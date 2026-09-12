@@ -38,7 +38,7 @@ export function WeekBlocks() {
       <div className="wp-wrap">
         <SectionHead index="03" label="Your week" titleId="week-title" title={<>A real week.<br /><span>Days off included.</span></>} note="Sample week" />
         <div ref={board} className="wp-week-board">
-          <div className="wp-week-scroll">
+          <div className="wp-week-scroll" tabIndex={0} role="region" aria-label="Sample week, scroll to see all seven days">
             <ol className={`wp-week ${inView || reduced ? 'is-playing' : 'is-armed'}`} aria-label="Sample week">
               {WEEK.map((day, i) => {
                 const style = { '--i': i } as CSSProperties

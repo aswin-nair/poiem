@@ -113,7 +113,7 @@ function PinnedSequence() {
             <m.div className="wp-p2n-entry wp-nl" style={{ x: entryX, scale: entryScale }}>
               <EntryCard
                 items={MEAL.items.map((item, i) => <MovingItem key={item.label} item={item} index={i} progress={progress} />)}
-                kcal={<m.span>{kcalText}</m.span>}
+                kcal={<><m.span aria-hidden="true">{kcalText}</m.span><span className="sr-only">{TOTAL}</span></>}
                 widths={[proteinWidth, carbsWidth, fatWidth]}
               />
             </m.div>

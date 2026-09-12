@@ -102,6 +102,7 @@ export function ScanPanel() {
           </button>
         ))}
       </div>
+      <p className="wp-scan-invitation"><span aria-hidden="true">↳</span> Pick a plate. Watch the ingredients add up.<span className="wp-sample-note">Illustrated examples</span></p>
     </figure>
   )
 }

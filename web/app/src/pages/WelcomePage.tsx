@@ -12,7 +12,10 @@ import { ScanPanel } from './welcome/ScanPanel'
 import { SectionHead } from './welcome/SectionHead'
 import { useCutNavigation } from './welcome/useCutNavigation'
 import { WeekBlocks } from './welcome/WeekBlocks'
+import { MomoAside } from './welcome/MomoAside'
+import { FoodTicker } from './welcome/FoodTicker'
 import '../styles/welcome-poster.css'
+import '../styles/welcome-details.css'
 
 const STEPS = [
   { number: '01', title: 'Snap or describe', shot: 'log', caption: 'Fig. 02 — Log', text: 'Take a photo, describe what you ate, or enter the numbers yourself.', alt: 'The Poiem log screen with photo, describe and manual entry options' },
@@ -91,13 +94,14 @@ export default function WelcomePage() {
   const condensed = useCondensedHeader()
   const { active, previous, steps } = useActiveStep()
   const { cutting, onNavigate } = useCutNavigation()
+  const [motionPaused, setMotionPaused] = useState(false)
   const home = import.meta.env.PROD ? '/' : '/welcome'
   const destination = user ? productPath('/') : productPath('/login?mode=signup')
   const signInDestination = user ? productPath('/') : productPath('/login?mode=signin')
   const cta = user ? 'Open my journal' : 'Start your journal'
 
   return (
-    <div className="welcome-poster">
+    <div className={`welcome-poster${motionPaused ? ' wp-motion-paused' : ''}`}>
       <a className="wp-skip" href="#welcome-content">Skip to content</a>
       <header className={`wp-header${condensed ? ' is-condensed' : ''}`}>
         <div className="wp-header-inner">
@@ -123,17 +127,20 @@ export default function WelcomePage() {
               <p className="wp-meta-row"><span>Poiem — food journal</span><span>Calories · macros · no guilt</span></p>
               <h1 id="welcome-title" className="wp-hero-title">
                 <span className="wp-hero-small">A little tracking.</span>{' '}
-                <span className="wp-hero-big"><span>A lot of</span>{' '}<span className="wp-mark">living.</span></span>
+                <span className="wp-hero-big"><span>A lot of</span>{' '}<span className="wp-mark">living.<svg className="wp-hero-doodle" viewBox="0 0 100 100" aria-hidden="true"><path d="M18 75Q53 70 72 22M49 30l25-12 7 28M20 24l9 12M8 46l16 3M47 7l-1 15" /></svg></span></span>
               </h1>
               <p className="wp-hero-intro">Snap, describe or type what you ate. Poiem estimates the calories and macros, you check the numbers, and your day carries on.</p>
               <div className="wp-actions">
                 <a className="wp-btn wp-btn-primary" href={destination} onClick={onNavigate}>{cta}<ArrowRight size={18} aria-hidden="true" /></a>
                 <a className="wp-btn wp-btn-ghost" href="#plate-to-numbers">See it work<ArrowDown size={18} aria-hidden="true" /></a>
               </div>
+              <MomoAside />
             </div>
             <div className="wp-hero-scan"><ScanPanel /></div>
           </div>
         </section>
+
+        <FoodTicker paused={motionPaused} onToggle={() => setMotionPaused(value => !value)} />
 
         <PlateToNumbers />
 

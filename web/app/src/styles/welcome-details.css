@@ -1,0 +1,76 @@
+/* A little mischief in the ruled-paper system. These details never cover controls. */
+.wp-hero-copy { position: relative; }
+.wp-hero-big > .wp-mark { position: relative; transform: rotate(-2deg); }
+.wp-hero-doodle { position: absolute; width: .65em; height: .65em; right: -.85em; bottom: .1em; overflow: visible; }
+.wp-hero-doodle path { fill: none; stroke: var(--wp-fg); stroke-linecap: round; stroke-linejoin: round; stroke-width: 4; stroke-dasharray: 230; animation: wp-doodle-draw 1s .6s both; }
+@keyframes wp-doodle-draw { from { stroke-dashoffset: 230; } to { stroke-dashoffset: 0; } }
+.wp-hero-scan { position: relative; }
+.wp-hero-scan::before { content: ''; position: absolute; z-index: 1; width: 66px; height: 18px; top: -10px; right: 30px; border: 1px solid var(--wp-line); background: repeating-linear-gradient(110deg,#e7f258 0 7px,#d1dc41 7px 8px); transform: rotate(7deg); pointer-events: none; }
+.wp-scan-invitation { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 18px !important; font: 500 11px/1.6 var(--wp-mono); color: var(--wp-muted); }
+.wp-scan-invitation > span:first-child { font-size: 24px; color: var(--wp-fg); line-height: 1; }
+.wp-sample-note { margin-left: auto; padding: 3px 6px; border: 1px solid var(--wp-line); text-transform: uppercase; font-size: 9px; }
+
+/* A small character introduction, with motion only after a deliberate tap. */
+.wp-momo-aside { display: flex; align-items: center; gap: 20px; max-width: 470px; margin-top: 35px; padding-bottom: 6px; }
+.welcome-poster .wp-momo-poke { position: relative; flex: 0 0 92px; width: 92px; height: 96px; padding: 6px; border: 3px solid #121212; border-radius: 48% 48% 8% 8%; background: #efb6cc; color: #121212; box-shadow: 4px 4px 0 var(--wp-shadow); cursor: pointer; transform: rotate(-6deg); transition: transform .18s var(--wp-ease), box-shadow .18s var(--wp-ease); }
+.welcome-poster .wp-momo-poke:hover { transform: rotate(1deg) translateY(-3px); box-shadow: 6px 7px 0 var(--wp-shadow); }
+.welcome-poster .wp-momo-poke:active { transform: translate(3px,3px) rotate(-2deg); box-shadow: 1px 1px 0 var(--wp-shadow); }
+.wp-momo-cutout { display: block; width: 100%; height: 100%; animation: wp-momo-bop .6s ease both; }
+/* Existing mascot CSS includes idle loops. Keep this cameo still between taps. */
+.wp-momo-cutout .momo-art * { animation-iteration-count: 1 !important; }
+.wp-momo-cutout .pose-still * { animation: none !important; }
+@keyframes wp-momo-bop { 0%,100% { transform: rotate(0); } 30% { transform: translateY(-7px) rotate(8deg); } 60% { transform: translateY(1px) rotate(-5deg); } }
+.wp-momo-spark { position: absolute; right: -10px; top: -9px; color: var(--wp-fg); }
+.wp-momo-note { position: relative; min-width: 0; }
+.wp-momo-byline { display: block; margin-bottom: 7px; color: var(--wp-muted); font: 600 9px/1.5 var(--wp-mono); letter-spacing: .045em; text-transform: uppercase; }
+.wp-momo-note p { min-height: 2.8em; font-size: 14px; font-weight: 800; line-height: 1.4; text-wrap: pretty; }
+.wp-momo-invite { display: flex; align-items: center; gap: 5px; margin-top: 8px; color: var(--wp-muted); font: 500 10px/1.5 var(--wp-mono); }
+
+/* The manifesto is one seamless ribbon. Duplicates are purely decorative. */
+.wp-food-ticker { display: flex; border-bottom: 3px solid var(--wp-line); background: var(--wp-hot); color: #121212; }
+.wp-ticker-window { flex: 1; min-width: 0; overflow: hidden; }
+.wp-ticker-track { display: flex; width: max-content; animation: wp-ticker-travel 34s linear infinite; animation-play-state: paused; }
+.wp-food-ticker[data-running='true'] .wp-ticker-track { animation-play-state: running; }
+.wp-ticker-window:hover .wp-ticker-track { animation-play-state: paused; }
+.wp-ticker-copy { display: flex; align-items: center; gap: 34px; flex-shrink: 0; padding: 22px 34px 22px 0; }
+.wp-ticker-copy span { white-space: nowrap; font: 900 clamp(32px,4vw,56px)/1 var(--wp-display); text-transform: uppercase; letter-spacing: -.01em; }
+.wp-ticker-copy svg { width: 33px; height: 33px; stroke-width: 1.8; }
+.wp-ticker-outline { color: transparent; -webkit-text-stroke: 1.2px #121212; }
+@keyframes wp-ticker-travel { to { transform: translateX(-50%); } }
+.welcome-poster .wp-ticker-toggle { flex: 0 0 74px; display: grid; place-content: center; justify-items: center; gap: 7px; min-height: 74px; padding: 10px; border: 0; border-left: 3px solid #121212; color: #121212; background: #e7f258; font: 600 10px/1 var(--wp-mono); text-transform: uppercase; cursor: pointer; }
+.welcome-poster .wp-ticker-toggle:focus-visible { outline: 3px solid #121212; outline-offset: -7px; }
+.wp-ticker-toggle:hover svg { transform: scale(1.15); }
+.wp-motion-paused *, .wp-motion-paused *::before, .wp-motion-paused *::after { animation-play-state: paused !important; }
+
+.wp-week-scroll:focus-visible { outline: 3px solid var(--wp-focus); outline-offset: 6px; }
+.wp-step-num { font-variant-numeric: tabular-nums; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wp-day .wp-day-plate { transition: transform .25s var(--wp-ease); }
+  .wp-day:hover .wp-day-plate { transform: rotate(-9deg) scale(1.07); }
+  .wp-facts { transition: transform .25s var(--wp-ease); }
+  .wp-facts:hover { transform: rotate(-1deg); }
+}
+@media (max-width: 900px) {
+  .wp-momo-aside { margin-top: 30px; max-width: 480px; }
+  .wp-hero-scan { margin-top: 10px; }
+}
+@media (max-width: 600px) {
+  .wp-momo-aside { gap: 16px; }
+  .welcome-poster .wp-momo-poke { flex-basis: 78px; width: 78px; height: 84px; }
+  .wp-momo-note p { font-size: 13px; min-height: 3.2em; }
+  .wp-momo-byline { font-size: 8px; }.wp-momo-invite { font-size: 9px; }
+  .wp-ticker-copy { gap: 22px; padding: 18px 22px 18px 0; }
+  .wp-ticker-copy svg { width: 26px; height: 26px; }
+  .welcome-poster .wp-ticker-toggle { flex-basis: 60px; }
+  .wp-sample-note { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wp-hero-doodle path, .wp-momo-cutout, .wp-ticker-track { animation: none !important; }
+  .wp-ticker-toggle { display: none !important; }
+  .wp-ticker-window { overflow-x: auto; }
+  .wp-ticker-track { width: 100%; }
+  .wp-ticker-copy { flex-wrap: wrap; padding: 20px; gap: 15px; width: 100%; justify-content: center; }
+  .wp-ticker-copy + .wp-ticker-copy { display: none; }
+  .wp-ticker-copy span { font-size: 26px; }
+  .wp-food-ticker .wp-ticker-outline { color: #121212; -webkit-text-stroke: 0; }
+}
