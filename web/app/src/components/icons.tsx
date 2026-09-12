@@ -6,8 +6,11 @@ import {
   List, PencilLine, Camera, ClipboardList, ArrowUpRight, CalendarDays, Bell,
   Search, ScanLine, Flame, Sparkles, Utensils, Egg, Wheat, Droplets, Trophy,
   ArrowRight, History, Coffee, Salad, Pizza, Fish, Apple, Soup, CircleCheck,
-  CloudUpload, CloudOff, ShieldCheck, Sprout, Armchair, Footprints, Dumbbell, Zap, Sunrise, Sun, Moon, type LucideIcon,
+  CloudUpload, CloudOff, ShieldCheck, Sprout, Armchair, Footprints, Dumbbell, Zap, Sunrise, Sun, Moon,
+  GlassWater, CupSoda, Milk, Wine, Beer, Hamburger, Sandwich, Drumstick, Beef, Shrimp, EggFried, Carrot, Croissant,
+  Cookie, CakeSlice, Donut, IceCreamCone, Candy, Popcorn, Banana, Citrus, Cherry, Grape, Nut, type LucideIcon,
 } from 'lucide-react'
+import { foodGlyphFor, type FoodGlyph } from '../lib/foodGlyph'
 
 export interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'width' | 'height' | 'viewBox'> {
   size?: number
@@ -83,8 +86,17 @@ const foodIcons: Record<string, LucideIcon> = {
   '🐟': Fish, '🍎': Apple, '🍏': Apple, '🥣': Soup, '🍜': Soup,
   '🍲': Soup, '🥚': Egg, '🍳': Egg, '🍞': Wheat, '🥐': Wheat,
 }
-/** Preserve stored meal data; change only its decorative presentation. */
-export function FoodIcon({ emoji, size = 24 }: { emoji?: string; size?: number }) {
-  const Component = foodIcons[emoji?.replace(/\uFE0F/g, '') ?? ''] ?? Utensils
+const glyphIcons: Record<FoodGlyph, LucideIcon> = {
+  coffee: Coffee, water: GlassWater, soda: CupSoda, milk: Milk, wine: Wine, beer: Beer,
+  burger: Hamburger, pizza: Pizza, sandwich: Sandwich, chicken: Drumstick, beef: Beef, fish: Fish, shrimp: Shrimp, egg: EggFried,
+  salad: Salad, carrot: Carrot, soup: Soup, bread: Wheat, croissant: Croissant,
+  cookie: Cookie, cake: CakeSlice, donut: Donut, icecream: IceCreamCone, candy: Candy, popcorn: Popcorn,
+  banana: Banana, apple: Apple, citrus: Citrus, cherry: Cherry, grape: Grape, nut: Nut,
+  meal: Utensils,
+}
+
+/** Preserve stored meal data; change only its decorative presentation. A known emoji wins, then the meal's name. */
+export function FoodIcon({ emoji, name, size = 24 }: { emoji?: string; name?: string; size?: number }) {
+  const Component = foodIcons[emoji?.replace(/️/g, '') ?? ''] ?? glyphIcons[foodGlyphFor(name)]
   return <Component size={size} aria-hidden="true" focusable="false" className="ui-icon ui-icon-tilt" />
 }

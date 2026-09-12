@@ -1,3 +1,4 @@
+@layer legacy {
 /* The recipe box and insight journal share the account and daily club palette.
    Explicit page scope wins against legacy dark rules without changing charts. */
 :root .app-shell.food-club-app:is(.saved-refresh, .insights-refresh) .page-heading {
@@ -73,4 +74,5 @@
   :root .app-shell.food-club-app.saved-refresh .saved-meal-row { padding: 16px; }
   :root .app-shell.food-club-app.saved-refresh .saved-meal-actions { gap: 8px; }
   :root .app-shell.food-club-app.saved-refresh .saved-meal-actions .log-pill-btn { flex-basis: 100%; margin-left: 0; }
+}
 }

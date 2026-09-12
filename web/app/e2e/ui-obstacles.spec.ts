@@ -16,22 +16,26 @@ test('daily summary, settings navigation and editor stay clear on a phone', asyn
   await page.screenshot({ path: testInfo.outputPath('today.png'), animations: 'disabled' })
   // The editorial summary is taller than one phone screen. Check that its
   // macros can be read clear of the fixed navigation after scrolling to them.
-  await page.locator('.home-macro-chips').evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }))
-  const macros = await page.locator('.home-macro-chips').boundingBox()
+  await page.locator('.k-macros').evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }))
+  const macros = await page.locator('.k-macros').boundingBox()
   const navigation = await nav(page).boundingBox()
   console.log('Today layout', { macros, navigation })
   expect(macros!.y).toBeGreaterThanOrEqual(0)
   expect(macros!.y + macros!.height).toBeLessThan(navigation!.y)
   await page.screenshot({ path: testInfo.outputPath('today-macros.png'), animations: 'disabled' })
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
-  // Space-aware hiding is temporary, not a change to the user's Momo setting.
+  // Space-aware hiding is temporary, not a change to the user's Momo setting. On a
+  // wide screen he waits beside the column, clear of Today's numbers and meals.
   await page.setViewportSize({ width: 1440, height: 960 })
   await settlePageLayout(page)
   await expect(page.locator('.mascot-host')).toBeVisible()
+  const momo = await page.locator('.mascot-host').boundingBox()
+  const column = await page.locator('.k-today-main').boundingBox()
+  expect(momo!.x >= column!.x + column!.width || momo!.x + momo!.width <= column!.x).toBe(true)
   await page.setViewportSize({ width: 390, height: 844 })
   await expect(page.locator('.mascot-host')).toHaveCount(0)
 
-  await page.locator('.home-today-row').first().click()
+  await page.locator('.k-meal-row').first().click()
   await expect(page.getByLabel('Food name')).toBeVisible()
   await settlePageLayout(page)
   await expect(page.locator('.mascot-host')).toHaveCount(0)

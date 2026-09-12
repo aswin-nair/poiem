@@ -56,6 +56,22 @@ export async function signUp(page: Page, opts?: { name?: string; email?: string;
   return { email, password, name }
 }
 
+/**
+ * Wait for a logged meal's confirmation and, when it is the full-screen
+ * "Logged." moment, see it closed. That moment closes itself after a few
+ * seconds, so Continue is a shortcut rather than a requirement: under load the
+ * click can lose the race, and what matters is that the moment ends. Later
+ * meals of the day confirm with a "Logged …" toast instead.
+ */
+async function finishLogConfirmation(page: Page, mealName: string, dismissCelebration: boolean): Promise<void> {
+  const celebration = page.getByRole('dialog', { name: 'Meal logged' })
+  const toast = page.locator('.toast').filter({ hasText: `Logged ${mealName}` })
+  await celebration.or(toast).first().waitFor()
+  if (!dismissCelebration || !await celebration.isVisible()) return
+  await celebration.getByRole('button', { name: 'Continue' }).click({ timeout: 5_000 }).catch(() => undefined)
+  await celebration.waitFor({ state: 'hidden' })
+}
+
 export async function completeOnboarding(
   page: Page,
   options?: {
@@ -93,10 +109,7 @@ export async function completeOnboarding(
   await page.waitForURL('/')
 
   if (options?.dismissCelebration !== false) {
-    const celebration = page.getByRole('dialog', { name: 'Meal logged' })
-    await celebration.waitFor()
-    await celebration.getByRole('button', { name: 'Continue' }).click()
-    await celebration.waitFor({ state: 'hidden' })
+    await finishLogConfirmation(page, meal.name, true)
   }
 }
 
@@ -136,10 +149,5 @@ export async function logManualMeal(
 
   await page.getByRole('button', { name: 'Log meal' }).click()
   await page.waitForURL('/')
-  const celebration = page.getByRole('dialog', { name: 'Meal logged' })
-  await celebration.waitFor()
-  if (options?.dismissCelebration !== false) {
-    await celebration.getByRole('button', { name: 'Continue' }).click()
-    await celebration.waitFor({ state: 'hidden' })
-  }
+  await finishLogConfirmation(page, meal.name, options?.dismissCelebration !== false)
 }

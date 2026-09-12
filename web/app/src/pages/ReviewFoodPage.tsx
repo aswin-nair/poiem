@@ -14,14 +14,7 @@ import { reviewFoodIssue } from '../lib/foodEntryValidation'
 import { useAuth } from '../store/AuthContext'
 import { sourceToMethod, track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
-
-function inferMealType(): MealType {
-  const h = new Date().getHours()
-  if (h < 11) return 'breakfast'
-  if (h < 15) return 'lunch'
-  if (h < 20) return 'dinner'
-  return 'snack'
-}
+import { defaultMealType } from '../lib/meals'
 
 export function ReviewFoodPage() {
   const {
@@ -38,7 +31,7 @@ export function ReviewFoodPage() {
   const saved = loadLogDrafts(userId).review
   const initialAnalysis = pendingAnalysis ?? saved?.analysis ?? null
   const [analysis, setAnalysis] = useState<FoodAnalysis | null>(initialAnalysis)
-  const [mealType, setMealType] = useState<MealType>(pendingAnalysis ? inferMealType() : (saved?.mealType ?? inferMealType()))
+  const [mealType, setMealType] = useState<MealType>(pendingAnalysis ? defaultMealType() : (saved?.mealType ?? defaultMealType()))
   const [servings, setServings] = useState(pendingAnalysis ? 1 : (saved?.servings ?? 1))
   const [source, setSource] = useState<FoodSource>(pendingAnalysis ? pendingSource : (saved?.source ?? pendingSource))
   const [emptyNumericFields, setEmptyNumericFields] = useState<Set<ReviewNumericField>>(

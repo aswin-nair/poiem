@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Journey Map ── */
 
 .journey-path-step {
@@ -116,3 +117,4 @@
 /* ═══════════════════════════════════════════════════════════════ */
 
 /* The meal path, moved off the dashboard. */
+}

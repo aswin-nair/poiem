@@ -1,10 +1,10 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { freshState } from '../lib/storage'
 import type { LogDraftEnvelope } from '../lib/logDrafts'
-import { LogMenuPage } from './LogMenuPage'
+import { LogSheet } from './LogSheet'
 import { ManualEntryPage } from './ManualEntryPage'
 
 let state = freshState()
@@ -20,42 +20,62 @@ vi.mock('../lib/logDrafts', () => ({
   clearLogDraft: vi.fn(),
 }))
 
+const oats = () => ({ id: 'recent', name: 'Oats', calories: 250, protein: 8, carbs: 40,
+  fat: 5, timestamp: new Date().toISOString(), source: 'manual' as const, mealType: 'breakfast' as const })
+
+const renderSheet = (routeState: object | null = null) => renderToStaticMarkup(createElement(
+  MemoryRouter,
+  { initialEntries: [{ pathname: '/log', state: routeState }] },
+  createElement(LogSheet),
+))
+
 beforeEach(() => {
   state = freshState()
   drafts = { version: 1 }
 })
 
-describe('daily UI contracts', () => {
-  it('offers all entry methods without opening the keyboard on arrival', () => {
-    const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(LogMenuPage)))
-    for (const route of ['text', 'photo', 'saved', 'manual']) {
+afterEach(() => {
+  vi.useRealTimers()
+})
+
+describe('log sheet', () => {
+  it('is a labelled dialog offering every way to log, without opening the keyboard', () => {
+    const html = renderSheet()
+    expect(html).toContain('role="dialog"')
+    expect(html).toContain('aria-labelledby="log-sheet-title"')
+    expect(html).toContain('id="log-sheet-title">Log a meal</h2>')
+    for (const [route, name] of [['photo', 'Snap a photo'], ['text', 'Describe your meal'], ['manual', 'Manual entry'], ['saved', 'Saved meals']]) {
       expect(html).toContain(`href="/log/${route}"`)
+      expect(html).toContain(`<span class="sr-only">${name}</span>`)
     }
-    expect(html.indexOf('Ways to log a meal')).toBeLessThan(html.indexOf('log-meal-search'))
-    expect(html).toContain('for="log-meal-search"')
+    expect(html).toContain('aria-label="Search your foods, or type calories"')
     expect(html).toContain('aria-describedby="log-search-hint"')
     expect(html.toLowerCase()).not.toContain('autofocus')
-    expect(html).toContain('Review an AI estimate')
-    expect(html).toContain('class="page-heading log-page-heading"')
-    expect(html).toContain('data-method="text_ai"')
-    expect(html).toContain('data-method="photo_ai"')
+    expect(html).toContain('Anything you log shows up here')
   })
 
-  it('gives recent and Saved meals a separate, named portion button', () => {
-    state.foodEntries = [{ id: 'recent', name: 'Oats', calories: 250, protein: 8, carbs: 40,
-      fat: 5, timestamp: new Date().toISOString(), source: 'manual', mealType: 'breakfast' }]
+  it('logs to the meal the time implies, or to the meal Today asked for', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 8, 12, 15, 30))
+    expect(renderSheet()).toContain('aria-controls="log-meal-choices">Snack')
+    expect(renderSheet({ mealType: 'dinner' })).toContain('aria-controls="log-meal-choices">Dinner')
+  })
+
+  it('puts recent meals first, with one-tap logging and a separate, named portion button', () => {
+    state.foodEntries = [oats()]
     state.favoriteMeals = [{ id: 'saved', name: 'Rice', calories: 200, protein: 4, carbs: 44, fat: 1, mealType: 'lunch' }]
-    const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(LogMenuPage)))
+    const html = renderSheet()
     expect(html).toContain('aria-label="Adjust portion for Oats">Portion</button>')
     expect(html).toContain('aria-label="Your meal shortcuts"')
     expect(html).toContain('Favourites</button>')
     expect(html).not.toMatch(/<button\b[^>]*>(?:(?!<\/button>)[\s\S])*<button\b/)
-    expect(html.indexOf('Log again')).toBeLessThan(html.indexOf('Ways to log a meal'))
+    expect(html.indexOf('Recent · tap to log again')).toBeLessThan(html.indexOf('aria-label="Other ways to log"'))
     state.foodEntries = []
-    const favouritesHtml = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(LogMenuPage)))
-    expect(favouritesHtml).toContain('aria-label="Adjust portion for Rice">Portion</button>')
+    expect(renderSheet()).toContain('aria-label="Adjust portion for Rice">Portion</button>')
   })
+})
 
+describe('manual entry', () => {
   it('shows a serving-scaled review before the native submit action', () => {
     drafts.manual = { name: 'Oats', calories: '250', protein: '8', carbs: '40', fat: '5',
       servings: 1.5, mealType: 'breakfast', updatedAt: new Date().toISOString() }
@@ -76,12 +96,12 @@ describe('daily UI contracts', () => {
     expect(html).toContain('<button type="submit" disabled=""')
   })
 
-  it('makes the recent-meal template explicit and offers a fresh start', () => {
-    state.foodEntries = [{ id: 'recent', name: 'Oats', calories: 250, protein: 8, carbs: 40,
-      fat: 5, timestamp: new Date().toISOString(), source: 'manual', mealType: 'breakfast' }]
+  it('starts blank even with recent meals, so nothing is logged by accident', () => {
+    state.foodEntries = [oats()]
     const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(ManualEntryPage)))
-    expect(html).toContain('Started from “Oats”')
-    expect(html).toContain('>Start fresh</button>')
-    expect(html).toContain('250 kcal')
+    expect(html).not.toContain('Started from')
+    expect(html).not.toContain('value="Oats"')
+    expect(html).not.toContain('aria-label="Meal total"')
+    expect(html).toContain('<button type="submit" disabled=""')
   })
 })

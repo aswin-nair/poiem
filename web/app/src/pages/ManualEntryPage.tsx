@@ -1,4 +1,3 @@
-import { PosterStrip } from '../components/PosterPrimitives'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { PressableButton } from '../components/PressableButton'
@@ -9,35 +8,22 @@ import { BackLink } from '../components/BackLink'
 import { clearLogDraft, hydrateLogDrafts, loadLogDrafts, saveManualLogDraft } from '../lib/logDrafts'
 import { validateManualFood } from '../lib/foodEntryValidation'
 import { useAuth } from '../store/AuthContext'
-import { recentMeals } from '../lib/meals'
+import { defaultMealType } from '../lib/meals'
 import { mascotEvent } from '../mascot/MascotOverlay'
 
-function inferMealType(): MealType {
-  const h = new Date().getHours()
-  if (h < 11) return 'breakfast'
-  if (h < 15) return 'lunch'
-  if (h < 20) return 'dinner'
-  return 'snack'
-}
-
 export function ManualEntryPage() {
-  const { state, addEntry } = useApp()
+  const { addEntry } = useApp()
   const { user } = useAuth()
   const navigate = useNavigate()
   const requestedSlot = (useLocation().state as { mealType?: MealType } | null)?.mealType
   const userId = user?.sub ?? ''
   const saved = loadLogDrafts(userId).manual
-  const initialMealType = requestedSlot ?? saved?.mealType ?? inferMealType()
-  const recentDefault = saved
-    ? undefined
-    : recentMeals(state.foodEntries).find(entry => entry.mealType === initialMealType)
-      ?? recentMeals(state.foodEntries)[0]
-  const [templateName, setTemplateName] = useState(recentDefault?.name ?? null)
-  const [name, setName] = useState(saved?.name ?? recentDefault?.name ?? '')
-  const [calories, setCalories] = useState(saved?.calories ?? (recentDefault ? String(recentDefault.calories) : ''))
-  const [protein, setProtein] = useState(saved?.protein ?? (recentDefault ? String(recentDefault.protein) : ''))
-  const [carbs, setCarbs] = useState(saved?.carbs ?? (recentDefault ? String(recentDefault.carbs) : ''))
-  const [fat, setFat] = useState(saved?.fat ?? (recentDefault ? String(recentDefault.fat) : ''))
+  const initialMealType = requestedSlot ?? saved?.mealType ?? defaultMealType()
+  const [name, setName] = useState(saved?.name ?? '')
+  const [calories, setCalories] = useState(saved?.calories ?? '')
+  const [protein, setProtein] = useState(saved?.protein ?? '')
+  const [carbs, setCarbs] = useState(saved?.carbs ?? '')
+  const [fat, setFat] = useState(saved?.fat ?? '')
   const [mealType, setMealType] = useState<MealType>(initialMealType)
   const [servings, setServings] = useState(saved?.servings ?? 1)
   const [error, setError] = useState<string | null>(null)
@@ -53,7 +39,7 @@ export function ManualEntryPage() {
       setProtein(current => current || manual.protein)
       setCarbs(current => current || manual.carbs)
       setFat(current => current || manual.fat)
-      setMealType(current => current === inferMealType() ? manual.mealType : current)
+      setMealType(current => current === defaultMealType() ? manual.mealType : current)
       setServings(current => current === 1 ? manual.servings : current)
     })
     return () => {
@@ -105,22 +91,10 @@ export function ManualEntryPage() {
     <div className="app-shell manual-refresh poster-ui">
       <main className="app-main motion-stagger">
         <BackLink to="/log" />
-        <PosterStrip items={['By the numbers', 'Your call']} />
         <header className="manual-heading">
           <h1 className="page-title">Manual entry</h1>
           <p className="page-sub">Enter the nutrition for one serving. We’ll calculate your total.</p>
         </header>
-
-        {templateName && (
-          <div className="manual-default-note">
-            <p>Started from “{templateName}”. You can change any value.</p>
-            <button type="button" className="log-clear-search" onClick={() => {
-              edited.current = true
-              setName(''); setCalories(''); setProtein(''); setCarbs(''); setFat('');
-              setServings(1); setTemplateName(null); setError(null)
-            }}>Start fresh</button>
-          </div>
-        )}
 
         {error && <div className="error-banner" role="alert">{error}</div>}
 

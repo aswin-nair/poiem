@@ -1,4 +1,3 @@
-import { PosterArt, PosterStrip } from '../components/PosterPrimitives'
 import { useMemo, useState } from 'react'
 import { BottomNav } from '../components/BottomNav'
 import { ProgressLineChart, ProgressBarChart } from '../components/Charts'
@@ -7,6 +6,8 @@ import { effectiveCalories } from '../lib/profile'
 import { localDayKey } from '../lib/dates'
 import { getStreakWithFreezes, getAllBadges, getBreakfastComparison, getMonthConsistency, getTotalLoggedDays } from '../lib/journey'
 import { HabitMilestones } from '../components/HabitMilestones'
+import { Meter } from '../components/Meter'
+import { LEVEL_NAMES, xpForLevel, xpForNextLevel } from '../lib/xp'
 import { IconChevronRight, IconMenuLines, IconFlame, IconTrophy } from '../components/icons'
 import { PressableButton } from '../components/PressableButton'
 import { Surface } from '../components/Surface'
@@ -59,6 +60,11 @@ export function ProgressPage() {
   const badges = getAllBadges(state.foodEntries, streak)
   const consistency = getMonthConsistency(state.foodEntries)
   const breakfastComparison = getBreakfastComparison(state.foodEntries)
+  const level = state.gamification.level
+  const levelStart = xpForLevel(level)
+  const levelEnd = xpForNextLevel(level)
+  const atTopLevel = levelEnd <= levelStart
+  const xpToNext = Math.max(0, levelEnd - state.gamification.xp)
   const [showLog, setShowLog] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
 
@@ -146,16 +152,34 @@ export function ProgressPage() {
     <div className="app-shell progress-shell insights-refresh food-club-app poster-ui">
       <main className="app-main progress-main motion-stagger">
 
-        <PosterStrip items={['The bigger picture', 'A routine, not a report card']} />
-
         <header className="progress-page-header page-heading">
-
-          <PosterArt burst={['Small', 'steps']} burstTone="rose" stickers={[{ food: 'carrot', tone: 'paper', tilt: -8 }, { food: 'apple', tone: 'leaf', tilt: 10 }]} />
           <PoiemSectionLabel>The bigger picture</PoiemSectionLabel>
           <h1 className="screen-title" style={{ marginBottom: 0 }}>Insights</h1>
           <p className="insights-intro">See your routine over time, one logged day at a time.</p>
           <span className="club-library-stamp">YOUR ROUTINE. NOT A REPORT CARD.</span>
         </header>
+
+        {/* Streak, level and XP live here; Today shows only the day itself. */}
+        <section className="k-card k-journey" aria-labelledby="journey-title">
+          <div className="k-section-head">
+            <h2 id="journey-title">Journey</h2>
+            <span className="tabular">Level {level}</span>
+          </div>
+          <dl className="k-journey-stats">
+            <div><dt>Day streak</dt><dd className="tabular">{streak}</dd></div>
+            <div><dt>Total XP</dt><dd className="tabular">{state.gamification.xp.toLocaleString()}</dd></div>
+            <div><dt>Freezes</dt><dd className="tabular">{state.gamification.streakFreezes}</dd></div>
+          </dl>
+          <Meter
+            label="Progress to the next level"
+            tone="acid"
+            value={atTopLevel ? 1 : state.gamification.xp - levelStart}
+            max={atTopLevel ? 1 : levelEnd - levelStart}
+          />
+          <p className="k-journey-note">
+            {LEVEL_NAMES[level] || 'Your journey'}{atTopLevel ? ' · Top level reached' : ` · ${xpToNext.toLocaleString()} XP to level ${level + 1}`}
+          </p>
+        </section>
 
         <HabitMilestones loggedDays={getTotalLoggedDays(state.foodEntries)} />
 

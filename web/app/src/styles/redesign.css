@@ -1,3 +1,4 @@
+@layer legacy {
 .eyebrow {
   display: block;
   font-size: var(--text-caption);
@@ -322,4 +323,5 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
 }

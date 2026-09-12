@@ -1,3 +1,4 @@
+@layer legacy {
 /* Saved: a reusable meal library. Insights: a readable record of the habit. */
 .saved-refresh .app-main, .insights-refresh .progress-main { padding-top: 1.5rem; }
 .saved-refresh .page-title, .insights-refresh .screen-title { font: 600 2rem/1.2 var(--display); letter-spacing: -.03em; }
@@ -71,3 +72,4 @@
 .weight-log-sheet input { min-height: 52px; font-size: 1rem; }
 @media (max-width: 430px) { .saved-refresh .discover-grid { grid-template-columns: 1fr; } }
 @media (max-width: 360px) { .insights-refresh .progress-stat-grid { grid-template-columns: 1fr; } }
+}

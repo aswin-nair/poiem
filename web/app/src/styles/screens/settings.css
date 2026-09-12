@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── SettingsPage ───────────────────────────────────────────── */
 
 .settings-section-label {
@@ -215,4 +216,5 @@
 .wardrobe-item:disabled {
   cursor: default;
   opacity: 0.58;
+}
 }

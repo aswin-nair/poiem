@@ -1,3 +1,4 @@
+@layer legacy {
 /* You: profile first, readable controls, and one persistent save action. */
 .you-refresh .you-header {
   display: flex;
@@ -149,4 +150,5 @@
 @media (max-width: 350px) {
   .you-refresh .you-save-bar { gap: 6px; }
   .you-refresh .you-save-bar { --button-padding-inline: .625rem; }
+}
 }

@@ -1,3 +1,4 @@
+@layer legacy {
 /* Account entry: a food poster and a readable membership ticket. */
 .food-club-auth, .food-club-app {
   --club-paper: #fff8e9;
@@ -225,4 +226,5 @@
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   :root .food-club-auth.auth-refresh .pressable:not(:disabled):hover .pressable-face > svg { transform: translate(2px, -2px); }
+}
 }

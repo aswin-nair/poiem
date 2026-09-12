@@ -1,3 +1,4 @@
+@layer legacy {
 /* Poiem logos and screen integration. Shared palette lives in tokens.css. */
 :root :is(.food-club-auth, .food-club-app),
 :root[data-theme="dark"] :is(.food-club-auth, .food-club-app) {
@@ -166,4 +167,5 @@
   .poiem-daily-extras > summary { gap: 10px; padding: 14px 12px; }
   .poiem-extras-icon { width: 34px; height: 38px; }
   .poiem-extras-content { padding: 12px; }
+}
 }

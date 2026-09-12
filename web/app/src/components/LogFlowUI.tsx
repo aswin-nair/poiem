@@ -1,4 +1,3 @@
-import { PosterStrip } from './PosterPrimitives'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { MomoSticker } from './MomoSticker'
@@ -10,7 +9,6 @@ export function LogFlowHeader({ title, description, step }: {
 }) {
   return (
     <>
-    <PosterStrip items={['Snap it', 'Check it', 'Log it']} />
     <header className="flow-heading">
       {step && <ol className="flow-steps" aria-label="Meal logging progress">
         <li aria-current={step === 1 ? 'step' : undefined} className={step === 2 ? 'is-complete' : ''}>

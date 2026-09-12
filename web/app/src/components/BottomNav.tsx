@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useFeel } from '../hooks/useHaptic'
 import { useAnchor } from '../mascot/anchors'
 import { IconHome, IconJourney, IconPlus, IconProgress, IconSettings } from './icons'
@@ -13,55 +13,49 @@ const TABS = [
 export function BottomNav() {
   const feel = useFeel()
   const fabAnchor = useAnchor('fab')
+  const location = useLocation()
+  const navigate = useNavigate()
+  const logOpen = location.pathname === '/log'
+
+  const tab = (item: (typeof TABS)[number]) => (
+    <NavLink
+      key={item.to}
+      to={item.to}
+      end={'end' in item ? item.end : undefined}
+      onPointerDown={() => feel('tap')}
+      className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+    >
+      {({ isActive }) => (
+        <span className="nav-item-inner">
+          <item.Icon active={isActive} />
+          <span>{item.label}</span>
+        </span>
+      )}
+    </NavLink>
+  )
 
   return (
     <nav className="bottom-nav-wrap" aria-label="Main">
       <div className="bottom-nav">
-        {TABS.slice(0, 2).map(tab => (
-          <NavLink
-            key={tab.to}
-            to={tab.to}
-            end={'end' in tab ? tab.end : undefined}
-            onPointerDown={() => feel('tap')}
-            className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
-          >
-            {({ isActive }) => (
-              <span className="nav-item-inner">
-                <tab.Icon active={isActive} />
-                <span>{tab.label}</span>
-              </span>
-            )}
-          </NavLink>
-        ))}
+        {TABS.slice(0, 2).map(tab)}
 
-        <NavLink
-          to="/log"
+        {/* Opens the log sheet over the current page; the URL is still /log. */}
+        <button
+          type="button"
           data-testid="fab"
           ref={fabAnchor}
-          className={({ isActive }) => `nav-fab${isActive ? ' active' : ''}`}
+          className={`nav-fab${logOpen ? ' active' : ''}`}
           aria-label="Log a meal"
-          onPointerDown={() => {
-            feel('press')
+          aria-haspopup="dialog"
+          onPointerDown={() => feel('press')}
+          onClick={() => {
+            if (!logOpen) navigate('/log', { state: { background: location } })
           }}
         >
           <IconPlus size={26} />
-        </NavLink>
+        </button>
 
-        {TABS.slice(2).map(tab => (
-          <NavLink
-            key={tab.to}
-            to={tab.to}
-            onPointerDown={() => feel('tap')}
-            className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
-          >
-            {({ isActive }) => (
-              <span className="nav-item-inner">
-                <tab.Icon active={isActive} />
-                <span>{tab.label}</span>
-              </span>
-            )}
-          </NavLink>
-        ))}
+        {TABS.slice(2).map(tab)}
       </div>
     </nav>
   )

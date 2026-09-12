@@ -1,3 +1,4 @@
+@layer legacy {
 :root {
   --poiem-paper: #FFF8EB;
   --poiem-ink: #26241F;
@@ -318,4 +319,5 @@
   --clay-inset-light: rgb(255 255 255 / 3%);
   --clay-inset-dark: rgb(0 0 0 / 18%);
   --skeleton-shine: rgb(255 255 255 / 6%);
+}
 }

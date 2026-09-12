@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── CoachPage ─────────────────────────────────────────────── */
 
 .coach-header-bar {
@@ -342,3 +343,4 @@
 
 .chat-send-btn:disabled { opacity: 0.4; }
 .chat-send-btn:not(:disabled):hover { opacity: 0.85; }
+}
