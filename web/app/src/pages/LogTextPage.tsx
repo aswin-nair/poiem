@@ -11,7 +11,6 @@ import { PressableButton } from '../components/PressableButton'
 import { mascotEvent } from '../mascot/MascotOverlay'
 import { AiSetupNotice, AnalysisStatus, FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
 import { IconArrowRight, IconEdit, IconSparkles } from '../components/icons'
-import { Surface } from '../components/Surface'
 
 const EXAMPLES = [
   '2 scrambled eggs, toast with butter',
@@ -92,8 +91,8 @@ export function LogTextPage() {
   const hasKey = !!state.aiSettings.apiKey
 
   return (
-    <div className="app-shell meal-flow poster-ui">
-      <main className="app-main motion-stagger">
+    <div className="app-shell k-screen k-flow">
+      <main className="app-main">
         <BackLink to="/log" />
         <LogFlowHeader step={1} title="What’s on the menu?" description="Describe your meal in your own words. We’ll turn it into an estimate you can edit." />
 
@@ -103,7 +102,7 @@ export function LogTextPage() {
         {!hasKey && <AiSetupNotice provider={providerLabel(state.aiSettings.provider)} />}
 
         <form className="flow-compose" onSubmit={event => { event.preventDefault(); void handleAnalyze() }}>
-        <Surface className="flow-description-card">
+        <div className="flow-description-card">
           <label className="flow-composer-label" htmlFor="meal-description"><IconEdit size={22} /> Your meal, your words</label>
           <p id="description-hint" className="flow-field-hint">Include quantities, drinks and extras when you know them.</p>
           <textarea
@@ -131,7 +130,7 @@ export function LogTextPage() {
               </div>
             </div>
           )}
-        </Surface>
+        </div>
 
         {loading ? <AnalysisStatus method="text" onCancel={cancelAnalysis} /> : <div className="flow-submit">
         <p><IconSparkles size={18} /> Next: check the portion and nutrition.</p>

@@ -2,7 +2,7 @@
 
 Design reference for the Poiem web app (`web/app`).
 
-**Poster outside, kitchen inside.** The public welcome page, onboarding and sign-in keep the loud poster voice: acid yellow, condensed type, stickers. The daily app is a quiet kitchen. It uses a warm paper ground, ink lines, one acid accent for progress and one persimmon colour for the main action. Someone logging their fourth meal of the day needs the number, not a show.
+**Poster outside, kitchen inside.** The public welcome page, onboarding and sign-in keep the loud poster voice: acid yellow, condensed type, stickers. The daily app is a friendly kitchen: a warm paper ground and ink lines, one bright acid card for the number that matters, soft colours that tell meals and foods apart, and Momo saying hello. Someone logging their fourth meal of the day needs the number first. Joy comes from colour, illustration and small motion, never from slogans or stickers.
 
 This file describes the **Poiem system**: the tokens, components and screen rules the app is being rebuilt on. Screens that have not moved yet still run on the older stylesheets, which are contained in a lower cascade layer (see [Architecture](#architecture)).
 
@@ -26,7 +26,7 @@ The Expo `mobile/` app stays a private alpha. It does **not** extract shared tok
 |-------|-------|------|
 | `legacy` | Every older sheet under `src/styles/` (base, clay, poster system, page sheets…) | Kept working while screens move; deleted sheet by sheet |
 | `system` | [`styles/system/tokens.css`](src/styles/system/tokens.css), [`styles/system/components.css`](src/styles/system/components.css) | Tokens, shared component styles, `k-*` primitives |
-| `screens` | [`styles/screens/kitchen.css`](src/styles/screens/kitchen.css) | Layout for rebuilt screens: Today, the log sheet, the Journey card |
+| `screens` | [`styles/screens/kitchen.css`](src/styles/screens/kitchen.css), [`styles/screens/flows.css`](src/styles/screens/flows.css) | Layout for rebuilt screens: Today, the log sheet and the Journey card; the log flows and Saved |
 | *(unlayered)* | [`styles/a11y.css`](src/styles/a11y.css) | Accessibility overrides (reduced motion, forced colours). Loaded last and allowed `!important` |
 
 A later layer always beats an earlier one, whatever the selector specificity. The system can therefore restyle a legacy class such as `.pressable-face` or `.toast` with a plain class selector, and an old `#poster-ui` ID chain in `legacy` cannot override it.
@@ -62,6 +62,11 @@ All tokens live in [`tokens.css`](src/styles/system/tokens.css). The light palet
 | `--k-danger-ink` / `--k-danger-soft` | `#A8283A` / `#FFE4E9` | `#FFA5B0` / `#3E2930` | Delete only |
 | `--k-focus` | `#20221D` | `#E7F258` | 3px focus outlines |
 | `--k-scrim` | ink at 48% | black at 62% | Sheet and dialog backdrops |
+| `--k-butter` / `--k-peach` / `--k-pink` / `--k-sky` / `--k-mint` | `#FFE58A` / `#FFD2B8` / `#F7C6D9` / `#BFE6FF` / `#C4EED8` | darker tints (`#4A4122`…) | Meal icons (breakfast, lunch, snack, dinner, other) and food tiles by kind of food |
+| `--k-on-tone` | `#20221D` | `#F8F1E4` | Icons on those tints |
+| `--k-sky-strong` | `#4FB0E8` | `#6CC3F2` | Fat meter and water glasses |
+| `--k-momo` | `#EFB6CC` | `#EFB6CC` | Momo's card |
+| `--k-action-deep` | `#F0663A` | — | Stripes in the calorie meter |
 
 Muted text on the ground is about 6.9:1 in light and 9.8:1 in dark. Ink on persimmon is about 6.5:1.
 
@@ -132,12 +137,12 @@ These React components render the same markup as before. `components.css` gives 
 
 [`pages/HomePage.tsx`](src/pages/HomePage.tsx). Everything needed for the day is on the first screen, top to bottom:
 
-1. **Date bar.** Weekday and date eyebrow, the day as a display title ("Today", "Yesterday"), and a calendar button. Below it, a seven-day week strip with a dot on logged days. It has no arrows; the calendar reaches other weeks.
-2. **Budget.** The one big number: kcal left (or "kcal over the guide"), an acid meter, and "eaten / guide" in mono.
-3. **Macros.** Protein, carbs and fat in one ruled row, each with current / goal grams and a thin meter.
-4. **Meals.** Grouped as Breakfast, Lunch, Dinner, Snack (plus Other when used). Each group shows its kcal. Rows show the food icon, name, time and P · C · F, and swipe to edit or delete. Each group ends with a dashed "Add breakfast" row that opens the log sheet for that meal.
-5. **Momo.** One line from the mascot, with "Roast me" only after consent.
-6. **Water and notes.** A small stepper (0–8 glasses) and "Add a kitchen note".
+1. **Date bar.** Weekday and date eyebrow, the day as a display title ("Today", "Yesterday"), and a calendar button. Below it, a seven-day week strip with an acid dot on logged days. It has no arrows; the calendar reaches other weeks.
+2. **Momo says hello.** A pink Momo card with a greeting by first name and time of day, and one warm line that fits the day ([`lib/todayGreeting.ts`](src/lib/todayGreeting.ts)). It never grades the numbers. A tap gets a playful line and a bop. "Roast me" appears only after consent.
+3. **Budget.** The one bright acid card: kcal left (or "kcal over the guide") counts up, a striped persimmon meter fills, and "eaten / guide" sits underneath in mono.
+4. **Macros.** Three small cards, each in its own colour: protein persimmon, carbs acid, fat sky blue.
+5. **Meals.** Grouped as Breakfast, Lunch, Dinner, Snack (plus Other when used), each with a coloured icon and its kcal. Rows show a food tile tinted by kind of food, the name, time and P · C · F, and swipe to edit or delete. A meal you just logged flashes acid. Each group ends with an "Add breakfast" row that opens the log sheet for that meal.
+6. **Water and notes.** Eight little glasses that fill, a stepper, and "Add a kitchen note".
 
 Today shows no poster masthead, stickers, streak chip or level chip. Streak, level, XP and freezes live in the **Journey** card on Insights. Tracking pause replaces the numbers with a notice. Guests see a claim-your-progress card and no log shortcuts.
 
@@ -158,9 +163,26 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 
 [`pages/ProgressPage.tsx`](src/pages/ProgressPage.tsx) opens with a `.k-card` "Journey": day streak, total XP, freezes, the level name, and a meter to the next level. The rest of Insights is still on legacy styles.
 
+### Log flows (`/log/text`, `/log/photo`, `/log/manual`, `/review`, `/edit/:id`)
+
+[`components/LogFlowUI.tsx`](src/components/LogFlowUI.tsx) and [`components/MealEntryFields.tsx`](src/components/MealEntryFields.tsx), styled in [`styles/screens/flows.css`](src/styles/screens/flows.css). Logging speaks the same language as Today:
+
+1. **Header.** Step chips ("1 Add meal", "2 Review & log") with the current step on acid, a display title, and a small pink Momo leaning in. Hide Momo removes him.
+2. **Describe.** One bordered card holds the words. Example chips come in butter, mint, sky and pink; a tap fills the field.
+3. **Photo.** A dashed drop zone that turns butter on hover, Camera and Gallery buttons, and the privacy note in plain text.
+4. **Thinking.** While AI reads the meal, an acid card shows Momo bopping and a Cancel button, which takes focus.
+5. **Review and Edit.** The food name sits beside a tile tinted by kind of food, and its glyph follows the name as you type. Calories are the acid row; protein, carbs and fat have the same colour caps as Today's macros. Meal choices carry their meal colour, and the chosen one turns solid ink. The total is an acid card with the Log button, sticky beside the editor from 1000px.
+6. **Manual.** The same header, macro colour caps and an acid "Ready to log" total.
+
+"AI estimates can be off" sits on butter. Errors use danger ink on soft danger.
+
+### Saved (`/discover`, `/log/saved`)
+
+[`pages/SavedMealsPage.tsx`](src/pages/SavedMealsPage.tsx). A "Your usuals" eyebrow and display title, search, meal filters as ink-when-chosen chips, then **Your saved meals** as square cards and **Recents** as rows in one card. Each meal has a tinted food tile, kcal in display type, a macro bar in Today's macro colours, a portion stepper and a persimmon Log button.
+
 ### Still on legacy
 
-Describe / Photo / Manual / Review / Edit flows, Saved, the rest of Insights, You, Coach, Support, About, and the poster surfaces (welcome, onboarding, sign-in). The daily screens have already lost their poster strips and art; the poster system stays only where the brand voice belongs.
+The rest of Insights, You, Coach, Support, About, and the poster surfaces (welcome, onboarding, sign-in). The daily screens have already lost their poster strips and art; the poster system stays only where the brand voice belongs.
 
 ---
 
@@ -196,6 +218,9 @@ Every change to a system screen is checked at **360, 390, 768 and 1440px**, in *
 |---------|------|-----------|
 | Today | `/` | Calories meter visible |
 | Log sheet | `/log` | "Log a meal" dialog visible |
+| Describe | `/log/text` | "Your meal, your words" field visible |
+| Manual | `/log/manual` | "Food name" field visible |
+| Saved | `/discover` | "Saved" heading visible |
 | Insights | `/progress` | Journey region visible |
 
 Run the matrix with Playwright. It creates a throwaway local account, captures each surface full-page, and fails on sideways scrolling or runtime errors:
@@ -214,8 +239,8 @@ Images land in `test-results/visual-matrix-*/` as `{surface}-{width}-{theme}.png
 |-------|-------|--------|
 | 0 | One system: tokens, component styles, cascade layers, this document, screenshot matrix | Done |
 | 1 | Daily loop: Today, log sheet, toast + Undo, rare celebrations, blank manual entry, snack default | Done |
-| 2 | Log flows (Describe, Photo, Manual, Review, Edit) on `k-*` primitives; delete their legacy rules | Next |
-| 3 | Saved, Insights, You | |
+| 2 | Log flows (Describe, Photo, Manual, Review, Edit) and Saved on the system; `meal-flow.css` deleted | Done |
+| 3 | Insights, You | Next |
 | 4 | Poster surfaces reviewed against the system tokens; remove unused legacy sheets and the `legacy` layer | |
 
 When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change.

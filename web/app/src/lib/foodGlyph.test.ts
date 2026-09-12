@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { foodGlyphFor } from './foodGlyph'
+import { foodGlyphFor, foodToneFor } from './foodGlyph'
+
+describe('food tile tones', () => {
+  it('groups foods into a few friendly colours', () => {
+    expect(foodToneFor('Large oat milk latte')).toBe('sky')
+    expect(foodToneFor('Avocado toast')).toBe('butter')
+    expect(foodToneFor('Chicken rice bowl')).toBe('peach')
+    expect(foodToneFor('Overnight oats')).toBe('mint')
+    expect(foodToneFor('Chocolate chip cookie')).toBe('pink')
+    expect(foodToneFor('Quick add')).toBe('plain')
+  })
+})
 
 describe('food glyphs', () => {
   it('recognises common meals, choosing the specific food over the broad one', () => {

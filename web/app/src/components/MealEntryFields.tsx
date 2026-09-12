@@ -3,6 +3,7 @@ import type { MealType } from '../types'
 import { MEAL_LABELS } from '../types'
 import { FoodIcon, IconBreakfast, IconCarbs, IconDinner, IconEdit, IconLunch, IconMeal, IconMinus, IconPlus, IconProtein, IconWater } from './icons'
 import { normalizeServings } from '../lib/mealReview'
+import { foodToneFor } from '../lib/foodGlyph'
 
 const NUTRITION_FIELDS = ['calories', 'protein', 'carbs', 'fat'] as const
 export type NutritionField = typeof NUTRITION_FIELDS[number]
@@ -17,7 +18,7 @@ const MEAL_ICONS = { breakfast: IconBreakfast, lunch: IconLunch, dinner: IconDin
 export function MealNameField({ name, emoji, onChange }: { name: string; emoji?: string; onChange: (value: string) => void }) {
   const id = useId()
   return <div className="flow-meal-name">
-    <span className="flow-food-sticker"><FoodIcon emoji={emoji} size={32} /></span>
+    <span className={`flow-food-sticker is-tone-${foodToneFor(name)}`}><FoodIcon emoji={emoji} name={name} size={30} /></span>
     <div><label htmlFor={id}>Food name <IconEdit size={16} /></label>
       <input id={id} value={name} onChange={event => onChange(event.target.value)} maxLength={500} required autoComplete="off" />
     </div>
@@ -53,7 +54,7 @@ export function MealTypePicker({ value, onChange }: { value: MealType; onChange:
     <div className="flow-meal-options">
       {(Object.keys(MEAL_LABELS) as MealType[]).map(meal => {
         const Icon = MEAL_ICONS[meal]
-        return <button type="button" key={meal} aria-pressed={meal === value} onClick={() => onChange(meal)}>
+        return <button type="button" key={meal} className={`is-${meal}`} aria-pressed={meal === value} onClick={() => onChange(meal)}>
           <Icon size={21} /><span>{MEAL_LABELS[meal]}</span>
         </button>
       })}

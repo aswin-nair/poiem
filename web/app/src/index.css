@@ -30,7 +30,6 @@
 @import './styles/library-insights-ui.css';
 @import './styles/you-ui.css';
 @import './styles/product-ui.css';
-@import './styles/meal-flow.css';
 @import './styles/components/buttons.css';
 @import './styles/components/forms.css';
 @import './styles/icon-motion.css';
@@ -47,4 +46,5 @@
 @import './styles/system/tokens.css';
 @import './styles/system/components.css';
 @import './styles/screens/kitchen.css';
+@import './styles/screens/flows.css';
 @import './styles/a11y.css';
