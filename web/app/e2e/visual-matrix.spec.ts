@@ -10,6 +10,9 @@ const WIDTHS = [360, 390, 768, 1440] as const
 const SURFACES: ReadonlyArray<{ name: string; path: string; ready: (page: Page) => ReturnType<Page['getByRole']> }> = [
   { name: 'today', path: '/', ready: page => page.getByRole('progressbar', { name: 'Calories' }) },
   { name: 'log-sheet', path: '/log', ready: page => page.getByRole('dialog', { name: 'Log a meal' }) },
+  { name: 'describe', path: '/log/text', ready: page => page.getByLabel('Your meal, your words') },
+  { name: 'manual', path: '/log/manual', ready: page => page.getByLabel('Food name') },
+  { name: 'saved', path: '/discover', ready: page => page.getByRole('heading', { name: 'Saved', exact: true }) },
   { name: 'insights', path: '/progress', ready: page => page.getByRole('region', { name: 'Journey' }) },
 ]
 

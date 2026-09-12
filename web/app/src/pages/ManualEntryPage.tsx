@@ -10,6 +10,7 @@ import { validateManualFood } from '../lib/foodEntryValidation'
 import { useAuth } from '../store/AuthContext'
 import { defaultMealType } from '../lib/meals'
 import { mascotEvent } from '../mascot/MascotOverlay'
+import { LogFlowHeader } from '../components/LogFlowUI'
 
 export function ManualEntryPage() {
   const { addEntry } = useApp()
@@ -88,13 +89,10 @@ export function ManualEntryPage() {
   }
 
   return (
-    <div className="app-shell manual-refresh poster-ui">
-      <main className="app-main motion-stagger">
+    <div className="app-shell k-screen k-flow">
+      <main className="app-main">
         <BackLink to="/log" />
-        <header className="manual-heading">
-          <h1 className="page-title">Manual entry</h1>
-          <p className="page-sub">Enter the nutrition for one serving. We’ll calculate your total.</p>
-        </header>
+        <LogFlowHeader title="Jot it down." description="Enter the nutrition for one serving. We’ll calculate your total." />
 
         {error && <div className="error-banner" role="alert">{error}</div>}
 
@@ -113,7 +111,7 @@ export function ManualEntryPage() {
         </div>
 
         <div className="field">
-          <label htmlFor="manual-calories">Calories <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>per serving</span></label>
+          <label htmlFor="manual-calories">Calories <span>per serving</span></label>
           <input id="manual-calories" type="number" inputMode="decimal" min="0" max="100000" step="any" required placeholder="0" value={calories} onChange={e => { setCalories(e.target.value); setError(null) }} />
         </div>
 

@@ -11,6 +11,7 @@ const LAYERED = {
   'styles/system/tokens.css': 'system',
   'styles/system/components.css': 'system',
   'styles/screens/kitchen.css': 'screens',
+  'styles/screens/flows.css': 'screens',
 } as const
 
 /** Innermost blocks are declarations; removing them leaves selectors and at-rules. */
@@ -22,7 +23,8 @@ describe('Poiem design system', () => {
   it('declares the cascade order once, before anything else, and loads accessibility overrides last', () => {
     expect(withoutComments(read('index.css')).trim().split(/\r?\n/)[0]).toBe('@layer legacy, system, screens;')
     expect(imports.at(-1)).toBe('./styles/a11y.css')
-    expect(imports.slice(-4, -1)).toEqual(Object.keys(LAYERED).map(path => `./${path}`))
+    const layered = Object.keys(LAYERED)
+    expect(imports.slice(-layered.length - 1, -1)).toEqual(layered.map(path => `./${path}`))
   })
 
   it('keeps every older stylesheet in the legacy layer, so the system wins without specificity tricks', () => {

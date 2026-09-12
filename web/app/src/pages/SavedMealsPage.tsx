@@ -1,16 +1,16 @@
 import { useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
-import { PoiemSectionLabel } from '../components/PoiemSectionLabel'
 import { BackLink } from '../components/BackLink'
 import { FoodIcon, IconMinus, IconPlus, IconSearch, IconStar } from '../components/icons'
 import { useApp, isFavorite } from '../store/AppContext'
 import { recentMeals, mealKey } from '../lib/meals'
 import { filterMealLibrary } from '../lib/mealLibrary'
+import { foodToneFor } from '../lib/foodGlyph'
 import { MEAL_LABELS } from '../types'
 import type { SavedMeal } from '../types'
 import type { FoodEntry } from '../types'
-import { Bookmark, History } from 'lucide-react'
+import { History } from 'lucide-react'
 import * as m from 'motion/react-m'
 import { motionSpring } from '../lib/motionPresets'
 
@@ -48,7 +48,7 @@ function DiscoverCard({
   return (
     <article className="discover-card" aria-label={name}>
       <div className="discover-card-top">
-        <span className="discover-card-emoji"><FoodIcon emoji={emoji} size={28} /></span>
+        <span className={`discover-card-emoji is-tone-${foodToneFor(name)}`}><FoodIcon emoji={emoji} name={name} size={26} /></span>
         <m.button
           type="button"
           className={`star-btn${starred ? ' active' : ''}`}
@@ -100,7 +100,7 @@ function MealRow({
 
   return (
     <article className="saved-meal-row" aria-label={name}>
-      <span className="saved-meal-emoji"><FoodIcon emoji={emoji} /></span>
+      <span className={`saved-meal-emoji is-tone-${foodToneFor(name)}`}><FoodIcon emoji={emoji} name={name} size={24} /></span>
       <div className="saved-meal-info">
         <h3 className="saved-meal-name">{name}</h3>
         <div className="saved-meal-meta">
@@ -188,14 +188,13 @@ export function SavedMealsPage() {
   }
 
   return (
-    <div className="app-shell saved-refresh food-club-app poster-ui">
-      <main className="app-main motion-stagger">
+    <div className="app-shell k-screen k-saved">
+      <main className="app-main">
         {isSubRoute && <BackLink to="/log" />}
-        <header className="page-heading" style={isSubRoute ? { marginTop: 12 } : undefined}>
-          <PoiemSectionLabel>Your usuals</PoiemSectionLabel>
-          <h1 className="page-title discover-title">Saved</h1>
+        <header className="page-heading">
+          <p className="k-eyebrow">Your usuals</p>
+          <h1 className="page-title">Saved</h1>
           <p className="page-sub">Your familiar meals, ready for another day. Adjust the portion, then log.</p>
-          <span className="club-library-stamp"><Bookmark size={16} aria-hidden="true" /> GOOD ENOUGH TO REPEAT</span>
         </header>
 
         <label className="saved-search-label" htmlFor="saved-meal-search">Find a saved or recent meal</label>
@@ -256,7 +255,7 @@ export function SavedMealsPage() {
           </div>
         )}
 
-        <div className="saved-section" style={{ marginTop: 24 }}>
+        <div className="saved-section">
           <div className="saved-section-header">
             <span className="saved-section-icon"><History size={20} aria-hidden="true" /></span>
             <h2 className="saved-section-title">Recents</h2>
