@@ -1,0 +1,88 @@
+/* Momo on the Poiem system. His drawing is flat with its own ink line, so the
+   older soft drop shadow goes. Colours inside the drawing come from
+   @fud-ai/product/momoArt and stay the same in light and dark; the dressing
+   room around him uses the system tokens. */
+@layer system {
+  .momo-art { filter: none; }
+
+  .k-wardrobe { display: grid; gap: var(--k-space-4); }
+  .k-wardrobe-stage {
+    display: grid;
+    justify-items: center;
+    gap: var(--k-space-3);
+    padding: var(--k-space-5) var(--k-space-4);
+    border: 2px solid var(--k-on-acid);
+    background: var(--k-momo);
+    color: var(--k-on-acid);
+    box-shadow: var(--k-shadow);
+  }
+  .k-wardrobe-momo { width: 168px; height: 168px; }
+  .k-wardrobe-worn { margin: 0; font: 700 var(--k-text-sm)/1.4 var(--k-font-body); text-align: center; text-wrap: balance; }
+  .k-wardrobe-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--k-space-2) var(--k-space-4); }
+  .k-wardrobe-actions .k-text-button { color: var(--k-on-acid); }
+  .k-wardrobe-actions .k-text-button:disabled { opacity: .5; cursor: default; }
+
+  .k-wardrobe-slots { display: flex; flex-wrap: wrap; gap: var(--k-space-2); }
+  .k-wardrobe-pieces {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 136px), 1fr));
+    gap: var(--k-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .k-wardrobe-piece {
+    display: grid;
+    justify-items: start;
+    align-content: start;
+    gap: 2px;
+    width: 100%;
+    height: 100%;
+    min-height: 44px;
+    margin: 0;
+    padding: var(--k-space-2) var(--k-space-3) var(--k-space-3);
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: none;
+    font: inherit;
+    text-align: left;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+  }
+  .k-wardrobe-piece[aria-pressed="true"] { background: var(--k-acid); color: var(--k-on-acid); border-color: var(--k-on-acid); box-shadow: var(--k-shadow-sm); }
+  .k-wardrobe-piece[aria-disabled="true"] { border-style: dashed; background: transparent; cursor: default; }
+  .k-wardrobe-piece[aria-disabled="true"] .k-wardrobe-thumb { opacity: .45; filter: grayscale(1); }
+  .k-wardrobe-piece:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-wardrobe-thumb { display: block; width: 56px; height: 56px; }
+  .k-wardrobe-name { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font: 800 var(--k-text-sm)/1.2 var(--k-font-body); }
+  .k-wardrobe-new {
+    padding: 1px 5px;
+    border: 1.5px solid var(--k-on-acid);
+    background: var(--k-acid);
+    color: var(--k-on-acid);
+    font: 600 var(--k-text-xs)/1.2 var(--k-font-mono);
+    font-style: normal;
+    text-transform: uppercase;
+  }
+  .k-wardrobe-rule { font: 500 var(--k-text-xs)/1.35 var(--k-font-mono); color: var(--k-muted); }
+  .k-wardrobe-piece[aria-pressed="true"] .k-wardrobe-rule { color: var(--k-on-acid); }
+
+  /* The try-on reveal in the "Logged." moment. */
+  .celebrate-piece {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    margin: var(--k-space-2) 0 0;
+    padding: var(--k-space-2) var(--k-space-4);
+    border: 2px solid var(--k-on-acid);
+    background: var(--k-acid);
+    color: var(--k-on-acid);
+    box-shadow: var(--k-shadow-sm);
+    font: 800 var(--k-text-md)/1.25 var(--k-font-body);
+    text-align: center;
+  }
+  .celebrate-piece .k-eyebrow { color: var(--k-on-acid); }
+}

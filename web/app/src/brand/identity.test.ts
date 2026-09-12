@@ -29,9 +29,11 @@ describe('Poiem release identity', () => {
     expect(wordmark).not.toContain('<text')
     expect(existsSync(new URL('brand/momo.svg', publicDir))).toBe(true)
     const momo = readFileSync(new URL('brand/momo.svg', publicDir), 'utf8')
-    expect(momo).toContain('.momo-outline {')
-    expect(momo).toContain('.momo-arm {')
-    expect(momo).toContain('fill: none;')
+    // The brand Momo is exported from @fud-ai/product/momoArt: flat shapes, no bitmap.
+    expect(momo).toContain('viewBox="-4 -2 128 128"')
+    expect(momo).toContain('class="momo-body"')
+    expect(momo).toContain('class="momo-steam"')
+    expect(momo).not.toContain('<image')
   })
 
   it('serves branding files before the deployment SPA catch-all', () => {

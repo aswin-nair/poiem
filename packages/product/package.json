@@ -9,7 +9,9 @@
     "./enamelAwards": "./src/enamelAwards.ts",
     "./guestClaim": "./src/guestClaim.ts",
     "./localDate": "./src/localDate.ts",
-    "./mascotVoice": "./src/mascotVoice.ts"
+    "./mascotVoice": "./src/mascotVoice.ts",
+    "./momoArt": "./src/momoArt.ts",
+    "./wardrobe": "./src/wardrobe.ts"
   },
   "types": "./src/index.ts",
   "scripts": {

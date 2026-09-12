@@ -10,6 +10,7 @@ const withoutComments = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, '')
 const LAYERED = {
   'styles/system/tokens.css': 'system',
   'styles/system/components.css': 'system',
+  'styles/system/momo.css': 'system',
   'styles/screens/kitchen.css': 'screens',
   'styles/screens/flows.css': 'screens',
 } as const

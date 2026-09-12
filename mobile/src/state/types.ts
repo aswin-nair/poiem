@@ -95,6 +95,7 @@ export interface GamificationState {
   notesByDate: Record<string, number>
   ownedCosmeticIds: string[]
   equippedCosmeticId: string | null
+  outfit: Partial<Record<'head' | 'face' | 'neck' | 'body' | 'hand', string>>
   repairsUsedMonth: string
   mascotActivity: MascotActivity
   brokenOn: string | null

@@ -3,11 +3,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { chromium } from '@playwright/test'
-import { createRequire } from 'node:module'
-import { createElement } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
-import ts from 'typescript'
-import * as expressions from '../src/mascot/expressions.ts'
+import { momoSvg } from './build-momo-asset.mjs'
 
 const app = new URL('../', import.meta.url)
 const identity = JSON.parse(await readFile(new URL('src/brand/identity.json', app), 'utf8'))
@@ -29,24 +25,8 @@ const exports = {
 for (const [name, source] of Object.entries(exports)) await writeFile(new URL(name, out), source + '\n')
 await writeFile(new URL('public/favicon.svg', app), icon + '\n')
 
-// Export the existing Momo component, not a replacement illustration.
-const require = createRequire(import.meta.url)
-const compiled = ts.transpileModule(await readFile(new URL('src/components/Momo.tsx', app), 'utf8'), {
-  compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-}).outputText
-const momoModule = {}
-new Function('require', 'exports', compiled)(id => id === '../mascot/expressions' ? expressions : require(id), momoModule)
-const enamel = await readFile(new URL('src/styles/enamel.css', app), 'utf8')
-const product = await readFile(new URL('src/styles/product-ui.css', app), 'utf8')
-const momoStart = enamel.indexOf('.momo-ground-shadow {')
-const momoEnd = enamel.indexOf('.momo-art.pose-wave_at_user', momoStart)
-if (momoStart < 0 || momoEnd <= momoStart) throw new Error('Momo base styles moved; update the export range before shipping.')
-const momoStyles = enamel.slice(momoStart, momoEnd)
-  + [...product.matchAll(/\.expression-momo[^{}]+\{[^}]+\}/g)].map(match => match[0]).join('\n')
-const momo = renderToStaticMarkup(createElement(momoModule.Momo, { mood: 'excited', expression: 'celebrating', pose: 'still' }))
-  .replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ')
-  .replace(/(<svg[^>]+>)/, `$1<style>svg{--coral:${colors.persimmon};--cobalt:${colors.iris}}*{animation:none!important;transition:none!important}${momoStyles}</style>`)
-await writeFile(new URL('momo.svg', out), momo + '\n')
+// Momo comes from the same shape data the app and the phone render.
+await writeFile(new URL('momo.svg', out), momoSvg() + '\n')
 
 const browser = await chromium.launch({ headless: true })
 try {

@@ -39,6 +39,7 @@ export function defaultGamification(now = new Date()): GamificationState {
     notesByDate: {},
     ownedCosmeticIds: [],
     equippedCosmeticId: null,
+    outfit: {},
     repairsUsedMonth: '',
     mascotActivity: 'lively',
     brokenOn: null,

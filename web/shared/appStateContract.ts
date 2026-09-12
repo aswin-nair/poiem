@@ -96,6 +96,7 @@ const GAMIFICATION_FIELDS = new Set([
   'notesByDate',
   'ownedCosmeticIds',
   'equippedCosmeticId',
+  'outfit',
   'repairsUsedMonth',
   'mascotActivity',
   'enamelQuests',
@@ -323,6 +324,13 @@ function stringArray(value: unknown, max = MAX_COLLECTION): value is string[] {
     && value.every(item => text(item, 500, false))
 }
 
+/** Momo's outfit: at most one wardrobe piece id per slot. */
+function validOutfit(value: unknown): boolean {
+  return row(value)
+    && Object.keys(value).length <= 8
+    && Object.entries(value).every(([slot, id]) => text(slot, 20, false) && text(id, 80, false))
+}
+
 function validGamification(value: unknown, allowLegacyGamification: boolean): string | null {
   if (!row(value)) return 'gamification must be an object'
   if (!hasOnlyFields(value, GAMIFICATION_FIELDS)) return 'gamification contains unknown fields'
@@ -369,6 +377,7 @@ function validGamification(value: unknown, allowLegacyGamification: boolean): st
   if (value.equippedCosmeticId !== undefined && value.equippedCosmeticId !== null && !text(value.equippedCosmeticId, 80, false)) {
     return 'gamification.equippedCosmeticId is invalid'
   }
+  if (value.outfit !== undefined && !validOutfit(value.outfit)) return 'gamification.outfit is invalid'
   if (value.repairsUsedMonth !== undefined && !text(value.repairsUsedMonth, 20)) return 'gamification.repairsUsedMonth is invalid'
   if (value.mascotActivity !== undefined && !oneOf(value.mascotActivity, ['lively', 'calm', 'off'])) {
     return 'gamification.mascotActivity is invalid'

@@ -189,4 +189,13 @@ describe('shared AppState runtime contract', () => {
     })
     expect(validateAppState(state, NOW, { allowLegacyGamification: true })).toEqual({ ok: true })
   })
+
+  it("accepts Momo's per-slot outfit and rejects a malformed one", () => {
+    const state = validState()
+    const gamification = state.gamification as unknown as Record<string, unknown>
+    gamification.outfit = { head: 'beanie', neck: 'scarf' }
+    expect(validateAppState(state, NOW)).toEqual({ ok: true })
+    gamification.outfit = { head: 42 }
+    expect(validateAppState(state, NOW)).toEqual({ ok: false, error: 'gamification.outfit is invalid' })
+  })
 })
