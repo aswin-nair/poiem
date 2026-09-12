@@ -1,0 +1,14 @@
+[extend]
+useDefault = true
+
+# Storage key names, not credentials. The default generic-api-key rule fires on
+# any quoted value assigned to an identifier ending in KEY or Key. These three
+# are the names of a localStorage bucket and two UserDefaults flags, so the
+# allowlist matches the literal values instead of muting the whole file.
+[allowlist]
+description = "Local storage and UserDefaults key names"
+regexes = [
+  '''fud-crashes-v1''',
+  '''energyBurnEnabledV2''',
+  '''adaptiveGoalsEnabled''',
+]
