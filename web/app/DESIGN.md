@@ -109,7 +109,7 @@ These React components render the same markup as before. `components.css` gives 
 | `BottomNav` | Card-coloured bar with a 2px line; active tab is solid ink; + is a 50px persimmon square |
 | `SwipeRow` | Ink Edit action, danger-ink Delete action |
 | `PortionSheet`, `DatePickerModal` | Square cards on the scrim, display-type titles, acid default choice |
-| `LogCelebration` | The full-screen "Logged." moment on the ground colour, awards on acid |
+| `LogCelebration` | The full-screen "Logged." moment on the ground colour, awards on acid; a new wardrobe piece arrives worn, named on acid |
 
 ### Primitives (`k-*`)
 
@@ -128,6 +128,29 @@ These React components render the same markup as before. `components.css` gives 
 | `Sheet` | [`components/Sheet.tsx`](src/components/Sheet.tsx): modal dialog with focus trap and Escape. A bottom sheet on phones, centred and square from 720px |
 
 `FoodIcon` picks a Lucide glyph from the meal's emoji, then from its name ([`lib/foodGlyph.ts`](src/lib/foodGlyph.ts): "Chicken rice bowl" → drumstick, "Oat milk latte" → coffee), falling back to utensils. Stored meal data is never changed.
+
+---
+
+## Momo
+
+Momo is a plump cream dumpling with a twisted top knot: cute outside, a dry little tally clerk inside ([`packages/product/src/mascotLines.ts`](../../packages/product/src/mascotLines.ts) keeps the voice). He is "he" everywhere.
+
+- **One drawing.** [`packages/product/src/momoArt.ts`](../../packages/product/src/momoArt.ts) holds him as plain shape data. [`components/Momo.tsx`](src/components/Momo.tsx) renders it on the web, `mobile/src/components/momo/MomoArtwork.tsx` renders it with `react-native-svg`, and `scripts/build-momo-asset.mjs` exports `public/brand/momo.svg`. Change him there, never in a copy.
+- **Look.** Flat fills with a 2.5px ink line and one flat shade, big low eyes and pink cheeks. His colours are his own and do not change in dark mode.
+- **Steam is his mood.** One line above his head: a curl when calm, a heart when pleased, a question hook while thinking, a pop when startled, a sparkle for a wink, Z's when sleepy. Moods come only from interaction, never from food, bodies or numbers.
+- **Animation.** Arms, pupils, face, body and shadow keep their `momo-*` class names, so every pose in `mascot/behaviors.ts` still animates. Inline paint on each shape beats the older stylesheet rules.
+
+### Wardrobe
+
+[`packages/product/src/wardrobe.ts`](../../packages/product/src/wardrobe.ts) defines 19 pieces in five slots (head, face, neck, body, hand). Momo wears one piece per slot, saved as `gamification.outfit` and shown everywhere he appears.
+
+| Rule | Detail |
+|------|--------|
+| **Logged days, not streaks** | Most pieces unlock at 3–120 total logged days, so a break never locks one |
+| **Firsts** | First photo log, kitchen note, full water day, day with breakfast, lunch and dinner, saved meal |
+| **Nothing sold, nothing taken back** | `ownedCosmeticIds` keeps every piece revealed or worn. The old single `equippedCosmeticId` seeds `outfit` once |
+| **Try-on reveal** | A log that finds a newly unlocked piece gets the "Logged." moment with Momo wearing it, then the piece is claimed so it shows once |
+| **Dressing room** | [`components/MomoWardrobe.tsx`](src/components/MomoWardrobe.tsx) under You → Momo's wardrobe: preview, slot chips, every piece with its unlock rule, Surprise me, Take it all off |
 
 ---
 
@@ -190,7 +213,7 @@ The rest of Insights, You, Coach, Support, About, and the poster surfaces (welco
 
 | Rule | Where |
 |------|-------|
-| **Celebrate rarely.** The full-screen "Logged." moment is for the day's first meal and streak milestones. Every other log confirms with a toast, "Logged {meal}", with Undo | [`lib/logFeedback.ts`](src/lib/logFeedback.ts) |
+| **Celebrate rarely.** The full-screen "Logged." moment is for the day's first meal, streak milestones, and a log that brings Momo a new wardrobe piece. Every other log confirms with a toast, "Logged {meal}", with Undo | [`lib/logFeedback.ts`](src/lib/logFeedback.ts) |
 | **Default meal by time.** Before 11:00 breakfast, before 15:00 lunch, 15:00–17:00 snack, before 21:00 dinner, then snack | `packages/domain/src/meals.ts`, fixture `packages/domain/fixtures/meals.v1.json` |
 | **Manual entry starts blank.** Drafts are restored; recent meals are never pre-filled | [`pages/ManualEntryPage.tsx`](src/pages/ManualEntryPage.tsx) |
 | **Over is information.** Past a goal the meter turns persimmon and the copy says "over the guide"; nothing turns red | `Meter`, Today budget |

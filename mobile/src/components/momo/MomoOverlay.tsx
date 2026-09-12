@@ -11,6 +11,7 @@ import {
   type PokePose,
   type TauntPose,
 } from '@fud-ai/product';
+import { normalizeOutfit } from '@fud-ai/product/wardrobe';
 import { usePathname } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -59,6 +60,7 @@ export function MomoOverlay() {
   } = useSafeAreaInsets();
   const window = useWindowDimensions();
   const activity = state.gamification.mascotActivity;
+  const outfit = normalizeOutfit(state.gamification.outfit, state.gamification.equippedCosmeticId);
   const muted = state.profile.mascotMuted === true;
   const [appActive, setAppActive] = useState(NativeAppState.currentState === 'active');
   const hidden = activity === 'off' || path !== '/' || !appActive;
@@ -326,7 +328,7 @@ export function MomoOverlay() {
               ],
             }}
           >
-            <Momo mood={mood} size={MOMO_SIZE} />
+            <Momo mood={mood} outfit={outfit} size={MOMO_SIZE} />
           </Animated.View>
         </Pressable>
       </Animated.View>

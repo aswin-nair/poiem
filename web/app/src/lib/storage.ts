@@ -1,5 +1,6 @@
 import type { AppState, FoodEntry, GamificationState } from '../types'
 import { entryDayKey } from '@fud-ai/product/localDate'
+import { normalizeOutfit } from '@fud-ai/product/wardrobe'
 import { localDayKey } from './dates'
 import { defaultProfile, profileInputIssue } from './profile'
 import { defaultAISettings, normalizeAISettings } from './aiConfig'
@@ -269,6 +270,7 @@ function normalizeGamification(value: unknown): GamificationState {
     equippedCosmeticId: typeof g.equippedCosmeticId === 'string' || g.equippedCosmeticId === null
       ? g.equippedCosmeticId
       : null,
+    outfit: normalizeOutfit(g.outfit, g.equippedCosmeticId),
     repairsUsedMonth: typeof g.repairsUsedMonth === 'string' ? g.repairsUsedMonth : '',
     mascotActivity: g.mascotActivity === 'calm' || g.mascotActivity === 'off' || g.mascotActivity === 'lively'
       ? g.mascotActivity
@@ -301,6 +303,7 @@ export function defaultGamification(): GamificationState {
     notesByDate: {},
     ownedCosmeticIds: [],
     equippedCosmeticId: null,
+    outfit: {},
     repairsUsedMonth: '',
     mascotActivity: 'lively',
     brokenOn: null,

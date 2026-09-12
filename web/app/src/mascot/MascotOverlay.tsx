@@ -865,7 +865,7 @@ export function MascotOverlay() {
           <Momo
             mood={mood}
             pose={pose}
-            cosmeticId={state.gamification.equippedCosmeticId}
+            outfit={state.gamification.outfit}
             thinking={thinking}
           />
         </div>

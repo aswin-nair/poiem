@@ -1,7 +1,17 @@
-import { COSMETICS, equipCosmetic } from '@fud-ai/product'
+import {
+  SLOT_LABELS,
+  WARDROBE,
+  WARDROBE_SLOTS,
+  availablePieceIds,
+  normalizeOutfit,
+  unlockLabel,
+  wardrobeProgress,
+  wearPiece,
+} from '@fud-ai/product/wardrobe';
 import { router } from 'expo-router';
 import { ScrollView, View } from 'react-native';
 
+import { MomoArtwork } from '@/components/momo/MomoArtwork';
 import { Card } from '@/components/primitives/Card';
 import { PressableButton } from '@/components/primitives/PressableButton';
 import { Screen, ScreenHeader } from '@/components/primitives/Screen';
@@ -16,6 +26,9 @@ export default function You() {
   const { state, setMascotActivity, setFeel, setPaused, setProfile, replaceState } = useApp();
   const streak = loggingStreak(state.foodEntries, state.gamification);
   const mascotVisible = state.gamification.mascotActivity !== 'off';
+  const outfit = normalizeOutfit(state.gamification.outfit, state.gamification.equippedCosmeticId);
+  const progress = wardrobeProgress(state);
+  const available = availablePieceIds(state.gamification.ownedCosmeticIds, progress);
 
   return (
     <Screen>
@@ -63,17 +76,31 @@ export default function You() {
           />
         </Card>
         <Card>
-          <Text variant="subtitle">Wardrobe</Text>
-          {COSMETICS.map(item => (
-            <SettingRow
-              key={item.id}
-              kind="navigate"
-              label={item.name}
-              onPress={() => {
-                const next = equipCosmetic(state.gamification, item.id, streak)
-                if (next) replaceState({ ...state, gamification: next })
-              }}
-            />
+          <Text variant="subtitle">Momo's wardrobe</Text>
+          <Text color="textSecondary">Pieces unlock as you log on more days, and when you try something new.</Text>
+          <View style={{ alignItems: 'center', marginVertical: 8 }}>
+            <MomoArtwork face="happy" outfit={outfit} size={140} />
+          </View>
+          {WARDROBE_SLOTS.map(slot => (
+            <View key={slot} style={{ gap: 4, marginTop: 8 }}>
+              <Text color="textSecondary">{SLOT_LABELS[slot]}</Text>
+              {WARDROBE.filter(piece => piece.slot === slot).map(piece => {
+                const unlocked = available.has(piece.id);
+                const wearing = outfit[slot] === piece.id;
+                return (
+                  <SettingRow
+                    detail={wearing ? 'Wearing' : unlocked ? 'Ready to wear' : unlockLabel(piece.unlock)}
+                    key={piece.id}
+                    kind="navigate"
+                    label={piece.name}
+                    onPress={() => {
+                      const next = wearPiece({ ...state.gamification, outfit }, piece.id, progress);
+                      if (next) replaceState({ ...state, gamification: next });
+                    }}
+                  />
+                );
+              })}
+            </View>
           ))}
         </Card>
         <SettingRow

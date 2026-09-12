@@ -19,17 +19,6 @@ export const FREE_FREEZE_STREAK = 7
 
 export type LogMethod = 'manual' | 'photo' | 'repeat' | 'other'
 
-export const COSMETICS = [
-  { id: 'bow', name: 'Bow', unlockStreak: 0 },
-  { id: 'scarf', name: 'Scarf', unlockStreak: 3 },
-  { id: 'chef-hat', name: 'Chef hat', unlockStreak: 7 },
-  { id: 'apron', name: 'Apron', unlockStreak: 14 },
-  { id: 'specs', name: 'Specs', unlockStreak: 30 },
-  { id: 'medal', name: 'Logging medal', unlockStreak: 60 },
-] as const
-
-export type CosmeticId = (typeof COSMETICS)[number]['id']
-
 export interface AwardEvent {
   id: string
   key: string
@@ -182,22 +171,5 @@ export function grantFreeFreezeAtStreak<T extends AwardLedger>(gamification: T, 
     ...gamification,
     streakFreezes: Math.min(ENAMEL_CAPS.FREEZES, gamification.streakFreezes + 1),
     awardedKeys: [...gamification.awardedKeys, 'enamel-free-freeze-7'],
-  }
-}
-
-export function equipCosmetic<T extends AwardLedger>(
-  gamification: T,
-  id: string,
-  streak: number,
-): T | null {
-  const item = COSMETICS.find(cosmetic => cosmetic.id === id)
-  const owned = gamification.ownedCosmeticIds.includes(id)
-  if (!item || (!owned && streak < item.unlockStreak)) return null
-  return {
-    ...gamification,
-    ownedCosmeticIds: owned
-      ? gamification.ownedCosmeticIds
-      : [...gamification.ownedCosmeticIds, id],
-    equippedCosmeticId: gamification.equippedCosmeticId === id ? null : id,
   }
 }

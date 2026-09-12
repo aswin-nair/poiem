@@ -151,6 +151,9 @@ export interface EnamelQuestState {
   weekly: EnamelQuestProgress
 }
 
+/** Momo's outfit: one wardrobe piece id per slot (see @fud-ai/product/wardrobe). */
+export type MomoOutfit = Partial<Record<'head' | 'face' | 'neck' | 'body' | 'hand', string>>
+
 export interface GamificationState {
   xp: number
   level: number
@@ -175,8 +178,9 @@ export interface GamificationState {
   gemEvents: GemEvent[]
   waterByDate: Record<string, number>
   notesByDate: Record<string, number>
-  ownedCosmeticIds: string[]
-  equippedCosmeticId: string | null
+  ownedCosmeticIds: string[]   // wardrobe pieces already revealed or worn; never taken back
+  equippedCosmeticId: string | null // legacy single worn piece, read once to seed `outfit`
+  outfit: MomoOutfit
   repairsUsedMonth: string
   mascotActivity: MascotActivity
   enamelQuests?: EnamelQuestState

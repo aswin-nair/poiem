@@ -1,35 +1,32 @@
 /**
  * Logging rewards attach to actions and consistency, never food outcomes.
  * Legacy currency and quest fields stay in stored state only for migration.
+ * Momo's wardrobe lives in `@fud-ai/product/wardrobe`.
  */
 
 import {
-  COSMETICS,
   ENAMEL_CAPS,
   ENAMEL_XP,
   FREE_FREEZE_STREAK,
   applyEnamelLogAwards as applySharedLogAwards,
   applyNote as applySharedNote,
   applyWaterChange as applySharedWater,
-  equipCosmetic as equipSharedCosmetic,
   grantFreeFreezeAtStreak as grantSharedFreeze,
   methodOf,
   ticketNumber,
-  type CosmeticId,
   type LogMethod,
 } from '@fud-ai/product/enamelAwards'
 import type { FoodEntry, GamificationState } from '../types'
 import { levelFromXp } from './xp'
 
 export {
-  COSMETICS,
   ENAMEL_CAPS,
   ENAMEL_XP,
   FREE_FREEZE_STREAK,
   methodOf,
   ticketNumber,
 }
-export type { CosmeticId, LogMethod }
+export type { LogMethod }
 
 function clock() {
   return {
@@ -77,12 +74,4 @@ export function markBrokenIfNeeded(
   }
   if (nextStreak > 0) return { ...gamification, brokenOn: null, brokenFrom: 0 }
   return gamification
-}
-
-export function equipCosmetic(
-  gamification: GamificationState,
-  id: string,
-  streak: number,
-): GamificationState | null {
-  return equipSharedCosmetic(gamification, id, streak)
 }

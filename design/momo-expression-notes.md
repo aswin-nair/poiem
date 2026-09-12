@@ -1,5 +1,12 @@
 # Momo expressions — implementation and asset decision
 
+> **Superseded (2026-09-13).** Momo was redrawn as flat shape data in
+> `packages/product/src/momoArt.ts`, shared by web, phone and the brand export,
+> with steam that shows his mood and a slot wardrobe in
+> `packages/product/src/wardrobe.ts`. The MascotVibe preview bitmap is no longer
+> shipped in either app. See "Momo" in `web/app/DESIGN.md`. The notes below are
+> kept as history.
+
 The selected implementation reuses the existing editable Momo illustration in
 `web/app/src/components/Momo.tsx`. The flat MascotVibe bitmap is no longer rendered;
 its original file is preserved. Eye, eyebrow, mouth and arm states now follow the

@@ -9,7 +9,7 @@ export function MomoSticker({ mood = 'cozy', pose = 'still', expression }: { moo
   if (state.gamification.mascotActivity === 'off') return null
   return (
     <span className="momo-sticker" aria-hidden="true">
-      <Momo mood={mood} pose={pose} expression={expression} cosmeticId={state.gamification.equippedCosmeticId} />
+      <Momo mood={mood} pose={pose} expression={expression} outfit={state.gamification.outfit} />
     </span>
   )
 }

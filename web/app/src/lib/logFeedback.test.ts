@@ -22,4 +22,9 @@ describe('log feedback', () => {
     const entries = [meal('breakfast', at(8)), meal('new', at(12))]
     expect(shouldCelebrateLog({ entries, entryId: 'new', awards: [award('meal-new'), award('streak-7')], now })).toBe(true)
   })
+
+  it('celebrates a log that brings Momo a new wardrobe piece', () => {
+    const entries = [meal('breakfast', at(8)), meal('new', at(12))]
+    expect(shouldCelebrateLog({ entries, entryId: 'new', awards: [award('meal-new')], newPieces: 1, now })).toBe(true)
+  })
 })

@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { useFeel } from '../hooks/useHaptic'
 import { MOMO_POKES, type TodayGreeting } from '../lib/todayGreeting'
+import type { MomoOutfit } from '../types'
 import { Momo } from './Momo'
 import { IconFlame } from './icons'
 
 /**
- * Momo says hello at the top of Today. A tap gets a playful line and a little
- * bop; nothing moves or talks on its own.
+ * Momo says hello at the top of Today, dressed in his current outfit. A tap
+ * gets a playful line and a little bop; nothing moves or talks on its own.
  */
-export function TodayMomo({ greeting, cosmeticId, roasts, onRoast }: {
+export function TodayMomo({ greeting, outfit, roasts, onRoast }: {
   greeting: TodayGreeting
-  cosmeticId?: string | null
+  outfit?: MomoOutfit
   roasts: boolean
   onRoast: () => void
 }) {
@@ -27,7 +28,7 @@ export function TodayMomo({ greeting, cosmeticId, roasts, onRoast }: {
         onClick={() => { feel('tap'); setPokes(count => count + 1) }}
       >
         <span className="k-momo-cutout" key={pokes}>
-          <Momo expression={current.expression} pose={pokes ? current.pose : 'still'} cosmeticId={cosmeticId} />
+          <Momo expression={current.expression} pose={pokes ? current.pose : 'still'} outfit={outfit} />
         </span>
       </button>
       <div className="k-momo-note">

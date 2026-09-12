@@ -8,7 +8,6 @@ import {
   applyEnamelLogAwards,
   applyNote,
   applyWaterChange,
-  equipCosmetic,
   grantFreeFreezeAtStreak,
 } from './enamelEconomy'
 
@@ -56,15 +55,5 @@ describe('streak rewards without currency', () => {
     const next = grantFreeFreezeAtStreak(g({ streakFreezes: 0 }), 7)
     expect(next.streakFreezes).toBe(1)
     expect(grantFreeFreezeAtStreak(next, 8)).toEqual(next)
-  })
-
-  it('unlocks and equips cosmetics directly from streak milestones', () => {
-    const initial = g({ gems: 99 })
-    expect(equipCosmetic(initial, 'chef-hat', 6)).toBeNull()
-    const equipped = equipCosmetic(initial, 'chef-hat', 7)
-    expect(equipped?.equippedCosmeticId).toBe('chef-hat')
-    expect(equipped?.ownedCosmeticIds).toContain('chef-hat')
-    expect(equipped?.gems).toBe(99)
-    expect(equipCosmetic(equipped!, 'chef-hat', 0)?.equippedCosmeticId).toBeNull()
   })
 })

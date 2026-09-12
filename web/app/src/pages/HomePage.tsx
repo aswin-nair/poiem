@@ -27,6 +27,7 @@ import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../li
 import { shouldCelebrateLog } from '../lib/logFeedback'
 import { foodToneFor } from '../lib/foodGlyph'
 import { todayGreeting } from '../lib/todayGreeting'
+import { claimPieces, newPieces, wardrobeProgress, type WardrobePiece } from '@fud-ai/product/wardrobe'
 import type { FoodEntry, MealType, XpEvent } from '../types'
 import { useAnchor } from '../mascot/anchors'
 import { mascotEvent } from '../mascot/MascotOverlay'
@@ -37,6 +38,7 @@ interface CelebrationState {
   entryId?: string
   foodName: string
   awards: XpEvent[]
+  pieces: WardrobePiece[]
   mascotEvent: 'log_success' | 'milestone'
 }
 
@@ -148,12 +150,16 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       : state.gamification.xpEvents.slice(0, 4)
     const streakMilestone = fresh.some(event => event.key.startsWith('streak-'))
     playLogConfirm({ streakMilestone })
-    if (!paused && shouldCelebrateLog({ entries: state.foodEntries, entryId: justLogged.id, awards: fresh })) {
+    // A wardrobe piece unlocked since the last reveal arrives in the celebration, worn, exactly once.
+    const pieces = paused ? [] : newPieces(state.gamification.ownedCosmeticIds, wardrobeProgress(state))
+    if (pieces.length) patchGamification(g => claimPieces(g, pieces.map(piece => piece.id)))
+    if (!paused && shouldCelebrateLog({ entries: state.foodEntries, entryId: justLogged.id, awards: fresh, newPieces: pieces.length })) {
       setCelebration({
         entryId: justLogged.id,
         foodName: justLogged.name,
         awards: fresh,
-        mascotEvent: streakMilestone ? 'milestone' : 'log_success',
+        pieces,
+        mascotEvent: streakMilestone || pieces.length ? 'milestone' : 'log_success',
       })
       return
     }
@@ -207,7 +213,8 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
           foodName={celebration.foodName}
           streak={streak}
           awards={celebration.awards}
-          cosmeticId={state.gamification.equippedCosmeticId}
+          outfit={state.gamification.outfit}
+          pieces={celebration.pieces}
           onDone={() => {
             const { entryId, foodName, mascotEvent: event } = celebration
             if (entryId) {
@@ -284,7 +291,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
               {showMomo && (
                 <TodayMomo
                   greeting={greeting}
-                  cosmeticId={state.gamification.equippedCosmeticId}
+                  outfit={state.gamification.outfit}
                   roasts={Boolean(profile.mascotRoasts)}
                   onRoast={() => mascotEvent('poke')}
                 />

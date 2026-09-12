@@ -37,9 +37,8 @@ import { deleteLocalAccount } from '../lib/localAuth'
 import { clearDurableUser } from '../lib/durableState'
 import { clearOnboardingDraft } from '../lib/onboarding'
 import { clearAccountSeen } from '../lib/guestMode'
-import { COSMETICS, equipCosmetic } from '../lib/enamelEconomy'
 import { getStreakWithFreezes, getAllBadges, getMonthConsistency } from '../lib/journey'
-import { Momo } from '../components/Momo'
+import { MomoWardrobe } from '../components/MomoWardrobe'
 import { MomoSticker } from '../components/MomoSticker'
 import { RoastPreview } from '../components/RoastPreview'
 import { SettingsNavigation } from '../components/SettingsNavigation'
@@ -528,30 +527,7 @@ export function SettingsPage() {
         <details className="you-disclosure">
           <summary>Momo’s wardrobe <span>Outfits &amp; unlocks</span></summary>
         <SettingsCard>
-          <p className="page-sub">Outfits unlock as your streak grows. Outfit changes save immediately.</p>
-          <div className="wardrobe-preview" aria-label="Momo wardrobe preview">
-            <Momo mood="proud" cosmeticId={state.gamification.equippedCosmeticId} />
-          </div>
-          <div className="wardrobe-grid">
-            {COSMETICS.map(item => {
-              const unlocked = state.gamification.ownedCosmeticIds.includes(item.id)
-                || currentStreak >= item.unlockStreak
-              const equipped = state.gamification.equippedCosmeticId === item.id
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`wardrobe-item${unlocked ? ' is-owned' : ''}`}
-                  disabled={!unlocked}
-                  aria-pressed={equipped}
-                  onClick={() => patchGamification(g => equipCosmetic(g, item.id, currentStreak) ?? g)}
-                >
-                  <strong>{item.name}</strong>
-                  <span>{equipped ? 'Equipped' : unlocked ? 'Available' : `Unlocks at ${item.unlockStreak} days`}</span>
-                </button>
-              )
-            })}
-          </div>
+          <MomoWardrobe />
         </SettingsCard>
         </details>
         </section>
