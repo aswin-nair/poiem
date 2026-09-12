@@ -86,7 +86,7 @@ The text scale is `--k-text-xs` .75rem, `--k-text-sm` .875rem, `--k-text-md` 1re
 | `--k-press` / `--k-ease` | 90ms press, `cubic-bezier(.2, .8, .2, 1)` |
 | `--k-shell` / `--k-gutter` | 480px column, 20px side padding |
 | `--k-tabbar-h` | 88px bottom clearance for the tab bar |
-| `--k-z-nav` / `--k-z-sheet` / `--k-z-toast` | 100 / 900 / 1000 |
+| `--k-z-nav` / `--k-z-toast` / `--k-z-sheet` | 100 / 800 / 900. Toasts sit above the tab bar but under sheets and dialogs, so an Undo never covers an open sheet |
 
 ---
 

@@ -59,7 +59,8 @@
     --k-tabbar-h: 88px;
     --k-z-nav: 100;
     --k-z-sheet: 900;
-    --k-z-toast: 1000;
+    /* Toasts sit above the tab bar and under sheets and dialogs, so they never cover an open sheet. */
+    --k-z-toast: 800;
   }
 
   :root[data-theme="dark"] {
