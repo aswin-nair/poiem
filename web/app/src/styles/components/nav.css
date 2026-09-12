@@ -1,3 +1,4 @@
+@layer legacy {
 .bottom-nav-wrap {
   position: fixed;
   bottom: 0;
@@ -130,4 +131,5 @@
   transform: translateY(3px) scale(0.96);
   box-shadow: var(--clay-coral-squish);
   transition-duration: var(--squish-in);
+}
 }

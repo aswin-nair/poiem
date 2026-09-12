@@ -1,3 +1,4 @@
+@layer legacy {
 .bottom-nav {
   background: var(--paper-card);
   border: 1px solid var(--chalk);
@@ -1157,4 +1158,5 @@ button.home-chip:focus-visible { outline: 3px solid var(--on-track); outline-off
   .celebrate-title,
   .celebrate-stat,
   .celebrate-burst { animation: none !important; }
+}
 }

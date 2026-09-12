@@ -1,3 +1,4 @@
+@layer legacy {
 /*
  * Poiem poster system — the account poster's language, applied app-wide.
  *
@@ -1170,4 +1171,5 @@
   :root :is(.poster-ui, #poster-ui) :is(.log-method-card, .today-shortcut, .log-portion-button):hover {
     translate: -2px -2px;
   }
+}
 }

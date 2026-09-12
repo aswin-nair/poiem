@@ -4,8 +4,10 @@
     { "hour": 0, "slot": "breakfast" },
     { "hour": 10, "slot": "breakfast" },
     { "hour": 11, "slot": "lunch" },
-    { "hour": 15, "slot": "lunch" },
-    { "hour": 16, "slot": "dinner" },
+    { "hour": 14, "slot": "lunch" },
+    { "hour": 15, "slot": "snack" },
+    { "hour": 16, "slot": "snack" },
+    { "hour": 17, "slot": "dinner" },
     { "hour": 20, "slot": "dinner" },
     { "hour": 21, "slot": "snack" },
     { "hour": 23, "slot": "snack" }

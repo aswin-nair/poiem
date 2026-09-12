@@ -121,8 +121,9 @@ describe('primary component accessibility contracts', () => {
     expect(html).toContain('Insights')
     expect(html).toContain('Saved')
     expect(html).toContain('You')
-    expect(html).toContain('aria-label="Log a meal"')
-    expect(html).toContain('href="/log"')
+    // The + opens the log sheet over the current page, so it is a button, not a link.
+    expect(html).toContain('<button type="button" data-testid="fab" class="nav-fab" aria-label="Log a meal" aria-haspopup="dialog"')
+    expect(html).not.toContain('href="/log"')
   })
 
   it('names clay fields and keeps path nodes labeled', () => {

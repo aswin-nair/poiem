@@ -104,6 +104,25 @@ describe('resting place', () => {
     expect(rest.x).toBeLessThanOrEqual((desktop.width + 480) / 2 - SIZE)
     expect(rest.x).toBeGreaterThanOrEqual((desktop.width - 480) / 2)
   })
+
+  /* Today protects its whole column, so on a wide screen he waits beside it
+     instead of standing on the day's numbers. */
+  it('waits beside a fully occupied column on a wide screen', () => {
+    const desktop = { width: 1440, height: 900 }
+    const column = { left: (desktop.width - 480) / 2, top: 0, right: (desktop.width + 480) / 2, bottom: desktop.height }
+    const rest = restPosition(SIZE, desktop, [column])
+
+    expect(rest.x).toBeGreaterThanOrEqual(column.right + 10)
+    expect(rest.x + SIZE).toBeLessThanOrEqual(desktop.width)
+    expect(isSafeMascotPosition(rest, SIZE, desktop, [column])).toBe(true)
+  })
+
+  it('has no side lane on a phone, so a fully occupied screen keeps him away', () => {
+    const phone = { width: 390, height: 844 }
+    const column = { left: 0, top: 0, right: phone.width, bottom: phone.height }
+
+    expect(isSafeMascotPosition(restPosition(SIZE, phone, [column]), SIZE, phone, [column])).toBe(false)
+  })
 })
 
 describe('authentication resting place', () => {

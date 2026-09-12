@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Home screen (mobile-style) ── */
 
 .home-shell {
@@ -1558,4 +1559,5 @@
   .day-ring-copy {
     text-align: center;
   }
+}
 }

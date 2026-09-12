@@ -115,6 +115,7 @@ const AUTH_CARD_MAX_WIDTH = 420
 const SAFE_TOP = 104
 const SAFE_BOTTOM = 112
 const CONTROL_CLEARANCE = 10
+const SIDE_LANE_GAP = 24
 
 function horizontalBounds(width: number, size: number, inset: number): { min: number; max: number } {
   const stageWidth = Math.min(width, APP_STAGE_MAX_WIDTH)
@@ -130,6 +131,18 @@ function verticalBounds(height: number, size: number): { min: number; max: numbe
   const min = Math.min(SAFE_TOP, viewportMax)
   const max = Math.max(min, Math.min(viewportMax, height - size - SAFE_BOTTOM))
   return { min, max }
+}
+
+/**
+ * Wide screens leave empty margins beside the app column. When the column has
+ * no clear spot (Today protects all of its content), Momo may wait just outside
+ * it rather than stand on what someone is reading. Phones have no side lanes.
+ */
+function sideLanes(width: number, size: number): { left: number; right: number } | null {
+  const stageWidth = Math.min(width, APP_STAGE_MAX_WIDTH)
+  const margin = (width - stageWidth) / 2
+  if (margin < size + SIDE_LANE_GAP * 2) return null
+  return { left: margin - SIDE_LANE_GAP - size, right: margin + stageWidth + SIDE_LANE_GAP }
 }
 
 function overlapsAvoidRect(
@@ -153,8 +166,11 @@ export function isSafeMascotPosition(
 ): boolean {
   const horizontal = horizontalBounds(viewport.width, size, 8)
   const vertical = verticalBounds(viewport.height, size)
-  return point.x >= horizontal.min
-    && point.x <= horizontal.max
+  const lanes = sideLanes(viewport.width, size)
+  const inStage = point.x >= horizontal.min && point.x <= horizontal.max
+  // A rendered position can differ from the placed one by a fraction of a pixel.
+  const inLane = lanes !== null && [lanes.left, lanes.right].some(lane => Math.abs(point.x - lane) <= 1)
+  return (inStage || inLane)
     && point.y >= vertical.min
     && point.y <= vertical.max
     && avoidRects.every(rect => !overlapsAvoidRect(point, size, rect))
@@ -231,6 +247,9 @@ export function restPosition(
     { x: horizontal.max, y: vertical.min },
     { x: horizontal.min, y: vertical.min },
   ]
+  // Inside the column first; a side lane only when the column has no clear spot.
+  const lanes = sideLanes(width, size)
+  if (lanes) candidates.push({ x: lanes.right, y: vertical.max }, { x: lanes.left, y: vertical.max })
   return safestCandidate(candidates, size, { width, height }, avoidRects)
 }
 

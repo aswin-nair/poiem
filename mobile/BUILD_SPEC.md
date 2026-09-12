@@ -502,7 +502,7 @@ Opens as a modal sheet from the Home FAB. Two steps, no more.
 
 **Step 1 — pick.** Search field is autofocused on mount. Above the results, a horizontal row of **recents and favourites** — this is what makes repeat logging fast, since most people eat the same twenty things. Empty search shows recents, never a blank screen.
 
-**Step 2 — portion.** Serving stepper, meal slot selector (pre-selected by time of day: before 11:00 breakfast, before 16:00 lunch, before 21:00 dinner, else snack), live calorie and macro preview that updates as the stepper moves. One primary button: `Log it`.
+**Step 2 — portion.** Serving stepper, meal slot selector (pre-selected by time of day: before 11:00 breakfast, before 15:00 lunch, before 17:00 snack, before 21:00 dinner, else snack), live calorie and macro preview that updates as the stepper moves. One primary button: `Log it`.
 
 On confirm: write the entry, award points, dismiss both modals, and return to Home with the ring animating up. See Phase 7 for the full choreography.
 

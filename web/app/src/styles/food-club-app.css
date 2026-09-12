@@ -1,3 +1,4 @@
+@layer legacy {
 /* Daily journal and meal menu. Scoped so other flows keep their existing layout. */
 :root .app-shell.food-club-app {
   background: var(--club-paper);
@@ -150,4 +151,5 @@
 }
 @media (prefers-reduced-motion: reduce) {
   :root .food-club-app .log-method-card { transform: none !important; transition: none; }
+}
 }

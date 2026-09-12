@@ -28,15 +28,13 @@ for (const viewport of [{ width: 360, height: 800 }, { width: 768, height: 1024 
         await settlePageLayout(page)
       })
       await fitsViewport(page)
-      if (name === 'today') {
-        await expect(page.locator('.calorie-ring-centre')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
-        await expect(page.locator('.calorie-ring-svg')).toHaveCSS('transform', 'none')
-      }
-      if (['today', 'describe', 'you'].includes(name)) await page.screenshot({ path: testInfo.outputPath(`${name}-${viewport.width}.png`), animations: 'disabled' })
+      if (name === 'today') await expect(page.getByRole('progressbar', { name: 'Calories' })).toBeVisible()
+      if (name === 'log') await expect(page.getByRole('dialog', { name: 'Log a meal' })).toBeVisible()
+      if (['today', 'log', 'describe', 'you'].includes(name)) await page.screenshot({ path: testInfo.outputPath(`${name}-${viewport.width}.png`), animations: 'disabled' })
     }
     await page.goto('/')
     await logManualMeal(page, { name: 'A rather long meal name with rice, vegetables, tofu and a side of soup', calories: '420' })
-    await page.locator('.home-today-row').filter({ hasText: 'A rather long meal name' }).click()
+    await page.locator('.k-meal-row').filter({ hasText: 'A rather long meal name' }).click()
     await expect(page).toHaveURL(/\/edit\//)
     await expect(page.getByLabel('Food name')).toBeVisible()
     await settlePageLayout(page)

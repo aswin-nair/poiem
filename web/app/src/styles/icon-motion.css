@@ -1,3 +1,4 @@
+@layer legacy {
 .ui-icon { flex-shrink: 0; vertical-align: middle; transform-origin: center; }
 .ui-icon.is-active { stroke-width: 2.6; }
 @keyframes icon-pop { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.18); } }
@@ -16,4 +17,5 @@
   :is(button, a):hover .ui-icon-tilt { animation: icon-tilt 420ms ease-out; }
   :is(button, a):hover .ui-icon-nudge { animation: icon-nudge 360ms ease-out; }
   :is(button, a):hover .ui-icon-draw > :is(path, polyline, line) { animation: icon-draw 420ms ease-out; }
+}
 }

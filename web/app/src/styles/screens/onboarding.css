@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Goal clamp explanations (§2.1) ──────────────────────────
    Informational, never alarming: a floor doing its job is not an error, so
    these read in the same calm tint as any other hint. */
@@ -562,4 +563,5 @@
   color: var(--ink-soft);
   font-size: 0.78rem;
   line-height: 1.35;
+}
 }

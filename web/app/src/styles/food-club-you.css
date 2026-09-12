@@ -1,3 +1,4 @@
+@layer legacy {
 /* The You page is the club house: playful on top, calm and explicit underneath. */
 :root .app-shell.food-club-app.you-refresh {
   background: var(--club-paper);
@@ -125,4 +126,5 @@
 }
 @media (prefers-reduced-motion: reduce) {
   :root .app-shell.food-club-app.you-refresh .you-momo-mark { transform: none; }
+}
 }

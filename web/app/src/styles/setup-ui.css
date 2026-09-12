@@ -1,3 +1,4 @@
+@layer legacy {
 /* Onboarding: a personal food journal, with a companion and clear chapters. */
 .setup-refresh { --setup-accent: var(--fun-yellow); --setup-wash: var(--paper-warm); max-width: 1080px; background: var(--paper); }
 .setup-refresh[data-chapter="routine"] { --setup-accent: var(--fun-blue); }
@@ -134,4 +135,5 @@
   .setup-refresh .onboarding-chip.active, .setup-refresh .activity-option.active { padding: 12px; }
   .setup-refresh .activity-option-icon { flex-basis: 36px; width: 36px; height: 40px; }
   .setup-refresh .onboarding-actions { flex-wrap: wrap; }
+}
 }

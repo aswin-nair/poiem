@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Progress screen ── */
 
 .progress-main {
@@ -309,4 +310,5 @@
 
 .own-past-callout span {
   color: var(--ink-soft);
+}
 }

@@ -1,3 +1,4 @@
+@layer legacy {
 /* Shared Snack Attack primitives: paper cutouts, bubbles, and recipe progress. */
 .food-sticker { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 2px solid #23221f; border-radius: 12px; color: #23221f; background: var(--club-lemon, #f8e66a); box-shadow: 3px 3px 0 var(--club-shadow, #23221f); }
 .food-sticker-sprout { background: var(--club-mint, #bce6c4); }
@@ -30,3 +31,4 @@
 .setup-refresh .setup-daily-recipe .onboarding-goal-value { color: var(--ink); font-size: clamp(1.2rem, 4vw, 1.8rem); }
 .setup-refresh .setup-daily-recipe .onboarding-goal-card:first-child .onboarding-goal-value { font-size: clamp(2.5rem, 8vw, 3.5rem); }
 .setup-recipe-foot { border-top: 1px dashed var(--edge-ink); margin: 6px 0 0; padding-top: 12px; font-size: .75rem; line-height: 1.5; color: var(--ink-soft); }
+}

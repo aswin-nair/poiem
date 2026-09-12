@@ -1,3 +1,4 @@
+@layer legacy {
 /* The welcome cover owns its complete layout here, including the Momo artwork. */
 .welcome-refresh {
   --welcome-scene: var(--fun-yellow);
@@ -116,4 +117,5 @@
 }
 @media (max-height: 700px) and (max-width: 767px) {
   .welcome-scene { height: 212px; }
+}
 }

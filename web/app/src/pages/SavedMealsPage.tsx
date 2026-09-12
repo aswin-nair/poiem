@@ -1,4 +1,3 @@
-import { PosterArt, PosterStrip } from '../components/PosterPrimitives'
 import { useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
@@ -192,9 +191,7 @@ export function SavedMealsPage() {
     <div className="app-shell saved-refresh food-club-app poster-ui">
       <main className="app-main motion-stagger">
         {isSubRoute && <BackLink to="/log" />}
-        <PosterStrip items={['Your usuals', 'Good enough to repeat']} />
         <header className="page-heading" style={isSubRoute ? { marginTop: 12 } : undefined}>
-          <PosterArt burst={['On', 'repeat']} burstTone="leaf" stickers={[{ food: 'croissant', tone: 'paper', tilt: -9 }, { food: 'cherry', tone: 'rose', tilt: 8 }]} />
           <PoiemSectionLabel>Your usuals</PoiemSectionLabel>
           <h1 className="page-title discover-title">Saved</h1>
           <p className="page-sub">Your familiar meals, ready for another day. Adjust the portion, then log.</p>

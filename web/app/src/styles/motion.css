@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Page transitions ────────────────────────────────────────
    Screens relate to each other instead of replacing each other: going deeper
    enters from the right, coming back enters from the left. Only the arriving
@@ -361,4 +362,5 @@
     animation: none !important;
     transition: none !important;
   }
+}
 }

@@ -4,7 +4,7 @@ import { logManualMeal, nav, signUpAndOnboard } from './helpers'
 
 async function openMealEditor(page: Page, name: string): Promise<void> {
   await expect(page).toHaveURL('/')
-  const meal = page.locator('.home-today-row').filter({ hasText: name })
+  const meal = page.locator('.k-meal-row').filter({ hasText: name })
   await expect(meal).toBeVisible()
   await meal.click()
   await expect(page).toHaveURL(/\/edit\//)
@@ -45,7 +45,7 @@ async function completeReleaseFlow(page: Page, mealName: string): Promise<void> 
   await page.locator('.flow-delete > summary').click()
   await page.getByRole('button', { name: 'Yes, delete entry' }).click()
   await expect(page).toHaveURL('/')
-  await expect(page.locator('.home-today-row').filter({ hasText: editedName })).toHaveCount(0)
+  await expect(page.locator('.k-meal-row').filter({ hasText: editedName })).toHaveCount(0)
 
   await page.locator('.toast').filter({ hasText: `Deleted ${editedName}` }).getByRole('button', { name: 'Undo', exact: true }).click()
   await openMealEditor(page, editedName)

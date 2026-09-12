@@ -1,38 +1,30 @@
-import { PosterArt, PosterStrip } from '../components/PosterPrimitives'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { LevelUpOverlay } from '../components/LevelUpOverlay'
-import { BrandLogo } from '../components/BrandLogo'
-import { ChevronDown, Sparkles } from 'lucide-react'
 import { DatePickerModal } from '../components/DatePickerModal'
 import { BottomNav } from '../components/BottomNav'
 import { MomoSticker } from '../components/MomoSticker'
-import { HabitMilestones } from '../components/HabitMilestones'
-import { FoodIcon, IconCalendar, IconFlame, IconStar, IconPlus, IconCamera, IconJourney, IconArrowRight, IconProtein, IconCarbs, IconWater, IconMeal, IconShield } from '../components/icons'
-import { Ticket } from '../components/Ticket'
+import { WeekStrip } from '../components/WeekStrip'
+import { Meter } from '../components/Meter'
+import { FoodIcon, IconCalendar, IconFlame, IconPlus, IconWater } from '../components/icons'
 import { SwipeRow } from '../components/SwipeRow'
 import { PullToRefresh } from '../components/PullToRefresh'
 import { useToast } from '../components/Toast'
+import { LogCelebration } from '../components/LogCelebration'
 import { useApp } from '../store/AppContext'
 import { entriesForDay, macroTotals } from '../lib/storage'
-import { effectiveProtein, effectiveCarbs, effectiveFat } from '../lib/profile'
-import { formatDayLabel, startOfDay, sameDay, localDayKey } from '../lib/dates'
-import { getStreakWithFreezes, getAllBadges, getTotalLoggedDays } from '../lib/journey'
-import { applyNote, applyWaterChange, ticketNumber } from '../lib/enamelEconomy'
+import { effectiveCalories, effectiveCarbs, effectiveFat, effectiveProtein } from '../lib/profile'
+import { formatDayLabel, localDayKey, sameDay, startOfDay } from '../lib/dates'
+import { getAllBadges, getStreakWithFreezes } from '../lib/journey'
+import { applyNote, applyWaterChange } from '../lib/enamelEconomy'
 import { useFeel } from '../hooks/useHaptic'
 import { playLogConfirm, setFeelEnabled } from '../lib/feel'
 import { evaluateNotifications } from '../lib/notifications'
-import { LogCelebration } from '../components/LogCelebration'
-import { Surface } from '../components/Surface'
-import { MEAL_LABELS, type FoodEntry, type XpEvent } from '../types'
+import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../lib/today'
+import { shouldCelebrateLog } from '../lib/logFeedback'
+import type { FoodEntry, MealType, XpEvent } from '../types'
 import { useAnchor } from '../mascot/anchors'
-import { CalorieRing } from '../components/CalorieRing'
-import { effectiveCalories } from '../lib/profile'
 import { mascotEvent } from '../mascot/MascotOverlay'
-import { dayRingProgress } from '../lib/dayRing'
-import { DayRing } from '../components/DayRing'
-import * as m from 'motion/react-m'
-import { motionSpring } from '../lib/motionPresets'
 
 interface JustLogged { id?: string; calories: number; name: string }
 
@@ -43,47 +35,53 @@ interface CelebrationState {
   mascotEvent: 'log_success' | 'milestone'
 }
 
+const WATER_GLASSES = 8
+const NOTE_LIMIT = 3
+
+/**
+ * Today, quiet by default: the number that matters, macros, and meals grouped
+ * the way the day actually went. Streaks, levels and XP live on Insights.
+ */
 export function HomePage({ guest = false }: { guest?: boolean }) {
   const { state, ackLevelUp, patchGamification, deleteEntry, restoreEntry, refresh } = useApp()
   const { toast } = useToast()
   const location = useLocation()
   const navigate = useNavigate()
   const feel = useFeel()
-  const streakAnchor = useAnchor('streak_flame')
-  const ringAnchor = useAnchor('calorie_ring')
+  const budgetAnchor = useAnchor('calorie_ring')
   const [selectedDate, setSelectedDate] = useState(() => startOfDay())
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [celebration, setCelebration] = useState<CelebrationState | null>(null)
   const loggedNavKey = useRef('')
   const prevSeenBadgeCount = useRef(state.gamification.seenBadgeIds.length)
 
+  const profile = state.profile
+  const paused = Boolean(profile.trackingPaused)
   const dayEntries = entriesForDay(state.foodEntries, selectedDate)
   const totals = macroTotals(dayEntries)
-  const profile = state.profile
+  const groups = groupEntriesByMeal(dayEntries)
+  const budget = calorieBudget(totals.calories, effectiveCalories(profile))
   const selectedDayKey = localDayKey(selectedDate)
-  const selectedDayLabel = formatDayLabel(selectedDate)
-  const selectedDayIsToday = selectedDayLabel === 'Today'
-  const snapshotLabel = selectedDayIsToday
-    ? 'Today’s snapshot'
-    : selectedDayLabel === 'Yesterday'
-      ? 'Yesterday’s snapshot'
-      : `${selectedDayLabel} snapshot`
-  const totalDateLabel = selectedDayIsToday
-    ? 'today'
-    : selectedDayLabel === 'Yesterday'
-      ? 'yesterday'
-      : `on ${selectedDayLabel}`
-  const paused = Boolean(profile.trackingPaused)
+  const dayLabel = formatDayLabel(selectedDate)
+  const isToday = sameDay(selectedDate, new Date())
+  const snapshotLabel = isToday ? 'Today’s snapshot' : dayLabel === 'Yesterday' ? 'Yesterday’s snapshot' : `${dayLabel} snapshot`
   const streak = getStreakWithFreezes(
     state.foodEntries,
     state.gamification.freezeUsedDates,
     state.gamification.pauseProtectedDates,
   )
-  const hasLoggedToday = state.foodEntries.some(e => sameDay(new Date(e.timestamp), new Date()))
+  const hasLoggedToday = state.foodEntries.some(entry => sameDay(new Date(entry.timestamp), new Date()))
   const water = state.gamification.waterByDate[selectedDayKey] ?? 0
   const notes = state.gamification.notesByDate[selectedDayKey] ?? 0
-  const calorieTarget = effectiveCalories(profile)
-  const dayProgress = dayRingProgress(dayEntries, notes, profile.loggingCommitment ?? 'light')
+  const loggedDays = useMemo(() => new Set(state.foodEntries.map(entry => localDayKey(entry.timestamp))), [state.foodEntries])
+  const frozenDays = useMemo(() => new Set(state.gamification.freezeUsedDates), [state.gamification.freezeUsedDates])
+  const showMomo = state.gamification.mascotActivity !== 'off' && !profile.mascotMuted
+  const macros = [
+    { key: 'protein', label: 'Protein', ...macroBudget(totals.protein, effectiveProtein(profile)) },
+    { key: 'carbs', label: 'Carbs', ...macroBudget(totals.carbs, effectiveCarbs(profile)) },
+    { key: 'fat', label: 'Fat', ...macroBudget(totals.fat, effectiveFat(profile)) },
+  ]
+
   useEffect(() => {
     setFeelEnabled({
       sound: profile.soundEnabled !== false,
@@ -93,7 +91,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
 
   useEffect(() => {
     if (paused) return
-    const hours = state.foodEntries.map(e => new Date(e.timestamp).getHours())
+    const hours = state.foodEntries.map(entry => new Date(entry.timestamp).getHours())
     void evaluateNotifications({
       loggedToday: hasLoggedToday,
       streak,
@@ -120,12 +118,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       : state.gamification.xpEvents.slice(0, 4)
     const streakMilestone = fresh.some(event => event.key.startsWith('streak-'))
     playLogConfirm({ streakMilestone })
-    setCelebration({
-      entryId: justLogged.id,
-      foodName: justLogged.name,
-      awards: fresh,
-      mascotEvent: streakMilestone ? 'milestone' : 'log_success',
-    })
+    if (!paused && shouldCelebrateLog({ entries: state.foodEntries, entryId: justLogged.id, awards: fresh })) {
+      setCelebration({
+        entryId: justLogged.id,
+        foodName: justLogged.name,
+        awards: fresh,
+        mascotEvent: streakMilestone ? 'milestone' : 'log_success',
+      })
+      return
+    }
+    const entryId = justLogged.id
+    toast(`Logged ${justLogged.name}`, entryId ? { action: { label: 'Undo', fn: () => deleteEntry(entryId) } } : undefined)
+    window.setTimeout(() => mascotEvent('log_success'), 120)
   }, [location.key]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -134,7 +138,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     if (current > prev) {
       const allBadges = getAllBadges(state.foodEntries, streak)
       const newIds = state.gamification.seenBadgeIds.slice(prev)
-      const newBadge = allBadges.find(b => newIds.includes(b.id))
+      const newBadge = allBadges.find(badge => newIds.includes(badge.id))
       if (newBadge) {
         feel('badge')
         toast(`Badge unlocked: ${newBadge.name}!`)
@@ -145,6 +149,12 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   }, [state.gamification.seenBadgeIds.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pendingLevelUp = state.gamification.pendingLevelUp
+
+  function openLog(mealType?: MealType) {
+    feel('press')
+    navigate('/log', { state: { background: location, mealType } })
+  }
+
   function removeMeal(entry: FoodEntry) {
     deleteEntry(entry.id)
     toast(`Removed ${entry.name}`, {
@@ -153,8 +163,13 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     })
   }
 
+  function changeWater(next: number) {
+    feel('water')
+    patchGamification(g => applyWaterChange(g, selectedDayKey, Math.max(0, Math.min(WATER_GLASSES, next))))
+  }
+
   return (
-    <div className="app-shell home-shell today-refresh food-club-app poster-ui">
+    <div className="app-shell k-screen k-today">
       {!paused && pendingLevelUp && <LevelUpOverlay level={pendingLevelUp} onDone={ackLevelUp} />}
       {!paused && celebration && !pendingLevelUp && (
         <LogCelebration
@@ -163,43 +178,39 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
           awards={celebration.awards}
           cosmeticId={state.gamification.equippedCosmeticId}
           onDone={() => {
-            const event = celebration.mascotEvent
-            const entryId = celebration.entryId
-            if (entryId) toast(`Logged ${celebration.foodName}`, {
-              action: { label: 'Undo', fn: () => deleteEntry(entryId) },
-            })
+            const { entryId, foodName, mascotEvent: event } = celebration
+            if (entryId) toast(`Logged ${foodName}`, { action: { label: 'Undo', fn: () => deleteEntry(entryId) } })
             setCelebration(null)
             window.setTimeout(() => mascotEvent(event), 120)
           }}
         />
       )}
 
-      {/* Streak and level remain context; meal logging is the primary action. */}
-      <PosterStrip items={['Today’s table', 'All foods welcome']} />
-      <header className="home-counter-chips" data-mascot-avoid>
-        <PosterArt placement="top" burst={['All', 'foods', 'welcome']} stickers={[{ food: 'pizza', tone: 'paper', tilt: -10 }, { food: 'salad', tone: 'leaf', tilt: 9 }]} />
-        <div className="today-heading">
-          <div className="poiem-journal-signature"><BrandLogo /><span>Your daily journal</span></div>
-          <p className="today-date">{selectedDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}</p>
-          <h1>{selectedDayLabel}</h1>
+      <header className="k-today-header" data-mascot-avoid>
+        <div className="k-today-title">
+          <p className="k-eyebrow">{selectedDate.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+          <h1>{dayLabel}</h1>
         </div>
-        <div className="today-badges">
-          <button
-            type="button"
-            className="home-chip"
-            ref={streakAnchor}
-            onClick={() => { feel('open'); setShowDatePicker(true) }}
-            aria-label={`${streak} day streak. Choose date.`}
-          >
-            <IconFlame size={22} />
-            <span className="tabular">{streak}<span className="today-streak-label"> day streak</span></span>
-          </button>
-          <div className="home-chip" aria-label={`Level ${state.gamification.level}, ${state.gamification.xp} total XP`}>
-            <IconStar size={22} />
-            <span className="tabular">Level {state.gamification.level}</span>
-          </div>
-        </div>
+        <button
+          type="button"
+          className="k-icon-button"
+          onClick={() => { feel('open'); setShowDatePicker(true) }}
+          aria-label="Choose date"
+        >
+          <IconCalendar size={22} />
+        </button>
       </header>
+      {!paused && (
+        <div className="k-week" data-mascot-avoid>
+          <WeekStrip
+            selectedDate={selectedDate}
+            onSelect={setSelectedDate}
+            loggedDays={loggedDays}
+            frozenDays={frozenDays}
+            showWeekNav={false}
+          />
+        </div>
+      )}
 
       {showDatePicker && (
         <DatePickerModal
@@ -210,191 +221,158 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       )}
 
       <PullToRefresh onRefresh={refresh}>
-      <main className="app-main home-main">
-        {paused ? (
-          <Surface className="home-ring-hero" style={{ textAlign: 'center' }}>
-            <p className="onboarding-title" style={{ fontSize: '1.2rem' }}>Tracking is paused</p>
-            <p className="page-sub">Calorie and macro numbers are hidden. Your streak is held where it is.</p>
-            <Link className="today-shortcut" to="/settings">Manage pause <IconArrowRight /></Link>
-          </Surface>
-        ) : (
-          <>
-            {guest && (
-              <Surface className="guest-save-card">
-                <p className="home-today-kicker">YOUR FIRST LOG IS HERE</p>
-                <h1 className="onboarding-title">Save your progress</h1>
-                <p className="page-sub">
-                  Continue to create an account and keep this device copy available across sign-in.
-                </p>
-                <button
-                  type="button"
-                  className="home-log-cta"
-                  onClick={() => navigate('/login?mode=signup&claim=1')}
-                >
-                  Continue
-                </button>
-                <button
-                  type="button"
-                  className="settings-data-btn"
-                  onClick={() => navigate('/login?mode=signin&claim=1')}
-                >
-                  I already have an account
-                </button>
-              </Surface>
-            )}
-            {/* Nutrition stays factual; optional habit progress is separate below. */}
-            <div ref={ringAnchor} className="home-ring-anchor" data-mascot-avoid>
-              <Surface className="home-ring-hero today-nutrition-card">
-                <div className="today-summary-heading">
-                  <h2>{snapshotLabel}</h2>
-                  <button type="button" className="today-date-button" onClick={() => setShowDatePicker(true)} aria-label="Choose date"><IconCalendar /></button>
-                </div>
-                <p className="poiem-journal-intro">A little tracking. <span>A lot of living.</span></p>
-                <div className="home-factual-readout">
-                  <CalorieRing
-                    consumed={totals.calories}
-                    target={calorieTarget}
-                    size={156}
-                  />
-                  <div className="home-factual-copy">
-                    <p className="today-energy-value tabular">{Math.round(totals.calories).toLocaleString()}<span>kcal logged</span></p>
-                    <p className="home-ring-sub tabular">
-                      Daily guide: {Math.round(calorieTarget).toLocaleString()} kcal
-                    </p>
+        {/* The walking Momo never stands on the day's numbers or meals: he waits beside the column on wide screens and stays off Today on a phone. */}
+        <main className="app-main k-today-main" data-mascot-avoid>
+          {paused ? (
+            <section className="k-card k-notice" aria-labelledby="paused-title">
+              <h2 id="paused-title">Tracking is paused</h2>
+              <p>Calorie and macro numbers are hidden. Your streak is held where it is.</p>
+              <Link className="k-text-button" to="/settings">Manage pause</Link>
+            </section>
+          ) : (
+            <>
+              {guest && (
+                <section className="k-card k-notice" aria-labelledby="guest-title">
+                  <p className="k-eyebrow">Your first log is here</p>
+                  <h2 id="guest-title">Save your progress</h2>
+                  <p>Continue to create an account and keep this device copy available across sign-in.</p>
+                  <div className="k-notice-actions">
+                    <button type="button" className="k-button is-primary" onClick={() => navigate('/login?mode=signup&claim=1')}>
+                      Continue
+                    </button>
+                    <button type="button" className="k-text-button" onClick={() => navigate('/login?mode=signin&claim=1')}>
+                      I already have an account
+                    </button>
                   </div>
-                </div>
-                {!guest && <m.button
-                  type="button"
-                  className="home-log-cta"
-                  whileTap={{ scale: .98 }}
-                  transition={motionSpring}
-                  onClick={() => { feel('press'); navigate('/log') }}
-                >
-                  <IconPlus size={24} /> {selectedDayIsToday ? 'Log a meal' : 'Log a meal today'} <IconArrowRight size={22} />
-                </m.button>}
-                {!guest && <div className="today-shortcuts">
-                  <Link className="today-shortcut" to="/log/photo"><IconCamera /> Scan food</Link>
-                  <Link className="today-shortcut" to="/log/saved"><IconJourney /> Saved meals</Link>
-                </div>}
-                <p className="today-guide-note">A guide, not a grade.</p>
-              </Surface>
-            </div>
-
-            <div className="home-macro-chips" data-mascot-avoid>
-              {[
-                { k: 'protein', Icon: IconProtein, name: 'Protein', have: totals.protein, goal: effectiveProtein(profile) },
-                { k: 'carbs', Icon: IconCarbs, name: 'Carbs', have: totals.carbs, goal: effectiveCarbs(profile) },
-                { k: 'fat', Icon: IconWater, name: 'Fat', have: totals.fat, goal: effectiveFat(profile) },
-              ].map(m => (
-                <div key={m.k} className={`home-macro-chip tone-${m.k}`}>
-                  <div className="home-macro-top">
-                    <span className="home-macro-label"><m.Icon size={16} />{m.name}</span>
-                    <span className="home-macro-value tabular">{Math.round(m.have)}g</span>
-                  </div>
-                  <span className="today-macro-goal">of {Math.round(m.goal)}g</span>
-                  <div
-                    className="home-macro-track"
-                    role="progressbar"
-                    aria-label={m.name}
-                    aria-valuemin={0}
-                    aria-valuemax={Math.round(m.goal)}
-                    aria-valuenow={Math.round(Math.min(m.have, m.goal))}
-                  >
-                    <span
-                      className="home-macro-fill"
-                      style={{ width: `${m.goal > 0 ? Math.min(100, (m.have / m.goal) * 100) : 0}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="home-today-list">
-              <div className="home-today-head">
-                <h2 className="home-today-kicker">Your meals</h2>
-                <span className="home-today-count">
-                  {dayEntries.length === 0
-                    ? 'No meals yet'
-                    : `${dayEntries.length} ${dayEntries.length === 1 ? 'meal' : 'meals'} · ${Math.round(totals.calories).toLocaleString()} kcal`}
-                </span>
-              </div>
-              {dayEntries.length === 0 ? (
-                <div className="home-today-empty"><IconMeal size={32} />
-                  <strong>{selectedDayIsToday ? 'Your table is ready' : 'A quiet page'}</strong>
-                  <p>{selectedDayIsToday ? 'Start with whatever you ate. You can change the details later.' : `Nothing was logged ${totalDateLabel}.`}</p>
-                </div>
-              ) : (
-                <div className="home-today-rows motion-stagger">
-                  {dayEntries.map(entry => (
-                    <SwipeRow
-                      key={entry.id}
-                      label={entry.name}
-                      actions={[
-                        { label: 'Edit', onAct: () => navigate(`/edit/${entry.id}`) },
-                        { label: 'Delete', tone: 'danger', onAct: () => removeMeal(entry) },
-                      ]}
-                    >
-                      <button
-                        type="button"
-                        className="home-today-row"
-                        onClick={() => { feel('tap'); navigate(`/edit/${entry.id}`) }}
-                      >
-                        <span className="home-today-emoji"><FoodIcon emoji={entry.emoji} /></span>
-                        <span className="home-today-name">
-                          {entry.name}
-                          <small>{MEAL_LABELS[entry.mealType] ?? 'Meal'}</small>
-                        </span>
-                        <span className="home-today-kcal tabular">{Math.round(entry.calories)} kcal</span>
-                      </button>
-                    </SwipeRow>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {state.gamification.mascotActivity !== 'off' && !profile.mascotMuted && <aside className="today-momo-note">
-              <MomoSticker mood={dayEntries.length > 0 ? 'proud' : 'cozy'} />
-              <div><strong>Momo’s little reminder</strong><p>{selectedDayIsToday
-                ? dayEntries.length > 0 ? 'You showed up. That’s the part worth celebrating.' : 'Fancy breakfast, leftover pizza—it all belongs here.'
-                : 'A page from your food story. No grades attached.'}</p>
-                {profile.mascotRoasts && <button type="button" className="today-roast-button" onClick={() => mascotEvent('poke')}>Roast me <IconFlame size={18} /></button>}
-              </div>
-            </aside>}
-
-            <details className="poiem-daily-extras">
-              <summary><span className="poiem-extras-icon"><Sparkles size={23} aria-hidden="true" /></span>
-                <span><strong>Your little extras</strong><small>{water || notes ? `${water}/8 water · ${notes} ${notes === 1 ? 'note' : 'notes'} · daily rhythm` : 'Water, notes & daily rhythm'}</small></span>
-                <ChevronDown size={20} className="poiem-disclosure-chevron" aria-hidden="true" />
-              </summary>
-              <div className="poiem-extras-content">
-                <Ticket
-                  date={selectedDate}
-                  ticketNo={ticketNumber(state.foodEntries) || getTotalLoggedDays(state.foodEntries) || 1}
-                  entries={dayEntries}
-                  protein={totals.protein}
-                  carbs={totals.carbs}
-                  fat={totals.fat}
-                  proteinGoal={effectiveProtein(profile)}
-                  carbsGoal={effectiveCarbs(profile)}
-                  fatGoal={effectiveFat(profile)}
-                  water={water}
-                  notes={notes}
-                  paused={paused}
-                  onWater={n => patchGamification(g => applyWaterChange(g, selectedDayKey, n))}
-                  onNote={() => patchGamification(g => applyNote(g, selectedDayKey))}
-                  variant="extras"
-                />
-                <section className="today-routine-card">
-                  <DayRing progress={dayProgress} />
-                  {state.gamification.streakFreezes > 0 && <p className="today-freeze-note"><IconShield /> {state.gamification.streakFreezes} streak {state.gamification.streakFreezes === 1 ? 'freeze' : 'freezes'} available for a day off.</p>}
                 </section>
-                <HabitMilestones loggedDays={getTotalLoggedDays(state.foodEntries)} />
-              </div>
-            </details>
+              )}
 
-          </>
-        )}
-      </main>
+              <section ref={budgetAnchor} className="k-budget" aria-labelledby="budget-title" data-mascot-avoid>
+                <h2 id="budget-title" className="k-eyebrow">{snapshotLabel}</h2>
+                <p className="k-budget-number">
+                  <strong className="tabular">{(budget.over > 0 ? budget.over : budget.remaining).toLocaleString()}</strong>
+                  <span>{budget.over > 0 ? 'kcal over the guide' : 'kcal left'}</span>
+                </p>
+                <Meter
+                  label="Calories"
+                  tone="acid"
+                  value={budget.consumed}
+                  max={budget.target}
+                  over={budget.over > 0}
+                  valueText={`${budget.consumed.toLocaleString()} of ${budget.target.toLocaleString()} kcal`}
+                />
+                <p className="k-budget-meta">
+                  <span className="tabular">{budget.consumed.toLocaleString()} eaten</span>
+                  <span className="tabular">{budget.target.toLocaleString()} guide</span>
+                </p>
+              </section>
+
+              <section className="k-macros" aria-label="Macros">
+                {macros.map(macro => (
+                  <div key={macro.key} className="k-macro">
+                    <span className="k-macro-label">{macro.label}</span>
+                    <span className="k-macro-value tabular"><strong>{macro.current}</strong> / {macro.goal} g</span>
+                    <Meter label={macro.label} value={macro.current} max={macro.goal} over={macro.over} />
+                  </div>
+                ))}
+              </section>
+
+              <section className="k-meals" aria-labelledby="meals-title">
+                <div className="k-section-head">
+                  <h2 id="meals-title">Meals</h2>
+                  <span className="tabular">
+                    {dayEntries.length === 0
+                      ? 'Nothing yet'
+                      : `${dayEntries.length} ${dayEntries.length === 1 ? 'meal' : 'meals'} · ${budget.consumed.toLocaleString()} kcal`}
+                  </span>
+                </div>
+                {dayEntries.length === 0 && (
+                  <p className="k-empty">
+                    {isToday
+                      ? 'Your table is ready. Start with whatever you ate — you can change the details later.'
+                      : `Nothing was logged ${dayLabel === 'Yesterday' ? 'yesterday' : `on ${dayLabel}`}.`}
+                  </p>
+                )}
+                {groups.map(group => (isToday || group.entries.length > 0) && (
+                  <section key={group.type} className="k-meal-group" aria-labelledby={`meal-${group.type}`}>
+                    <header className="k-meal-head">
+                      <h3 id={`meal-${group.type}`}>{group.label}</h3>
+                      {group.entries.length > 0 && <span className="tabular">{group.calories.toLocaleString()} kcal</span>}
+                    </header>
+                    {group.entries.map(entry => (
+                      <SwipeRow
+                        key={entry.id}
+                        label={entry.name}
+                        actions={[
+                          { label: 'Edit', onAct: () => navigate(`/edit/${entry.id}`) },
+                          { label: 'Delete', tone: 'danger', onAct: () => removeMeal(entry) },
+                        ]}
+                      >
+                        <button
+                          type="button"
+                          className="k-meal-row"
+                          onClick={() => { feel('tap'); navigate(`/edit/${entry.id}`) }}
+                        >
+                          <span className="k-food-tile"><FoodIcon emoji={entry.emoji} name={entry.name} size={20} /></span>
+                          <span className="k-meal-name">
+                            {entry.name}
+                            <small>{entryTime(entry)} · P {Math.round(entry.protein)} · C {Math.round(entry.carbs)} · F {Math.round(entry.fat)}</small>
+                          </span>
+                          <span className="k-meal-kcal tabular">{Math.round(entry.calories)} kcal</span>
+                        </button>
+                      </SwipeRow>
+                    ))}
+                    {isToday && !guest && (
+                      <button type="button" className="k-add-row" onClick={() => openLog(group.type)}>
+                        <IconPlus size={16} /> Add {group.label.toLowerCase()}
+                      </button>
+                    )}
+                  </section>
+                ))}
+                {!isToday && (
+                  <button type="button" className="k-button k-back-today" onClick={() => setSelectedDate(startOfDay())}>
+                    Back to today
+                  </button>
+                )}
+              </section>
+
+              {showMomo && (
+                <aside className="k-momo" aria-label="A note from Momo">
+                  <span className="k-momo-avatar"><MomoSticker mood={dayEntries.length > 0 ? 'proud' : 'cozy'} /></span>
+                  <p>
+                    {isToday
+                      ? dayEntries.length > 0 ? 'You showed up. That’s the part worth celebrating.' : 'Fancy breakfast, leftover pizza — it all belongs here.'
+                      : 'A page from your food story. No grades attached.'}
+                  </p>
+                  {profile.mascotRoasts && (
+                    <button type="button" className="k-text-button" onClick={() => mascotEvent('poke')}>
+                      Roast me <IconFlame size={16} />
+                    </button>
+                  )}
+                </aside>
+              )}
+
+              {isToday && !guest && (
+                <section className="k-extras" aria-label="Water and notes">
+                  <span className="k-extras-label"><IconWater size={18} /> Water</span>
+                  <div className="k-stepper" role="group" aria-label="Water glasses">
+                    <button type="button" aria-label="Remove a glass of water" disabled={water <= 0} onClick={() => changeWater(water - 1)}>−</button>
+                    <span className="tabular" aria-live="polite">{water}/{WATER_GLASSES}</span>
+                    <button type="button" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
+                  </div>
+                  <button
+                    type="button"
+                    className="k-text-button"
+                    disabled={notes >= NOTE_LIMIT}
+                    onClick={() => { feel('tap'); patchGamification(g => applyNote(g, selectedDayKey)) }}
+                  >
+                    {notes >= NOTE_LIMIT ? 'Notes logged' : 'Add a kitchen note'}
+                  </button>
+                </section>
+              )}
+            </>
+          )}
+        </main>
       </PullToRefresh>
 
       {!guest && <BottomNav />}

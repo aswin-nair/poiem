@@ -1,3 +1,4 @@
+@layer legacy {
 /* Meal logging: a colourful work surface, with the final total beside the editor. */
 .meal-flow .app-main { padding-bottom: calc(40px + var(--safe-bottom)); }
 .meal-flow .flow-heading { margin: 8px 0 24px; }
@@ -146,4 +147,5 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .meal-flow .ui-icon { animation: none !important; transition: none !important; }
+}
 }

@@ -1,0 +1,85 @@
+/* Poiem system tokens ("Quiet Kitchen").
+   Everything the app draws from lives here. The legacy stylesheets sit in the
+   `legacy` cascade layer below, so these values and the system components win
+   without ID selectors or !important. Colourful fills always take dark ink. */
+@layer system {
+  :root {
+    --k-ground: #FFF8EB;
+    --k-card: #FFFDF7;
+    --k-sunken: #F3EBDB;
+    --k-ink: #20221D;
+    --k-muted: #5A564C;
+    --k-line: #20221D;
+    --k-hair: rgb(32 34 29 / 14%);
+    --k-hair-strong: rgb(32 34 29 / 34%);
+
+    --k-acid: #E7F258;
+    --k-on-acid: #20221D;
+    --k-action: #FF8055;
+    --k-on-action: #20221D;
+    /* Over a target is information, not a warning: a warm fill, never red text. */
+    --k-over-fill: #FF8055;
+    --k-danger-soft: #FFE4E9;
+    --k-danger-ink: #A8283A;
+
+    --k-switch-on-track: #20221D;
+    --k-switch-on-knob: #E7F258;
+
+    --k-focus: #20221D;
+    --k-shadow-color: #20221D;
+    --k-shadow-sm: 3px 3px 0 var(--k-shadow-color);
+    --k-shadow: 4px 4px 0 var(--k-shadow-color);
+    --k-scrim: rgb(20 20 18 / 48%);
+
+    --k-font-display: 'Barlow Condensed', Impact, 'Arial Narrow', system-ui, sans-serif;
+    --k-font-body: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --k-font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+
+    --k-text-xs: .75rem;
+    --k-text-sm: .875rem;
+    --k-text-md: 1rem;
+    --k-text-lg: 1.125rem;
+
+    --k-space-1: 4px;
+    --k-space-2: 8px;
+    --k-space-3: 12px;
+    --k-space-4: 16px;
+    --k-space-5: 20px;
+    --k-space-6: 24px;
+    --k-space-7: 32px;
+    --k-space-8: 40px;
+
+    --k-radius-tile: 8px;
+    --k-radius-sheet: 18px;
+    --k-press: 90ms;
+    --k-ease: cubic-bezier(.2, .8, .2, 1);
+
+    --k-shell: 480px;
+    --k-gutter: 20px;
+    --k-tabbar-h: 88px;
+    --k-z-nav: 100;
+    --k-z-sheet: 900;
+    --k-z-toast: 1000;
+  }
+
+  :root[data-theme="dark"] {
+    --k-switch-on-track: #E7F258;
+    --k-switch-on-knob: #20221D;
+    --k-ground: #191B1A;
+    --k-card: #242723;
+    --k-sunken: #1E201E;
+    --k-ink: #F8F1E4;
+    --k-muted: #C9C2B4;
+    --k-line: #A5A795;
+    --k-hair: rgb(248 241 228 / 12%);
+    --k-hair-strong: rgb(248 241 228 / 30%);
+    --k-action: #FF996F;
+    --k-on-action: #181B20;
+    --k-over-fill: #FF996F;
+    --k-danger-soft: #3E2930;
+    --k-danger-ink: #FFA5B0;
+    --k-focus: #E7F258;
+    --k-shadow-color: #080A08;
+    --k-scrim: rgb(0 0 0 / 62%);
+  }
+}

@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Log celebration (§11.1) ─────────────────────────────────
    The whole screen becomes the reward. Nothing here reacts to the calorie
    total — only to the act of logging. §2.4 / §2.5 */
@@ -445,3 +446,4 @@
 }
 
 .toast-x:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+}

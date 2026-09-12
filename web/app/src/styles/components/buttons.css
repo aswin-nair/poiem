@@ -1,3 +1,4 @@
+@layer legacy {
 /* Shared tactile button: one recipe for account, onboarding and app screens. */
 .pressable {
   position: relative; display: inline-block; max-width: 100%; min-width: 0;
@@ -35,3 +36,4 @@
   .pressable:not(:disabled):not([aria-disabled="true"]):active .pressable-face { transform: translateY(3px); }
 }
 @media (prefers-reduced-motion: reduce) { .pressable-face { transition: none; } }
+}

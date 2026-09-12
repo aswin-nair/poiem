@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Swipe-to-delete food cards ────────────────────────────── */
 
 /* Outer wrapper groups the swipe row + the expanded quick-edit panel */
@@ -531,3 +532,4 @@
 /* ═══════════════════════════════════════════════════════════════
    ADDICTIVE HOME UX — keyframes, components, micro-interactions
    ═══════════════════════════════════════════════════════════════ */
+}

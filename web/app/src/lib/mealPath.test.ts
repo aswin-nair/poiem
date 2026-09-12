@@ -20,7 +20,7 @@ describe('meal path derivation', () => {
   })
 
   it('ignores other as a fifth node', () => {
-    const nodes = mealPathStates([entry('other'), entry('other')], 15)
+    const nodes = mealPathStates([entry('other'), entry('other')], 14)
     expect(nodes).toHaveLength(4)
     expect(nodes.every(node => node.status !== 'done')).toBe(true)
     expect(mascotSlot(nodes)).toBe('lunch')

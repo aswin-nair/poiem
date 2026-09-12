@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Review / Edit shared ───────────────────────────────────── */
 
 /* ── Review Food Page ─────────────────────────────────────── */
@@ -1082,4 +1083,5 @@
   box-shadow: var(--clay-inset);
   font-size: 0.78rem;
   line-height: 1.4;
+}
 }

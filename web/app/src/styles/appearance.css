@@ -1,3 +1,4 @@
+@layer legacy {
 .appearance-control {
   min-width: 0;
   max-width: 100%;
@@ -132,4 +133,5 @@
 @media (forced-colors: active) {
   .appearance-option > input:checked + .appearance-option-face { outline: 2px solid Highlight; outline-offset: -3px; }
   .appearance-option > input:focus-visible + .appearance-option-face { outline-color: Highlight; }
+}
 }

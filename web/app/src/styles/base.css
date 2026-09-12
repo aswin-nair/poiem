@@ -1,3 +1,4 @@
+@layer legacy {
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body, #root {
@@ -159,4 +160,5 @@ a:hover { text-decoration: underline; }
   background: var(--coral-soft);
   border-color: var(--coral);
   color: var(--coral-text);
+}
 }

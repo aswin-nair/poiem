@@ -1,4 +1,3 @@
-import { PosterStrip } from '../components/PosterPrimitives'
 import { useRef, useState } from 'react'
 import { Toggle, RadioDot } from '../components/Toggle'
 import { SettingsRow } from '../components/SettingsRow'
@@ -238,7 +237,6 @@ export function SettingsPage() {
   return (
     <div className="app-shell you-refresh food-club-app poster-ui">
       <main className="app-main">
-        <PosterStrip items={['Your space', 'Your pace']} />
         <header className="you-header">
           <div>
             <PoiemSectionLabel>Your space</PoiemSectionLabel>
