@@ -14,6 +14,7 @@ import { ResetPasswordPage } from './pages/ResetPasswordPage'
 import { HomePage } from './pages/HomePage'
 import { OnboardingPage } from './pages/OnboardingPage'
 import { LogSheet } from './pages/LogSheet'
+import { LogSheetOpenContext } from './lib/logSheetOpen'
 import { LogTextPage } from './pages/LogTextPage'
 import { PhotoLogPage } from './pages/PhotoLogPage'
 import { SavedMealsPage } from './pages/SavedMealsPage'
@@ -152,6 +153,7 @@ function AuthenticatedRoutes() {
   }
 
   return (
+    <LogSheetOpenContext.Provider value={logSheetOpen}>
     <AnchorProvider>
     <MascotOverlay />
     <DirectionalRoutes hold={route.hold}>
@@ -178,6 +180,7 @@ function AuthenticatedRoutes() {
     </DirectionalRoutes>
     {logSheetOpen && <LogSheet />}
     </AnchorProvider>
+    </LogSheetOpenContext.Provider>
   )
 }
 
