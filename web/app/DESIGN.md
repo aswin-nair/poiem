@@ -106,7 +106,7 @@ These React components render the same markup as before. `components.css` gives 
 | `PressableButton` | Square face, 2px line, 3px hard shadow; primary is persimmon. Press moves the face 2px and drops the shadow. Focus ring on the face |
 | `Toggle` / `RadioDot` | Square 52×30 switch; on is an ink track with an acid knob (reversed in dark) |
 | `Toast` | Ink chip with ground text, 44px Undo and dismiss targets, stacked above the tab bar |
-| `BottomNav` | Card-coloured bar with a 2px line; active tab is solid ink; + is a 50px persimmon square |
+| `BottomNav` | Card-coloured bar with a 2px line; active tab is solid ink. The + is a 58px persimmon sticker rising out of the bar: it squashes when pressed, pops a small acid burst, and turns into an acid × while the log sheet is open |
 | `SwipeRow` | Ink Edit action, danger-ink Delete action |
 | `PortionSheet`, `DatePickerModal` | Square cards on the scrim, display-type titles, acid default choice |
 | `LogCelebration` | The full-screen "Logged." moment on the ground colour, awards on acid; a new wardrobe piece arrives worn, named on acid |
@@ -175,10 +175,11 @@ Today shows no poster masthead, stickers, streak chip or level chip. Streak, lev
 
 In order:
 
-1. **"Logging to" chip** with the meal. It defaults from the time of day, or uses the meal an "Add …" row asked for.
+0. **Header.** The sheet springs up and its parts rise in turn. Momo hops in with his question steam beside "Log a meal" and a kind prompt for the meal ("What’s on the lunch plate?").
+1. **"Logging to" chip** in the meal's colour, beside its icon. It defaults from the time of day, or uses the meal an "Add …" row asked for.
 2. **Search** across recent and saved meals. A bare number becomes "Quick add N kcal".
 3. **Recent / Favourites.** One tap logs again; "Portion" (or press-and-hold) picks ½–2×.
-4. **Other ways to log:** Photo, Describe, Manual, Saved. Each carries the chosen meal.
+4. **More ways to log:** Photo, Describe, Manual and Saved as tinted tiles with a one-line hint. Each carries the chosen meal.
 
 The sheet never focuses the search field on open, so the phone keyboard stays down.
 

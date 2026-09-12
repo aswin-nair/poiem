@@ -168,23 +168,78 @@
   .bottom-nav .nav-item.active .nav-item-inner { border-color: var(--k-ink); background: var(--k-ink); color: var(--k-ground); box-shadow: none; }
   .bottom-nav .nav-item:focus-visible { outline: none; }
   .bottom-nav .nav-item:focus-visible .nav-item-inner { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  /* The + is a tilted persimmon sticker that rises out of the bar. It squashes
+     when pressed, pops a small acid burst, and turns into an acid × while the
+     log sheet is open. */
   .bottom-nav .nav-fab {
+    position: relative;
     justify-self: center;
     display: grid;
     place-items: center;
-    width: 50px;
-    height: 50px;
+    flex: 0 0 auto;
+    width: 58px;
+    height: 58px;
+    margin: -20px 0 0;
     padding: 0;
-    border: 2px solid var(--k-line);
+    border: 0;
     border-radius: 0;
+    background: transparent;
+    color: var(--k-on-action);
+    box-shadow: none;
+    transform: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Explicit size: a percentage width inside a grid <button> shrinks to the icon. */
+  .bottom-nav .nav-fab-face {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border: 2px solid var(--k-on-action);
     background: var(--k-action);
     color: var(--k-on-action);
-    box-shadow: var(--k-shadow-sm);
-    cursor: pointer;
-    transition: transform var(--k-press) ease, box-shadow var(--k-press) ease;
+    box-shadow: 4px 4px 0 var(--k-shadow-color);
+    rotate: -6deg;
+    transition: rotate 240ms cubic-bezier(.3, 1.6, .5, 1), translate var(--k-press) ease, scale var(--k-press) ease, box-shadow var(--k-press) ease, background-color 160ms ease;
   }
-  .bottom-nav .nav-fab:is(:active, .active) { transform: translate(2px, 2px); box-shadow: none; }
-  .bottom-nav .nav-fab:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .bottom-nav .nav-fab-face svg { stroke-width: 3; transition: rotate 280ms cubic-bezier(.3, 1.6, .5, 1); }
+  .bottom-nav .nav-fab:hover .nav-fab-face { rotate: 0deg; }
+  .bottom-nav .nav-fab:hover .nav-fab-face svg { rotate: 90deg; }
+  .bottom-nav .nav-fab:active .nav-fab-face { translate: 3px 3px; scale: .92; box-shadow: 0 0 0 var(--k-shadow-color); }
+  .bottom-nav .nav-fab.active .nav-fab-face {
+    rotate: 0deg;
+    translate: 2px 2px;
+    background: var(--k-acid);
+    border-color: var(--k-on-acid);
+    color: var(--k-on-acid);
+    box-shadow: 2px 2px 0 var(--k-shadow-color);
+  }
+  .bottom-nav .nav-fab.active .nav-fab-face svg { rotate: 135deg; }
+  .bottom-nav .nav-fab:focus-visible { outline: none; }
+  .bottom-nav .nav-fab:focus-visible .nav-fab-face { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .bottom-nav .nav-fab-burst { position: absolute; inset: 0; pointer-events: none; }
+  .bottom-nav .nav-fab-burst i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 13px;
+    margin: -6.5px 0 0 -2.5px;
+    border: 1.5px solid var(--k-on-acid);
+    background: var(--k-acid);
+    opacity: 0;
+    animation: k-fab-burst 480ms cubic-bezier(.2, .8, .2, 1) both;
+  }
+  .bottom-nav .nav-fab-burst i:nth-child(1) { --burst-angle: -70deg; }
+  .bottom-nav .nav-fab-burst i:nth-child(2) { --burst-angle: -35deg; animation-delay: 20ms; }
+  .bottom-nav .nav-fab-burst i:nth-child(3) { --burst-angle: 0deg; animation-delay: 40ms; }
+  .bottom-nav .nav-fab-burst i:nth-child(4) { --burst-angle: 35deg; animation-delay: 20ms; }
+  .bottom-nav .nav-fab-burst i:nth-child(5) { --burst-angle: 70deg; }
+  @keyframes k-fab-burst {
+    0% { opacity: 1; transform: rotate(var(--burst-angle)) translateY(-22px) scaleY(.3); }
+    100% { opacity: 0; transform: rotate(var(--burst-angle)) translateY(-50px) scaleY(1); }
+  }
 
   /* ── Swipe rows ────────────────────────────────────────────── */
   .swipe-row { border-radius: 0; }
