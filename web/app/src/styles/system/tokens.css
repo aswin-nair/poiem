@@ -21,6 +21,17 @@
     --k-over-fill: #FF8055;
     --k-danger-soft: #FFE4E9;
     --k-danger-ink: #A8283A;
+    --k-action-deep: #F0663A;
+
+    /* Joy: soft food tiles, meal and macro colours, and Momo's card. Colourful fills take dark ink. */
+    --k-butter: #FFE58A;
+    --k-peach: #FFD2B8;
+    --k-pink: #F7C6D9;
+    --k-sky: #BFE6FF;
+    --k-mint: #C4EED8;
+    --k-sky-strong: #4FB0E8;
+    --k-momo: #EFB6CC;
+    --k-on-tone: #20221D;
 
     --k-switch-on-track: #20221D;
     --k-switch-on-knob: #E7F258;
@@ -79,6 +90,14 @@
     --k-over-fill: #FF996F;
     --k-danger-soft: #3E2930;
     --k-danger-ink: #FFA5B0;
+    /* Tinted tiles in dark; bright colour stays on actions, meters and Momo. */
+    --k-butter: #4A4122;
+    --k-peach: #4B3527;
+    --k-pink: #4A2F3C;
+    --k-sky: #223B4D;
+    --k-mint: #243F31;
+    --k-sky-strong: #6CC3F2;
+    --k-on-tone: #F8F1E4;
     --k-focus: #E7F258;
     --k-shadow-color: #080A08;
     --k-scrim: rgb(0 0 0 / 62%);

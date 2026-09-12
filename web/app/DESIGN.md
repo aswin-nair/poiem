@@ -2,7 +2,7 @@
 
 Design reference for the Poiem web app (`web/app`).
 
-**Poster outside, kitchen inside.** The public welcome page, onboarding and sign-in keep the loud poster voice: acid yellow, condensed type, stickers. The daily app is a quiet kitchen. It uses a warm paper ground, ink lines, one acid accent for progress and one persimmon colour for the main action. Someone logging their fourth meal of the day needs the number, not a show.
+**Poster outside, kitchen inside.** The public welcome page, onboarding and sign-in keep the loud poster voice: acid yellow, condensed type, stickers. The daily app is a friendly kitchen: a warm paper ground and ink lines, one bright acid card for the number that matters, soft colours that tell meals and foods apart, and Momo saying hello. Someone logging their fourth meal of the day needs the number first. Joy comes from colour, illustration and small motion, never from slogans or stickers.
 
 This file describes the **Poiem system**: the tokens, components and screen rules the app is being rebuilt on. Screens that have not moved yet still run on the older stylesheets, which are contained in a lower cascade layer (see [Architecture](#architecture)).
 
@@ -62,6 +62,11 @@ All tokens live in [`tokens.css`](src/styles/system/tokens.css). The light palet
 | `--k-danger-ink` / `--k-danger-soft` | `#A8283A` / `#FFE4E9` | `#FFA5B0` / `#3E2930` | Delete only |
 | `--k-focus` | `#20221D` | `#E7F258` | 3px focus outlines |
 | `--k-scrim` | ink at 48% | black at 62% | Sheet and dialog backdrops |
+| `--k-butter` / `--k-peach` / `--k-pink` / `--k-sky` / `--k-mint` | `#FFE58A` / `#FFD2B8` / `#F7C6D9` / `#BFE6FF` / `#C4EED8` | darker tints (`#4A4122`…) | Meal icons (breakfast, lunch, snack, dinner, other) and food tiles by kind of food |
+| `--k-on-tone` | `#20221D` | `#F8F1E4` | Icons on those tints |
+| `--k-sky-strong` | `#4FB0E8` | `#6CC3F2` | Fat meter and water glasses |
+| `--k-momo` | `#EFB6CC` | `#EFB6CC` | Momo's card |
+| `--k-action-deep` | `#F0663A` | — | Stripes in the calorie meter |
 
 Muted text on the ground is about 6.9:1 in light and 9.8:1 in dark. Ink on persimmon is about 6.5:1.
 
@@ -132,12 +137,12 @@ These React components render the same markup as before. `components.css` gives 
 
 [`pages/HomePage.tsx`](src/pages/HomePage.tsx). Everything needed for the day is on the first screen, top to bottom:
 
-1. **Date bar.** Weekday and date eyebrow, the day as a display title ("Today", "Yesterday"), and a calendar button. Below it, a seven-day week strip with a dot on logged days. It has no arrows; the calendar reaches other weeks.
-2. **Budget.** The one big number: kcal left (or "kcal over the guide"), an acid meter, and "eaten / guide" in mono.
-3. **Macros.** Protein, carbs and fat in one ruled row, each with current / goal grams and a thin meter.
-4. **Meals.** Grouped as Breakfast, Lunch, Dinner, Snack (plus Other when used). Each group shows its kcal. Rows show the food icon, name, time and P · C · F, and swipe to edit or delete. Each group ends with a dashed "Add breakfast" row that opens the log sheet for that meal.
-5. **Momo.** One line from the mascot, with "Roast me" only after consent.
-6. **Water and notes.** A small stepper (0–8 glasses) and "Add a kitchen note".
+1. **Date bar.** Weekday and date eyebrow, the day as a display title ("Today", "Yesterday"), and a calendar button. Below it, a seven-day week strip with an acid dot on logged days. It has no arrows; the calendar reaches other weeks.
+2. **Momo says hello.** A pink Momo card with a greeting by first name and time of day, and one warm line that fits the day ([`lib/todayGreeting.ts`](src/lib/todayGreeting.ts)). It never grades the numbers. A tap gets a playful line and a bop. "Roast me" appears only after consent.
+3. **Budget.** The one bright acid card: kcal left (or "kcal over the guide") counts up, a striped persimmon meter fills, and "eaten / guide" sits underneath in mono.
+4. **Macros.** Three small cards, each in its own colour: protein persimmon, carbs acid, fat sky blue.
+5. **Meals.** Grouped as Breakfast, Lunch, Dinner, Snack (plus Other when used), each with a coloured icon and its kcal. Rows show a food tile tinted by kind of food, the name, time and P · C · F, and swipe to edit or delete. A meal you just logged flashes acid. Each group ends with an "Add breakfast" row that opens the log sheet for that meal.
+6. **Water and notes.** Eight little glasses that fill, a stepper, and "Add a kitchen note".
 
 Today shows no poster masthead, stickers, streak chip or level chip. Streak, level, XP and freezes live in the **Journey** card on Insights. Tracking pause replaces the numbers with a notice. Guests see a claim-your-progress card and no log shortcuts.
 

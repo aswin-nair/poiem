@@ -30,8 +30,9 @@ describe('Today', () => {
     expect(render()).not.toContain('Roast me')
   })
 
-  it('leads with what is left, then macros, then meals, without streaks, levels or decoration', () => {
+  it('opens with Momo, then what is left, then macros, then meals, without streaks, levels or poster decoration', () => {
     const html = render()
+    expect(html.indexOf('aria-label="A note from Momo"')).toBeLessThan(html.indexOf('kcal left'))
     expect(html).toContain('Today’s snapshot')
     expect(html).toContain('kcal left')
     expect(html).toContain('aria-label="Choose date"')
@@ -42,6 +43,7 @@ describe('Today', () => {
       expect(html).toContain(`Add ${slot}</button>`)
     }
     expect(html).toContain('aria-label="Water glasses"')
+    expect(html.match(/class="k-glass( is-full)?"/g)).toHaveLength(8)
     expect(html).not.toMatch(/day streak|Level \d/)
     expect(html).not.toContain('Logging milestones')
     expect(html).not.toContain('poster-')
@@ -49,7 +51,14 @@ describe('Today', () => {
     expect(html.match(/aria-label="Log a meal"/g)).toHaveLength(1)
   })
 
-  it('groups meals by meal type, each with its time, macros and a food icon', () => {
+  it('greets by first name and gives Momo a button to poke', () => {
+    state.profile.name = 'Sam Rivera'
+    const html = render()
+    expect(html).toMatch(/(Morning|Afternoon|Evening|Hey there), Sam!/)
+    expect(html).toContain('aria-label="Say something, Momo"')
+  })
+
+  it('groups meals by meal type, each with its time, macros and a tinted food icon', () => {
     state.foodEntries = [
       meal(),
       meal({ id: 'soup', name: 'Tomato soup', calories: 180, protein: 4, carbs: 20, fat: 9, mealType: 'dinner' }),
@@ -61,6 +70,7 @@ describe('Today', () => {
     expect(html).toContain('250 kcal')
     expect(html).toContain('P 8 · C 40 · F 5')
     expect(html).toContain('lucide-soup')
+    expect(html).toContain('k-food-tile is-tone-mint')
     expect(html).toContain('2 meals · 430 kcal')
     expect(html).toContain('You showed up.')
   })
@@ -70,6 +80,7 @@ describe('Today', () => {
     const html = render()
     expect(html).toContain('kcal over the guide')
     expect(html).not.toContain('kcal left')
+    expect(html).toContain('Tomorrow’s a fresh plate.')
   })
 
   it('hides nutrition during tracking pause', () => {

@@ -51,3 +51,20 @@ export function foodGlyphFor(name: string | undefined): FoodGlyph {
   if (!text.trim()) return 'meal'
   return RULES.find(([pattern]) => pattern.test(text))?.[1] ?? 'meal'
 }
+
+/** A soft tile colour per kind of food, so a day of meals reads as a day of different foods. */
+export type FoodTone = 'butter' | 'mint' | 'pink' | 'sky' | 'peach' | 'plain'
+
+const TONES: Record<FoodGlyph, FoodTone> = {
+  coffee: 'sky', water: 'sky', soda: 'sky', milk: 'sky', wine: 'sky', beer: 'sky',
+  burger: 'butter', pizza: 'butter', sandwich: 'butter', bread: 'butter', croissant: 'butter', popcorn: 'butter',
+  chicken: 'peach', beef: 'peach', fish: 'peach', shrimp: 'peach', egg: 'peach', nut: 'peach',
+  salad: 'mint', carrot: 'mint', soup: 'mint',
+  cookie: 'pink', cake: 'pink', donut: 'pink', icecream: 'pink', candy: 'pink',
+  banana: 'pink', apple: 'pink', citrus: 'pink', cherry: 'pink', grape: 'pink',
+  meal: 'plain',
+}
+
+export function foodToneFor(name: string | undefined): FoodTone {
+  return TONES[foodGlyphFor(name)]
+}
