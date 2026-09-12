@@ -27,6 +27,31 @@ function isLogged(day: WeekDay): day is LoggedDay {
 const LOGGED = WEEK.filter(isLogged)
 const AVERAGE = Math.round(LOGGED.reduce((sum, day) => sum + day.kcal, 0) / LOGGED.length)
 
+/** Each day also stamps in on its own, so a phone that stacks the week sees every day arrive. */
+function Day({ day, index }: { day: WeekDay; index: number }) {
+  const row = useRef<HTMLLIElement>(null)
+  const arrived = useInView(row, { once: true, amount: 0.6 })
+  const style = { '--i': index } as CSSProperties
+  const state = arrived ? ' is-in' : ''
+  return isLogged(day) ? (
+    <li ref={row} className={`wp-day${state}`} style={style}>
+      <p className="wp-day-name">{day.day}</p>
+      <PlateArt meal={day.meal} className="wp-day-plate" />
+      <p className="wp-day-kcal"><strong className="tabular">{day.kcal.toLocaleString('en-US')}</strong>kcal</p>
+      <p className="wp-day-note">{day.entries} entries</p>
+      <span className="wp-day-meter" aria-hidden="true"><span style={{ '--fill': day.kcal / METER_SCALE } as CSSProperties} /></span>
+    </li>
+  ) : (
+    <li ref={row} className={`wp-day is-off${state}`} style={style}>
+      <p className="wp-day-name">{day.day}</p>
+      <span className="wp-day-plate wp-day-empty" aria-hidden="true" />
+      <p className="wp-day-kcal"><strong>Day off</strong>Not logged</p>
+      <p className="wp-day-note">Nothing to catch up on</p>
+      <span className="wp-day-meter" aria-hidden="true" />
+    </li>
+  )
+}
+
 /** A sample week as a ruled board: logged days stamp in, days off stay part of the week. */
 export function WeekBlocks() {
   const board = useRef<HTMLDivElement>(null)
@@ -38,28 +63,9 @@ export function WeekBlocks() {
       <div className="wp-wrap">
         <SectionHead index="03" label="Your week" titleId="week-title" title={<>A real week.<br /><span>Days off included.</span></>} note="Sample week" />
         <div ref={board} className="wp-week-board">
-          <div className="wp-week-scroll" tabIndex={0} role="region" aria-label="Sample week, scroll to see all seven days">
+          <div className="wp-week-scroll" tabIndex={0} role="region" aria-label="Sample week, Monday to Sunday">
             <ol className={`wp-week ${inView || reduced ? 'is-playing' : 'is-armed'}`} aria-label="Sample week">
-              {WEEK.map((day, i) => {
-                const style = { '--i': i } as CSSProperties
-                return isLogged(day) ? (
-                  <li key={day.day} className="wp-day" style={style}>
-                    <p className="wp-day-name">{day.day}</p>
-                    <PlateArt meal={day.meal} className="wp-day-plate" />
-                    <p className="wp-day-kcal"><strong className="tabular">{day.kcal.toLocaleString('en-US')}</strong>kcal</p>
-                    <p className="wp-day-note">{day.entries} entries</p>
-                    <span className="wp-day-meter" aria-hidden="true"><span style={{ '--fill': day.kcal / METER_SCALE } as CSSProperties} /></span>
-                  </li>
-                ) : (
-                  <li key={day.day} className="wp-day is-off" style={style}>
-                    <p className="wp-day-name">{day.day}</p>
-                    <span className="wp-day-plate wp-day-empty" aria-hidden="true" />
-                    <p className="wp-day-kcal"><strong>Day off</strong>Not logged</p>
-                    <p className="wp-day-note">Nothing to catch up on</p>
-                    <span className="wp-day-meter" aria-hidden="true" />
-                  </li>
-                )
-              })}
+              {WEEK.map((day, i) => <Day key={day.day} day={day} index={i} />)}
             </ol>
           </div>
           <ul className="wp-week-summary">

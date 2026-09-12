@@ -1,4 +1,5 @@
-import { useState, type CSSProperties } from 'react'
+import { useRef, useState, type CSSProperties } from 'react'
+import { useInView, useReducedMotion } from 'motion/react'
 import { useCountUp } from '../../hooks/useCountUp'
 import { layoutCallouts, leaderPath, STAGE } from './callouts'
 import { PlateArt } from './PlateArt'
@@ -20,13 +21,18 @@ export function ScanPanel() {
   const [index, setIndex] = useState(0)
   const [hot, setHot] = useState<number | null>(null)
   const compact = useMediaQuery('(max-width: 640px)')
+  const figure = useRef<HTMLElement>(null)
+  // On a phone the plate sits below the headline. Read it when it arrives on screen, not while it's out of sight.
+  const inView = useInView(figure, { once: true, amount: 0.35 })
+  const reduced = useReducedMotion()
+  const play = inView || Boolean(reduced)
   const meal = SAMPLE_MEALS[index]
   const total = mealKcal(meal)
-  const kcal = useCountUp(total, 650)
+  const kcal = useCountUp(play ? total : 0, 650)
   const callouts = layoutCallouts(meal.items)
 
   return (
-    <figure className="wp-scan">
+    <figure ref={figure} className="wp-scan" data-play={play}>
       <figcaption className="wp-meta-row">
         <span>Sample plate {pad(index + 1)} / {pad(SAMPLE_MEALS.length)}</span>
         <span>{meal.name}</span>
@@ -78,9 +84,9 @@ export function ScanPanel() {
       </div>
 
       {compact && (
-        <ol className="wp-scan-legend">
+        <ol className="wp-scan-legend" key={meal.id}>
           {meal.items.map((item, i) => (
-            <li key={item.label}><span className="wp-scan-num">{i + 1}</span><span>{item.label}</span><span className="tabular">{item.kcal} kcal</span></li>
+            <li key={item.label} style={order(i)}><span className="wp-scan-num">{i + 1}</span><span>{item.label}</span><span className="tabular">{item.kcal} kcal</span></li>
           ))}
         </ol>
       )}

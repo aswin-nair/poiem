@@ -1,0 +1,90 @@
+/* Motion that waits for its section. On a phone most of the page starts below the fold,
+   so each piece plays when it arrives on screen instead of while it is out of sight.
+   Everything here is off under prefers-reduced-motion (see welcome-poster.css). */
+
+/* Hero scan: the grid, sweep, markers and food list hold their first frame until the plate is visible. */
+.wp-scan:not([data-play='true']) :is(.wp-scan-stage, .wp-scan-legend) * { animation-play-state: paused; }
+.wp-scan-legend li { animation: wp-tag .45s var(--wp-ease) both; animation-delay: calc(560ms + var(--i) * 140ms); }
+
+/* [01] Plate to numbers on phones and tablets: plate lands, foods fill the label, the entry reaches Today. */
+.wp-p2n.is-reveal .wp-p2n-plate svg { transition: scale .75s cubic-bezier(.3, 1.45, .5, 1), rotate .75s var(--wp-ease), opacity .35s ease; }
+.wp-p2n.is-reveal .wp-p2n-plate:not(.is-in) svg { scale: .55; rotate: -20deg; opacity: 0; }
+.wp-p2n.is-reveal .wp-p2n-entry { transition: translate .6s var(--wp-ease), opacity .35s ease; }
+.wp-p2n.is-reveal .wp-p2n-entry:not(.is-in) { translate: 0 36px; opacity: 0; }
+.wp-p2n.is-reveal .wp-p2n-items li { transition: translate .5s var(--wp-ease), opacity .3s ease; transition-delay: calc(260ms + var(--i) * 160ms); }
+.wp-p2n.is-reveal .wp-p2n-entry:not(.is-in) .wp-p2n-items li { translate: -40px 0; opacity: 0; }
+.wp-p2n.is-reveal .wp-bar > span { transition: width .9s var(--wp-ease) .75s; }
+.wp-p2n.is-reveal .wp-entry-macros li:nth-child(2) .wp-bar > span { transition-delay: .9s; }
+.wp-p2n.is-reveal .wp-entry-macros li:nth-child(3) .wp-bar > span { transition-delay: 1.05s; }
+.wp-p2n.is-reveal .wp-p2n-screen { transition: translate .75s var(--wp-ease), rotate .75s var(--wp-ease), opacity .4s ease; }
+.wp-p2n.is-reveal .wp-p2n-phone:not(.is-in) .wp-p2n-screen { translate: 0 72px; rotate: 4deg; opacity: 0; }
+.wp-p2n.is-reveal .wp-p2n-flash { transition: scale .5s cubic-bezier(.3, 1.7, .5, 1) .7s; }
+.wp-p2n.is-reveal .wp-p2n-phone:not(.is-in) .wp-p2n-flash { scale: 0; }
+
+/* [03] Your week: a day stamps in when it arrives, even if the board as a whole hasn't. */
+.wp-week.is-armed .wp-day.is-in .wp-day-plate { transform: none; }
+.wp-week.is-armed .wp-day.is-in .wp-day-meter > span { transform: scaleX(var(--fill)); }
+
+/* [04] Poiem Facts: the label drops in, then its rows fill one by one. */
+@media (prefers-reduced-motion: no-preference) {
+  .wp-facts { transition: rotate .7s cubic-bezier(.3, 1.35, .5, 1), translate .6s var(--wp-ease), opacity .35s ease; }
+  .wp-facts:not(.is-in) { rotate: -6deg; translate: 0 48px; opacity: 0; }
+  .wp-facts .wp-nl-kcal > strong { transition: scale .55s cubic-bezier(.3, 1.8, .5, 1) .35s; }
+  .wp-facts:not(.is-in) .wp-nl-kcal > strong { scale: .3; }
+  .wp-facts-rows > div { transition: translate .45s var(--wp-ease), opacity .3s ease; transition-delay: calc(450ms + var(--i) * 120ms); }
+  .wp-facts:not(.is-in) .wp-facts-rows > div { translate: 28px 0; opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  /* [02] How it works: the step in the middle of the screen keeps a visible marker. */
+  .wp-step-num { transition: background-color .25s ease, color .25s ease; }
+  .wp-step.is-active .wp-step-num { background: var(--wp-accent); color: #121212; }
+}
+
+/* [02] Each app screen wipes up as it scrolls into view, where scroll-driven animation is supported. */
+@keyframes wp-figure-rise {
+  from { clip-path: inset(100% -24px -24px -24px); translate: 0 48px; rotate: -2deg; }
+  to { clip-path: inset(-24px); translate: 0 0; rotate: 0deg; }
+}
+@supports (animation-timeline: view()) {
+  @media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+    .wp-step-figure .wp-figure { animation: wp-figure-rise linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+  }
+}
+
+@media (max-width: 600px) {
+  /* The week reads top to bottom on a phone, so every day is on screen when it stamps in. */
+  .wp-week-scroll { overflow: visible; scroll-snap-type: none; }
+  .wp-week { grid-template-columns: minmax(0, 1fr); width: auto; }
+  .wp-day {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    grid-template-areas: 'plate name kcal' 'plate note kcal';
+    column-gap: 14px;
+    row-gap: 4px;
+    align-items: center;
+    min-height: 0;
+    padding: 14px 16px 28px;
+    scroll-snap-align: none;
+  }
+  .wp-day-name { grid-area: name; align-self: end; }
+  .wp-day-plate { grid-area: plate; width: 64px; max-width: none; margin: 0; transition-delay: 60ms; }
+  .wp-day-empty { width: 54px; justify-self: center; }
+  .wp-day-kcal { grid-area: kcal; margin-top: 0; text-align: right; }
+  .wp-day-kcal strong { font-size: 34px; }
+  .wp-day-note { grid-area: note; margin-top: 0; align-self: start; }
+  .wp-day-meter > span { transition-delay: 260ms; }
+
+  /* Nothing under 11px on a phone. */
+  .wp-momo-byline, .wp-momo-invite, .wp-sample-note, .wp-scan-macros li > span { font-size: 11px; }
+  .welcome-poster .wp-ticker-toggle { font-size: 11px; }
+}
+
+/* Touch screens keep a hover state after a tap; don't leave buttons lifted. */
+@media (hover: none) {
+  .welcome-poster .wp-btn:hover { transform: none; box-shadow: 6px 6px 0 var(--wp-shadow); }
+  .welcome-poster .wp-btn-sm:hover { box-shadow: 4px 4px 0 var(--wp-shadow); }
+  .welcome-poster .wp-btn:hover svg { transform: none; }
+  .welcome-poster .wp-scan-picker button:hover:not([aria-pressed='true']) { transform: none; box-shadow: 4px 4px 0 var(--wp-shadow); background: var(--wp-cell); color: var(--wp-fg); }
+  .welcome-poster .wp-scan-picker button:hover .wp-scan-thumb { transform: none; }
+}
