@@ -16,6 +16,7 @@ on:
       - 'packages/**'
       - 'package.json'
       - '.github/workflows/web-ci.yml'
+  workflow_dispatch:
 
 jobs:
   web-unit:
