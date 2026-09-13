@@ -14,6 +14,7 @@ const SURFACES: ReadonlyArray<{ name: string; path: string; ready: (page: Page) 
   { name: 'manual', path: '/log/manual', ready: page => page.getByLabel('Food name') },
   { name: 'saved', path: '/discover', ready: page => page.getByRole('heading', { name: 'Saved', exact: true }) },
   { name: 'insights', path: '/progress', ready: page => page.getByRole('region', { name: 'Journey' }) },
+  { name: 'you', path: '/settings', ready: page => page.getByRole('heading', { name: 'You', exact: true }) },
 ]
 
 for (const width of WIDTHS) {

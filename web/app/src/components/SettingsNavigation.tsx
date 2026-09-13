@@ -18,7 +18,7 @@ export function SettingsNavigation({ hasChanges, saved, invalid, onSave }: {
   useEffect(() => {
     const container = toolbar.current
     const links = rail.current
-    const shell = container?.closest<HTMLElement>('.you-refresh')
+    const shell = container?.closest<HTMLElement>('.k-you')
     if (!container || !links || !shell) return
     let frame = 0
     const sync = () => {
