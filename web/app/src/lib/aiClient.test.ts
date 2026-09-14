@@ -57,4 +57,30 @@ describe('AI request boundaries', () => {
     expect(error.message).toBe('OpenRouter could not complete the request (400).')
     expect(error.message).not.toContain('private-provider-detail')
   })
+
+  it('tells a rejected key apart from an empty balance and a rate limit', async () => {
+    const messageFor = async (status: number) => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status })))
+      return completeChat(settings, [{ role: 'user', content: 'meal' }]).then(
+        () => '',
+        (value: unknown) => value instanceof Error ? value.message : String(value),
+      )
+    }
+
+    expect(await messageFor(401)).toBe('OpenRouter rejected your API key. Check it in You → AI settings.')
+    expect(await messageFor(402)).toContain('out of credits')
+    expect(await messageFor(429)).toContain('rate-limiting')
+    expect(await messageFor(503)).toContain('having trouble right now')
+  })
+
+  it('reads a rejected Gemini key out of its ambiguous 400', async () => {
+    const gemini: AISettings = { ...settings, provider: 'gemini', model: 'gemini-2.0-flash' }
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(
+      '{"error":{"code":400,"message":"API key not valid. Please pass a valid API key.","status":"INVALID_ARGUMENT"}}',
+      { status: 400 },
+    )))
+
+    await expect(completeChat(gemini, [{ role: 'user', content: 'meal' }]))
+      .rejects.toThrow('Gemini rejected your API key. Check it in You → AI settings.')
+  })
 })

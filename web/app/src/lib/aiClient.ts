@@ -34,6 +34,34 @@ async function timedRequest<T>(
   }
 }
 
+/**
+ * Turn a provider status into advice the reader can act on. A bare status code cannot
+ * distinguish a wrong key from an empty balance, which is the difference between
+ * "fix your key" and "add credits". The response body is never copied into the message.
+ */
+function providerFailure(provider: string, status: number, invalidKey = false): Error {
+  if (invalidKey || status === 401 || status === 403) {
+    return new Error(`${provider} rejected your API key. Check it in You → AI settings.`)
+  }
+  if (status === 402) {
+    return new Error(`Your ${provider} account is out of credits. Add credits, or pick another model in You → AI settings.`)
+  }
+  if (status === 429) {
+    return new Error(`${provider} is rate-limiting this key. Wait a moment, then try again or log manually.`)
+  }
+  if (status >= 500) {
+    // The code stays in outage text: it is the one case where the fault is not the reader's.
+    return new Error(`${provider} is having trouble right now (${status}). Try again, or log manually.`)
+  }
+  return new Error(`${provider} could not complete the request (${status}).`)
+}
+
+/** Gemini reports a rejected key as 400 INVALID_ARGUMENT, so its status alone is ambiguous. */
+async function geminiFailure(res: Response): Promise<Error> {
+  const detail = await res.text().catch(() => '')
+  return providerFailure('Gemini', res.status, /API[ _]?key not valid|API_KEY_INVALID/i.test(detail))
+}
+
 function aiHeaders(settings: AISettings): Record<string, string> {
   const h: Record<string, string> = { 'Content-Type': 'application/json' }
   if (settings.provider === 'openrouter') {
@@ -51,7 +79,7 @@ export async function completeChat(
   temperature?: number,
   options: RequestOptions = {},
 ): Promise<string> {
-  if (!settings.apiKey.trim()) throw new Error('Add your API key in Settings.')
+  if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
 
   if (settings.provider === 'openrouter') {
     return timedRequest(async signal => {
@@ -66,7 +94,7 @@ export async function completeChat(
         }),
         signal,
       })
-      if (!res.ok) throw new Error(`OpenRouter could not complete the request (${res.status}).`)
+      if (!res.ok) throw providerFailure('OpenRouter', res.status)
       const json = await res.json() as { choices?: Array<{ message?: { content?: string } }>; error?: { message?: string } }
       if (json.error?.message) throw new Error('OpenRouter could not complete the request.')
       const text = json.choices?.[0]?.message?.content
@@ -107,7 +135,7 @@ export async function completeChat(
         signal,
       },
     )
-    if (!res.ok) throw new Error(`Gemini could not complete the request (${res.status}).`)
+    if (!res.ok) throw await geminiFailure(res)
     const json = await res.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> }
     const text = json.candidates?.[0]?.content?.parts?.[0]?.text
     if (!text) throw new Error('Gemini returned an empty response. Try again or log manually.')
@@ -128,7 +156,7 @@ export async function completeVision(
   systemPrompt?: string,
   options: RequestOptions = {},
 ): Promise<string> {
-  if (!settings.apiKey.trim()) throw new Error('Add your API key in Settings.')
+  if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
 
   if (settings.provider === 'openrouter') {
     const content = [
@@ -174,7 +202,7 @@ export async function completeVision(
         signal,
       },
     )
-    if (!res.ok) throw new Error(`Gemini could not complete the request (${res.status}).`)
+    if (!res.ok) throw await geminiFailure(res)
     const json = await res.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> }
     const text = json.candidates?.[0]?.content?.parts?.[0]?.text
     if (!text) throw new Error('Gemini returned an empty response. Try again or log manually.')
