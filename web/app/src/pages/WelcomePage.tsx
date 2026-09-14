@@ -14,6 +14,7 @@ import { useCutNavigation } from './welcome/useCutNavigation'
 import { WeekBlocks } from './welcome/WeekBlocks'
 import { MomoAside } from './welcome/MomoAside'
 import { FoodTicker } from './welcome/FoodTicker'
+import { CursorAccent } from './welcome/CursorAccent'
 import '../styles/welcome-poster.css'
 import '../styles/welcome-details.css'
 
@@ -102,6 +103,7 @@ export default function WelcomePage() {
 
   return (
     <div className={`welcome-poster${motionPaused ? ' wp-motion-paused' : ''}`}>
+      <CursorAccent paused={motionPaused} />
       <a className="wp-skip" href="#welcome-content">Skip to content</a>
       <header className={`wp-header${condensed ? ' is-condensed' : ''}`}>
         <div className="wp-header-inner">
