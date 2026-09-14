@@ -73,6 +73,13 @@ describe('AI request boundaries', () => {
     expect(await messageFor(503)).toContain('having trouble right now')
   })
 
+  it('blames a retired model, not the key, for a 404', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 404 })))
+
+    await expect(completeChat(settings, [{ role: 'user', content: 'meal' }]))
+      .rejects.toThrow('OpenRouter has no such model any more. Pick a different model in You → AI settings.')
+  })
+
   it('reads a rejected Gemini key out of its ambiguous 400', async () => {
     const gemini: AISettings = { ...settings, provider: 'gemini', model: 'gemini-2.0-flash' }
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(

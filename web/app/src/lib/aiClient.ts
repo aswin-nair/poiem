@@ -1,4 +1,4 @@
-import type { AISettings } from './aiConfig'
+import { DEFAULT_GEMINI_MODEL, DEFAULT_OPENROUTER_MODEL, type AISettings } from './aiConfig'
 
 type ChatMsg = { role: 'system' | 'user' | 'assistant'; content: string | unknown[] }
 
@@ -46,6 +46,9 @@ function providerFailure(provider: string, status: number, invalidKey = false): 
   if (status === 402) {
     return new Error(`Your ${provider} account is out of credits. Add credits, or pick another model in You → AI settings.`)
   }
+  if (status === 404) {
+    return new Error(`${provider} has no such model any more. Pick a different model in You → AI settings.`)
+  }
   if (status === 429) {
     return new Error(`${provider} is rate-limiting this key. Wait a moment, then try again or log manually.`)
   }
@@ -87,7 +90,7 @@ export async function completeChat(
         method: 'POST',
         headers: aiHeaders(settings),
         body: JSON.stringify({
-          model: settings.model || 'google/gemini-2.0-flash-001',
+          model: settings.model || DEFAULT_OPENROUTER_MODEL,
           messages,
           max_tokens: maxTokens,
           ...(temperature != null ? { temperature } : {}),
@@ -106,7 +109,7 @@ export async function completeChat(
     })
   }
 
-  const model = settings.model || 'gemini-2.0-flash'
+  const model = settings.model || DEFAULT_GEMINI_MODEL
   const system = messages.find(m => m.role === 'system')
   const conv = messages.filter(m => m.role !== 'system')
   const contents = conv.map(m => ({
@@ -175,7 +178,7 @@ export async function completeVision(
     })
   }
 
-  const model = settings.model || 'gemini-2.0-flash'
+  const model = settings.model || DEFAULT_GEMINI_MODEL
   const parts: unknown[] = [
     { inlineData: { mimeType, data: imageBase64 } },
     { text: prompt },

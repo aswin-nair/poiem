@@ -57,7 +57,8 @@ export function freshState(): AppState {
     exerciseEntries: [],
     favoriteMeals: [],
     chatMessages: [],
-    aiSettings: { provider: 'openrouter', apiKey: '', model: 'google/gemini-2.0-flash-001' },
+    // Must stay a model OpenRouter still serves: a retired slug 404s on every request.
+    aiSettings: { provider: 'openrouter', apiKey: '', model: 'google/gemini-2.5-flash' },
     gamification: defaultGamification(),
   }
 }

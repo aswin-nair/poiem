@@ -15,6 +15,7 @@ import {
   GEMINI_MODELS,
   apiKeyHelpUrl,
   apiKeyPlaceholder,
+  defaultModelFor,
   isLowAccuracyModel,
 } from '../lib/aiConfig'
 import {
@@ -98,7 +99,7 @@ export function SettingsPage() {
 
   function handleProviderChange(next: AIProvider) {
     setProvider(next)
-    setModel(next === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash')
+    setModel(defaultModelFor(next))
   }
 
   function saveProfile() {
@@ -576,7 +577,7 @@ export function SettingsPage() {
               list="model-presets"
               value={model}
               onChange={e => setModel(e.target.value)}
-              placeholder={provider === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash'}
+              placeholder={defaultModelFor(provider)}
             />
             <datalist id="model-presets">
               {modelPresets.map(m => <option key={m} value={m} />)}
@@ -591,9 +592,9 @@ export function SettingsPage() {
               <button
                 type="button"
                 className="settings-accuracy-fix"
-                onClick={() => setModel(provider === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash')}
+                onClick={() => setModel(defaultModelFor(provider))}
               >
-                Switch to {provider === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash'} (cheap &amp; far more accurate)
+                Switch to {defaultModelFor(provider)} (cheap &amp; far more accurate)
               </button>
             </div>
           )}
