@@ -1,7 +1,7 @@
 import { canStageGuestClaim, guestUserIdFromDevice } from '@fud-ai/product/guestClaim'
 import { clearDurableUser, loadDurableState, saveDurableLocalSnapshot } from './durableState'
 import { clearOnboardingDraft } from './onboarding'
-import { clearUserState } from './storage'
+import { clearUserState, savePrivateAIKey } from './storage'
 
 const DEVICE_ID_KEY = 'fud-ai-guest-device-id'
 const CLAIM_PREFIX = 'fud-ai-guest-claim-'
@@ -53,6 +53,11 @@ export async function stageGuestStateForAccount(accountId: string): Promise<bool
   if (!guest) return false
 
   await saveDurableLocalSnapshot(accountId, guest.state)
+  // The BYOK key is deliberately stored outside AppState, so the snapshot above
+  // cannot carry it. Copy it across before finalizing clears the guest slot,
+  // otherwise signing in silently destroys the only copy and AI logging stops.
+  const guestApiKey = guest.state.aiSettings.apiKey.trim()
+  if (guestApiKey) savePrivateAIKey(accountId, guestApiKey)
   localStorage.setItem(`${CLAIM_PREFIX}${accountId}`, sourceId)
   return true
 }

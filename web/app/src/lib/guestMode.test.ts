@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { clearDurableUser, enqueueDurableMutation, loadDurableState, saveDurableLocalSnapshot } from './durableState'
 import { finalizeGuestClaim, guestUserId, hasPendingGuestClaim, stageGuestStateForAccount } from './guestMode'
-import { freshState } from './storage'
+import { freshState, loadPrivateAIKey, savePrivateAIKey } from './storage'
 
 function memoryStorage(): Storage {
   const values = new Map<string, string>()
@@ -41,6 +41,29 @@ describe('guest progress claim', () => {
     await finalizeGuestClaim('account-1')
     expect(hasPendingGuestClaim('account-1')).toBe(false)
     expect(await loadDurableState(guestId)).toBeNull()
+    await clearDurableUser('account-1')
+  })
+
+  it('carries the device-local AI key onto the account so BYOK features keep working', async () => {
+    vi.stubGlobal('localStorage', memoryStorage())
+    vi.stubGlobal('indexedDB', undefined)
+    const guestId = guestUserId()
+    savePrivateAIKey(guestId, 'sk-or-guest-key')
+    const state = freshState()
+    state.onboarded = true
+    state.foodEntries.push({
+      id: 'first', name: 'Breakfast', calories: 320, protein: 12, carbs: 45, fat: 9,
+      timestamp: '2026-08-30T08:00:00.000Z', source: 'manual', mealType: 'breakfast',
+    })
+    await saveDurableLocalSnapshot(guestId, state)
+
+    expect(await stageGuestStateForAccount('account-1')).toBe(true)
+    expect(loadPrivateAIKey('account-1')).toBe('sk-or-guest-key')
+
+    // Finalizing wipes the guest slot, so the account copy is the only one left.
+    await finalizeGuestClaim('account-1')
+    expect(loadPrivateAIKey('account-1')).toBe('sk-or-guest-key')
+    expect(loadPrivateAIKey(guestId)).toBe('')
     await clearDurableUser('account-1')
   })
 
