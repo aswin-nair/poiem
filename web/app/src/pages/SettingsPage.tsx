@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { useAuth } from '../store/AuthContext'
 import { BottomNav } from '../components/BottomNav'
-import { PoiemSectionLabel } from '../components/PoiemSectionLabel'
 import { SettingsFinder } from '../components/SettingsFinder'
 import type { ActivityLevel, AIProvider, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
 import type { MascotPersonality } from '../lib/aiConfig'
@@ -235,11 +234,11 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="app-shell you-refresh food-club-app poster-ui">
-      <main className="app-main">
+    <div className="app-shell k-screen k-you">
+      <main className="app-main k-you-main" data-mascot-avoid>
         <header className="you-header">
           <div>
-            <PoiemSectionLabel>Your space</PoiemSectionLabel>
+            <p className="k-eyebrow">Your space</p>
             <h1 className="page-title">You</h1>
             <p className="page-sub">{profile.name || user?.name || 'Your food journal'}</p>
             <span className="you-header-stamp">MADE A LITTLE MORE YOU.</span>
@@ -448,7 +447,7 @@ export function SettingsPage() {
           </header>
         <SectionLabel>Streak</SectionLabel>
         <SettingsCard>
-          <p className="page-sub" style={{ marginBottom: 8 }}>
+          <p className="page-sub">
             {currentStreak}-day streak · {state.gamification.streakFreezes} {state.gamification.streakFreezes === 1 ? 'freeze' : 'freezes'}
           </p>
           <div className="insights-heat" aria-hidden>
@@ -456,7 +455,7 @@ export function SettingsPage() {
               <span key={i} className={`insights-heat-cell${logged ? ' is-logged' : ''}`} />
             ))}
           </div>
-          <p className="page-sub" style={{ marginTop: 10 }}>
+          <p className="page-sub">
             One refreshes monthly, and a 7-day streak can add another. Taking a break is always available below.
           </p>
         </SettingsCard>
@@ -544,7 +543,7 @@ export function SettingsPage() {
         <SettingsCard>
           <p className="settings-byok-note">
             Your key stays in this browser only.{' '}
-            <a href={apiKeyHelpUrl(provider)} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+            <a href={apiKeyHelpUrl(provider)} target="_blank" rel="noreferrer" className="settings-key-help">
               Get a key <IconArrowUpRight size={12} strokeWidth={2.2} />
             </a>
           </p>

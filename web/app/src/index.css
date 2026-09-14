@@ -48,4 +48,6 @@
 @import './styles/system/momo.css';
 @import './styles/screens/kitchen.css';
 @import './styles/screens/flows.css';
+@import './styles/screens/insights.css';
+@import './styles/screens/you.css';
 @import './styles/a11y.css';

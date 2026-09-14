@@ -13,6 +13,8 @@ const LAYERED = {
   'styles/system/momo.css': 'system',
   'styles/screens/kitchen.css': 'screens',
   'styles/screens/flows.css': 'screens',
+  'styles/screens/insights.css': 'screens',
+  'styles/screens/you.css': 'screens',
 } as const
 
 /** Innermost blocks are declarations; removing them leaves selectors and at-rules. */

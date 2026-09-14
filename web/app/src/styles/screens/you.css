@@ -1,0 +1,415 @@
+/* You on the Poiem system: a warm settings page, not a control panel.
+   Pink Momo in the header, an acid stamp, a butter appearance card, a sticky
+   ink section rail, section titles as tinted tags, square fields, and goal
+   tiles with Today's macro colour caps. Markup and class names are the page's own. */
+@layer screens {
+  .k-you { min-height: 100dvh; }
+  .k-you-main {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    padding: 12px var(--k-gutter) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + 40px);
+  }
+
+  /* ── Header ────────────────────────────────────────────────── */
+  .k-you .you-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    margin: 6px 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .k-you .you-header > div:first-child { display: grid; justify-items: start; gap: 6px; min-width: 0; }
+  .k-you .page-title { margin: 0; font: 900 clamp(2.75rem, 12vw, 3.5rem)/.85 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-you .you-header .page-sub { margin: 0; font: 700 var(--k-text-md)/1.3 var(--k-font-body); color: var(--k-muted); overflow-wrap: anywhere; }
+  .k-you .you-header-stamp {
+    margin: 4px 0 0;
+    padding: 6px 10px;
+    border: 2px solid var(--k-on-acid);
+    background: var(--k-acid);
+    color: var(--k-on-acid);
+    box-shadow: var(--k-shadow-sm);
+    rotate: -2deg;
+    font: 600 var(--k-text-xs)/1 var(--k-font-mono);
+    letter-spacing: .06em;
+  }
+  .k-you .you-momo-mark {
+    width: 76px;
+    height: 80px;
+    padding: 1px;
+    border: 2px solid var(--k-on-acid);
+    border-radius: 48% 48% 10% 10%;
+    background: var(--k-momo);
+    box-shadow: var(--k-shadow-sm);
+    rotate: 6deg;
+    animation: k-log-momo-hop 560ms cubic-bezier(.3, 1.6, .5, 1) 120ms both;
+  }
+  .k-you .you-momo-mark:empty { display: none; }
+  .k-you .you-momo-mark .momo-sticker { display: block; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; transform: none; rotate: none; }
+  .k-you .you-momo-mark svg { display: block; width: 100%; height: 100%; }
+  .k-you .you-status {
+    justify-self: start;
+    margin: -4px 0 0;
+    padding: 5px 10px;
+    border: 2px solid var(--k-line);
+    background: var(--k-mint);
+    color: var(--k-on-tone);
+    font: 600 var(--k-text-xs)/1.2 var(--k-font-mono);
+  }
+
+  /* ── Finder ────────────────────────────────────────────────── */
+  .k-you .poiem-settings-finder { position: relative; margin: 0; }
+  .k-you .poiem-search-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 52px 0 14px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: var(--k-shadow-sm);
+  }
+  .k-you .poiem-search-field:focus-within { border-color: var(--k-line); outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .k-you .poiem-search-field input {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--k-ink);
+    box-shadow: none;
+    outline: none;
+    font: 600 var(--k-text-md)/1.2 var(--k-font-body);
+  }
+  .k-you .poiem-search-field input::placeholder { color: var(--k-muted); }
+  .k-you .poiem-search-clear { top: 4px; right: 4px; border-radius: 0; color: var(--k-ink); }
+  .k-you .poiem-search-clear:hover { background: var(--k-sunken); color: var(--k-ink); }
+  .k-you .poiem-search-clear:focus-visible { outline: 3px solid var(--k-focus); outline-offset: -3px; }
+  .k-you .poiem-settings-results { margin: 8px 0 0; padding: 4px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: var(--k-shadow); }
+  .k-you .poiem-search-status { margin: 8px 10px; font: 600 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); }
+  .k-you .poiem-settings-results a { border-radius: 0; color: var(--k-ink); }
+  .k-you .poiem-settings-results a > svg { color: var(--k-ink); }
+  .k-you .poiem-settings-results strong { font: 800 var(--k-text-md)/1.2 var(--k-font-body); }
+  .k-you .poiem-settings-results small { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); color: var(--k-muted); }
+  .k-you .poiem-settings-results a:is(:hover, :focus-visible) { background: var(--k-acid); color: var(--k-on-acid); }
+  .k-you .poiem-settings-results a:is(:hover, :focus-visible) :is(small, svg) { color: var(--k-on-acid); }
+  .k-you .poiem-settings-results a:focus-visible { outline: 3px solid var(--k-on-acid); outline-offset: -3px; }
+
+  /* ── Appearance ────────────────────────────────────────────── */
+  .k-you .appearance-settings {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: var(--k-space-4);
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-butter);
+    color: var(--k-on-tone);
+    scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px);
+  }
+  .k-you .appearance-settings-copy h2 { margin: 0 0 4px; font: 900 1.5rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-on-tone); }
+  .k-you .appearance-settings-copy p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-on-tone); }
+  .k-you .appearance-control { color: var(--k-on-tone); }
+  .k-you .appearance-legend { margin: 0 0 6px; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .k-you .appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+  .k-you .appearance-option-face {
+    min-height: 48px;
+    padding: 0 8px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    font: 800 var(--k-text-sm)/1.2 var(--k-font-body);
+    transform: none;
+  }
+  .k-you .appearance-option:hover input:not(:checked) + .appearance-option-face { background: var(--k-sunken); color: var(--k-ink); transform: none; }
+  .k-you .appearance-option > input:checked + .appearance-option-face { background: var(--k-ink); color: var(--k-ground); box-shadow: var(--k-shadow-sm); }
+  .k-you .appearance-option > input:active + .appearance-option-face { transform: none; translate: 1px 1px; }
+  .k-you .appearance-option > input:focus-visible + .appearance-option-face { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+
+  /* ── Sticky section rail and save bar ──────────────────────── */
+  .k-you .you-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    gap: 6px;
+    margin: 0 calc(var(--k-gutter) * -1);
+    padding: 6px var(--k-gutter) 8px;
+    border: 0;
+    border-bottom: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-ground);
+    box-shadow: none;
+  }
+  .k-you .you-section-picker { display: flex; align-items: center; gap: 6px; min-width: 0; }
+  .k-you .you-shortcuts {
+    display: flex;
+    flex: 1;
+    gap: 6px;
+    min-width: 0;
+    padding: 5px;
+    margin: -5px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .k-you .you-shortcuts::-webkit-scrollbar { display: none; }
+  .k-you .you-shortcuts a {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: none;
+    font: 700 var(--k-text-sm)/1 var(--k-font-body);
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .k-you .you-shortcuts a:hover { background: var(--k-sunken); color: var(--k-ink); }
+  .k-you .you-shortcuts a[aria-current="location"] { background: var(--k-ink); color: var(--k-ground); border-color: var(--k-ink); }
+  .k-you .you-shortcuts a:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-you .you-more-sections { display: grid; place-items: center; flex: 0 0 44px; min-height: 44px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); box-shadow: none; }
+  .k-you .you-save-bar {
+    --button-padding-inline: .875rem;
+    --button-font-size: .875rem;
+    --action-height: 2.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 10px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .k-you .you-save-bar .settings-saved-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--k-muted);
+    font: 600 var(--k-text-xs)/1.2 var(--k-font-mono);
+    text-align: left;
+  }
+  .k-you .you-toolbar.has-changes .settings-saved-banner { color: var(--k-ink); }
+  .k-you .you-unsaved-dot { width: 10px; height: 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-action); rotate: 45deg; }
+  .k-you .you-save-error { flex-basis: 100%; display: flex; align-items: center; min-height: 44px; font: 700 var(--k-text-sm)/1.2 var(--k-font-body); color: var(--k-danger-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── Sections ──────────────────────────────────────────────── */
+  .k-you .you-section { display: grid; gap: 10px; padding: 12px 0 0; scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px); }
+  .k-you .you-section:focus { outline: none; }
+  .k-you .you-section:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 6px; }
+  .k-you .you-section-heading { display: grid; justify-items: start; gap: 8px; margin: 0 0 4px; padding: 0; border: 0; background: none; }
+  .k-you .you-section-heading h2 {
+    max-width: 100%;
+    margin: 0;
+    padding: 5px 10px 3px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--tone, var(--k-card));
+    color: var(--k-on-tone);
+    box-shadow: var(--k-shadow-sm);
+    rotate: -1.5deg;
+    font: 900 clamp(1.625rem, 7vw, 2rem)/1 var(--k-font-display);
+    letter-spacing: .01em;
+    text-transform: uppercase;
+  }
+  .k-you .you-section-heading p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-you .you-section[id="you-profile"] { --tone: var(--k-peach); }
+  .k-you .you-section[id="you-preferences"] { --tone: var(--k-sky); }
+  .k-you .you-section[id="you-momo"] { --tone: var(--k-pink); }
+  .k-you .you-section[id="you-ai"] { --tone: var(--k-mint); }
+  .k-you .you-section[id="you-account"] { --tone: var(--k-butter); }
+  .k-you .you-section[id="you-data"] { --tone: var(--k-peach); }
+  .k-you .settings-section-label { margin: 8px 0 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--k-muted); }
+  .k-you :is(.you-pause-note, .settings-clamp-note) { margin: 0; padding: 10px 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); font: 500 var(--k-text-sm)/1.45 var(--k-font-body); }
+  .k-you .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
+
+  /* Goals: calories on acid, macros with Today's colour caps. */
+  .k-you .settings-goals-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; }
+  .k-you .settings-goal-card { display: grid; gap: 4px; min-width: 0; padding: 14px 12px 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: inset 0 6px 0 var(--tone); }
+  .k-you .settings-goal-card:nth-child(1) { --tone: var(--k-acid); border-color: var(--k-on-acid); background: var(--k-acid); box-shadow: var(--k-shadow-sm); }
+  .k-you .settings-goal-card:nth-child(2) { --tone: var(--k-action); }
+  .k-you .settings-goal-card:nth-child(3) { --tone: var(--k-acid); }
+  .k-you .settings-goal-card:nth-child(4) { --tone: var(--k-sky-strong); }
+  .k-you .settings-goal-label { font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
+  .k-you .settings-goal-value { font: 900 2rem/1 var(--k-font-display); font-variant-numeric: tabular-nums; color: var(--k-ink); }
+  .k-you .settings-goal-card:nth-child(1) :is(.settings-goal-label, .settings-goal-value) { color: var(--k-on-acid); }
+  @media (min-width: 400px) {
+    .k-you .settings-goals-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  /* ── Cards, rows and fields ────────────────────────────────── */
+  .k-you .settings-card {
+    display: grid;
+    margin: 0;
+    padding: 0 16px;
+    overflow: visible;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: none;
+  }
+  .k-you .settings-card .page-sub { margin: 12px 0 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-you .settings-card > .page-sub:last-child { margin-bottom: 12px; }
+  .k-you .settings-row { display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 8px 0; border: 0; }
+  .k-you .settings-row + .settings-row { border-top: 1px solid var(--k-hair); }
+  .k-you .settings-row-labels { display: grid; flex: 1; gap: 2px; min-width: 0; }
+  .k-you .settings-row-label { font: 700 var(--k-text-md)/1.25 var(--k-font-body); color: var(--k-ink); }
+  .k-you .settings-row-hint { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); color: var(--k-muted); }
+  .k-you .settings-row-control { display: flex; flex-shrink: 0; align-items: center; gap: 6px; max-width: 55%; }
+  /* A key or a model name needs the whole width, so those rows put the field under the label. */
+  .k-you .settings-row:has(.settings-key-wrap, input[list]) { flex-wrap: wrap; gap: 8px; padding: 12px 0; }
+  .k-you .settings-row:has(.settings-key-wrap, input[list]) .settings-row-control { flex: 1 1 100%; max-width: none; }
+  .k-you .settings-row-control > input[list] { max-width: none; }
+  .k-you :is(.settings-input, .settings-select, .settings-textarea) {
+    width: 100%;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-ground);
+    color: var(--k-ink);
+    box-shadow: none;
+    outline: none;
+  }
+  .k-you :is(.settings-input, .settings-select) { max-width: 168px; min-height: 44px; padding: 0 10px; font: 700 var(--k-text-sm)/1.2 var(--k-font-body); }
+  .k-you .settings-textarea { padding: 10px 12px; font: 500 var(--k-text-sm)/1.5 var(--k-font-body); }
+  .k-you :is(.settings-input, .settings-select, .settings-textarea):focus { border-color: var(--k-line); outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-you .settings-select:disabled { background: var(--k-sunken); color: var(--k-muted); border-color: var(--k-hair-strong); }
+  .k-you .settings-key-wrap { display: flex; align-items: center; gap: 6px; width: 100%; }
+  .k-you .settings-key-wrap .settings-input { flex: 1; max-width: none; }
+  .k-you .settings-key-toggle { min-width: 56px; min-height: 44px; padding: 0 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); font: 800 var(--k-text-xs)/1 var(--k-font-body); }
+  .k-you .settings-key-toggle[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); }
+  .k-you .settings-byok-note { margin: 0; padding: 12px 0 4px; font: 500 var(--k-text-xs)/1.5 var(--k-font-body); color: var(--k-muted); }
+  .k-you .settings-key-help { display: inline-flex; align-items: center; gap: 2px; color: var(--k-ink); font-weight: 800; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .k-you .settings-accuracy-warning { display: grid; gap: 10px; margin: 4px 0 12px; padding: 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); }
+  .k-you .settings-accuracy-warning p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-on-tone); }
+  .k-you .settings-accuracy-fix { justify-self: start; min-height: 44px; padding: 8px 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: var(--k-shadow-sm); font: 800 var(--k-text-xs)/1.3 var(--k-font-body); }
+  .k-you .settings-field-block { display: grid; gap: 8px; padding: 12px 0; border-top: 1px solid var(--k-hair); }
+  .k-you .settings-divider { height: 1px; margin: 0 -16px; background: var(--k-hair); }
+
+  /* Row buttons run edge to edge; the Allow button inside a row is a small bordered button. */
+  .k-you :is(.settings-data-btn, .settings-link-row, .settings-signout-btn) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: calc(100% + 32px);
+    min-height: 52px;
+    margin: 0 -16px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--k-ink);
+    box-shadow: none;
+    transform: none;
+    font: 700 var(--k-text-md)/1.25 var(--k-font-body);
+    text-align: left;
+    text-decoration: none;
+    transition: background-color 120ms ease;
+  }
+  .k-you :is(.settings-data-btn, .settings-link-row, .settings-signout-btn):is(:hover, :active) { background: var(--k-sunken); color: var(--k-ink); transform: none; box-shadow: none; }
+  .k-you :is(.settings-data-btn, .settings-link-row, .settings-signout-btn):focus-visible { outline: 3px solid var(--k-focus); outline-offset: -3px; }
+  .k-you .settings-data-btn.danger { color: var(--k-danger-ink); }
+  .k-you .settings-data-btn.danger:is(:hover, :active) { background: var(--k-danger-soft); color: var(--k-danger-ink); }
+  .k-you :is(.settings-data-btn, .settings-signout-btn):disabled { color: var(--k-muted); background: transparent; cursor: not-allowed; }
+  .k-you .settings-link-chevron { flex-shrink: 0; color: var(--k-muted); }
+  .k-you .settings-row-control .settings-data-btn {
+    justify-content: center;
+    width: auto;
+    min-height: 44px;
+    margin: 0;
+    padding: 0 14px;
+    border: 2px solid var(--k-line);
+    background: var(--k-card);
+    box-shadow: var(--k-shadow-sm);
+    font: 800 var(--k-text-sm)/1 var(--k-font-body);
+  }
+  .k-you .settings-row-control .settings-data-btn:active { translate: 2px 2px; box-shadow: none; }
+
+  /* Account */
+  .k-you .settings-account-row { display: flex; align-items: center; gap: 12px; padding: 14px 0 10px; }
+  .k-you .account-avatar { flex: none; width: 48px; height: 48px; border: 2px solid var(--k-line); border-radius: 0; object-fit: cover; }
+  .k-you .account-avatar-fallback { display: grid; place-items: center; background: var(--k-acid); color: var(--k-on-acid); font: 900 1.375rem/1 var(--k-font-display); }
+  .k-you .account-info strong { font: 800 var(--k-text-md)/1.25 var(--k-font-body); color: var(--k-ink); }
+  .k-you .account-info span { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); color: var(--k-muted); }
+  .k-you .settings-card .field { display: grid; gap: 6px; margin: 12px 0 0; }
+  .k-you .settings-card .field label { margin: 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
+  .k-you .settings-card .field input { width: 100%; min-height: 48px; padding: 0 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-ground); color: var(--k-ink); box-shadow: none; font: 600 var(--k-text-md)/1.2 var(--k-font-body); }
+  .k-you .settings-card .field input:focus { border-color: var(--k-line); box-shadow: none; outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-you .settings-card[role="region"] { border-color: var(--k-danger-ink); box-shadow: 4px 4px 0 var(--k-danger-ink); }
+  .k-you .settings-card[role="region"] > h2 { margin: 14px 0 0; font: 900 1.5rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-danger-ink); }
+
+  /* Momo: streak, achievements, roast preview, and the wardrobe disclosure. */
+  .k-you .wardrobe-grid { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 0; }
+  .k-you .wardrobe-grid:empty { display: none; }
+  .k-you .wardrobe-item.is-owned { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 8px 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); outline: none; font: 700 var(--k-text-sm)/1.25 var(--k-font-body); }
+  .k-you .roast-preview { display: grid; justify-items: start; gap: 10px; margin: 4px 0 12px; padding: 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); }
+  .k-you .roast-preview-reply { margin: 0; }
+  .k-you .roast-preview-reply p { margin: 0; font: 600 var(--k-text-md)/1.45 var(--k-font-body); color: var(--k-on-tone); }
+  .k-you .roast-preview-hint { margin: 0; font: 500 var(--k-text-xs)/1.4 var(--k-font-body); color: var(--k-on-tone); }
+  .k-you .roast-preview .today-shortcut { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border: 2px solid var(--k-on-action); border-radius: 0; background: var(--k-action); color: var(--k-on-action); box-shadow: var(--k-shadow-sm); font: 800 var(--k-text-sm)/1 var(--k-font-body); }
+  .k-you .roast-preview .today-shortcut:active { translate: 2px 2px; box-shadow: none; }
+
+  /* Disclosures open with the + that turns into ×, like the log button. */
+  .k-you .you-disclosure { margin: 4px 0 0; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: var(--k-shadow-sm); }
+  .k-you .you-disclosure > summary {
+    position: relative;
+    display: grid;
+    align-content: center;
+    gap: 2px;
+    min-height: 64px;
+    padding: 10px 64px 10px 16px;
+    border: 0;
+    color: var(--k-ink);
+    font: 800 var(--k-text-md)/1.25 var(--k-font-body);
+    list-style: none;
+    cursor: pointer;
+  }
+  .k-you .you-disclosure > summary::-webkit-details-marker { display: none; }
+  /* The acid square stays put; only the + inside it turns. */
+  .k-you .you-disclosure > summary::before,
+  .k-you .you-disclosure > summary::after {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    margin-top: -17px;
+  }
+  .k-you .you-disclosure > summary::before { content: ''; border: 2px solid var(--k-on-acid); background: var(--k-acid); }
+  .k-you .you-disclosure > summary::after {
+    content: '+';
+    display: grid;
+    place-items: center;
+    color: var(--k-on-acid);
+    font: 900 1.625rem/1 var(--k-font-display);
+    transition: rotate 240ms cubic-bezier(.3, 1.6, .5, 1);
+  }
+  .k-you .you-disclosure[open] > summary::after { rotate: 45deg; }
+  .k-you .you-disclosure > summary span { display: block; margin: 0; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
+  .k-you .you-disclosure > summary:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .k-you .you-disclosure[open] > summary { border-bottom: 2px solid var(--k-line); }
+  .k-you .you-disclosure > .settings-card { border: 0; box-shadow: none; }
+  .k-you .you-disclosure > .settings-card:has(.k-wardrobe) { padding: 16px; }
+
+  .k-you .settings-footer { margin: 8px 0 0; padding: 12px 0; font: 600 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); text-align: center; }
+}

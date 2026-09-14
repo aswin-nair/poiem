@@ -1,0 +1,249 @@
+/* Insights on the Poiem system: the routine over time, never a report card.
+   Same language as Today: square cards on paper, one bright acid moment per
+   card, Today's macro colours for numbers, soft tints for foods, and Momo
+   cheering from the header. Markup and class names are the page's own. */
+@layer screens {
+  .k-insights { min-height: 100dvh; }
+  .k-insights-main {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: 12px var(--k-gutter) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + 40px);
+  }
+
+  /* ── Header ────────────────────────────────────────────────── */
+  .k-insights .progress-page-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px 14px;
+    margin: 6px 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .k-insights-title { display: grid; gap: 6px; min-width: 0; }
+  .k-insights-title .k-eyebrow { margin: 0; }
+  .k-insights .screen-title { margin: 0; font: 900 clamp(2.75rem, 12vw, 3.5rem)/.85 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-insights .insights-intro { margin: 0; max-width: 34ch; font: 500 var(--k-text-md)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-insights .progress-page-header .momo-sticker {
+    display: block;
+    width: 76px;
+    height: 80px;
+    padding: 1px;
+    border: 2px solid var(--k-on-acid);
+    border-radius: 48% 48% 10% 10%;
+    background: var(--k-momo);
+    box-shadow: var(--k-shadow-sm);
+    transform: none;
+    rotate: 6deg;
+  }
+  .k-insights .progress-page-header .momo-sticker svg { display: block; width: 100%; height: 100%; }
+  .k-insights .club-library-stamp {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin: 4px 0 0;
+    padding: 6px 10px;
+    border: 2px solid var(--k-on-acid);
+    border-radius: 0;
+    background: var(--k-acid);
+    color: var(--k-on-acid);
+    box-shadow: var(--k-shadow-sm);
+    rotate: -2deg;
+    font: 600 var(--k-text-xs)/1 var(--k-font-mono);
+    letter-spacing: .06em;
+  }
+  .k-insights .k-notice .pressable { justify-self: start; }
+
+  /* ── Cards ─────────────────────────────────────────────────── */
+  .k-insights :is(.progress-card, .habit-milestones) {
+    margin: 0;
+    padding: var(--k-space-4);
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: none;
+  }
+  .k-insights .progress-card-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; }
+  .k-insights .progress-card-title { margin: 0; font: 900 1.5rem/1 var(--k-font-display); letter-spacing: .01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-insights .page-sub { margin: 4px 0 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
+
+  /* Journey: three tinted stats and an acid meter. */
+  .k-insights .k-journey { margin: 0; box-shadow: var(--k-shadow); }
+  .k-insights .k-journey-stats div { padding: 8px 10px; border: 2px solid var(--k-line); background: var(--tone); }
+  .k-insights .k-journey-stats div:nth-child(1) { --tone: var(--k-peach); }
+  .k-insights .k-journey-stats div:nth-child(2) { --tone: var(--k-butter); }
+  .k-insights .k-journey-stats div:nth-child(3) { --tone: var(--k-sky); }
+  .k-insights .k-journey-stats :is(dt, dd) { color: var(--k-on-tone); }
+
+  /* Milestones: a dashed path of stops that turn acid as you reach them. */
+  .k-insights .habit-heading { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 12px; }
+  .k-insights .habit-emblem { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid var(--k-line); background: var(--k-butter); color: var(--k-on-tone); rotate: -5deg; }
+  .k-insights .habit-heading h2 { margin: 0; font: 900 1.375rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
+  .k-insights .habit-heading p { margin: 4px 0 0; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
+  .k-insights .habit-path { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin: 18px 0 10px; padding: 0; list-style: none; }
+  .k-insights .habit-path::before { content: ''; position: absolute; top: 21px; right: 10%; left: 10%; border-top: 2px dashed var(--k-hair-strong); }
+  .k-insights .habit-path li { position: relative; display: grid; justify-items: center; gap: 6px; text-align: center; font: 600 var(--k-text-xs)/1.2 var(--k-font-body); color: var(--k-muted); }
+  .k-insights .habit-path li::after { content: none; }
+  .k-insights .habit-node { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 900 1.125rem/1 var(--k-font-display); }
+  .k-insights .habit-path li.is-achieved { color: var(--k-ink); }
+  .k-insights .habit-path li.is-achieved .habit-node { border-color: var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid); box-shadow: var(--k-shadow-sm); rotate: -4deg; }
+  .k-insights .habit-path li.is-achieved:nth-child(even) .habit-node { rotate: 4deg; }
+  .k-insights .habit-footnote { margin: 0; font: 500 var(--k-text-xs)/1.45 var(--k-font-body); color: var(--k-muted); }
+
+  /* ── Consistency ───────────────────────────────────────────── */
+  .k-insights .consistency-streak { padding: 4px 8px; border: 2px solid var(--k-line); background: var(--k-peach); color: var(--k-on-tone); font: 600 var(--k-text-xs)/1 var(--k-font-mono); }
+  .k-insights .consistency-headline { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; }
+  .k-insights .consistency-number { font: 900 clamp(3.5rem, 16vw, 4.5rem)/.85 var(--k-font-display); font-variant-numeric: tabular-nums; color: var(--k-ink); }
+  .k-insights .consistency-unit { font: 800 var(--k-text-lg)/1.1 var(--k-font-body); color: var(--k-ink); }
+  .k-insights .consistency-sub { margin: 4px 0 8px; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
+  :is(.k-insights, .k-you) .insights-heat { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; margin: 12px 0 8px; }
+  :is(.k-insights, .k-you) .insights-heat-cell { display: block; aspect-ratio: 1; border: 2px solid var(--k-hair-strong); border-radius: 0; background: var(--k-sunken); box-shadow: none; }
+  :is(.k-insights, .k-you) .insights-heat-cell.is-logged { border-color: var(--k-on-acid); background: var(--k-acid); }
+  :is(.k-insights, .k-you) .insights-heat-cell.is-future { border-style: dashed; background: transparent; }
+  .k-insights .insights-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 600 var(--k-text-xs)/1 var(--k-font-mono); color: var(--k-muted); }
+  .k-insights .insights-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .k-insights .insights-legend i { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--k-hair-strong); background: var(--k-sunken); }
+  .k-insights .insights-legend i.is-logged { border-color: var(--k-on-acid); background: var(--k-acid); }
+  .k-insights .insights-legend i.is-future { border-style: dashed; background: transparent; }
+  .k-insights .own-past-callout { display: grid; gap: 2px; margin-top: 14px; padding: 10px 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); font: 500 var(--k-text-sm)/1.4 var(--k-font-body); }
+  .k-insights .own-past-callout strong { font-weight: 800; }
+
+  /* ── Range, weight and calories ────────────────────────────── */
+  .k-insights .insights-range-control { display: grid; gap: 8px; margin: 8px 0 -4px; padding: 0; border: 0; background: none; box-shadow: none; }
+  .k-insights .insights-range-control h2 { margin: 0; font: 900 1.875rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
+  .k-insights .insights-range-control p { margin: 0; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
+  .k-insights .range-chips { display: flex; gap: 6px; }
+  .k-insights .range-chip { min-width: 76px; min-height: 44px; padding: 0 14px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; }
+  .k-insights .range-chip[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); box-shadow: var(--k-shadow-sm); }
+  .k-insights .range-chip:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-insights .progress-log-btn { min-height: 44px; padding: 0 14px; border: 2px solid var(--k-on-action); border-radius: 0; background: var(--k-action); color: var(--k-on-action); box-shadow: var(--k-shadow-sm); font: 800 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; }
+  .k-insights .progress-log-btn:active { translate: 2px 2px; box-shadow: none; }
+  .k-insights .progress-log-btn:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .k-insights .progress-avg-pill { padding: 6px 10px; border: 2px solid var(--k-on-acid); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); font: 600 var(--k-text-xs)/1 var(--k-font-mono); }
+  .k-insights .progress-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 12px; }
+  .k-insights .progress-stat-card { display: grid; align-content: start; gap: 4px; min-width: 0; padding: 10px 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; }
+  .k-insights .progress-stat-card .eyebrow { font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
+  .k-insights .progress-stat-value { font: 900 1.625rem/1 var(--k-font-display); font-variant-numeric: tabular-nums; color: var(--k-ink); overflow-wrap: anywhere; }
+  .k-insights .progress-stat-sub { font: 500 var(--k-text-xs)/1.3 var(--k-font-body); color: var(--k-muted); }
+  .k-insights .progress-stat-card.is-accent { background: var(--k-sky); }
+  .k-insights .progress-stat-card.is-accent :is(.eyebrow, .progress-stat-value, .progress-stat-sub) { color: var(--k-on-tone); }
+  .k-insights :is(.insights-empty, .insights-chart-note, .chart-footnote, .chart-empty) { margin: 8px 0 0; font: 500 var(--k-text-xs)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-insights .progress-chart-wrap { margin: 6px 0 0; padding: 8px 0 0; border: 0; background: none; box-shadow: none; }
+  .k-insights .progress-chart-wrap svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .k-insights .history-link-card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 60px;
+    margin: 0;
+    padding: 8px 12px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: var(--k-shadow-sm);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .k-insights .history-link-card:active { translate: 2px 2px; box-shadow: none; }
+  .k-insights .history-link-card:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .k-insights .history-link-icon { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-mint); color: var(--k-on-tone); }
+  .k-insights .history-link-text { display: grid; gap: 2px; min-width: 0; }
+  .k-insights .history-link-text strong { font: 800 var(--k-text-md)/1.2 var(--k-font-body); }
+  .k-insights .history-link-text span { font: 500 var(--k-text-xs)/1.3 var(--k-font-body); color: var(--k-muted); }
+  .k-insights .history-link-chevron { display: inline-flex; transition: rotate 200ms var(--k-ease); }
+  .k-insights .history-link-card[aria-expanded="true"] .history-link-chevron { rotate: 90deg; }
+  .k-insights .history-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 10px; min-height: 52px; border-top: 1px solid var(--k-hair); }
+  .k-insights .history-row:first-child { border-top: 0; }
+  .k-insights .history-date { font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
+  .k-insights .history-weight { font: 900 1.25rem/1 var(--k-font-display); color: var(--k-ink); }
+  .k-insights .btn-delete { min-height: 44px; padding: 0 8px; border: 0; border-radius: 0; background: none; color: var(--k-danger-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+  /* ── Most logged, the ticket archive and achievements ──────── */
+  .k-most-logged { display: grid; margin: 10px 0 0; padding: 0; list-style: none; }
+  .k-most-logged li { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; align-items: center; gap: 10px; min-height: 52px; border-top: 1px solid var(--k-hair); }
+  .k-most-logged li:first-child { border-top: 0; }
+  .k-most-name { font: 700 var(--k-text-md)/1.25 var(--k-font-body); color: var(--k-ink); overflow-wrap: anywhere; }
+  .k-most-count { padding: 4px 8px; border: 2px solid var(--k-line); font: 600 var(--k-text-xs)/1 var(--k-font-mono); color: var(--k-ink); }
+  .k-most-logged li:first-child .k-most-count { border-color: var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid); }
+  .k-insights div.torn-archive { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0; padding: 0; border: 0; background: none; }
+  .k-insights .torn-stub {
+    position: relative;
+    margin: 0;
+    padding: 8px 12px 8px 18px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: 2px 2px 0 var(--k-shadow-color);
+    font: 600 var(--k-text-xs)/1 var(--k-font-mono);
+    rotate: none;
+    transform: none;
+  }
+  .k-insights .torn-stub::before { content: ''; position: absolute; top: 4px; bottom: 4px; left: 7px; border-left: 2px dotted var(--k-hair-strong); }
+  .k-insights .torn-stub::after { content: none; }
+  .k-insights .torn-stub:nth-child(4n + 1) { background: var(--k-butter); color: var(--k-on-tone); }
+  .k-insights .torn-stub:nth-child(4n + 2) { background: var(--k-mint); color: var(--k-on-tone); }
+  .k-insights .torn-stub:nth-child(4n + 3) { background: var(--k-sky); color: var(--k-on-tone); }
+  .k-insights .torn-stub:nth-child(4n) { background: var(--k-pink); color: var(--k-on-tone); }
+  .k-insights .badge-count-pill { padding: 4px 8px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); font: 600 var(--k-text-xs)/1 var(--k-font-mono); }
+  .k-insights .streak-banner { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 12px; margin: 0 0 12px; padding: 10px 12px; border: 2px solid var(--k-on-acid); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); box-shadow: var(--k-shadow-sm); }
+  .k-insights .streak-banner-fire { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid var(--k-on-acid); background: var(--k-action); color: var(--k-on-action); rotate: -6deg; }
+  .k-insights .streak-banner-num { font: 900 1.375rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-on-acid); }
+  .k-insights .streak-banner-sub { font: 600 var(--k-text-sm)/1.3 var(--k-font-body); color: var(--k-on-acid); }
+  .k-insights .badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)); gap: 8px; }
+  .k-insights .badge-card { display: grid; align-content: start; justify-items: start; gap: 4px; margin: 0; padding: 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; text-align: left; }
+  .k-insights .badge-card.unlocked { background: var(--k-butter); color: var(--k-on-tone); box-shadow: var(--k-shadow-sm); }
+  .k-insights .badge-card.locked { border-style: dashed; background: transparent; color: var(--k-muted); filter: none; opacity: 1; }
+  .k-insights .badge-emoji { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid currentColor; background: none; }
+  .k-insights .badge-name { font: 800 var(--k-text-sm)/1.2 var(--k-font-body); }
+  .k-insights .badge-desc { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); }
+
+  /* The weight sheet opens over Insights, shaped like the log sheet. */
+  .k-insights .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--k-z-sheet);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    background: var(--k-scrim);
+  }
+  .k-insights .modal-sheet.weight-log-sheet {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    max-width: var(--k-shell);
+    max-height: min(90dvh, 780px);
+    margin: 0;
+    overflow-y: auto;
+    padding: 20px var(--k-gutter) calc(20px + env(safe-area-inset-bottom, 0px));
+    border: 2px solid var(--k-line);
+    border-bottom: 0;
+    border-radius: var(--k-radius-sheet) var(--k-radius-sheet) 0 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: none;
+  }
+  .k-insights .weight-log-sheet h2 { margin: 0; font: 900 1.875rem/.95 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
+  .k-insights .weight-log-sheet > p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-insights .weight-log-sheet form { display: grid; gap: 10px; margin: 6px 0 0; }
+  .k-insights .weight-log-sheet .field { display: grid; gap: 6px; margin: 0; }
+  .k-insights .weight-log-sheet .field label { margin: 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
+  .k-insights .weight-log-sheet .field input { width: 100%; min-height: 56px; padding: 0 14px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-ground); color: var(--k-ink); box-shadow: none; font: 900 1.75rem/1 var(--k-font-display); }
+  .k-insights .weight-log-sheet .field input:focus { border-color: var(--k-line); box-shadow: none; outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-insights .weight-log-sheet .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
+  @media (min-width: 720px) {
+    .k-insights .modal-backdrop { align-items: center; padding: 24px; }
+    .k-insights .modal-sheet.weight-log-sheet { border-bottom: 2px solid var(--k-line); border-radius: 0; box-shadow: var(--k-shadow); }
+  }
+}

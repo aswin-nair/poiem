@@ -183,9 +183,27 @@ In order:
 
 The sheet never focuses the search field on open, so the phone keyboard stays down.
 
-### Insights — Journey card
+### Insights (`/progress`)
 
-[`pages/ProgressPage.tsx`](src/pages/ProgressPage.tsx) opens with a `.k-card` "Journey": day streak, total XP, freezes, the level name, and a meter to the next level. The rest of Insights is still on legacy styles.
+[`pages/ProgressPage.tsx`](src/pages/ProgressPage.tsx), styled in [`styles/screens/insights.css`](src/styles/screens/insights.css). Your routine over time, never a report card:
+
+1. **Header.** "The bigger picture" eyebrow, a display title, a proud pink Momo, and an acid stamp: "Your routine. Not a report card."
+2. **Journey.** Day streak, total XP and freezes on peach, butter and sky tiles, the level name, and an acid meter to the next level.
+3. **Milestones.** A dashed path of five stops (first log, 3, 7, 14 and 30 days) that turn acid when reached. Breaks never reset them.
+4. **Consistency.** Days logged this month in display type, an acid heat grid with its legend, and a butter note comparing breakfasts with your own best week.
+5. **Weight and calories.** Week or Month as ink-when-chosen chips. Stat tiles (the latest weight on sky), a persimmon line and bar chart with an ink dashed goal line, and the weight history behind a row that opens in place. "+ Log weight" opens a sheet shaped like the log sheet.
+6. **Most logged, ticket archive, achievements.** Foods with tinted tiles and a count (the top count on acid), recent logged days as coloured ticket stubs, and unlocked badges on butter with the next one dashed.
+
+### You (`/settings`)
+
+[`pages/SettingsPage.tsx`](src/pages/SettingsPage.tsx), styled in [`styles/screens/you.css`](src/styles/screens/you.css):
+
+1. **Header.** "Your space" eyebrow, a display title, your name, an acid stamp, a pink Momo card and a mint status chip.
+2. **Finder.** A bordered search field. Results turn acid under the pointer or keyboard focus.
+3. **Appearance.** A butter card with Light, Dark and System as square tiles; the chosen one is solid ink. It saves instantly.
+4. **Section rail.** Sticky at the top: section links as chips, with the current one in solid ink, and the save bar. A persimmon diamond shows while changes are unsaved.
+5. **Sections.** Each title is a tilted tag in its own tint: Profile peach, Preferences sky, Momo pink, AI mint, Account butter, Data peach. Daily goals put calories on acid and give protein, carbs and fat Today's colour caps. Rows, square fields and edge-to-edge row buttons sit in bordered cards. Delete actions use danger ink.
+6. **Disclosures.** AI setup and Momo's wardrobe open with an acid + that turns into ×, like the log button.
 
 ### Log flows (`/log/text`, `/log/photo`, `/log/manual`, `/review`, `/edit/:id`)
 
@@ -206,7 +224,7 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 
 ### Still on legacy
 
-The rest of Insights, You, Coach, Support, About, and the poster surfaces (welcome, onboarding, sign-in). The daily screens have already lost their poster strips and art; the poster system stays only where the brand voice belongs.
+Coach, Support, About, and the poster surfaces (welcome, onboarding, sign-in). The four tabs have lost their poster strips and art; the poster system stays only where the brand voice belongs. The old `.insights-refresh`, `.you-refresh` and `.poster-ui` rules for Insights and You no longer match anything and leave with the legacy sheets in phase 4.
 
 ---
 
@@ -219,7 +237,7 @@ The rest of Insights, You, Coach, Support, About, and the poster surfaces (welco
 | **Manual entry starts blank.** Drafts are restored; recent meals are never pre-filled | [`pages/ManualEntryPage.tsx`](src/pages/ManualEntryPage.tsx) |
 | **Over is information.** Past a goal the meter turns persimmon and the copy says "over the guide"; nothing turns red | `Meter`, Today budget |
 | **One "Log a meal" control.** On Today, exactly one control has that accessible name: the + button | Today, e2e `home.spec.ts` |
-| **Momo stays off the numbers.** Today's week strip and content are marked `data-mascot-avoid`. When the app column has no clear spot and the screen leaves room (about 752px and wider), the walking Momo waits in a side lane beside the column. On a phone he stays off Today, and the one-line note speaks for him | `pages/HomePage.tsx`, `mascot/controller.ts` |
+| **Momo stays off the numbers.** Today's week strip and content, and the Insights and You columns, are marked `data-mascot-avoid`. When the app column has no clear spot and the screen leaves room (about 752px and wider), the walking Momo waits in a side lane beside the column. On a phone he stays off Today, and the one-line note speaks for him | `pages/HomePage.tsx`, `mascot/controller.ts` |
 
 ---
 
@@ -246,6 +264,7 @@ Every change to a system screen is checked at **360, 390, 768 and 1440px**, in *
 | Manual | `/log/manual` | "Food name" field visible |
 | Saved | `/discover` | "Saved" heading visible |
 | Insights | `/progress` | Journey region visible |
+| You | `/settings` | "You" heading visible |
 
 Run the matrix with Playwright. It creates a throwaway local account, captures each surface full-page, and fails on sideways scrolling or runtime errors:
 
@@ -264,7 +283,7 @@ Images land in `test-results/visual-matrix-*/` as `{surface}-{width}-{theme}.png
 | 0 | One system: tokens, component styles, cascade layers, this document, screenshot matrix | Done |
 | 1 | Daily loop: Today, log sheet, toast + Undo, rare celebrations, blank manual entry, snack default | Done |
 | 2 | Log flows (Describe, Photo, Manual, Review, Edit) and Saved on the system; `meal-flow.css` deleted | Done |
-| 3 | Insights, You | Next |
-| 4 | Poster surfaces reviewed against the system tokens; remove unused legacy sheets and the `legacy` layer | |
+| 3 | Insights and You on the system; charts drawn with system tokens | Done |
+| 4 | Poster surfaces reviewed against the system tokens; remove unused legacy sheets and the `legacy` layer | Next |
 
 When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change.

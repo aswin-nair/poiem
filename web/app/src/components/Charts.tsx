@@ -61,7 +61,7 @@ export function LineChart({ points, unit = '', goal, color = 'var(--coral)' }: L
     <div className="chart-wrap">
       <svg viewBox={`0 0 ${w} ${h}`} className="line-chart" aria-hidden>
         {goalY != null && (
-          <line x1={pad} y1={goalY} x2={w - pad} y2={goalY} stroke="var(--ink-mute)" strokeDasharray="4 4" strokeWidth="1" />
+          <line x1={pad} y1={goalY} x2={w - pad} y2={goalY} stroke="var(--k-ink)" strokeDasharray="4 4" strokeWidth="1" />
         )}
         <polyline fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" points={polyline} />
         {coords.map(c => (
@@ -156,7 +156,8 @@ export function ProgressLineChart({
   const yTicks = [max, (max + min) / 2, min].map(v => Math.round(v * 10) / 10)
 
   const coords = points.map((p, i) => {
-    const x = padL + (i / Math.max(points.length - 1, 1)) * chartW
+    // A single weigh-in sits mid-chart instead of on top of the axis labels.
+    const x = points.length === 1 ? padL + chartW / 2 : padL + (i / (points.length - 1)) * chartW
     const y = padT + chartH - ((p.value - min) / range) * chartH
     return { x, y, ...p }
   })
@@ -176,8 +177,8 @@ export function ProgressLineChart({
       <svg viewBox={`0 0 ${w} ${h}`} className="progress-line-chart" aria-hidden>
         <defs>
           <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--coral-start)" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="var(--coral-start)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--k-action)" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="var(--k-action)" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -185,8 +186,8 @@ export function ProgressLineChart({
           const y = padT + chartH - ((tick - min) / range) * chartH
           return (
             <g key={tick}>
-              <line x1={padL} y1={y} x2={w - padR} y2={y} stroke="var(--rule)" strokeWidth="1" />
-              <text x={padL - 6} y={y + 4} textAnchor="end" fill="var(--ink-mute)" fontSize="10">{tick}</text>
+              <line x1={padL} y1={y} x2={w - padR} y2={y} stroke="var(--k-hair)" strokeWidth="1" />
+              <text x={padL - 6} y={y + 4} textAnchor="end" fill="var(--k-muted)" fontSize="10">{tick}</text>
             </g>
           )
         })}
@@ -195,24 +196,24 @@ export function ProgressLineChart({
           <g>
             <line
               x1={padL} y1={goalY} x2={w - padR} y2={goalY}
-              stroke="var(--ink-mute)" strokeDasharray="5 4" strokeWidth="1.5" opacity="0.75"
+              stroke="var(--k-ink)" strokeDasharray="5 4" strokeWidth="1.5" opacity="0.75"
             />
-            <text x={w - padR} y={goalY - 4} textAnchor="end" fill="var(--ink-mute)" fontSize="9" opacity="0.85">goal</text>
+            <text x={w - padR} y={goalY - 4} textAnchor="end" fill="var(--k-muted)" fontSize="9" opacity="0.85">goal</text>
           </g>
         )}
 
-        <path d={areaPath} fill="url(#area-grad)" />
-        <path d={linePath} fill="none" stroke="var(--coral-start)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        {coords.length > 1 && <path d={areaPath} fill="url(#area-grad)" />}
+        <path d={linePath} fill="none" stroke="var(--k-action)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
 
         {coords.map((c, i) => (
           <circle key={c.label} cx={c.x} cy={c.y} r={i === coords.length - 1 ? 5 : 3.5}
-            fill={i === coords.length - 1 ? 'var(--coral-start)' : 'var(--coral-end)'}
-            stroke="var(--paper-card)" strokeWidth={i === coords.length - 1 ? '2' : '0'}
+            fill={i === coords.length - 1 ? 'var(--k-action)' : 'var(--k-action-deep)'}
+            stroke="var(--k-ink)" strokeWidth={i === coords.length - 1 ? '2' : '0'}
           />
         ))}
 
         {coords.map((c, i) => showXLabels.includes(i) && (
-          <text key={`${c.label}-x`} x={c.x} y={h - 6} textAnchor="middle" fill="var(--ink-mute)" fontSize="9">{c.label}</text>
+          <text key={`${c.label}-x`} x={c.x} y={h - 6} textAnchor="middle" fill="var(--k-muted)" fontSize="9">{c.label}</text>
         ))}
       </svg>
       {points.length > 0 && (
@@ -255,8 +256,8 @@ export function ProgressBarChart({
       <svg viewBox={`0 0 ${w} ${h}`} className="progress-bar-chart" aria-hidden>
         <defs>
           <linearGradient id="bar-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--coral-start)" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="var(--coral-end)" stopOpacity="0.6" />
+            <stop offset="0%" stopColor="var(--k-action)" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="var(--k-action-deep)" stopOpacity="0.6" />
           </linearGradient>
         </defs>
 
@@ -264,23 +265,13 @@ export function ProgressBarChart({
           const y = padT + chartH - (tick / yMax) * chartH
           return (
             <g key={tick}>
-              <line x1={padL} y1={y} x2={w - padR} y2={y} stroke="var(--rule)" strokeWidth="1" />
-              <text x={padL - 6} y={y + 4} textAnchor="end" fill="var(--ink-mute)" fontSize="9">
+              <line x1={padL} y1={y} x2={w - padR} y2={y} stroke="var(--k-hair)" strokeWidth="1" />
+              <text x={padL - 6} y={y + 4} textAnchor="end" fill="var(--k-muted)" fontSize="9">
                 {tick >= 1000 ? `${tick / 1000}k` : tick}
               </text>
             </g>
           )
         })}
-
-        {goalY != null && (
-          <g>
-            <line
-              x1={padL} y1={goalY} x2={w - padR} y2={goalY}
-              stroke="var(--chalk)" strokeDasharray="5 4" strokeWidth="1.5"
-            />
-            <text x={w - padR} y={goalY - 4} textAnchor="end" fill="var(--ink-soft)" fontSize="9">goal</text>
-          </g>
-        )}
 
         {bars.map((b, i) => {
           const barH = b.value > 0 ? Math.max((b.value / yMax) * chartH, 3) : 0
@@ -291,7 +282,7 @@ export function ProgressBarChart({
             <g key={b.label}>
               <rect
                 x={x} y={padT} width={barW} height={trackH}
-                rx="4" fill="var(--paper-deep)"
+                rx="4" fill="var(--k-sunken)"
               />
               {b.value > 0 && (
                 <rect
@@ -302,15 +293,27 @@ export function ProgressBarChart({
               {showLabels && b.value > 0 && (
                 <text
                   x={x + barW / 2} y={y - 4}
-                  textAnchor="middle" fill="var(--ink-soft)" fontSize="8" fontWeight="600"
+                  textAnchor="middle" fill="var(--k-muted)" fontSize="8" fontWeight="600"
                 >
                   {b.value >= 1000 ? `${(b.value / 1000).toFixed(1)}k` : b.value}
                 </text>
               )}
-              <text x={x + barW / 2} y={h - 6} textAnchor="middle" fill="var(--ink-mute)" fontSize="9">{b.label}</text>
+              <text x={x + barW / 2} y={h - 6} textAnchor="middle" fill="var(--k-muted)" fontSize="9">{b.label}</text>
             </g>
           )
         })}
+
+        {/* Drawn over the bars so the tracks never hide the goal or its label. */}
+        {goalY != null && (
+          <g>
+            <line
+              x1={padL} y1={goalY} x2={w - padR} y2={goalY}
+              stroke="var(--k-ink)" strokeDasharray="5 4" strokeWidth="1.5"
+            />
+            <text x={w - padR} y={goalY - 4} textAnchor="end" fill="var(--k-ink)" fontSize="9" fontWeight="600"
+              stroke="var(--k-card)" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke">goal</text>
+          </g>
+        )}
       </svg>
       <ChartDataTable caption="Calories by day" rows={bars} />
     </div>
