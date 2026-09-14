@@ -41,6 +41,11 @@ const RETIRED_OPENROUTER_MODELS: Record<string, string> = {
   'google/gemini-2.0-flash': DEFAULT_OPENROUTER_MODEL,
 }
 
+/** The replacement for a retired slug, or undefined when the model is still served. */
+export function retiredModelReplacement(model: unknown): string | undefined {
+  return typeof model === 'string' ? RETIRED_OPENROUTER_MODELS[model] : undefined
+}
+
 export function defaultModelFor(provider: AIProvider): string {
   return provider === 'openrouter' ? DEFAULT_OPENROUTER_MODEL : DEFAULT_GEMINI_MODEL
 }

@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { AppState } from '../types'
+import { defaultModelFor } from './aiConfig'
 import {
   clearUserState,
   exportData,
@@ -120,5 +121,33 @@ describe('private BYOK storage', () => {
     expect(localStorage.getItem('fud-seen-badges')).toBeNull()
     expect(localStorage.getItem('fud-log-drafts-v1-user-1')).toBeNull()
     expect(localStorage.getItem('fud-log-drafts-recovery-v1-user-1')).toBeNull()
+  })
+})
+
+describe('stored AI model', () => {
+  beforeEach(() => {
+    vi.stubGlobal('localStorage', memoryStorage())
+  })
+
+  function savedWithModel(model: string): void {
+    const saved: AppState = {
+      ...freshState(),
+      aiSettings: { ...freshState().aiSettings, model },
+    }
+    localStorage.setItem('fud-ai-web-state-user-1', JSON.stringify(saved))
+  }
+
+  it('repairs a retired model slug when reopening a saved account', () => {
+    // Normalization otherwise lets stored values win, which would pin every install saved
+    // before the catalogue change to a model OpenRouter answers 404 for.
+    savedWithModel('google/gemini-2.0-flash-001')
+
+    expect(loadState('user-1').aiSettings.model).toBe(defaultModelFor('openrouter'))
+  })
+
+  it('leaves a model the reader picked for themselves alone', () => {
+    savedWithModel('openai/gpt-4o-mini')
+
+    expect(loadState('user-1').aiSettings.model).toBe('openai/gpt-4o-mini')
   })
 })
