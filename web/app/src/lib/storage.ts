@@ -212,7 +212,7 @@ function normalizeAIForValidation(value: unknown): AppState['aiSettings'] {
 
   const migrated = normalizeAISettings(value as Partial<AppState['aiSettings']>)
   // Stored values win, so validation judges what was really saved rather than a repaired copy.
-  // A retired model slug is the exception: kept as-is it 404s on every request forever.
+  // A retired model slug is the exception: a BYOK reader who kept one 404s on every request.
   const storedModel = retiredModelReplacement(value.model) ?? value.model
   return {
     ...migrated,
