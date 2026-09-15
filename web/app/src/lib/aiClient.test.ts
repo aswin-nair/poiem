@@ -80,6 +80,48 @@ describe('AI request boundaries', () => {
       .rejects.toThrow('OpenRouter has no such model any more. Pick a different model in You → AI settings.')
   })
 
+  it('posts managed work in the envelope the API validates', async () => {
+    // The API reads body.payload.messages. A flat { task, messages } body parses as valid
+    // JSON and fails only at the server, so the nesting has to be pinned here.
+    vi.stubGlobal('localStorage', {
+      length: 0, clear: () => {}, getItem: () => null, key: () => null,
+      removeItem: () => {}, setItem: () => {},
+    } as Storage)
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ text: '{"name":"Oats"}' }), {
+      status: 200, headers: { 'Content-Type': 'application/json' },
+    }))
+    vi.stubGlobal('fetch', fetchMock)
+    const managed: AISettings = { ...settings, accessMode: 'managed', apiKey: '' }
+
+    await completeChat(managed, [{ role: 'user', content: 'oats' }], 100, undefined, { task: 'food_text' })
+
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit]
+    expect(url).toContain('/api/ai/analyze')
+    expect(JSON.parse(String(init.body))).toEqual({
+      task: 'food_text',
+      payload: { messages: [{ role: 'user', content: 'oats' }] },
+    })
+  })
+
+  it('never sends a managed request to the provider directly', async () => {
+    vi.stubGlobal('localStorage', {
+      length: 0, clear: () => {}, getItem: () => null, key: () => null,
+      removeItem: () => {}, setItem: () => {},
+    } as Storage)
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ text: '{"name":"Oats"}' }), {
+      status: 200, headers: { 'Content-Type': 'application/json' },
+    }))
+    vi.stubGlobal('fetch', fetchMock)
+    const managed: AISettings = { ...settings, accessMode: 'managed', apiKey: '' }
+
+    await completeChat(managed, [{ role: 'user', content: 'oats' }], 100, undefined, { task: 'food_text' })
+
+    for (const [url] of fetchMock.mock.calls as [string][]) {
+      expect(url).not.toContain('openrouter.ai')
+      expect(url).not.toContain('generativelanguage.googleapis.com')
+    }
+  })
+
   it('reads a rejected Gemini key out of its ambiguous 400', async () => {
     const gemini: AISettings = { ...settings, provider: 'gemini', model: 'gemini-2.0-flash' }
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(

@@ -27,6 +27,7 @@ import { SettingsPage } from './pages/SettingsPage'
 import { JourneyPage } from './pages/JourneyPage'
 import { AboutPage } from './pages/AboutPage'
 import { SupportPage } from './pages/SupportPage'
+import { AdminPage } from './pages/AdminPage'
 import { ComponentSheetPage } from './pages/ComponentSheetPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
@@ -84,6 +85,7 @@ function routeTitle(pathname: string): string {
   if (pathname.startsWith('/edit/')) return 'Edit meal'
   if (pathname === '/coach') return 'AI Coach'
   if (pathname === '/support') return 'Support'
+  if (pathname === '/admin') return 'Managed AI admin'
   if (pathname === '/about') return 'About'
   if (pathname === '/onboarding') return 'Get started'
   if (pathname === '/login') return 'Sign in'
@@ -173,6 +175,7 @@ function AuthenticatedRoutes() {
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/support" element={<SupportPage />} />
+      <Route path="/admin" element={<AdminPage />} />
       <Route path="/journey" element={<JourneyPage />} />
       {import.meta.env.DEV && <Route path="/dev/components" element={<ComponentSheetPage />} />}
       <Route path="*" element={<Navigate to="/" replace />} />

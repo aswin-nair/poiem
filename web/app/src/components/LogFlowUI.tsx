@@ -25,11 +25,11 @@ export function LogFlowHeader({ title, description, step }: {
   )
 }
 
-export function AiSetupNotice({ provider }: { provider: string }) {
+export function AiSetupNotice({ provider, managed = false }: { provider: string; managed?: boolean }) {
   return <section className="flow-setup" aria-labelledby="flow-setup-title">
     <IconSparkles size={24} />
     <div><h2 id="flow-setup-title">A little setup for AI</h2>
-      <p>Add your {provider} API key in You → AI settings. Manual logging is ready now, with no key needed.</p>
+      <p>{managed ? 'Managed AI is unavailable in this environment. Add your own ' + provider + ' API key in Advanced settings, or use manual logging.' : `Add your ${provider} API key in You → AI settings. Manual logging is ready now, with no key needed.`}</p>
       <div className="flow-link-row"><Link to="/settings">Set up AI</Link><Link to="/log/manual">Log manually</Link></div>
     </div>
   </section>
@@ -56,9 +56,9 @@ export function FlowFeedback({ message, error = false, children }: { message: st
   </div>
 }
 
-export function PhotoPrivacyNote({ provider }: { provider: string }) {
+export function PhotoPrivacyNote({ provider, managed = false }: { provider: string; managed?: boolean }) {
   return <div className="flow-privacy" role="note"><IconShield size={20} />
-    <p>Nothing is sent until you choose Analyze photo. Then your image goes directly to {provider} to estimate nutrition.
+    <p>Nothing is sent until you choose Analyze photo. Then your image is sent {managed ? 'through Poiem to its managed provider' : `directly to ${provider}`} to estimate nutrition.
       Poiem does not store the image; the provider controls retention under its policy.
       {' '}<Link to="/log/manual">Use manual entry without uploading</Link>.</p>
   </div>

@@ -153,7 +153,7 @@ export async function analyzeTextFood(
     { role: 'system' as const, content: buildFoodSystemPrompt(settings.customInstructions) },
     { role: 'user' as const, content: textPrompt(description) },
   ]
-  const text = await completeChat(settings, messages, FOOD_MAX_TOKENS, FOOD_TEMPERATURE, { signal })
+  const text = await completeChat(settings, messages, FOOD_MAX_TOKENS, FOOD_TEMPERATURE, { signal, task: 'food_text' })
   return toAnalysis(extractJSON(text))
 }
 
@@ -171,7 +171,7 @@ export async function analyzeImageFood(
     FOOD_MAX_TOKENS,
     FOOD_TEMPERATURE,
     buildFoodSystemPrompt(settings.customInstructions),
-    { signal },
+    { signal, task: 'food_photo' },
   )
   return toAnalysis(extractJSON(text))
 }

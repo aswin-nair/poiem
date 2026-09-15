@@ -106,5 +106,13 @@ export async function runDeletionReconciliation(sql) {
 export async function runRetentionJobs(sql) {
   const cleanup = await runRetentionCleanup(sql)
   const orphans = await runDeletionReconciliation(sql)
+  try { await runAiRetentionCleanup(sql) } catch { /* plan migration may be pending */ }
   return { cleanup, orphans }
+}
+
+/** Additive managed-AI retention. Kept separate so older rehearsal fixtures remain stable. */
+export async function runAiRetentionCleanup(sql) {
+  await sql`DELETE FROM ai_usage_reservations WHERE created_at < NOW() - INTERVAL '14 days' OR (status = 'reserved' AND expires_at < NOW() - INTERVAL '1 day')`
+  await sql`DELETE FROM ai_usage_daily WHERE day < (CURRENT_TIMESTAMP AT TIME ZONE 'UTC')::date - 90`
+  await sql`DELETE FROM ai_scope_daily WHERE day < (CURRENT_TIMESTAMP AT TIME ZONE 'UTC')::date - 90`
 }

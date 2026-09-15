@@ -5,6 +5,8 @@ import { useApp } from '../store/AppContext'
 import { sendCoachMessage } from '../lib/coachAI'
 import { coachSafetyResponse } from '../lib/coachSafety'
 import { providerLabel } from '../lib/aiConfig'
+import { useAiAccess } from '../lib/aiAccess'
+import { usesByok } from '../lib/aiClient'
 import { IconSend } from '../components/icons'
 import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
@@ -84,6 +86,7 @@ export function CoachPage() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const requestRef = useRef<AbortController | null>(null)
+  const { canUse } = useAiAccess()
 
   useEffect(() => () => requestRef.current?.abort(), [])
 
@@ -95,8 +98,10 @@ export function CoachPage() {
     const trimmed = text.trim()
     if (!trimmed || loading) return
     const safety = coachSafetyResponse(trimmed)
-    if (!state.aiSettings.apiKey && !safety) {
-      setError(`Add your ${providerLabel(state.aiSettings.provider)} API key in Settings.`)
+    if (!safety && !canUse(state.aiSettings, 'coach')) {
+      if (!usesByok(state.aiSettings) && canUse(state.aiSettings, 'food_text')) setError('Coach is a Premium feature. You can still log meals with managed AI.')
+      else if (usesByok(state.aiSettings)) setError(`Add your ${providerLabel(state.aiSettings.provider)} API key in Settings.`)
+      else setError('Managed AI is not available right now. You can add your own key in Advanced settings.')
       return
     }
     setError(null)
@@ -145,7 +150,8 @@ export function CoachPage() {
     }
   }
 
-  const hasKey = !!state.aiSettings.apiKey
+  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
+  const canChat = canUse(state.aiSettings, 'coach')
 
   return (
     <div className="app-shell coach-shell food-club-app poster-ui">
@@ -176,7 +182,7 @@ export function CoachPage() {
       <main className="app-main coach-main motion-stagger">
         {error && <div className="error-banner" role="alert">{error}</div>}
 
-        {!hasKey && (
+        {!canChat && (
           <div className="coach-no-key-card">
             <span className="coach-no-key-icon" aria-hidden><KeyRound size={26} /></span>
             <p>Add your <Link to="/settings">{providerLabel(state.aiSettings.provider)}</Link> API key in Settings to start chatting.</p>
@@ -191,7 +197,7 @@ export function CoachPage() {
               <p className="chat-empty-sub">Reflect on recent logging patterns or ask for general meal ideas.</p>
               <p className="chat-empty-sub">
                 Your chat is stored with your Poiem data. When you send a message, limited recent log context is sent
-                directly to {providerLabel(state.aiSettings.provider)}; that provider controls its own retention.
+                {hasKey ? `directly to ${providerLabel(state.aiSettings.provider)}` : 'through Poiem’s managed provider'}; that provider controls its own retention.
               </p>
               <div className="starter-chips">
                 {STARTERS.map(s => (
@@ -201,7 +207,7 @@ export function CoachPage() {
                     className="starter-chip"
                     whileTap={{ scale: .97 }} transition={motionSoftSpring}
                     onClick={() => send(s)}
-                    disabled={!hasKey}
+                    disabled={!canChat}
                   >
                     <Sparkles size={15} aria-hidden="true" /> {s}
                   </m.button>
@@ -262,7 +268,7 @@ export function CoachPage() {
             className="chat-input"
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder={hasKey ? 'Ask Coach…' : 'Ask for support, or add an API key for coaching'}
+            placeholder={canChat ? 'Ask Coach…' : 'Ask for support, or add an API key for coaching'}
             disabled={loading}
           />
           <button

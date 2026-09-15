@@ -14,6 +14,8 @@ describe('Vercel Hobby function count', () => {
     const files = listVercelServerlessFunctions(apiRoot)
     expect(files).toEqual([
       'account.ts',
+      'admin.ts',
+      'ai.ts',
       'auth.ts',
       'cron/retention.ts',
       'entities.ts',

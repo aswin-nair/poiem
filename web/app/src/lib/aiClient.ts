@@ -1,4 +1,5 @@
 import { DEFAULT_GEMINI_MODEL, DEFAULT_OPENROUTER_MODEL, type AISettings } from './aiConfig'
+import { apiFetch } from './apiClient'
 
 type ChatMsg = { role: 'system' | 'user' | 'assistant'; content: string | unknown[] }
 
@@ -8,6 +9,8 @@ const VISION_TIMEOUT_MS = 30_000
 interface RequestOptions {
   signal?: AbortSignal
   timeoutMs?: number
+  /** Server-managed capability. Mascot is intentionally never managed. */
+  task?: 'food_text' | 'food_photo' | 'coach' | 'mascot'
 }
 
 async function timedRequest<T>(
@@ -75,6 +78,33 @@ function aiHeaders(settings: AISettings): Record<string, string> {
   return h
 }
 
+export function usesByok(settings: AISettings): boolean {
+  // Settings created before managed AI did not have accessMode. Preserve their explicit
+  // device-key behavior while all newly-created settings default to managed.
+  return settings.accessMode === 'byok' || (settings.accessMode === undefined && Boolean(settings.apiKey.trim()))
+}
+
+function managedTask(options: RequestOptions): 'food_text' | 'food_photo' | 'coach' {
+  if (options.task === 'food_photo' || options.task === 'coach' || options.task === 'food_text') return options.task
+  return 'food_text'
+}
+
+async function completeManaged(
+  task: 'food_text' | 'food_photo' | 'coach',
+  messages: ChatMsg[],
+  options: RequestOptions,
+): Promise<string> {
+  return apiFetch<{ text: string }>('/api/ai/analyze', {
+    method: 'POST',
+    body: JSON.stringify({ task, payload: { messages } }),
+    signal: options.signal,
+  }, undefined, true, options.timeoutMs ?? 40_000).then(result => {
+    if (!result || typeof result.text !== 'string' || !result.text.trim()) throw new Error('Poiem AI returned an empty response. Try again or log manually.')
+    if (typeof window !== 'undefined') window.dispatchEvent(new Event('poiem-ai-status-changed'))
+    return result.text
+  })
+}
+
 export async function completeChat(
   settings: AISettings,
   messages: ChatMsg[],
@@ -82,6 +112,10 @@ export async function completeChat(
   temperature?: number,
   options: RequestOptions = {},
 ): Promise<string> {
+  if (!usesByok(settings)) {
+    if (options.task === 'mascot') throw new Error('Momo AI uses your own API key. Add one in You → Advanced settings.')
+    return completeManaged(managedTask(options), messages, options)
+  }
   if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
 
   if (settings.provider === 'openrouter') {
@@ -159,6 +193,18 @@ export async function completeVision(
   systemPrompt?: string,
   options: RequestOptions = {},
 ): Promise<string> {
+  if (!usesByok(settings)) {
+    if (options.task === 'mascot') throw new Error('Momo AI uses your own API key. Add one in You → Advanced settings.')
+    const content = [
+      { type: 'image_url', image_url: { url: `data:${mimeType};base64,${imageBase64}` } },
+      { type: 'text', text: prompt },
+    ]
+    const messages: ChatMsg[] = []
+    const sys = systemPrompt?.trim() ?? settings.customInstructions?.trim()
+    if (sys) messages.push({ role: 'system', content: sys })
+    messages.push({ role: 'user', content })
+    return completeManaged('food_photo', messages, options)
+  }
   if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
 
   if (settings.provider === 'openrouter') {
@@ -174,6 +220,7 @@ export async function completeVision(
     messages.push({ role: 'user', content })
     return completeChat(settings, messages, maxTokens, temperature, {
       ...options,
+      task: 'food_photo',
       timeoutMs: options.timeoutMs ?? VISION_TIMEOUT_MS,
     })
   }

@@ -57,7 +57,7 @@ export function accessTokenForAccount(userId: string, captured?: string | null):
   return null
 }
 
-async function tryRefreshAccessToken(): Promise<boolean> {
+export async function tryRefreshAccessToken(): Promise<boolean> {
   if (refreshInFlight) return refreshInFlight
   refreshInFlight = (async () => {
     try {
@@ -76,11 +76,12 @@ async function tryRefreshAccessToken(): Promise<boolean> {
   }
 }
 
-async function apiFetch<T>(
+export async function apiFetch<T>(
   path: string,
   init: RequestInit = {},
   sessionToken?: string,
   allowRefresh = true,
+  timeoutMs = API_TIMEOUT_MS,
 ): Promise<T> {
   const base = apiBaseUrl()
   const url = `${base}${path}`
@@ -94,7 +95,10 @@ async function apiFetch<T>(
   if (token) headers.set('Authorization', `Bearer ${token}`)
 
   const controller = new AbortController()
-  const timeout = globalThis.setTimeout(() => controller.abort(), API_TIMEOUT_MS)
+  const timeout = globalThis.setTimeout(() => controller.abort(), timeoutMs)
+  const abortFromCaller = () => controller.abort()
+  init.signal?.addEventListener('abort', abortFromCaller, { once: true })
+  if (init.signal?.aborted) controller.abort()
   let res: Response
   let data: ({ error?: string } & T)
   try {
@@ -112,6 +116,7 @@ async function apiFetch<T>(
     throw new ApiError('Could not reach the server. Your saved changes will retry automatically.', 0)
   } finally {
     globalThis.clearTimeout(timeout)
+    init.signal?.removeEventListener('abort', abortFromCaller)
   }
 
   if (
@@ -128,7 +133,7 @@ async function apiFetch<T>(
       && authTokenSubject(token) === authTokenSubject(next),
     )
     if (next && (sessionToken === undefined || sameAccount)) {
-      return apiFetch<T>(path, init, sessionToken === undefined ? undefined : next, false)
+      return apiFetch<T>(path, init, sessionToken === undefined ? undefined : next, false, timeoutMs)
     }
   }
 

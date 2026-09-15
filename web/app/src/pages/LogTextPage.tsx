@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { analyzeTextFood } from '../lib/foodAI'
 import { providerLabel } from '../lib/aiConfig'
+import { useAiAccess } from '../lib/aiAccess'
+import { usesByok } from '../lib/aiClient'
 import { BackLink } from '../components/BackLink'
 import { track } from '../lib/analytics'
 import { clearLogDraft, hydrateLogDrafts, loadLogDrafts, saveTextLogDraft } from '../lib/logDrafts'
@@ -28,6 +30,7 @@ export function LogTextPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  const { canUse } = useAiAccess()
   const requestRef = useRef<AbortController | null>(null)
   const edited = useRef(false)
 
@@ -52,7 +55,7 @@ export function LogTextPage() {
 
   async function handleAnalyze() {
     const trimmed = text.trim()
-    if (!trimmed || !state.aiSettings.apiKey || requestRef.current) return
+    if (!trimmed || !canUse(state.aiSettings, 'food_text') || requestRef.current) return
     const controller = new AbortController()
     requestRef.current = controller
     setLoading(true)
@@ -88,7 +91,8 @@ export function LogTextPage() {
     setNotice('Analysis stopped. Your description is still here.')
   }
 
-  const hasKey = !!state.aiSettings.apiKey
+  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
+  const canAnalyze = canUse(state.aiSettings, 'food_text')
 
   return (
     <div className="app-shell k-screen k-flow">
@@ -99,7 +103,7 @@ export function LogTextPage() {
         {error && <FlowFeedback message={error} error><Link to="/log/manual">Keep going with manual entry</Link></FlowFeedback>}
         {notice && <FlowFeedback message={notice} />}
 
-        {!hasKey && <AiSetupNotice provider={providerLabel(state.aiSettings.provider)} />}
+        {!canAnalyze && <AiSetupNotice provider={providerLabel(state.aiSettings.provider)} managed={!hasKey} />}
 
         <form className="flow-compose" onSubmit={event => { event.preventDefault(); void handleAnalyze() }}>
         <div className="flow-description-card">
@@ -137,7 +141,7 @@ export function LogTextPage() {
         <PressableButton
           fullWidth
           type="submit"
-          disabled={!text.trim() || !hasKey}
+          disabled={!text.trim() || !canAnalyze}
         >
           Estimate my meal <IconArrowRight size={20} />
         </PressableButton>

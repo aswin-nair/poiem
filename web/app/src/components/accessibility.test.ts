@@ -29,6 +29,8 @@ vi.mock('../store/AppContext', () => ({
     setPendingSource: () => undefined,
   }),
 }))
+// AI is account-only, so the upload controls exist only for a signed-in reader.
+vi.mock('../store/AuthContext', () => ({ useAuth: () => ({ user: { sub: 'accessibility-test' } }) }))
 
 function count(haystack: string, needle: RegExp): number {
   return [...haystack.matchAll(needle)].length

@@ -30,7 +30,7 @@ export const ALERT_CATALOG: AlertCatalog = {
     { id: 'migration-failure', signal: 'migration_failures', condition: 'any failure', owner: 'UNASSIGNED', blocking: true },
     { id: 'deletion-failure', signal: 'destructive_deletion', condition: 'any unconfirmed or failed deletion', owner: 'UNASSIGNED', blocking: true },
     { id: 'ai-provider-errors', signal: 'ai_requests', condition: 'provider error >10% for 10 minutes', owner: 'UNASSIGNED', blocking: true },
-    { id: 'managed-ai-invoked', signal: 'managed_ai_invoked', condition: 'any invocation or unexpected enablement', owner: 'UNASSIGNED', blocking: true },
+    { id: 'managed-ai-invoked', signal: 'managed_ai_invoked', condition: 'unauthorized/unentitled serving or unexpected enablement', owner: 'UNASSIGNED', blocking: true },
     { id: 'crash-free', signal: 'crash_free_sessions', condition: 'below 99.8%', owner: 'UNASSIGNED', blocking: true },
   ],
 }
@@ -47,6 +47,8 @@ export interface AlertMetrics {
   deletionFailures?: number
   aiProviderErrorRate?: number
   managedAiInvocations?: number
+  /** Authorized managed calls are expected traffic; only this metric pages. */
+  managedAiUnauthorizedInvocations?: number
   crashFreeRate?: number
 }
 
@@ -62,7 +64,7 @@ export function evaluateAlertRules(metrics: AlertMetrics): string[] {
   if ((metrics.migrationFailures ?? 0) > 0) firing.push('migration-failure')
   if ((metrics.deletionFailures ?? 0) > 0) firing.push('deletion-failure')
   if (metrics.aiProviderErrorRate != null && metrics.aiProviderErrorRate > 0.1) firing.push('ai-provider-errors')
-  if ((metrics.managedAiInvocations ?? 0) > 0) firing.push('managed-ai-invoked')
+  if ((metrics.managedAiUnauthorizedInvocations ?? metrics.managedAiInvocations ?? 0) > 0) firing.push('managed-ai-invoked')
   if (metrics.crashFreeRate != null && metrics.crashFreeRate < 0.998) firing.push('crash-free')
   return firing
 }

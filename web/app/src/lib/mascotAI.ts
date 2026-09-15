@@ -475,7 +475,7 @@ export async function generateMascotLines(
       ],
       240,
       1.05,
-      { signal, timeoutMs: 12_000 },
+      { signal, timeoutMs: 12_000, task: 'mascot' },
     )
     return selectMascotLines(parseLines(raw), context, recent)
   } catch (error) {

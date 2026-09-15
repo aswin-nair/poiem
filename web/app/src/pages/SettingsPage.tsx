@@ -7,7 +7,8 @@ import { useAuth } from '../store/AuthContext'
 import { BottomNav } from '../components/BottomNav'
 import { SettingsFinder } from '../components/SettingsFinder'
 import type { ActivityLevel, AIProvider, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
-import type { MascotPersonality } from '../lib/aiConfig'
+import type { AIAccessMode, MascotPersonality } from '../lib/aiConfig'
+import { useAiAccess } from '../lib/aiAccess'
 import { ACTIVITY_LABELS, GOAL_LABELS } from '../types'
 import {
   OPENROUTER_MODELS,
@@ -57,8 +58,10 @@ function SettingsCard({ children }: { children: React.ReactNode }) {
 export function SettingsPage() {
   const { state, updateProfile, updateAISettings, replaceState, clearAllData, patchGamification } = useApp()
   const { user, signOut } = useAuth()
+  const { status: aiStatus, refresh: refreshAiStatus } = useAiAccess()
   const [profile, setProfile] = useState<UserProfile>(state.profile)
   const [provider, setProvider] = useState<AIProvider>(state.aiSettings.provider)
+  const [accessMode, setAccessMode] = useState<AIAccessMode>(state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
   const [apiKey, setApiKey] = useState(state.aiSettings.apiKey)
   const [showKey, setShowKey] = useState(false)
   const [model, setModel] = useState(state.aiSettings.model)
@@ -89,6 +92,7 @@ export function SettingsPage() {
   const mascotVisible = state.gamification.mascotActivity !== 'off'
   const hasChanges = JSON.stringify(profile) !== JSON.stringify(state.profile)
     || provider !== state.aiSettings.provider
+    || accessMode !== (state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
     || apiKey !== state.aiSettings.apiKey
     || model !== state.aiSettings.model
     || instructions !== (state.aiSettings.customInstructions ?? '')
@@ -109,6 +113,7 @@ export function SettingsPage() {
     const enablingPause = !state.profile.trackingPaused && Boolean(profile.trackingPaused)
     updateProfile(profile)
     updateAISettings({
+      accessMode,
       provider,
       apiKey,
       model,
@@ -119,6 +124,7 @@ export function SettingsPage() {
     if (enablingPause) track({ name: 'pause_tracking_enabled' })
     setProfileError(null)
     setSaved(true)
+    void refreshAiStatus()
   }
 
   function handleExport() {
@@ -142,6 +148,7 @@ export function SettingsPage() {
         replaceState(next)
         setProfile(next.profile)
         setProvider(next.aiSettings.provider)
+        setAccessMode(next.aiSettings.accessMode ?? (next.aiSettings.apiKey ? 'byok' : 'managed'))
         setApiKey(next.aiSettings.apiKey)
         setModel(next.aiSettings.model)
         setInstructions(next.aiSettings.customInstructions ?? '')
@@ -535,11 +542,21 @@ export function SettingsPage() {
         <section className="you-section" id="you-ai" aria-labelledby="you-ai-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-ai-title">AI setup</h2>
-            <p>Optional: connect your own key for AI meal estimates and fresh Momo dialogue.</p>
+            <p>Managed Poiem AI is ready by default. Bring your own key from Advanced when you want full control.</p>
           </header>
+        <SettingsCard>
+          <SettingsRow label="AI access" hint={accessMode === 'managed' ? 'Poiem chooses a safe model and applies your daily allowance.' : 'Your key stays in this browser and is used only when you choose BYOK.'}>
+            <select className="settings-select" value={accessMode} onChange={event => setAccessMode(event.target.value as AIAccessMode)} aria-label="AI access mode">
+              <option value="managed">Managed by Poiem</option>
+              <option value="byok">My own API key</option>
+            </select>
+          </SettingsRow>
+          {accessMode === 'managed' && <p className="settings-byok-note">Food scans: {aiStatus ? `${aiStatus.food.remaining} left today` : 'checking availability…'} · Coach: {aiStatus?.plan === 'premium' ? `${aiStatus.coach.remaining} left today` : 'Premium only'}</p>}
+          {aiStatus?.isAdmin && <p className="settings-byok-note"><Link to="/admin">Open managed AI admin</Link></p>}
+        </SettingsCard>
         {/* AI */}
         <details className="you-disclosure">
-          <summary>Connection &amp; AI preferences <span>{apiKey.trim() ? 'Key added · not verified' : 'No key added'}</span></summary>
+          <summary>Advanced · Connection &amp; AI preferences <span>{apiKey.trim() ? 'Key added · not verified' : 'No key added'}</span></summary>
         <SettingsCard>
           <p className="settings-byok-note">
             Your key stays in this browser only.{' '}
@@ -808,7 +825,7 @@ export function SettingsPage() {
         </SettingsCard>
         </section>
 
-        <p className="settings-footer">Poiem · Local-first · BYOK AI · Privacy-first</p>
+        <p className="settings-footer">Poiem · Managed or BYOK AI · Privacy-first</p>
       </main>
       <BottomNav />
     </div>

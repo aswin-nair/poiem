@@ -1,7 +1,10 @@
 export type AIProvider = 'openrouter' | 'gemini'
+export type AIAccessMode = 'managed' | 'byok'
 export type MascotPersonality = 'warm' | 'witty' | 'sassy'
 
 export interface AISettings {
+  /** Managed Poiem AI is the default. BYOK is an explicit Advanced setting. */
+  accessMode?: AIAccessMode
   provider: AIProvider
   apiKey: string
   model: string
@@ -82,6 +85,7 @@ export function normalizeAISettings(raw?: Partial<AISettings>): AISettings {
   )
 
   return {
+    accessMode: raw.accessMode === 'byok' || (raw.accessMode === undefined && Boolean(raw.apiKey?.trim())) ? 'byok' : 'managed',
     provider,
     apiKey: raw.apiKey ?? '',
     model: resolveModel(provider, raw.model),

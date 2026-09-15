@@ -105,6 +105,7 @@ const GAMIFICATION_FIELDS = new Set([
   'startedAt',
 ])
 const AI_SETTINGS_FIELDS = new Set([
+  'accessMode',
   'provider',
   'apiKey',
   'model',
@@ -432,6 +433,7 @@ function validEnamelQuestState(value: unknown): boolean {
 function validAISettings(value: unknown, allowApiKey: boolean): string | null {
   if (!row(value)) return 'aiSettings must be an object'
   if (!hasOnlyFields(value, AI_SETTINGS_FIELDS)) return 'aiSettings contains unknown fields'
+  if (value.accessMode !== undefined && !oneOf(value.accessMode, ['managed', 'byok'])) return 'aiSettings.accessMode is invalid'
   if (!oneOf(value.provider, ['openrouter', 'gemini'])) return 'aiSettings.provider is invalid'
   if (value.apiKey !== undefined && !text(value.apiKey, 10_000)) return 'aiSettings.apiKey is invalid'
   if (!allowApiKey && typeof value.apiKey === 'string' && value.apiKey.length > 0) {

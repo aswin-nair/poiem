@@ -12,6 +12,8 @@ import health from '../api/health.js'
 import migrations from '../api/migrations.js'
 import ready from '../api/ready.js'
 import state from '../api/state.js'
+import ai from '../api/ai.js'
+import admin from '../api/admin.js'
 
 /*
  * Poiem on Cloudflare: one Worker serves the app, the API and the daily job.
@@ -51,6 +53,8 @@ export const API_ROUTES: Readonly<Record<string, VercelHandler>> = {
   '/api/migrations': migrations,
   '/api/ready': ready,
   '/api/state': state,
+  '/api/ai': ai,
+  '/api/admin': admin,
 }
 
 export function matchApiRoute(pathname: string): { handler: VercelHandler; params: Record<string, string> } | null {
@@ -60,6 +64,10 @@ export function matchApiRoute(pathname: string): { handler: VercelHandler; param
   // Vercel rewrote /api/auth/:action to /api/auth?action=:action.
   const authAction = /^\/api\/auth\/([A-Za-z0-9-]+)$/.exec(path)
   if (authAction) return { handler: API_ROUTES['/api/auth'], params: { action: authAction[1] } }
+  const aiAction = /^\/api\/ai\/([A-Za-z0-9-]+)$/.exec(path)
+  if (aiAction) return { handler: API_ROUTES['/api/ai'], params: { action: aiAction[1] } }
+  const adminAction = /^\/api\/admin\/([A-Za-z0-9-]+)$/.exec(path)
+  if (adminAction) return { handler: API_ROUTES['/api/admin'], params: { action: adminAction[1] } }
   return null
 }
 
