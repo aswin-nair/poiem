@@ -57,7 +57,7 @@ test.describe('Navigation', () => {
     await page.getByRole('link', { name: /Snap a photo/i }).click()
 
     await expect(page).toHaveURL('/log/photo')
-    await expect(page.getByRole('heading', { name: 'A little setup for AI' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Temporarily unavailable' })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Set up AI' })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Log manually' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'Tap to choose a photo' })).toHaveCount(0)

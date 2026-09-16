@@ -9,10 +9,12 @@ async function configureTestAI(page: Page) {
   // Only a dummy key, and every provider request is intercepted by the test.
   await page.goto('/settings')
   await page.getByRole('switch', { name: 'Show Momo', exact: true }).uncheck()
-  await page.locator('summary').filter({ hasText: 'Connection & AI preferences' }).click()
+  await page.getByRole('link', { name: 'AI setup' }).click()
+  await page.getByRole('switch', { name: 'Use my own API key' }).check()
   await page.getByRole('combobox', { name: 'Provider', exact: true }).selectOption('openrouter')
-  await page.locator('input[aria-label="API key"]').fill('local-test-key-not-a-credential')
+  await page.getByRole('textbox', { name: 'API key' }).fill('local-test-key-not-a-credential')
   await page.getByRole('button', { name: 'Save settings', exact: true }).click()
+  await expect(page.getByRole('status').filter({ hasText: 'Settings saved' })).toBeVisible()
   await nav(page).getByRole('link', { name: 'Today', exact: true }).click()
   await expect(page).toHaveURL('/')
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { canUseAi } from './aiAccess'
+import { canUseAi, msUntilQuotaReset } from './aiAccess'
 import type { AISettings } from './aiConfig'
 import type { AiStatus } from '../../../shared/aiPlans'
 
@@ -46,5 +46,12 @@ describe('AI availability', () => {
     expect(canUseAi(true, status(), managedSettings, 'coach')).toBe(false)
     expect(canUseAi(true, status({ plan: 'premium', coach: { used: 0, reserved: 0, limit: 50, remaining: 50 } }), managedSettings, 'coach')).toBe(true)
     expect(canUseAi(true, null, byokSettings, 'coach')).toBe(true)
+  })
+
+  it('schedules a refresh only while the quota reset is still in the future', () => {
+    expect(msUntilQuotaReset(null, Date.parse('2026-09-16T23:00:00.000Z'))).toBeNull()
+    expect(msUntilQuotaReset('not-a-date', Date.parse('2026-09-16T23:00:00.000Z'))).toBeNull()
+    expect(msUntilQuotaReset('2026-09-17T00:00:00.000Z', Date.parse('2026-09-17T00:00:00.000Z'))).toBeNull()
+    expect(msUntilQuotaReset('2026-09-17T00:00:00.000Z', Date.parse('2026-09-16T23:00:00.000Z'))).toBe(3_600_000)
   })
 })

@@ -69,7 +69,7 @@ describe('meal logging UI contracts', () => {
     state.aiSettings = { ...state.aiSettings, accessMode: 'managed', apiKey: '' }
     for (const page of [<LogTextPage key="text" />, <PhotoLogPage key="photo" />]) {
       const html = renderToStaticMarkup(<MemoryRouter>{page}</MemoryRouter>)
-      expect(html).toContain('A little setup for AI')
+      expect(html).toContain('Temporarily unavailable')
       expect(html).toContain('href="/log/manual"')
       expect(html).toContain('href="/settings"')
       expect(html).not.toContain('class="photo-upload-zone"')
@@ -185,6 +185,22 @@ describe('meal logging UI contracts', () => {
     expect(html).toContain('role="status" aria-live="polite"')
     expect(html).toContain('Cancel analysis')
     expect(html).not.toContain('role="progressbar"')
+  })
+
+  it('calls useLocation before reading first-meal state', () => {
+    for (const file of ['LogTextPage.tsx', 'PhotoLogPage.tsx', 'ReviewFoodPage.tsx']) {
+      const source = readFileSync(new URL(`./${file}`, import.meta.url), 'utf8')
+      expect(source).toContain('const location = useLocation()')
+      expect(source).toContain('firstMealFromNavState(location.state)')
+      expect(source).not.toContain('isFirstMealJourney() || Boolean((useLocation()')
+    }
+  })
+
+  it('does not apply a restored photo after the reader changes the selection', () => {
+    const source = readFileSync(new URL('./PhotoLogPage.tsx', import.meta.url), 'utf8')
+    expect(source).toContain('selectionGen.current += 1')
+    expect(source).toContain('selectionGen.current !== gen')
+    expect(source).toContain('Keep a photo the reader already chose if draft hydration fails')
   })
 
   it('uses named fields, decimal keyboards and selected-state meal buttons', () => {

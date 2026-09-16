@@ -48,3 +48,5 @@ export function ComponentSheetPage() {
     </div>
   )
 }
+
+export default ComponentSheetPage

@@ -62,7 +62,13 @@ export async function liveModels(): Promise<AiModel[]> {
     }))
   } catch { throw new AiProviderError() } finally { clearTimeout(timer) }
 }
-export async function validatePlanConfig(raw: unknown): Promise<AiPlanConfig> {
+export function modelsUnchanged(previous: Pick<AiPlanConfig, 'model' | 'fallback_models'>, next: Pick<AiPlanConfig, 'model' | 'fallback_models'>): boolean {
+  return previous.model === next.model
+    && previous.fallback_models.length === next.fallback_models.length
+    && previous.fallback_models.every((id, index) => id === next.fallback_models[index])
+}
+
+export async function validatePlanConfig(raw: unknown, options?: { catalogue?: AiModel[] | null; previous?: AiPlanConfig | null }): Promise<AiPlanConfig> {
   if (!raw || typeof raw !== 'object') throw new AiInputError('Invalid plan configuration')
   const config = raw as AiPlanConfig
   if ((config.plan !== 'free' && config.plan !== 'premium') || config.provider !== 'openrouter'
@@ -70,9 +76,21 @@ export async function validatePlanConfig(raw: unknown): Promise<AiPlanConfig> {
     || ![config.daily_food, config.daily_coach].every(value => Number.isSafeInteger(value) && value >= 0 && value <= 10000)
     || (config.plan === 'free' && config.daily_coach !== 0)) throw new AiInputError('Invalid plan, provider or daily limits')
   const ids = [config.model, ...config.fallback_models]
-  if (ids.some(id => typeof id !== 'string' || id.length > 160) || new Set(ids).size !== ids.length) throw new AiInputError('Use distinct valid models')
-  const catalogue = await liveModels()
-  if (ids.some(id => !catalogue.some(model => model.id === id && model.image))) throw new AiInputError('Every model must exist in the live catalogue and accept images')
+  if (ids.some(id => typeof id !== 'string' || !id.trim() || id.length > 160) || new Set(ids).size !== ids.length) throw new AiInputError('Use distinct valid models')
+  let catalogue = options?.catalogue
+  if (catalogue === undefined) {
+    try { catalogue = await liveModels() } catch { catalogue = null }
+  }
+  if (catalogue && catalogue.length > 0) {
+    if (ids.some(id => !catalogue.some(model => model.id === id && model.image))) {
+      throw new AiInputError('Every model must exist in the live catalogue and accept images')
+    }
+  } else {
+    const previous = options?.previous
+    if (!previous || !modelsUnchanged(previous, config)) {
+      throw new AiInputError('The model catalogue is unavailable. Quota changes can still be saved with the current models.')
+    }
+  }
   return { plan: config.plan, provider: 'openrouter', model: config.model, fallback_models: config.fallback_models,
     daily_food: config.daily_food, daily_coach: config.daily_coach }
 }

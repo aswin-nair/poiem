@@ -205,10 +205,12 @@ CREATE TABLE IF NOT EXISTS ai_usage_reservations (
   task text NOT NULL CHECK (task IN ('food', 'coach')),
   ip_hash char(64) NOT NULL,
   status text NOT NULL DEFAULT 'reserved' CHECK (status IN ('reserved', 'completed', 'released')),
+  fallback_count integer NOT NULL DEFAULT 0 CHECK (fallback_count >= 0),
   expires_at timestamptz NOT NULL DEFAULT NOW() + INTERVAL '2 minutes',
   created_at timestamptz NOT NULL DEFAULT NOW()
 );
 CREATE INDEX IF NOT EXISTS ai_reservations_pending ON ai_usage_reservations (user_id, day, expires_at) WHERE status = 'reserved';
+ALTER TABLE ai_usage_reservations ADD COLUMN IF NOT EXISTS fallback_count integer NOT NULL DEFAULT 0;
 
 CREATE OR REPLACE FUNCTION charge_ai_attempt(p_day date, p_ip text, p_global_max integer, p_ip_max integer)
 RETURNS text LANGUAGE plpgsql AS $$
@@ -244,10 +246,14 @@ $$;
 CREATE OR REPLACE FUNCTION reserve_ai_fallback(p_id uuid, p_global_max integer, p_ip_max integer)
 RETURNS text LANGUAGE plpgsql AS $$
 DECLARE r ai_usage_reservations%ROWTYPE;
+  charge text;
 BEGIN
   SELECT * INTO r FROM ai_usage_reservations WHERE id = p_id;
   IF NOT FOUND OR r.status <> 'reserved' OR r.expires_at <= NOW() THEN RETURN 'expired'; END IF;
-  RETURN charge_ai_attempt((CURRENT_TIMESTAMP AT TIME ZONE 'UTC')::date, r.ip_hash, p_global_max, p_ip_max);
+  charge := charge_ai_attempt((CURRENT_TIMESTAMP AT TIME ZONE 'UTC')::date, r.ip_hash, p_global_max, p_ip_max);
+  IF charge <> 'ok' THEN RETURN charge; END IF;
+  UPDATE ai_usage_reservations SET fallback_count = fallback_count + 1 WHERE id = p_id;
+  RETURN 'ok';
 END;
 $$;
 
@@ -264,6 +270,17 @@ BEGIN
   RETURN true;
 END;
 $$;
+
+CREATE TABLE IF NOT EXISTS admin_audit (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  actor_id uuid REFERENCES users(id) ON DELETE SET NULL,
+  action text NOT NULL CHECK (action IN ('plan.update', 'account.update')),
+  target text NOT NULL,
+  before_state jsonb NOT NULL,
+  after_state jsonb NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS admin_audit_created ON admin_audit (created_at DESC);
 
 -- Phase 4 additive entity store. Snapshot writes remain authoritative until
 -- staging parity evidence exists. These tables are empty in the first cloud

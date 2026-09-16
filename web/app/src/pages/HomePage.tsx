@@ -31,6 +31,7 @@ import { claimPieces, newPieces, wardrobeProgress, type WardrobePiece } from '@f
 import type { FoodEntry, MealType, XpEvent } from '../types'
 import { useAnchor } from '../mascot/anchors'
 import { mascotEvent } from '../mascot/MascotOverlay'
+import { clearFirstMealJourney, isFirstMealJourney } from '../lib/firstMeal'
 
 interface JustLogged { id?: string; calories: number; name: string }
 
@@ -40,6 +41,7 @@ interface CelebrationState {
   awards: XpEvent[]
   pieces: WardrobePiece[]
   mascotEvent: 'log_success' | 'milestone'
+  firstMeal: boolean
 }
 
 const WATER_GLASSES = 8
@@ -153,13 +155,15 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     // A wardrobe piece unlocked since the last reveal arrives in the celebration, worn, exactly once.
     const pieces = paused ? [] : newPieces(state.gamification.ownedCosmeticIds, wardrobeProgress(state))
     if (pieces.length) patchGamification(g => claimPieces(g, pieces.map(piece => piece.id)))
-    if (!paused && shouldCelebrateLog({ entries: state.foodEntries, entryId: justLogged.id, awards: fresh, newPieces: pieces.length })) {
+    const firstMeal = isFirstMealJourney() || state.foodEntries.filter(entry => entry.id !== justLogged.id).length === 0
+    if (!paused && (firstMeal || shouldCelebrateLog({ entries: state.foodEntries, entryId: justLogged.id, awards: fresh, newPieces: pieces.length }))) {
       setCelebration({
         entryId: justLogged.id,
         foodName: justLogged.name,
         awards: fresh,
         pieces,
         mascotEvent: streakMilestone || pieces.length ? 'milestone' : 'log_success',
+        firstMeal,
       })
       return
     }
@@ -211,6 +215,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       {!paused && celebration && !pendingLevelUp && (
         <LogCelebration
           foodName={celebration.foodName}
+          firstMeal={celebration.firstMeal}
           streak={streak}
           awards={celebration.awards}
           outfit={state.gamification.outfit}
@@ -222,6 +227,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
               toast(`Logged ${foodName}`, { action: { label: 'Undo', fn: () => deleteEntry(entryId) } })
             }
             setCelebration(null)
+            clearFirstMealJourney()
             window.setTimeout(() => mascotEvent(event), 120)
           }}
         />

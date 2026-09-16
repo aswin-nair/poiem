@@ -50,13 +50,24 @@ interface RecoveryBlob {
   quarantinedAt: string
 }
 
+interface StoredPhotoDraft {
+  name: string
+  type: string
+  lastModified: number
+  savedAt: string
+  bytes: ArrayBuffer
+}
+
 interface StoredDrafts {
   userId: string
   envelope: LogDraftEnvelope
   recovery?: RecoveryBlob
+  photo?: StoredPhotoDraft
 }
 
 const memory = new Map<string, LogDraftEnvelope>()
+const photoMemory = new Map<string, File>()
+const photoRevision = new Map<string, number>()
 let databasePromise: Promise<IDBDatabase | null> | null = null
 let writeQueue: Promise<void> = Promise.resolve()
 
@@ -270,6 +281,16 @@ function openDraftDatabase(): Promise<IDBDatabase | null> {
   return promise
 }
 
+function bumpPhotoRevision(userId: string): number {
+  const next = (photoRevision.get(userId) ?? 0) + 1
+  photoRevision.set(userId, next)
+  return next
+}
+
+function photoRevisionMatches(userId: string, revision: number): boolean {
+  return (photoRevision.get(userId) ?? 0) === revision
+}
+
 function enqueueWrite(task: () => Promise<void>): void {
   writeQueue = writeQueue.then(task, task)
 }
@@ -359,8 +380,10 @@ function persist(userId: string, next: LogDraftEnvelope): boolean {
     const latest = memory.get(userId) ?? envelope
     const db = await openDraftDatabase()
     if (db) {
-      if (isEmptyEnvelope(latest)) await idbDelete(db, userId)
-      else await idbPut(db, { userId, envelope: latest })
+      const current = await idbGet(db, userId)
+      const photo = current?.photo
+      if (isEmptyEnvelope(latest) && !photo && !photoMemory.has(userId)) await idbDelete(db, userId)
+      else await idbPut(db, { userId, envelope: latest, recovery: current?.recovery, photo })
       try { removeFallback(userId) } catch { /* keep the fallback if it cannot be removed */ }
       return
     }
@@ -391,6 +414,7 @@ export function loadLogDrafts(userId: string, now = new Date()): LogDraftEnvelop
 
 export async function hydrateLogDrafts(userId: string, now = new Date()): Promise<LogDraftEnvelope> {
   if (!userId) return emptyEnvelope()
+  await writeQueue
   expireRecoveryStore(userId, now)
   const db = await openDraftDatabase()
   if (!db) {
@@ -422,8 +446,8 @@ export async function hydrateLogDrafts(userId: string, now = new Date()): Promis
 
   memory.set(userId, envelope)
   try {
-    if (isEmptyEnvelope(envelope) && !recovery) await idbDelete(db, userId)
-    else await idbPut(db, { userId, envelope, recovery })
+    if (isEmptyEnvelope(envelope) && !recovery && !record?.photo && !photoMemory.has(userId)) await idbDelete(db, userId)
+    else await idbPut(db, { userId, envelope, recovery, photo: record?.photo })
     removeFallback(userId)
   } catch {
     // Keep the in-memory draft when the durable write cannot complete.
@@ -449,10 +473,12 @@ export function saveReviewLogDraft(userId: string, draft: Omit<ReviewLogDraft, '
   return persist(userId, { ...current, review: { ...draft, updatedAt: new Date().toISOString() } })
 }
 
-export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'review'): void {
+export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'review' | 'photo'): void {
   if (!userId) return
   if (!section) {
     memory.delete(userId)
+    bumpPhotoRevision(userId)
+    photoMemory.delete(userId)
     try {
       removeFallback(userId)
       removeRecovery(userId)
@@ -465,9 +491,89 @@ export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'rev
     })
     return
   }
+  if (section === 'photo') {
+    clearPhotoLogDraft(userId)
+    return
+  }
   const current = loadLogDrafts(userId)
   delete current[section]
   persist(userId, current)
+}
+
+function fileFromPhoto(photo: StoredPhotoDraft): File {
+  return new File([photo.bytes], photo.name, { type: photo.type, lastModified: photo.lastModified })
+}
+
+export function peekPhotoLogDraft(userId: string): File | null {
+  return photoMemory.get(userId) ?? null
+}
+
+export function savePhotoLogDraft(userId: string, file: File): boolean {
+  if (!userId) return false
+  bumpPhotoRevision(userId)
+  photoMemory.set(userId, file)
+  enqueueWrite(async () => {
+    const latest = memory.get(userId) ?? emptyEnvelope()
+    const db = await openDraftDatabase()
+    if (!db) return
+    const current = await idbGet(db, userId)
+    const bytes = await file.arrayBuffer()
+    await idbPut(db, {
+      userId,
+      envelope: current?.envelope ?? latest,
+      recovery: current?.recovery,
+      photo: {
+        name: file.name.slice(0, 200),
+        type: file.type,
+        lastModified: file.lastModified,
+        savedAt: new Date().toISOString(),
+        bytes,
+      },
+    })
+  })
+  return true
+}
+
+export async function hydratePhotoLogDraft(userId: string, now = new Date()): Promise<File | null> {
+  if (!userId) return null
+  const cached = photoMemory.get(userId)
+  if (cached) return cached
+  const revision = photoRevision.get(userId) ?? 0
+  await writeQueue
+  if (!photoRevisionMatches(userId, revision)) return photoMemory.get(userId) ?? null
+  const afterWrites = photoMemory.get(userId)
+  if (afterWrites) return afterWrites
+  const db = await openDraftDatabase()
+  if (!db) return null
+  let record: StoredDrafts | null = null
+  try { record = await idbGet(db, userId) } catch { return photoMemory.get(userId) ?? null }
+  if (!photoRevisionMatches(userId, revision)) return photoMemory.get(userId) ?? null
+  const photo = record?.photo
+  if (!photo?.bytes || !isTimestamp(photo.savedAt) || isTimestampExpired(photo.savedAt, now.getTime(), DRAFT_TTL_MS)) {
+    if (record?.photo && photoRevisionMatches(userId, revision) && !photoMemory.has(userId)) {
+      await idbPut(db, { ...record, photo: undefined })
+    }
+    return photoMemory.get(userId) ?? null
+  }
+  if (!photoRevisionMatches(userId, revision)) return photoMemory.get(userId) ?? null
+  const file = fileFromPhoto(photo)
+  if (!photoRevisionMatches(userId, revision)) return photoMemory.get(userId) ?? null
+  photoMemory.set(userId, file)
+  return file
+}
+
+export function clearPhotoLogDraft(userId: string): void {
+  if (!userId) return
+  bumpPhotoRevision(userId)
+  photoMemory.delete(userId)
+  enqueueWrite(async () => {
+    const db = await openDraftDatabase()
+    if (!db) return
+    const current = await idbGet(db, userId)
+    if (!current) return
+    if (isEmptyEnvelope(current.envelope) && !current.recovery) await idbDelete(db, userId)
+    else await idbPut(db, { ...current, photo: undefined })
+  })
 }
 
 export async function flushLogDraftWrites(): Promise<void> {
@@ -476,6 +582,8 @@ export async function flushLogDraftWrites(): Promise<void> {
 
 export async function resetLogDraftRuntime(): Promise<void> {
   memory.clear()
+  photoMemory.clear()
+  photoRevision.clear()
   writeQueue = Promise.resolve()
   if (databasePromise) {
     const db = await databasePromise

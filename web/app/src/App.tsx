@@ -1,8 +1,8 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
 import { BrandLogo } from './components/BrandLogo'
 import identity from './brand/identity.json'
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import { BrowserRouter, Navigate, Route, Routes, useLocation, type Location } from 'react-router-dom'
+import { Navigate, Route, RouterProvider, Routes, createBrowserRouter, useLocation, type Location } from 'react-router-dom'
 import { googleClientId, isGoogleAuthConfigured } from './lib/auth'
 import { hasSeenAccount } from './lib/guestMode'
 import { AuthProvider, useAuth } from './store/AuthContext'
@@ -24,18 +24,21 @@ import { EditFoodPage } from './pages/EditFoodPage'
 import { ProgressPage } from './pages/ProgressPage'
 import { CoachPage } from './pages/CoachPage'
 import { SettingsPage } from './pages/SettingsPage'
-import { JourneyPage } from './pages/JourneyPage'
-import { AboutPage } from './pages/AboutPage'
-import { SupportPage } from './pages/SupportPage'
-import { AdminPage } from './pages/AdminPage'
-import { ComponentSheetPage } from './pages/ComponentSheetPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
-import type { ReactNode } from 'react'
 import { useNavDirection } from './hooks/useNavDirection'
 import { LazyMotion, MotionConfig } from 'motion/react'
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage'))
+const AdminPage = lazy(() => import('./pages/AdminPage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const SupportPage = lazy(() => import('./pages/SupportPage'))
+const JourneyPage = lazy(() => import('./pages/JourneyPage'))
+const ComponentSheetPage = lazy(() => import('./pages/ComponentSheetPage'))
+
+function PageFallback() {
+  return <main className="app-main"><p role="status">Opening…</p></main>
+}
 
 /** Client-side navigation keeps the browser's scroll offset by default; land each new page at the top. */
 function ScrollToTop() {
@@ -173,11 +176,11 @@ function AuthenticatedRoutes() {
       <Route path="/review" element={<ReviewFoodPage />} />
       <Route path="/edit/:id" element={<EditFoodPage />} />
       <Route path="/settings" element={<SettingsPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/support" element={<SupportPage />} />
-      <Route path="/admin" element={<AdminPage />} />
-      <Route path="/journey" element={<JourneyPage />} />
-      {import.meta.env.DEV && <Route path="/dev/components" element={<ComponentSheetPage />} />}
+      <Route path="/about" element={<Suspense fallback={<PageFallback />}><AboutPage /></Suspense>} />
+      <Route path="/support" element={<Suspense fallback={<PageFallback />}><SupportPage /></Suspense>} />
+      <Route path="/admin" element={<Suspense fallback={<PageFallback />}><AdminPage /></Suspense>} />
+      <Route path="/journey" element={<Suspense fallback={<PageFallback />}><JourneyPage /></Suspense>} />
+      {import.meta.env.DEV && <Route path="/dev/components" element={<Suspense fallback={<PageFallback />}><ComponentSheetPage /></Suspense>} />}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
     </DirectionalRoutes>
@@ -255,17 +258,31 @@ function AppGate() {
 
 const loadMotionFeatures = () => import('./lib/motionFeatures').then(module => module.default)
 
+function RoutedShell() {
+  return (
+    <>
+      <ScrollToTop />
+      <ToastProvider>
+        <RootSurface />
+      </ToastProvider>
+    </>
+  )
+}
+
 function AppShell() {
+  const router = useRef<ReturnType<typeof createBrowserRouter> | null>(null)
+  if (!router.current) {
+    router.current = createBrowserRouter(
+      [{ path: '*', element: <RoutedShell /> }],
+      { basename: routerBasename() },
+    )
+  }
+
   return (
     <LazyMotion features={loadMotionFeatures}>
       <MotionConfig reducedMotion="user">
         <AuthProvider>
-          <BrowserRouter basename={routerBasename()}>
-            <ScrollToTop />
-            <ToastProvider>
-              <RootSurface />
-            </ToastProvider>
-          </BrowserRouter>
+          <RouterProvider router={router.current} />
         </AuthProvider>
       </MotionConfig>
     </LazyMotion>

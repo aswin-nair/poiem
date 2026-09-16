@@ -100,6 +100,15 @@
   .flow-setup > svg { box-sizing: border-box; width: 40px; height: 40px; margin: 0; padding: 7px; border: 2px solid var(--k-line); background: var(--k-sky); color: var(--k-on-tone); }
   .flow-setup h2 { margin: 0 0 4px; font: 900 1.375rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
   .flow-setup p { margin: 0; font: 500 var(--k-text-sm)/1.5 var(--k-font-body); color: var(--k-muted); }
+  .flow-setup.is-checking > svg { background: var(--k-sky); }
+  .flow-setup.is-limit_reached > svg { background: var(--k-butter); }
+  .flow-setup.is-premium_required > svg { background: var(--k-pink); }
+  .flow-setup.is-unavailable > svg { background: var(--k-peach); }
+  .flow-allowance {
+    margin: 8px 0 0;
+    font: 600 var(--k-text-xs)/1.4 var(--k-font-mono);
+    color: var(--k-ink);
+  }
   .flow-link-row { display: flex; flex-wrap: wrap; gap: 0 18px; margin-top: 4px; }
   :is(.flow-link-row a, .flow-submit > a, .flow-feedback a, .flow-text-action) {
     display: inline-flex;

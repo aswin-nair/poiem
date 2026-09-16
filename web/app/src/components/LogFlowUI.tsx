@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { MomoSticker } from './MomoSticker'
 import { PressableButton } from './PressableButton'
 import { IconCheck, IconEdit, IconShield, IconSparkles } from './icons'
+import type { AiAvailability, AiAvailabilityKind } from '../lib/aiAvailability'
+import { allowanceCopy } from '../lib/aiAvailability'
+import type { ManagedTask } from '../../../shared/aiPlans'
 
 export function LogFlowHeader({ title, description, step }: {
   title: string; description: string; step?: 1 | 2
@@ -25,14 +28,82 @@ export function LogFlowHeader({ title, description, step }: {
   )
 }
 
-export function AiSetupNotice({ provider, managed = false }: { provider: string; managed?: boolean }) {
-  return <section className="flow-setup" aria-labelledby="flow-setup-title">
+const STATE_COPY: Record<Exclude<AiAvailabilityKind, 'ready'>, { title: string; body: (provider: string, task: ManagedTask) => string }> = {
+  checking: {
+    title: 'Checking availability',
+    body: () => 'Checking whether Poiem AI can run this estimate.',
+  },
+  limit_reached: {
+    title: 'Daily limit reached',
+    body: (_provider, task) => task === 'coach'
+      ? 'You’ve used today’s Coach messages. You can still log meals, or come back after the reset.'
+      : 'You’ve used today’s food scans. Retry after the reset, or log this meal manually.',
+  },
+  premium_required: {
+    title: 'Premium required',
+    body: () => 'Coach on Poiem’s key is a Premium feature. You can still log meals, or add your own key in You.',
+  },
+  unavailable: {
+    title: 'Temporarily unavailable',
+    body: (provider, task) => {
+      void task
+      return `Poiem AI is not available right now. Add your ${provider} key in You, retry in a moment, or log manually.`
+    },
+  },
+}
+
+export function AiAvailabilityCard({
+  availability,
+  provider,
+  task,
+  onRetry,
+}: {
+  availability: AiAvailability
+  provider: string
+  task: ManagedTask
+  onRetry?: () => void
+}) {
+  if (availability.kind === 'ready') return null
+
+  const unsigned = availability.kind === 'unavailable' && availability.reason === 'unsigned'
+  const missingKey = availability.kind === 'unavailable' && availability.reason === 'missing_key'
+  const copy = unsigned
+    ? { title: 'Sign in to use AI', body: 'Photo and description need an account. Manual logging is ready now.' }
+    : missingKey
+      ? { title: 'Add your API key', body: `Add your ${provider} API key in You → AI setup. Manual logging is ready now, with no key needed.` }
+      : STATE_COPY[availability.kind]
+  const body = typeof copy.body === 'function' ? copy.body(provider, task) : copy.body
+  const retryable = availability.kind === 'checking'
+    ? false
+    : availability.kind === 'unavailable'
+      ? availability.retryable
+      : availability.kind === 'limit_reached' || availability.kind === 'premium_required'
+        ? false
+        : true
+  const manual = task !== 'coach'
+  const allowance = allowanceCopy(availability, task)
+
+  return <section className={`flow-setup is-${availability.kind}`} aria-labelledby="flow-ai-state-title" data-ai-state={availability.kind}>
     <IconSparkles size={24} />
-    <div><h2 id="flow-setup-title">A little setup for AI</h2>
-      <p>{managed ? 'Managed AI is unavailable in this environment. Add your own ' + provider + ' API key in Advanced settings, or use manual logging.' : `Add your ${provider} API key in You → AI settings. Manual logging is ready now, with no key needed.`}</p>
-      <div className="flow-link-row"><Link to="/settings">Set up AI</Link><Link to="/log/manual">Log manually</Link></div>
+    <div>
+      <h2 id="flow-ai-state-title">{copy.title}</h2>
+      <p>{body}</p>
+      {allowance && <p className="flow-allowance">{allowance}</p>}
+      <div className="flow-link-row">
+        {retryable && onRetry && <button type="button" className="flow-text-action" onClick={onRetry}>Retry</button>}
+        {unsigned && <Link to="/login?mode=signup">Create an account</Link>}
+        {availability.kind === 'unavailable' && availability.reason !== 'unsigned' && <Link to="/settings">Set up AI</Link>}
+        {availability.kind === 'premium_required' && <Link to="/settings">Open You</Link>}
+        {manual && <Link to="/log/manual">Log manually</Link>}
+      </div>
     </div>
   </section>
+}
+
+export function AiAllowanceHint({ availability, task }: { availability: AiAvailability; task: ManagedTask }) {
+  const copy = allowanceCopy(availability, task)
+  if (!copy) return null
+  return <p className="flow-allowance" data-ai-state={availability.kind}>{copy}</p>
 }
 
 export function AnalysisStatus({ method, onCancel }: { method: 'text' | 'photo'; onCancel: () => void }) {
@@ -64,6 +135,8 @@ export function PhotoPrivacyNote({ provider, managed = false }: { provider: stri
   </div>
 }
 
-export function EstimateNote() {
-  return <p className="flow-estimate-note"><IconEdit size={20} /> AI estimates can be off. Check the portion and change any number before logging.</p>
+export function EstimateNote({ firstMeal = false }: { firstMeal?: boolean }) {
+  return <p className="flow-estimate-note"><IconEdit size={20} /> {firstMeal
+    ? 'This is an estimate, not a final log. Check the name, portion, and numbers, then save. You can still edit it from Today.'
+    : 'AI estimates can be off. Check the portion and change any number before logging.'}</p>
 }

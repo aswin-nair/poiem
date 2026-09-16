@@ -9,6 +9,7 @@ import { SettingsFinder } from '../components/SettingsFinder'
 import type { ActivityLevel, AIProvider, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
 import type { AIAccessMode, MascotPersonality } from '../lib/aiConfig'
 import { useAiAccess } from '../lib/aiAccess'
+import { allowanceCopy } from '../lib/aiAvailability'
 import { ACTIVITY_LABELS, GOAL_LABELS } from '../types'
 import {
   OPENROUTER_MODELS,
@@ -59,7 +60,7 @@ function SettingsCard({ children }: { children: React.ReactNode }) {
 export function SettingsPage() {
   const { state, updateProfile, updateAISettings, replaceState, clearAllData, patchGamification } = useApp()
   const { user, signOut } = useAuth()
-  const { status: aiStatus, refresh: refreshAiStatus } = useAiAccess()
+  const { status: aiStatus, refresh: refreshAiStatus, availability: aiAvailability } = useAiAccess()
   const [profile, setProfile] = useState<UserProfile>(state.profile)
   const [provider, setProvider] = useState<AIProvider>(state.aiSettings.provider)
   const [accessMode, setAccessMode] = useState<AIAccessMode>(state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
@@ -557,9 +558,8 @@ export function SettingsPage() {
           </SettingsRow>
           {accessMode === 'managed' && (
             <p className="settings-byok-note">
-              {aiStatus
-                ? `${aiStatus.food.remaining} of ${aiStatus.food.limit} food scans left today.`
-                : 'Checking Poiem AI availability…'}
+              {allowanceCopy(aiAvailability({ ...state.aiSettings, accessMode }, 'food_photo'), 'food_photo')
+                ?? (aiStatus ? `${aiStatus.food.remaining} of ${aiStatus.food.limit} food scans left today.` : 'Checking Poiem AI availability…')}
             </p>
           )}
           {aiStatus?.isAdmin && <p className="settings-byok-note"><Link to="/admin">Open managed AI admin</Link></p>}

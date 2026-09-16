@@ -4,3 +4,5 @@ import { Navigate } from 'react-router-dom'
 export function JourneyPage() {
   return <Navigate to="/progress" replace />
 }
+
+export default JourneyPage

@@ -3,13 +3,17 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { FoodAnalysis } from '../types'
 import {
   clearLogDraft,
+  clearPhotoLogDraft,
   flushLogDraftWrites,
   hydrateLogDrafts,
+  hydratePhotoLogDraft,
   isSafeFoodAnalysis,
   loadLogDrafts,
   logDraftStorageKeys,
+  peekPhotoLogDraft,
   resetLogDraftRuntime,
   saveManualLogDraft,
+  savePhotoLogDraft,
   saveReviewLogDraft,
   saveTextLogDraft,
 } from './logDrafts'
@@ -254,5 +258,27 @@ describe('food logging drafts in IndexedDB', () => {
 
     await resetLogDraftRuntime()
     expect(await hydrateLogDrafts('person-a')).toEqual({ version: 1 })
+  })
+
+  it('does not restore a photo that was replaced or cleared while hydration was in flight', async () => {
+    const older = new File([Uint8Array.of(1)], 'old.png', { type: 'image/png', lastModified: 1 })
+    const newer = new File([Uint8Array.of(2)], 'new.png', { type: 'image/png', lastModified: 2 })
+    savePhotoLogDraft('person-a', older)
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+
+    const restoring = hydratePhotoLogDraft('person-a')
+    savePhotoLogDraft('person-a', newer)
+    expect((await restoring)?.name).toBe('new.png')
+    expect(peekPhotoLogDraft('person-a')?.name).toBe('new.png')
+
+    await resetLogDraftRuntime()
+    const restoringAfterClear = hydratePhotoLogDraft('person-a')
+    clearPhotoLogDraft('person-a')
+    expect(await restoringAfterClear).toBeNull()
+    expect(peekPhotoLogDraft('person-a')).toBeNull()
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    expect(await hydratePhotoLogDraft('person-a')).toBeNull()
   })
 })

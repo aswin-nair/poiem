@@ -10,11 +10,12 @@ import { usesByok } from '../lib/aiClient'
 import { IconSend } from '../components/icons'
 import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
-import { KeyRound, MessageCircle, Sparkles, Trash2 } from 'lucide-react'
+import { MessageCircle, Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
 import { PoiemSectionLabel } from '../components/PoiemSectionLabel'
 import * as m from 'motion/react-m'
 import { motionSoftSpring } from '../lib/motionPresets'
+import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
 function CoachMessage({ text }: { text: string }) {
@@ -86,7 +87,7 @@ export function CoachPage() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const requestRef = useRef<AbortController | null>(null)
-  const { canUse } = useAiAccess()
+  const { availability, refresh } = useAiAccess()
 
   useEffect(() => () => requestRef.current?.abort(), [])
 
@@ -94,13 +95,19 @@ export function CoachPage() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [state.chatMessages, loading])
 
+  const ai = availability(state.aiSettings, 'coach')
+  const foodAi = availability(state.aiSettings, 'food_text')
+  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
+  const canChat = ai.kind === 'ready'
+
   async function send(text: string) {
     const trimmed = text.trim()
     if (!trimmed || loading) return
     const safety = coachSafetyResponse(trimmed)
-    if (!safety && !canUse(state.aiSettings, 'coach')) {
-      if (!usesByok(state.aiSettings) && canUse(state.aiSettings, 'food_text')) setError('Coach is a Premium feature. You can still log meals with managed AI.')
-      else if (usesByok(state.aiSettings)) setError(`Add your ${providerLabel(state.aiSettings.provider)} API key in Settings.`)
+    if (!safety && !canChat) {
+      if (ai.kind === 'premium_required' && foodAi.kind === 'ready') setError('Coach is a Premium feature. You can still log meals with managed AI.')
+      else if (ai.kind === 'unavailable' && ai.reason === 'missing_key') setError(`Add your ${providerLabel(state.aiSettings.provider)} API key in Settings.`)
+      else if (ai.kind === 'limit_reached') setError('You’ve used today’s Coach messages. Try again after the reset.')
       else setError('Managed AI is not available right now. You can add your own key in Advanced settings.')
       return
     }
@@ -150,9 +157,6 @@ export function CoachPage() {
     }
   }
 
-  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
-  const canChat = canUse(state.aiSettings, 'coach')
-
   return (
     <div className="app-shell coach-shell food-club-app poster-ui">
       <header className="coach-header-bar">
@@ -183,10 +187,12 @@ export function CoachPage() {
         {error && <div className="error-banner" role="alert">{error}</div>}
 
         {!canChat && (
-          <div className="coach-no-key-card">
-            <span className="coach-no-key-icon" aria-hidden><KeyRound size={26} /></span>
-            <p>Add your <Link to="/settings">{providerLabel(state.aiSettings.provider)}</Link> API key in Settings to start chatting.</p>
-          </div>
+          <AiAvailabilityCard
+            availability={ai}
+            provider={providerLabel(state.aiSettings.provider)}
+            task="coach"
+            onRetry={() => { void refresh() }}
+          />
         )}
 
         <div className="chat-thread">
@@ -259,6 +265,7 @@ export function CoachPage() {
         {loading && (
           <PressableButton variant="secondary" label="Cancel response" onClick={() => requestRef.current?.abort()} />
         )}
+        <AiAllowanceHint availability={ai} task="coach" />
         <form
           className="chat-input-form"
           onSubmit={e => { e.preventDefault(); send(input) }}

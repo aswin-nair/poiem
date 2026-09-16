@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { effectivePlan, managedAiEnabled } from '../../api/_lib/plan.js'
-import { AiInputError, validateManagedPayload } from '../../api/_lib/aiProvider.js'
+import { AiInputError, validateManagedPayload, validatePlanConfig } from '../../api/_lib/aiProvider.js'
+import type { AiModel, AiPlanConfig } from '../../shared/aiPlans.js'
 
 describe('managed AI entitlement rules', () => {
   afterEach(() => vi.unstubAllEnvs())
@@ -50,5 +51,36 @@ describe('managed AI request envelope', () => {
     ] }]
     expect(validateManagedPayload('food_photo', { messages: photo }).messages).toHaveLength(1)
     expect(() => validateManagedPayload('food_text', { messages: photo })).toThrow(AiInputError)
+  })
+})
+
+const previous: AiPlanConfig = {
+  plan: 'free',
+  provider: 'openrouter',
+  model: 'google/gemma-4-31b-it',
+  fallback_models: ['google/gemini-2.5-flash'],
+  daily_food: 20,
+  daily_coach: 0,
+}
+const catalogue: AiModel[] = [
+  { id: 'google/gemma-4-31b-it', name: 'Gemma', image: true, promptPrice: '', completionPrice: '' },
+  { id: 'google/gemini-2.5-flash', name: 'Flash', image: true, promptPrice: '', completionPrice: '' },
+  { id: 'openai/gpt-4o-mini', name: 'Text', image: false, promptPrice: '', completionPrice: '' },
+]
+
+describe('plan configuration validation', () => {
+  it('rejects empty, text-only, or unknown model IDs when the catalogue is live', async () => {
+    await expect(validatePlanConfig({ ...previous, model: '' }, { catalogue, previous })).rejects.toBeInstanceOf(AiInputError)
+    await expect(validatePlanConfig({ ...previous, model: 'openai/gpt-4o-mini' }, { catalogue, previous })).rejects.toBeInstanceOf(AiInputError)
+    await expect(validatePlanConfig({ ...previous, model: 'missing/model' }, { catalogue, previous })).rejects.toBeInstanceOf(AiInputError)
+  })
+
+  it('allows quota-only edits when the catalogue is down, and keeps the last validated models', async () => {
+    const saved = await validatePlanConfig({ ...previous, daily_food: 25 }, { catalogue: null, previous })
+    expect(saved).toEqual({ ...previous, daily_food: 25 })
+    await expect(validatePlanConfig({ ...previous, model: 'google/other-vision', fallback_models: [] }, { catalogue: [], previous }))
+      .rejects.toThrow(/catalogue is unavailable/)
+    await expect(validatePlanConfig({ ...previous, daily_food: 25 }, { catalogue: null, previous: null }))
+      .rejects.toThrow(/catalogue is unavailable/)
   })
 })

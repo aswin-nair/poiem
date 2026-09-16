@@ -17,6 +17,7 @@ export interface LogCelebrationProps {
   outfit?: MomoOutfit
   /** Wardrobe pieces unlocked since the last reveal. Momo arrives wearing the first. */
   pieces?: WardrobePiece[]
+  firstMeal?: boolean
   onDone: () => void
 }
 
@@ -29,6 +30,7 @@ export function LogCelebration({
   awards,
   outfit,
   pieces = [],
+  firstMeal = false,
   onDone,
 }: LogCelebrationProps) {
   const [reduced] = useState(() => prefersReducedMotion())
@@ -85,8 +87,9 @@ export function LogCelebration({
         <div className="celebrate-momo" aria-hidden>
           <div style={{ width: 112, height: 112 }}><Momo mood="excited" outfit={wearing} /></div>
         </div>
-        <h2 className="celebrate-title">Logged.</h2>
+        <h2 className="celebrate-title">{firstMeal ? 'First meal in.' : 'Logged.'}</h2>
         <p className="celebrate-sub">{foodName}</p>
+        {firstMeal && <p className="celebrate-first">Momo saved your first plate. Tap it on Today if you want to correct anything.</p>}
         {pieces.length > 0 && (
           <p className="celebrate-piece">
             <span className="k-eyebrow">New for Momo</span>

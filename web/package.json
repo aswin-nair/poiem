@@ -9,6 +9,7 @@
     "db:migrate:refresh": "node scripts/migrate.mjs refresh",
     "db:migrate:entities": "node scripts/migrate.mjs entities",
     "db:migrate:plans": "node scripts/migrate.mjs plans",
+    "db:migrate:ops": "node scripts/migrate.mjs ops",
     "db:audit-byok": "node scripts/audit-byok.mjs",
     "db:retention-cleanup": "node scripts/retention-cleanup.mjs",
     "db:retention-rehearsal": "node scripts/retention-rehearsal.mjs",

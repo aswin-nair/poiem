@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { analyzeTextFood } from '../lib/foodAI'
 import { providerLabel } from '../lib/aiConfig'
 import { useAiAccess } from '../lib/aiAccess'
-import { usesByok } from '../lib/aiClient'
 import { BackLink } from '../components/BackLink'
 import { track } from '../lib/analytics'
 import { clearLogDraft, hydrateLogDrafts, loadLogDrafts, saveTextLogDraft } from '../lib/logDrafts'
 import { useAuth } from '../store/AuthContext'
 import { PressableButton } from '../components/PressableButton'
 import { mascotEvent } from '../mascot/MascotOverlay'
-import { AiSetupNotice, AnalysisStatus, FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
+import { AiAllowanceHint, AiAvailabilityCard, AnalysisStatus, FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
 import { IconArrowRight, IconEdit, IconSparkles } from '../components/icons'
+import { firstMealFromNavState } from '../lib/firstMeal'
 
 const EXAMPLES = [
   '2 scrambled eggs, toast with butter',
@@ -25,14 +25,18 @@ export function LogTextPage() {
   const { state, setPendingAnalysis, setPendingImagePreview, setPendingSource } = useApp()
   const { user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const firstMeal = firstMealFromNavState(location.state)
   const userId = user?.sub ?? ''
   const [text, setText] = useState(() => loadLogDrafts(userId).text?.text ?? '')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
-  const { canUse } = useAiAccess()
+  const { availability, refresh } = useAiAccess()
   const requestRef = useRef<AbortController | null>(null)
   const edited = useRef(false)
+  const ai = availability(state.aiSettings, 'food_text')
+  const canAnalyze = ai.kind === 'ready'
 
   useEffect(() => {
     let cancelled = false
@@ -55,7 +59,7 @@ export function LogTextPage() {
 
   async function handleAnalyze() {
     const trimmed = text.trim()
-    if (!trimmed || !canUse(state.aiSettings, 'food_text') || requestRef.current) return
+    if (!trimmed || !canAnalyze || requestRef.current) return
     const controller = new AbortController()
     requestRef.current = controller
     setLoading(true)
@@ -70,7 +74,7 @@ export function LogTextPage() {
       setPendingAnalysis(analysis)
       setPendingImagePreview(null)
       clearLogDraft(userId, 'text')
-      navigate('/review')
+      navigate('/review', { state: { firstMeal } })
     } catch (e) {
       if (controller.signal.aborted || requestRef.current !== controller) return
       track({ name: 'ai_analysis_failed', method: 'text_ai' })
@@ -91,19 +95,24 @@ export function LogTextPage() {
     setNotice('Analysis stopped. Your description is still here.')
   }
 
-  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
-  const canAnalyze = canUse(state.aiSettings, 'food_text')
-
   return (
     <div className="app-shell k-screen k-flow">
       <main className="app-main">
         <BackLink to="/log" />
-        <LogFlowHeader step={1} title="What’s on the menu?" description="Describe your meal in your own words. We’ll turn it into an estimate you can edit." />
+        <LogFlowHeader
+          step={1}
+          title={firstMeal ? 'Describe your first meal.' : 'What’s on the menu?'}
+          description={firstMeal
+            ? 'Say what you ate in your own words. You’ll check the estimate before it counts.'
+            : 'Describe your meal in your own words. We’ll turn it into an estimate you can edit.'}
+        />
 
-        {error && <FlowFeedback message={error} error><Link to="/log/manual">Keep going with manual entry</Link></FlowFeedback>}
+        {error && <FlowFeedback message={error} error>
+          <button type="button" className="flow-text-action" onClick={() => { void handleAnalyze() }}>Retry</button>
+          <Link to="/log/manual">Keep going with manual entry</Link>
+        </FlowFeedback>}
         {notice && <FlowFeedback message={notice} />}
-
-        {!canAnalyze && <AiSetupNotice provider={providerLabel(state.aiSettings.provider)} managed={!hasKey} />}
+        <AiAvailabilityCard availability={ai} provider={providerLabel(state.aiSettings.provider)} task="food_text" onRetry={() => { void refresh() }} />
 
         <form className="flow-compose" onSubmit={event => { event.preventDefault(); void handleAnalyze() }}>
         <div className="flow-description-card">
@@ -138,6 +147,7 @@ export function LogTextPage() {
 
         {loading ? <AnalysisStatus method="text" onCancel={cancelAnalysis} /> : <div className="flow-submit">
         <p><IconSparkles size={18} /> Next: check the portion and nutrition.</p>
+        <AiAllowanceHint availability={ai} task="food_text" />
         <PressableButton
           fullWidth
           type="submit"

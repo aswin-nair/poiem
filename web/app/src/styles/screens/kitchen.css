@@ -455,10 +455,10 @@
     text-decoration: none;
     transition: translate var(--k-press) ease, box-shadow var(--k-press) ease;
   }
-  .k-method.is-tone-butter { --tone: var(--k-butter); }
-  .k-method.is-tone-sky { --tone: var(--k-sky); }
-  .k-method.is-tone-mint { --tone: var(--k-mint); }
-  .k-method.is-tone-pink { --tone: var(--k-pink); }
+  .k-method.is-tone-butter { --tone: var(--k-sticker-butter, var(--k-butter)); }
+  .k-method.is-tone-sky { --tone: var(--k-sticker-sky, var(--k-sky)); }
+  .k-method.is-tone-mint { --tone: var(--k-sticker-mint, var(--k-mint)); }
+  .k-method.is-tone-pink { --tone: var(--k-sticker-pink, var(--k-pink)); }
   .k-method-icon {
     display: grid;
     place-items: center;
@@ -466,7 +466,7 @@
     height: 44px;
     border: 2px solid var(--k-line);
     background: var(--tone);
-    color: var(--k-on-tone);
+    color: var(--k-sticker-ink, #20221D);
     rotate: -5deg;
     transition: rotate 240ms cubic-bezier(.3, 1.6, .5, 1), scale 240ms cubic-bezier(.3, 1.6, .5, 1);
   }
@@ -478,6 +478,11 @@
   .k-method:hover .k-method-icon { rotate: 0deg; scale: 1.08; }
   .k-method:active { translate: 2px 2px; box-shadow: none; }
   .k-method:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    .k-method, .k-method-icon { transition: none; }
+    .k-method:hover { translate: none; }
+    .k-method:hover .k-method-icon { rotate: -5deg; scale: 1; }
+  }
   @media (max-width: 340px) { .k-methods { grid-template-columns: minmax(0, 1fr); } }
 
   /* ── Journey card on Insights ──────────────────────────────── */

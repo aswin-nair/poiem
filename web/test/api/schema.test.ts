@@ -36,6 +36,11 @@ describe('account security schema', () => {
     expect(schema).toContain('family_id')
   })
 
+  it('counts managed-AI fallbacks on the reservation that actually retried', () => {
+    expect(schema).toContain('fallback_count integer NOT NULL DEFAULT 0')
+    expect(schema).toContain('SET fallback_count = fallback_count + 1')
+  })
+
   it('adds calendar-stable entity tables without replacing snapshot writes', () => {
     expect(schema).toContain('CREATE TABLE IF NOT EXISTS account_entities')
     expect(schema).toContain('CREATE TABLE IF NOT EXISTS entity_tombstones')

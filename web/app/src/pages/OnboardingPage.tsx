@@ -5,7 +5,7 @@ import { useApp } from '../store/AppContext'
 import { useAuth } from '../store/AuthContext'
 import type { ActivityLevel, Gender, LoggingCommitment, MealType, UserProfile, WeightGoal } from '../types'
 import { ACTIVITY_LABELS, GOAL_LABELS, MEAL_LABELS } from '../types'
-import { IconCheck, IconShield, IconChevronLeft, IconChevronRight, IconMeal, IconSparkles, IconSprout, IconRest, IconWalk, IconWorkout, IconEnergy, IconFlame } from '../components/icons'
+import { IconCheck, IconShield, IconChevronLeft, IconChevronRight, IconMeal, IconSparkles, IconSprout, IconRest, IconWalk, IconWorkout, IconEnergy, IconFlame, IconCamera, IconEdit, IconClipboard } from '../components/icons'
 import { PressableButton } from '../components/PressableButton'
 import { OnboardingCompanion, OnboardingStepBadge } from '../components/OnboardingCompanion'
 import { OnboardingWelcome, WELCOME_SLIDE_COUNT } from '../components/OnboardingWelcome'
@@ -32,6 +32,7 @@ import {
 } from '../lib/onboarding'
 import { selectLogMethod, startLogFlow, track } from '../lib/analytics'
 import { guestUserId } from '../lib/guestMode'
+import { markFirstMealJourney } from '../lib/firstMeal'
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 import { motionOpacity, motionPop, motionSpring, motionStep, plateReveal } from '../lib/motionPresets'
@@ -215,6 +216,29 @@ export function OnboardingPage() {
     }))
   }
 
+  function startAiFirstMeal(method: 'photo' | 'text') {
+    if (finishing.current) return
+    if (birthdayEligibility(draft.birthdayInput) !== 'eligible' || !targets) {
+      setDraft(current => ({ ...current, step: 0 }))
+      setValidationError('Confirm your date of birth before continuing.')
+      return
+    }
+    if (!user) {
+      setValidationError('Photo and description need an account. Type the numbers below, or sign in.')
+      return
+    }
+    finishing.current = true
+    if (targets.clamped) track({ name: 'goal_clamped' })
+    updateProfile(profile)
+    setOnboarded(true)
+    markFirstMealJourney()
+    track({ name: 'onboarding_completed' })
+    clearOnboardingDraft(userId)
+    window.setTimeout(() => {
+      navigate(method === 'photo' ? '/log/photo' : '/log/text', { replace: true, state: { firstMeal: true } })
+    }, 0)
+  }
+
   function handleBirthdayChange(value: string) {
     const birthday = birthdayToIso(value) ?? ''
     updateDraft(current => ({
@@ -262,6 +286,7 @@ export function OnboardingPage() {
       mealType: firstMeal.mealType,
     })
     setOnboarded(true)
+    markFirstMealJourney()
     track({ name: 'onboarding_completed' })
     clearOnboardingDraft(userId)
     // Switching the route table from onboarding-only to the main app first
@@ -629,7 +654,23 @@ export function OnboardingPage() {
         {step === FIRST_MEAL_STEP && (
           <div className="onboarding-step-content">
             <h1 className="onboarding-title">Log your first meal</h1>
-            <p className="onboarding-sub">Use a real meal or snack. Enter the total for what you ate, not per serving. You can edit it later from Today.</p>
+            <p className="onboarding-sub">Photograph it, describe it, or type the numbers. You’ll review the estimate before it counts, then Momo will celebrate with you.</p>
+            <nav className="first-meal-methods" aria-label="Ways to log your first meal">
+              <button type="button" className="k-method is-tone-butter" onClick={() => startAiFirstMeal('photo')}>
+                <span className="k-method-icon" aria-hidden="true"><IconCamera size={22} /></span>
+                <span className="k-method-text"><strong>Photo</strong><small>Point, shoot, check</small></span>
+              </button>
+              <button type="button" className="k-method is-tone-sky" onClick={() => startAiFirstMeal('text')}>
+                <span className="k-method-icon" aria-hidden="true"><IconEdit size={22} /></span>
+                <span className="k-method-text"><strong>Describe</strong><small>Say it in your words</small></span>
+              </button>
+              <button type="button" className="k-method is-tone-mint" onClick={() => document.getElementById('first-meal-name')?.focus()}>
+                <span className="k-method-icon" aria-hidden="true"><IconClipboard size={22} /></span>
+                <span className="k-method-text"><strong>Manual</strong><small>Type the numbers</small></span>
+              </button>
+            </nav>
+            {!user && <p className="setup-note">Photo and description need an account. You can still type a meal now.</p>}
+            <p className="setup-note">Check the name, calories, and macros. You can edit this meal from Today after it’s saved.</p>
             <div className="field">
               <label htmlFor="first-meal-name">Meal name</label>
               <input

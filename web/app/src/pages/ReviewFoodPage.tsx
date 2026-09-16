@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { BackLink } from '../components/BackLink'
 import { IconCheck, IconChevronDown, IconPlus, IconTrash } from '../components/icons'
@@ -14,6 +14,7 @@ import { useAuth } from '../store/AuthContext'
 import { sourceToMethod, track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
 import { defaultMealType } from '../lib/meals'
+import { firstMealFromNavState } from '../lib/firstMeal'
 
 export function ReviewFoodPage() {
   const {
@@ -26,6 +27,8 @@ export function ReviewFoodPage() {
   } = useApp()
   const { user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const firstMeal = firstMealFromNavState(location.state)
   const userId = user?.sub ?? ''
   const saved = loadLogDrafts(userId).review
   const initialAnalysis = pendingAnalysis ?? saved?.analysis ?? null
@@ -180,8 +183,14 @@ export function ReviewFoodPage() {
     <div className="app-shell k-screen k-flow k-flow-wide">
       <main className="app-main">
         <BackLink onClick={discard} label="Start over" />
-        <LogFlowHeader step={2} title="Make it your meal." description="The estimate is a starting point. You’re in charge of the final details." />
-        <EstimateNote />
+        <LogFlowHeader
+          step={2}
+          title={firstMeal ? 'Check your first meal.' : 'Make it your meal.'}
+          description={firstMeal
+            ? 'Poiem guessed from your photo or description. Change anything that doesn’t match, then save. Momo will celebrate with you.'
+            : 'The estimate is a starting point. You’re in charge of the final details.'}
+        />
+        <EstimateNote firstMeal={firstMeal} />
         {error && <FlowFeedback message={error} error />}
         <form className="flow-review-layout" noValidate onSubmit={event => { event.preventDefault(); save() }}>
           <div className="flow-review-editor">

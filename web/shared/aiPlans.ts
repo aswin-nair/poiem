@@ -27,3 +27,25 @@ export interface AiModel {
   promptPrice: string
   completionPrice: string
 }
+export interface AdminUsageSnapshot {
+  available: boolean
+  sample?: boolean
+  day: string
+  foodUsed: number | null
+  coachUsed: number | null
+  successes: number | null
+  failures: number | null
+  fallbacks: number | null
+  attempts: number | null
+  budgetUsed: number | null
+  budgetLimit: number | null
+}
+export interface AdminAuditEntry {
+  id: string
+  actorEmail: string | null
+  action: 'plan.update' | 'account.update'
+  target: string
+  before: Record<string, unknown>
+  after: Record<string, unknown>
+  createdAt: string
+}
