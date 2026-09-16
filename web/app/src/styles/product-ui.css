@@ -1,3 +1,4 @@
+@layer legacy {
 /* Tangerine food club: ocean-blue identity, warm actions, lemon highlights.
    Existing page files own the flows; accessibility rules are imported last. */
 .app-shell { background: var(--paper); }
@@ -544,4 +545,5 @@
 }
 @media (min-width: 768px) {
   .app-shell:not(.setup-refresh) { border-inline: var(--fun-outline); }
+}
 }

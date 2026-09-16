@@ -1,8 +1,8 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { BrandLogo } from './components/BrandLogo'
 import identity from './brand/identity.json'
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation, type Location } from 'react-router-dom'
 import { googleClientId, isGoogleAuthConfigured } from './lib/auth'
 import { hasSeenAccount } from './lib/guestMode'
 import { AuthProvider, useAuth } from './store/AuthContext'
@@ -13,7 +13,8 @@ import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
 import { HomePage } from './pages/HomePage'
 import { OnboardingPage } from './pages/OnboardingPage'
-import { LogMenuPage } from './pages/LogMenuPage'
+import { LogSheet } from './pages/LogSheet'
+import { LogSheetOpenContext } from './lib/logSheetOpen'
 import { LogTextPage } from './pages/LogTextPage'
 import { PhotoLogPage } from './pages/PhotoLogPage'
 import { SavedMealsPage } from './pages/SavedMealsPage'
@@ -26,6 +27,7 @@ import { SettingsPage } from './pages/SettingsPage'
 import { JourneyPage } from './pages/JourneyPage'
 import { AboutPage } from './pages/AboutPage'
 import { SupportPage } from './pages/SupportPage'
+import { AdminPage } from './pages/AdminPage'
 import { ComponentSheetPage } from './pages/ComponentSheetPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
@@ -37,7 +39,8 @@ const WelcomePage = lazy(() => import('./pages/WelcomePage'))
 
 /** Client-side navigation keeps the browser's scroll offset by default; land each new page at the top. */
 function ScrollToTop() {
-  const { pathname, search } = useLocation()
+  const { pathname, search, state } = useLocation()
+  const sheetBackground = useRef<string | null>(null)
   useEffect(() => {
     const title = isWelcomeSurface(pathname) ? 'A little tracking. A lot of living.'
       : pathname === '/login' && new URLSearchParams(search).get('mode') === 'signup' ? 'Sign up'
@@ -46,6 +49,17 @@ function ScrollToTop() {
   }, [pathname, search])
 
   useEffect(() => {
+    // The log sheet opens over the page underneath and moves focus into itself.
+    // Opening it, or closing it back to that same page, keeps the scroll position.
+    const routeState = state as { background?: { pathname: string }; justLogged?: unknown } | null
+    if (pathname === '/log') {
+      sheetBackground.current = routeState?.background?.pathname ?? null
+      if (!routeState?.background) window.scrollTo(0, 0)
+      return
+    }
+    const returnedFromSheet = sheetBackground.current === pathname && !routeState?.justLogged
+    sheetBackground.current = null
+    if (returnedFromSheet) return
     window.scrollTo(0, 0)
     const frame = window.requestAnimationFrame(() => {
       const heading = document.querySelector<HTMLElement>('main h1, .app-shell > header h1')
@@ -54,7 +68,7 @@ function ScrollToTop() {
       heading.focus({ preventScroll: true })
     })
     return () => window.cancelAnimationFrame(frame)
-  }, [pathname])
+  }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
   return null
 }
 
@@ -71,6 +85,7 @@ function routeTitle(pathname: string): string {
   if (pathname.startsWith('/edit/')) return 'Edit meal'
   if (pathname === '/coach') return 'AI Coach'
   if (pathname === '/support') return 'Support'
+  if (pathname === '/admin') return 'Managed AI admin'
   if (pathname === '/about') return 'About'
   if (pathname === '/onboarding') return 'Get started'
   if (pathname === '/login') return 'Sign in'
@@ -107,13 +122,28 @@ function RootSurface() {
  * can slide in from the side the user came from. `display: contents` keeps the
  * wrapper out of layout entirely.
  */
-function DirectionalRoutes({ children }: { children: ReactNode }) {
+function DirectionalRoutes({ children, hold = false }: { children: ReactNode; hold?: boolean }) {
   const direction = useNavDirection()
-  return <div className={`nav-dir nav-dir-${direction}`}>{children}</div>
+  // Opening or closing the log sheet is not a page change; keep the entrance class so the page doesn't replay it.
+  const [shown, setShown] = useState(direction)
+  if (!hold && shown !== direction) setShown(direction)
+  return <div className={`nav-dir nav-dir-${shown}`}>{children}</div>
 }
 
 function AuthenticatedRoutes() {
   const { state } = useApp()
+  const location = useLocation()
+  const background = (location.state as { background?: Location } | null)?.background
+  const logSheetOpen = location.pathname === '/log'
+  // The page under the sheet stays put while it opens and when it closes back onto that page.
+  const [route, setRoute] = useState({ path: location.pathname, under: background?.pathname ?? null, hold: false })
+  if (route.path !== location.pathname) {
+    setRoute({
+      path: location.pathname,
+      under: logSheetOpen ? background?.pathname ?? null : null,
+      hold: (logSheetOpen && Boolean(background)) || route.under === location.pathname,
+    })
+  }
 
   if (!state.onboarded) {
     return (
@@ -125,14 +155,16 @@ function AuthenticatedRoutes() {
   }
 
   return (
+    <LogSheetOpenContext.Provider value={logSheetOpen}>
     <AnchorProvider>
     <MascotOverlay />
-    <DirectionalRoutes>
-    <Routes>
+    <DirectionalRoutes hold={route.hold}>
+    <Routes location={logSheetOpen && background ? background : location}>
       <Route path="/" element={<HomePage />} />
       <Route path="/progress" element={<ProgressPage />} />
       <Route path="/coach" element={<CoachPage />} />
-      <Route path="/log" element={<LogMenuPage />} />
+      {/* Opened directly, the log sheet sits over Today. */}
+      <Route path="/log" element={<HomePage />} />
       <Route path="/log/text" element={<LogTextPage />} />
       <Route path="/log/photo" element={<PhotoLogPage />} />
       <Route path="/log/saved" element={<SavedMealsPage />} />
@@ -143,12 +175,15 @@ function AuthenticatedRoutes() {
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/support" element={<SupportPage />} />
+      <Route path="/admin" element={<AdminPage />} />
       <Route path="/journey" element={<JourneyPage />} />
       {import.meta.env.DEV && <Route path="/dev/components" element={<ComponentSheetPage />} />}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
     </DirectionalRoutes>
+    {logSheetOpen && <LogSheet />}
     </AnchorProvider>
+    </LogSheetOpenContext.Provider>
   )
 }
 

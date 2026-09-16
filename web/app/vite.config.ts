@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { defineConfig, type Plugin } from 'vite'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const root = path.dirname(fileURLToPath(import.meta.url))
@@ -46,13 +46,17 @@ function vercelAssetRewrites(): Plugin {
   }
 }
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, root, '')
+  const backend = (env.VITE_DATA_BACKEND ?? process.env.VITE_DATA_BACKEND ?? '').trim().toLowerCase()
   if (command === 'build') {
-    const backend = (process.env.VITE_DATA_BACKEND ?? '').trim().toLowerCase()
     if (backend !== 'local' && backend !== 'neon') {
       throw new Error('VITE_DATA_BACKEND must be local or neon for a production build')
     }
   }
+
+  // 3001 avoids WSL/Docker often claiming 3000 on Windows before Vercel dev starts.
+  const apiProxyTarget = (env.VITE_API_PROXY ?? 'http://127.0.0.1:3001').replace(/\/$/, '')
 
   return {
     plugins: [react(), vercelAssetRewrites()],
@@ -72,6 +76,11 @@ export default defineConfig(({ command }) => {
       strictPort: true,
       host: 'localhost',
       open: '/',
+      // Cloud builds talk to /api on the same origin. Vite alone has no API, so proxy to
+      // `npm run dev:all` (default port 3001) or whatever VITE_API_PROXY points at.
+      proxy: command === 'serve' && backend === 'neon'
+        ? { '/api': { target: apiProxyTarget, changeOrigin: true } }
+        : undefined,
     },
     preview: {
       port: 4173,

@@ -37,7 +37,7 @@ vi.mock('../lib/logDrafts', async importOriginal => ({
 
 beforeEach(() => {
   state = freshState()
-  state.aiSettings.apiKey = 'test-key'
+  state.aiSettings = { ...state.aiSettings, accessMode: 'byok', apiKey: 'test-key' }
   drafts = { version: 1 }
   pendingAnalysis = null
   pendingImagePreview = null
@@ -66,7 +66,7 @@ describe('meal logging UI contracts', () => {
   })
 
   it('offers AI setup and manual entry without exposing enabled upload controls', () => {
-    state.aiSettings.apiKey = ''
+    state.aiSettings = { ...state.aiSettings, accessMode: 'managed', apiKey: '' }
     for (const page of [<LogTextPage key="text" />, <PhotoLogPage key="photo" />]) {
       const html = renderToStaticMarkup(<MemoryRouter>{page}</MemoryRouter>)
       expect(html).toContain('A little setup for AI')

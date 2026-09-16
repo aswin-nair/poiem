@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { track } from '../lib/analytics'
 import { useCountUp } from '../hooks/useCountUp'
 import { prefersReducedMotion } from '../lib/tokens'
-import type { XpEvent } from '../types'
+import type { WardrobePiece } from '@fud-ai/product/wardrobe'
+import type { MomoOutfit, XpEvent } from '../types'
 import { Momo } from './Momo'
 import { useFeel } from '../hooks/useHaptic'
 import { useDialogFocus } from '../hooks/useDialogFocus'
@@ -13,15 +14,21 @@ export interface LogCelebrationProps {
   foodName: string
   streak: number
   awards: XpEvent[]
-  cosmeticId?: string | null
+  outfit?: MomoOutfit
+  /** Wardrobe pieces unlocked since the last reveal. Momo arrives wearing the first. */
+  pieces?: WardrobePiece[]
   onDone: () => void
 }
+
+/** A new piece earns Momo a little longer on stage. */
+const PIECE_REVEAL_MS = 1400
 
 export function LogCelebration({
   foodName,
   streak,
   awards,
-  cosmeticId,
+  outfit,
+  pieces = [],
   onDone,
 }: LogCelebrationProps) {
   const [reduced] = useState(() => prefersReducedMotion())
@@ -52,13 +59,17 @@ export function LogCelebration({
   }, [awards.length, feel, reduced])
 
   useEffect(() => {
-    const ms = reduced ? 1800 : Math.max(2300, awards.length * 420 + 1600)
+    const reveal = pieces.length ? PIECE_REVEAL_MS : 0
+    const ms = (reduced ? 1800 : Math.max(2300, awards.length * 420 + 1600)) + reveal
     const t = setTimeout(() => {
       track({ name: 'log_celebration_completed' })
       onDone()
     }, ms)
     return () => clearTimeout(t)
-  }, [awards.length, onDone, reduced])
+  }, [awards.length, pieces.length, onDone, reduced])
+
+  const firstPiece = pieces[0]
+  const wearing = firstPiece ? { ...outfit, [firstPiece.slot]: firstPiece.id } : outfit
 
   return (
     <div
@@ -72,10 +83,16 @@ export function LogCelebration({
       <div className="celebrate-burst" aria-hidden />
       <div className="celebrate-inner">
         <div className="celebrate-momo" aria-hidden>
-          <div style={{ width: 112, height: 112 }}><Momo mood="excited" cosmeticId={cosmeticId} /></div>
+          <div style={{ width: 112, height: 112 }}><Momo mood="excited" outfit={wearing} /></div>
         </div>
         <h2 className="celebrate-title">Logged.</h2>
         <p className="celebrate-sub">{foodName}</p>
+        {pieces.length > 0 && (
+          <p className="celebrate-piece">
+            <span className="k-eyebrow">New for Momo</span>
+            {pieces.map(piece => piece.name).join(', ')}
+          </p>
+        )}
 
         {awards.length > 0 && (
           <ul className="celebrate-awards" aria-label="Rewards revealed">

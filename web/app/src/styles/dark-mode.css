@@ -1,3 +1,4 @@
+@layer legacy {
 /* Graphite surfaces; colour belongs to buttons, selected states and small badges.
    Keep large reading panels neutral instead of turning pastel cards muddy. */
 :root[data-theme="dark"] body {
@@ -307,4 +308,5 @@
 :root[data-theme="dark"] .auth-refresh .auth-momo-greeting p {
   background: var(--paper-float);
   border-color: transparent;
+}
 }

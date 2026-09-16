@@ -5,13 +5,18 @@ import { stateWithoutPrivateSecrets } from './storage'
 
 const LEGACY_TOKEN_KEY = 'fud-ai-auth-token'
 const API_TIMEOUT_MS = 12_000
+/** Hits the single auth handler; works with or without Vercel path rewrites. */
+export function authApiPath(action: string): string {
+  return `/api/auth?action=${encodeURIComponent(action)}`
+}
+
 const NO_REFRESH_PATHS = new Set([
-  '/api/auth/refresh',
-  '/api/auth/login',
-  '/api/auth/register',
-  '/api/auth/google',
-  '/api/auth/forgot-password',
-  '/api/auth/reset-password',
+  authApiPath('refresh'),
+  authApiPath('login'),
+  authApiPath('register'),
+  authApiPath('google'),
+  authApiPath('forgot-password'),
+  authApiPath('reset-password'),
 ])
 
 let accessToken: string | null = null
@@ -57,11 +62,11 @@ export function accessTokenForAccount(userId: string, captured?: string | null):
   return null
 }
 
-async function tryRefreshAccessToken(): Promise<boolean> {
+export async function tryRefreshAccessToken(): Promise<boolean> {
   if (refreshInFlight) return refreshInFlight
   refreshInFlight = (async () => {
     try {
-      const result = await apiFetch<{ token?: string }>('/api/auth/refresh', { method: 'POST' })
+      const result = await apiFetch<{ token?: string }>(authApiPath('refresh'), { method: 'POST' })
       if (typeof result.token !== 'string' || !result.token) return false
       saveAuthToken(result.token)
       return true
@@ -76,11 +81,12 @@ async function tryRefreshAccessToken(): Promise<boolean> {
   }
 }
 
-async function apiFetch<T>(
+export async function apiFetch<T>(
   path: string,
   init: RequestInit = {},
   sessionToken?: string,
   allowRefresh = true,
+  timeoutMs = API_TIMEOUT_MS,
 ): Promise<T> {
   const base = apiBaseUrl()
   const url = `${base}${path}`
@@ -94,7 +100,10 @@ async function apiFetch<T>(
   if (token) headers.set('Authorization', `Bearer ${token}`)
 
   const controller = new AbortController()
-  const timeout = globalThis.setTimeout(() => controller.abort(), API_TIMEOUT_MS)
+  const timeout = globalThis.setTimeout(() => controller.abort(), timeoutMs)
+  const abortFromCaller = () => controller.abort()
+  init.signal?.addEventListener('abort', abortFromCaller, { once: true })
+  if (init.signal?.aborted) controller.abort()
   let res: Response
   let data: ({ error?: string } & T)
   try {
@@ -112,6 +121,7 @@ async function apiFetch<T>(
     throw new ApiError('Could not reach the server. Your saved changes will retry automatically.', 0)
   } finally {
     globalThis.clearTimeout(timeout)
+    init.signal?.removeEventListener('abort', abortFromCaller)
   }
 
   if (
@@ -128,32 +138,38 @@ async function apiFetch<T>(
       && authTokenSubject(token) === authTokenSubject(next),
     )
     if (next && (sessionToken === undefined || sameAccount)) {
-      return apiFetch<T>(path, init, sessionToken === undefined ? undefined : next, false)
+      return apiFetch<T>(path, init, sessionToken === undefined ? undefined : next, false, timeoutMs)
     }
   }
 
   if (!res.ok) {
+    if (res.status === 404 && path.startsWith('/api/')) {
+      const devHint = import.meta.env.DEV && isCloudBackend()
+        ? ' The API is not running here — from web/, run npm run dev:all on port 3001 (or set VITE_API_PROXY).'
+        : ''
+      throw new ApiError((data.error ?? 'Not found') + devHint, res.status)
+    }
     throw new ApiError(data.error ?? `Request failed (${res.status})`, res.status)
   }
   return data as T
 }
 
 export async function apiRegister(name: string, email: string, password: string) {
-  return apiFetch<{ token: string; user: AuthUser }>('/api/auth/register', {
+  return apiFetch<{ token: string; user: AuthUser }>(authApiPath('register'), {
     method: 'POST',
     body: JSON.stringify({ name, email, password }),
   })
 }
 
 export async function apiLogin(email: string, password: string) {
-  return apiFetch<{ token: string; user: AuthUser }>('/api/auth/login', {
+  return apiFetch<{ token: string; user: AuthUser }>(authApiPath('login'), {
     method: 'POST',
     body: JSON.stringify({ email, password }),
   })
 }
 
 export async function apiGoogleAuth(credential: string) {
-  return apiFetch<{ token: string; user: AuthUser }>('/api/auth/google', {
+  return apiFetch<{ token: string; user: AuthUser }>(authApiPath('google'), {
     method: 'POST',
     body: JSON.stringify({ credential }),
   })
@@ -161,7 +177,7 @@ export async function apiGoogleAuth(credential: string) {
 
 export async function apiRefreshSession(): Promise<{ token: string; user: AuthUser } | null> {
   try {
-    const result = await apiFetch<{ token: string; user: AuthUser }>('/api/auth/refresh', {
+    const result = await apiFetch<{ token: string; user: AuthUser }>(authApiPath('refresh'), {
       method: 'POST',
     })
     if (typeof result.token !== 'string' || !result.user?.sub) return null
@@ -174,21 +190,21 @@ export async function apiRefreshSession(): Promise<{ token: string; user: AuthUs
 }
 
 export async function apiForgotPassword(email: string): Promise<void> {
-  await apiFetch<{ ok: true }>('/api/auth/forgot-password', {
+  await apiFetch<{ ok: true }>(authApiPath('forgot-password'), {
     method: 'POST',
     body: JSON.stringify({ email }),
   })
 }
 
 export async function apiResetPassword(token: string, password: string): Promise<void> {
-  await apiFetch<{ ok: true }>('/api/auth/reset-password', {
+  await apiFetch<{ ok: true }>(authApiPath('reset-password'), {
     method: 'POST',
     body: JSON.stringify({ token, password }),
   })
 }
 
 export async function apiChangePassword(currentPassword: string, newPassword: string) {
-  return apiFetch<{ token: string; user: AuthUser }>('/api/auth/change-password', {
+  return apiFetch<{ token: string; user: AuthUser }>(authApiPath('change-password'), {
     method: 'POST',
     body: JSON.stringify({ currentPassword, newPassword }),
   })
@@ -210,11 +226,11 @@ export async function apiLoadState(
 }
 
 export async function apiLogout(sessionToken: string): Promise<void> {
-  await apiFetch<{ ok: true }>('/api/auth/logout', { method: 'POST' }, sessionToken)
+  await apiFetch<{ ok: true }>(authApiPath('logout'), { method: 'POST' }, sessionToken)
 }
 
 export async function apiLogoutAll(sessionToken: string): Promise<void> {
-  await apiFetch<{ ok: true }>('/api/auth/logout-all', { method: 'POST' }, sessionToken)
+  await apiFetch<{ ok: true }>(authApiPath('logout-all'), { method: 'POST' }, sessionToken)
 }
 
 export async function apiDeleteAccount(sessionToken: string): Promise<void> {

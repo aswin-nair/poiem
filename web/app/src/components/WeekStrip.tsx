@@ -15,6 +15,11 @@ interface WeekStripProps {
   loggedDays?: Set<string>
   /** local_date keys covered by a freeze, so a gap does not read as a miss. */
   frozenDays?: Set<string>
+  /**
+   * Previous and next week arrows. Today leaves them out so each day keeps a
+   * 44px target on a small phone; its calendar reaches other weeks.
+   */
+  showWeekNav?: boolean
 }
 
 function isFutureDay(date: Date, today: Date): boolean {
@@ -30,6 +35,7 @@ export function WeekStrip({
   onSelect,
   loggedDays,
   frozenDays,
+  showWeekNav = true,
 }: WeekStripProps) {
   const today = new Date()
   const days = weekDatesContaining(selectedDate)
@@ -49,14 +55,16 @@ export function WeekStrip({
 
   return (
     <div className="week-strip-row">
-      <button
-        type="button"
-        className="week-nav-btn"
-        onClick={goToPrevWeek}
-        aria-label="Previous week"
-      >
-        <IconChevronLeft size={16} strokeWidth={2.4} />
-      </button>
+      {showWeekNav && (
+        <button
+          type="button"
+          className="week-nav-btn"
+          onClick={goToPrevWeek}
+          aria-label="Previous week"
+        >
+          <IconChevronLeft size={16} strokeWidth={2.4} />
+        </button>
+      )}
 
       <div className="week-strip">
         {days.map(d => {
@@ -92,23 +100,24 @@ export function WeekStrip({
               >
                 {d.getDate()}
               </span>
-              <span className="week-day-streak" aria-hidden>
-                {isLogged ? '🔥' : isFrozen ? '❄️' : ''}
-              </span>
+              <span className={`week-day-mark${isLogged ? ' is-logged' : isFrozen ? ' is-frozen' : ''}`} aria-hidden />
+
             </button>
           )
         })}
       </div>
 
-      <button
-        type="button"
-        className="week-nav-btn"
-        onClick={goToNextWeek}
-        disabled={isCurrentWeek}
-        aria-label="Next week"
-      >
-        <IconChevronRight size={16} strokeWidth={2.4} />
-      </button>
+      {showWeekNav && (
+        <button
+          type="button"
+          className="week-nav-btn"
+          onClick={goToNextWeek}
+          disabled={isCurrentWeek}
+          aria-label="Next week"
+        >
+          <IconChevronRight size={16} strokeWidth={2.4} />
+        </button>
+      )}
     </div>
   )
 }

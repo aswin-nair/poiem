@@ -1,4 +1,3 @@
-import { PosterArt, PosterStrip } from '../components/PosterPrimitives'
 import { useMemo, useState } from 'react'
 import { BottomNav } from '../components/BottomNav'
 import { ProgressLineChart, ProgressBarChart } from '../components/Charts'
@@ -7,11 +6,13 @@ import { effectiveCalories } from '../lib/profile'
 import { localDayKey } from '../lib/dates'
 import { getStreakWithFreezes, getAllBadges, getBreakfastComparison, getMonthConsistency, getTotalLoggedDays } from '../lib/journey'
 import { HabitMilestones } from '../components/HabitMilestones'
-import { IconChevronRight, IconMenuLines, IconFlame, IconTrophy } from '../components/icons'
+import { Meter } from '../components/Meter'
+import { LEVEL_NAMES, xpForLevel, xpForNextLevel } from '../lib/xp'
+import { FoodIcon, IconChevronRight, IconMenuLines, IconFlame, IconTrophy } from '../components/icons'
 import { PressableButton } from '../components/PressableButton'
-import { Surface } from '../components/Surface'
 import { WeightLogSheet } from '../components/WeightLogSheet'
-import { PoiemSectionLabel } from '../components/PoiemSectionLabel'
+import { MomoSticker } from '../components/MomoSticker'
+import { foodToneFor } from '../lib/foodGlyph'
 
 const RANGES = [
   { id: '1W', label: 'Week', days: 7 },
@@ -35,14 +36,10 @@ interface StatCardProps {
 }
 
 function StatCard({ label, value, sub, accent }: StatCardProps) {
-  const valueColor = accent ? 'var(--coral-text)' : undefined
-
   return (
-    <div className="progress-stat-card">
+    <div className={`progress-stat-card${accent ? ' is-accent' : ''}`}>
       <span className="eyebrow">{label}</span>
-      <span className="progress-stat-value" style={valueColor ? { color: valueColor } : undefined}>
-        {value}
-      </span>
+      <span className="progress-stat-value">{value}</span>
       {sub && <span className="progress-stat-sub">{sub}</span>}
     </div>
   )
@@ -59,6 +56,11 @@ export function ProgressPage() {
   const badges = getAllBadges(state.foodEntries, streak)
   const consistency = getMonthConsistency(state.foodEntries)
   const breakfastComparison = getBreakfastComparison(state.foodEntries)
+  const level = state.gamification.level
+  const levelStart = xpForLevel(level)
+  const levelEnd = xpForNextLevel(level)
+  const atTopLevel = levelEnd <= levelStart
+  const xpToNext = Math.max(0, levelEnd - state.gamification.xp)
   const [showLog, setShowLog] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
 
@@ -124,18 +126,19 @@ export function ProgressPage() {
 
   if (state.profile.trackingPaused) {
     return (
-      <div className="app-shell progress-shell insights-refresh food-club-app poster-ui">
-        <main className="app-main progress-main motion-stagger">
-          <div className="progress-page-header">
-            <h1 className="screen-title" style={{ marginBottom: 0 }}>Insights</h1>
-          </div>
-          <Surface className="progress-card" style={{ textAlign: 'center' }}>
-            <h2 className="progress-card-title">Tracking is paused</h2>
-            <p className="page-sub" style={{ marginTop: 8 }}>
-              Your progress numbers are hidden and your streak is being held.
-            </p>
-            <PressableButton to="/settings" label="Manage pause" className="settings-coach-link" />
-          </Surface>
+      <div className="app-shell k-screen k-insights">
+        <main className="app-main k-insights-main">
+          <header className="progress-page-header page-heading">
+            <div className="k-insights-title">
+              <p className="k-eyebrow">The bigger picture</p>
+              <h1 className="screen-title">Insights</h1>
+            </div>
+          </header>
+          <section className="k-card k-notice" aria-labelledby="insights-paused-title">
+            <h2 id="insights-paused-title">Tracking is paused</h2>
+            <p>Your progress numbers are hidden and your streak is being held.</p>
+            <PressableButton to="/settings" label="Manage pause" />
+          </section>
         </main>
         <BottomNav />
       </div>
@@ -143,19 +146,41 @@ export function ProgressPage() {
   }
 
   return (
-    <div className="app-shell progress-shell insights-refresh food-club-app poster-ui">
-      <main className="app-main progress-main motion-stagger">
-
-        <PosterStrip items={['The bigger picture', 'A routine, not a report card']} />
+    <div className="app-shell k-screen k-insights">
+      {/* Momo walks beside the column on wide screens and stays off the charts on a phone. */}
+      <main className="app-main k-insights-main" data-mascot-avoid>
 
         <header className="progress-page-header page-heading">
-
-          <PosterArt burst={['Small', 'steps']} burstTone="rose" stickers={[{ food: 'carrot', tone: 'paper', tilt: -8 }, { food: 'apple', tone: 'leaf', tilt: 10 }]} />
-          <PoiemSectionLabel>The bigger picture</PoiemSectionLabel>
-          <h1 className="screen-title" style={{ marginBottom: 0 }}>Insights</h1>
-          <p className="insights-intro">See your routine over time, one logged day at a time.</p>
+          <div className="k-insights-title">
+            <p className="k-eyebrow">The bigger picture</p>
+            <h1 className="screen-title">Insights</h1>
+            <p className="insights-intro">See your routine over time, one logged day at a time.</p>
+          </div>
+          <MomoSticker mood="proud" pose="still" />
           <span className="club-library-stamp">YOUR ROUTINE. NOT A REPORT CARD.</span>
         </header>
+
+        {/* Streak, level and XP live here; Today shows only the day itself. */}
+        <section className="k-card k-journey" aria-labelledby="journey-title">
+          <div className="k-section-head">
+            <h2 id="journey-title">Journey</h2>
+            <span className="tabular">Level {level}</span>
+          </div>
+          <dl className="k-journey-stats">
+            <div><dt>Day streak</dt><dd className="tabular">{streak}</dd></div>
+            <div><dt>Total XP</dt><dd className="tabular">{state.gamification.xp.toLocaleString()}</dd></div>
+            <div><dt>Freezes</dt><dd className="tabular">{state.gamification.streakFreezes}</dd></div>
+          </dl>
+          <Meter
+            label="Progress to the next level"
+            tone="acid"
+            value={atTopLevel ? 1 : state.gamification.xp - levelStart}
+            max={atTopLevel ? 1 : levelEnd - levelStart}
+          />
+          <p className="k-journey-note">
+            {LEVEL_NAMES[level] || 'Your journey'}{atTopLevel ? ' · Top level reached' : ` · ${xpToNext.toLocaleString()} XP to level ${level + 1}`}
+          </p>
+        </section>
 
         <HabitMilestones loggedDays={getTotalLoggedDays(state.foodEntries)} />
 
@@ -246,12 +271,12 @@ export function ProgressPage() {
               <strong>Weight history</strong>
               <span>{sortedWeights.length} {sortedWeights.length === 1 ? 'entry' : 'entries'} · tap to {showHistory ? 'hide' : 'view or delete'}</span>
             </div>
-            <span className="about-chevron" style={{ display: 'inline-flex', transform: showHistory ? 'rotate(90deg)' : undefined, transition: 'transform 0.2s' }}><IconChevronRight size={16} /></span>
+            <span className="history-link-chevron"><IconChevronRight size={16} /></span>
           </button>
         )}
 
         {sortedWeights.length > 0 && (
-          <div id="weight-history" hidden={!showHistory} className="progress-card" style={{ marginBottom: 12 }}>
+          <div id="weight-history" hidden={!showHistory} className="progress-card">
             {[...sortedWeights].reverse().map(w => (
               <div key={w.id} className="history-row">
                 <span className="history-date">{new Date(w.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
@@ -271,7 +296,7 @@ export function ProgressPage() {
             </div>
           </div>
 
-          <div className="progress-stat-grid" style={{ marginBottom: 12 }}>
+          <div className="progress-stat-grid">
             <StatCard label="Goal" value={`${goal.toLocaleString()} kcal`} />
             <StatCard
               label="Days tracked"
@@ -289,9 +314,13 @@ export function ProgressPage() {
           {mostLogged.length === 0 ? (
             <p className="page-sub">Nothing logged yet.</p>
           ) : (
-            <ul className="torn-archive">
+            <ul className="k-most-logged">
               {mostLogged.map(([name, count]) => (
-                <li key={name}>{name} · {count}</li>
+                <li key={name}>
+                  <span className={`k-food-tile is-tone-${foodToneFor(name)}`}><FoodIcon name={name} size={20} /></span>
+                  <span className="k-most-name">{name}</span>
+                  <span className="k-most-count tabular" aria-label={`${count} ${count === 1 ? 'time' : 'times'}`}>×{count}</span>
+                </li>
               ))}
             </ul>
           )}
@@ -303,7 +332,9 @@ export function ProgressPage() {
           {archiveDays.length === 0 && <p className="insights-empty">Your logged days will appear here.</p>}
           <div className="torn-archive">
             {archiveDays.map(day => (
-              <div key={day} className="torn-stub">{day}</div>
+              <div key={day} className="torn-stub">
+                {new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })}
+              </div>
             ))}
           </div>
         </div>

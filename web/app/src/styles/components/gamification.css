@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── StreakCard ──────────────────────────────────────────────── */
 .streak-card {
   display: flex;
@@ -323,3 +324,4 @@
 }
 
 /* ── XP Bar ── */
+}

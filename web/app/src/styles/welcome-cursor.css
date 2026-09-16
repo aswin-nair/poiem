@@ -1,0 +1,127 @@
+/* A graphic pointer, a fading ink stroke, and registration marks on controls. */
+.wp-cursor-system {
+  display: contents;
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.wp-cursor-system,
+.wp-cursor-system * { pointer-events: none !important; }
+.wp-cursor-system[data-visible='true'] { visibility: visible; }
+
+.wp-cursor-pointer,
+.wp-cursor-trail,
+.wp-cursor-focus,
+.wp-cursor-stamp {
+  position: fixed;
+  z-index: 45;
+  inset: 0 auto auto 0;
+}
+
+.wp-cursor-pointer {
+  width: 24px;
+  height: 28px;
+  line-height: 0;
+}
+
+.wp-cursor-pointer > svg {
+  display: block;
+  width: 24px;
+  height: 28px;
+  overflow: visible;
+  transform-origin: 1px 1px;
+  transition: transform 150ms cubic-bezier(.2, .9, .25, 1.2);
+}
+
+.wp-cursor-system[data-kind='action'] .wp-cursor-pointer > svg { transform: scale(1.06); }
+.wp-cursor-system[data-kind='momo'] .wp-cursor-pointer > svg { transform: rotate(-7deg) scale(1.06); }
+.wp-cursor-system[data-pressed='true'] .wp-cursor-pointer > svg {
+  transform: scale(.84);
+  transition-duration: 75ms;
+  transition-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+
+.wp-cursor-flash { transition: fill 140ms ease; }
+.wp-cursor-system[data-kind='action'] .wp-cursor-flash { fill: #ff5c28; }
+.wp-cursor-system[data-kind='momo'] .wp-cursor-flash { fill: #efa9c4; }
+
+.wp-cursor-trail {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  mix-blend-mode: difference;
+}
+
+.wp-cursor-stroke {
+  fill: #fff;
+  stroke: none;
+  opacity: .36;
+}
+
+.wp-cursor-focus {
+  box-sizing: border-box;
+  opacity: 0;
+  mix-blend-mode: difference;
+  transform-origin: 0 0;
+  transition: opacity 140ms ease;
+}
+
+.wp-cursor-focus[data-active='true'] { opacity: 1; }
+
+.wpc-corner {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border: 0 solid #fff;
+  opacity: .85;
+  transform: scale(.65);
+  transition: transform 170ms cubic-bezier(.2, .9, .25, 1.25), opacity 140ms ease;
+}
+
+.wp-cursor-focus[data-active='true'] .wpc-corner { transform: scale(1); }
+.wp-cursor-system[data-pressed='true'] .wp-cursor-focus[data-active='true'] .wpc-corner {
+  opacity: 1;
+  transform: scale(.82);
+  transition-duration: 75ms;
+  transition-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+.wpc-corner[data-corner='tl'] { top: 0; left: 0; border-top-width: 3px; border-left-width: 3px; transform-origin: top left; }
+.wpc-corner[data-corner='tr'] { top: 0; right: 0; border-top-width: 3px; border-right-width: 3px; transform-origin: top right; }
+.wpc-corner[data-corner='bl'] { bottom: 0; left: 0; border-bottom-width: 3px; border-left-width: 3px; transform-origin: bottom left; }
+.wpc-corner[data-corner='br'] { bottom: 0; right: 0; border-bottom-width: 3px; border-right-width: 3px; transform-origin: bottom right; }
+
+.wp-cursor-stamp {
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  color: #fff;
+  mix-blend-mode: difference;
+  transform-origin: center;
+}
+
+.wp-cursor-stamp > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The real pointer stays available until the enhancement is ready. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .welcome-poster[data-ink-cursor='on']:not(.wp-motion-paused),
+  .welcome-poster[data-ink-cursor='on']:not(.wp-motion-paused) * { cursor: none !important; }
+}
+
+.wp-motion-paused .wp-cursor-system { display: none; }
+
+@media (hover: none), (pointer: coarse), (pointer: none), (prefers-reduced-motion: reduce) {
+  .wp-cursor-system { display: none; }
+}

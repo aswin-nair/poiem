@@ -79,5 +79,5 @@ export async function sendCoachMessage(
     messages.push({ role: msg.role, content: msg.content })
   }
   messages.push({ role: 'user', content: userMessage })
-  return completeChat(state.aiSettings, messages, 800, undefined, { signal })
+  return completeChat(state.aiSettings, messages.slice(-24), 800, undefined, { signal, task: 'coach' })
 }

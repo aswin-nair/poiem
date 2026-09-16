@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Mascot (§7.6) ───────────────────────────────────────────
    Colours come from the existing coral/cream palette; the mascot introduces
    no new hue. Every animation is disabled under reduced motion. */
@@ -196,4 +197,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mascot-roamer.is-arriving { animation: none; }
+}
 }

@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { analyzeImageFood, fileToBase64 } from '../lib/foodAI'
 import { providerLabel } from '../lib/aiConfig'
+import { useAiAccess } from '../lib/aiAccess'
+import { usesByok } from '../lib/aiClient'
 import { BackLink } from '../components/BackLink'
 import { IconArrowRight, IconCamera, IconClose, IconScan } from '../components/icons'
 import { track } from '../lib/analytics'
@@ -22,7 +24,9 @@ export function PhotoLogPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
-  const hasKey = !!state.aiSettings.apiKey
+  const { canUse } = useAiAccess()
+  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
+  const canAnalyze = canUse(state.aiSettings, 'food_photo')
 
   useEffect(() => () => {
     requestRef.current?.abort()
@@ -50,7 +54,7 @@ export function PhotoLogPage() {
   }
 
   async function handleAnalyze() {
-    if (!selectedFile || !hasKey || requestRef.current) return
+    if (!selectedFile || !canAnalyze || requestRef.current) return
     const controller = new AbortController()
     requestRef.current = controller
     setLoading(true)
@@ -95,15 +99,15 @@ export function PhotoLogPage() {
   }
 
   return (
-    <div className="app-shell meal-flow poster-ui">
-      <main className="app-main motion-stagger">
+    <div className="app-shell k-screen k-flow">
+      <main className="app-main">
         <BackLink to="/log" />
         <LogFlowHeader step={1} title="Give your meal a close-up." description="Choose a photo, check the frame, then let AI make a first estimate." />
         {error && <FlowFeedback message={error} error><Link to="/log/manual">Keep going with manual entry</Link></FlowFeedback>}
         {notice && <FlowFeedback message={notice} />}
-        {!hasKey && <AiSetupNotice provider={providerLabel(state.aiSettings.provider)} />}
+        {!canAnalyze && <AiSetupNotice provider={providerLabel(state.aiSettings.provider)} managed={!hasKey} />}
 
-        {hasKey && <>
+        {canAnalyze && <>
           {preview ? <figure className="flow-photo-card">
             <img src={preview} alt="Selected meal, not yet logged" />
             <figcaption><span>{selectedFile?.name}</span>
@@ -125,20 +129,20 @@ export function PhotoLogPage() {
           </>}
         </>}
 
-        <PhotoPrivacyNote provider={providerLabel(state.aiSettings.provider)} />
-        {hasKey && !loading && <div className="flow-submit">
+        <PhotoPrivacyNote provider={providerLabel(state.aiSettings.provider)} managed={!hasKey} />
+        {canAnalyze && !loading && <div className="flow-submit">
           <PressableButton fullWidth disabled={!selectedFile} onClick={() => { void handleAnalyze() }}>Analyze photo <IconArrowRight size={20} /></PressableButton>
           <p>Nothing is logged until you confirm the estimate.</p>
           <Link to="/log/text">Prefer to describe your meal?</Link>
         </div>}
 
-        <input ref={cameraRef} type="file" accept="image/*" capture="environment" hidden disabled={!hasKey || loading}
+        <input ref={cameraRef} type="file" accept="image/*" capture="environment" hidden disabled={!canAnalyze || loading}
           aria-label="Take a photo" onChange={event => {
             const file = event.target.files?.[0]
             event.target.value = ''
             if (file) handleFile(file)
           }} />
-        <input ref={galleryRef} type="file" accept="image/*" hidden disabled={!hasKey || loading}
+        <input ref={galleryRef} type="file" accept="image/*" hidden disabled={!canAnalyze || loading}
           aria-label="Choose a photo from gallery" onChange={event => {
             const file = event.target.files?.[0]
             event.target.value = ''

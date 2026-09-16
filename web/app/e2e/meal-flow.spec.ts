@@ -38,9 +38,10 @@ test('text estimate, portion, review correction and logging work together', asyn
   await page.getByRole('button', { name: 'Lunch', exact: true }).click()
   await expect(page.getByLabel('Meal total')).toContainText('580')
   await page.getByRole('button', { name: 'Log meal', exact: true }).click()
-  await expect(page.getByRole('dialog', { name: 'Meal logged' })).toContainText('My rice bowl')
-  await page.getByRole('dialog', { name: 'Meal logged' }).getByRole('button', { name: 'Continue' }).click()
-  await expect(page.locator('.home-today-row').filter({ hasText: 'My rice bowl' })).toContainText('580 kcal')
+  // The day's second meal confirms with a toast rather than the full-screen moment.
+  await expect(page.locator('.toast').filter({ hasText: 'Logged My rice bowl' })).toBeVisible()
+  const lunch = page.getByRole('region', { name: 'Lunch', exact: true })
+  await expect(lunch.locator('.k-meal-row').filter({ hasText: 'My rice bowl' })).toContainText('580 kcal')
 })
 
 test('a cancelled text request keeps its draft and can retry', async ({ page }) => {

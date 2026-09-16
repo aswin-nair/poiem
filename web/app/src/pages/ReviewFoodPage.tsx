@@ -5,7 +5,6 @@ import { BackLink } from '../components/BackLink'
 import { IconCheck, IconChevronDown, IconPlus, IconTrash } from '../components/icons'
 import { EstimateNote, FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
 import { MealNameField, MealTotals, MealTypePicker, NutritionFields, PortionControl } from '../components/MealEntryFields'
-import { Surface } from '../components/Surface'
 import { normalizeServings, scaleFoodAnalysis } from '../lib/mealReview'
 import type { FoodAnalysis, FoodSource, MealType } from '../types'
 import { MEAL_LABELS } from '../types'
@@ -14,14 +13,7 @@ import { reviewFoodIssue } from '../lib/foodEntryValidation'
 import { useAuth } from '../store/AuthContext'
 import { sourceToMethod, track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
-
-function inferMealType(): MealType {
-  const h = new Date().getHours()
-  if (h < 11) return 'breakfast'
-  if (h < 15) return 'lunch'
-  if (h < 20) return 'dinner'
-  return 'snack'
-}
+import { defaultMealType } from '../lib/meals'
 
 export function ReviewFoodPage() {
   const {
@@ -38,7 +30,7 @@ export function ReviewFoodPage() {
   const saved = loadLogDrafts(userId).review
   const initialAnalysis = pendingAnalysis ?? saved?.analysis ?? null
   const [analysis, setAnalysis] = useState<FoodAnalysis | null>(initialAnalysis)
-  const [mealType, setMealType] = useState<MealType>(pendingAnalysis ? inferMealType() : (saved?.mealType ?? inferMealType()))
+  const [mealType, setMealType] = useState<MealType>(pendingAnalysis ? defaultMealType() : (saved?.mealType ?? defaultMealType()))
   const [servings, setServings] = useState(pendingAnalysis ? 1 : (saved?.servings ?? 1))
   const [source, setSource] = useState<FoodSource>(pendingAnalysis ? pendingSource : (saved?.source ?? pendingSource))
   const [emptyNumericFields, setEmptyNumericFields] = useState<Set<ReviewNumericField>>(
@@ -87,7 +79,7 @@ export function ReviewFoodPage() {
     track({ name: 'entry_reviewed', method: sourceToMethod(source) })
   }, [analysis, source])
 
-  if (!analysis) return <div className="app-shell meal-flow poster-ui"><main className="app-main">
+  if (!analysis) return <div className="app-shell k-screen k-flow"><main className="app-main">
     <BackLink to="/log" />
     {loadingDraft ? <p role="status">Restoring your review…</p> : <>
       <LogFlowHeader title="Let’s start with a meal." description="There isn’t an estimate to review yet. Choose how you’d like to add one." />
@@ -185,30 +177,30 @@ export function ReviewFoodPage() {
   }
 
   return (
-    <div className="app-shell meal-flow poster-ui meal-flow-wide">
-      <main className="app-main motion-stagger">
+    <div className="app-shell k-screen k-flow k-flow-wide">
+      <main className="app-main">
         <BackLink onClick={discard} label="Start over" />
         <LogFlowHeader step={2} title="Make it your meal." description="The estimate is a starting point. You’re in charge of the final details." />
         <EstimateNote />
         {error && <FlowFeedback message={error} error />}
         <form className="flow-review-layout" noValidate onSubmit={event => { event.preventDefault(); save() }}>
-          <Surface className="flow-review-editor">
+          <div className="flow-review-editor">
             <MealNameField name={analysis.name} emoji={analysis.emoji} onChange={value => update('name', value)} />
             <PortionControl value={servings} grams={analysis.servingSizeGrams} onChange={changeServings} />
             <NutritionFields values={nutrition} onChange={updateNumeric} />
             <MealTypePicker value={mealType} onChange={value => { markCorrected(); setMealType(value) }} />
-          </Surface>
+          </div>
           <div className="flow-review-side">
             {source === 'snapFood' && pendingImagePreview && <figure className="flow-photo-evidence">
               <img src={pendingImagePreview} alt="Meal photo being reviewed" />
               <figcaption>Original photo · only kept for this review</figcaption>
             </figure>}
-            <Surface className="flow-review-summary">
+            <div className="flow-review-summary">
               {!issue ? <MealTotals name={analysis.name} calories={analysis.calories} mealType={mealType} servings={servings} />
                 : <p className="flow-summary-hint">Fill in the meal details to see your final total here.</p>}
               <PressableButton fullWidth type="submit"><IconPlus size={20} /> Log meal</PressableButton>
               <p className="flow-save-hint"><IconCheck size={18} /> Logs to {MEAL_LABELS[mealType].toLowerCase()} today. You can edit it later.</p>
-            </Surface>
+            </div>
             {analysis.ingredients && analysis.ingredients.length > 0 && <details className="flow-breakdown">
               <summary>Inside the estimate <span>{analysis.ingredients.length} items</span><IconChevronDown size={18} /></summary>
               <ul>{analysis.ingredients.map((ingredient, index) => <li key={index}>

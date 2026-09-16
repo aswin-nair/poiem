@@ -24,11 +24,13 @@ import { AnalysisStatus, FlowFeedback } from './LogFlowUI'
 
 vi.mock('../store/AppContext', () => ({
   useApp: () => ({
-    state: { ...freshState(), aiSettings: { apiKey: 'test-key', provider: 'gemini' } },
+    state: { ...freshState(), aiSettings: { ...freshState().aiSettings, accessMode: 'byok', apiKey: 'test-key', provider: 'gemini' } },
     setPendingAnalysis: () => undefined,
     setPendingSource: () => undefined,
   }),
 }))
+// AI is account-only, so the upload controls exist only for a signed-in reader.
+vi.mock('../store/AuthContext', () => ({ useAuth: () => ({ user: { sub: 'accessibility-test' } }) }))
 
 function count(haystack: string, needle: RegExp): number {
   return [...haystack.matchAll(needle)].length
@@ -121,8 +123,9 @@ describe('primary component accessibility contracts', () => {
     expect(html).toContain('Insights')
     expect(html).toContain('Saved')
     expect(html).toContain('You')
-    expect(html).toContain('aria-label="Log a meal"')
-    expect(html).toContain('href="/log"')
+    // The + opens the log sheet over the current page, so it is a button, not a link.
+    expect(html).toContain('<button type="button" data-testid="fab" class="nav-fab" aria-label="Log a meal" aria-haspopup="dialog"')
+    expect(html).not.toContain('href="/log"')
   })
 
   it('names clay fields and keeps path nodes labeled', () => {

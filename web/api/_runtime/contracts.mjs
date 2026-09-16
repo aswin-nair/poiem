@@ -799,7 +799,7 @@ var ALERT_CATALOG = {
     { id: "migration-failure", signal: "migration_failures", condition: "any failure", owner: "UNASSIGNED", blocking: true },
     { id: "deletion-failure", signal: "destructive_deletion", condition: "any unconfirmed or failed deletion", owner: "UNASSIGNED", blocking: true },
     { id: "ai-provider-errors", signal: "ai_requests", condition: "provider error >10% for 10 minutes", owner: "UNASSIGNED", blocking: true },
-    { id: "managed-ai-invoked", signal: "managed_ai_invoked", condition: "any invocation or unexpected enablement", owner: "UNASSIGNED", blocking: true },
+    { id: "managed-ai-invoked", signal: "managed_ai_invoked", condition: "unauthorized/unentitled serving or unexpected enablement", owner: "UNASSIGNED", blocking: true },
     { id: "crash-free", signal: "crash_free_sessions", condition: "below 99.8%", owner: "UNASSIGNED", blocking: true }
   ]
 };
@@ -815,7 +815,7 @@ function evaluateAlertRules(metrics) {
   if ((metrics.migrationFailures ?? 0) > 0) firing.push("migration-failure");
   if ((metrics.deletionFailures ?? 0) > 0) firing.push("deletion-failure");
   if (metrics.aiProviderErrorRate != null && metrics.aiProviderErrorRate > 0.1) firing.push("ai-provider-errors");
-  if ((metrics.managedAiInvocations ?? 0) > 0) firing.push("managed-ai-invoked");
+  if ((metrics.managedAiUnauthorizedInvocations ?? 0) > 0) firing.push("managed-ai-invoked");
   if (metrics.crashFreeRate != null && metrics.crashFreeRate < 0.998) firing.push("crash-free");
   return firing;
 }
@@ -883,7 +883,7 @@ function evaluateRolloutHalt(signals) {
   if (signals.secretSync) halt.push("secret-sync");
   if (signals.failedDeletion) halt.push("failed-deletion");
   if (signals.unsafeTargetBypass) halt.push("unsafe-target-bypass");
-  if (signals.managedAiInvoked) halt.push("managed-ai-invoked");
+  if (signals.managedAiUnauthorized || signals.managedAiInvoked) halt.push("managed-ai-invoked");
   if (signals.unresolvedHighFinding) halt.push("unresolved-high-finding");
   if (signals.onboardingCompletion != null && signals.onboardingCompletion < ROLLOUT_THRESHOLDS.onboardingCompletion) {
     halt.push("onboarding-completion");

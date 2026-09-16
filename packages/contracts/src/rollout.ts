@@ -86,6 +86,9 @@ export interface RolloutIncidents {
   secretSync?: boolean
   failedDeletion?: boolean
   unsafeTargetBypass?: boolean
+  /** Authorized managed traffic is expected; this incident means unauthorized serving. */
+  managedAiUnauthorized?: boolean
+  /** @deprecated use managedAiUnauthorized. Kept for old rollout callers. */
   managedAiInvoked?: boolean
   unresolvedHighFinding?: boolean
   onboardingCompletion?: number
@@ -102,7 +105,7 @@ export function evaluateRolloutHalt(signals: RolloutIncidents): string[] {
   if (signals.secretSync) halt.push('secret-sync')
   if (signals.failedDeletion) halt.push('failed-deletion')
   if (signals.unsafeTargetBypass) halt.push('unsafe-target-bypass')
-  if (signals.managedAiInvoked) halt.push('managed-ai-invoked')
+  if (signals.managedAiUnauthorized || signals.managedAiInvoked) halt.push('managed-ai-invoked')
   if (signals.unresolvedHighFinding) halt.push('unresolved-high-finding')
   if (
     signals.onboardingCompletion != null

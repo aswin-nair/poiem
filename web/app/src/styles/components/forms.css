@@ -1,3 +1,4 @@
+@layer legacy {
 /* Field appearance has one owner. Page files retain layout, not focus recipes. */
 :is(.app-shell, .login-page) :is(.field input, .field select, .field textarea, .settings-input, .settings-select, .settings-textarea, .log-search-input, .text-log-input, .chat-input, .clay-input) {
   min-width: 0;
@@ -32,3 +33,4 @@
 :is(.app-shell, .login-page) :is(input, select, textarea):disabled { background: var(--disabled-fill); color: var(--ink-soft); cursor: not-allowed; }
 .flow-number-wrap input { appearance: textfield; }
 .flow-number-wrap input::-webkit-inner-spin-button, .flow-number-wrap input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+}

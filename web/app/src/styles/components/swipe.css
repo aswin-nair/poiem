@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Swipe-to-reveal row ─────────────────────────────────────
    The actions sit behind the row and are uncovered by dragging it left. They
    are ordinary buttons the whole time, so nothing here is the only route to
@@ -149,3 +150,4 @@
 }
 
 .ptr-content { will-change: transform; }
+}

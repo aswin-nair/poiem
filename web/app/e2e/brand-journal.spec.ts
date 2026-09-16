@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { settlePageLayout, signUpAndOnboard } from './helpers'
 
-test('Poiem journal signature fits alongside streak controls and About keeps the identity', async ({ page }, testInfo) => {
+test('Today’s date bar keeps the title clear of the date control, and About keeps the identity', async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await signUpAndOnboard(page)
   for (const width of [320, 390, 768, 1440]) {
@@ -9,15 +9,15 @@ test('Poiem journal signature fits alongside streak controls and About keeps the
     for (const colorScheme of ['light', 'dark'] as const) {
       await page.emulateMedia({ colorScheme })
       await settlePageLayout(page)
-      await expect(page.getByRole('img', { name: 'Poiem', exact: true })).toBeVisible()
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true)
-      const signature = await page.locator('.poiem-journal-signature').boundingBox()
-      const badges = await page.locator('.today-badges').boundingBox()
-      // The poster masthead stacks the chips under the title. Beside or below are
-      // both fine; what must never happen is the signature running into them.
-      const clear = signature!.x + signature!.width <= badges!.x || signature!.y + signature!.height <= badges!.y
-      expect(clear, `signature overlaps streak controls at ${width}px ${colorScheme}`).toBe(true)
-      if (width === 320) await page.screenshot({ path: testInfo.outputPath(`journal-${colorScheme}.png`), fullPage: true })
+      const title = await page.getByRole('heading', { name: 'Today', exact: true, level: 1 }).boundingBox()
+      const dateButton = await page.getByRole('button', { name: 'Choose date', exact: true }).boundingBox()
+      // Beside or below are both fine; the title must never run into the control.
+      const clear = title!.x + title!.width <= dateButton!.x || title!.y + title!.height <= dateButton!.y
+      expect(clear, `title overlaps the date control at ${width}px ${colorScheme}`).toBe(true)
+      expect(dateButton!.width).toBeGreaterThanOrEqual(44)
+      expect(dateButton!.height).toBeGreaterThanOrEqual(44)
+      if (width === 320) await page.screenshot({ path: testInfo.outputPath(`today-header-${colorScheme}.png`), fullPage: true })
     }
   }
   await page.goto('/about')

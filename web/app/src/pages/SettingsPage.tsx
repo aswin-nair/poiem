@@ -1,4 +1,3 @@
-import { PosterStrip } from '../components/PosterPrimitives'
 import { useRef, useState } from 'react'
 import { Toggle, RadioDot } from '../components/Toggle'
 import { SettingsRow } from '../components/SettingsRow'
@@ -6,16 +5,18 @@ import { Link } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { useAuth } from '../store/AuthContext'
 import { BottomNav } from '../components/BottomNav'
-import { PoiemSectionLabel } from '../components/PoiemSectionLabel'
 import { SettingsFinder } from '../components/SettingsFinder'
 import type { ActivityLevel, AIProvider, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
-import type { MascotPersonality } from '../lib/aiConfig'
+import type { AIAccessMode, MascotPersonality } from '../lib/aiConfig'
+import { useAiAccess } from '../lib/aiAccess'
 import { ACTIVITY_LABELS, GOAL_LABELS } from '../types'
 import {
   OPENROUTER_MODELS,
   GEMINI_MODELS,
+  MANAGED_OPENROUTER_MODEL,
   apiKeyHelpUrl,
   apiKeyPlaceholder,
+  defaultModelFor,
   isLowAccuracyModel,
 } from '../lib/aiConfig'
 import {
@@ -38,9 +39,8 @@ import { deleteLocalAccount } from '../lib/localAuth'
 import { clearDurableUser } from '../lib/durableState'
 import { clearOnboardingDraft } from '../lib/onboarding'
 import { clearAccountSeen } from '../lib/guestMode'
-import { COSMETICS, equipCosmetic } from '../lib/enamelEconomy'
 import { getStreakWithFreezes, getAllBadges, getMonthConsistency } from '../lib/journey'
-import { Momo } from '../components/Momo'
+import { MomoWardrobe } from '../components/MomoWardrobe'
 import { MomoSticker } from '../components/MomoSticker'
 import { RoastPreview } from '../components/RoastPreview'
 import { SettingsNavigation } from '../components/SettingsNavigation'
@@ -59,8 +59,10 @@ function SettingsCard({ children }: { children: React.ReactNode }) {
 export function SettingsPage() {
   const { state, updateProfile, updateAISettings, replaceState, clearAllData, patchGamification } = useApp()
   const { user, signOut } = useAuth()
+  const { status: aiStatus, refresh: refreshAiStatus } = useAiAccess()
   const [profile, setProfile] = useState<UserProfile>(state.profile)
   const [provider, setProvider] = useState<AIProvider>(state.aiSettings.provider)
+  const [accessMode, setAccessMode] = useState<AIAccessMode>(state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
   const [apiKey, setApiKey] = useState(state.aiSettings.apiKey)
   const [showKey, setShowKey] = useState(false)
   const [model, setModel] = useState(state.aiSettings.model)
@@ -91,6 +93,7 @@ export function SettingsPage() {
   const mascotVisible = state.gamification.mascotActivity !== 'off'
   const hasChanges = JSON.stringify(profile) !== JSON.stringify(state.profile)
     || provider !== state.aiSettings.provider
+    || accessMode !== (state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
     || apiKey !== state.aiSettings.apiKey
     || model !== state.aiSettings.model
     || instructions !== (state.aiSettings.customInstructions ?? '')
@@ -100,7 +103,7 @@ export function SettingsPage() {
 
   function handleProviderChange(next: AIProvider) {
     setProvider(next)
-    setModel(next === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash')
+    setModel(defaultModelFor(next))
   }
 
   function saveProfile() {
@@ -111,6 +114,7 @@ export function SettingsPage() {
     const enablingPause = !state.profile.trackingPaused && Boolean(profile.trackingPaused)
     updateProfile(profile)
     updateAISettings({
+      accessMode,
       provider,
       apiKey,
       model,
@@ -121,6 +125,7 @@ export function SettingsPage() {
     if (enablingPause) track({ name: 'pause_tracking_enabled' })
     setProfileError(null)
     setSaved(true)
+    void refreshAiStatus()
   }
 
   function handleExport() {
@@ -144,6 +149,7 @@ export function SettingsPage() {
         replaceState(next)
         setProfile(next.profile)
         setProvider(next.aiSettings.provider)
+        setAccessMode(next.aiSettings.accessMode ?? (next.aiSettings.apiKey ? 'byok' : 'managed'))
         setApiKey(next.aiSettings.apiKey)
         setModel(next.aiSettings.model)
         setInstructions(next.aiSettings.customInstructions ?? '')
@@ -236,12 +242,11 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="app-shell you-refresh food-club-app poster-ui">
-      <main className="app-main">
-        <PosterStrip items={['Your space', 'Your pace']} />
+    <div className="app-shell k-screen k-you">
+      <main className="app-main k-you-main" data-mascot-avoid>
         <header className="you-header">
           <div>
-            <PoiemSectionLabel>Your space</PoiemSectionLabel>
+            <p className="k-eyebrow">Your space</p>
             <h1 className="page-title">You</h1>
             <p className="page-sub">{profile.name || user?.name || 'Your food journal'}</p>
             <span className="you-header-stamp">MADE A LITTLE MORE YOU.</span>
@@ -450,7 +455,7 @@ export function SettingsPage() {
           </header>
         <SectionLabel>Streak</SectionLabel>
         <SettingsCard>
-          <p className="page-sub" style={{ marginBottom: 8 }}>
+          <p className="page-sub">
             {currentStreak}-day streak · {state.gamification.streakFreezes} {state.gamification.streakFreezes === 1 ? 'freeze' : 'freezes'}
           </p>
           <div className="insights-heat" aria-hidden>
@@ -458,7 +463,7 @@ export function SettingsPage() {
               <span key={i} className={`insights-heat-cell${logged ? ' is-logged' : ''}`} />
             ))}
           </div>
-          <p className="page-sub" style={{ marginTop: 10 }}>
+          <p className="page-sub">
             One refreshes monthly, and a 7-day streak can add another. Taking a break is always available below.
           </p>
         </SettingsCard>
@@ -530,30 +535,7 @@ export function SettingsPage() {
         <details className="you-disclosure">
           <summary>Momo’s wardrobe <span>Outfits &amp; unlocks</span></summary>
         <SettingsCard>
-          <p className="page-sub">Outfits unlock as your streak grows. Outfit changes save immediately.</p>
-          <div className="wardrobe-preview" aria-label="Momo wardrobe preview">
-            <Momo mood="proud" cosmeticId={state.gamification.equippedCosmeticId} />
-          </div>
-          <div className="wardrobe-grid">
-            {COSMETICS.map(item => {
-              const unlocked = state.gamification.ownedCosmeticIds.includes(item.id)
-                || currentStreak >= item.unlockStreak
-              const equipped = state.gamification.equippedCosmeticId === item.id
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`wardrobe-item${unlocked ? ' is-owned' : ''}`}
-                  disabled={!unlocked}
-                  aria-pressed={equipped}
-                  onClick={() => patchGamification(g => equipCosmetic(g, item.id, currentStreak) ?? g)}
-                >
-                  <strong>{item.name}</strong>
-                  <span>{equipped ? 'Equipped' : unlocked ? 'Available' : `Unlocks at ${item.unlockStreak} days`}</span>
-                </button>
-              )
-            })}
-          </div>
+          <MomoWardrobe />
         </SettingsCard>
         </details>
         </section>
@@ -561,15 +543,32 @@ export function SettingsPage() {
         <section className="you-section" id="you-ai" aria-labelledby="you-ai-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-ai-title">AI setup</h2>
-            <p>Optional: connect your own key for AI meal estimates and fresh Momo dialogue.</p>
+            <p>After you sign up, photo and text logging use Poiem’s OpenRouter key and {MANAGED_OPENROUTER_MODEL}. Add your own key only if you want a different provider or model.</p>
           </header>
-        {/* AI */}
-        <details className="you-disclosure">
-          <summary>Connection &amp; AI preferences <span>{apiKey.trim() ? 'Key added · not verified' : 'No key added'}</span></summary>
+        <SettingsCard>
+          <SettingsRow
+            label="Use my own API key"
+            hint="Off: Poiem’s key and model. On: the key below stays in this browser and is sent only to the provider you pick."
+          >
+            <Toggle
+              checked={accessMode === 'byok'}
+              onChange={next => setAccessMode(next ? 'byok' : 'managed')}
+            />
+          </SettingsRow>
+          {accessMode === 'managed' && (
+            <p className="settings-byok-note">
+              {aiStatus
+                ? `${aiStatus.food.remaining} of ${aiStatus.food.limit} food scans left today.`
+                : 'Checking Poiem AI availability…'}
+            </p>
+          )}
+          {aiStatus?.isAdmin && <p className="settings-byok-note"><Link to="/admin">Open managed AI admin</Link></p>}
+        </SettingsCard>
+        {accessMode === 'byok' && (
         <SettingsCard>
           <p className="settings-byok-note">
             Your key stays in this browser only.{' '}
-            <a href={apiKeyHelpUrl(provider)} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+            <a href={apiKeyHelpUrl(provider)} target="_blank" rel="noreferrer" className="settings-key-help">
               Get a key <IconArrowUpRight size={12} strokeWidth={2.2} />
             </a>
           </p>
@@ -602,7 +601,7 @@ export function SettingsPage() {
               list="model-presets"
               value={model}
               onChange={e => setModel(e.target.value)}
-              placeholder={provider === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash'}
+              placeholder={defaultModelFor(provider)}
             />
             <datalist id="model-presets">
               {modelPresets.map(m => <option key={m} value={m} />)}
@@ -617,9 +616,9 @@ export function SettingsPage() {
               <button
                 type="button"
                 className="settings-accuracy-fix"
-                onClick={() => setModel(provider === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash')}
+                onClick={() => setModel(defaultModelFor(provider))}
               >
-                Switch to {provider === 'openrouter' ? 'google/gemini-2.0-flash-001' : 'gemini-2.0-flash'} (cheap &amp; far more accurate)
+                Switch to {defaultModelFor(provider)} (cheap &amp; far more accurate)
               </button>
             </div>
           )}
@@ -634,6 +633,11 @@ export function SettingsPage() {
               rows={3}
             />
           </label>
+        </SettingsCard>
+        )}
+        <details className="you-disclosure">
+          <summary>Momo live AI <span>{apiKey.trim() ? 'Uses your key when added' : 'Needs your own API key'}</span></summary>
+        <SettingsCard>
           <SettingsRow
             label="Momo live AI"
             hint={apiKey.trim()
@@ -834,7 +838,7 @@ export function SettingsPage() {
         </SettingsCard>
         </section>
 
-        <p className="settings-footer">Poiem · Local-first · BYOK AI · Privacy-first</p>
+        <p className="settings-footer">Poiem · Poiem AI or your own key · Privacy-first</p>
       </main>
       <BottomNav />
     </div>

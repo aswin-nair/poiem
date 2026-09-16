@@ -14,7 +14,7 @@ test.describe('Onboarding activation', () => {
 
     await completeOnboarding(page, { meal: { name: 'Guest yogurt bowl' } })
     await expect(page.getByRole('heading', { name: 'Save your progress' })).toBeVisible()
-    await expect(page.locator('.home-today-row').filter({ hasText: 'Guest yogurt bowl' })).toBeVisible()
+    await expect(page.locator('.k-meal-row').filter({ hasText: 'Guest yogurt bowl' })).toBeVisible()
     await expect(page.getByLabel('Main')).toHaveCount(0)
     await expect(page.getByRole('button', { name: 'Continue' })).toBeVisible()
   })
@@ -81,7 +81,7 @@ test.describe('Onboarding activation', () => {
     await expect(celebration).toContainText('Banana oat bowl')
     await celebration.getByRole('button', { name: 'Continue' }).click()
     await celebration.waitFor({ state: 'hidden' })
-    await expect(page.locator('.home-today-row').filter({ hasText: 'Banana oat bowl' })).toBeVisible()
+    await expect(page.locator('.k-meal-row').filter({ hasText: 'Banana oat bowl' })).toBeVisible()
 
     const draftKeys = await page.evaluate(() => (
       Object.keys(localStorage).filter(key => key.startsWith('fud-onboarding-draft-'))

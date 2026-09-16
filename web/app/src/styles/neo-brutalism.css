@@ -1,3 +1,4 @@
+@layer legacy {
 /* Neo-brutalism: loud food blocks, ink outlines, and tactile depth. */
 .welcome-refresh,
 .setup-refresh,
@@ -431,3 +432,4 @@
   color: var(--scene-ink);
 }
 :root .setup-refresh [aria-pressed="true"] .activity-option-icon { color: var(--ink); }
+}

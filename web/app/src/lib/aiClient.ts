@@ -1,4 +1,5 @@
-import type { AISettings } from './aiConfig'
+import { DEFAULT_GEMINI_MODEL, DEFAULT_OPENROUTER_MODEL, type AISettings } from './aiConfig'
+import { apiFetch } from './apiClient'
 
 type ChatMsg = { role: 'system' | 'user' | 'assistant'; content: string | unknown[] }
 
@@ -8,6 +9,8 @@ const VISION_TIMEOUT_MS = 30_000
 interface RequestOptions {
   signal?: AbortSignal
   timeoutMs?: number
+  /** Server-managed capability. Mascot is intentionally never managed. */
+  task?: 'food_text' | 'food_photo' | 'coach' | 'mascot'
 }
 
 async function timedRequest<T>(
@@ -34,6 +37,37 @@ async function timedRequest<T>(
   }
 }
 
+/**
+ * Turn a provider status into advice the reader can act on. A bare status code cannot
+ * distinguish a wrong key from an empty balance, which is the difference between
+ * "fix your key" and "add credits". The response body is never copied into the message.
+ */
+function providerFailure(provider: string, status: number, invalidKey = false): Error {
+  if (invalidKey || status === 401 || status === 403) {
+    return new Error(`${provider} rejected your API key. Check it in You → AI settings.`)
+  }
+  if (status === 402) {
+    return new Error(`Your ${provider} account is out of credits. Add credits, or pick another model in You → AI settings.`)
+  }
+  if (status === 404) {
+    return new Error(`${provider} has no such model any more. Pick a different model in You → AI settings.`)
+  }
+  if (status === 429) {
+    return new Error(`${provider} is rate-limiting this key. Wait a moment, then try again or log manually.`)
+  }
+  if (status >= 500) {
+    // The code stays in outage text: it is the one case where the fault is not the reader's.
+    return new Error(`${provider} is having trouble right now (${status}). Try again, or log manually.`)
+  }
+  return new Error(`${provider} could not complete the request (${status}).`)
+}
+
+/** Gemini reports a rejected key as 400 INVALID_ARGUMENT, so its status alone is ambiguous. */
+async function geminiFailure(res: Response): Promise<Error> {
+  const detail = await res.text().catch(() => '')
+  return providerFailure('Gemini', res.status, /API[ _]?key not valid|API_KEY_INVALID/i.test(detail))
+}
+
 function aiHeaders(settings: AISettings): Record<string, string> {
   const h: Record<string, string> = { 'Content-Type': 'application/json' }
   if (settings.provider === 'openrouter') {
@@ -44,6 +78,33 @@ function aiHeaders(settings: AISettings): Record<string, string> {
   return h
 }
 
+export function usesByok(settings: AISettings): boolean {
+  // Settings created before managed AI did not have accessMode. Preserve their explicit
+  // device-key behavior while all newly-created settings default to managed.
+  return settings.accessMode === 'byok' || (settings.accessMode === undefined && Boolean(settings.apiKey.trim()))
+}
+
+function managedTask(options: RequestOptions): 'food_text' | 'food_photo' | 'coach' {
+  if (options.task === 'food_photo' || options.task === 'coach' || options.task === 'food_text') return options.task
+  return 'food_text'
+}
+
+async function completeManaged(
+  task: 'food_text' | 'food_photo' | 'coach',
+  messages: ChatMsg[],
+  options: RequestOptions,
+): Promise<string> {
+  return apiFetch<{ text: string }>('/api/ai?action=analyze', {
+    method: 'POST',
+    body: JSON.stringify({ task, payload: { messages } }),
+    signal: options.signal,
+  }, undefined, true, options.timeoutMs ?? 40_000).then(result => {
+    if (!result || typeof result.text !== 'string' || !result.text.trim()) throw new Error('Poiem AI returned an empty response. Try again or log manually.')
+    if (typeof window !== 'undefined') window.dispatchEvent(new Event('poiem-ai-status-changed'))
+    return result.text
+  })
+}
+
 export async function completeChat(
   settings: AISettings,
   messages: ChatMsg[],
@@ -51,7 +112,11 @@ export async function completeChat(
   temperature?: number,
   options: RequestOptions = {},
 ): Promise<string> {
-  if (!settings.apiKey.trim()) throw new Error('Add your API key in Settings.')
+  if (!usesByok(settings)) {
+    if (options.task === 'mascot') throw new Error('Momo AI uses your own API key. Add one in You → Advanced settings.')
+    return completeManaged(managedTask(options), messages, options)
+  }
+  if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
 
   if (settings.provider === 'openrouter') {
     return timedRequest(async signal => {
@@ -59,14 +124,14 @@ export async function completeChat(
         method: 'POST',
         headers: aiHeaders(settings),
         body: JSON.stringify({
-          model: settings.model || 'google/gemini-2.0-flash-001',
+          model: settings.model || DEFAULT_OPENROUTER_MODEL,
           messages,
           max_tokens: maxTokens,
           ...(temperature != null ? { temperature } : {}),
         }),
         signal,
       })
-      if (!res.ok) throw new Error(`OpenRouter could not complete the request (${res.status}).`)
+      if (!res.ok) throw providerFailure('OpenRouter', res.status)
       const json = await res.json() as { choices?: Array<{ message?: { content?: string } }>; error?: { message?: string } }
       if (json.error?.message) throw new Error('OpenRouter could not complete the request.')
       const text = json.choices?.[0]?.message?.content
@@ -78,7 +143,7 @@ export async function completeChat(
     })
   }
 
-  const model = settings.model || 'gemini-2.0-flash'
+  const model = settings.model || DEFAULT_GEMINI_MODEL
   const system = messages.find(m => m.role === 'system')
   const conv = messages.filter(m => m.role !== 'system')
   const contents = conv.map(m => ({
@@ -107,7 +172,7 @@ export async function completeChat(
         signal,
       },
     )
-    if (!res.ok) throw new Error(`Gemini could not complete the request (${res.status}).`)
+    if (!res.ok) throw await geminiFailure(res)
     const json = await res.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> }
     const text = json.candidates?.[0]?.content?.parts?.[0]?.text
     if (!text) throw new Error('Gemini returned an empty response. Try again or log manually.')
@@ -128,7 +193,19 @@ export async function completeVision(
   systemPrompt?: string,
   options: RequestOptions = {},
 ): Promise<string> {
-  if (!settings.apiKey.trim()) throw new Error('Add your API key in Settings.')
+  if (!usesByok(settings)) {
+    if (options.task === 'mascot') throw new Error('Momo AI uses your own API key. Add one in You → Advanced settings.')
+    const content = [
+      { type: 'image_url', image_url: { url: `data:${mimeType};base64,${imageBase64}` } },
+      { type: 'text', text: prompt },
+    ]
+    const messages: ChatMsg[] = []
+    const sys = systemPrompt?.trim() ?? settings.customInstructions?.trim()
+    if (sys) messages.push({ role: 'system', content: sys })
+    messages.push({ role: 'user', content })
+    return completeManaged('food_photo', messages, options)
+  }
+  if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
 
   if (settings.provider === 'openrouter') {
     const content = [
@@ -143,11 +220,12 @@ export async function completeVision(
     messages.push({ role: 'user', content })
     return completeChat(settings, messages, maxTokens, temperature, {
       ...options,
+      task: 'food_photo',
       timeoutMs: options.timeoutMs ?? VISION_TIMEOUT_MS,
     })
   }
 
-  const model = settings.model || 'gemini-2.0-flash'
+  const model = settings.model || DEFAULT_GEMINI_MODEL
   const parts: unknown[] = [
     { inlineData: { mimeType, data: imageBase64 } },
     { text: prompt },
@@ -174,7 +252,7 @@ export async function completeVision(
         signal,
       },
     )
-    if (!res.ok) throw new Error(`Gemini could not complete the request (${res.status}).`)
+    if (!res.ok) throw await geminiFailure(res)
     const json = await res.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> }
     const text = json.candidates?.[0]?.content?.parts?.[0]?.text
     if (!text) throw new Error('Gemini returned an empty response. Try again or log manually.')

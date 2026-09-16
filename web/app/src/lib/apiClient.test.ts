@@ -127,7 +127,7 @@ describe('in-memory access tokens', () => {
     const bob = unsignedToken('00000000-0000-4000-8000-000000000002', 3)
     const fetchMock = vi.fn(async (url: string, init?: RequestInit) => {
       expect(init?.credentials).toBe('include')
-      if (String(url).includes('/api/auth/refresh')) {
+      if (String(url).includes('action=refresh')) {
         return new Response(JSON.stringify({ token: aliceNext, user: { sub: '00000000-0000-4000-8000-000000000001' } }), {
           status: 200,
           headers: { 'Content-Type': 'application/json' },
@@ -150,7 +150,7 @@ describe('in-memory access tokens', () => {
     fetchMock.mockClear()
     saveAuthToken(bob)
     fetchMock.mockImplementation(async (url: string) => {
-      if (String(url).includes('/api/auth/refresh')) {
+      if (String(url).includes('action=refresh')) {
         return new Response(JSON.stringify({ token: bob }), { status: 200 })
       }
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 })
@@ -162,9 +162,13 @@ describe('in-memory access tokens', () => {
 })
 
 describe('account lifecycle requests', () => {
+  it('targets the auth handler with a query action (no path rewrite required)', async () => {
+    const { authApiPath } = await import('./apiClient')
+    expect(authApiPath('google')).toBe('/api/auth?action=google')
+  })
   it.each([
-    ['logout', apiLogout, '/api/auth/logout', 'POST'],
-    ['logout-all', apiLogoutAll, '/api/auth/logout-all', 'POST'],
+    ['logout', apiLogout, 'action=logout', 'POST'],
+    ['logout-all', apiLogoutAll, 'action=logout-all', 'POST'],
   ] as const)('sends %s with the captured bearer', async (_name, action, path, method) => {
     vi.stubEnv('VITE_DATA_BACKEND', 'neon')
     vi.stubGlobal('localStorage', memoryStorage())

@@ -1,3 +1,4 @@
+@layer legacy {
 /* CALORIES BURNED — Activity Quick Row & Sheet */
 
 /* ── Quick preset row on home screen ─────────────────────────── */
@@ -560,4 +561,5 @@
   .error-banner {
     border: 2px solid CanvasText;
   }
+}
 }

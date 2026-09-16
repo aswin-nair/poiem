@@ -1,3 +1,4 @@
+@layer legacy {
 /* ── Toggle + radio ──────────────────────────────────────────
    The wrapper is the 44px target. The input is transparent and fills it, so
    the hit area is the control itself rather than a smaller box beside it. */
@@ -98,4 +99,5 @@
   .toggle-track,
   .toggle-knob,
   .radio-dot-fill { transition: none; }
+}
 }

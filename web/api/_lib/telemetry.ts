@@ -41,6 +41,8 @@ const API_ROUTES = new Set([
   '/api/auth/reset-password',
   '/api/auth/change-password',
   '/api/cron/retention',
+  '/api/ai',
+  '/api/admin',
 ])
 
 function environment(): 'dev' | 'staging' | 'production' | 'test' {
@@ -121,14 +123,14 @@ export function emitStandaloneApiRequest(input: {
   emitApiEnvelope({ ...input, method })
 }
 
-export function emitManagedAiInvoked(requestId: string, status: number): void {
+export function emitManagedAiInvoked(requestId: string, status: number, route: '/api/gemini' | '/api/ai' = '/api/gemini'): void {
   const built = buildTelemetryEnvelope({
     event: { name: 'managed_ai_invoked', request_id: requestId, status },
     eventId: requestId,
     environment: environment(),
     release: releaseId(),
     platform: 'api',
-    appSurface: '/api/gemini',
+    appSurface: route,
   })
   if (!built.ok) return
   console.error(JSON.stringify(built.value))
@@ -144,6 +146,9 @@ export function withApiTelemetry(
 
   return async function observedHandler(req: VercelRequest, res: VercelResponse) {
     const requestId = requestIdFrom(req)
+    // Make the generated ID available to handlers that emit a secondary
+    // operational event for the same request.
+    if (req.headers) req.headers['x-request-id'] = requestId
     applyIdentityHeaders(res, requestId)
     const rawMethod = typeof req.method === 'string' ? req.method.toUpperCase() : 'GET'
     const method = HTTP_METHODS.has(rawMethod) ? rawMethod : 'GET'

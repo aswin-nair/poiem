@@ -1,3 +1,4 @@
+@layer legacy {
 .bottom-nav {
   background: var(--paper-card);
   border: 1px solid var(--chalk);
@@ -324,15 +325,6 @@
   filter: drop-shadow(0 7px 7px rgba(58, 42, 34, 0.14));
 }
 
-/* MascotVibe is the temporary base artwork. Keeping the vector layers in the
-   component makes the licensed export a one-file replacement and preserves
-   the existing pose, celebration, thinking and wardrobe overlays. */
-.mascotvibe-momo .momo-original-art { display: none; }
-.momo-mascotvibe-image {
-  pointer-events: none;
-  transform-box: fill-box;
-  transform-origin: 50% 78%;
-}
 .momo-raster-gesture-cues {
   fill: none;
   stroke: var(--coral, #ff7a50);
@@ -351,29 +343,6 @@
 .momo-raster-ponder-cues { animation: momo-raster-ponder-cues 1.2s ease-in-out 2; }
 .momo-raster-bow-cues { animation: momo-raster-bow-cues 800ms ease-in-out 2; }
 
-/* The MascotVibe preview is a single bitmap. Small image-level transforms and
-   comic hand marks give those three poses a readable performance without
-   claiming that the hidden vector arms can still articulate independently. */
-.momo-art.pose-wave_at_user .momo-mascotvibe-image {
-  animation: momo-raster-wave 1.8s ease-in-out;
-}
-.momo-art.pose-look_around .momo-mascotvibe-image {
-  animation: momo-raster-look 2s ease-in-out;
-}
-.momo-art.pose-stretch .momo-mascotvibe-image {
-  animation: momo-raster-stretch 2.2s ease-in-out;
-}
-.mascotvibe-momo.mood-sleepy .momo-mascotvibe-image {
-  opacity: 0.9;
-  filter: saturate(0.82) brightness(0.98);
-}
-.momo-mascotvibe-eye-cover { fill: #f4dfc5; }
-.momo-mascotvibe-eyes path {
-  fill: none;
-  stroke: #582440;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-}
 
 .momo-ground-shadow {
   fill: #3a2a22;
@@ -1157,4 +1126,5 @@ button.home-chip:focus-visible { outline: 3px solid var(--on-track); outline-off
   .celebrate-title,
   .celebrate-stat,
   .celebrate-burst { animation: none !important; }
+}
 }

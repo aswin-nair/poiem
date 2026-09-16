@@ -1,3 +1,4 @@
+@layer legacy {
 /* Clay recipe. One light source (top-left). Depth is hierarchy, never status. */
 
 .clay-surface,
@@ -411,4 +412,5 @@
   font-size: 0.72rem;
   line-height: 1.35;
   color: var(--ink-mute);
+}
 }

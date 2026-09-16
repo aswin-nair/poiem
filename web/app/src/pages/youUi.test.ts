@@ -57,18 +57,19 @@ describe('You page UI', () => {
     expect(html).toMatch(/<button type="button" disabled="" class="pressable/)
   })
 
-  it('keeps advanced AI and wardrobe content in native, initially closed disclosures', () => {
+  it('keeps wardrobe and Momo live AI in native, initially closed disclosures', () => {
     const html = renderPage()
     expect(html.match(/<details class="you-disclosure">/g)).toHaveLength(2)
-    expect(html).toContain('Connection &amp; AI preferences')
-    expect(html).toContain('No key added')
-    expect(html).toContain('aria-label="Show API key" aria-pressed="false"')
+    expect(html).toContain('Use my own API key')
+    expect(html).toContain('google/gemma-4-31b-it')
+    expect(html).toContain('role="switch"')
     expect(html).not.toContain('<details class="you-disclosure" open=')
   })
 
   it('does not imply that an untested key is connected', () => {
-    state.aiSettings.apiKey = 'test-placeholder'
-    expect(renderPage()).toContain('Key added · not verified')
+    state.aiSettings = { ...state.aiSettings, accessMode: 'byok', apiKey: 'test-placeholder' }
+    expect(renderPage()).toContain('aria-label="API key"')
+    expect(renderPage()).toContain('Uses your key when added')
   })
 
   it('explains immediate mascot changes and provides an achievements empty state', () => {
@@ -76,7 +77,8 @@ describe('You page UI', () => {
     expect(html).toContain('Your first badge starts with your first log.')
     expect(html).toContain('Keep your companion around the app · saves immediately')
     expect(html).toContain('Silence speech bubbles · apply with Save settings')
-    expect(html).toContain('Outfit changes save immediately.')
+    expect(html).toContain('Changes save right away.')
+    expect(html).toContain('role="group" aria-label="Wardrobe slot"')
     expect(html).toContain('href="/support"')
     expect(html).toContain('href="/coach"')
   })

@@ -19,12 +19,14 @@ function entry(over: Partial<FoodEntry> = {}): FoodEntry {
 }
 
 describe('meal slot by time of day', () => {
-  it('follows the §9.1 boundaries', () => {
+  it('follows the §9.1 boundaries, with mid-afternoon filed as a snack', () => {
     expect(defaultMealType(7)).toBe('breakfast')
     expect(defaultMealType(10)).toBe('breakfast')
     expect(defaultMealType(11)).toBe('lunch')
-    expect(defaultMealType(15)).toBe('lunch')
-    expect(defaultMealType(16)).toBe('dinner')
+    expect(defaultMealType(14)).toBe('lunch')
+    expect(defaultMealType(15)).toBe('snack')
+    expect(defaultMealType(16)).toBe('snack')
+    expect(defaultMealType(17)).toBe('dinner')
     expect(defaultMealType(20)).toBe('dinner')
     expect(defaultMealType(21)).toBe('snack')
     expect(defaultMealType(23)).toBe('snack')

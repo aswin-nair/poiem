@@ -45,6 +45,7 @@ import {
   type MascotAIContext,
   type MascotAIEvent,
 } from '../lib/mascotAI'
+import { usesByok } from '../lib/aiClient'
 
 const SIZE = 88
 const MOVE_MS = 600
@@ -210,6 +211,7 @@ export function MascotOverlay() {
   const aiEnabled = Boolean(
     !muted
     && !roastEnabled
+    && usesByok(state.aiSettings)
     && state.aiSettings.apiKey.trim()
     && state.aiSettings.mascotEnabled !== false,
   )
@@ -865,7 +867,7 @@ export function MascotOverlay() {
           <Momo
             mood={mood}
             pose={pose}
-            cosmeticId={state.gamification.equippedCosmeticId}
+            outfit={state.gamification.outfit}
             thinking={thinking}
           />
         </div>

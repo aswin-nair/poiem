@@ -43,7 +43,7 @@ This rebrand preserves account, package, and storage identifiers. Connecting the
 
 ---
 
-Open-source, privacy-first calorie tracker for iOS and Android. Bring your own AI provider — 13 supported including Gemini, OpenAI, Claude, Grok, Groq, Hugging Face, Fireworks AI, DeepInfra, Mistral, and any custom OpenAI-compatible endpoint. Snap a meal, share a food photo into Fud AI, scan a barcode, combine two camera shots, add a note to a camera or library photo, ask your AI coach how to hit your goal, speak your lunch, or use Siri Shortcuts on iOS to log food and weight. On supported iPhones, food-description analysis for text, voice-transcribed, and Siri food logs can use Apple Intelligence on-device as the final fallback after BYOK provider/fallback attempts fail. AI features require a user-supplied provider key. Managed hosted AI is not available.
+Open-source, privacy-first calorie tracker for iOS and Android. After sign-up, the web app uses Poiem’s OpenRouter key and `google/gemma-4-31b-it`; anyone can instead add their own API key in You → AI setup. Mobile remains BYOK-only. Snap a meal, share a food photo into Fud AI, scan a barcode, combine two camera shots, add a note to a camera or library photo, ask your AI coach how to hit your goal, speak your lunch, or use Siri Shortcuts on iOS to log food and weight.
 
 iOS 4.4 build 25 makes goal calculation AI-powered — Recalculate Goals and onboarding compute your calories and macros via AI, refined from your logged intake and weight trend with a formula fallback — and merges Energy Burn Goals into a single Apple Health–aware Adaptive Goals toggle. It also adds goal locks, optional body-circumference measurements that feed Recalculate and the Coach, swipe-between-days on Home, formatted (markdown) Coach replies, dual-labelled weight goals (Cutting / Recomp / Bulking), new-version notifications, and 12/24-hour log times.
 
@@ -75,7 +75,7 @@ Android 2.3.0 build 26 brings the same AI-driven goals, goal locks, body measure
 
 ### Intelligence
 - **AI Coach tab** — multi-turn chat with memory. Coach sees your profile, weight history, food log, today's date/timezone, and richer meal details, then answers questions like "what's my expected weight in 30 days?" or "how do I lose 2 kg?". Coach also supports camera/photo attachments on Android. Memory persists across launches; Reset button starts a fresh conversation. Long-press any reply to copy.
-- **AI Access** — Bring Your Own Key lets you pick provider, model, fallback, custom instructions, and speech language directly on device. Managed hosted AI is not available.
+- **AI Access** — After sign-up, Poiem web uses the operator OpenRouter key and `google/gemma-4-31b-it`. Bring Your Own Key is an optional toggle in You → AI setup; native clients remain BYOK-only.
 - **Apple Intelligence fallback** — on supported iPhones, food-description analysis for text, voice-transcribed, and Siri food logs can use Apple Intelligence on-device as the final fallback after BYOK provider/fallback attempts fail.
 - **AI optional nutrient goals** — estimate detailed nutrient goals from profile data without changing calorie/protein/carbs/fat formulas.
 - **Goal-aware prompt chips** — suggested questions change based on whether your goal is Lose / Gain / Maintain
@@ -111,7 +111,7 @@ Android 2.3.0 build 26 brings the same AI-driven goals, goal locks, body measure
 
 ## AI Providers
 
-Pick any of the **13 LLM providers** for food analysis, meal what-if suggestions, optional nutrient-goal estimation, and Coach chat. Free Gemini keys are available at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). BYOK requests go directly from your device to the provider you configure. For text, voice-transcribed, and Siri food descriptions on supported iPhones, Apple Intelligence can run on-device only as the last fallback after BYOK provider/fallback attempts fail. The hosted managed-AI proxy fails closed and is not available for use or purchase.
+On the web, signed-in accounts use Poiem’s OpenRouter key and `google/gemma-4-31b-it` (Free: 20 food scans/day; Premium: 100 food scans and 50 Coach messages/day). Your own API key is optional in You → AI setup and is sent from the browser to the provider you pick. Free Gemini keys are available at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). For text, voice-transcribed, and Siri food descriptions on supported iPhones, Apple Intelligence can run on-device only as the last fallback after BYOK provider/fallback attempts fail. Set `OPENROUTER_API_KEY` and apply the plans migration to turn Poiem AI on; see `docs/operations/managed-ai-rollout.md`.
 
 | Provider | Format | Highlight | Needs API Key |
 |----------|--------|-----------|:---:|
@@ -352,7 +352,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb shell am start -n com.apoorvdarshan.calorietracker/.MainActivity
 ```
 
-First launch walks you through onboarding (gender, birthday, height/weight with metric/imperial toggle, body fat %, activity with protein target preview, goal, goal speed, notifications, Apple Health / Health Connect, BYOK AI setup, review). A free Gemini key is available at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Provider, fallback, and speech settings remain available in **Settings → AI Access**.
+First launch walks you through onboarding (gender, birthday, height/weight with metric/imperial toggle, body fat %, activity with protein target preview, goal, goal speed, notifications, Apple Health / Health Connect, and review). After sign-up, web users use Poiem AI; add your own key in **You → AI setup** if you want a different provider or model. A free Gemini key is available at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
 
 ## Contributing
 

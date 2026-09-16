@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { freshState } from '../lib/storage'
+import type { FoodEntry } from '../types'
 import { HomePage } from './HomePage'
 
 let state = freshState()
@@ -14,9 +15,13 @@ vi.mock('../mascot/MascotOverlay', () => ({ mascotEvent: vi.fn() }))
 vi.mock('../mascot/anchors', () => ({ useAnchor: () => () => {} }))
 
 const render = (guest = false) => renderToStaticMarkup(<MemoryRouter><HomePage guest={guest} /></MemoryRouter>)
+const meal = (over: Partial<FoodEntry> = {}): FoodEntry => ({
+  id: 'oats', name: 'Oats', calories: 250, protein: 8, carbs: 40, fat: 5,
+  timestamp: new Date().toISOString(), source: 'manual', mealType: 'breakfast', ...over,
+})
 beforeEach(() => { state = freshState() })
 
-describe('Today dashboard', () => {
+describe('Today', () => {
   it('only offers the direct roast action after consent', () => {
     expect(render()).not.toContain('Roast me')
     state.profile.mascotRoasts = true
@@ -24,48 +29,81 @@ describe('Today dashboard', () => {
     state.profile.trackingPaused = true
     expect(render()).not.toContain('Roast me')
   })
-  it('shows the useful surface immediately, without an artificial loading delay', () => {
+
+  it('opens with Momo, then what is left, then macros, then meals, without streaks, levels or poster decoration', () => {
     const html = render()
+    expect(html.indexOf('aria-label="A note from Momo"')).toBeLessThan(html.indexOf('kcal left'))
     expect(html).toContain('Today’s snapshot')
-    expect(html).toContain('kcal logged')
-    expect(html).toContain('Your table is ready')
-    expect(html).toContain('href="/log/photo"')
-    expect(html).toContain('href="/log/saved"')
+    expect(html).toContain('kcal left')
     expect(html).toContain('aria-label="Choose date"')
-    expect(html.indexOf('home-log-cta')).toBeLessThan(html.indexOf('Your meals'))
-    expect(html.indexOf('Your meals')).toBeLessThan(html.indexOf('Logging milestones'))
-    expect(html).toContain('lucide-flame')
+    expect(html.indexOf('kcal left')).toBeLessThan(html.indexOf('aria-label="Macros"'))
+    expect(html.indexOf('aria-label="Macros"')).toBeLessThan(html.indexOf('id="meals-title"'))
+    expect(html).toContain('Your table is ready')
+    for (const slot of ['breakfast', 'lunch', 'dinner', 'snack']) {
+      expect(html).toContain(`Add ${slot}</button>`)
+    }
+    expect(html).toContain('aria-label="Water glasses"')
+    expect(html.match(/class="k-glass( is-full)?"/g)).toHaveLength(8)
+    expect(html).not.toMatch(/day streak|Level \d/)
+    expect(html).not.toContain('Logging milestones')
+    expect(html).not.toContain('poster-')
     expect(html).not.toContain('🔥')
+    expect(html.match(/aria-label="Log a meal"/g)).toHaveLength(1)
   })
-  it('renders actual nutrition and neutral meal icons', () => {
-    state.foodEntries = [{ id: 'oats', name: 'Oats', calories: 250, protein: 8, carbs: 40,
-      fat: 5, timestamp: new Date().toISOString(), source: 'manual', mealType: 'breakfast' }]
+
+  it('greets by first name and gives Momo a button to poke', () => {
+    state.profile.name = 'Sam Rivera'
     const html = render()
-    expect(html).toContain('250 kcal')
-    expect(html).toContain('Oats')
-    expect(html).toContain('lucide-utensils')
-    expect(html).toContain('You showed up.')
-    expect(html).toContain('1 logged day')
+    expect(html).toMatch(/(Morning|Afternoon|Evening|Hey there), Sam!/)
+    expect(html).toContain('aria-label="Say something, Momo"')
   })
-  it('hides nutrition and milestones during tracking pause', () => {
+
+  it('groups meals by meal type, each with its time, macros and a tinted food icon', () => {
+    state.foodEntries = [
+      meal(),
+      meal({ id: 'soup', name: 'Tomato soup', calories: 180, protein: 4, carbs: 20, fat: 9, mealType: 'dinner' }),
+    ]
+    const html = render()
+    expect(html.indexOf('id="meal-breakfast"')).toBeLessThan(html.indexOf('>Oats'))
+    expect(html.indexOf('>Oats')).toBeLessThan(html.indexOf('id="meal-dinner"'))
+    expect(html.indexOf('id="meal-dinner"')).toBeLessThan(html.indexOf('>Tomato soup'))
+    expect(html).toContain('250 kcal')
+    expect(html).toContain('P 8 · C 40 · F 5')
+    expect(html).toContain('lucide-soup')
+    expect(html).toContain('k-food-tile is-tone-mint')
+    expect(html).toContain('2 meals · 430 kcal')
+    expect(html).toContain('You showed up.')
+  })
+
+  it('says plainly how far over the guide the day went', () => {
+    state.foodEntries = [meal({ calories: 9_000 })]
+    const html = render()
+    expect(html).toContain('kcal over the guide')
+    expect(html).not.toContain('kcal left')
+    expect(html).toContain('Tomorrow’s a fresh plate.')
+  })
+
+  it('hides nutrition during tracking pause', () => {
     state.profile.trackingPaused = true
     const html = render()
     expect(html).toContain('Tracking is paused')
     expect(html).toContain('Manage pause')
-    expect(html).not.toContain('kcal logged')
-    expect(html).not.toContain('Logging milestones')
+    expect(html).not.toContain('kcal left')
+    expect(html).not.toContain('aria-label="Macros"')
   })
+
   it('respects mute and hide-Momo preferences', () => {
     state.profile.mascotMuted = true
-    expect(render()).not.toContain('Momo’s little reminder')
+    expect(render()).not.toContain('A note from Momo')
     state.profile.mascotMuted = false
     state.gamification.mascotActivity = 'off'
-    expect(render()).not.toContain('Momo’s little reminder')
+    expect(render()).not.toContain('A note from Momo')
   })
-  it('keeps the guest account-claim path without normal log shortcuts', () => {
+
+  it('keeps the guest account-claim path without log shortcuts or navigation', () => {
     const html = render(true)
     expect(html).toContain('Save your progress')
-    expect(html).not.toContain('href="/log/photo"')
+    expect(html).not.toContain('Add breakfast')
     expect(html).not.toContain('aria-label="Main"')
   })
 })

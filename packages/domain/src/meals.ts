@@ -9,7 +9,9 @@ export type MealSlot = (typeof MEAL_SLOTS)[number]
  */
 export function defaultMealSlot(localHour: number): MealSlot {
   if (localHour < 11) return 'breakfast'
-  if (localHour < 16) return 'lunch'
+  if (localHour < 15) return 'lunch'
+  // Mid-afternoon food is a snack; filing 3 pm as dinner puts the day in the wrong order.
+  if (localHour < 17) return 'snack'
   if (localHour < 21) return 'dinner'
   return 'snack'
 }

@@ -3,11 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:all": "npx vercel dev --yes",
+    "dev:all": "npx vercel dev --yes --listen 3001",
     "db:migrate": "node scripts/migrate.mjs",
     "db:migrate:security": "node scripts/migrate.mjs security",
     "db:migrate:refresh": "node scripts/migrate.mjs refresh",
     "db:migrate:entities": "node scripts/migrate.mjs entities",
+    "db:migrate:plans": "node scripts/migrate.mjs plans",
     "db:audit-byok": "node scripts/audit-byok.mjs",
     "db:retention-cleanup": "node scripts/retention-cleanup.mjs",
     "db:retention-rehearsal": "node scripts/retention-rehearsal.mjs",

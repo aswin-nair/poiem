@@ -1,3 +1,4 @@
+@layer legacy {
 /* Daily-use surfaces: a clear meal journal within the existing coral identity. */
 .today-refresh, .log-refresh, .manual-refresh {
   --daily-gap: 1.5rem;
@@ -88,4 +89,5 @@
   .today-refresh .home-today-row { flex-wrap: wrap; }
   .log-method-card { padding: .875rem; }
   .today-refresh .day-ring { grid-template-columns: 1fr; }
+}
 }

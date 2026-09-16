@@ -1,4 +1,7 @@
-/* Phase 0 split. Tokens first; motion last. */
+/* Cascade layers: every legacy sheet sits in `legacy`; the Quiet Kitchen system
+   and its screens sit above it, so they win without ID selectors or !important.
+   Accessibility overrides stay unlayered and last. */
+@layer legacy, system, screens;
 @import './styles/tokens.css';
 @import './styles/base.css';
 @import './styles/components/nav.css';
@@ -27,7 +30,6 @@
 @import './styles/library-insights-ui.css';
 @import './styles/you-ui.css';
 @import './styles/product-ui.css';
-@import './styles/meal-flow.css';
 @import './styles/components/buttons.css';
 @import './styles/components/forms.css';
 @import './styles/icon-motion.css';
@@ -41,4 +43,11 @@
 @import './styles/food-club-coach.css';
 @import './styles/poiem-brand.css';
 @import './styles/poster-system.css';
+@import './styles/system/tokens.css';
+@import './styles/system/components.css';
+@import './styles/system/momo.css';
+@import './styles/screens/kitchen.css';
+@import './styles/screens/flows.css';
+@import './styles/screens/insights.css';
+@import './styles/screens/you.css';
 @import './styles/a11y.css';

@@ -40,7 +40,9 @@
 .welcome-poster .wp-ticker-toggle { flex: 0 0 74px; display: grid; place-content: center; justify-items: center; gap: 7px; min-height: 74px; padding: 10px; border: 0; border-left: 3px solid #121212; color: #121212; background: #e7f258; font: 600 10px/1 var(--wp-mono); text-transform: uppercase; cursor: pointer; }
 .welcome-poster .wp-ticker-toggle:focus-visible { outline: 3px solid #121212; outline-offset: -7px; }
 .wp-ticker-toggle:hover svg { transform: scale(1.15); }
-.wp-motion-paused *, .wp-motion-paused *::before, .wp-motion-paused *::after { animation-play-state: paused !important; }
+/* Pause the decorative loops only: freezing entrance animations can hide later sections. */
+.wp-motion-paused .wp-ticker-track, .wp-motion-paused .wp-final-plate svg { animation-play-state: paused !important; }
+.wp-motion-paused .wp-momo-cutout, .wp-motion-paused .momo-art * { animation: none !important; }
 
 .wp-week-scroll:focus-visible { outline: 3px solid var(--wp-focus); outline-offset: 6px; }
 .wp-step-num { font-variant-numeric: tabular-nums; }

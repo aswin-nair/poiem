@@ -8,7 +8,6 @@ import type { MealType } from '../types'
 import { PressableButton } from '../components/PressableButton'
 import { FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
 import { MealNameField, MealTotals, MealTypePicker, NutritionFields } from '../components/MealEntryFields'
-import { Surface } from '../components/Surface'
 import { validateManualFood } from '../lib/foodEntryValidation'
 
 export function EditFoodPage() {
@@ -25,7 +24,7 @@ export function EditFoodPage() {
   const [mealType, setMealType] = useState<MealType>(entry?.mealType ?? 'other')
   const [error, setError] = useState<string | null>(null)
 
-  if (!entry) return <div className="app-shell meal-flow poster-ui"><main className="app-main">
+  if (!entry) return <div className="app-shell k-screen k-flow"><main className="app-main">
     <BackLink to="/" label="Today" />
     <LogFlowHeader title="This entry isn’t here." description="It may have been removed. Your other meals are waiting on Today." />
     <PressableButton to="/" label="Back to Today" />
@@ -64,8 +63,8 @@ export function EditFoodPage() {
   }
 
   return (
-    <div className="app-shell meal-flow poster-ui meal-flow-wide">
-      <main className="app-main motion-stagger">
+    <div className="app-shell k-screen k-flow k-flow-wide">
+      <main className="app-main">
         <div className="flow-edit-topbar">
           <BackLink onClick={leave} label="Today" />
           <button type="button" className="flow-favourite" onClick={() => toggleFavorite(entry)}
@@ -76,19 +75,19 @@ export function EditFoodPage() {
         <LogFlowHeader title="A little fine-tuning." description="Change the details below. Your original entry stays as it is until you save." />
         {error && <FlowFeedback message={error} error />}
         <form className="flow-review-layout" noValidate onSubmit={event => { event.preventDefault(); save() }}>
-          <Surface className="flow-review-editor">
+          <div className="flow-review-editor">
             <MealNameField name={name} emoji={entry.emoji} onChange={value => { setName(value); setError(null) }} />
             <NutritionFields values={nutrition} optionalMacros onChange={(field, value) => { setNutrition(current => ({ ...current, [field]: value })); setError(null) }} />
             <MealTypePicker value={mealType} onChange={value => { setMealType(value); setError(null) }} />
-          </Surface>
+          </div>
           <div className="flow-review-side">
-            <Surface className="flow-review-summary">
+            <div className="flow-review-summary">
               {result.ok ? <MealTotals name={result.value.name} calories={result.value.calories} mealType={mealType} />
                 : <p className="flow-summary-hint">Check the meal details to see your updated total here.</p>}
               <PressableButton fullWidth type="submit" disabled={!changed}><IconCheck size={20} /> Save changes</PressableButton>
               <p className="flow-save-hint">{changed ? 'Updates this entry only, keeping its original date.' : 'Everything is up to date. Change a field to save.'}</p>
               <button type="button" className="flow-text-action" onClick={leave}>Cancel edits</button>
-            </Surface>
+            </div>
             <details className="flow-delete">
               <summary><IconTrash size={18} /> Delete this entry</summary>
               <p>Remove “{entry.name}” from your log? You’ll have a short Undo window after deleting.</p>

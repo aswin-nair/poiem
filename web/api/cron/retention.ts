@@ -42,7 +42,8 @@ async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const result = await runRetentionJobs(getDb()) as {
+    const db = getDb()
+    const result = await runRetentionJobs(db) as {
       cleanup: RetentionCleanupCounts
       orphans: DeletionOrphanCounts
     }
@@ -56,7 +57,8 @@ async function handler(req: VercelRequest, res: VercelResponse) {
       cleanup: formatRetentionCleanup(result.cleanup),
       orphans: formatDeletionOrphans(result.orphans),
     }))
-  } catch {
+  } catch (error) {
+    console.error(JSON.stringify({ event: 'retention_cron_error', error: error instanceof Error ? error.name : 'unknown' }))
     json(res, 500, { error: 'Retention job failed' })
   }
 }

@@ -1,8 +1,9 @@
 import type { AppState, FoodEntry, GamificationState } from '../types'
 import { entryDayKey } from '@fud-ai/product/localDate'
+import { normalizeOutfit } from '@fud-ai/product/wardrobe'
 import { localDayKey } from './dates'
 import { defaultProfile, profileInputIssue } from './profile'
-import { defaultAISettings, normalizeAISettings } from './aiConfig'
+import { defaultAISettings, normalizeAISettings, retiredModelReplacement } from './aiConfig'
 import { validateAppState } from '../../../shared/appStateContract'
 import { clearLogDraft } from './logDrafts'
 
@@ -210,12 +211,15 @@ function normalizeAIForValidation(value: unknown): AppState['aiSettings'] {
   if (!record(value)) return value as AppState['aiSettings']
 
   const migrated = normalizeAISettings(value as Partial<AppState['aiSettings']>)
+  // Stored values win, so validation judges what was really saved rather than a repaired copy.
+  // A retired model slug is the exception: a BYOK reader who kept one 404s on every request.
+  const storedModel = retiredModelReplacement(value.model) ?? value.model
   return {
     ...migrated,
     ...value,
     provider: value.provider === undefined ? migrated.provider : value.provider,
     apiKey: value.apiKey === undefined ? migrated.apiKey : value.apiKey,
-    model: value.model === undefined ? migrated.model : value.model,
+    model: value.model === undefined ? migrated.model : storedModel,
   } as AppState['aiSettings']
 }
 
@@ -269,6 +273,7 @@ function normalizeGamification(value: unknown): GamificationState {
     equippedCosmeticId: typeof g.equippedCosmeticId === 'string' || g.equippedCosmeticId === null
       ? g.equippedCosmeticId
       : null,
+    outfit: normalizeOutfit(g.outfit, g.equippedCosmeticId),
     repairsUsedMonth: typeof g.repairsUsedMonth === 'string' ? g.repairsUsedMonth : '',
     mascotActivity: g.mascotActivity === 'calm' || g.mascotActivity === 'off' || g.mascotActivity === 'lively'
       ? g.mascotActivity
@@ -301,6 +306,7 @@ export function defaultGamification(): GamificationState {
     notesByDate: {},
     ownedCosmeticIds: [],
     equippedCosmeticId: null,
+    outfit: {},
     repairsUsedMonth: '',
     mascotActivity: 'lively',
     brokenOn: null,
