@@ -1,6 +1,7 @@
-import { useRef, useState, type ReactNode } from 'react'
+import { useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import * as m from 'motion/react-m'
-import { useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { useCountUp } from '../../hooks/useCountUp'
 import { PlateArt } from './PlateArt'
 import { mealKcal, SAMPLE_MEALS, type MealItem } from './meals'
 import { useMediaQuery } from './useMediaQuery'
@@ -126,7 +127,43 @@ function PinnedSequence() {
   )
 }
 
-/** Phones, short screens and reduced motion get the finished story, laid out in order. */
+/**
+ * Phones and tablets stack the story, so each part plays as it scrolls into view:
+ * the plate lands, the foods fill the label and the calories count up, then the
+ * entry arrives in Today.
+ */
+function RevealSequence() {
+  const plate = useRef<HTMLDivElement>(null)
+  const entry = useRef<HTMLDivElement>(null)
+  const phone = useRef<HTMLDivElement>(null)
+  const plateIn = useInView(plate, { once: true, amount: 0.5 })
+  const entryIn = useInView(entry, { once: true, amount: 0.45 })
+  const phoneIn = useInView(phone, { once: true, amount: 0.35 })
+  const kcal = useCountUp(entryIn ? TOTAL : 0, 900)
+
+  return (
+    <section className="wp-p2n wp-band-ink is-static is-reveal" id="plate-to-numbers" aria-labelledby="p2n-title">
+      <div className="wp-wrap wp-p2n-inner">
+        <Head phase={phoneIn ? 2 : entryIn ? 1 : plateIn ? 0 : -1} />
+        <div className="wp-p2n-grid">
+          <div ref={plate} className={`wp-p2n-plate${plateIn ? ' is-in' : ''}`}><PlateArt meal={MEAL.id} /></div>
+          <div ref={entry} className={`wp-p2n-entry wp-nl${entryIn ? ' is-in' : ''}`}>
+            <EntryCard
+              items={MEAL.items.map((item, i) => (
+                <li key={item.label} style={{ '--i': i } as CSSProperties}><span>{item.label}</span><span className="tabular">{item.kcal} kcal</span></li>
+              ))}
+              kcal={<><span aria-hidden="true">{kcal}</span><span className="sr-only">{TOTAL}</span></>}
+              widths={MACROS.map(macro => (entryIn ? barWidth(MEAL[macro.key]) : '0%'))}
+            />
+          </div>
+          <div ref={phone} className={`wp-p2n-phone${phoneIn ? ' is-in' : ''}`}><PhoneScreen flash={1} /></div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/** Reduced motion gets the finished story, laid out in order. */
 function StaticSequence() {
   return (
     <section className="wp-p2n wp-band-ink is-static" id="plate-to-numbers" aria-labelledby="p2n-title">
@@ -151,5 +188,6 @@ function StaticSequence() {
 export function PlateToNumbers() {
   const reduced = useReducedMotion()
   const roomy = useMediaQuery('(min-width: 1000px) and (min-height: 700px)')
-  return reduced || !roomy ? <StaticSequence /> : <PinnedSequence />
+  if (reduced) return <StaticSequence />
+  return roomy ? <PinnedSequence /> : <RevealSequence />
 }

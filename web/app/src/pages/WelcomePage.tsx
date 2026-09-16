@@ -17,6 +17,7 @@ import { FoodTicker } from './welcome/FoodTicker'
 import { CursorAccent } from './welcome/CursorAccent'
 import '../styles/welcome-poster.css'
 import '../styles/welcome-details.css'
+import '../styles/welcome-motion.css'
 
 const STEPS = [
   { number: '01', title: 'Snap or describe', shot: 'log', caption: 'Fig. 02 — Log', text: 'Take a photo, describe what you ate, or enter the numbers yourself.', alt: 'The Poiem log screen with photo, describe and manual entry options' },

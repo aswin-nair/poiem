@@ -32,6 +32,7 @@ test.describe('welcome page', () => {
     await page.goto('/welcome')
     const story = page.locator('#plate-to-numbers')
     await expect(story).toHaveClass(/is-pinned/)
+    // The visible count is aria-hidden; screen readers get the total from a sibling.
     const kcal = story.locator('.wp-nl-kcal strong span[aria-hidden="true"]')
     await expect(kcal).toHaveText('0')
     await expect(story.locator('.wp-nl-kcal .sr-only')).toHaveText('380')
@@ -40,13 +41,34 @@ test.describe('welcome page', () => {
     await expect(story.locator('.wp-p2n-phases li.is-active')).toHaveText('03 Journal')
   })
 
+  test('phones play each section when it scrolls into view', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('/welcome')
+    const story = page.locator('#plate-to-numbers')
+    await expect(story).toHaveClass(/is-reveal/)
+    const kcal = story.locator('.wp-nl-kcal strong span[aria-hidden="true"]')
+    await expect(kcal).toHaveText('0')
+    await expect(story.locator('.wp-nl-kcal .sr-only')).toHaveText('380')
+    await story.locator('.wp-p2n-entry').scrollIntoViewIfNeeded()
+    await expect(story.locator('.wp-p2n-entry')).toHaveClass(/is-in/)
+    await expect(kcal).toHaveText('380')
+
+    // The week reads top to bottom, so no day is hidden off to the side.
+    const week = page.locator('#week .wp-week-scroll')
+    expect(await week.evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true)
+    const lastDay = page.locator('#week .wp-day').last()
+    await lastDay.scrollIntoViewIfNeeded()
+    await expect(lastDay).toHaveClass(/is-in/)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true)
+  })
+
   test('reduced motion shows the finished story and week without scroll effects', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto('/welcome')
     const story = page.locator('#plate-to-numbers')
     await expect(story).toHaveClass(/is-static/)
-    await expect(story.locator('.wp-nl-kcal strong')).toHaveText('380')
+    await expect(story.locator('.wp-nl-kcal strong span[aria-hidden="true"]')).toHaveText('380')
     await expect(page.locator('#week .wp-week')).toHaveClass(/is-playing/)
     await expect(page.locator('#week')).toContainText('Average kcal on logged days')
     await expect(page.getByRole('figure', { name: 'Poiem Facts' })).toContainText('Food guilt')
