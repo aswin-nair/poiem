@@ -14,16 +14,15 @@ day. A reservation is made atomically before an upstream attempt and is
 released on provider failure, while global and per-IP attempt caps are never
 refunded. Expired reservations are recoverable by the next request.
 
-BYOK remains available only through the explicit Advanced setting. BYOK calls
+BYOK is an explicit “Use my own API key” setting. BYOK calls
 continue to go directly from the browser to the selected provider. Momo's
 live-authored dialogue is BYOK-only; its reviewed local dialogue pool remains
 the fallback. Coach is managed-Premium-only, while a Free user may use Coach
 with their own key.
 
-The `ENABLE_MANAGED_AI` flag is fail-closed. It must be enabled together with
-`OPENROUTER_API_KEY` and a positive `MANAGED_AI_GLOBAL_DAILY_MAX`; the database
-migration must be applied before serving is enabled. Payments, entitlement
-webhooks, and native iOS/Expo managed serving remain out of scope.
+Poiem AI turns on when `OPENROUTER_API_KEY` is set. Set `ENABLE_MANAGED_AI=false`
+to disable. The database migration must be applied before serving. Payments,
+entitlement webhooks, and native iOS/Expo managed serving remain out of scope.
 
 ## Consequences
 
@@ -41,9 +40,9 @@ webhooks, and native iOS/Expo managed serving remain out of scope.
 Set the following Vercel/Worker secrets only in a protected environment:
 
 ```text
-ENABLE_MANAGED_AI=false
-OPENROUTER_API_KEY=<operator secret>
-MANAGED_AI_GLOBAL_DAILY_MAX=0
+# OPENROUTER_API_KEY=<operator secret>
+# ENABLE_MANAGED_AI=false
+# MANAGED_AI_GLOBAL_DAILY_MAX=2000
 MANAGED_AI_IP_DAILY_MAX=250
 ```
 

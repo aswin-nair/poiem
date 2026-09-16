@@ -13,6 +13,7 @@ import { ACTIVITY_LABELS, GOAL_LABELS } from '../types'
 import {
   OPENROUTER_MODELS,
   GEMINI_MODELS,
+  MANAGED_OPENROUTER_MODEL,
   apiKeyHelpUrl,
   apiKeyPlaceholder,
   defaultModelFor,
@@ -542,21 +543,28 @@ export function SettingsPage() {
         <section className="you-section" id="you-ai" aria-labelledby="you-ai-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-ai-title">AI setup</h2>
-            <p>Managed Poiem AI is ready by default. Bring your own key from Advanced when you want full control.</p>
+            <p>After you sign up, photo and text logging use Poiem’s OpenRouter key and {MANAGED_OPENROUTER_MODEL}. Add your own key only if you want a different provider or model.</p>
           </header>
         <SettingsCard>
-          <SettingsRow label="AI access" hint={accessMode === 'managed' ? 'Poiem chooses a safe model and applies your daily allowance.' : 'Your key stays in this browser and is used only when you choose BYOK.'}>
-            <select className="settings-select" value={accessMode} onChange={event => setAccessMode(event.target.value as AIAccessMode)} aria-label="AI access mode">
-              <option value="managed">Managed by Poiem</option>
-              <option value="byok">My own API key</option>
-            </select>
+          <SettingsRow
+            label="Use my own API key"
+            hint="Off: Poiem’s key and model. On: the key below stays in this browser and is sent only to the provider you pick."
+          >
+            <Toggle
+              checked={accessMode === 'byok'}
+              onChange={next => setAccessMode(next ? 'byok' : 'managed')}
+            />
           </SettingsRow>
-          {accessMode === 'managed' && <p className="settings-byok-note">Food scans: {aiStatus ? `${aiStatus.food.remaining} left today` : 'checking availability…'} · Coach: {aiStatus?.plan === 'premium' ? `${aiStatus.coach.remaining} left today` : 'Premium only'}</p>}
+          {accessMode === 'managed' && (
+            <p className="settings-byok-note">
+              {aiStatus
+                ? `${aiStatus.food.remaining} of ${aiStatus.food.limit} food scans left today.`
+                : 'Checking Poiem AI availability…'}
+            </p>
+          )}
           {aiStatus?.isAdmin && <p className="settings-byok-note"><Link to="/admin">Open managed AI admin</Link></p>}
         </SettingsCard>
-        {/* AI */}
-        <details className="you-disclosure">
-          <summary>Advanced · Connection &amp; AI preferences <span>{apiKey.trim() ? 'Key added · not verified' : 'No key added'}</span></summary>
+        {accessMode === 'byok' && (
         <SettingsCard>
           <p className="settings-byok-note">
             Your key stays in this browser only.{' '}
@@ -625,6 +633,11 @@ export function SettingsPage() {
               rows={3}
             />
           </label>
+        </SettingsCard>
+        )}
+        <details className="you-disclosure">
+          <summary>Momo live AI <span>{apiKey.trim() ? 'Uses your key when added' : 'Needs your own API key'}</span></summary>
+        <SettingsCard>
           <SettingsRow
             label="Momo live AI"
             hint={apiKey.trim()
@@ -825,7 +838,7 @@ export function SettingsPage() {
         </SettingsCard>
         </section>
 
-        <p className="settings-footer">Poiem · Managed or BYOK AI · Privacy-first</p>
+        <p className="settings-footer">Poiem · Poiem AI or your own key · Privacy-first</p>
       </main>
       <BottomNav />
     </div>

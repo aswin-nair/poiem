@@ -38,7 +38,7 @@ export function useAiAccess() {
     if (!user?.sub || !isCloudBackend()) { setStatus(null); return }
     setLoading(true)
     try {
-      const next = await apiFetch<AiStatus>('/api/ai/status')
+      const next = await apiFetch<AiStatus>('/api/ai?action=status')
       setStatus(next)
       setError(null)
     } catch (cause) {

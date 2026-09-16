@@ -12,6 +12,13 @@ const appRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const env = { ...process.env, VITE_DATA_BACKEND: backend }
 const extra = process.argv.slice(3)
 
+if (backend === 'neon') {
+  const proxy = (env.VITE_API_PROXY ?? 'http://127.0.0.1:3001').replace(/\/$/, '')
+  console.warn(
+    `[poiem] Cloud backend: /api is proxied to ${proxy}. Start the API first (from web/: npm run dev:all).`,
+  )
+}
+
 const result = spawnSync(
   process.execPath,
   [join(appRoot, 'node_modules/vite/bin/vite.js'), ...extra],

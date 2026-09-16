@@ -94,7 +94,7 @@ async function completeManaged(
   messages: ChatMsg[],
   options: RequestOptions,
 ): Promise<string> {
-  return apiFetch<{ text: string }>('/api/ai/analyze', {
+  return apiFetch<{ text: string }>('/api/ai?action=analyze', {
     method: 'POST',
     body: JSON.stringify({ task, payload: { messages } }),
     signal: options.signal,

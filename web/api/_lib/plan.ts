@@ -16,11 +16,13 @@ export function effectivePlan(row: Pick<PlanUser, 'plan' | 'subscription_status'
     && (expires === null || new Date(expires).getTime() > now) ? 'premium' : 'free'
 }
 export function managedAiEnabled(): boolean {
-  return process.env.ENABLE_MANAGED_AI === 'true' && !!process.env.OPENROUTER_API_KEY?.trim()
-    && dailyGlobalMax() > 0
+  if (process.env.ENABLE_MANAGED_AI === 'false') return false
+  return Boolean(process.env.OPENROUTER_API_KEY?.trim()) && dailyGlobalMax() > 0
 }
 export function dailyGlobalMax(): number {
-  const value = Number(process.env.MANAGED_AI_GLOBAL_DAILY_MAX)
+  const raw = process.env.MANAGED_AI_GLOBAL_DAILY_MAX
+  if (raw === undefined || raw.trim() === '') return 2000
+  const value = Number(raw)
   return Number.isSafeInteger(value) && value > 0 ? value : 0
 }
 export function dailyIpMax(): number {

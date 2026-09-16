@@ -9,8 +9,10 @@ build.
 2. Run `npm run db:migrate:plans` from `web/` and confirm both `ai_plan_config`
    rows exist. Never run this against production without the normal migration
    approval and backup rehearsal.
-3. Set `OPENROUTER_API_KEY`, `MANAGED_AI_GLOBAL_DAILY_MAX` and (optionally)
-   `MANAGED_AI_IP_DAILY_MAX`. Keep `ENABLE_MANAGED_AI=false` while validating.
+3. Set `OPENROUTER_API_KEY`. That turns Poiem AI on for signed-in accounts
+   (model `google/gemma-4-31b-it`). Set `ENABLE_MANAGED_AI=false` to disable.
+   Optionally set `MANAGED_AI_GLOBAL_DAILY_MAX` (default 2000) and
+   `MANAGED_AI_IP_DAILY_MAX`.
 4. Mark the initial operator with a controlled database update to
    `users.is_admin = true`; the admin API never accepts that field from a
    browser request.

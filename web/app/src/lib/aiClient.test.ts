@@ -96,7 +96,7 @@ describe('AI request boundaries', () => {
     await completeChat(managed, [{ role: 'user', content: 'oats' }], 100, undefined, { task: 'food_text' })
 
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit]
-    expect(url).toContain('/api/ai/analyze')
+    expect(url).toContain('/api/ai?action=analyze')
     expect(JSON.parse(String(init.body))).toEqual({
       task: 'food_text',
       payload: { messages: [{ role: 'user', content: 'oats' }] },

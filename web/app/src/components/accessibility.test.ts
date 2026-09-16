@@ -24,7 +24,7 @@ import { AnalysisStatus, FlowFeedback } from './LogFlowUI'
 
 vi.mock('../store/AppContext', () => ({
   useApp: () => ({
-    state: { ...freshState(), aiSettings: { apiKey: 'test-key', provider: 'gemini' } },
+    state: { ...freshState(), aiSettings: { ...freshState().aiSettings, accessMode: 'byok', apiKey: 'test-key', provider: 'gemini' } },
     setPendingAnalysis: () => undefined,
     setPendingSource: () => undefined,
   }),

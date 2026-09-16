@@ -12,10 +12,20 @@ describe('managed AI entitlement rules', () => {
     expect(effectivePlan({ plan: 'free', subscription_status: 'active', subscription_expires_at: null })).toBe('free')
   })
 
-  it('fails closed unless the operator enables all managed-AI prerequisites', () => {
-    vi.stubEnv('ENABLE_MANAGED_AI', 'false')
+  it('turns on when the operator OpenRouter key is set', () => {
     vi.stubEnv('OPENROUTER_API_KEY', 'operator-secret')
+    vi.stubEnv('ENABLE_MANAGED_AI', '')
+    vi.stubEnv('MANAGED_AI_GLOBAL_DAILY_MAX', '')
+    expect(managedAiEnabled()).toBe(true)
+  })
+
+  it('stays off without a key, and when the operator turns it off', () => {
+    vi.stubEnv('OPENROUTER_API_KEY', 'operator-secret')
+    vi.stubEnv('ENABLE_MANAGED_AI', 'false')
     vi.stubEnv('MANAGED_AI_GLOBAL_DAILY_MAX', '100')
+    expect(managedAiEnabled()).toBe(false)
+    vi.stubEnv('ENABLE_MANAGED_AI', 'true')
+    vi.stubEnv('OPENROUTER_API_KEY', '')
     expect(managedAiEnabled()).toBe(false)
   })
 })

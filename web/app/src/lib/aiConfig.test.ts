@@ -24,6 +24,11 @@ describe('AI model settings', () => {
     expect(settings.model).toBe('anthropic/claude-sonnet-4')
   })
 
+  it('starts a new account on managed Poiem AI, not a personal key', () => {
+    expect(defaultAISettings().accessMode).toBe('managed')
+    expect(OPENROUTER_MODELS).toContain('google/gemma-4-31b-it')
+  })
+
   it('offers only models the photo flow can actually use', () => {
     // Photo logging sends an image, so a text-only preset would break that flow on selection.
     expect(OPENROUTER_MODELS).not.toContain('meta-llama/llama-3.3-70b-instruct')

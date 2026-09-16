@@ -19,7 +19,11 @@ export interface AISettings {
 // is last: it randomly routes to whichever free model is available (often a small ~3B model)
 // and is not suitable for accuracy-sensitive nutrition estimation — see the warning surfaced
 // in Settings when it's selected.
+/** Server-selected model for signed-in accounts on the operator OpenRouter key. */
+export const MANAGED_OPENROUTER_MODEL = 'google/gemma-4-31b-it'
+
 export const OPENROUTER_MODELS = [
+  MANAGED_OPENROUTER_MODEL,
   'google/gemini-2.5-flash',
   'openai/gpt-4o-mini',
   'anthropic/claude-sonnet-4',
@@ -60,6 +64,7 @@ export function isLowAccuracyModel(model: string): boolean {
 
 export function defaultAISettings(): AISettings {
   return {
+    accessMode: 'managed',
     provider: 'openrouter',
     apiKey: '',
     model: DEFAULT_OPENROUTER_MODEL,
