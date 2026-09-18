@@ -27,7 +27,7 @@ import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../li
 import { shouldCelebrateLog } from '../lib/logFeedback'
 import { foodToneFor } from '../lib/foodGlyph'
 import { todayGreeting } from '../lib/todayGreeting'
-import { claimPieces, newPieces, wardrobeProgress, type WardrobePiece } from '@fud-ai/product/wardrobe'
+import { FIRST_PIECE, claimPieces, newPieces, wardrobePiece, wardrobeProgress, type WardrobePiece } from '@fud-ai/product/wardrobe'
 import type { FoodEntry, MealType, XpEvent } from '../types'
 import { useAnchor } from '../mascot/anchors'
 import { mascotEvent } from '../mascot/MascotOverlay'
@@ -152,10 +152,16 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       : state.gamification.xpEvents.slice(0, 4)
     const streakMilestone = fresh.some(event => event.key.startsWith('streak-'))
     playLogConfirm({ streakMilestone })
-    // A wardrobe piece unlocked since the last reveal arrives in the celebration, worn, exactly once.
-    const pieces = paused ? [] : newPieces(state.gamification.ownedCosmeticIds, wardrobeProgress(state))
-    if (pieces.length) patchGamification(g => claimPieces(g, pieces.map(piece => piece.id)))
     const firstMeal = isFirstMealJourney() || state.foodEntries.filter(entry => entry.id !== justLogged.id).length === 0
+    // A wardrobe piece unlocked since the last reveal arrives in the celebration, worn, exactly once.
+    // The first meal, typed, photographed or described, hands over Momo's first piece and puts it on him.
+    const owned = state.gamification.ownedCosmeticIds
+    const handedOver = firstMeal && !owned.includes(FIRST_PIECE) ? wardrobePiece(FIRST_PIECE) : undefined
+    const pieces = paused ? [] : [...(handedOver ? [handedOver] : []), ...newPieces(owned, wardrobeProgress(state))]
+    if (pieces.length) patchGamification(g => {
+      const claimed = claimPieces(g, pieces.map(piece => piece.id))
+      return handedOver && !claimed.outfit.head ? { ...claimed, outfit: { ...claimed.outfit, head: FIRST_PIECE } } : claimed
+    })
     if (!paused && (firstMeal || shouldCelebrateLog({ entries: state.foodEntries, entryId: justLogged.id, awards: fresh, newPieces: pieces.length }))) {
       setCelebration({
         entryId: justLogged.id,

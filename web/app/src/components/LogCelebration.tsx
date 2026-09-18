@@ -92,7 +92,7 @@ export function LogCelebration({
         {firstMeal && <p className="celebrate-first">Momo saved your first plate. Tap it on Today if you want to correct anything.</p>}
         {pieces.length > 0 && (
           <p className="celebrate-piece">
-            <span className="k-eyebrow">New for Momo</span>
+            <span className="k-eyebrow">{firstPiece.unlock.kind === 'start' ? 'Momo’s first piece' : 'New for Momo'}</span>
             {pieces.map(piece => piece.name).join(', ')}
           </p>
         )}
