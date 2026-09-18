@@ -55,6 +55,9 @@ export const WARDROBE: readonly WardrobePiece[] = [
 
 const BY_ID = new Map(WARDROBE.map(piece => [piece.id, piece]))
 
+/** Handed over at the end of the first run: Momo puts it on with the first meal. */
+export const FIRST_PIECE = 'blossom'
+
 export function wardrobePiece(id: string): WardrobePiece | undefined {
   return BY_ID.get(id)
 }

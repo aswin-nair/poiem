@@ -16,7 +16,7 @@ const MOMENTS: Array<{ line: string; mood: Mood; pose: string; label: string; Ic
   { line: 'Desk days count too. Think about your ordinary week.', mood: 'curious', pose: 'stretch', label: 'Your everyday rhythm', Icon: IconWalk },
   { line: 'A little consistency beats a dramatic Monday plan.', mood: 'cozy', pose: 'wave_at_user', label: 'Find your groove', Icon: IconEnergy },
   { line: 'Made for you. Adjustable, just like your weekend plans.', mood: 'proud', pose: 'celebrate_small', label: 'Made for you', Icon: IconSparkles },
-  { line: 'Your first entry! Leftovers are absolutely invited.', mood: 'proud', pose: 'happy_hop', label: 'Your first little win', Icon: IconMeal },
+  { line: 'One real meal and my clip goes on. Leftovers are invited.', mood: 'proud', pose: 'happy_hop', label: 'Your first little win', Icon: IconMeal },
 ]
 const CHAPTERS = [
   { label: 'Meet you', detail: 'A few details, a personal starting point.' },
@@ -26,13 +26,14 @@ const CHAPTERS = [
 
 export function OnboardingStepBadge({ step }: { step: number }) {
   const { Icon, label } = MOMENTS[step]
-  return <div className="setup-question-tag">
-    <span className="setup-question-icon" aria-hidden="true"><Icon size={23} /></span>
+  return <div className="k-setup-tag">
+    <span className="k-setup-tag-icon" aria-hidden="true"><Icon size={18} /></span>
     <span>{label}</span>
-    <span className="setup-question-number" aria-hidden="true">{String(step + 1).padStart(2, '0')}</span>
+    <span className="k-setup-tag-number" aria-hidden="true">{String(step + 1).padStart(2, '0')}</span>
   </div>
 }
 
+/** Momo's card beside setup. His steam follows the answers; measurements never become jokes. */
 export function OnboardingCompanion({ step, error, profile }: { step: number; error: boolean; profile?: UserProfile }) {
   const { state } = useApp()
   const prefersReducedMotion = useReducedMotion()
@@ -64,34 +65,35 @@ export function OnboardingCompanion({ step, error, profile }: { step: number; er
   const visible = state.gamification.mascotActivity !== 'off'
   const reduced = prefersReducedMotion || state.profile.mascotReducedMotion === true
   const lively = !reduced && state.gamification.mascotActivity === 'lively' && !error
-  return <aside className={`setup-companion${!visible ? ' without-momo' : ''}`} aria-label="Your setup journey">
-    <div className="setup-companion-intro">
-      <span className="setup-club-label"><IconSprout size={16} /> Your daily Poiem</span>
+  return <aside className="k-setup-companion" aria-label="Your setup journey">
+    {visible && <div className="k-setup-momo">
+      <m.div className="k-setup-momo-art" aria-hidden="true"
+        initial={reduced ? false : { opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={motionSoftSpring}>
+        <m.div className="k-setup-momo-bob"
+          initial={false}
+          animate={lively ? { rotate: [0, 3, 0], y: [0, -3, 0] } : { rotate: 0, y: 0 }}
+          transition={lively ? motionIdle : { duration: 0 }}>
+          <MomoSticker mood={error ? 'curious' : moment.mood} pose={error ? 'ponder' : moment.pose} expression={answerExpression} />
+        </m.div>
+      </m.div>
+      <div className="k-setup-momo-note">
+        <p className="k-setup-momo-name">Momo <span>your food buddy</span></p>
+        {!state.profile.mascotMuted && <m.p key={`${step}-${error}-${answerLine}`} className="k-setup-momo-line" {...motionOpacity}>
+          {error ? 'We’ve got this. Let’s check that detail together.' : answerLine ?? moment.line}
+        </m.p>}
+      </div>
+    </div>}
+    <div className="k-setup-intro">
+      <span className="k-eyebrow">Your daily Poiem</span>
       <h2>Small steps.<br /><span>A very you start.</span></h2>
     </div>
-    {visible && <m.div className="setup-companion-scene" aria-hidden="true"
-      initial={reduced ? false : { opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={motionSoftSpring}>
-      <span className="setup-scene-orbit" />
-      <span className="setup-scene-spark"><IconSparkles size={28} /></span>
-      <span className="setup-scene-meal"><IconMeal size={28} /></span>
-      <m.div className="setup-mascot-motion"
-        initial={false}
-        animate={lively ? { rotate: [0, 3, 0], y: [0, -5, 0] } : { rotate: 0, y: 0 }}
-        transition={lively ? motionIdle : { duration: 0 }}>
-        <MomoSticker mood={error ? 'curious' : moment.mood} pose={error ? 'ponder' : moment.pose} expression={answerExpression} />
-      </m.div>
-      <span className="setup-momo-name">Momo, your food buddy</span>
-    </m.div>}
-      {visible && !state.profile.mascotMuted && <m.p key={`${step}-${error}-${answerLine}`} className="setup-companion-line" {...motionOpacity}>
-        {error ? 'We’ve got this. Let’s check that detail together.' : answerLine ?? moment.line}
-      </m.p>}
-    <ol className="setup-chapters" aria-label="Setup chapters">
+    <ol className="k-setup-chapters" aria-label="Setup chapters">
       {CHAPTERS.map((item, index) => <li key={item.label} className={index < chapter ? 'is-complete' : index === chapter ? 'is-current' : ''} aria-current={index === chapter ? 'step' : undefined}>
-        <span className="setup-chapter-number" aria-hidden="true">{index < chapter ? <IconCheck size={18} /> : index + 1}</span>
+        <span className="k-setup-chapter-number" aria-hidden="true">{index < chapter ? <IconCheck size={18} /> : index + 1}</span>
         <span><strong>{item.label}</strong><small>{item.detail}</small></span>
         {index < chapter && <span className="sr-only">Completed</span>}
       </li>)}
     </ol>
-    <p className="setup-draft-note"><IconShield size={16} /> Your setup saves on this device.</p>
+    <p className="k-setup-draft"><IconShield size={16} /> Your setup saves on this device.</p>
   </aside>
 }

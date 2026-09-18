@@ -16,6 +16,7 @@ const LAYERED = {
   'styles/screens/insights.css': 'screens',
   'styles/screens/you.css': 'screens',
   'styles/screens/admin.css': 'screens',
+  'styles/screens/first-run.css': 'screens',
 } as const
 
 /** Innermost blocks are declarations; removing them leaves selectors and at-rules. */

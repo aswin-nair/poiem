@@ -79,7 +79,7 @@ test.describe('Navigation', () => {
     const page = await context.newPage()
     await page.goto('/')
     await expect(page).toHaveURL(/\/onboarding/)
-    await expect(page.getByRole('heading', { name: 'Big flavour. Less effort.' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Meet Momo.' })).toBeVisible()
     await context.close()
   })
 

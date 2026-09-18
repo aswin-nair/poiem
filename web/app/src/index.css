@@ -51,4 +51,5 @@
 @import './styles/screens/insights.css';
 @import './styles/screens/you.css';
 @import './styles/screens/admin.css';
+@import './styles/screens/first-run.css';
 @import './styles/a11y.css';

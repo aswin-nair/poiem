@@ -79,6 +79,9 @@ test.describe('Onboarding activation', () => {
     await page.waitForURL('/')
     const celebration = page.getByRole('dialog', { name: 'Meal logged' })
     await expect(celebration).toContainText('Banana oat bowl')
+    // The first meal hands Momo his first wardrobe piece.
+    await expect(celebration.locator('.celebrate-piece')).toContainText('Momo’s first piece')
+    await expect(celebration.locator('.celebrate-piece')).toContainText('Blossom clip')
     await celebration.getByRole('button', { name: 'Continue' }).click()
     await celebration.waitFor({ state: 'hidden' })
     await expect(page.locator('.k-meal-row').filter({ hasText: 'Banana oat bowl' })).toBeVisible()

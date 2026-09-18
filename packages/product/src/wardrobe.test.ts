@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { PIECE_ART, momoScene } from './momoArt'
 import {
+  FIRST_PIECE,
   WARDROBE,
   WARDROBE_SLOTS,
   availablePieceIds,
@@ -10,6 +11,7 @@ import {
   normalizeOutfit,
   surpriseOutfit,
   unlockLabel,
+  wardrobePiece,
   wardrobeProgress,
   wearPiece,
   type WardrobeProgress,
@@ -85,6 +87,12 @@ describe("Momo's wardrobe", () => {
     const claimed = claimPieces({ ownedCosmeticIds: [] as string[] }, ['pencil', 'bow', 'scarf', 'laser'])
     expect(claimed.ownedCosmeticIds).toEqual(['pencil', 'bow', 'scarf'])
     expect(newPieces(claimed.ownedCosmeticIds, week)).toEqual([])
+  })
+
+  it('hands over a first piece everyone keeps, without waiting for a reveal', () => {
+    expect(wardrobePiece(FIRST_PIECE)?.unlock).toEqual({ kind: 'start' })
+    expect(availablePieceIds([], progress()).has(FIRST_PIECE)).toBe(true)
+    expect(newPieces([], progress()).map(piece => piece.id)).not.toContain(FIRST_PIECE)
   })
 
   it('builds surprise looks only from available pieces', () => {

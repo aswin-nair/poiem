@@ -20,7 +20,7 @@ test.describe('Production build', () => {
   test('app loads at /app/ and starts first-time guests in onboarding', async ({ page }) => {
     await page.goto('/app/')
     await expect(page).toHaveURL(/\/onboarding/, { timeout: 15_000 })
-    await expect(page.getByRole('heading', { name: 'Big flavour. Less effort.' })).toBeVisible({ timeout: 15_000 })
+    await expect(page.getByRole('heading', { name: 'Meet Momo.' })).toBeVisible({ timeout: 15_000 })
   })
 
   test('client router works under /app/', async ({ page }) => {
@@ -29,6 +29,6 @@ test.describe('Production build', () => {
     await expect(page.getByRole('heading', { name: 'Welcome back!', exact: true })).toBeVisible({ timeout: 15_000 })
     await page.getByRole('link', { name: 'Try Poiem first', exact: true }).click()
     await expect(page).toHaveURL(/\/app\/onboarding/)
-    await expect(page.getByRole('heading', { name: 'Big flavour. Less effort.' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Meet Momo.' })).toBeVisible()
   })
 })

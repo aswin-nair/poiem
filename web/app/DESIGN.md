@@ -149,6 +149,7 @@ Momo is a plump cream dumpling with a twisted top knot: cute outside, a dry litt
 | **Logged days, not streaks** | Most pieces unlock at 3–120 total logged days, so a break never locks one |
 | **Firsts** | First photo log, kitchen note, full water day, day with breakfast, lunch and dinner, saved meal |
 | **Nothing sold, nothing taken back** | `ownedCosmeticIds` keeps every piece revealed or worn. The old single `equippedCosmeticId` seeds `outfit` once |
+| **First piece** | The Blossom clip (`FIRST_PIECE`) is everyone's from the start. The first meal hands it over on any path (typed, photographed or described): Today puts it on Momo unless he already wears a hat, and the "First meal in." moment labels it "Momo’s first piece" |
 | **Try-on reveal** | A log that finds a newly unlocked piece gets the "Logged." moment with Momo wearing it, then the piece is claimed so it shows once |
 | **Dressing room** | [`components/MomoWardrobe.tsx`](src/components/MomoWardrobe.tsx) under You → Momo's wardrobe: preview, slot chips, every piece with its unlock rule, Surprise me, Take it all off |
 
@@ -222,9 +223,19 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 
 [`pages/SavedMealsPage.tsx`](src/pages/SavedMealsPage.tsx). A "Your usuals" eyebrow and display title, search, meal filters as ink-when-chosen chips, then **Your saved meals** as square cards and **Recents** as rows in one card. Each meal has a tinted food tile, kcal in display type, a macro bar in Today's macro colours, a portion stepper and a persimmon Log button.
 
+### First run (`/onboarding`)
+
+[`components/OnboardingWelcome.tsx`](src/components/OnboardingWelcome.tsx), [`pages/OnboardingPage.tsx`](src/pages/OnboardingPage.tsx) and [`components/OnboardingCompanion.tsx`](src/components/OnboardingCompanion.tsx), styled in [`styles/screens/first-run.css`](src/styles/screens/first-run.css). The first run introduces Momo and ends with his first piece:
+
+1. **Intro.** Three slides, each a tinted tablecloth card with Momo, a speech bubble and an acid stamp: **Meet Momo** (butter), **Read the steam** (sky) and **His first piece** (pink, Momo already trying on the Blossom clip). The second line of each title is the acid moment. On the steam slide, Cosy, Happy, Curious and Sleepy chips change his steam live, and the copy says his mood never comes from what you eat. Get started stays above the fold from 320px.
+2. **Setup.** A step row with the chapter as a tinted chip, and an acid progress bar. Momo's card sits above the step on a phone and in a sticky column with the three chapters from 960px; his steam follows the answers. Each step is one bordered card: a tinted tag, a display title, square fields, and choices as square cards that turn acid when chosen.
+3. **Targets.** "Your daily recipe" puts calories on an acid tile and gives protein, carbs and fat Today's colour caps.
+4. **First meal.** Photo, Describe and Manual as tinted method tiles; Photo and Describe hand over to the AI flows. On the typed form, calories are the acid field, macros wear their colour caps, meal types carry their meal colour, and the total is an acid card. Whichever way it arrives, the first meal puts the Blossom clip on Momo and the "First meal in." moment shows "Momo’s first piece".
+5. **Age notice.** A plain card with Change date of birth and Back to welcome.
+
 ### Still on legacy
 
-Coach, Support, About, and the poster surfaces (welcome, onboarding, sign-in). The four tabs have lost their poster strips and art; the poster system stays only where the brand voice belongs. The old `.insights-refresh`, `.you-refresh` and `.poster-ui` rules for Insights and You no longer match anything and leave with the legacy sheets in phase 4.
+Coach, Support, About, and the poster surfaces (the welcome page and sign-in). The four tabs have lost their poster strips and art; the poster system stays only where the brand voice belongs. The old `.insights-refresh`, `.you-refresh` and `.poster-ui` rules for Insights and You no longer match anything and leave with the legacy sheets in phase 4.
 
 ---
 
@@ -284,6 +295,6 @@ Images land in `test-results/visual-matrix-*/` as `{surface}-{width}-{theme}.png
 | 1 | Daily loop: Today, log sheet, toast + Undo, rare celebrations, blank manual entry, snack default | Done |
 | 2 | Log flows (Describe, Photo, Manual, Review, Edit) and Saved on the system; `meal-flow.css` deleted | Done |
 | 3 | Insights and You on the system; charts drawn with system tokens | Done |
-| 4 | Poster surfaces reviewed against the system tokens; remove unused legacy sheets and the `legacy` layer | Next |
+| 4 | Poster surfaces reviewed against the system tokens (first run done); remove unused legacy sheets and the `legacy` layer | In progress |
 
 When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change.

@@ -1,7 +1,8 @@
-import { PosterStrip } from './PosterPrimitives'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CalendarDays, Camera, Check, ChefHat, SlidersHorizontal, Soup, Sparkles } from 'lucide-react'
+import { FIRST_PIECE } from '@fud-ai/product/wardrobe'
 import type { Mood } from '../mascot/behaviors'
+import type { MomoExpression } from '../mascot/expressions'
 import { IconChevronLeft, IconChevronRight } from './icons'
 import { MomoSticker } from './MomoSticker'
 import { BrandLogo } from './BrandLogo'
@@ -10,50 +11,62 @@ import { useApp } from '../store/AppContext'
 import { AppearanceControl } from './AppearanceControl'
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
-import { motionFade, motionOpacity, motionSoftSpring, motionSpring, motionStep } from '../lib/motionPresets'
-import { FoodSticker, MomoBubble } from './SnackAttackPrimitives'
+import { motionFade, motionOpacity, motionSoftSpring, motionStep } from '../lib/motionPresets'
 
-const WELCOME_SLIDES = [
+/* The steam above Momo's knot is how he shows a mood. The second slide lets
+   someone try four of them; none of them ever comes from food or numbers. */
+const STEAM_MOODS: Array<{ id: string; label: string; expression: MomoExpression; steam: string; speech: string }> = [
+  { id: 'cosy', label: 'Cosy', expression: 'neutral', steam: 'a curl', speech: 'Just simmering. Very relaxed dumpling.' },
+  { id: 'happy', label: 'Happy', expression: 'happy', steam: 'a heart', speech: 'You showed up. That’s the whole trick.' },
+  { id: 'curious', label: 'Curious', expression: 'curious', steam: 'a question', speech: 'What’s for lunch? Asking for me.' },
+  { id: 'sleepy', label: 'Sleepy', expression: 'sleepy', steam: 'Z’s', speech: 'Five more minutes. Then breakfast.' },
+]
+
+const WELCOME_SLIDES: Array<{
+  theme: 'hello' | 'steam' | 'piece'
+  kicker: string
+  title: [string, string]
+  description: string
+  speech: string
+  tag: string
+  mood: Mood
+  pose: string
+  expression: MomoExpression
+}> = [
   {
-    theme: 'lemon',
+    theme: 'hello',
     kicker: 'Meet your daily Poiem',
-    title: ['Big flavour.', 'Less effort.'],
-    description: 'A photo. A few words. Poiem makes room for your meals, calories, and the little wins.',
-    speech: 'I do the counting. You do the crunching.',
-    sticker: 'All foods welcome',
-    ticketTitle: 'Your lunch, logged.',
-    ticketDetail: 'A photo or a quick note',
-    ticketIcon: Camera,
-    mood: 'cozy' as Mood,
+    title: ['Meet', 'Momo.'],
+    description: 'Log a meal with a photo, a few words or the numbers. Momo keeps count and keeps you company.',
+    speech: 'Hi. I do the counting. You do the eating.',
+    tag: 'All foods welcome',
+    mood: 'cozy',
     pose: 'wave_at_user',
+    expression: 'happy',
   },
   {
-    theme: 'garden',
-    kicker: 'Progress with personality',
-    title: ['Small logs.', 'Good vibes.'],
-    description: 'Spot your patterns and celebrate consistency with Momo. Messy days are welcome, too.',
-    speech: 'A little progress? I brought big applause.',
-    sticker: 'Every little log counts',
-    ticketTitle: 'Find your rhythm.',
-    ticketDetail: 'One day at a time',
-    ticketIcon: CalendarDays,
-    mood: 'proud' as Mood,
+    theme: 'steam',
+    kicker: 'How Momo feels',
+    title: ['Read', 'the steam.'],
+    description: 'The little puff above his knot is his mood. It comes from how you use the app, never from what you eat.',
+    speech: '',
+    tag: '',
+    mood: 'cozy',
+    pose: 'still',
+    expression: 'happy',
+  },
+  {
+    theme: 'piece',
+    kicker: 'Your plate. Your pace.',
+    title: ['His first', 'piece.'],
+    description: 'A few questions, then one real meal. Momo puts on his Blossom clip, and new pieces arrive with the days you log.',
+    speech: 'I’ve been saving this clip for you.',
+    tag: 'Blossom clip · his to keep',
+    mood: 'proud',
     pose: 'celebrate_small',
+    expression: 'proud',
   },
-  {
-    theme: 'lilac',
-    kicker: 'Made for your real life',
-    title: ['Your plate.', 'Your pace.'],
-    description: 'Tell us a little about you. Get a starting plan that fits your routine, with room to change.',
-    speech: 'Your routine. My very tiny clipboard.',
-    sticker: 'A plan with wiggle room',
-    ticketTitle: 'Make it your own.',
-    ticketDetail: 'Your goals. Your routine.',
-    ticketIcon: SlidersHorizontal,
-    mood: 'curious' as Mood,
-    pose: 'point_at_target',
-  },
-] as const
+]
 
 export const WELCOME_SLIDE_COUNT = WELCOME_SLIDES.length
 
@@ -66,91 +79,83 @@ export function OnboardingWelcome({ index, onSlideChange, onStart, signedIn }: {
   const { state } = useApp()
   const prefersReducedMotion = useReducedMotion()
   const reducedDecorations = prefersReducedMotion || state.profile.mascotReducedMotion === true
+  const [moodId, setMoodId] = useState('happy')
   const slide = WELCOME_SLIDES[index] ?? WELCOME_SLIDES[0]
-  const TicketIcon = slide.ticketIcon
+  const steamMood = STEAM_MOODS.find(mood => mood.id === moodId) ?? STEAM_MOODS[1]
+  const onSteam = slide.theme === 'steam'
+  const showMomo = state.gamification.mascotActivity !== 'off'
+  const speech = onSteam ? steamMood.speech : slide.speech
+  const tag = onSteam ? `Steam: ${steamMood.steam}` : slide.tag
 
   return (
-    <m.main className={`welcome-shell welcome-refresh welcome-theme-${slide.theme} poster-ui`} aria-label="Welcome to Poiem"
+    <m.main className={`k-screen k-intro is-${slide.theme}`} aria-label="Welcome to Poiem"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={motionFade}>
-      <header className="welcome-brand-row">
+      <header className="k-intro-bar">
         <span className="welcome-brand"><BrandLogo /></span>
-        <div className="appearance-header-actions">
-          <span className="welcome-club-label"><ChefHat size={19} aria-hidden="true" /> A little more you</span>
-          <AppearanceControl compact />
-        </div>
+        <AppearanceControl compact />
       </header>
-      <PosterStrip items={['Real food. Real life.', 'All foods welcome.']} />
 
-      <div className="welcome-cover">
-        <m.div className="welcome-scene" aria-hidden="true"
-          initial={reducedDecorations ? false : { opacity: 0, scale: 0.96, rotate: -1 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={motionSoftSpring}>
-          <div className="welcome-scene-grain" />
-          <m.span className="welcome-scene-spark welcome-spark-one" initial={reducedDecorations ? false : { opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ ...motionSpring, delay: 0.22 }}><Sparkles /></m.span>
-          <m.span className="welcome-scene-spark welcome-spark-two" initial={reducedDecorations ? false : { opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ ...motionSpring, delay: 0.34 }}><Sparkles /></m.span>
-          <m.span className="welcome-scene-food welcome-food-pizza" initial={reducedDecorations ? false : { opacity: 0, x: -24, rotate: -26 }} animate={{ opacity: 1, x: 0, rotate: -12 }} transition={{ ...motionSpring, delay: 0.16 }} whileHover={reducedDecorations ? undefined : { y: -4, rotate: -6 }}><FoodSticker variant="pizza" /></m.span>
-          <m.span className="welcome-scene-food welcome-food-sprout" initial={reducedDecorations ? false : { opacity: 0, x: 24, rotate: 25 }} animate={{ opacity: 1, x: 0, rotate: 11 }} transition={{ ...motionSpring, delay: 0.28 }} whileHover={reducedDecorations ? undefined : { y: -4, rotate: 6 }}><FoodSticker variant="sprout" /></m.span>
-          {state.gamification.mascotActivity !== 'off' && !state.profile.mascotMuted && <MomoBubble className="welcome-momo-speech">
-            <m.span key={slide.theme} {...motionOpacity}>{slide.speech}</m.span>
-          </MomoBubble>}
-          {/* CSS owns centering; Motion only transforms the artwork inside it. */}
-          <div className="welcome-mascot-wrap">
-          <m.div className="welcome-mascot-motion" style={{ position: 'relative', display: 'grid', placeItems: 'center', width: '100%', height: '100%' }}
-            initial={reducedDecorations ? false : { opacity: 0, scale: 0.78, y: 28 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ ...motionSoftSpring, delay: 0.1 }}>
-            <div className="welcome-mascot-halo" />
-            <div className="welcome-mascot-fallback"><Soup size={100} strokeWidth={1.6} /></div>
-            <MomoSticker mood={slide.mood} pose={slide.pose} />
+      <div className="k-intro-layout">
+        {showMomo && <div className="k-intro-stage" aria-hidden="true">
+          {!state.profile.mascotMuted && <m.p key={speech} className="k-intro-speech" {...motionOpacity}>{speech}</m.p>}
+          <m.div key={`${slide.theme}-${onSteam ? moodId : ''}`} className="k-intro-momo"
+            initial={reducedDecorations ? false : { opacity: 0, scale: .86, y: 18, rotate: -4 }}
+            animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }} transition={motionSoftSpring}>
+            <MomoSticker mood={slide.mood} pose={slide.pose}
+              expression={onSteam ? steamMood.expression : slide.expression}
+              outfit={slide.theme === 'piece' ? { head: FIRST_PIECE } : {}} />
           </m.div>
-          </div>
-          <m.div className="welcome-scene-ticket" initial={reducedDecorations ? false : { opacity: 0, rotate: -4, scale: 0.84 }} animate={{ opacity: 1, rotate: -4, scale: 1 }} transition={{ ...motionSoftSpring, delay: 0.42 }}>
-            <span className="welcome-ticket-icon"><TicketIcon size={24} /></span>
-            <span><strong>{slide.ticketTitle}</strong><small>{slide.ticketDetail}</small></span>
-            <span className="welcome-ticket-check"><Check size={17} /></span>
-          </m.div>
-          <m.span className="welcome-scene-sticker" initial={reducedDecorations ? false : { opacity: 0, rotate: 8, scale: 0.84 }} animate={{ opacity: 1, rotate: 8, scale: 1 }} transition={{ ...motionSoftSpring, delay: 0.5 }}>{slide.sticker}</m.span>
-        </m.div>
+          {tag && <span className="k-intro-tag">{tag}</span>}
+        </div>}
 
-        <section className="welcome-content" aria-labelledby="welcome-heading">
+        <section className="k-intro-copy" aria-labelledby="welcome-heading">
           <div aria-live="polite" aria-atomic="true">
-            <m.div key={slide.theme} className="welcome-copy" {...(prefersReducedMotion ? motionOpacity : motionStep)}>
-              <p className="welcome-kicker"><span aria-hidden="true">0{index + 1}</span>{slide.kicker}</p>
-              <h1 className="welcome-title" id="welcome-heading"><span>{slide.title[0]}</span>{' '}<span>{slide.title[1]}</span></h1>
-              <p className="welcome-sub">{slide.description}</p>
+            <m.div key={slide.theme} className="k-intro-text" {...(prefersReducedMotion ? motionOpacity : motionStep)}>
+              <p className="k-eyebrow"><span aria-hidden="true">0{index + 1}</span>{slide.kicker}</p>
+              <h1 className="k-intro-title" id="welcome-heading"><span>{slide.title[0]}</span>{' '}<span>{slide.title[1]}</span></h1>
+              <p className="k-intro-sub">{slide.description}</p>
             </m.div>
           </div>
 
-          <nav className="welcome-slide-nav" aria-label="Introduction slides">
-            <div className="welcome-dots">
+          {onSteam && <div className="k-intro-moods" role="group" aria-label="Try Momo’s moods">
+            {STEAM_MOODS.map(mood => (
+              <button key={mood.id} type="button" className={`k-chip is-${mood.id}`} aria-pressed={mood.id === moodId}
+                onClick={() => setMoodId(mood.id)}>{mood.label}</button>
+            ))}
+          </div>}
+
+          <nav className="k-intro-nav" aria-label="Introduction slides">
+            <div className="k-intro-dots">
               {WELCOME_SLIDES.map((item, slideIndex) => (
-                <m.button
+                <button
                   key={item.theme}
                   type="button"
-                  className={`welcome-dot${slideIndex === index ? ' active' : ''}`}
+                  className="k-intro-dot"
                   aria-label={`Go to slide ${slideIndex + 1}: ${item.title.join(' ')}`}
                   aria-current={slideIndex === index ? 'step' : undefined}
                   onClick={() => onSlideChange(slideIndex)}
-                  whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
-                ><span aria-hidden="true">{slideIndex + 1}</span></m.button>
+                ><span aria-hidden="true">{slideIndex + 1}</span></button>
               ))}
             </div>
-            <div className="welcome-slide-arrows">
-              <m.button type="button" aria-label="Previous introduction" disabled={index === 0}
-                onClick={() => onSlideChange(Math.max(0, index - 1))} whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}>
+            <div className="k-intro-arrows">
+              <button type="button" className="k-icon-button" aria-label="Previous introduction" disabled={index === 0}
+                onClick={() => onSlideChange(Math.max(0, index - 1))}>
                 <IconChevronLeft size={20} />
-              </m.button>
-              <m.button type="button" aria-label="Next introduction" disabled={index === WELCOME_SLIDE_COUNT - 1}
-                onClick={() => onSlideChange(Math.min(WELCOME_SLIDE_COUNT - 1, index + 1))} whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}>
+              </button>
+              <button type="button" className="k-icon-button" aria-label="Next introduction" disabled={index === WELCOME_SLIDE_COUNT - 1}
+                onClick={() => onSlideChange(Math.min(WELCOME_SLIDE_COUNT - 1, index + 1))}>
                 <IconChevronRight size={20} />
-              </m.button>
+              </button>
             </div>
           </nav>
 
-          <div className="welcome-actions">
+          <div className="k-intro-actions">
             <PressableButton fullWidth onClick={onStart}>
               Get started <IconChevronRight size={19} />
             </PressableButton>
-            <p className="welcome-setup-note">Your rhythm. Your starting guide. Your first meal.</p>
+            <p className="k-intro-note">A few questions, your starting guide, then your first meal.</p>
             {!signedIn && (
-              <Link to="/login" className="welcome-signin-link">
+              <Link to="/login" className="k-intro-signin">
                 Already have an account? <strong>Sign in</strong>
               </Link>
             )}
