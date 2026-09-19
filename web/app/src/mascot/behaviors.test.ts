@@ -73,6 +73,14 @@ describe('the anchors actually get visited', () => {
    `idle_blink` both had a weight, a cooldown and (for one) a `when` clause at a
    priority `pickAmbient` never looks at, so neither could play once. A table
    entry that cannot fire is worse than a missing one — it reads as done. */
+describe('quiet screens', () => {
+  it('keeps Saved and Insights off the roaming list', () => {
+    const overlay = readFileSync(new URL('./MascotOverlay.tsx', import.meta.url), 'utf8')
+    expect(overlay).toContain("startsWith('/discover')")
+    expect(overlay).toContain("startsWith('/progress')")
+  })
+})
+
 describe('no behaviour is stranded', () => {
   it('can be reached either by the picker or by name', () => {
     const overlay = readFileSync(new URL('./MascotOverlay.tsx', import.meta.url), 'utf8')
