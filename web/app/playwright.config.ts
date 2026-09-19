@@ -17,7 +17,10 @@ export default defineConfig({
       animations: 'disabled',
       caret: 'hide',
       scale: 'css',
-      maxDiffPixelRatio: 0.012,
+      // An absolute budget, not a ratio: baselines are full-page, so a ratio hands
+      // a 3000px-tall screen thousands of free pixels and small changes pass. The
+      // container's noise floor measured zero, so 200 is slack, not tolerance.
+      maxDiffPixels: 200,
     },
   },
   use: {

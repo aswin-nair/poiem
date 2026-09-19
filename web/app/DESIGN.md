@@ -248,7 +248,7 @@ From 768px these cards pair into two columns, so a wide screen reads as a dashbo
 2. **Finder.** A bordered search field. Results turn acid under the pointer or keyboard focus.
 3. **Appearance.** A butter card with Light, Dark and System as square tiles; the chosen one is solid ink. It saves instantly.
 4. **Section rail.** Sticky at the top: section links as chips, with the current one in solid ink, and the save bar. A persimmon diamond shows while changes are unsaved.
-5. **Sections.** Each title is 18px sentence-case body type on the ground — no tinted tag behind it — over a muted line of help text; the smaller labels inside a section stay mono uppercase. Daily goals put calories on acid and the other three on sunken tiles. Rows, square fields and edge-to-edge row buttons sit in hairline cards. Delete actions use danger ink.
+5. **Sections.** Each title is 18px sentence-case body type on the ground — no tinted tag behind it — over a muted line of help text; the smaller labels inside a section stay mono uppercase. Daily goals put calories on an acid tile and give protein, carbs and fat sunken tiles under Today's colour caps. Rows, square fields and edge-to-edge row buttons sit in hairline cards. Delete actions use danger ink.
 6. **Disclosures.** AI setup and Momo's wardrobe open with an acid + that turns into ×, like the log button.
 
 The column is capped at 880px from 768px, because settings are read as rows and a 1200px row is hard to follow. Each row with a field puts the control beside its label, stacking again below 360px.
@@ -328,7 +328,9 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 
 ## Screenshot matrix
 
-Forty-four pixel baselines, generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set. **Today** and **/dev/components** are locked at **320, 390, 768 and 1440px**; the screens the visual reset has already been through — the log sheet, Describe, Manual, Saved, Insights, You and Coach — are locked at **390 and 1440px**, the phone column and the desktop rail. Every surface is locked in **light and dark**. `npm run test:e2e` runs the project, so CI fails on an unexplained pixel:
+Forty-four pixel baselines, generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set. **Today** and **/dev/components** are locked at **320, 390, 768 and 1440px**; the screens the visual reset has already been through — the log sheet, Describe, Manual, Saved, Insights, You and Coach — are locked at **390 and 1440px**, the phone column and the desktop rail. Every surface is locked in **light and dark**. `npm run test:e2e` runs the project, so CI fails on an unexplained pixel.
+
+Comparison is an absolute budget of **200 differing pixels per image**, not a ratio. A ratio scales with the page, so a tall screen collects thousands of free pixels and a real change slips through — which is how restoring You's macro caps once passed at ratio 0.01 against a 0.012 limit. Measured in the container, an unchanged screen differs by zero pixels, so the budget is slack for stray antialiasing rather than a tolerance for design drift.
 
 ```bash
 npm run visual
