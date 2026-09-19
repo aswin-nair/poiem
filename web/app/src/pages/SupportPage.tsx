@@ -1,3 +1,4 @@
+import { AppShell } from '../components/system/AppShell'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -70,7 +71,7 @@ export function SupportPage() {
   useEffect(() => track({ name: 'support_opened' }), [])
 
   return (
-    <div className="app-shell k-screen k-page k-support">
+    <AppShell screen="k-page k-support" nav={<BottomNav />}>
       <main className="app-main k-page-main" data-mascot-avoid>
         <BackLink to="/settings" />
         <header className="k-page-head">
@@ -122,8 +123,7 @@ export function SupportPage() {
           Poiem is a habit tracker, not a medical tool.
         </p>
       </main>
-      <BottomNav />
-    </div>
+    </AppShell>
   )
 }
 

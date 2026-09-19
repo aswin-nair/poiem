@@ -39,7 +39,7 @@ test('daily summary, settings navigation and editor stay clear on a phone', asyn
   await expect(page.getByLabel('Food name')).toBeVisible()
   await settlePageLayout(page)
   await expect(page.locator('.mascot-host')).toHaveCount(0)
-  await expect(page.locator('.flow-heading .momo-sticker')).toBeVisible()
+  await expect(page.locator('.flow-heading h1')).toBeVisible()
   await page.screenshot({ path: testInfo.outputPath('editor.png'), animations: 'disabled' })
 
   await page.goto('/settings')

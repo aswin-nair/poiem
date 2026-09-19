@@ -99,7 +99,7 @@ New names, landed beside the existing `--k-space-1…8` and `--k-text-*` values 
 | `--k-role-border` / `--k-role-border-subtle` | line / hair | Rules |
 | `--k-role-accent` / `--k-role-accent-ink` | acid / on-acid | The one bright moment |
 | `--k-role-focus` | `--k-focus` | Focus rings |
-| `--k-workspace` / `--k-nav-side` | 1200px / 220px | Desktop shell |
+| `--k-workspace` / `--k-nav-side` / `--k-mascot-rail` | 1200px / 220px / 112px | Desktop shell: content column, side nav, and the lane Momo waits in |
 
 Surfaces are exactly three classes: `.k-surface`, `.k-surface.is-outlined`, `.k-surface.is-hero`. At most one hero per route.
 
@@ -126,10 +126,10 @@ These React components render the same markup as before. `components.css` gives 
 
 | Component | Look |
 |-----------|------|
-| `PressableButton` | Square face, 2px line, 3px hard shadow; primary is persimmon. Press moves the face 2px and drops the shadow. Focus ring on the face |
+| `PressableButton` | Square face, 2px line, no shadow; primary is persimmon. Press nudges the face 2px. Focus ring on the face |
 | `Toggle` / `RadioDot` | Square 52×30 switch; on is an ink track with an acid knob (reversed in dark) |
 | `Toast` | Ink chip with ground text, 44px Undo and dismiss targets, stacked above the tab bar |
-| `BottomNav` | Card-coloured bar with a 2px line; active tab is solid ink. The + is a 58px persimmon sticker rising out of the bar: it squashes when pressed, pops a small acid burst, and turns into an acid × while the log sheet is open |
+| `BottomNav` | Card-coloured bar with a 2px line; active tab is solid ink. The + is a 58px persimmon sticker rising out of the bar: it squashes when pressed, pops a small acid burst, and turns into an acid × while the log sheet is open. From 1120px the same component is a sticky rail in the left column instead: no bar, no border, each icon beside its label, and the + still in its place in the middle of the list |
 | `SwipeRow` | Ink Edit action, danger-ink Delete action |
 | `PortionSheet`, `DatePickerModal` | Square cards on the scrim, display-type titles, acid default choice |
 | `LogCelebration` | The full-screen "Logged." moment on the ground colour, awards on acid; a new wardrobe piece arrives worn, named on acid |
@@ -140,8 +140,8 @@ These React components render the same markup as before. `components.css` gives 
 |-------------------|-----|
 | `.k-screen` | Screen shell: ground, ink, body font |
 | `.k-eyebrow` | Mono uppercase label above a heading or number |
-| `.k-card` | Bordered card for grouped content (notices, Journey) |
-| `.k-section-head` | Display heading plus a mono summary, ruled underneath |
+| `.k-card` | Hairline card for grouped content (notices, Journey), padded with `--k-pad-panel` |
+| `.k-section-head` | Sentence-case section heading in 18px body type, plus a mono summary, ruled underneath with a hairline |
 | `Meter` / `.k-meter` | [`components/Meter.tsx`](src/components/Meter.tsx): a named `progressbar`. `tone="acid"` for the calorie budget, ink for macros; `over` switches to `--k-over-fill` |
 | `.k-button` (`.is-primary`) | 48px bordered button |
 | `.k-icon-button` | 44px square icon button; always has an `aria-label` |
@@ -156,7 +156,7 @@ Phase 1 rebuilds migrated screens on these. `PressableButton`, `Sheet` and `Nutr
 
 | Component | Use |
 |-----------|-----|
-| `AppShell` | Single column and bottom nav below 768px; wider content to 1119px; side nav and a 1120–1200px workspace above that |
+| `AppShell` | Single column and bottom nav below 768px; wider content to 1119px. From 1120px it is three columns: the nav rail, a workspace up to 1200px, and an empty lane for Momo. A shell with no nav (the first run, the account screens) centres on 52rem instead |
 | `PageHeader` | Eyebrow, title, optional subtitle and action. Replaces the seven bespoke header clusters |
 | `Section` | Sentence-case section title, optional meta, one hairline divider |
 | `Surface` | The three surface variants |
@@ -197,6 +197,8 @@ Momo is a plump cream dumpling with a twisted top knot: cute outside, a dry litt
 
 ## Screens on the system
 
+The four tabs, Coach, Support, About and the component reference render inside `AppShell`, so the column width, the page padding and the navigation are decided in one place. The log flows and the first run still build their own `div.app-shell`; they move in a later phase.
+
 ### Today (`/`)
 
 [`pages/HomePage.tsx`](src/pages/HomePage.tsx), styled in [`styles/screens/today.css`](src/styles/screens/today.css). Everything needed for the day is on the first screen, top to bottom:
@@ -228,29 +230,33 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 
 [`pages/ProgressPage.tsx`](src/pages/ProgressPage.tsx), styled in [`styles/screens/insights.css`](src/styles/screens/insights.css). Your routine over time, never a report card:
 
-1. **Header.** "The bigger picture" eyebrow, a display title, a proud pink Momo, and an acid stamp: "Your routine. Not a report card."
+1. **Header.** "The bigger picture" eyebrow, a display title, and one line of intent: "See your routine over time, one logged day at a time." No stamp and no mascot in the header — on a wide screen Momo waits in his own lane beside the column.
 2. **Journey.** Day streak, total XP and freezes on peach, butter and sky tiles, the level name, and an acid meter to the next level.
 3. **Milestones.** A dashed path of five stops (first log, 3, 7, 14 and 30 days) that turn acid when reached. Breaks never reset them.
 4. **Consistency.** Days logged this month in display type, an acid heat grid with its legend, and a butter note comparing breakfasts with your own best week.
 5. **Weight and calories.** Week or Month as ink-when-chosen chips. Stat tiles (the latest weight on sky), a persimmon line and bar chart with an ink dashed goal line, and the weight history behind a row that opens in place. "+ Log weight" opens a sheet shaped like the log sheet.
 6. **Most logged, ticket archive, achievements.** Foods with tinted tiles and a count (the top count on acid), recent logged days as coloured ticket stubs, and unlocked badges on butter with the next one dashed.
 
+From 768px these cards pair into two columns, so a wide screen reads as a dashboard instead of one tall strip.
+
 ### You (`/settings`)
 
 [`pages/SettingsPage.tsx`](src/pages/SettingsPage.tsx), styled in [`styles/screens/you.css`](src/styles/screens/you.css):
 
-1. **Header.** "Your space" eyebrow, a display title, your name, an acid stamp, a pink Momo card and a mint status chip.
+1. **Header.** "Your space" eyebrow, a display title, your name, and a muted mono status line ("Your routine · your pace", or the pause notice). No stamp and no mascot mark.
 2. **Finder.** A bordered search field. Results turn acid under the pointer or keyboard focus.
 3. **Appearance.** A butter card with Light, Dark and System as square tiles; the chosen one is solid ink. It saves instantly.
 4. **Section rail.** Sticky at the top: section links as chips, with the current one in solid ink, and the save bar. A persimmon diamond shows while changes are unsaved.
-5. **Sections.** Each title is a tilted tag in its own tint: Profile peach, Preferences sky, Momo pink, AI mint, Account butter, Data peach. Daily goals put calories on acid and give protein, carbs and fat Today's colour caps. Rows, square fields and edge-to-edge row buttons sit in bordered cards. Delete actions use danger ink.
+5. **Sections.** Each title is 18px sentence-case body type on the ground — no tinted tag behind it — over a muted line of help text; the smaller labels inside a section stay mono uppercase. Daily goals put calories on acid and the other three on sunken tiles. Rows, square fields and edge-to-edge row buttons sit in hairline cards. Delete actions use danger ink.
 6. **Disclosures.** AI setup and Momo's wardrobe open with an acid + that turns into ×, like the log button.
+
+The column is capped at 880px from 768px, because settings are read as rows and a 1200px row is hard to follow. Each row with a field puts the control beside its label, stacking again below 360px.
 
 ### Log flows (`/log/text`, `/log/photo`, `/log/manual`, `/review`, `/edit/:id`)
 
 [`components/LogFlowUI.tsx`](src/components/LogFlowUI.tsx) and [`components/MealEntryFields.tsx`](src/components/MealEntryFields.tsx), styled in [`styles/screens/flows.css`](src/styles/screens/flows.css). Logging speaks the same language as Today:
 
-1. **Header.** Step chips ("1 Add meal", "2 Review & log") with the current step on acid, a display title, and a small pink Momo leaning in. Hide Momo removes him.
+1. **Header.** Step chips ("1 Add meal", "2 Review & log") with the current step on acid, and a display title. The header carries no mascot; Momo appears while the AI reads the meal, and Hide Momo removes him there.
 2. **Describe.** One bordered card holds the words. Example chips come in butter, mint, sky and pink; a tap fills the field.
 3. **Photo.** A dashed drop zone that turns butter on hover, Camera and Gallery buttons, and the privacy note in plain text.
 4. **Thinking.** While AI reads the meal, an acid card shows Momo bopping and a Cancel button, which takes focus.
@@ -261,7 +267,7 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 
 ### Saved (`/discover`, `/log/saved`)
 
-[`pages/SavedMealsPage.tsx`](src/pages/SavedMealsPage.tsx). A "Your usuals" eyebrow and display title, search, meal filters as ink-when-chosen chips, then **Your saved meals** as square cards and **Recents** as rows in one card. Each meal has a tinted food tile, kcal in display type, a macro bar in Today's macro colours, a portion stepper and a persimmon Log button.
+[`pages/SavedMealsPage.tsx`](src/pages/SavedMealsPage.tsx). A "Your usuals" eyebrow and display title, search, meal filters as ink-when-chosen chips in an even grid (three across, six from 768px), then **Your saved meals** as square cards and **Recents** as rows in one card. Both are labelled regions, so the two collections can be reached directly, and from 768px they sit side by side. Each meal has a tinted food tile, kcal in display type, a macro bar in Today's macro colours, a portion stepper and a persimmon Log button.
 
 ### First run (`/onboarding`)
 
@@ -275,7 +281,7 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 
 ### Coach (`/coach`)
 
-[`pages/CoachPage.tsx`](src/pages/CoachPage.tsx), styled in [`styles/screens/pages.css`](src/styles/screens/pages.css). A pink Momo card and an "AI Coach" display title. With no messages, an "Ask me anything" card offers three tinted starters and says where the chat is stored. Coach's replies are square cards beside a small pink Momo; your messages sit on the right in butter. Each message has a 44px Delete. A safety reply adds a mint "Talk to someone" list of support links. The message field and a persimmon Send button sit in a bar above the tab bar.
+[`pages/CoachPage.tsx`](src/pages/CoachPage.tsx), styled in [`styles/screens/pages.css`](src/styles/screens/pages.css). A pink Momo card and an "AI Coach" display title. With no messages, an "Ask me anything" card offers three starters as plain hairline cards and says where the chat is stored. Coach's replies are square cards beside a small pink Momo; your messages sit on the right in butter. Each message has a 44px Delete. A safety reply adds a mint "Talk to someone" list of support links. The message field and a persimmon Send button sit in a bar that sticks to the bottom of the column. Coach, Support and About cap their reading measure at 880px inside the workspace, so prose never stretches the full width.
 
 ### Support and About (`/support`, `/about`)
 
@@ -329,7 +335,7 @@ npm run visual:update
 npm run visual:sheet
 ```
 
-Images live in [`e2e/visual/__screenshots__/`](e2e/visual/__screenshots__). Updating a baseline is an explicit `visual:update` commit, never automatic. The older matrix below still records the other screens to `test-results/` until later phases migrate them.
+Images live in [`e2e/visual/__screenshots__/`](e2e/visual/__screenshots__). Updating a baseline is an explicit `visual:update` commit, never automatic. The older matrix below still records the other screens to `test-results/` until later phases migrate them. `visual:sheet` takes a phase number and pairs that phase's before images with its after images: `npm run visual:sheet -- 2`.
 
 Every change to a system screen is also checked at **360, 390, 768 and 1440px**, in **light and dark**:
 
@@ -349,7 +355,7 @@ Run the matrix with Playwright. It creates a throwaway local account, captures e
 npx playwright test e2e/visual-matrix.spec.ts --project=chromium
 ```
 
-Images land in `test-results/visual-matrix-*/` as `{surface}-{width}-{theme}.png`. Look at them before merging.
+Images land in `test-results/visual-matrix-*/` as `{surface}-{width}-{theme}.png`. Look at them before merging. A review pack captures the same run twice — once on the previous `main`, once on the branch — and keeps the 390 and 1440 pairs under `review/phase-N/`.
 
 ---
 
@@ -367,10 +373,10 @@ The **visual reset** extends that work rather than replacing it. Baseline counts
 
 | Reset | Scope | Status |
 |-------|-------|--------|
-| 1 | Additive contract tokens, self-hosted fonts, visual seed, shared primitives, rebuilt Today, component reference, committed screenshots | This change |
-| 2 | Daily screens: Today details, log sheet, the five logging forms, Saved filters | Next |
-| 3 | Remaining screens with legacy selector removal per screen | Next |
-| 4 | Desktop compositions per task | Next |
+| 1 | Additive contract tokens, self-hosted fonts, visual seed, shared primitives, rebuilt Today, component reference, committed screenshots | Done, reviewed in [`review/phase-1.md`](review/phase-1.md) |
+| 2 | Every remaining screen on `AppShell`; the raised chrome flattened across the log sheet, the five logging forms, Saved, Insights, You, Coach, Support, About and admin; header stamps and mascot marks removed; a desktop nav rail with a lane for Momo | This change, reviewed in [`review/phase-2.md`](review/phase-2.md) |
+| 3 | Legacy selector removal per screen, and the design-rule contract extended to the sheets phase 2 reworked | Next |
+| 4 | The remaining desktop compositions, per task | Next |
 | 5 | Motion polish, full design-rule and visual matrix, staging sign-off | Next |
 
 When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change. To prune, remove only rules whose selectors name classes that no source file contains, and prove it with a computed-style comparison of every screen before and after. Welcome poster sheets stay: they are imported from JavaScript, not from `index.css`.

@@ -1,3 +1,4 @@
+import { AppShell } from '../components/system/AppShell'
 import { useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
@@ -188,7 +189,7 @@ export function SavedMealsPage() {
   }
 
   return (
-    <div className="app-shell k-screen k-saved">
+    <AppShell screen="k-saved" nav={<BottomNav />}>
       <main className="app-main">
         {isSubRoute && <BackLink to="/log" />}
         <header className="page-heading">
@@ -227,6 +228,8 @@ export function SavedMealsPage() {
           {filteredFavorites.length} saved · {filteredRecents.length} recent{hasFilters ? ' matching your filters' : ' in your collection'}
         </p>
 
+        <div className="saved-collections">
+        <section className="saved-collection" aria-label="Your saved meals">
         <div className="discover-section-header">
           <h2 className="discover-section-title">Your saved meals</h2>
           <span className="discover-count-badge">{filteredFavorites.length}</span>
@@ -255,7 +258,8 @@ export function SavedMealsPage() {
           </div>
         )}
 
-        <div className="saved-section">
+        </section>
+        <section className="saved-section" aria-label="Recent meals">
           <div className="saved-section-header">
             <span className="saved-section-icon"><History size={20} aria-hidden="true" /></span>
             <h2 className="saved-section-title">Recents</h2>
@@ -284,9 +288,9 @@ export function SavedMealsPage() {
               ))}
             </div>
           )}
+        </section>
         </div>
       </main>
-      <BottomNav />
-    </div>
+    </AppShell>
   )
 }

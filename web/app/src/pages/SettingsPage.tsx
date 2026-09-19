@@ -1,3 +1,4 @@
+import { AppShell } from '../components/system/AppShell'
 import { useRef, useState } from 'react'
 import { Toggle, RadioDot } from '../components/Toggle'
 import { SettingsRow } from '../components/SettingsRow'
@@ -42,12 +43,9 @@ import { clearOnboardingDraft } from '../lib/onboarding'
 import { clearAccountSeen } from '../lib/guestMode'
 import { getStreakWithFreezes, getAllBadges, getMonthConsistency } from '../lib/journey'
 import { MomoWardrobe } from '../components/MomoWardrobe'
-import { MomoSticker } from '../components/MomoSticker'
 import { RoastPreview } from '../components/RoastPreview'
 import { SettingsNavigation } from '../components/SettingsNavigation'
 import { AppearanceControl } from '../components/AppearanceControl'
-import * as m from 'motion/react-m'
-import { motionSpring } from '../lib/motionPresets'
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <h3 className="settings-section-label">{children}</h3>
@@ -243,18 +241,14 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="app-shell k-screen k-you">
+    <AppShell screen="k-you" nav={<BottomNav />}>
       <main className="app-main k-you-main" data-mascot-avoid>
         <header className="you-header">
           <div>
             <p className="k-eyebrow">Your space</p>
             <h1 className="page-title">You</h1>
             <p className="page-sub">{profile.name || user?.name || 'Your food journal'}</p>
-            <span className="you-header-stamp">MADE A LITTLE MORE YOU.</span>
           </div>
-          <m.div className="you-momo-mark" whileHover={{ rotate: -5, y: -4 }} whileTap={{ scale: .96 }} transition={motionSpring}>
-            <MomoSticker />
-          </m.div>
         </header>
         <p className="you-status">{profile.trackingPaused ? 'Tracking paused · your streak is held' : 'Your routine · your pace'}</p>
         <SettingsFinder />
@@ -840,7 +834,6 @@ export function SettingsPage() {
 
         <p className="settings-footer">Poiem · Poiem AI or your own key · Privacy-first</p>
       </main>
-      <BottomNav />
-    </div>
+    </AppShell>
   )
 }

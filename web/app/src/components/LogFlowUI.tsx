@@ -21,7 +21,6 @@ export function LogFlowHeader({ title, description, step }: {
       </ol>}
       <div className="flow-heading-content">
         <div><h1>{title}</h1><p>{description}</p></div>
-        <MomoSticker mood={step === 2 ? 'proud' : 'curious'} pose={step === 2 ? 'wave_at_user' : 'look_around'} />
       </div>
     </header>
     </>

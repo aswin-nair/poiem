@@ -1,3 +1,4 @@
+import { AppShell } from '../components/system/AppShell'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
@@ -160,7 +161,7 @@ export function CoachPage() {
   }
 
   return (
-    <div className="app-shell k-screen k-coach">
+    <AppShell screen="k-coach" nav={<BottomNav />}>
       <header className="k-coach-head" data-mascot-avoid>
         <span className="k-coach-momo" aria-hidden="true"><MomoSticker mood="excited" pose="still" /></span>
         <div className="k-coach-title">
@@ -298,7 +299,6 @@ export function CoachPage() {
         </form>
       </div>
 
-      <BottomNav />
-    </div>
+    </AppShell>
   )
 }

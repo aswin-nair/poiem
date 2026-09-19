@@ -1,3 +1,4 @@
+import { AppShell } from '../components/system/AppShell'
 import { useMemo, useState } from 'react'
 import { BottomNav } from '../components/BottomNav'
 import { ProgressLineChart, ProgressBarChart } from '../components/Charts'
@@ -11,7 +12,6 @@ import { LEVEL_NAMES, xpForLevel, xpForNextLevel } from '../lib/xp'
 import { FoodIcon, IconChevronRight, IconMenuLines, IconFlame, IconTrophy } from '../components/icons'
 import { PressableButton } from '../components/PressableButton'
 import { WeightLogSheet } from '../components/WeightLogSheet'
-import { MomoSticker } from '../components/MomoSticker'
 import { foodToneFor } from '../lib/foodGlyph'
 
 const RANGES = [
@@ -126,7 +126,7 @@ export function ProgressPage() {
 
   if (state.profile.trackingPaused) {
     return (
-      <div className="app-shell k-screen k-insights">
+      <AppShell screen="k-insights" nav={<BottomNav />}>
         <main className="app-main k-insights-main">
           <header className="progress-page-header page-heading">
             <div className="k-insights-title">
@@ -140,14 +140,12 @@ export function ProgressPage() {
             <PressableButton to="/settings" label="Manage pause" />
           </section>
         </main>
-        <BottomNav />
-      </div>
+      </AppShell>
     )
   }
 
   return (
-    <div className="app-shell k-screen k-insights">
-      {/* Momo walks beside the column on wide screens and stays off the charts on a phone. */}
+    <AppShell screen="k-insights" nav={<BottomNav />}>
       <main className="app-main k-insights-main" data-mascot-avoid>
 
         <header className="progress-page-header page-heading">
@@ -156,8 +154,6 @@ export function ProgressPage() {
             <h1 className="screen-title">Insights</h1>
             <p className="insights-intro">See your routine over time, one logged day at a time.</p>
           </div>
-          <MomoSticker mood="proud" pose="still" />
-          <span className="club-library-stamp">YOUR ROUTINE. NOT A REPORT CARD.</span>
         </header>
 
         {/* Streak, level and XP live here; Today shows only the day itself. */}
@@ -375,7 +371,6 @@ export function ProgressPage() {
 
       {showLog && <WeightLogSheet initialWeight={sortedWeights.at(-1)?.weightKg ?? state.profile.weightKg} onSave={logWeight} onClose={() => setShowLog(false)} />}
 
-      <BottomNav />
-    </div>
+    </AppShell>
   )
 }
