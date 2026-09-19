@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { signUpAndOnboard } from './helpers'
+import { nav, signUpAndOnboard } from './helpers'
 
 /* The swipe row is the one gesture in the app that shares an axis with an
    existing browser behaviour. These check the two ways it can go wrong: it
@@ -9,14 +9,18 @@ test.describe('Swipe-to-edit meal rows', () => {
     await page.setViewportSize({ width: 420, height: 900 })
     await signUpAndOnboard(page)
     await page.goto('/')
-    await page.getByLabel('Main').waitFor({ state: 'visible' })
+    await nav(page).waitFor({ state: 'visible' })
     // The list renders after the reveal delay; without this the counts below
     // measure an empty page and the assertions are vacuous.
-    await page.locator('.swipe-row').first().waitFor({ state: 'visible' })
-    // Pointer coordinates need the row in the viewport, not merely rendered
-    // below Today's summary. Keep both gesture tests independent of its height.
-    await page.locator('.swipe-row').first().scrollIntoViewIfNeeded()
-    await expect(page.locator('.swipe-row').first()).toBeInViewport()
+    const row = page.locator('.swipe-row').first()
+    await row.waitFor({ state: 'visible' })
+    // A row lying under the fixed bar still counts as in the viewport, so
+    // scrollIntoViewIfNeeded leaves it there and every pointer event below
+    // lands on the bar instead. Centre the row, then prove it clears the bar.
+    await row.evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' }))
+    const box = (await row.boundingBox())!
+    const bar = (await nav(page).boundingBox())!
+    expect(box.y + box.height).toBeLessThanOrEqual(bar.y)
   })
 
   test('a horizontal drag reveals the actions', async ({ page }) => {
