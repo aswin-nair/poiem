@@ -328,7 +328,7 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 
 ## Screenshot matrix
 
-Phase 1 commits pixel baselines for **Today** and **/dev/components** at **320, 390, 768 and 1440px**, in **light and dark** (16 PNGs). They are generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set:
+Forty-four pixel baselines, generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set. **Today** and **/dev/components** are locked at **320, 390, 768 and 1440px**; the screens the visual reset has already been through — the log sheet, Describe, Manual, Saved, Insights, You and Coach — are locked at **390 and 1440px**, the phone column and the desktop rail. Every surface is locked in **light and dark**. `npm run test:e2e` runs the project, so CI fails on an unexplained pixel:
 
 ```bash
 npm run visual
@@ -336,7 +336,7 @@ npm run visual:update
 npm run visual:sheet
 ```
 
-Images live in [`e2e/visual/__screenshots__/`](e2e/visual/__screenshots__). Updating a baseline is an explicit `visual:update` commit, never automatic. The older matrix below still records the other screens to `test-results/` until later phases migrate them. `visual:sheet` takes a phase number and pairs that phase's before images with its after images: `npm run visual:sheet -- 2`.
+Images live in [`e2e/visual/__screenshots__/`](e2e/visual/__screenshots__). Updating a baseline is an explicit `visual:update` commit, never automatic. A surface joins the list once its screen has been reworked, so the baseline records a decision rather than freezing a mess. The older matrix below still records the unmigrated screens to `test-results/`. `visual:sheet` takes a phase number and pairs that phase's before images with its after images: `npm run visual:sheet -- 2`.
 
 Every change to a system screen is also checked at **360, 390, 768 and 1440px**, in **light and dark**:
 
@@ -375,9 +375,9 @@ The **visual reset** extends that work rather than replacing it. Baseline counts
 | Reset | Scope | Status |
 |-------|-------|--------|
 | 1 | Additive contract tokens, self-hosted fonts, visual seed, shared primitives, rebuilt Today, component reference, committed screenshots | Done, reviewed in [`review/phase-1.md`](review/phase-1.md) |
-| 2 | Every remaining screen on `AppShell`; the raised chrome flattened across the log sheet, the five logging forms, Saved, Insights, You, Coach, Support, About and admin; header stamps and mascot marks removed; a desktop nav rail with a lane for Momo | This change, reviewed in [`review/phase-2.md`](review/phase-2.md) |
+| 2 | Every remaining screen on `AppShell`; the raised chrome flattened across the log sheet, the five logging forms, Saved, Insights, You, Coach, Support, About and admin; header stamps and mascot marks removed; a desktop nav rail with a lane for Momo | Done, reviewed in [`review/phase-2.md`](review/phase-2.md) |
 | 3 | Legacy selector removal per screen. The flat-surface and tilt rules now cover the sheets phase 2 reworked; what remains is moving their 37 off-step type sizes onto the contract and emptying `TYPE_DEBT` | Next |
 | 4 | The remaining desktop compositions, per task | Next |
-| 5 | Motion polish, full design-rule and visual matrix, staging sign-off | Next |
+| 5 | Motion polish, baselines for whatever phases 3 and 4 rework, staging sign-off | Next |
 
 When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change. To prune, remove only rules whose selectors name classes that no source file contains, and prove it with a computed-style comparison of every screen before and after. Welcome poster sheets stay: they are imported from JavaScript, not from `index.css`.
