@@ -155,13 +155,15 @@
   .bottom-nav .nav-item-inner {
     gap: 3px;
     min-height: 48px;
-    padding: 4px 2px;
+    /* No inline padding: at 320px five cells leave "Insights" barely enough room
+       at the contract's smallest step, and 2px each side truncates it. */
+    padding: 4px 0;
     border: 2px solid transparent;
     border-radius: 0;
     background: transparent;
     color: inherit;
     box-shadow: none;
-    font: 700 11px/1.1 var(--k-font-body);
+    font: 700 var(--k-type-meta)/1.1 var(--k-font-body);
   }
   .bottom-nav .nav-item span { font-family: var(--k-font-body); font-weight: 700; }
   .bottom-nav .nav-item.active { color: var(--k-ground); background: transparent; box-shadow: none; }
@@ -265,19 +267,19 @@
     color: var(--k-ink);
     box-shadow: var(--k-shadow);
   }
-  .portion-title { font: 900 1.5rem/1 var(--k-font-display); letter-spacing: .01em; text-transform: uppercase; color: var(--k-ink); }
+  .portion-title { font: 900 var(--k-type-panel)/1 var(--k-font-display); letter-spacing: .01em; text-transform: uppercase; color: var(--k-ink); }
   .portion-close { border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); }
   .portion-sub { color: var(--k-muted); }
   .portion-option { border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; }
   .portion-option.is-default { background: var(--k-acid); box-shadow: none; }
-  .portion-mult { font: 800 1.1rem/1 var(--k-font-body); color: var(--k-ink); }
-  .portion-kcal { font: 600 .72rem/1.2 var(--k-font-mono); color: var(--k-muted); }
+  .portion-mult { font: 800 var(--k-type-lead)/1 var(--k-font-body); color: var(--k-ink); }
+  .portion-kcal { font: 600 var(--k-type-meta)/1.2 var(--k-font-mono); color: var(--k-muted); }
   .portion-option.is-default :is(.portion-mult, .portion-kcal) { color: var(--k-on-acid); }
 
   /* ── Date picker ───────────────────────────────────────────── */
   .date-modal-overlay { background: var(--k-scrim); }
   .date-modal { border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: var(--k-shadow); }
-  .date-modal-title { font: 900 1.4rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
+  .date-modal-title { font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
   :is(.date-modal-nav, .date-modal-close) { border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; }
   .date-modal-weekdays { font: 600 var(--k-text-xs)/1 var(--k-font-mono); color: var(--k-muted); }
   .date-modal-cell { border-radius: 0; color: var(--k-ink); font-family: var(--k-font-body); box-shadow: none; }
@@ -298,14 +300,14 @@
     background: var(--k-card);
     box-shadow: var(--k-shadow);
   }
-  .celebrate-title { margin-top: var(--k-space-2); font: 900 3.5rem/.85 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .celebrate-title { margin-top: var(--k-space-2); font: 900 var(--k-type-title)/.85 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
   .celebrate-sub { font: 700 var(--k-text-md)/1.4 var(--k-font-body); color: var(--k-muted); }
   .celebrate-first { max-width: 28ch; margin: 0 auto; font: 600 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-ink); }
   .celebrate-awards li { border: 2px solid var(--k-line); border-radius: 0; box-shadow: none; background: var(--k-card); color: var(--k-ink); font: 600 var(--k-text-sm)/1.3 var(--k-font-body); }
   .celebrate-awards strong { padding: 2px 6px; background: var(--k-acid); color: var(--k-on-acid); }
   .celebrate-stat { border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: none; }
-  .celebrate-stat-value { font: 900 2.25rem/1 var(--k-font-display); color: var(--k-ink); }
-  .celebrate-stat-label { font: 600 11px/1.3 var(--k-font-mono); letter-spacing: .04em; color: var(--k-muted); }
+  .celebrate-stat-value { font: 900 var(--k-type-title)/1 var(--k-font-display); color: var(--k-ink); }
+  .celebrate-stat-label { font: 600 var(--k-type-meta)/1.3 var(--k-font-mono); letter-spacing: .04em; color: var(--k-muted); }
 
   /* A page's heading takes focus on arrival so screen readers start there.
      It is not a control, so it shows no focus ring. */

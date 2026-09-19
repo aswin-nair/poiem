@@ -47,7 +47,7 @@
 
   /* ── Support ────────────────────────────────────────────────── */
   .k-support-lines { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-  .k-support-line h2 { font-size: 1.375rem; }
+  .k-support-line h2 { font-size: var(--k-type-lead); }
   .k-support-phone {
     display: flex;
     align-items: center;
@@ -58,7 +58,7 @@
     background: var(--k-card);
     color: var(--k-ink);
     box-shadow: none;
-    font: 900 1.75rem/1 var(--k-font-display);
+    font: 900 var(--k-type-figure)/1 var(--k-font-display);
     letter-spacing: .02em;
     text-decoration: none;
     font-variant-numeric: tabular-nums;
@@ -84,7 +84,7 @@
   }
   .k-about-hero .poiem-logo { width: 132px; height: auto; color: var(--k-on-acid); }
   .k-about-hero .poiem-logo-letter { fill: var(--k-on-acid); }
-  .k-about-hero h2 { margin: 0; font: 900 clamp(2rem, 9vw, 2.5rem)/.9 var(--k-font-display); text-transform: uppercase; color: var(--k-on-acid); }
+  .k-about-hero h2 { margin: 0; font: 900 clamp(var(--k-type-panel), 9vw, var(--k-type-title))/.9 var(--k-font-display); text-transform: uppercase; color: var(--k-on-acid); }
   .k-about-hero p { max-width: 42ch; margin: 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); color: var(--k-on-acid); }
   .k-about-stamp { padding: 4px 8px; border: 2px solid var(--k-on-acid); background: var(--k-card); color: var(--k-ink); rotate: none; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; }
   .k-about-momo { grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: 14px; }
@@ -137,7 +137,7 @@
     rotate: none;
   }
   .k-coach-title { display: grid; gap: 4px; min-width: 0; }
-  .k-coach-title h1 { margin: 0; font: 900 clamp(2.25rem, 10vw, 2.75rem)/.86 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-coach-title h1 { margin: 0; font: 900 clamp(var(--k-type-panel), 10vw, var(--k-type-title))/.86 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
   .k-coach-sub { margin: 0; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
   .k-coach-clear { align-self: start; min-width: 44px; }
 
