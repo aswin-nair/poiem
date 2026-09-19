@@ -19,11 +19,6 @@
 .pressable-secondary .pressable-face { background: var(--paper-card); color: var(--ink); border-color: var(--control-border); box-shadow: 0 3px 0 var(--shadow-ink); }
 .pressable-ghost .pressable-face { background: var(--paper-card); color: var(--ink); box-shadow: none; }
 .pressable-destructive .pressable-face { background: var(--danger); color: var(--on-danger); box-shadow: 0 4px 0 var(--danger-deep); }
-.auth-refresh .pressable-primary .pressable-face {
-  background: var(--coral-hue);
-  border-color: transparent;
-  box-shadow: 0 4px 0 var(--coral-deep), 0 10px 18px color-mix(in srgb, var(--coral-hue) 22%, transparent);
-}
 .pressable:not(:disabled):not([aria-disabled="true"]):is(.is-pressed, :active) .pressable-face { transform: translateY(3px); box-shadow: 0 1px 0 var(--shadow-ink); }
 .pressable-ghost:not(:disabled):not([aria-disabled="true"]):active .pressable-face { box-shadow: none; }
 .pressable:focus-visible { outline: none; }

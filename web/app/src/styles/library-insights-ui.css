@@ -1,75 +1,25 @@
 @layer legacy {
-/* Saved: a reusable meal library. Insights: a readable record of the habit. */
-.saved-refresh .app-main, .insights-refresh .progress-main { padding-top: 1.5rem; }
-.saved-refresh .page-title, .insights-refresh .screen-title { font: 600 2rem/1.2 var(--display); letter-spacing: -.03em; }
-.saved-refresh .page-sub, .insights-intro { font-size: 1rem; line-height: 1.6; color: var(--ink-soft); margin: .75rem 0 1.5rem; }
+.insights-intro { font-size: 1rem; line-height: 1.6; color: var(--ink-soft); margin: .75rem 0 1.5rem; }
 .saved-search-label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: .5rem; }
-.saved-refresh .discover-search { border: 1px solid var(--rule-strong); box-shadow: none; border-radius: 16px; }
-.saved-refresh .discover-search input { font-size: 1rem; min-height: 52px; }
-.saved-refresh .discover-chip-row { flex-wrap: wrap; overflow: visible; gap: .5rem; }
-.saved-refresh .discover-chip { min-height: 44px; font-size: .875rem; box-shadow: none; border: 1px solid var(--rule-strong); }
-.saved-refresh .discover-chip.active { border-color: var(--coral-text); background: var(--coral-soft); }
 .saved-reset { display: inline-flex; align-items: center; min-height: 44px; padding: .5rem 0; border: 0; background: transparent; color: var(--coral-text); font: inherit; font-size: .875rem; text-decoration: underline; cursor: pointer; }
-.saved-refresh .discover-section-header { margin: 1.5rem 0 .875rem; }
-.saved-refresh .discover-section-title, .saved-refresh .saved-section-title { margin: 0; font: 600 1.25rem/1.4 var(--display); letter-spacing: 0; text-transform: none; color: var(--ink); }
-.saved-refresh .discover-count-badge { font-size: .875rem; }
-.saved-refresh .discover-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .875rem; }
-.saved-refresh .discover-card { padding: 1rem; border-radius: 20px; box-shadow: none; }
-.saved-refresh .discover-card-name { display: block; min-height: 0; margin: 0; font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
-.saved-refresh .discover-card-cals { font-size: 1.25rem; color: var(--ink); margin-top: .5rem; }
 .saved-portion-note { margin: .375rem 0 0; font-size: .875rem; color: var(--ink-soft); }
 .saved-macro-summary { margin: .625rem 0 0; font-size: .875rem; line-height: 1.6; color: var(--ink-soft); }
-.saved-refresh .discover-card-footer { flex-wrap: wrap; gap: .75rem; margin-top: auto; padding-top: 1rem; }
-.saved-refresh .log-pill-btn { min-height: 48px; padding: .75rem 1rem; border: 0; background: var(--coral-text); color: var(--paper-card); font-size: .875rem; background-clip: border-box; }
-.saved-refresh .ssc-val { font-size: .875rem; min-width: 2.5rem; text-align: center; }
-.saved-refresh .ssc-btn { flex-shrink: 0; }
-.saved-refresh .saved-empty { padding: 1.25rem; border: 1px dashed var(--rule-strong); border-radius: 16px; color: var(--ink-soft); font-size: 1rem; line-height: 1.6; }
 .saved-empty strong { color: var(--ink); }
 .saved-empty p { margin: .5rem 0; }
-.saved-refresh .saved-meal-row { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: start; padding: 1.25rem; gap: .75rem; }
-.saved-refresh .saved-meal-name { margin: 0; white-space: normal; font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
-.saved-refresh .saved-meal-cals, .saved-refresh .saved-meal-macros { font-size: .875rem; line-height: 1.6; color: var(--ink-soft); }
-.saved-refresh .saved-meal-dot { display: none; }
-.saved-refresh .saved-meal-macros { flex-basis: 100%; }
-.saved-refresh .saved-meal-type { font-size: .8125rem; letter-spacing: 0; text-transform: none; }
-.saved-refresh .saved-meal-actions { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: center; gap: .75rem; }
-.saved-refresh .saved-meal-actions .log-pill-btn { margin-left: auto; }
-.saved-refresh button:focus-visible, .saved-refresh a:focus-visible { outline: 3px solid var(--coral-text); outline-offset: 3px; }
-.insights-refresh .progress-card { border: 1px solid var(--rule); border-radius: 20px; padding: 1.25rem; box-shadow: none; margin-bottom: 1rem; }
-.insights-refresh .progress-card-header { flex-wrap: wrap; gap: .5rem; }
-.insights-refresh .progress-card-title { font: 600 1.25rem/1.4 var(--display); }
-.insights-refresh .page-sub { font-size: .875rem; line-height: 1.6; }
-.insights-refresh .consistency-sub, .insights-refresh .consistency-unit, .insights-refresh .consistency-streak { font-size: .875rem; line-height: 1.5; }
-.insights-refresh .own-past-callout { font-size: .875rem; line-height: 1.6; }
 .insights-legend { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .8125rem; color: var(--ink-soft); margin-top: .75rem; }
 .insights-legend > span { display: inline-flex; align-items: center; gap: .375rem; }
 .insights-legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--rule-strong); }
 .insights-legend .is-logged { background: var(--coral-text); }
 .insights-legend .is-future { background: transparent; border: 1px dashed var(--ink-soft); }
-.insights-refresh .insights-heat-cell { background: var(--rule-strong); }
-.insights-refresh .insights-heat-cell.is-logged { background: var(--coral-text); }
-.insights-refresh .insights-heat-cell.is-future { background: transparent; border: 1px dashed var(--ink-soft); opacity: 1; }
 .insights-range-control { margin: 1.75rem 0 1rem; }
 .insights-range-control h2 { font: 600 1.25rem/1.4 var(--display); margin: 0 0 .875rem; }
 .insights-range-control .range-chips { padding: 0; gap: .5rem; }
 .insights-range-control .range-chip { flex: 1; min-height: 48px; font-size: .875rem; box-shadow: none; border: 1px solid var(--rule-strong); }
 .insights-range-control .range-chip.active { border: 2px solid var(--coral-text); background: var(--coral-soft); }
 .insights-range-control p, .insights-chart-note { font-size: .875rem; line-height: 1.6; color: var(--ink-soft); margin: .75rem 0 0; }
-.insights-refresh .progress-stat-card { padding: .875rem; box-shadow: none; border-radius: 14px; }
-.insights-refresh .progress-stat-card .eyebrow { margin: 0; font-size: .875rem; letter-spacing: 0; text-transform: none; }
-.insights-refresh .progress-stat-value { font: 600 1.375rem/1.4 var(--display); overflow-wrap: anywhere; }
-.insights-refresh .progress-stat-sub, .insights-refresh .progress-avg-pill { font-size: .8125rem; white-space: normal; }
 .insights-empty { margin: .75rem 0 0; padding: 1rem; border: 1px dashed var(--rule-strong); border-radius: 12px; font-size: 1rem; line-height: 1.6; color: var(--ink-soft); }
-.insights-refresh .progress-log-btn { font-size: .875rem; min-height: 44px; }
-.insights-refresh .history-link-card { box-shadow: none; border: 1px solid var(--rule); }
-.insights-refresh .history-link-text span, .insights-refresh .history-date, .insights-refresh .badge-desc { font-size: .875rem; line-height: 1.5; }
-.insights-refresh .history-row { flex-wrap: wrap; gap: .625rem; }
-.insights-refresh .btn-delete { min-height: 44px; }
-.insights-refresh .torn-archive { font-size: .875rem; line-height: 1.6; overflow-wrap: anywhere; }
 .weight-log-sheet { max-height: 90dvh; overflow-y: auto; }
 .weight-log-sheet h2 { font: 600 1.5rem/1.3 var(--display); }
 .weight-log-sheet > p { font-size: 1rem; line-height: 1.6; color: var(--ink-soft); }
 .weight-log-sheet input { min-height: 52px; font-size: 1rem; }
-@media (max-width: 430px) { .saved-refresh .discover-grid { grid-template-columns: 1fr; } }
-@media (max-width: 360px) { .insights-refresh .progress-stat-grid { grid-template-columns: 1fr; } }
 }

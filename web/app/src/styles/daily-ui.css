@@ -1,68 +1,5 @@
 @layer legacy {
-/* Daily-use surfaces: a clear meal journal within the existing coral identity. */
-.today-refresh, .log-refresh, .manual-refresh {
-  --daily-gap: 1.5rem;
-  --daily-label: .875rem;
-}
-.today-refresh .home-counter-chips { align-items: center; flex-wrap: wrap; gap: .5rem; padding: 1.25rem 1.25rem .75rem; }
-.today-heading { flex: 1 0 100%; }
-.today-heading h1 { margin: .25rem 0 .5rem; font: 600 2rem/1.15 var(--display); letter-spacing: -.025em; }
-.today-date { margin: 0; font-size: var(--daily-label); color: var(--ink-soft); }
-.today-refresh .home-chip { box-shadow: none; border: 1px solid var(--rule); font-size: .875rem; min-height: 44px; }
-.today-refresh .home-main { padding-top: .5rem; }
-.today-refresh .home-ring-hero { gap: 1.25rem; padding: 1.25rem; box-shadow: var(--shadow-sm); border: 1px solid var(--rule); }
-.today-refresh .home-factual-readout { padding-top: 0; border-top: 0; gap: 1rem; }
-.today-refresh .home-factual-readout .calorie-ring { flex-shrink: 0; }
-.today-refresh .home-ring-say { font-size: 1.125rem; line-height: 1.4; }
-.today-refresh .home-ring-sub { text-align: left; font-size: .875rem; line-height: 1.6; }
-.today-refresh .home-log-cta { width: 100%; margin: 0; min-height: 52px; font-size: 1rem; letter-spacing: 0; text-transform: none; }
-.today-refresh .day-ring { width: 100%; grid-template-columns: 88px minmax(0, 1fr); border-top: 1px solid var(--rule); padding-top: 1rem; gap: .875rem; }
-.today-refresh .day-ring-graphic { width: 88px; height: 88px; flex: 0 0 88px; }
-.today-refresh .day-ring-copy h2 { margin: .25rem 0 .5rem; font: 500 1rem/1.4 var(--display); }
-.today-refresh .day-ring-copy .home-today-kicker { font-size: .75rem; }
-.today-refresh .day-ring-legend li { grid-template-columns: 8px minmax(0, 1fr) auto; font-size: .875rem; }
-.today-refresh .day-ring-copy { text-align: left; min-width: 0; }
-.today-refresh .day-ring-center strong { font-size: 1rem; }
-.today-refresh .day-ring-center span { display: none; }
-.today-refresh .day-ring-legend small { font-size: .75rem; }
-.today-refresh .home-macro-chips { gap: .5rem; margin-block: 1rem var(--daily-gap); }
-.today-refresh .home-macro-chip { padding: .875rem .75rem; box-shadow: none; border: 1px solid var(--rule); }
-.today-refresh .home-macro-top { flex-direction: column; gap: .375rem; align-items: flex-start; }
-.today-refresh .home-macro-label { font-size: .875rem; letter-spacing: 0; color: var(--ink-soft); }
-.today-refresh .home-macro-value { font-size: 1.375rem; line-height: 1.2; }
-.today-macro-goal { display: block; font-size: .75rem; color: var(--ink-soft); margin: .25rem 0 .625rem; }
-.today-refresh .home-today-head { align-items: baseline; flex-wrap: wrap; gap: .5rem; margin-bottom: .875rem; }
-.today-refresh .home-today-head h2 { font: 500 1.25rem/1.4 var(--display); letter-spacing: 0; color: var(--ink); }
-.today-refresh .home-today-count { font-size: .875rem; }
-.today-refresh .home-today-row { padding: 1rem .875rem; box-shadow: none; }
-.today-refresh .home-today-name { font-size: 1rem; overflow-wrap: anywhere; min-width: 0; }
-.today-refresh .home-today-name small { font-size: .8125rem; margin-top: .25rem; }
-.today-refresh .home-today-kcal { font-size: .875rem; flex-shrink: 0; }
-.today-refresh .home-today-empty { font-size: 1rem; line-height: 1.65; padding: 1.25rem; }
-.log-refresh .app-main, .manual-refresh .app-main { padding-top: 1.25rem; }
-.log-intro { margin: .5rem 0 1.5rem; font-size: 1rem; line-height: 1.6; color: var(--ink-soft); }
-.log-method-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-bottom: 1.75rem; }
-.log-method-card { display: flex; flex-direction: column; align-items: flex-start; gap: .625rem; padding: 1rem; border: 1px solid var(--rule-strong); border-radius: 20px; background: var(--paper-card); color: var(--ink); text-decoration: none; }
-.log-method-card strong { font-size: 1rem; line-height: 1.4; }
-.log-method-card > span:last-child { font-size: .875rem; line-height: 1.5; color: var(--ink-soft); }
-.log-method-card .icon-tile { box-shadow: none; background: var(--coral-soft); color: var(--coral-text); }
-.log-method-card:hover { border-color: var(--coral-text); background: var(--paper-warm); }
-.log-refresh .log-search-wrap { margin-bottom: 1.5rem; }
-.log-search-label { display: block; margin-bottom: .625rem; font-size: 1rem; font-weight: 700; }
-.log-refresh .log-search-input { font-size: 1rem; min-height: 52px; box-shadow: none; border: 1px solid var(--rule-strong); }
-.log-search-hint, .log-list-hint { margin: .625rem 0 1rem; font-size: .875rem; line-height: 1.6; color: var(--ink-soft); }
-.log-refresh .eyebrow { font: 500 1.25rem/1.4 var(--display); text-transform: none; letter-spacing: 0; color: var(--ink); margin: 1.5rem 0 .75rem; }
-.log-clear-search { border: 0; background: transparent; color: var(--coral-text); text-decoration: underline; font: inherit; font-size: .875rem; min-height: 44px; padding: .5rem 0; cursor: pointer; }
-.log-pick-item { display: flex; align-items: center; gap: .25rem; border-bottom: 1px solid var(--rule); }
-.log-pick-item .log-pick-row { flex: 1; min-width: 0; border: 0; box-shadow: none; padding: 1rem .5rem; flex-wrap: wrap; }
-.log-refresh .log-pick-name { font-size: 1rem; overflow-wrap: anywhere; white-space: normal; }
-.log-refresh .log-pick-kcal { font-size: .875rem; }
-.log-portion-button { min-height: 44px; padding: .5rem .75rem; border: 1px solid var(--rule-strong); border-radius: 12px; font: inherit; font-size: .875rem; color: var(--ink); background: var(--paper-card); cursor: pointer; }
-.log-refresh .log-empty { border: 1px dashed var(--rule-strong); background: transparent; padding: 1.25rem; }
-.log-refresh .log-empty-title { font-size: 1.125rem; }
-.log-refresh .log-empty-sub { font-size: 1rem; line-height: 1.65; overflow-wrap: anywhere; }
-.log-method-card:focus-visible, .log-portion-button:focus-visible, .log-clear-search:focus-visible { outline: 3px solid var(--coral-text); outline-offset: 3px; }
-.manual-refresh .page-sub { font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+.log-search-hint { margin: .625rem 0 1rem; font-size: .875rem; line-height: 1.6; color: var(--ink-soft); }
 .manual-entry-form { display: flex; flex-direction: column; gap: 1.25rem; }
 .manual-entry-form .field { margin: 0; }
 .manual-entry-form .field label, #manual-meal-type { display: block; font-size: .875rem; margin-bottom: .5rem; }
@@ -71,8 +8,6 @@
 .manual-entry-form .review-grid input { min-width: 0; width: 100%; }
 .manual-macro-hint { margin: .25rem 0 -.625rem; font-size: .875rem; font-weight: 700; }
 .manual-macro-hint span { font-weight: 400; color: var(--ink-soft); margin-left: .5rem; }
-.manual-refresh .manual-default-note { padding: 1rem; border: 1px solid var(--rule); border-radius: 16px; margin-bottom: 1.5rem; }
-.manual-default-note p { margin: 0; font-size: .875rem; line-height: 1.5; }
 .manual-entry-form .serving-row { flex-wrap: wrap; gap: .75rem; padding-block: .75rem; }
 .manual-entry-form .serving-btn { min-width: 44px; min-height: 44px; }
 .manual-entry-form .serving-label { font-size: 1rem; }
@@ -82,12 +17,4 @@
 .manual-summary span { font-size: .875rem; font-weight: 700; }
 .manual-summary strong { font: 500 1.5rem/1.3 var(--display); }
 .manual-summary p { margin: .5rem 0 0; color: var(--ink-soft); font-size: .875rem; line-height: 1.6; }
-@media (max-width: 360px) {
-  .today-refresh .home-factual-readout { flex-direction: row; gap: .75rem; }
-  .today-refresh .home-ring-hero { padding: 1rem; }
-  .today-refresh .home-factual-copy .home-ring-say { text-align: left; }
-  .today-refresh .home-today-row { flex-wrap: wrap; }
-  .log-method-card { padding: .875rem; }
-  .today-refresh .day-ring { grid-template-columns: 1fr; }
-}
 }

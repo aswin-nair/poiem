@@ -176,43 +176,6 @@
 
 .settings-byok-note a { color: var(--coral-text); }
 
-/* ── Support screen (§2.8) ───────────────────────────────────
-   Quiet by design. The phone number is the one emphatic element. */
-.support-region {
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 6px;
-}
-
-.support-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-
-.support-phone {
-  display: inline-block;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--coral-text);
-  text-decoration: none;
-  margin-bottom: 6px;
-}
-
-.support-detail {
-  font-size: 0.8rem;
-  color: var(--ink-soft);
-  line-height: 1.5;
-}
-.wardrobe-preview {
-  width: 112px;
-  height: 112px;
-  margin: 8px auto 16px;
-}
-
 .wardrobe-item:disabled {
   cursor: default;
   opacity: 0.58;

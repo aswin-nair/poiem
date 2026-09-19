@@ -90,16 +90,14 @@ describe('enamel contrast and paint budgets', () => {
     expect(css).toContain('--clay-e2:')
     expect(css).toContain('--clay-e3:')
     expect(css).toContain('--clay-squish:')
-    expect(css).toContain('.clay-surface')
-    expect(css).toMatch(/\.log-pick-row[\s\S]*var\(--clay-e1\)/)
     const e1 = css.match(/--clay-e1:([^;]+);/)?.[1] ?? ''
     expect(e1).toContain('0 8px 14px')
     expect(e1).not.toContain('0 20px 36px')
   })
 
-  it('does not encode over-budget as extra clay depth', () => {
-    const over = css.match(/\.home-kcal-left\.is-over\s*\{([^}]*)\}/g)?.join(' ') ?? ''
-    expect(over).toContain('var(--ink-soft)')
+  it('does not encode over-budget as extra depth or danger', () => {
+    const over = css.match(/\.k-meter\.is-over \.k-meter-fill\s*\{([^}]*)\}/g)?.join(' ') ?? ''
+    expect(over).toContain('var(--k-over-fill)')
     expect(over).not.toMatch(/clay-e3|danger/)
   })
 

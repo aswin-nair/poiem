@@ -313,9 +313,6 @@
 
 .fqe-btn-edit:hover { color: var(--ink); border-color: var(--rule-strong); }
 
-/* Keep old classes as no-ops so nothing breaks */
-.food-quick-breakdown, .food-quick-nutrient, .food-quick-nutrient-value, .food-quick-nutrient-label, .food-quick-cal-row, .food-quick-label, .food-quick-input, .food-quick-unit, .food-quick-actions, .fq-delete, .fq-full { /* legacy — replaced */ }
-
 /* ── Badges (Progress page) ─────────────────────────────────── */
 
 .badge-count-pill {
@@ -472,21 +469,6 @@
   color: var(--ink-soft);
   margin-left: auto;
   white-space: nowrap;
-}
-
-.serving-total-preview {
-  background: var(--info-soft);
-  border: 1px solid color-mix(in srgb, var(--protein-text) 25%, transparent);
-  border-radius: var(--radius-sm);
-  padding: 9px 14px;
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  margin-bottom: 16px;
-}
-
-.serving-total-preview strong {
-  color: var(--ink);
-  font-weight: 700;
 }
 
 /* ── Compact serving stepper (Saved meals) ──────────────────── */

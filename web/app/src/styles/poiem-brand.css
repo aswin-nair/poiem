@@ -1,18 +1,4 @@
 @layer legacy {
-/* Poiem logos and screen integration. Shared palette lives in tokens.css. */
-:root :is(.food-club-auth, .food-club-app),
-:root[data-theme="dark"] :is(.food-club-auth, .food-club-app) {
-  --club-paper: var(--paper);
-  --club-card: var(--paper-card);
-  --club-input: var(--paper-warm);
-  --club-ink: var(--ink);
-  --club-muted: var(--ink-mute);
-  --club-tomato: var(--poiem-persimmon);
-  --club-lemon: var(--poiem-citron);
-  --club-mint: var(--poiem-leaf);
-  --club-pink: var(--poiem-rose);
-  --club-blue: var(--selection);
-}
 .poiem-logo { display: inline-block; vertical-align: middle; flex: none; overflow: visible; }
 .poiem-logo--wordmark { width: 126px; height: auto; color: var(--ink); }
 .poiem-logo-letter { fill: currentColor; }
@@ -21,18 +7,8 @@
 :root .welcome-brand { display: inline-flex; align-items: center; line-height: 1; text-decoration: none; flex-shrink: 0; }
 .welcome-brand .poiem-logo { width: clamp(112px, 15vw, 145px); }
 .welcome-brand:focus-visible { outline: 3px solid var(--selection); outline-offset: 8px; border-radius: 4px; }
-.poiem-auth-logo { margin: 0 auto 28px; display: block; width: 150px; }
-.poiem-session-logo { width: 154px; margin-bottom: 8px; }
 .splash-wordmark .poiem-logo { width: 190px; }
 .splash-ring-wrap .poiem-logo--mark { position: absolute; inset: 28px; width: 72px; height: 72px; }
-.poiem-journal-signature { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 0 0 18px; margin: 0 0 24px; border-bottom: 1px solid var(--rule-strong); }
-.poiem-journal-signature .poiem-logo { width: 100px; }
-.poiem-journal-signature span { color: var(--ink-mute); font: 700 .625rem/1.5 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
-.poiem-about-hero { margin-block: 24px; padding: clamp(24px, 5vw, 40px); background: var(--poiem-citron); color: var(--poiem-ink); border: 2px solid var(--poiem-ink); border-radius: 8px 28px 8px 8px; box-shadow: 5px 5px 0 var(--poiem-ink); }
-.poiem-about-hero .poiem-logo { color: var(--poiem-ink); width: min(230px, 80%); }
-.poiem-about-hero h2 { margin: 26px 0 12px; max-width: 15ch; font: 600 clamp(2rem, 6vw, 3rem)/1.1 var(--display); letter-spacing: -.035em; }
-.poiem-about-hero p { max-width: 48ch; line-height: 1.7; }
-.poiem-about-label { display: block; margin-top: 26px; font: 800 .7rem/1.5 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
 
 /* One signature across the journal, tools and personal space. */
 .poiem-section-label {
@@ -49,41 +25,6 @@
 .poiem-section-label .poiem-logo { width: 66px; color: var(--ink); }
 .poiem-section-divider { width: 1px; height: 14px; background: currentColor; opacity: .4; }
 
-/* Iris is for finding your way; persimmon remains the main action. */
-:root .app-shell.food-club-app .bottom-nav .nav-item.active {
-  color: var(--selection);
-  background: transparent;
-  box-shadow: none;
-}
-:root .app-shell.food-club-app .bottom-nav .nav-item.active .nav-item-inner {
-  background: var(--selection-soft);
-  color: var(--selection);
-  border-color: var(--selection);
-  box-shadow: 2px 2px 0 var(--club-shadow);
-}
-:root .app-shell.food-club-app.you-refresh .you-shortcuts a[aria-current="location"] {
-  background: var(--selection-soft);
-  color: var(--selection);
-  border-color: var(--selection);
-}
-.food-club-app { --poiem-header-surface: var(--poiem-iris); --poiem-header-ink: #fff8eb; }
-:root[data-theme="dark"] .food-club-app { --poiem-header-surface: var(--selection-soft); --poiem-header-ink: var(--ink); }
-:root .app-shell.food-club-app.you-refresh .you-header,
-:root .app-shell.food-club-app.coach-shell .coach-header-bar {
-  background: var(--poiem-header-surface);
-  color: var(--poiem-header-ink);
-}
-:root .app-shell.food-club-app.you-refresh .you-header :is(.page-title, .page-sub),
-:root .app-shell.food-club-app.coach-shell :is(.coach-header-title, .coach-header-sub),
-.food-club-app :is(.you-header, .coach-header-bar) :is(.poiem-section-label, .poiem-logo) {
-  color: var(--poiem-header-ink);
-}
-.coach-header-info .poiem-section-label { margin-bottom: 4px; font-size: .5625rem; gap: 6px 8px; }
-.coach-header-info .poiem-section-label .poiem-logo { width: 52px; }
-:root .app-shell.food-club-app.you-refresh .you-header > div:first-child { min-width: 0; }
-:root .app-shell.food-club-app.you-refresh .you-header .page-sub { overflow-wrap: anywhere; }
-:root .app-shell.food-club-app.you-refresh .you-momo-mark { flex-shrink: 0; }
-
 /* Settings search stays in normal flow, with ordinary keyboard-friendly links. */
 .poiem-settings-finder { position: relative; margin: 12px 0 24px; }
 .poiem-search-field {
@@ -99,19 +40,6 @@
 }
 .poiem-search-field > svg { flex: none; }
 .poiem-search-field:focus-within { border-color: var(--selection); outline: 3px solid var(--selection-soft); outline-offset: 3px; }
-:root .food-club-app .poiem-search-field input {
-  width: 100%;
-  min-width: 0;
-  min-height: 48px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  outline: none;
-  background: transparent;
-  color: var(--ink);
-  box-shadow: none;
-  font: 500 1rem/1.5 var(--sans);
-}
 .poiem-search-field input::placeholder { color: var(--ink-mute); opacity: 1; }
 .poiem-search-field input::-webkit-search-cancel-button { -webkit-appearance: none; }
 .poiem-search-clear { position: absolute; right: 4px; top: 4px; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 7px; background: transparent; color: var(--ink-mute); }
@@ -124,48 +52,14 @@
 .poiem-settings-results strong { display: block; font-size: .9375rem; }
 .poiem-settings-results small { display: block; margin-top: 4px; font-size: .8125rem; color: var(--ink-mute); }
 .poiem-settings-results a:is(:hover, :focus-visible) { background: var(--selection-soft); }
-:root .food-club-app .poiem-settings-results a:focus-visible { outline-offset: -3px; }
-.you-refresh #you-appearance { scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px); }
-
-/* Give the day one main action, with optional extras one tap away. */
-.poiem-journal-intro { margin: 0 0 20px; color: var(--ink-mute); font-size: .8125rem; line-height: 1.6; }
-.poiem-journal-intro span { color: var(--ink); font-weight: 600; }
-:root .food-club-app .home-chip { background: var(--paper-card); color: var(--ink); box-shadow: none; border: 1.5px solid var(--rule-strong); }
-:root .food-club-app .home-chip:last-child { background: var(--selection-soft); color: var(--selection); }
-:root .food-club-app .home-macro-chip { box-shadow: none; }
-:root .food-club-app .today-nutrition-card { border-radius: 8px 24px 8px 8px; }
-.today-refresh .home-main { padding-bottom: calc(var(--nav-h) + var(--safe-bottom) + 24px); }
-.poiem-daily-extras { grid-column: 1 / -1; border: 1.5px solid var(--club-line); border-radius: 12px; background: var(--paper-card); }
-.poiem-daily-extras > summary { display: flex; align-items: center; gap: 12px; min-height: 80px; padding: 16px; border-radius: 10px; cursor: pointer; list-style: none; color: var(--ink); }
-.poiem-daily-extras > summary::-webkit-details-marker { display: none; }
-.poiem-daily-extras > summary strong { display: block; font: 600 1.125rem/1.3 var(--display); }
-.poiem-daily-extras > summary small { display: block; margin-top: 4px; color: var(--ink-mute); font-size: .75rem; line-height: 1.5; }
-.poiem-extras-icon { display: grid; place-items: center; width: 42px; height: 42px; flex: none; border-radius: 11px; background: var(--selection-soft); color: var(--selection); }
-.poiem-disclosure-chevron { flex: none; margin-left: auto; color: var(--ink-mute); }
-.poiem-daily-extras[open] > summary { border-bottom: 1px dashed var(--rule-strong); border-radius: 10px 10px 0 0; }
-.poiem-daily-extras[open] .poiem-disclosure-chevron { transform: rotate(180deg); }
-.poiem-daily-extras > summary:focus-visible { outline: 3px solid var(--selection); outline-offset: 4px; }
-.poiem-extras-content { display: grid; gap: 16px; padding: 16px; }
-.poiem-extras-content > * { min-width: 0; margin: 0; }
-
-@media (min-width: 900px) {
-  .poiem-extras-content { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .poiem-extras-content .habit-milestones { grid-column: 1 / -1; }
-}
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .poiem-settings-results a > svg { transition: transform 160ms ease; }
   .poiem-settings-results a:hover > svg { transform: translate(2px, -2px); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .poiem-disclosure-chevron { transition: transform 180ms ease; }
   .poiem-search-field { transition: border-color 160ms ease, outline-color 160ms ease; }
 }
 @media (max-width: 380px) {
   .welcome-brand .poiem-logo { width: 104px; }
-  .poiem-journal-signature { gap: 10px; }
-  .poiem-journal-signature span { font-size: .5625rem; }
-  .poiem-daily-extras > summary { gap: 10px; padding: 14px 12px; }
-  .poiem-extras-icon { width: 34px; height: 38px; }
-  .poiem-extras-content { padding: 12px; }
 }
 }

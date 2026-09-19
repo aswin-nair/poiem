@@ -16,7 +16,8 @@ beforeEach(() => { state = freshState() })
 describe('character-led login', () => {
   it('keeps sign-in focused, named, and password-masked initially', () => {
     const html = render()
-    expect(html).toContain('<main class="login-page auth-refresh food-club-auth poiem-auth-signin">')
+    expect(html).toContain('<main class="k-screen k-account is-signin">')
+    expect(html).not.toContain('food-club-frame')
     expect(html).toContain('Welcome back!')
     expect(html).toContain('role="group" aria-label="Account access"')
     expect(html).toContain('<fieldset class="auth-fields">')

@@ -12,23 +12,5 @@
 .progress-recipe-fill { display: block; height: 100%; background: var(--club-tomato, #ff754f); transition: width .28s cubic-bezier(.22, 1, .36, 1); }
 .progress-recipe-stops { position: absolute; inset: 0; display: grid; }
 .progress-recipe-stops i:not(:last-child) { border-right: 2px solid var(--club-card, #fffefa); }
-.setup-refresh .progress-recipe { background: var(--paper-card); border: var(--fun-outline); }
-.setup-refresh .progress-recipe-fill { background: var(--selection); }
-.setup-refresh .progress-recipe-stops i:not(:last-child) { border-right-color: var(--paper-card); }
 @media (prefers-reduced-motion: reduce) { .progress-recipe-fill { transition: none; } }
-
-/* The result is a nutrition-label receipt, with theme-aware paper and ink. */
-.setup-refresh .setup-daily-recipe { margin: 4px 5px 10px 0; padding: clamp(12px, 3vw, 20px); border-radius: 2px 15px 2px 2px; background: var(--paper-card); color: var(--ink); border-color: var(--edge-ink); box-shadow: 5px 5px 0 var(--shadow-ink); }
-.setup-recipe-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 16px; border-bottom: 3px solid var(--edge-ink); }
-.setup-recipe-heading > div { min-width: 0; }
-.setup-recipe-heading > div > span { font-size: .65rem; font-weight: 800; letter-spacing: .12em; }
-.setup-recipe-heading h2 { margin: 6px 0 0; overflow-wrap: anywhere; font: 600 clamp(1.5rem, 4vw, 2rem)/1.1 var(--display); }
-.setup-recipe-heading .food-sticker { flex: 0 0 44px; background: var(--fun-yellow); color: var(--ink); }
-.setup-refresh .setup-daily-recipe .onboarding-goals-grid { gap: 0; margin-top: 8px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.setup-refresh .setup-daily-recipe .onboarding-goal-card { min-width: 0; padding: 12px 4px; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: var(--ink); }
-.setup-refresh .setup-daily-recipe .onboarding-goal-card:first-child { border-bottom: 2px solid var(--edge-ink); margin-bottom: 4px; }
-.setup-refresh .setup-daily-recipe .onboarding-goal-label { color: var(--ink-soft); font-size: .75rem; }
-.setup-refresh .setup-daily-recipe .onboarding-goal-value { color: var(--ink); font-size: clamp(1.2rem, 4vw, 1.8rem); }
-.setup-refresh .setup-daily-recipe .onboarding-goal-card:first-child .onboarding-goal-value { font-size: clamp(2.5rem, 8vw, 3.5rem); }
-.setup-recipe-foot { border-top: 1px dashed var(--edge-ink); margin: 6px 0 0; padding-top: 12px; font-size: .75rem; line-height: 1.5; color: var(--ink-soft); }
 }

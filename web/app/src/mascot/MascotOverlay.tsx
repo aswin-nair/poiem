@@ -169,6 +169,8 @@ export function MascotOverlay() {
 
   const screen = screenFromPath(location.pathname)
   const authScreen = location.pathname.startsWith('/login')
+    || location.pathname.startsWith('/forgot-password')
+    || location.pathname.startsWith('/reset-password')
   const activity = (state.gamification.mascotActivity ?? 'lively') as ActivityLevel
   const speechCooldownMs = SPEAK_COOLDOWN_MS[activity]
   const streak = getStreakWithFreezes(

@@ -7,12 +7,14 @@ const CIRC = 2 * Math.PI * RADIUS
 interface SplashScreenProps {
   /** When true, plays the fade/scale-out transition before the parent unmounts this component. */
   exiting?: boolean
+  /** After the first open in a session: stays invisible unless loading takes a noticeable moment. */
+  quiet?: boolean
 }
 
-export function SplashScreen({ exiting = false }: SplashScreenProps) {
+export function SplashScreen({ exiting = false, quiet = false }: SplashScreenProps) {
   return (
     <div
-      className={`splash-screen${exiting ? ' splash-exit' : ''}`}
+      className={`splash-screen${exiting ? ' splash-exit' : ''}${quiet ? ' is-quiet' : ''}`}
       role="status"
       aria-label="Loading Poiem"
     >

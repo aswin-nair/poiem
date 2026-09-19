@@ -1,0 +1,294 @@
+/* Coach, Support and About on the Poiem system. The same language as Today:
+   square cards on paper, tinted tiles, Momo in his pink card, and one acid
+   moment per screen. Support stays quiet on purpose: the phone numbers are its
+   only emphatic element. */
+@layer screens {
+  /* ── Shared page frame (Support, About) ─────────────────────── */
+  .k-page { min-height: 100dvh; }
+  .k-page-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 16px;
+    padding: 12px var(--k-gutter) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + 40px);
+  }
+  .k-page-main .back-link {
+    justify-self: start;
+    gap: 4px;
+    margin: 0 0 -6px -4px;
+    padding: 0 8px 0 4px;
+    border: 0;
+    background: none;
+    color: var(--k-ink);
+    font: 700 var(--k-text-sm)/1 var(--k-font-body);
+    text-decoration: none;
+  }
+  .k-page-main .back-link:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-page-head { display: grid; gap: 6px; }
+  .k-page-head h1 { margin: 0; font: 900 clamp(2.75rem, 12vw, 3.5rem)/.85 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-page-intro { max-width: 46ch; margin: 4px 0 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); color: var(--k-muted); text-wrap: pretty; }
+  .k-page-foot { margin: 4px 0 0; font: 500 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); text-align: center; }
+  .k-page .k-card { display: grid; gap: 8px; margin: 0; }
+  .k-page .k-card h2 { margin: 0; font: 900 1.5rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
+  .k-row-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0;
+    border-top: 1px solid var(--k-hair);
+    color: var(--k-ink);
+    font: 700 var(--k-text-sm)/1.25 var(--k-font-body);
+    text-decoration: none;
+  }
+  .k-row-link svg { flex: none; }
+  .k-row-link:hover span { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .k-row-link:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+
+  /* ── Support ────────────────────────────────────────────────── */
+  .k-support-lines { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .k-support-line h2 { font-size: 1.375rem; }
+  .k-support-phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 0 16px;
+    border: 2px solid var(--k-line);
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: var(--k-shadow-sm);
+    font: 900 1.75rem/1 var(--k-font-display);
+    letter-spacing: .02em;
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .k-support-phone:active { translate: 2px 2px; box-shadow: none; }
+  .k-support-phone:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .k-support-detail { margin: 0; font: 500 var(--k-text-sm)/1.5 var(--k-font-body); color: var(--k-muted); }
+  .k-support-urgent { border-color: var(--k-danger-ink); background: var(--k-danger-soft); }
+  .k-support-urgent h2 { color: var(--k-danger-ink); }
+  .k-support-urgent .k-support-detail { color: var(--k-ink); }
+  .k-support-pause .k-row-link { border-top: 0; }
+
+  /* ── About ─────────────────────────────────────────────────── */
+  .k-about-hero {
+    display: grid;
+    justify-items: start;
+    gap: 10px;
+    padding: 18px 16px;
+    border: 2px solid var(--k-on-acid);
+    background: var(--k-acid);
+    color: var(--k-on-acid);
+    box-shadow: var(--k-shadow);
+  }
+  .k-about-hero .poiem-logo { width: 132px; height: auto; color: var(--k-on-acid); }
+  .k-about-hero .poiem-logo-letter { fill: var(--k-on-acid); }
+  .k-about-hero h2 { margin: 0; font: 900 clamp(2rem, 9vw, 2.5rem)/.9 var(--k-font-display); text-transform: uppercase; color: var(--k-on-acid); }
+  .k-about-hero p { max-width: 42ch; margin: 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); color: var(--k-on-acid); }
+  .k-about-stamp { padding: 4px 8px; border: 2px solid var(--k-on-acid); background: var(--k-card); color: var(--k-ink); rotate: -2deg; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; }
+  .k-about-momo { grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: 14px; }
+  .k-about-momo-art {
+    width: 72px;
+    height: 78px;
+    padding: 4px;
+    border: 2px solid var(--k-on-acid);
+    border-radius: 48% 48% 10% 10%;
+    background: var(--k-momo);
+    box-shadow: var(--k-shadow-sm);
+    rotate: -5deg;
+  }
+  .k-about-momo > div { display: grid; gap: 8px; }
+  .k-about-momo p { margin: 0; font: 500 var(--k-text-sm)/1.5 var(--k-font-body); color: var(--k-muted); }
+  .k-about-links { gap: 0; padding-block: 4px; }
+  .k-about-links .k-row-link:first-child { border-top: 0; }
+
+  /* Momo's stickers on these screens sit in their own cards, not the old yellow blob. */
+  :is(.k-coach-momo, .k-coach-avatar, .k-about-momo-art) .momo-sticker {
+    display: block;
+    flex: none;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    transform: none;
+  }
+  :is(.k-coach-momo, .k-coach-avatar, .k-about-momo-art) svg { display: block; width: 100%; height: 100%; }
+
+  /* ── Coach ─────────────────────────────────────────────────── */
+  .k-coach { min-height: 100dvh; }
+  .k-coach-head {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 18px var(--k-gutter) 6px;
+  }
+  .k-coach-momo {
+    width: 64px;
+    height: 68px;
+    padding: 4px;
+    border: 2px solid var(--k-on-acid);
+    border-radius: 48% 48% 10% 10%;
+    background: var(--k-momo);
+    box-shadow: var(--k-shadow-sm);
+    rotate: -6deg;
+  }
+  .k-coach-title { display: grid; gap: 4px; min-width: 0; }
+  .k-coach-title h1 { margin: 0; font: 900 clamp(2.25rem, 10vw, 2.75rem)/.86 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-coach-sub { margin: 0; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
+  .k-coach-clear { align-self: start; min-width: 44px; }
+
+  .k-coach-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 14px;
+    /* Room for the message bar and the tab bar under the last message. */
+    padding: 10px var(--k-gutter) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + 150px);
+  }
+  .k-coach-main .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); box-shadow: none; font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
+
+  .k-coach-empty { display: grid; gap: 10px; box-shadow: var(--k-shadow); }
+  .k-coach-empty h2 { margin: 0; font: 900 1.875rem/.95 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
+  .k-coach-empty > p { margin: 0; font: 500 var(--k-text-md)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-coach-starters { display: grid; gap: 8px; margin-top: 2px; }
+  .k-coach-starter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 8px 12px;
+    border: 2px solid var(--k-line);
+    background: var(--tone);
+    color: var(--k-on-tone);
+    font: 700 var(--k-text-sm)/1.3 var(--k-font-body);
+    text-align: left;
+    cursor: pointer;
+    transition: translate 140ms ease, box-shadow 140ms ease;
+  }
+  .k-coach-starter.is-tone-butter { --tone: var(--k-butter); }
+  .k-coach-starter.is-tone-peach { --tone: var(--k-peach); }
+  .k-coach-starter.is-tone-mint { --tone: var(--k-mint); }
+  .k-coach-starter svg { flex: none; }
+  .k-coach-starter:disabled { border-style: dashed; border-color: var(--k-hair-strong); background: transparent; color: var(--k-muted); cursor: default; }
+  .k-coach-starter:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  @media (hover: hover) and (pointer: fine) {
+    .k-coach-starter:not(:disabled):hover { translate: -1px -1px; box-shadow: var(--k-shadow-sm); }
+  }
+  .k-coach-privacy { margin: 0; font: 500 var(--k-text-xs)/1.5 var(--k-font-body); color: var(--k-muted); }
+
+  /* The conversation: Coach on the left in cards, your words on the right in butter. */
+  .k-coach-thread { display: grid; gap: 12px; }
+  .k-coach-msg { display: grid; align-items: end; gap: 4px 10px; max-width: 100%; }
+  .k-coach-msg.is-assistant { grid-template-columns: 40px minmax(0, 1fr); justify-self: stretch; }
+  .k-coach-msg.is-user { justify-items: end; justify-self: end; max-width: 86%; }
+  .k-coach-avatar {
+    grid-row: 1;
+    width: 40px;
+    height: 43px;
+    padding: 2px;
+    border: 2px solid var(--k-on-acid);
+    border-radius: 48% 48% 10% 10%;
+    background: var(--k-momo);
+  }
+  .k-coach-bubble { min-width: 0; padding: 12px 14px; border: 2px solid var(--k-line); background: var(--k-card); color: var(--k-ink); }
+  .k-coach-msg.is-assistant .k-coach-bubble { box-shadow: var(--k-shadow-sm); }
+  .k-coach-msg.is-user .k-coach-bubble { background: var(--k-butter); color: var(--k-on-tone); }
+  .k-coach-text { display: grid; gap: 8px; margin: 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); overflow-wrap: anywhere; }
+  .k-coach-text p, .k-coach-text ul { margin: 0; }
+  .k-coach-text ul { display: grid; gap: 4px; padding-left: 1.2em; }
+  .k-coach-text strong { font-weight: 800; }
+  .k-coach-delete {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 6px;
+    border: 0;
+    background: none;
+    color: var(--k-muted);
+    font: 600 var(--k-text-xs)/1 var(--k-font-body);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .k-coach-msg.is-assistant .k-coach-delete { grid-column: 2; justify-self: start; margin: -6px 0 -10px -6px; }
+  .k-coach-msg.is-user .k-coach-delete { margin: -6px -6px -10px 0; }
+  .k-coach-delete:hover { color: var(--k-danger-ink); }
+  .k-coach-delete:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 0; }
+  .k-coach-msg.is-typing .k-coach-bubble { display: flex; gap: 6px; justify-self: start; padding: 14px 16px; }
+  .k-coach-dot { width: 8px; height: 8px; background: var(--k-ink); animation: k-coach-dot 1s ease-in-out infinite; }
+  .k-coach-dot:nth-child(2) { animation-delay: .15s; }
+  .k-coach-dot:nth-child(3) { animation-delay: .3s; }
+  @keyframes k-coach-dot { 0%, 60%, 100% { translate: 0 0; opacity: .4; } 30% { translate: 0 -5px; opacity: 1; } }
+
+  .k-coach-help { display: grid; gap: 4px; padding: 12px 14px; border: 2px solid var(--k-line); background: var(--k-mint); color: var(--k-on-tone); }
+  .k-coach-help .k-eyebrow { color: var(--k-on-tone); }
+  .k-coach-help ul { display: grid; margin: 0; padding: 0; list-style: none; }
+  .k-coach-help a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 44px;
+    border-top: 1px solid color-mix(in srgb, var(--k-on-tone) 22%, transparent);
+    color: var(--k-on-tone);
+    font: 700 var(--k-text-sm)/1.25 var(--k-font-body);
+    text-decoration: none;
+  }
+  .k-coach-help li:first-child a { border-top: 0; }
+  .k-coach-help a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .k-coach-help a:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+
+  /* The message bar sits above the tab bar. */
+  .k-coach-compose {
+    position: fixed;
+    right: 0;
+    bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px));
+    left: 0;
+    z-index: calc(var(--k-z-nav) - 1);
+    display: grid;
+    gap: 6px;
+    width: 100%;
+    max-width: var(--k-shell);
+    margin: 0 auto;
+    padding: 10px var(--k-gutter) 8px;
+    border-top: 2px solid var(--k-line);
+    background: var(--k-ground);
+  }
+  .k-coach-compose .flow-allowance { margin: 0; }
+  .k-coach-compose .pressable { justify-self: start; --action-height: 2.75rem; }
+  .k-coach-form { display: grid; grid-template-columns: minmax(0, 1fr) 52px; gap: 8px; margin: 0; }
+  .k-coach-input {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    padding: 0 14px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: none;
+    font: 600 var(--k-text-md)/1.2 var(--k-font-body);
+  }
+  .k-coach-input::placeholder { color: var(--k-muted); opacity: 1; }
+  .k-coach-input:focus { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-coach-send {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: 2px solid var(--k-on-action);
+    border-radius: 0;
+    background: var(--k-action);
+    color: var(--k-on-action);
+    box-shadow: var(--k-shadow-sm);
+    cursor: pointer;
+  }
+  .k-coach-send:active:not(:disabled) { translate: 2px 2px; box-shadow: none; }
+  .k-coach-send:disabled { border-color: var(--k-hair-strong); background: var(--k-sunken); color: var(--k-muted); box-shadow: none; cursor: default; }
+  .k-coach-send:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+}

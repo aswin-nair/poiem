@@ -113,7 +113,9 @@
   :is(.flow-link-row a, .flow-submit > a, .flow-feedback a, .flow-text-action) {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
+    min-width: 44px;
     min-height: 44px;
     padding: 0;
     border: 0;

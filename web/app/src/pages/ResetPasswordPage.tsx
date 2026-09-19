@@ -32,11 +32,11 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <BrandLogo className="poiem-auth-logo" />
-        <h1 className="login-title">Choose a new password</h1>
-        <p className="login-sub">This link works once and expires in 30 minutes.</p>
+    <main className="k-screen k-account is-simple">
+      <section className="login-card k-account-card" aria-labelledby="account-heading">
+        <BrandLogo className="k-account-logo" />
+        <h1 id="account-heading" className="k-account-simple-title">Choose a new password</h1>
+        <p className="k-account-simple-sub">This link works once and expires in 30 minutes.</p>
         {error && <div className="error-banner" role="alert">{error}</div>}
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="field">
@@ -69,10 +69,10 @@ export function ResetPasswordPage() {
             {loading ? 'Please wait…' : 'Update password'}
           </PressableButton>
         </form>
-        <p className="login-foot">
+        <p className="login-hint">
           <Link to="/login">Back to sign in</Link>
         </p>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }

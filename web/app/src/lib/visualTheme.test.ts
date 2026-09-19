@@ -77,7 +77,7 @@ describe('shared visual theme', () => {
     for (let index = 1; index < levels.length; index += 1) {
       expect(levels[index]).toBeGreaterThan(levels[index - 1])
     }
-    expect(darkStyles).toContain('.you-refresh .you-header')
+    expect(readFileSync(new URL('../styles/system/tokens.css', import.meta.url), 'utf8')).toMatch(/:root\[data-theme="dark"\] \{[^}]*--k-card:/)
     expect(darkStyles).toContain('.app-shell .bottom-nav')
     expect(imports.indexOf('dark-mode.css')).toBeGreaterThan(imports.indexOf('appearance.css'))
   })
@@ -128,13 +128,19 @@ describe('shared visual theme', () => {
   it('leaves accessibility rules last and pairs the colourful heatmap with its legend', () => {
     expect(imports.trim().endsWith("@import './styles/a11y.css';")).toBe(true)
     expect(imports.indexOf('product-ui.css')).toBeGreaterThan(imports.indexOf('you-ui.css'))
-    expect(styles).toContain('.insights-refresh .consistency-card .insights-heat-cell.is-logged, .insights-refresh .consistency-card .insights-legend .is-logged { background: var(--ink); }')
-    expect(styles).toContain('.insights-heat-cell.is-future, .insights-legend .is-future')
+    const insights = readFileSync(new URL('../styles/screens/insights.css', import.meta.url), 'utf8')
+    const rule = (selector: string) => insights.split('\n').find(line => line.includes(`${selector} {`)) ?? ''
+    // The legend's swatches paint exactly like the heat cells they explain.
+    expect(rule('.insights-heat-cell.is-logged')).toContain('background: var(--k-acid)')
+    expect(rule('.insights-legend i.is-logged')).toContain('background: var(--k-acid)')
+    expect(rule('.insights-heat-cell.is-future')).toContain('border-style: dashed')
+    expect(rule('.insights-legend i.is-future')).toContain('border-style: dashed')
   })
 
   it('keeps decorative Momo stickers stationary and styles the welcome route too', () => {
     expect(styles).toContain('.momo-sticker .momo-art, .momo-sticker .momo-art * { animation: none !important; transition: none !important; }')
-    expect(readFileSync(new URL('../styles/welcome-ui.css', import.meta.url), 'utf8')).toContain('.welcome-refresh .welcome-content')
-    expect(readFileSync(new URL('../styles/setup-ui.css', import.meta.url), 'utf8')).toContain('.setup-refresh .setup-form')
+    const firstRun = readFileSync(new URL('../styles/screens/first-run.css', import.meta.url), 'utf8')
+    expect(firstRun).toContain('.k-intro-stage')
+    expect(firstRun).toContain('.k-setup-form')
   })
 })

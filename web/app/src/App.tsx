@@ -8,11 +8,7 @@ import { hasSeenAccount } from './lib/guestMode'
 import { AuthProvider, useAuth } from './store/AuthContext'
 import { AppProvider, useApp } from './store/AppContext'
 import { ToastProvider } from './components/Toast'
-import { LoginPage } from './pages/LoginPage'
-import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
-import { ResetPasswordPage } from './pages/ResetPasswordPage'
 import { HomePage } from './pages/HomePage'
-import { OnboardingPage } from './pages/OnboardingPage'
 import { LogSheet } from './pages/LogSheet'
 import { LogSheetOpenContext } from './lib/logSheetOpen'
 import { LogTextPage } from './pages/LogTextPage'
@@ -22,7 +18,6 @@ import { ReviewFoodPage } from './pages/ReviewFoodPage'
 import { ManualEntryPage } from './pages/ManualEntryPage'
 import { EditFoodPage } from './pages/EditFoodPage'
 import { ProgressPage } from './pages/ProgressPage'
-import { CoachPage } from './pages/CoachPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
@@ -35,6 +30,12 @@ const AboutPage = lazy(() => import('./pages/AboutPage'))
 const SupportPage = lazy(() => import('./pages/SupportPage'))
 const JourneyPage = lazy(() => import('./pages/JourneyPage'))
 const ComponentSheetPage = lazy(() => import('./pages/ComponentSheetPage'))
+// Screens most visits never open load on demand: the first run, the account screens and Coach.
+const OnboardingPage = lazy(() => import('./pages/OnboardingPage').then(module => ({ default: module.OnboardingPage })))
+const LoginPage = lazy(() => import('./pages/LoginPage').then(module => ({ default: module.LoginPage })))
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage').then(module => ({ default: module.ForgotPasswordPage })))
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage').then(module => ({ default: module.ResetPasswordPage })))
+const CoachPage = lazy(() => import('./pages/CoachPage').then(module => ({ default: module.CoachPage })))
 
 function PageFallback() {
   return <main className="app-main"><p role="status">Opening…</p></main>
@@ -64,12 +65,19 @@ function ScrollToTop() {
     sheetBackground.current = null
     if (returnedFromSheet) return
     window.scrollTo(0, 0)
-    const frame = window.requestAnimationFrame(() => {
+    // A page that loads on demand arrives a moment after the route changes, so keep looking briefly.
+    let frame = 0
+    let tries = 0
+    const focusHeading = () => {
       const heading = document.querySelector<HTMLElement>('main h1, .app-shell > header h1')
-      if (!heading) return
-      heading.tabIndex = -1
-      heading.focus({ preventScroll: true })
-    })
+      if (heading) {
+        heading.tabIndex = -1
+        heading.focus({ preventScroll: true })
+      } else if (++tries < 60) {
+        frame = window.requestAnimationFrame(focusHeading)
+      }
+    }
+    frame = window.requestAnimationFrame(focusHeading)
     return () => window.cancelAnimationFrame(frame)
   }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
   return null
@@ -151,7 +159,7 @@ function AuthenticatedRoutes() {
   if (!state.onboarded) {
     return (
       <Routes>
-        <Route path="/onboarding" element={<OnboardingPage />} />
+        <Route path="/onboarding" element={<Suspense fallback={<PageFallback />}><OnboardingPage /></Suspense>} />
         <Route path="*" element={<Navigate to="/onboarding" replace />} />
       </Routes>
     )
@@ -165,7 +173,7 @@ function AuthenticatedRoutes() {
     <Routes location={logSheetOpen && background ? background : location}>
       <Route path="/" element={<HomePage />} />
       <Route path="/progress" element={<ProgressPage />} />
-      <Route path="/coach" element={<CoachPage />} />
+      <Route path="/coach" element={<Suspense fallback={<PageFallback />}><CoachPage /></Suspense>} />
       {/* Opened directly, the log sheet sits over Today. */}
       <Route path="/log" element={<HomePage />} />
       <Route path="/log/text" element={<LogTextPage />} />
@@ -203,10 +211,10 @@ function GuestRoutes() {
       <AnchorProvider>
         <MascotOverlay />
         <Routes>
-          <Route path="/onboarding" element={<OnboardingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/onboarding" element={<Suspense fallback={<PageFallback />}><OnboardingPage /></Suspense>} />
+          <Route path="/login" element={<Suspense fallback={<PageFallback />}><LoginPage /></Suspense>} />
+          <Route path="/forgot-password" element={<Suspense fallback={<PageFallback />}><ForgotPasswordPage /></Suspense>} />
+          <Route path="/reset-password" element={<Suspense fallback={<PageFallback />}><ResetPasswordPage /></Suspense>} />
           <Route path="*" element={<Navigate to={fallback} replace />} />
         </Routes>
       </AnchorProvider>
@@ -218,9 +226,9 @@ function GuestRoutes() {
       <MascotOverlay />
       <Routes>
         <Route path="/" element={<HomePage guest />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/login" element={<Suspense fallback={<PageFallback />}><LoginPage /></Suspense>} />
+        <Route path="/forgot-password" element={<Suspense fallback={<PageFallback />}><ForgotPasswordPage /></Suspense>} />
+        <Route path="/reset-password" element={<Suspense fallback={<PageFallback />}><ResetPasswordPage /></Suspense>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AnchorProvider>
@@ -232,12 +240,12 @@ function AppGate() {
 
   if (!sessionReady) {
     return (
-      <div className="login-page">
-        <div className="login-card">
-          <h1 className="login-title"><BrandLogo className="poiem-session-logo" /></h1>
-          <p className="login-sub">Checking your session…</p>
-        </div>
-      </div>
+      <main className="k-screen k-account is-simple">
+        <section className="login-card k-account-card is-session" aria-live="polite">
+          <h1 className="k-account-simple-title"><BrandLogo className="k-account-logo" /></h1>
+          <p className="k-account-simple-sub">Checking your session…</p>
+        </section>
+      </main>
     )
   }
 

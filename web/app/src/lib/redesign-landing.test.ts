@@ -35,9 +35,9 @@ describe('redesign landing audit', () => {
     expect(css).toContain('--action-height: 3.375rem;')
   })
 
-  it('keeps over-budget copy on the ink-soft token', () => {
-    const over = css.match(/\.home-kcal-left\.is-over\s*\{([^}]*)\}/)?.[1]
-    expect(over).toContain('var(--ink-soft)')
+  it('keeps over-budget as information: a warm fill, never danger', () => {
+    const over = css.match(/^\s*\.k-meter\.is-over \.k-meter-fill\s*\{([^}]*)\}/m)?.[1]
+    expect(over).toContain('var(--k-over-fill)')
     expect(over).not.toMatch(/danger/)
   })
 
@@ -56,7 +56,6 @@ describe('redesign landing audit', () => {
     expect(css).toContain('--cobalt:')
     expect(css).toContain('--squish-in:')
     expect(css).toContain('var(--clay-squish)')
-    expect(css).toContain('.clay-inset')
   })
 
   it('documents Expo as web-first, no shared token extract', () => {

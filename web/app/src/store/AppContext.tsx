@@ -65,6 +65,18 @@ import { PressableButton } from '../components/PressableButton'
 
 const MIN_SPLASH_MS = 1100
 
+/* The brand splash plays once per browser session. Reloads, deep links and
+   sign-ins after that go straight to the page as soon as the data is ready. */
+const SPLASH_SEEN_KEY = 'poiem-splash-seen'
+
+function splashSeenThisSession(): boolean {
+  try { return sessionStorage.getItem(SPLASH_SEEN_KEY) === '1' } catch { return false }
+}
+
+function markSplashSeen(): void {
+  try { sessionStorage.setItem(SPLASH_SEEN_KEY, '1') } catch { /* private mode */ }
+}
+
 const SPLASH_EXIT_MS = 320
 
 class CloudSyncUnavailableError extends Error {
@@ -171,6 +183,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
   const [state, setState] = useState<AppState>(() => (cloud ? freshState() : loadState(userId)))
 
   const [loading, setLoading] = useState(true)
+  const [quietSplash] = useState(splashSeenThisSession)
 
   const [cloudLoadError, setCloudLoadError] = useState(false)
 
@@ -467,7 +480,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     async function hydrate() {
 
-      const minTime = delay(MIN_SPLASH_MS)
+      const quiet = splashSeenThisSession()
+      const minTime = quiet ? Promise.resolve() : delay(MIN_SPLASH_MS)
 
       let hydrationFailed = false
 
@@ -650,6 +664,12 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       })
 
       if (cloud) void drainOutboxRef.current()
+
+      markSplashSeen()
+      if (quiet) {
+        setLoading(false)
+        return
+      }
 
       // Play the splash's fade/scale-out transition before unmounting it.
 
@@ -1104,7 +1124,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
   if (loading) {
 
-    return <SplashScreen exiting={splashExiting} />
+    return <SplashScreen exiting={splashExiting} quiet={quietSplash} />
 
   }
 

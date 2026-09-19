@@ -70,58 +70,55 @@ export function SupportPage() {
   useEffect(() => track({ name: 'support_opened' }), [])
 
   return (
-    <div className="app-shell">
-      <main className="app-main motion-stagger">
+    <div className="app-shell k-screen k-page k-support">
+      <main className="app-main k-page-main" data-mascot-avoid>
         <BackLink to="/settings" />
-        <h1 className="screen-title" style={{ marginTop: 12 }}>Support</h1>
-
-        <div className="progress-card">
-          <p className="about-lead">
+        <header className="k-page-head">
+          <p className="k-eyebrow">Someone to talk to</p>
+          <h1>Support</h1>
+          <p className="k-page-intro">
             If food, eating or your body is feeling heavy, talking to someone
             helps more than any tracker can. The helplines below are free and
             confidential; the directory can help you find local support.
           </p>
-        </div>
+        </header>
 
-        {HELPLINES.map(line => (
-          <div className="progress-card" key={line.region}>
-            <p className="support-region">{line.region}</p>
-            <p className="support-name">{line.name}</p>
-            {line.dial ? (
-              <a className="support-phone" href={`tel:${line.dial}`}>{line.phone}</a>
-            ) : null}
-            <p className="support-detail">{line.detail}</p>
-            <a
-              className="about-link-row"
-              href={line.url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>Visit website</span>
-              <span className="about-chevron"><IconArrowUpRight size={15} /></span>
-            </a>
-          </div>
-        ))}
+        <ul className="k-support-lines">
+          {HELPLINES.map(line => (
+            <li className="k-card k-support-line" key={line.region}>
+              <p className="k-eyebrow">{line.region}</p>
+              <h2>{line.name}</h2>
+              {line.dial ? (
+                <a className="k-support-phone" href={`tel:${line.dial}`}>{line.phone}</a>
+              ) : null}
+              <p className="k-support-detail">{line.detail}</p>
+              <a className="k-row-link" href={line.url} target="_blank" rel="noreferrer">
+                <span>Visit website</span>
+                <IconArrowUpRight size={16} />
+              </a>
+            </li>
+          ))}
+        </ul>
 
-        <div className="progress-card">
-          <p className="support-region">In immediate danger</p>
-          <p className="support-detail">
+        <section className="k-card k-support-urgent" aria-labelledby="support-urgent-title">
+          <h2 id="support-urgent-title">In immediate danger</h2>
+          <p className="k-support-detail">
             Call your local emergency number. In the US you can also call or
             text 988 for the Suicide and Crisis Lifeline.
           </p>
-        </div>
+        </section>
 
-        <div className="progress-card">
-          <p className="support-detail">
+        <section className="k-card k-support-pause" aria-label="Take a break">
+          <p className="k-support-detail">
             You can also step away from the numbers without losing your streak.
           </p>
-          <Link className="about-link-row" to="/settings">
+          <Link className="k-row-link" to="/settings">
             <span>Pause tracking</span>
-            <span className="about-chevron"><IconArrowUpRight size={15} /></span>
+            <IconArrowUpRight size={16} />
           </Link>
-        </div>
+        </section>
 
-        <p className="about-version">
+        <p className="k-page-foot">
           Poiem is a habit tracker, not a medical tool.
         </p>
       </main>

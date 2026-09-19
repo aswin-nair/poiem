@@ -25,11 +25,11 @@ export function ForgotPasswordPage() {
   }
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <BrandLogo className="poiem-auth-logo" />
-        <h1 className="login-title">Forgot password</h1>
-        <p className="login-sub">
+    <main className="k-screen k-account is-simple">
+      <section className="login-card k-account-card" aria-labelledby="account-heading">
+        <BrandLogo className="k-account-logo" />
+        <h1 id="account-heading" className="k-account-simple-title">Forgot password</h1>
+        <p className="k-account-simple-sub">
           {submitted
             ? 'If an account exists for that address, reset instructions are on the way.'
             : 'Enter the email you use to sign in. We will send a reset link if an account exists.'}
@@ -54,10 +54,10 @@ export function ForgotPasswordPage() {
             </PressableButton>
           </form>
         )}
-        <p className="login-foot">
+        <p className="login-hint">
           <Link to="/login">Back to sign in</Link>
         </p>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }

@@ -1,91 +1,9 @@
 @layer legacy {
-/* CALORIES BURNED — Activity Quick Row & Sheet */
-
-/* ── Quick preset row on home screen ─────────────────────────── */
-.activity-quick-row {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 4px 0 8px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
-  scroll-padding-inline: 16px;
-}
-.activity-quick-row::-webkit-scrollbar { display: none; }
-
-.activity-quick-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 9px 13px 8px;
-  border-radius: 16px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--ink-soft);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.14s, border-color 0.14s, transform 0.12s;
-  -webkit-tap-highlight-color: transparent;
-}
-.activity-quick-chip > span:first-child { font-size: 1.3rem; line-height: 1; }
-.activity-quick-chip:active { transform: scale(0.93); }
-.activity-quick-chip:hover {
-  background: var(--selection-soft);
-  border-color: var(--selection);
-  color: var(--ink);
-}
-
-.activity-detail-row {
-  width: 100%;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  padding: 0 var(--space-md);
-  margin-bottom: var(--space-lg);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--paper-card) 72%, transparent);
-  color: var(--ink-soft);
-  font-size: var(--text-label);
-  text-align: left;
-  transition: background var(--motion-press) ease, transform var(--motion-press) ease;
-}
-
-.activity-detail-row > span:first-child {
-  color: var(--ink);
-  font-weight: 700;
-}
-
-.activity-detail-row:hover { background: var(--paper-card); }
-.activity-detail-row:active { transform: translateY(1px); }
 
 /* ── CalorieHero burned chip ──────────────────────────────────── */
 @keyframes burned-chip-in {
   from { opacity: 0; transform: translateY(4px) scale(0.9); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.calorie-burned-chip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 8px;
-  padding: 5px 16px;
-  border-radius: 20px;
-  background: var(--success-soft);
-  border: 1px solid color-mix(in srgb, var(--success-ink) 35%, transparent);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--success-ink);
-  animation: burned-chip-in 0.3s ease both;
 }
 
 /* ── Activity Sheet (bottom sheet) ───────────────────────────── */
@@ -288,8 +206,7 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .activity-sheet,
-  .calorie-burned-chip {
+  .activity-sheet {
     animation: none !important;
   }
 }
@@ -358,13 +275,6 @@
   animation: splash-ring-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
 }
 
-.splash-logo {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-  animation: splash-logo-pulse 1.6s ease-in-out 0.2s infinite;
-}
-
 .splash-wordmark {
   font-size: 1.4rem;
   font-weight: 800;
@@ -389,7 +299,6 @@
     animation: none !important;
     stroke-dashoffset: 0;
   }
-  .splash-logo,
   .splash-wordmark,
   .splash-tagline {
     animation: none !important;
@@ -433,34 +342,6 @@
   padding-top: 4px;
 }
 
-.home-skeleton-week {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  padding: 4px 8px 8px;
-}
-
-.home-skeleton-day {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.home-skeleton-ring-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px 0 20px;
-}
-
-.home-skeleton-chips {
-  display: flex;
-  gap: 8px;
-  overflow: hidden;
-  padding: 4px 0 6px;
-}
-
 .home-skeleton-macros {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -477,26 +358,6 @@
   border-radius: var(--radius-sm);
 }
 
-.home-skeleton-food {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 4px;
-}
-
-.home-skeleton-food-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.home-skeleton-food-lines {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
 /* ═══════════════════════════════════════════════════════════════
    HOME AMBIENT GLOW (zone-tinted)
    ═══════════════════════════════════════════════════════════════ */
@@ -504,38 +365,6 @@
 @keyframes glow-drift {
   0%, 100% { transform: translate(-50%, 0) scale(1);    opacity: 0.9; }
   50%       { transform: translate(-50%, 10px) scale(1.08); opacity: 1;   }
-}
-
-.home-ambient-glow {
-  position: absolute;
-  top: -80px;
-  left: 50%;
-  width: 340px;
-  height: 340px;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.35;
-  pointer-events: none;
-  z-index: 0;
-  transform: translate(-50%, 0);
-  animation: glow-drift 8s ease-in-out infinite;
-  transition: background 0.6s ease;
-  background: radial-gradient(circle, rgba(255, 122, 80, 0.22), transparent 70%);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-ambient-glow {
-    animation: none !important;
-  }
-}
-
-/* Streak state carried by the existing week strip, so Home has one week row
-   rather than two competing ones. */
-.week-day-streak {
-  display: block;
-  height: 13px;
-  font-size: 0.62rem;
-  line-height: 13px;
 }
 
 .sr-only {

@@ -1,0 +1,275 @@
+/* Sign in, sign up, forgot and reset password, and the session check, on the
+   Poiem system. The acid poster keeps the brand voice (EAT. LOG. LIVE.) and
+   Momo reacting to the form; the form itself is a plain square card. On a
+   phone the poster is compact so the form arrives quickly, and the submit
+   button docks above the keyboard line. */
+@layer screens {
+  .k-account { min-height: 100dvh; background: var(--k-ground); color: var(--k-ink); }
+  .k-account-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 14px var(--k-gutter) 0;
+  }
+  .k-account-bar .appearance-options { display: flex; gap: 0; padding: 0; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: var(--k-shadow-sm); }
+  .k-account-bar .appearance-option { flex: 0 0 44px; }
+  .k-account-bar .appearance-option-face { width: 44px; min-height: 44px; padding: 0; border-radius: 0; background: transparent; color: var(--k-ink); transform: none; }
+  .k-account-bar .appearance-option:hover input:not(:checked) + .appearance-option-face { background: var(--k-sunken); color: var(--k-ink); transform: none; }
+  .k-account-bar .appearance-option > input:checked + .appearance-option-face { background: var(--k-ink); color: var(--k-ground); }
+  .k-account-bar .appearance-option > input:focus-visible + .appearance-option-face { outline: 3px solid var(--k-focus); outline-offset: -5px; }
+  .k-account-layout {
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    max-width: var(--k-shell);
+    margin: 0 auto;
+    padding: 14px var(--k-gutter) 32px;
+  }
+
+  /* ── The poster ────────────────────────────────────────────── */
+  .k-account-poster {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 108px;
+    grid-template-areas: "eyebrow eyebrow" "headline stage" "bubble bubble";
+    align-items: center;
+    gap: 8px 14px;
+    padding: 16px;
+    border: 2px solid var(--k-on-acid);
+    background: var(--k-acid);
+    color: var(--k-on-acid);
+    box-shadow: var(--k-shadow);
+  }
+  .k-account-poster > .k-eyebrow { grid-area: eyebrow; color: var(--k-on-acid); }
+  .k-account-headline {
+    display: grid;
+    grid-area: headline;
+    justify-items: start;
+    gap: 2px;
+    margin: 0;
+    font: 900 clamp(2.5rem, 13vw, 3.5rem)/.84 var(--k-font-display);
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+    color: var(--k-on-acid);
+  }
+  .k-account-headline span:nth-child(2) { color: transparent; -webkit-text-stroke: 2px var(--k-on-acid); }
+  .k-account-headline span:nth-child(3) {
+    margin-top: 4px;
+    padding: .06em .12em 0;
+    border: 2px solid var(--k-on-acid);
+    background: var(--k-action);
+    color: var(--k-on-action);
+    box-shadow: 3px 3px 0 var(--k-on-acid);
+    rotate: -2deg;
+  }
+  .k-account-stage { position: relative; display: grid; grid-area: stage; place-items: center; }
+  .k-account-momo {
+    display: grid;
+    place-items: center;
+    width: 108px;
+    height: 116px;
+    padding: 5px;
+    border: 2px solid var(--k-on-acid);
+    border-radius: 48% 48% 10% 10%;
+    background: var(--k-momo);
+    color: var(--k-on-tone);
+    box-shadow: 3px 3px 0 var(--k-on-acid);
+    rotate: 5deg;
+  }
+  .k-account-momo-art, .k-account-momo .momo-sticker, .k-account-momo svg { display: block; width: 100%; height: 100%; }
+  .k-account-momo .momo-sticker { flex: none; border: 0; border-radius: 0; background: none; box-shadow: none; transform: none; }
+  .k-account-momo .food-club-fallback { width: 56px; height: 56px; }
+  .k-account-receipt { display: none; }
+  .k-account-bubble { display: grid; grid-area: bubble; gap: 4px; }
+  .k-account-bubble .k-eyebrow { color: var(--k-on-acid); }
+  .k-account-bubble p {
+    margin: 0;
+    padding: 10px 12px;
+    border: 2px solid var(--k-on-acid);
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: 3px 3px 0 var(--k-on-acid);
+    font: 700 var(--k-text-sm)/1.35 var(--k-font-body);
+  }
+  .k-account-description { display: none; }
+
+  /* ── The form card ─────────────────────────────────────────── */
+  .k-account-card {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+    margin: 0;
+    padding: 20px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-card);
+    color: var(--k-ink);
+    box-shadow: var(--k-shadow);
+    text-align: left;
+    animation: none;
+  }
+  .k-account-kicker { padding-bottom: 10px; border-bottom: 2px solid var(--k-line); }
+  .k-account-title { display: grid; gap: 6px; }
+  .k-account-title h1 { margin: 0; font: 900 clamp(2.75rem, 12vw, 3.5rem)/.86 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-account-title p { margin: 0; font: 500 var(--k-text-md)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-account-claim { display: flex; align-items: center; gap: 8px; margin: 0; padding: 10px 12px; border: 2px solid var(--k-line); background: var(--k-butter); color: var(--k-on-tone); font: 700 var(--k-text-sm)/1.3 var(--k-font-body); }
+  .k-account-claim svg { flex: none; }
+
+  .k-account .auth-tabs { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: none; }
+  .k-account .auth-tab {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 48px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--k-ink);
+    box-shadow: none;
+    font: 800 var(--k-text-sm)/1 var(--k-font-body);
+    cursor: pointer;
+  }
+  .k-account .auth-tab-marker { position: absolute; inset: 0; border-radius: 0; background: var(--k-ink); box-shadow: none; }
+  .k-account .auth-tab-label { position: relative; z-index: 1; }
+  .k-account .auth-tab.active { color: var(--k-ground); background: transparent; }
+  .k-account .auth-tab:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; z-index: 2; }
+  .k-account .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); box-shadow: none; font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
+  .k-account .error-banner:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+
+  .k-account .auth-form { display: grid; gap: 14px; margin: 0; text-align: left; }
+  .k-account .auth-fields { display: grid; gap: 14px; min-width: 0; margin: 0; padding: 0; border: 0; }
+  .k-account .field { display: grid; gap: 6px; min-width: 0; margin: 0; }
+  .k-account .field > label { margin: 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
+  .k-account .field input {
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
+    margin: 0;
+    padding: 0 12px;
+    border: 2px solid var(--k-line);
+    border-radius: 0;
+    background: var(--k-ground);
+    color: var(--k-ink);
+    box-shadow: none;
+    font: 700 var(--k-text-md)/1.2 var(--k-font-body);
+    transform: none;
+  }
+  .k-account .field input::placeholder { color: var(--k-muted); font-weight: 500; opacity: 1; }
+  .k-account .field input:focus { border-color: var(--k-line); box-shadow: none; outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-account .auth-password-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; font: 500 var(--k-text-xs)/1.3 var(--k-font-body); color: var(--k-muted); }
+  .k-account .auth-show-password {
+    min-height: 44px;
+    margin-left: auto;
+    padding: 0 2px;
+    border: 0;
+    background: none;
+    color: var(--k-ink);
+    font: 700 var(--k-text-sm)/1 var(--k-font-body);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+  .k-account .auth-show-password:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-account .auth-password-strength { display: grid; gap: 6px; }
+  .k-account .auth-password-meter { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .k-account .auth-password-meter-bar { display: block; height: 8px; border: 1.5px solid var(--k-hair-strong); border-radius: 0; background: var(--k-sunken); transform-origin: left; }
+  .k-account .auth-password-meter-bar.is-on { border-color: var(--k-on-acid); background: var(--k-acid); }
+  .k-account .auth-password-strength-label { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); color: var(--k-muted); }
+  .k-account .auth-password-match { font: 700 var(--k-text-xs)/1.35 var(--k-font-body); }
+  .k-account .auth-password-match.is-match { color: var(--k-ink); }
+  .k-account .auth-password-match.is-mismatch { color: var(--k-danger-ink); }
+  .k-account .auth-submit-dock { margin: 2px 0 0; }
+
+  .k-account .login-hint { margin: 0; text-align: center; }
+  .k-account .login-hint a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--k-ink);
+    font: 700 var(--k-text-sm)/1 var(--k-font-body);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  .k-account .login-hint a:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-account .auth-divider { display: flex; align-items: center; gap: 12px; margin: 0; font: 600 var(--k-text-xs)/1 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--k-muted); }
+  .k-account .auth-divider::before, .k-account .auth-divider::after { content: ''; flex: 1; height: 2px; background: var(--k-line); }
+  .k-account .login-google { display: flex; justify-content: center; min-height: 44px; }
+  .k-account-foot { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 0; padding-top: 12px; border-top: 2px dashed var(--k-hair-strong); font: 500 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); text-align: center; }
+  .k-account-foot svg { flex: none; }
+
+  /* ── Forgot, reset and the session check: one card ─────────── */
+  .k-account.is-simple { display: grid; align-content: start; justify-items: center; padding: clamp(24px, 8vh, 72px) var(--k-gutter) 40px; }
+  .k-account.is-simple > .k-account-card { width: min(100%, 440px); }
+  .k-account-logo { width: 120px; }
+  .k-account-simple-title { margin: 0; font: 900 clamp(2.25rem, 10vw, 3rem)/.9 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); text-wrap: balance; }
+  .k-account-simple-sub { margin: 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); color: var(--k-muted); }
+  .k-account-card.is-session { justify-items: center; text-align: center; box-shadow: none; }
+  .k-account-card.is-session .k-account-logo { width: 150px; }
+
+  /* A phone: the submit button docks at the bottom until the keyboard opens. */
+  @media (max-width: 899px) {
+    .k-account:not(.is-simple) { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+    .k-account .auth-submit-dock {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30;
+      margin: 0;
+      padding: 10px max(var(--k-gutter), calc((100vw - 440px) / 2)) calc(14px + env(safe-area-inset-bottom, 0px));
+      border-top: 2px solid var(--k-line);
+      background: var(--k-ground);
+    }
+    .k-account .auth-submit-dock.is-keyboard-open { position: static; padding: 4px 0 0; border-top: 0; background: transparent; }
+    .k-account :is(input, button, a, .error-banner) { scroll-margin-block: 120px; }
+  }
+
+  /* Wide screens: the poster and the form side by side. */
+  @media (min-width: 900px) {
+    .k-account-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
+      align-items: start;
+      gap: 40px;
+      max-width: 1040px;
+      padding-top: 28px;
+    }
+    .k-account-poster {
+      position: sticky;
+      top: 24px;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "eyebrow" "headline" "stage" "bubble" "description";
+      gap: 16px;
+      padding: 28px;
+    }
+    .k-account-headline { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 14px; min-width: 0; font-size: clamp(3.5rem, 5vw, 4.75rem); }
+    .k-account-headline span:nth-child(3) { margin-top: 0; }
+    .k-account-stage { grid-template-columns: auto 1fr; justify-items: start; align-items: end; gap: 20px; }
+    .k-account-momo { width: 168px; height: 180px; padding: 8px; }
+    .k-account-receipt {
+      display: grid;
+      gap: 6px;
+      width: min(100%, 240px);
+      padding: 12px 14px;
+      border: 2px solid var(--k-on-acid);
+      background: var(--k-card);
+      color: var(--k-ink);
+      box-shadow: 3px 3px 0 var(--k-on-acid);
+      rotate: -3deg;
+    }
+    .k-account-receipt-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font: 600 var(--k-text-xs)/1 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
+    .k-account-receipt strong { font: 800 var(--k-text-lg)/1.2 var(--k-font-body); }
+    .k-account-receipt-kcal { display: flex; align-items: baseline; gap: 6px; font: 600 var(--k-text-sm)/1 var(--k-font-body); }
+    .k-account-receipt-kcal b { font: 900 1.75rem/1 var(--k-font-display); }
+    .k-account-receipt-kcal small { font: 500 var(--k-text-xs)/1 var(--k-font-mono); color: var(--k-muted); }
+    .k-account-bubble p { font-size: var(--k-text-md); }
+    .k-account-description { display: block; grid-area: description; max-width: 46ch; margin: 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); color: var(--k-on-acid); }
+    .k-account-description strong { font-weight: 800; }
+    .k-account-card { padding: 28px; }
+  }
+}
