@@ -46,6 +46,7 @@ import {
   type MascotAIEvent,
 } from '../lib/mascotAI'
 import { usesByok } from '../lib/aiClient'
+import { poiemTestHooks, rollTestRng, testRng } from '../lib/testHooks'
 
 const SIZE = 88
 const MOVE_MS = 600
@@ -210,6 +211,8 @@ export function MascotOverlay() {
     || location.pathname.startsWith('/edit/')
     || location.pathname === '/review'
     || location.pathname.startsWith('/log/')
+    || location.pathname.startsWith('/discover')
+    || location.pathname.startsWith('/progress')
   const aiEnabled = Boolean(
     !muted
     && !roastEnabled
@@ -275,7 +278,7 @@ export function MascotOverlay() {
       if (!rect) return
       next = targetFromRect(rect, SIZE, undefined, collectAvoidRects())
     } else if (!reduced && behavior.roams && !authScreen) {
-      next = roamPosition(SIZE, undefined, positionRef.current, Math.random, collectAvoidRects())
+      next = roamPosition(SIZE, undefined, positionRef.current, testRng(), collectAvoidRects())
     }
 
     // If the straight route is blocked, perform the gesture in place.
@@ -434,7 +437,7 @@ export function MascotOverlay() {
   const roast = useCallback(() => {
     if (!roastEnabled || mutedRef.current || activity === 'off' || paused || quiet) return
     dialogueEpoch.current += 1
-    const act = pickRoast(screen, Math.floor(Math.random() * 10000), [...roastHistory.current, ...recentLines()], 'poke')
+    const act = pickRoast(screen, Math.floor(rollTestRng() * 10000), [...roastHistory.current, ...recentLines()], 'poke')
     roastHistory.current = [act.line, ...roastHistory.current].slice(0, 16)
     react(act.pose)
     lastSpokeAt.current = Date.now()
@@ -473,9 +476,9 @@ export function MascotOverlay() {
       quietScreen: quiet,
     })) return false
 
-    const poseIndex = Math.floor(Math.random() * TAUNT_POSES.length)
+    const poseIndex = Math.floor(rollTestRng() * TAUNT_POSES.length)
     const tauntPose = TAUNT_POSES[poseIndex] ?? TAUNT_POSES[0]
-    const seed = sessionVariant() + Math.floor(Math.random() * 10_000)
+    const seed = sessionVariant() + Math.floor(rollTestRng() * 10_000)
     const act = roastEnabled
       ? pickRoast(screen, seed, [...roastHistory.current, ...recentLines()])
       : tauntAct(tauntPose, seed, recentLines())
@@ -750,7 +753,7 @@ export function MascotOverlay() {
     // `reduced` already covers activity === 'off' — see where it is defined.
     if (reduced || paused || interactionPaused || quiet || authScreen) return
     const tick = () => {
-      const delay = scheduleDelay(accountAgeDays, activity)
+      const delay = scheduleDelay(accountAgeDays, activity, testRng())
       if (!Number.isFinite(delay)) return
       timerRef.current = window.setTimeout(() => {
         const ctx = {
@@ -771,7 +774,7 @@ export function MascotOverlay() {
           && (!currentRef.current || currentRef.current.endsAt <= Date.now())
         ) {
           if (!volunteerTaunt(ctx.idleSeconds)) {
-            const next = pickAmbient(ctx, cooldowns.current, Date.now())
+            const next = pickAmbient(ctx, cooldowns.current, Date.now(), testRng())
             if (next) {
               play(next.key)
               // She speaks when she has walked somewhere: an anchored behaviour means
@@ -838,7 +841,7 @@ export function MascotOverlay() {
   /* `quiet` previously only stopped him scheduling new behaviours — he stayed
      on screen regardless, which is why he sat on top of the log options and
      the support page. A quiet screen means gone, not just still. */
-  if (activity === 'off' || quiet || paused) return null
+  if (activity === 'off' || quiet || paused || poiemTestHooks()?.hideOverlay) return null
 
   return (
     <div className="mascot-overlay">

@@ -1,0 +1,211 @@
+@layer system {
+  .k-app {
+    position: relative;
+    max-width: none;
+    width: 100%;
+    background: var(--k-role-surface);
+    color: var(--k-role-text);
+  }
+  .k-workspace-col { min-width: 0; }
+  .k-app > .app-main,
+  .k-app-main {
+    width: 100%;
+    max-width: var(--k-workspace);
+    margin-inline: auto;
+    padding: var(--k-pad-panel);
+    padding-bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + var(--k-space-3xl));
+  }
+
+  .k-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--k-space-md);
+    padding: var(--k-space-lg) var(--k-pad-panel) var(--k-space-xs);
+  }
+  .k-page-header-copy { min-width: 0; }
+  .k-page-title {
+    margin: var(--k-space-xs) 0 0;
+    font: 900 var(--k-type-title)/.9 var(--k-font-display);
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+    color: var(--k-role-text);
+  }
+  .k-page-sub {
+    margin: var(--k-space-sm) 0 0;
+    font: 500 var(--k-type-body)/1.4 var(--k-font-body);
+    color: var(--k-role-text-muted);
+  }
+
+  .k-section { display: grid; gap: var(--k-space-sm); }
+  .k-section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--k-space-md);
+    padding-bottom: var(--k-space-sm);
+    border-bottom: 1px solid var(--k-role-border-subtle);
+  }
+  .k-section-title {
+    margin: 0;
+    font: 700 var(--k-type-section)/1.2 var(--k-font-body);
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--k-role-text);
+  }
+  .k-section-meta {
+    font: 600 var(--k-type-meta)/1.3 var(--k-font-mono);
+    color: var(--k-role-text-muted);
+  }
+
+  .k-surface {
+    background: transparent;
+    color: var(--k-role-text);
+  }
+  .k-surface.is-outlined {
+    padding: var(--k-space-lg);
+    border: 1px solid var(--k-role-border-subtle);
+    background: var(--k-role-surface-raised);
+  }
+  .k-surface.is-hero {
+    display: grid;
+    gap: var(--k-space-sm);
+    padding: var(--k-space-lg);
+    border: 2px solid var(--k-role-accent-ink);
+    background: var(--k-role-accent);
+    color: var(--k-role-accent-ink);
+    box-shadow: var(--k-shadow);
+  }
+
+  .k-field { display: grid; gap: var(--k-space-xs); }
+  .k-field-label {
+    font: 600 var(--k-type-label)/1.3 var(--k-font-body);
+    color: var(--k-role-text);
+  }
+  .k-field-hint,
+  .k-field-error {
+    margin: 0;
+    font: 500 var(--k-type-meta)/1.35 var(--k-font-body);
+  }
+  .k-field-hint { color: var(--k-role-text-muted); }
+  .k-field-error { color: var(--k-danger-ink); }
+  .k-field input,
+  .k-field select,
+  .k-field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 var(--k-space-md);
+    border: 2px solid var(--k-role-border);
+    border-radius: 0;
+    background: var(--k-role-surface-raised);
+    color: var(--k-role-text);
+    font: 500 var(--k-type-body)/1.3 var(--k-font-body);
+  }
+  .k-field textarea { min-height: 96px; padding: var(--k-space-md); resize: vertical; }
+  .k-field.is-error input,
+  .k-field.is-error select,
+  .k-field.is-error textarea { border-color: var(--k-danger-ink); }
+  .k-field.is-disabled { opacity: .55; }
+  .k-field :is(input, select, textarea):focus-visible,
+  .k-field.is-demo-focus :is(input, select, textarea) { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+  .k-field :is(input, select, textarea):disabled { background: var(--k-sunken); cursor: not-allowed; }
+
+  .k-field-grid {
+    display: grid;
+    gap: var(--k-space-lg);
+  }
+  .k-field-grid.is-cols-2 { grid-template-columns: minmax(0, 1fr); }
+  .k-field-grid.is-cols-3 { grid-template-columns: minmax(0, 1fr); }
+
+  .k-filter-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: var(--k-space-sm);
+  }
+  .k-filter {
+    min-height: 44px;
+    padding: 0 var(--k-space-md);
+    border: 2px solid var(--k-role-border);
+    background: var(--k-role-surface-raised);
+    color: var(--k-role-text);
+    font: 700 var(--k-type-label)/1 var(--k-font-body);
+    cursor: pointer;
+  }
+  .k-filter[aria-pressed="true"] {
+    background: var(--k-role-text);
+    color: var(--k-role-surface);
+  }
+  .k-filter:disabled { opacity: .5; cursor: default; }
+  .k-filter:focus-visible,
+  .k-filter.is-demo-focus { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+
+  .k-empty-state {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--k-space-md);
+  }
+  .k-empty-title {
+    margin: 0 0 var(--k-space-xs);
+    font: 700 var(--k-type-lead)/1.2 var(--k-font-body);
+    color: var(--k-role-text);
+  }
+  .k-empty-state .k-empty { margin: 0; font: 500 var(--k-type-body)/1.45 var(--k-font-body); color: var(--k-role-text-muted); }
+
+  .k-sheet.is-loading { opacity: .7; pointer-events: none; }
+
+  @media (min-width: 768px) {
+    .k-field-grid.is-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .k-field-grid.is-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .k-filter-group { grid-template-columns: repeat(auto-fit, minmax(120px, max-content)); }
+  }
+
+  @media (min-width: 1120px) {
+    .k-app {
+      display: grid;
+      grid-template-columns: var(--k-nav-side) minmax(0, var(--k-workspace));
+      justify-content: center;
+      align-items: start;
+      min-height: 100dvh;
+      padding-right: var(--k-mascot-rail);
+    }
+    .k-app .bottom-nav-wrap {
+      position: sticky;
+      top: 0;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      height: 100dvh;
+      max-width: none;
+      width: var(--k-nav-side);
+      padding: var(--k-space-xl) var(--k-space-lg);
+      pointer-events: auto;
+    }
+    .k-app .bottom-nav {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
+      min-height: 0;
+      height: auto;
+      gap: var(--k-space-sm);
+    }
+    .k-app .nav-fab { margin: var(--k-space-sm) 0; }
+    .k-app > .app-main,
+    .k-app-main {
+      padding-bottom: var(--k-space-3xl);
+    }
+  }
+
+  .k-sheet-main {
+    display: grid;
+    gap: var(--k-space-2xl);
+    max-width: 52rem;
+    padding: var(--k-space-lg) var(--k-pad-panel) var(--k-space-3xl);
+  }
+  .k-sheet-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--k-space-md);
+  }
+}

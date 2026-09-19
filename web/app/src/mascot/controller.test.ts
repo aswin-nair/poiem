@@ -97,12 +97,12 @@ describe('resting place', () => {
     expect(rest.x === 0 && rest.y === 0).toBe(false)
   })
 
-  it('rests inside the centred app on a wide desktop', () => {
+  it('rests in the desktop rail on a wide screen', () => {
     const desktop = { width: 1440, height: 900 }
     const rest = restPosition(SIZE, desktop)
 
-    expect(rest.x).toBeLessThanOrEqual((desktop.width + 480) / 2 - SIZE)
-    expect(rest.x).toBeGreaterThanOrEqual((desktop.width - 480) / 2)
+    expect(rest.x).toBeGreaterThanOrEqual(desktop.width - SIZE - 16)
+    expect(rest.x + SIZE).toBeLessThanOrEqual(desktop.width)
   })
 
   /* Today protects its whole column, so on a wide screen he waits beside it
@@ -113,6 +113,16 @@ describe('resting place', () => {
     const rest = restPosition(SIZE, desktop, [column])
 
     expect(rest.x).toBeGreaterThanOrEqual(column.right + 10)
+    expect(rest.x + SIZE).toBeLessThanOrEqual(desktop.width)
+    expect(isSafeMascotPosition(rest, SIZE, desktop, [column])).toBe(true)
+  })
+
+  it('waits in the desktop rail beside a wide workspace column', () => {
+    const desktop = { width: 1440, height: 900 }
+    const column = { left: 220, top: 0, right: desktop.width - 112, bottom: desktop.height }
+    const rest = restPosition(SIZE, desktop, [column])
+
+    expect(rest.x).toBeGreaterThanOrEqual(column.right)
     expect(rest.x + SIZE).toBeLessThanOrEqual(desktop.width)
     expect(isSafeMascotPosition(rest, SIZE, desktop, [column])).toBe(true)
   })

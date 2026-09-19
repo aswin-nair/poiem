@@ -200,7 +200,7 @@
     background: var(--k-action);
     color: var(--k-on-action);
     box-shadow: 4px 4px 0 var(--k-shadow-color);
-    rotate: -6deg;
+    rotate: 0deg;
     transition: rotate 240ms cubic-bezier(.3, 1.6, .5, 1), translate var(--k-press) ease, scale var(--k-press) ease, box-shadow var(--k-press) ease, background-color 160ms ease;
   }
   .bottom-nav .nav-fab-face svg { stroke-width: 3; transition: rotate 280ms cubic-bezier(.3, 1.6, .5, 1); }

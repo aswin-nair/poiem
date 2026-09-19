@@ -68,7 +68,7 @@ test.describe('welcome page', () => {
     await page.goto('/welcome')
     const story = page.locator('#plate-to-numbers')
     await expect(story).toHaveClass(/is-static/)
-    await expect(story.locator('.wp-nl-kcal strong span[aria-hidden="true"]')).toHaveText('380')
+    await expect(story.locator('.wp-nl-kcal strong')).toHaveText('380')
     await expect(page.locator('#week .wp-week')).toHaveClass(/is-playing/)
     await expect(page.locator('#week')).toContainText('Average kcal on logged days')
     await expect(page.getByRole('figure', { name: 'Poiem Facts' })).toContainText('Food guilt')

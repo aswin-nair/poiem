@@ -78,6 +78,47 @@
     --k-z-sheet: 900;
     /* Toasts sit above the tab bar and under sheets and dialogs, so they never cover an open sheet. */
     --k-z-toast: 800;
+
+    /* Contract ramp (additive). Existing --k-space-* stay for unmigrated screens. */
+    --k-space-xs: 4px;
+    --k-space-sm: 8px;
+    --k-space-md: 12px;
+    --k-space-lg: 16px;
+    --k-space-xl: 24px;
+    --k-space-2xl: 32px;
+    --k-space-3xl: 48px;
+    --k-space-4xl: 64px;
+    --k-pad-panel: 16px;
+
+    --k-type-meta: 12px;
+    --k-type-label: 14px;
+    --k-type-body: 16px;
+    --k-type-lead: 18px;
+    --k-type-section: 18px;
+    --k-type-title: 40px;
+    --k-type-metric: 64px;
+
+    --k-role-surface: var(--k-ground);
+    --k-role-surface-raised: var(--k-card);
+    --k-role-text: var(--k-ink);
+    --k-role-text-muted: var(--k-muted);
+    --k-role-border: var(--k-line);
+    --k-role-border-subtle: var(--k-hair);
+    --k-role-accent: var(--k-acid);
+    --k-role-accent-ink: var(--k-on-acid);
+    --k-role-focus: var(--k-focus);
+
+    --k-workspace: 1200px;
+    --k-nav-side: 220px;
+    --k-mascot-rail: 112px;
+    --k-bp-tablet: 768px;
+    --k-bp-desktop: 1120px;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --k-pad-panel: 24px;
+    }
   }
 
   :root[data-theme="dark"] {
@@ -113,5 +154,15 @@
     --k-focus: #E7F258;
     --k-shadow-color: #080A08;
     --k-scrim: rgb(0 0 0 / 62%);
+
+    --k-role-surface: var(--k-ground);
+    --k-role-surface-raised: var(--k-card);
+    --k-role-text: var(--k-ink);
+    --k-role-text-muted: var(--k-muted);
+    --k-role-border: var(--k-line);
+    --k-role-border-subtle: var(--k-hair);
+    --k-role-accent: var(--k-acid);
+    --k-role-accent-ink: var(--k-on-acid);
+    --k-role-focus: var(--k-focus);
   }
 }

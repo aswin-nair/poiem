@@ -112,10 +112,12 @@ function viewportOr(given?: Viewport): Viewport {
 
 const APP_STAGE_MAX_WIDTH = 480
 const AUTH_CARD_MAX_WIDTH = 420
+const DESKTOP_MIN_WIDTH = 1120
 const SAFE_TOP = 104
 const SAFE_BOTTOM = 112
 const CONTROL_CLEARANCE = 10
 const SIDE_LANE_GAP = 24
+const DESKTOP_RAIL_INSET = 8
 
 function horizontalBounds(width: number, size: number, inset: number): { min: number; max: number } {
   const stageWidth = Math.min(width, APP_STAGE_MAX_WIDTH)
@@ -137,8 +139,14 @@ function verticalBounds(height: number, size: number): { min: number; max: numbe
  * Wide screens leave empty margins beside the app column. When the column has
  * no clear spot (Today protects all of its content), Momo may wait just outside
  * it rather than stand on what someone is reading. Phones have no side lanes.
+ * Desktop shells keep a right-hand rail (`--k-mascot-rail`) instead of the old
+ * 480px-centred margins, so the lane sits past the wide workspace.
  */
 function sideLanes(width: number, size: number): { left: number; right: number } | null {
+  if (width >= DESKTOP_MIN_WIDTH) {
+    const right = width - size - DESKTOP_RAIL_INSET
+    return { left: right, right }
+  }
   const stageWidth = Math.min(width, APP_STAGE_MAX_WIDTH)
   const margin = (width - stageWidth) / 2
   if (margin < size + SIDE_LANE_GAP * 2) return null
@@ -239,7 +247,7 @@ export function restPosition(
   const { width, height } = viewportOr(viewport)
   const horizontal = horizontalBounds(width, size, 16)
   const vertical = verticalBounds(height, size)
-  const candidates = [
+  const inColumn = [
     { x: horizontal.max, y: vertical.max },
     { x: horizontal.min, y: vertical.max },
     { x: horizontal.max, y: Math.round((vertical.min + vertical.max) / 2) },
@@ -247,9 +255,15 @@ export function restPosition(
     { x: horizontal.max, y: vertical.min },
     { x: horizontal.min, y: vertical.min },
   ]
-  // Inside the column first; a side lane only when the column has no clear spot.
+  // Phone/tablet: stay in the 480 column unless it is fully occupied.
+  // Desktop: the shell reserved a right-hand rail, so rest there first.
   const lanes = sideLanes(width, size)
-  if (lanes) candidates.push({ x: lanes.right, y: vertical.max }, { x: lanes.left, y: vertical.max })
+  const laneSpots = lanes
+    ? [{ x: lanes.right, y: vertical.max }, { x: lanes.left, y: vertical.max }]
+    : []
+  const candidates = width >= DESKTOP_MIN_WIDTH
+    ? [...laneSpots, ...inColumn]
+    : [...inColumn, ...laneSpots]
   return safestCandidate(candidates, size, { width, height }, avoidRects)
 }
 
