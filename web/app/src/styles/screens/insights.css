@@ -45,7 +45,7 @@
   .k-insights .page-sub { margin: 4px 0 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
 
   /* Journey: three tinted stats and an acid meter. */
-  .k-insights .k-journey { margin: 0; box-shadow: var(--k-shadow); }
+  .k-insights .k-journey { margin: 0; }
   .k-insights .k-journey-stats div { padding: 8px 10px; border: 0; background: var(--k-sunken); }
   .k-insights .k-journey-stats div:nth-child(1) { --tone: var(--k-peach); }
   .k-insights .k-journey-stats div:nth-child(2) { --tone: var(--k-butter); }

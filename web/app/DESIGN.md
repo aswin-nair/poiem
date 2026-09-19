@@ -37,8 +37,9 @@ A later layer always beats an earlier one, whatever the selector specificity. Th
 - **Every colour, font, size and z-index comes from a `--k-*` token.** A literal hex value in a component is a bug.
 - **New screens use `k-*` primitives.** Don't add rules to legacy sheets. When a screen moves to the system, delete the legacy rules it no longer uses.
 - **Colourful fills always take dark ink.** Acid and persimmon backgrounds use `--k-on-acid` / `--k-on-action` in both themes.
-- These rules are enforced by [`src/lib/designSystem.test.ts`](src/lib/designSystem.test.ts), which checks the layer order, legacy containment, no IDs, no `!important`, and — on migrated sheets — contract type steps, role-named spacing, the three surface variants, and no resting tilt.
 - **No resting rotation** on text, controls, cards or navigation. Mascot artwork and 45/90-degree shape construction are allow-listed.
+- **Nothing raised at rest.** A hard offset block says "this floats above the page", so it belongs to sheets, modals, toasts and the tab bar, to the one hero per route, and to drawn artwork. Cards, buttons, chips, rows and tiles are flat.
+- These rules are enforced by [`src/lib/designSystem.test.ts`](src/lib/designSystem.test.ts), which checks the layer order, legacy containment, no IDs and no `!important` everywhere, then holds two lists of sheets to the visual contract. `MIGRATED` sheets must be fully on it: contract type steps, role-named spacing, the three surface variants, no resting tilt, nothing raised. `FLATTENED` sheets are held to all of that except the type steps, where `TYPE_DEBT` records the exact number of off-step sizes each one still sets — so an old size can be fixed but a new one cannot slip in. Sizes are read in both px and rem.
 
 ---
 
@@ -375,7 +376,7 @@ The **visual reset** extends that work rather than replacing it. Baseline counts
 |-------|-------|--------|
 | 1 | Additive contract tokens, self-hosted fonts, visual seed, shared primitives, rebuilt Today, component reference, committed screenshots | Done, reviewed in [`review/phase-1.md`](review/phase-1.md) |
 | 2 | Every remaining screen on `AppShell`; the raised chrome flattened across the log sheet, the five logging forms, Saved, Insights, You, Coach, Support, About and admin; header stamps and mascot marks removed; a desktop nav rail with a lane for Momo | This change, reviewed in [`review/phase-2.md`](review/phase-2.md) |
-| 3 | Legacy selector removal per screen, and the design-rule contract extended to the sheets phase 2 reworked | Next |
+| 3 | Legacy selector removal per screen. The flat-surface and tilt rules now cover the sheets phase 2 reworked; what remains is moving their 37 off-step type sizes onto the contract and emptying `TYPE_DEBT` | Next |
 | 4 | The remaining desktop compositions, per task | Next |
 | 5 | Motion polish, full design-rule and visual matrix, staging sign-off | Next |
 
