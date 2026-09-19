@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { logManualMeal, settlePageLayout, signUpAndOnboard } from './helpers'
+import { applyVisualSeed } from './seed'
 
 async function fitsViewport(page: Page) {
   const metrics = await page.evaluate(() => ({
@@ -100,6 +101,46 @@ test('reduced motion and enlarged text remain usable', async ({ page }) => {
   const button = page.getByRole('button', { name: 'Primary', exact: true })
   const transition = await button.locator('.pressable-face').evaluate(element => getComputedStyle(element).transitionDuration)
   expect(parseFloat(transition)).toBeLessThanOrEqual(.001)
+})
+
+test('Today fields stay aligned and Momo stays off Saved and Insights', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await applyVisualSeed(page)
+  await page.goto('/')
+  await expect(page.getByRole('progressbar', { name: 'Calories' })).toBeVisible()
+  await settlePageLayout(page)
+
+  const today = await page.evaluate(() => {
+    const macros = [...document.querySelectorAll('.k-macro')].map(node => node.getBoundingClientRect())
+    const meals = document.querySelector('.k-meals')?.getBoundingClientRect()
+    return {
+      macroLefts: macros.map(box => Math.round(box.left)),
+      macroHeights: macros.map(box => Math.round(box.height)),
+      mealsTop: meals ? Math.round(meals.top) : 0,
+    }
+  })
+  expect(today.macroLefts.length).toBe(3)
+  expect(Math.max(...today.macroHeights) - Math.min(...today.macroHeights)).toBeLessThanOrEqual(4)
+  expect(today.mealsTop).toBeGreaterThan(0)
+
+  for (const path of ['/discover', '/progress']) {
+    await page.goto(path)
+    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible()
+    await expect(page.locator('.mascot-overlay')).toHaveCount(0)
+  }
+
+  await page.goto('/dev/components')
+  await expect(page.getByRole('heading', { name: 'Components' })).toBeVisible()
+  const fields = await page.evaluate(() => {
+    const inputs = [...document.querySelectorAll('.k-field input')].map(node => node.getBoundingClientRect())
+    const filters = [...document.querySelectorAll('.k-filter-group .k-filter')].map(node => node.getBoundingClientRect())
+    return {
+      inputLefts: inputs.map(box => Math.round(box.left)),
+      filterHeights: filters.map(box => Math.round(box.height)),
+    }
+  })
+  expect(fields.inputLefts.length).toBeGreaterThan(1)
+  expect(Math.max(...fields.filterHeights) - Math.min(...fields.filterHeights)).toBeLessThanOrEqual(2)
 })
 
 test('Momo yields to the primary action and stays quiet while editing', async ({ page }) => {

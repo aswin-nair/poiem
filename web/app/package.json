@@ -17,6 +17,9 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "visual": "node scripts/visual.mjs",
+    "visual:update": "node scripts/visual.mjs --update",
+    "visual:sheet": "node scripts/contact-sheet.mjs",
     "ci": "npm run lint && npm run test && npm run build:local && npm run test:e2e"
   },
   "dependencies": {

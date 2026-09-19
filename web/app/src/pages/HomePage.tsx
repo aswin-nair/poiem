@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { LevelUpOverlay } from '../components/LevelUpOverlay'
 import { DatePickerModal } from '../components/DatePickerModal'
 import { BottomNav } from '../components/BottomNav'
+import { AppShell, EmptyState, MealRow, PageHeader, Section, Surface } from '../components/system'
 import { TodayMomo } from '../components/TodayMomo'
 import { WeekStrip } from '../components/WeekStrip'
 import { Meter } from '../components/Meter'
@@ -216,7 +217,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   }
 
   return (
-    <div className="app-shell k-screen k-today">
+    <AppShell screen="k-today" nav={!guest ? <BottomNav /> : undefined}>
       {!paused && pendingLevelUp && <LevelUpOverlay level={pendingLevelUp} onDone={ackLevelUp} />}
       {!paused && celebration && !pendingLevelUp && (
         <LogCelebration
@@ -239,20 +240,22 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
         />
       )}
 
-      <header className="k-today-header" data-mascot-avoid>
-        <div className="k-today-title">
-          <p className="k-eyebrow">{selectedDate.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}</p>
-          <h1>{dayLabel}</h1>
-        </div>
-        <button
-          type="button"
-          className="k-icon-button"
-          onClick={() => { feel('open'); setShowDatePicker(true) }}
-          aria-label="Choose date"
-        >
-          <IconCalendar size={22} />
-        </button>
-      </header>
+      <PageHeader
+        className="k-today-header"
+        avoid
+        eyebrow={selectedDate.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
+        title={dayLabel}
+        action={(
+          <button
+            type="button"
+            className="k-icon-button"
+            onClick={() => { feel('open'); setShowDatePicker(true) }}
+            aria-label="Choose date"
+          >
+            <IconCalendar size={22} />
+          </button>
+        )}
+      />
       {!paused && (
         <div className="k-week" data-mascot-avoid>
           <WeekStrip
@@ -277,93 +280,124 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
         {/* The walking Momo never stands on the day's numbers or meals: he waits beside the column on wide screens and stays off Today on a phone. */}
         <main className="app-main k-today-main" data-mascot-avoid>
           {paused ? (
-            <section className="k-card k-notice" aria-labelledby="paused-title">
+            <Surface variant="outlined" as="section" className="k-notice" aria-labelledby="paused-title">
               <h2 id="paused-title">Tracking is paused</h2>
               <p>Calorie and macro numbers are hidden. Your streak is held where it is.</p>
               <Link className="k-text-button" to="/settings">Manage pause</Link>
-            </section>
+            </Surface>
           ) : (
-            <>
-              {guest && (
-                <section className="k-card k-notice" aria-labelledby="guest-title">
-                  <p className="k-eyebrow">Your first log is here</p>
-                  <h2 id="guest-title">Save your progress</h2>
-                  <p>Continue to create an account and keep this device copy available across sign-in.</p>
-                  <div className="k-notice-actions">
-                    <button type="button" className="k-button is-primary" onClick={() => navigate('/login?mode=signup&claim=1')}>
-                      Continue
-                    </button>
-                    <button type="button" className="k-text-button" onClick={() => navigate('/login?mode=signin&claim=1')}>
-                      I already have an account
-                    </button>
-                  </div>
+            <div className="k-today-layout">
+              <div className="k-today-summary">
+                {guest && (
+                  <Surface variant="outlined" as="section" className="k-notice" aria-labelledby="guest-title">
+                    <p className="k-eyebrow">Your first log is here</p>
+                    <h2 id="guest-title">Save your progress</h2>
+                    <p>Continue to create an account and keep this device copy available across sign-in.</p>
+                    <div className="k-notice-actions">
+                      <button type="button" className="k-button is-primary" onClick={() => navigate('/login?mode=signup&claim=1')}>
+                        Continue
+                      </button>
+                      <button type="button" className="k-text-button" onClick={() => navigate('/login?mode=signin&claim=1')}>
+                        I already have an account
+                      </button>
+                    </div>
+                  </Surface>
+                )}
+
+                {showMomo && (
+                  <TodayMomo
+                    greeting={greeting}
+                    outfit={state.gamification.outfit}
+                    roasts={Boolean(profile.mascotRoasts)}
+                    onRoast={() => mascotEvent('poke')}
+                  />
+                )}
+
+                <Surface
+                  variant="hero"
+                  as="section"
+                  ref={budgetAnchor}
+                  className={`k-budget${budget.over > 0 ? ' is-over' : ''}`}
+                  aria-labelledby="budget-title"
+                >
+                  <h2 id="budget-title" className="k-eyebrow">{snapshotLabel}</h2>
+                  <p className="k-budget-number">
+                    <strong className="tabular">{shownBudget.toLocaleString()}</strong>
+                    {dayEntries.length > 0 && (
+                      <svg className="k-budget-burst" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 14l7 8M4 30l11 1M26 4l-1 12" /></svg>
+                    )}
+                    <span>{budget.over > 0 ? 'kcal over the guide' : 'kcal left'}</span>
+                  </p>
+                  <Meter
+                    label="Calories"
+                    tone="acid"
+                    value={budget.consumed}
+                    max={budget.target}
+                    over={budget.over > 0}
+                    valueText={`${budget.consumed.toLocaleString()} of ${budget.target.toLocaleString()} kcal`}
+                  />
+                  <p className="k-budget-meta">
+                    <span className="tabular">{budget.consumed.toLocaleString()} eaten</span>
+                    <span className="tabular">{budget.target.toLocaleString()} guide</span>
+                  </p>
+                </Surface>
+
+                <section className="k-macros" aria-label="Macros">
+                  {macros.map(macro => (
+                    <div key={macro.key} className={`k-macro is-${macro.key}`}>
+                      <span className="k-macro-label"><i aria-hidden="true" />{macro.label}</span>
+                      <span className="k-macro-value tabular"><strong>{macro.current}</strong> / {macro.goal} g</span>
+                      <Meter label={macro.label} value={macro.current} max={macro.goal} over={macro.over} />
+                    </div>
+                  ))}
                 </section>
-              )}
 
-              {showMomo && (
-                <TodayMomo
-                  greeting={greeting}
-                  outfit={state.gamification.outfit}
-                  roasts={Boolean(profile.mascotRoasts)}
-                  onRoast={() => mascotEvent('poke')}
-                />
-              )}
+                {isToday && !guest && (
+                  <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
+                    <div className="k-water">
+                      <span className="k-extras-label"><IconWater size={18} /> Water</span>
+                      <span className="k-glasses" aria-hidden="true">
+                        {Array.from({ length: WATER_GLASSES }, (_, glass) => (
+                          <span key={glass} className={`k-glass${glass < water ? ' is-full' : ''}`} />
+                        ))}
+                      </span>
+                    </div>
+                    <div className="k-stepper" role="group" aria-label="Water glasses">
+                      <button type="button" aria-label="Remove a glass of water" disabled={water <= 0} onClick={() => changeWater(water - 1)}>−</button>
+                      <span className="tabular" aria-live="polite">{water}/{WATER_GLASSES}</span>
+                      <button type="button" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
+                    </div>
+                    <button
+                      type="button"
+                      className="k-text-button"
+                      disabled={notes >= NOTE_LIMIT}
+                      onClick={() => { feel('tap'); patchGamification(g => applyNote(g, selectedDayKey)) }}
+                    >
+                      {notes >= NOTE_LIMIT ? 'Notes logged' : 'Add a kitchen note'}
+                    </button>
+                  </Surface>
+                )}
+              </div>
 
-              <section ref={budgetAnchor} className={`k-budget${budget.over > 0 ? ' is-over' : ''}`} aria-labelledby="budget-title">
-                <h2 id="budget-title" className="k-eyebrow">{snapshotLabel}</h2>
-                <p className="k-budget-number">
-                  <strong className="tabular">{shownBudget.toLocaleString()}</strong>
-                  {dayEntries.length > 0 && (
-                    <svg className="k-budget-burst" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 14l7 8M4 30l11 1M26 4l-1 12" /></svg>
-                  )}
-                  <span>{budget.over > 0 ? 'kcal over the guide' : 'kcal left'}</span>
-                </p>
-                <Meter
-                  label="Calories"
-                  tone="acid"
-                  value={budget.consumed}
-                  max={budget.target}
-                  over={budget.over > 0}
-                  valueText={`${budget.consumed.toLocaleString()} of ${budget.target.toLocaleString()} kcal`}
-                />
-                <p className="k-budget-meta">
-                  <span className="tabular">{budget.consumed.toLocaleString()} eaten</span>
-                  <span className="tabular">{budget.target.toLocaleString()} guide</span>
-                </p>
-              </section>
-
-              <section className="k-macros" aria-label="Macros">
-                {macros.map(macro => (
-                  <div key={macro.key} className={`k-macro is-${macro.key}`}>
-                    <span className="k-macro-label"><i aria-hidden="true" />{macro.label}</span>
-                    <span className="k-macro-value tabular"><strong>{macro.current}</strong> / {macro.goal} g</span>
-                    <Meter label={macro.label} value={macro.current} max={macro.goal} over={macro.over} />
-                  </div>
-                ))}
-              </section>
-
-              <section className="k-meals" aria-labelledby="meals-title">
-                <div className="k-section-head">
-                  <h2 id="meals-title">Meals</h2>
+              <Section
+                className="k-meals"
+                titleId="meals-title"
+                title="Meals"
+                meta={(
                   <span className="tabular">
                     {dayEntries.length === 0
                       ? 'Nothing yet'
                       : `${dayEntries.length} ${dayEntries.length === 1 ? 'meal' : 'meals'} · ${budget.consumed.toLocaleString()} kcal`}
                   </span>
-                </div>
+                )}
+              >
                 {dayEntries.length === 0 && (
-                  <div className="k-empty-day">
-                    <svg className="k-empty-plate" viewBox="0 0 80 80" aria-hidden="true">
-                      <circle cx="40" cy="40" r="34" />
-                      <circle cx="40" cy="40" r="23" />
-                      <path d="M40 23v6M57 40h-6" />
-                    </svg>
-                    <p className="k-empty">
-                      {isToday
-                        ? 'Your table is ready. Start with whatever you ate — you can change the details later.'
-                        : `Nothing was logged ${dayLabel === 'Yesterday' ? 'yesterday' : `on ${dayLabel}`}.`}
-                    </p>
-                  </div>
+                  <EmptyState
+                    className="k-empty-day"
+                    body={isToday
+                      ? 'Your table is ready. Start with whatever you ate — you can change the details later.'
+                      : `Nothing was logged ${dayLabel === 'Yesterday' ? 'yesterday' : `on ${dayLabel}`}.`}
+                  />
                 )}
                 {groups.map(group => {
                   if (!isToday && group.entries.length === 0) return null
@@ -384,18 +418,14 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                             { label: 'Delete', tone: 'danger', onAct: () => removeMeal(entry) },
                           ]}
                         >
-                          <button
-                            type="button"
-                            className={`k-meal-row${entry.id === freshId ? ' is-fresh' : ''}`}
+                          <MealRow
+                            name={entry.name}
+                            fresh={entry.id === freshId}
                             onClick={() => { feel('tap'); navigate(`/edit/${entry.id}`) }}
-                          >
-                            <span className={`k-food-tile is-tone-${foodToneFor(entry.name)}`}><FoodIcon emoji={entry.emoji} name={entry.name} size={20} /></span>
-                            <span className="k-meal-name">
-                              {entry.name}
-                              <small>{entryTime(entry)} · P {Math.round(entry.protein)} · C {Math.round(entry.carbs)} · F {Math.round(entry.fat)}</small>
-                            </span>
-                            <span className="k-meal-kcal tabular">{Math.round(entry.calories)} kcal</span>
-                          </button>
+                            tile={<span className={`k-food-tile is-tone-${foodToneFor(entry.name)}`}><FoodIcon emoji={entry.emoji} name={entry.name} size={20} /></span>}
+                            meta={`${entryTime(entry)} · P ${Math.round(entry.protein)} · C ${Math.round(entry.carbs)} · F ${Math.round(entry.fat)}`}
+                            kcal={`${Math.round(entry.calories)} kcal`}
+                          />
                         </SwipeRow>
                       ))}
                       {isToday && !guest && (
@@ -411,39 +441,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                     Back to today
                   </button>
                 )}
-              </section>
-
-              {isToday && !guest && (
-                <section className="k-extras" aria-label="Water and notes">
-                  <div className="k-water">
-                    <span className="k-extras-label"><IconWater size={18} /> Water</span>
-                    <span className="k-glasses" aria-hidden="true">
-                      {Array.from({ length: WATER_GLASSES }, (_, glass) => (
-                        <span key={glass} className={`k-glass${glass < water ? ' is-full' : ''}`} />
-                      ))}
-                    </span>
-                  </div>
-                  <div className="k-stepper" role="group" aria-label="Water glasses">
-                    <button type="button" aria-label="Remove a glass of water" disabled={water <= 0} onClick={() => changeWater(water - 1)}>−</button>
-                    <span className="tabular" aria-live="polite">{water}/{WATER_GLASSES}</span>
-                    <button type="button" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
-                  </div>
-                  <button
-                    type="button"
-                    className="k-text-button"
-                    disabled={notes >= NOTE_LIMIT}
-                    onClick={() => { feel('tap'); patchGamification(g => applyNote(g, selectedDayKey)) }}
-                  >
-                    {notes >= NOTE_LIMIT ? 'Notes logged' : 'Add a kitchen note'}
-                  </button>
-                </section>
-              )}
-            </>
+              </Section>
+            </div>
           )}
         </main>
       </PullToRefresh>
-
-      {!guest && <BottomNav />}
-    </div>
+    </AppShell>
   )
 }

@@ -25,8 +25,8 @@ The Expo `mobile/` app stays a private alpha. It does **not** extract shared tok
 | Layer | Files | Role |
 |-------|-------|------|
 | `legacy` | The older sheets under `src/styles/` that still style something (base, toggles, swipe rows, the splash, mascot motion…) | Pruned to rules that can still match; deleted sheet by sheet |
-| `system` | [`styles/system/tokens.css`](src/styles/system/tokens.css), [`styles/system/components.css`](src/styles/system/components.css) | Tokens, shared component styles, `k-*` primitives |
-| `screens` | [`kitchen.css`](src/styles/screens/kitchen.css), [`flows.css`](src/styles/screens/flows.css), [`insights.css`](src/styles/screens/insights.css), [`you.css`](src/styles/screens/you.css), [`admin.css`](src/styles/screens/admin.css), [`first-run.css`](src/styles/screens/first-run.css), [`pages.css`](src/styles/screens/pages.css), [`account.css`](src/styles/screens/account.css) | Layout for every screen of the app: Today and the log sheet; the log flows and Saved; Insights; You; admin; the first run; Coach, Support and About; sign-in and the password screens |
+| `system` | [`fonts.css`](src/styles/system/fonts.css), [`tokens.css`](src/styles/system/tokens.css), [`components.css`](src/styles/system/components.css), [`foundations.css`](src/styles/system/foundations.css), [`momo.css`](src/styles/system/momo.css) | Self-hosted faces, tokens, shared component styles, and the phase-1 primitives |
+| `screens` | [`kitchen.css`](src/styles/screens/kitchen.css), [`today.css`](src/styles/screens/today.css), [`flows.css`](src/styles/screens/flows.css), [`insights.css`](src/styles/screens/insights.css), [`you.css`](src/styles/screens/you.css), [`admin.css`](src/styles/screens/admin.css), [`first-run.css`](src/styles/screens/first-run.css), [`pages.css`](src/styles/screens/pages.css), [`account.css`](src/styles/screens/account.css) | Layout for every screen of the app: the log sheet; Today; the log flows and Saved; Insights; You; admin; the first run; Coach, Support and About; sign-in and the password screens |
 | *(unlayered)* | [`styles/a11y.css`](src/styles/a11y.css) | Accessibility overrides (reduced motion, forced colours). Loaded last and allowed `!important` |
 
 A later layer always beats an earlier one, whatever the selector specificity. The system can therefore restyle a legacy class such as `.pressable-face` or `.toast` with a plain class selector, and an old `#poster-ui` ID chain in `legacy` cannot override it.
@@ -37,7 +37,8 @@ A later layer always beats an earlier one, whatever the selector specificity. Th
 - **Every colour, font, size and z-index comes from a `--k-*` token.** A literal hex value in a component is a bug.
 - **New screens use `k-*` primitives.** Don't add rules to legacy sheets. When a screen moves to the system, delete the legacy rules it no longer uses.
 - **Colourful fills always take dark ink.** Acid and persimmon backgrounds use `--k-on-acid` / `--k-on-action` in both themes.
-- These rules are enforced by [`src/lib/designSystem.test.ts`](src/lib/designSystem.test.ts), which checks the layer order, legacy containment, no IDs and no `!important`.
+- These rules are enforced by [`src/lib/designSystem.test.ts`](src/lib/designSystem.test.ts), which checks the layer order, legacy containment, no IDs, no `!important`, and — on migrated sheets — contract type steps, role-named spacing, the three surface variants, and no resting tilt.
+- **No resting rotation** on text, controls, cards or navigation. Mascot artwork and 45/90-degree shape construction are allow-listed.
 
 ---
 
@@ -78,7 +79,29 @@ Muted text on the ground is about 6.9:1 in light and 9.8:1 in dark. Ink on persi
 | `--k-font-body` | Plus Jakarta Sans | Everything people read and tap |
 | `--k-font-mono` | IBM Plex Mono | Eyebrows, units, kcal values, dates in the week strip |
 
-The text scale is `--k-text-xs` .75rem, `--k-text-sm` .875rem, `--k-text-md` 1rem and `--k-text-lg` 1.125rem. Display sizes are set per screen with `clamp()`. Digits that line up use the `tabular` class.
+The text scale is `--k-text-xs` .75rem, `--k-text-sm` .875rem, `--k-text-md` 1rem and `--k-text-lg` 1.125rem. Unmigrated screens still set display sizes with `clamp()`. Migrated screens use the fixed contract steps below. Digits that line up use the `tabular` class.
+
+Barlow Condensed, Plus Jakarta Sans and IBM Plex Mono are self-hosted as `woff2` under [`public/fonts/`](public/fonts/) via [`fonts.css`](src/styles/system/fonts.css) (`font-display: block`). The app does not load Google Fonts.
+
+### Contract tokens (additive)
+
+New names, landed beside the existing `--k-space-1…8` and `--k-text-*` values so unmigrated screens do not move. Value-named `--k-space-4` already means 16px, so the new ramp is role-named.
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `--k-space-xs` … `--k-space-4xl` | 4, 8, 12, 16, 24, 32, 48, 64px | Migrated spacing |
+| `--k-pad-panel` | 16px below 768px, 24px above | Page and panel padding |
+| `--k-type-meta` / `--k-type-label` / `--k-type-body` / `--k-type-lead` | 12 / 14 / 16 / 18px | Reading and chrome |
+| `--k-type-section` | 18px, body face, sentence case | Section titles |
+| `--k-type-title` / `--k-type-metric` | 40 / 64px, condensed display face | Page titles and the calorie number |
+| `--k-role-surface` / `--k-role-surface-raised` | ground / card | Surfaces in both themes |
+| `--k-role-text` / `--k-role-text-muted` | ink / muted | Copy |
+| `--k-role-border` / `--k-role-border-subtle` | line / hair | Rules |
+| `--k-role-accent` / `--k-role-accent-ink` | acid / on-acid | The one bright moment |
+| `--k-role-focus` | `--k-focus` | Focus rings |
+| `--k-workspace` / `--k-nav-side` | 1200px / 220px | Desktop shell |
+
+Surfaces are exactly three classes: `.k-surface`, `.k-surface.is-outlined`, `.k-surface.is-hero`. At most one hero per route.
 
 ### Space, shape, motion, layout
 
@@ -89,7 +112,7 @@ The text scale is `--k-text-xs` .75rem, `--k-text-sm` .875rem, `--k-text-md` 1re
 | `--k-radius-sheet` | 18px (top corners of the phone sheet only) |
 | `--k-shadow-sm` / `--k-shadow` | 3px / 4px hard offset in `--k-shadow-color` |
 | `--k-press` / `--k-ease` | 90ms press, `cubic-bezier(.2, .8, .2, 1)` |
-| `--k-shell` / `--k-gutter` | 480px column, 20px side padding |
+| `--k-shell` / `--k-gutter` | 480px column, 20px side padding (unmigrated screens) |
 | `--k-tabbar-h` | 88px bottom clearance for the tab bar |
 | `--k-z-nav` / `--k-z-toast` / `--k-z-sheet` | 100 / 800 / 900. Toasts sit above the tab bar but under sheets and dialogs, so an Undo never covers an open sheet |
 
@@ -127,6 +150,23 @@ These React components render the same markup as before. `components.css` gives 
 | `.k-food-tile` | 36px rounded tile holding a `FoodIcon` |
 | `Sheet` | [`components/Sheet.tsx`](src/components/Sheet.tsx): modal dialog with focus trap and Escape. A bottom sheet on phones, centred and square from 720px |
 
+### Shared primitives (`components/system/`)
+
+Phase 1 rebuilds migrated screens on these. `PressableButton`, `Sheet` and `NutritionFields` stay as they are.
+
+| Component | Use |
+|-----------|-----|
+| `AppShell` | Single column and bottom nav below 768px; wider content to 1119px; side nav and a 1120–1200px workspace above that |
+| `PageHeader` | Eyebrow, title, optional subtitle and action. Replaces the seven bespoke header clusters |
+| `Section` | Sentence-case section title, optional meta, one hairline divider |
+| `Surface` | The three surface variants |
+| `FormField` / `FieldGrid` | Label, hint or error, 1–3 columns from 768px |
+| `FilterGroup` | Ink-when-chosen filters with a stable selected geometry |
+| `MealRow` | Food tile, name, meta, kcal |
+| `EmptyState` | Plate drawing and a short line |
+
+The living catalogue is `/dev/components` ([`ComponentSheetPage.tsx`](src/pages/ComponentSheetPage.tsx)), captured in the visual project.
+
 `FoodIcon` picks a Lucide glyph from the meal's emoji, then from its name ([`lib/foodGlyph.ts`](src/lib/foodGlyph.ts): "Chicken rice bowl" → drumstick, "Oat milk latte" → coffee), falling back to utensils. Stored meal data is never changed.
 
 ---
@@ -159,7 +199,7 @@ Momo is a plump cream dumpling with a twisted top knot: cute outside, a dry litt
 
 ### Today (`/`)
 
-[`pages/HomePage.tsx`](src/pages/HomePage.tsx). Everything needed for the day is on the first screen, top to bottom:
+[`pages/HomePage.tsx`](src/pages/HomePage.tsx), styled in [`styles/screens/today.css`](src/styles/screens/today.css). Everything needed for the day is on the first screen, top to bottom:
 
 1. **Date bar.** Weekday and date eyebrow, the day as a display title ("Today", "Yesterday"), and a calendar button. Below it, a seven-day week strip with an acid dot on logged days. It has no arrows; the calendar reaches other weeks.
 2. **Momo says hello.** A pink Momo card with a greeting by first name and time of day, and one warm line that fits the day ([`lib/todayGreeting.ts`](src/lib/todayGreeting.ts)). It never grades the numbers. A tap gets a playful line and a bop. "Roast me" appears only after consent.
@@ -264,7 +304,7 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 | **Manual entry starts blank.** Drafts are restored; recent meals are never pre-filled | [`pages/ManualEntryPage.tsx`](src/pages/ManualEntryPage.tsx) |
 | **Over is information.** Past a goal the meter turns persimmon and the copy says "over the guide"; nothing turns red | `Meter`, Today budget |
 | **One "Log a meal" control.** On Today, exactly one control has that accessible name: the + button | Today, e2e `home.spec.ts` |
-| **Momo stays off the numbers.** Today's week strip and content, and the Insights, You, Coach, Support and About columns, are marked `data-mascot-avoid`; Support, Coach and the account screens hide the walking Momo entirely. When the app column has no clear spot and the screen leaves room (about 752px and wider), the walking Momo waits in a side lane beside the column. On a phone he stays off Today, and the one-line note speaks for him | `pages/HomePage.tsx`, `mascot/controller.ts` |
+| **Momo stays off the numbers.** Today's week strip and content, and the Insights, You, Coach, Support and About columns, are marked `data-mascot-avoid`; Support, Coach, Saved (`/discover`), Insights (`/progress`) and the account screens hide the walking Momo entirely. When the app column has no clear spot and the screen leaves room (about 752px and wider), the walking Momo waits in a side lane beside the column. On a phone he stays off Today, and the one-line note speaks for him | `pages/HomePage.tsx`, `mascot/MascotOverlay.tsx` |
 
 ---
 
@@ -281,7 +321,17 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 
 ## Screenshot matrix
 
-Every change to a system screen is checked at **360, 390, 768 and 1440px**, in **light and dark**:
+Phase 1 commits pixel baselines for **Today** and **/dev/components** at **320, 390, 768 and 1440px**, in **light and dark** (16 PNGs). They are generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set:
+
+```bash
+npm run visual
+npm run visual:update
+npm run visual:sheet
+```
+
+Images live in [`e2e/visual/__screenshots__/`](e2e/visual/__screenshots__). Updating a baseline is an explicit `visual:update` commit, never automatic. The older matrix below still records the other screens to `test-results/` until later phases migrate them.
+
+Every change to a system screen is also checked at **360, 390, 768 and 1440px**, in **light and dark**:
 
 | Surface | Path | Ready when |
 |---------|------|-----------|
@@ -313,4 +363,14 @@ Images land in `test-results/visual-matrix-*/` as `{surface}-{width}-{theme}.png
 | 3 | Insights and You on the system; charts drawn with system tokens | Done |
 | 4 | Every app screen on the system (first run, Coach, Support, About, account screens); legacy sheets pruned to rules that can still match (458 → 188 KB, three sheets deleted); then move the last shared pieces and remove the `legacy` layer | In progress |
 
-When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change. To prune, remove only rules whose selectors name classes that no source file contains, and prove it with a computed-style comparison of every screen before and after.
+The **visual reset** extends that work rather than replacing it. Baseline counts live in [`DESIGN-BASELINE.md`](DESIGN-BASELINE.md).
+
+| Reset | Scope | Status |
+|-------|-------|--------|
+| 1 | Additive contract tokens, self-hosted fonts, visual seed, shared primitives, rebuilt Today, component reference, committed screenshots | This change |
+| 2 | Daily screens: Today details, log sheet, the five logging forms, Saved filters | Next |
+| 3 | Remaining screens with legacy selector removal per screen | Next |
+| 4 | Desktop compositions per task | Next |
+| 5 | Motion polish, full design-rule and visual matrix, staging sign-off | Next |
+
+When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change. To prune, remove only rules whose selectors name classes that no source file contains, and prove it with a computed-style comparison of every screen before and after. Welcome poster sheets stay: they are imported from JavaScript, not from `index.css`.
