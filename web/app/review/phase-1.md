@@ -13,7 +13,7 @@ Approved Today plus the shared foundations. Unmigrated screens keep their curren
 
 ## Contact sheet
 
-Open [`contact-sheet.html`](contact-sheet.html) after `npm run visual:update` and `npm run visual:sheet`. After images are the committed baselines. Before captures from `origin/main` were not frozen in this pack — compare against the previous Today in `kitchen.css` on `5c10f82b` if you need a side-by-side.
+Open [`contact-sheet.html`](contact-sheet.html). Before images in [`before/`](before/) were captured from `origin/main` (`5c10f82b`) in the same Playwright container, with the same Ada seed. After images are the committed baselines.
 
 ## Component state matrix
 

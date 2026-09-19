@@ -17,7 +17,10 @@ const cards = after.map(name => {
     : '<p class="missing">No before capture</p>'
   return `<figure>
     <figcaption>${name}</figcaption>
-    <div class="pair">${previous}<img src="../e2e/visual/__screenshots__/${name}" alt="after ${name}" /></div>
+    <div class="pair">
+      <div><p class="label">Before</p>${previous}</div>
+      <div><p class="label">After</p><img src="../e2e/visual/__screenshots__/${name}" alt="after ${name}" /></div>
+    </div>
   </figure>`
 }).join('\n')
 
@@ -29,11 +32,12 @@ writeFileSync(join(outDir, 'contact-sheet.html'), `<!doctype html>
   h1 { font-size: 28px; }
   figure { margin: 0 0 32px; }
   .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .label { margin: 0 0 8px; font: 600 13px/1 sans-serif; letter-spacing: .04em; text-transform: uppercase; }
   img { width: 100%; border: 1px solid #20221d; background: #fff; }
   .missing { border: 1px dashed #20221d; padding: 24px; }
 </style>
 <h1>Phase 1 contact sheet</h1>
-<p>After images are the committed visual baselines. Before images are optional captures from origin/main.</p>
+<p>Before is <code>origin/main</code> (<code>5c10f82b</code>) with the same seeded account. After is the committed phase 1 baseline.</p>
 ${cards || '<p>No after screenshots yet. Run npm run visual:update.</p>'}
 `)
 console.log(`Wrote ${join(outDir, 'contact-sheet.html')} (${after.length} after images)`)
