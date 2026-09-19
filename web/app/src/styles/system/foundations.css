@@ -6,8 +6,10 @@
     background: var(--k-role-surface);
     color: var(--k-role-text);
   }
-  .k-workspace-col { min-width: 0; }
+  .k-workspace-col { min-width: 0; width: 100%; max-width: var(--k-workspace); margin-inline: auto; }
+  .k-app:not(.has-nav) .k-workspace-col { max-width: 52rem; }
   .k-app > .app-main,
+  .k-workspace-col > .app-main,
   .k-app-main {
     width: 100%;
     max-width: var(--k-workspace);
@@ -161,13 +163,15 @@
   }
 
   @media (min-width: 1120px) {
-    .k-app {
+    .k-app.has-nav {
       display: grid;
-      grid-template-columns: var(--k-nav-side) minmax(0, var(--k-workspace));
+      /* The empty third column is Momo's lane. Without it he has nowhere to
+         stand beside a full-width page, so he hides instead of waiting. */
+      grid-template-columns: var(--k-nav-side) minmax(0, var(--k-workspace)) var(--k-mascot-rail);
       justify-content: center;
       align-items: start;
       min-height: 100dvh;
-      padding-right: var(--k-mascot-rail);
+      padding-inline: var(--k-space-xl);
     }
     .k-app .bottom-nav-wrap {
       position: sticky;
@@ -189,9 +193,16 @@
       min-height: 0;
       height: auto;
       gap: var(--k-space-sm);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
     }
-    .k-app .nav-fab { margin: var(--k-space-sm) 0; }
+    .k-app .bottom-nav .nav-item-inner { flex-direction: row; justify-content: flex-start; gap: var(--k-space-md); width: 100%; min-height: 52px; padding: var(--k-space-md); }
+    .k-app .bottom-nav .nav-item span { font-size: var(--k-type-label); }
+    .k-app .nav-fab { margin: var(--k-space-sm) auto; }
     .k-app > .app-main,
+    .k-workspace-col > .app-main,
     .k-app-main {
       padding-bottom: var(--k-space-3xl);
     }

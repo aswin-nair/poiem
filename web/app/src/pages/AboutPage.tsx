@@ -1,3 +1,4 @@
+import { AppShell } from '../components/system/AppShell'
 import { BottomNav } from '../components/BottomNav'
 import { BackLink } from '../components/BackLink'
 import { IconArrowUpRight } from '../components/icons'
@@ -7,7 +8,7 @@ import identity from '../brand/identity.json'
 
 export function AboutPage() {
   return (
-    <div className="app-shell k-screen k-page k-about">
+    <AppShell screen="k-page k-about" nav={<BottomNav />}>
       <main className="app-main k-page-main" data-mascot-avoid>
         <BackLink to="/settings" />
         <header className="k-page-head">
@@ -44,8 +45,7 @@ export function AboutPage() {
 
         <p className="k-page-foot">Poiem · Your plate. Your pace.</p>
       </main>
-      <BottomNav />
-    </div>
+    </AppShell>
   )
 }
 

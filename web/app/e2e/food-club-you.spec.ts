@@ -15,7 +15,6 @@ for (const width of [320, 390, 768, 1280]) {
       await page.emulateMedia({ colorScheme })
       await page.reload()
       await expect(page.locator('html')).toHaveAttribute('data-theme', colorScheme)
-      await expect(page.getByText('MADE A LITTLE MORE YOU.')).toBeVisible()
       await expect(page.getByRole('link', { name: 'Momo' })).toBeVisible()
       await page.getByRole('link', { name: 'Momo' }).click()
       await expect(page.getByRole('heading', { name: 'Your kitchen companion' })).toBeVisible()

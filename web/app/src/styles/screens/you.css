@@ -7,15 +7,14 @@
   .k-you-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    align-content: start;
-    gap: 16px;
-    padding: 12px var(--k-gutter) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + 40px);
+    align-content: start; gap: var(--k-space-xl);
+    padding: 12px var(--k-pad-panel) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + 40px);
   }
 
   /* ── Header ────────────────────────────────────────────────── */
   .k-you .you-header {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
     gap: 14px;
     margin: 6px 0 0;
@@ -26,40 +25,11 @@
     box-shadow: none;
   }
   .k-you .you-header > div:first-child { display: grid; justify-items: start; gap: 6px; min-width: 0; }
-  .k-you .page-title { margin: 0; font: 900 clamp(2.75rem, 12vw, 3.5rem)/.85 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-you .page-title { margin: 0; font: 900 var(--k-type-title)/1 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
   .k-you .you-header .page-sub { margin: 0; font: 700 var(--k-text-md)/1.3 var(--k-font-body); color: var(--k-muted); overflow-wrap: anywhere; }
-  .k-you .you-header-stamp {
-    margin: 4px 0 0;
-    padding: 6px 10px;
-    border: 2px solid var(--k-on-acid);
-    background: var(--k-acid);
-    color: var(--k-on-acid);
-    box-shadow: var(--k-shadow-sm);
-    rotate: -2deg;
-    font: 600 var(--k-text-xs)/1 var(--k-font-mono);
-    letter-spacing: .06em;
-  }
-  .k-you .you-momo-mark {
-    width: 76px;
-    height: 80px;
-    padding: 1px;
-    border: 2px solid var(--k-on-acid);
-    border-radius: 48% 48% 10% 10%;
-    background: var(--k-momo);
-    box-shadow: var(--k-shadow-sm);
-    rotate: 6deg;
-    animation: k-log-momo-hop 560ms cubic-bezier(.3, 1.6, .5, 1) 120ms both;
-  }
-  .k-you .you-momo-mark:empty { display: none; }
-  .k-you .you-momo-mark .momo-sticker { display: block; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; transform: none; rotate: none; }
-  .k-you .you-momo-mark svg { display: block; width: 100%; height: 100%; }
   .k-you .you-status {
     justify-self: start;
-    margin: -4px 0 0;
-    padding: 5px 10px;
-    border: 2px solid var(--k-line);
-    background: var(--k-mint);
-    color: var(--k-on-tone);
+    margin: -4px 0 0; padding: 0; border: 0; background: none; color: var(--k-muted);
     font: 600 var(--k-text-xs)/1.2 var(--k-font-mono);
   }
 
@@ -71,11 +41,11 @@
     gap: 10px;
     min-height: 52px;
     padding: 0 52px 0 14px;
-    border: 2px solid var(--k-line);
+    border: 1px solid var(--k-hair-strong);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
-    box-shadow: var(--k-shadow-sm);
+    box-shadow: none;
   }
   .k-you .poiem-search-field:focus-within { border-color: var(--k-line); outline: 3px solid var(--k-focus); outline-offset: 3px; }
   .k-you .poiem-search-field input {
@@ -95,7 +65,7 @@
   .k-you .poiem-search-clear { top: 4px; right: 4px; border-radius: 0; color: var(--k-ink); }
   .k-you .poiem-search-clear:hover { background: var(--k-sunken); color: var(--k-ink); }
   .k-you .poiem-search-clear:focus-visible { outline: 3px solid var(--k-focus); outline-offset: -3px; }
-  .k-you .poiem-settings-results { margin: 8px 0 0; padding: 4px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: var(--k-shadow); }
+  .k-you .poiem-settings-results { margin: 8px 0 0; padding: 4px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); box-shadow: var(--k-shadow); }
   .k-you .poiem-search-status { margin: 8px 10px; font: 600 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); }
   .k-you .poiem-settings-results a { border-radius: 0; color: var(--k-ink); }
   .k-you .poiem-settings-results a > svg { color: var(--k-ink); }
@@ -109,23 +79,20 @@
   .k-you .appearance-settings {
     display: grid;
     gap: 12px;
-    margin: 0;
-    padding: var(--k-space-4);
-    border: 2px solid var(--k-line);
-    border-radius: 0;
-    background: var(--k-butter);
-    color: var(--k-on-tone);
+    margin: 0; padding: var(--k-pad-panel);
+    border: 1px solid var(--k-hair-strong);
+    border-radius: 0; background: var(--k-card); color: var(--k-ink);
     scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px);
   }
-  .k-you .appearance-settings-copy h2 { margin: 0 0 4px; font: 900 1.5rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-on-tone); }
-  .k-you .appearance-settings-copy p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-on-tone); }
-  .k-you .appearance-control { color: var(--k-on-tone); }
+  .k-you .appearance-settings-copy h2 { margin: 0 0 4px; font: 700 var(--k-type-section)/1.3 var(--k-font-body); text-transform: none; color: var(--k-ink); }
+  .k-you .appearance-settings-copy p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
+  .k-you .appearance-control { color: var(--k-ink); }
   .k-you .appearance-legend { margin: 0 0 6px; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; }
   .k-you .appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
   .k-you .appearance-option-face {
     min-height: 48px;
     padding: 0 8px;
-    border: 2px solid var(--k-line);
+    border: 1px solid var(--k-hair-strong);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
@@ -133,7 +100,7 @@
     transform: none;
   }
   .k-you .appearance-option:hover input:not(:checked) + .appearance-option-face { background: var(--k-sunken); color: var(--k-ink); transform: none; }
-  .k-you .appearance-option > input:checked + .appearance-option-face { background: var(--k-ink); color: var(--k-ground); box-shadow: var(--k-shadow-sm); }
+  .k-you .appearance-option > input:checked + .appearance-option-face { background: var(--k-ink); color: var(--k-ground); box-shadow: none; }
   .k-you .appearance-option > input:active + .appearance-option-face { transform: none; translate: 1px 1px; }
   .k-you .appearance-option > input:focus-visible + .appearance-option-face { outline: 3px solid var(--k-focus); outline-offset: 3px; }
 
@@ -144,8 +111,8 @@
     z-index: 20;
     display: grid;
     gap: 6px;
-    margin: 0 calc(var(--k-gutter) * -1);
-    padding: 6px var(--k-gutter) 8px;
+    margin: 0 calc(var(--k-pad-panel) * -1);
+    padding: 6px var(--k-pad-panel) 8px;
     border: 0;
     border-bottom: 2px solid var(--k-line);
     border-radius: 0;
@@ -170,7 +137,7 @@
     align-items: center;
     min-height: 44px;
     padding: 0 12px;
-    border: 2px solid var(--k-line);
+    border: 1px solid var(--k-hair-strong);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
@@ -182,7 +149,7 @@
   .k-you .you-shortcuts a:hover { background: var(--k-sunken); color: var(--k-ink); }
   .k-you .you-shortcuts a[aria-current="location"] { background: var(--k-ink); color: var(--k-ground); border-color: var(--k-ink); }
   .k-you .you-shortcuts a:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
-  .k-you .you-more-sections { display: grid; place-items: center; flex: 0 0 44px; min-height: 44px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); box-shadow: none; }
+  .k-you .you-more-sections { display: grid; place-items: center; flex: 0 0 44px; min-height: 44px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; }
   .k-you .you-save-bar {
     --button-padding-inline: .875rem;
     --button-font-size: .875rem;
@@ -210,27 +177,20 @@
     text-align: left;
   }
   .k-you .you-toolbar.has-changes .settings-saved-banner { color: var(--k-ink); }
-  .k-you .you-unsaved-dot { width: 10px; height: 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-action); rotate: 45deg; }
+  .k-you .you-unsaved-dot { width: 10px; height: 10px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-action); rotate: 45deg; }
   .k-you .you-save-error { flex-basis: 100%; display: flex; align-items: center; min-height: 44px; font: 700 var(--k-text-sm)/1.2 var(--k-font-body); color: var(--k-danger-ink); text-decoration: underline; text-underline-offset: 3px; }
 
   /* ── Sections ──────────────────────────────────────────────── */
-  .k-you .you-section { display: grid; gap: 10px; padding: 12px 0 0; scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px); }
+  .k-you .you-section { display: grid; gap: var(--k-space-lg); padding: var(--k-space-lg) 0 0; scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px); }
   .k-you .you-section:focus { outline: none; }
   .k-you .you-section:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 6px; }
   .k-you .you-section-heading { display: grid; justify-items: start; gap: 8px; margin: 0 0 4px; padding: 0; border: 0; background: none; }
   .k-you .you-section-heading h2 {
     max-width: 100%;
-    margin: 0;
-    padding: 5px 10px 3px;
-    border: 2px solid var(--k-line);
-    border-radius: 0;
-    background: var(--tone, var(--k-card));
-    color: var(--k-on-tone);
-    box-shadow: var(--k-shadow-sm);
-    rotate: -1.5deg;
-    font: 900 clamp(1.625rem, 7vw, 2rem)/1 var(--k-font-display);
-    letter-spacing: .01em;
-    text-transform: uppercase;
+    margin: 0; padding: 0; border: 0;
+    border-radius: 0; background: none; color: var(--k-ink);
+    box-shadow: none;
+    rotate: none; font: 700 var(--k-type-section)/1.3 var(--k-font-body); letter-spacing: 0; text-transform: none;
   }
   .k-you .you-section-heading p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
   .k-you .you-section[id="you-profile"] { --tone: var(--k-peach); }
@@ -240,13 +200,13 @@
   .k-you .you-section[id="you-account"] { --tone: var(--k-butter); }
   .k-you .you-section[id="you-data"] { --tone: var(--k-peach); }
   .k-you .settings-section-label { margin: 8px 0 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--k-muted); }
-  .k-you :is(.you-pause-note, .settings-clamp-note) { margin: 0; padding: 10px 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); font: 500 var(--k-text-sm)/1.45 var(--k-font-body); }
+  .k-you :is(.you-pause-note, .settings-clamp-note) { margin: 0; padding: 10px 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); font: 500 var(--k-text-sm)/1.45 var(--k-font-body); }
   .k-you .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
 
   /* Goals: calories on acid, macros with Today's colour caps. */
   .k-you .settings-goals-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; }
-  .k-you .settings-goal-card { display: grid; gap: 4px; min-width: 0; padding: 14px 12px 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: inset 0 6px 0 var(--tone); }
-  .k-you .settings-goal-card:nth-child(1) { --tone: var(--k-acid); border-color: var(--k-on-acid); background: var(--k-acid); box-shadow: var(--k-shadow-sm); }
+  .k-you .settings-goal-card { display: grid; gap: 4px; min-width: 0; padding: var(--k-space-lg); border: 0; border-radius: 0; background: var(--k-sunken); box-shadow: none; }
+  .k-you .settings-goal-card:nth-child(1) { --tone: var(--k-acid); border-color: var(--k-on-acid); background: var(--k-acid); box-shadow: none; }
   .k-you .settings-goal-card:nth-child(2) { --tone: var(--k-action); }
   .k-you .settings-goal-card:nth-child(3) { --tone: var(--k-acid); }
   .k-you .settings-goal-card:nth-child(4) { --tone: var(--k-sky-strong); }
@@ -263,7 +223,7 @@
     margin: 0;
     padding: 0 16px;
     overflow: visible;
-    border: 2px solid var(--k-line);
+    border: 1px solid var(--k-hair-strong);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
@@ -279,30 +239,30 @@
   .k-you .settings-row-control { display: flex; flex-shrink: 0; align-items: center; gap: 6px; max-width: 55%; }
   /* A key or a model name needs the whole width, so those rows put the field under the label. */
   .k-you .settings-row:has(.settings-key-wrap, input[list]) { flex-wrap: wrap; gap: 8px; padding: 12px 0; }
-  .k-you .settings-row:has(.settings-key-wrap, input[list]) .settings-row-control { flex: 1 1 100%; max-width: none; }
+  .k-you .settings-row:has(.settings-key-wrap, input[list]) .settings-row-control { flex: 1 1 100%; max-width: none;  grid-column: 1 / -1; }
   .k-you .settings-row-control > input[list] { max-width: none; }
   .k-you :is(.settings-input, .settings-select, .settings-textarea) {
     width: 100%;
-    border: 2px solid var(--k-line);
+    border: 1px solid var(--k-hair-strong);
     border-radius: 0;
     background: var(--k-ground);
     color: var(--k-ink);
     box-shadow: none;
     outline: none;
   }
-  .k-you :is(.settings-input, .settings-select) { max-width: 168px; min-height: 44px; padding: 0 10px; font: 700 var(--k-text-sm)/1.2 var(--k-font-body); }
+  .k-you :is(.settings-input, .settings-select) { max-width: none; min-height: 48px; padding: 0 8px; font: 500 var(--k-type-body)/1.3 var(--k-font-body);  min-width: 0;  margin: 0; }
   .k-you .settings-textarea { padding: 10px 12px; font: 500 var(--k-text-sm)/1.5 var(--k-font-body); }
   .k-you :is(.settings-input, .settings-select, .settings-textarea):focus { border-color: var(--k-line); outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .k-you .settings-select:disabled { background: var(--k-sunken); color: var(--k-muted); border-color: var(--k-hair-strong); }
   .k-you .settings-key-wrap { display: flex; align-items: center; gap: 6px; width: 100%; }
   .k-you .settings-key-wrap .settings-input { flex: 1; max-width: none; }
-  .k-you .settings-key-toggle { min-width: 56px; min-height: 44px; padding: 0 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); font: 800 var(--k-text-xs)/1 var(--k-font-body); }
+  .k-you .settings-key-toggle { min-width: 56px; min-height: 44px; padding: 0 10px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); font: 800 var(--k-text-xs)/1 var(--k-font-body); }
   .k-you .settings-key-toggle[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); }
   .k-you .settings-byok-note { margin: 0; padding: 12px 0 4px; font: 500 var(--k-text-xs)/1.5 var(--k-font-body); color: var(--k-muted); }
   .k-you .settings-key-help { display: inline-flex; align-items: center; gap: 2px; color: var(--k-ink); font-weight: 800; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-  .k-you .settings-accuracy-warning { display: grid; gap: 10px; margin: 4px 0 12px; padding: 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); }
+  .k-you .settings-accuracy-warning { display: grid; gap: 10px; margin: 4px 0 12px; padding: 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); }
   .k-you .settings-accuracy-warning p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-on-tone); }
-  .k-you .settings-accuracy-fix { justify-self: start; min-height: 44px; padding: 8px 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: var(--k-shadow-sm); font: 800 var(--k-text-xs)/1.3 var(--k-font-body); }
+  .k-you .settings-accuracy-fix { justify-self: start; min-height: 44px; padding: 8px 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 800 var(--k-text-xs)/1.3 var(--k-font-body); }
   .k-you .settings-field-block { display: grid; gap: 8px; padding: 12px 0; border-top: 1px solid var(--k-hair); }
   .k-you .settings-divider { height: 1px; margin: 0 -16px; background: var(--k-hair); }
 
@@ -339,16 +299,16 @@
     min-height: 44px;
     margin: 0;
     padding: 0 14px;
-    border: 2px solid var(--k-line);
+    border: 1px solid var(--k-hair-strong);
     background: var(--k-card);
-    box-shadow: var(--k-shadow-sm);
+    box-shadow: none;
     font: 800 var(--k-text-sm)/1 var(--k-font-body);
   }
   .k-you .settings-row-control .settings-data-btn:active { translate: 2px 2px; box-shadow: none; }
 
   /* Account */
   .k-you .settings-account-row { display: flex; align-items: center; gap: 12px; padding: 14px 0 10px; }
-  .k-you .account-avatar { flex: none; width: 48px; height: 48px; border: 2px solid var(--k-line); border-radius: 0; object-fit: cover; }
+  .k-you .account-avatar { flex: none; width: 48px; height: 48px; border: 1px solid var(--k-hair-strong); border-radius: 0; object-fit: cover; }
   .k-you .account-avatar-fallback { display: grid; place-items: center; background: var(--k-acid); color: var(--k-on-acid); font: 900 1.375rem/1 var(--k-font-display); }
   /* A long name or email truncates instead of widening the page. */
   .k-you .account-info { flex: 1 1 auto; min-width: 0; overflow: hidden; }
@@ -357,7 +317,7 @@
   .k-you .account-info span { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); color: var(--k-muted); }
   .k-you .settings-card .field { display: grid; gap: 6px; margin: 12px 0 0; }
   .k-you .settings-card .field label { margin: 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
-  .k-you .settings-card .field input { width: 100%; min-height: 48px; padding: 0 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-ground); color: var(--k-ink); box-shadow: none; font: 600 var(--k-text-md)/1.2 var(--k-font-body); }
+  .k-you .settings-card .field input { width: 100%; min-height: 48px; padding: 0 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-ground); color: var(--k-ink); box-shadow: none; font: 600 var(--k-text-md)/1.2 var(--k-font-body); }
   .k-you .settings-card .field input:focus { border-color: var(--k-line); box-shadow: none; outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .k-you .settings-card[role="region"] { border-color: var(--k-danger-ink); box-shadow: 4px 4px 0 var(--k-danger-ink); }
   .k-you .settings-card[role="region"] > h2 { margin: 14px 0 0; font: 900 1.5rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-danger-ink); }
@@ -365,16 +325,16 @@
   /* Momo: streak, achievements, roast preview, and the wardrobe disclosure. */
   .k-you .wardrobe-grid { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 0; }
   .k-you .wardrobe-grid:empty { display: none; }
-  .k-you .wardrobe-item.is-owned { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 8px 10px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); outline: none; font: 700 var(--k-text-sm)/1.25 var(--k-font-body); }
-  .k-you .roast-preview { display: grid; justify-items: start; gap: 10px; margin: 4px 0 12px; padding: 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); }
+  .k-you .wardrobe-item.is-owned { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 8px 10px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); outline: none; font: 700 var(--k-text-sm)/1.25 var(--k-font-body); }
+  .k-you .roast-preview { display: grid; justify-items: start; gap: 10px; margin: 4px 0 12px; padding: 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); }
   .k-you .roast-preview-reply { margin: 0; }
   .k-you .roast-preview-reply p { margin: 0; font: 600 var(--k-text-md)/1.45 var(--k-font-body); color: var(--k-on-tone); }
   .k-you .roast-preview-hint { margin: 0; font: 500 var(--k-text-xs)/1.4 var(--k-font-body); color: var(--k-on-tone); }
-  .k-you .roast-preview .today-shortcut { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border: 2px solid var(--k-on-action); border-radius: 0; background: var(--k-action); color: var(--k-on-action); box-shadow: var(--k-shadow-sm); font: 800 var(--k-text-sm)/1 var(--k-font-body); }
+  .k-you .roast-preview .today-shortcut { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border: 2px solid var(--k-on-action); border-radius: 0; background: var(--k-action); color: var(--k-on-action); box-shadow: none; font: 800 var(--k-text-sm)/1 var(--k-font-body); }
   .k-you .roast-preview .today-shortcut:active { translate: 2px 2px; box-shadow: none; }
 
   /* Disclosures open with the + that turns into ×, like the log button. */
-  .k-you .you-disclosure { margin: 4px 0 0; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: var(--k-shadow-sm); }
+  .k-you .you-disclosure { margin: 4px 0 0; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; }
   .k-you .you-disclosure > summary {
     position: relative;
     display: grid;
@@ -416,4 +376,16 @@
   .k-you .you-disclosure > .settings-card:has(.k-wardrobe) { padding: 16px; }
 
   .k-you .settings-footer { margin: 8px 0 0; padding: 12px 0; font: 600 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); text-align: center; }
+  /* A shared label column gives every editable row the same field edges. */
+  .k-you .settings-row:has(.settings-input, .settings-select) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--k-space-lg); padding-block: var(--k-space-md); }
+  .k-you .settings-row:has(.settings-input, .settings-select) .settings-row-control { width: 100%; min-width: 0; max-width: none; }
+  @media (max-width: 359px) {
+    .k-you .settings-row:has(.settings-input, .settings-select) { grid-template-columns: minmax(0, 1fr); gap: var(--k-space-sm); }
+  }
+  @media (min-width: 768px) {
+    .k-you-main { max-width: 880px; margin-inline: auto; }
+    .k-you .settings-row:has(.settings-input, .settings-select) { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+    .k-you .you-shortcuts { flex-wrap: wrap; overflow: visible; }
+    .k-you .you-more-sections { display: none; }
+  }
 }

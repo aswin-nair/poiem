@@ -12,7 +12,7 @@ export function AppShell({
   screen?: string
 }) {
   return (
-    <div className={`app-shell k-app k-screen${screen ? ` ${screen}` : ''}${className ? ` ${className}` : ''}`}>
+    <div className={`app-shell k-app k-screen${nav ? ' has-nav' : ''}${screen ? ` ${screen}` : ''}${className ? ` ${className}` : ''}`}>
       {nav}
       <div className="k-workspace-col">{children}</div>
     </div>

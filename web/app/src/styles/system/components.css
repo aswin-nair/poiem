@@ -36,7 +36,7 @@
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
-    box-shadow: var(--k-shadow-sm);
+    box-shadow: none;
     font: 800 var(--button-font-size, 1rem)/1.25 var(--k-font-body);
     letter-spacing: 0;
     text-transform: none;
@@ -335,16 +335,16 @@
     text-transform: uppercase;
     color: var(--k-muted);
   }
-  .k-card { padding: var(--k-space-4); border: 2px solid var(--k-line); background: var(--k-card); color: var(--k-ink); }
+  .k-card { padding: var(--k-pad-panel); border: 1px solid var(--k-hair-strong); background: var(--k-card); color: var(--k-ink); }
   .k-section-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: var(--k-space-3);
     padding-bottom: var(--k-space-2);
-    border-bottom: 2px solid var(--k-line);
+    border-bottom: 1px solid var(--k-hair-strong);
   }
-  .k-section-head :is(h2, h3) { margin: 0; font: 900 1.5rem/1 var(--k-font-display); letter-spacing: .01em; text-transform: uppercase; color: var(--k-ink); }
+  .k-section-head :is(h2, h3) { margin: 0; font: 700 var(--k-type-section)/1.3 var(--k-font-body); letter-spacing: 0; text-transform: none; color: var(--k-ink); }
   .k-section-head > span { font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
   .k-muted { color: var(--k-muted); }
 

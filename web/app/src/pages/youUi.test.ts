@@ -28,9 +28,9 @@ describe('You page UI', () => {
     state.gamification.mascotActivity = 'off'
     expect(renderPage()).not.toContain('Roast me')
   })
-  it('respects Hide Momo for the decorative profile sticker', () => {
-    expect(renderPage()).toContain('class="momo-sticker" aria-hidden="true"')
-    state.gamification.mascotActivity = 'off'
+  /* The header carries the page's own words now, with no decorative Momo to
+     hide, so nothing here depends on the Hide Momo setting. */
+  it('keeps the header free of mascot decoration', () => {
     expect(renderPage()).not.toContain('class="momo-sticker"')
   })
 
