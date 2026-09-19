@@ -319,7 +319,7 @@
   .k-you .settings-card .field label { margin: 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
   .k-you .settings-card .field input { width: 100%; min-height: 48px; padding: 0 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-ground); color: var(--k-ink); box-shadow: none; font: 600 var(--k-text-md)/1.2 var(--k-font-body); }
   .k-you .settings-card .field input:focus { border-color: var(--k-line); box-shadow: none; outline: 3px solid var(--k-focus); outline-offset: 2px; }
-  .k-you .settings-card[role="region"] { border-color: var(--k-danger-ink); box-shadow: 4px 4px 0 var(--k-danger-ink); }
+  .k-you .settings-card[role="region"] { border-color: var(--k-danger-ink); }
   .k-you .settings-card[role="region"] > h2 { margin: 14px 0 0; font: 900 1.5rem/1 var(--k-font-display); text-transform: uppercase; color: var(--k-danger-ink); }
 
   /* Momo: streak, achievements, roast preview, and the wardrobe disclosure. */

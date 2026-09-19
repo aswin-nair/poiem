@@ -284,7 +284,7 @@
   .date-modal-cell.today { box-shadow: inset 0 0 0 2px var(--k-line); }
   .date-modal-cell.selected { background: var(--k-ink); color: var(--k-ground); }
   .date-modal-cell:disabled { color: var(--k-hair-strong); }
-  .date-modal-today-btn { min-height: 44px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); box-shadow: var(--k-shadow-sm); font: 800 var(--k-text-sm)/1 var(--k-font-body); }
+  .date-modal-today-btn { min-height: 44px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); box-shadow: none; font: 800 var(--k-text-sm)/1 var(--k-font-body); }
 
   /* ── The log moment (first meal of the day and milestones) ─── */
   .celebrate-overlay { background: var(--k-ground); }
@@ -364,7 +364,7 @@
     border: 2px solid var(--k-line);
     background: var(--k-card);
     color: var(--k-ink);
-    box-shadow: var(--k-shadow-sm);
+    box-shadow: none;
     font: 800 var(--k-text-md)/1.2 var(--k-font-body);
     text-decoration: none;
     cursor: pointer;
