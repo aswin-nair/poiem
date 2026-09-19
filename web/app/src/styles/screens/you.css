@@ -6,6 +6,7 @@
   .k-you { min-height: 100dvh; }
   .k-you-main {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     align-content: start;
     gap: 16px;
     padding: 12px var(--k-gutter) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + 40px);
@@ -349,6 +350,9 @@
   .k-you .settings-account-row { display: flex; align-items: center; gap: 12px; padding: 14px 0 10px; }
   .k-you .account-avatar { flex: none; width: 48px; height: 48px; border: 2px solid var(--k-line); border-radius: 0; object-fit: cover; }
   .k-you .account-avatar-fallback { display: grid; place-items: center; background: var(--k-acid); color: var(--k-on-acid); font: 900 1.375rem/1 var(--k-font-display); }
+  /* A long name or email truncates instead of widening the page. */
+  .k-you .account-info { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+  .k-you .account-info :is(strong, span) { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .k-you .account-info strong { font: 800 var(--k-text-md)/1.25 var(--k-font-body); color: var(--k-ink); }
   .k-you .account-info span { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); color: var(--k-muted); }
   .k-you .settings-card .field { display: grid; gap: 6px; margin: 12px 0 0; }

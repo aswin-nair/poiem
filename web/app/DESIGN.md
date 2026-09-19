@@ -24,9 +24,9 @@ The Expo `mobile/` app stays a private alpha. It does **not** extract shared tok
 
 | Layer | Files | Role |
 |-------|-------|------|
-| `legacy` | Every older sheet under `src/styles/` (base, clay, poster system, page sheets…) | Kept working while screens move; deleted sheet by sheet |
+| `legacy` | The older sheets under `src/styles/` that still style something (base, toggles, swipe rows, the splash, mascot motion…) | Pruned to rules that can still match; deleted sheet by sheet |
 | `system` | [`styles/system/tokens.css`](src/styles/system/tokens.css), [`styles/system/components.css`](src/styles/system/components.css) | Tokens, shared component styles, `k-*` primitives |
-| `screens` | [`styles/screens/kitchen.css`](src/styles/screens/kitchen.css), [`styles/screens/flows.css`](src/styles/screens/flows.css) | Layout for rebuilt screens: Today, the log sheet and the Journey card; the log flows and Saved |
+| `screens` | [`kitchen.css`](src/styles/screens/kitchen.css), [`flows.css`](src/styles/screens/flows.css), [`insights.css`](src/styles/screens/insights.css), [`you.css`](src/styles/screens/you.css), [`admin.css`](src/styles/screens/admin.css), [`first-run.css`](src/styles/screens/first-run.css), [`pages.css`](src/styles/screens/pages.css), [`account.css`](src/styles/screens/account.css) | Layout for every screen of the app: Today and the log sheet; the log flows and Saved; Insights; You; admin; the first run; Coach, Support and About; sign-in and the password screens |
 | *(unlayered)* | [`styles/a11y.css`](src/styles/a11y.css) | Accessibility overrides (reduced motion, forced colours). Loaded last and allowed `!important` |
 
 A later layer always beats an earlier one, whatever the selector specificity. The system can therefore restyle a legacy class such as `.pressable-face` or `.toast` with a plain class selector, and an old `#poster-ui` ID chain in `legacy` cannot override it.
@@ -233,9 +233,25 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 4. **First meal.** Photo, Describe and Manual as tinted method tiles; Photo and Describe hand over to the AI flows. On the typed form, calories are the acid field, macros wear their colour caps, meal types carry their meal colour, and the total is an acid card. Whichever way it arrives, the first meal puts the Blossom clip on Momo and the "First meal in." moment shows "Momo’s first piece".
 5. **Age notice.** A plain card with Change date of birth and Back to welcome.
 
+### Coach (`/coach`)
+
+[`pages/CoachPage.tsx`](src/pages/CoachPage.tsx), styled in [`styles/screens/pages.css`](src/styles/screens/pages.css). A pink Momo card and an "AI Coach" display title. With no messages, an "Ask me anything" card offers three tinted starters and says where the chat is stored. Coach's replies are square cards beside a small pink Momo; your messages sit on the right in butter. Each message has a 44px Delete. A safety reply adds a mint "Talk to someone" list of support links. The message field and a persimmon Send button sit in a bar above the tab bar.
+
+### Support and About (`/support`, `/about`)
+
+Also in `pages.css`, sharing one frame: a back link, an eyebrow, a display title and square cards. **Support** stays quiet on purpose: no Momo, no jokes, and the phone numbers are its only emphatic element, as full-width bordered buttons. "In immediate danger" sits on soft danger. **About** carries the joy instead: an acid brand card and Momo in his pink card.
+
+### Account screens (`/login`, `/forgot-password`, `/reset-password`)
+
+[`pages/LoginPage.tsx`](src/pages/LoginPage.tsx) and [`components/FoodClubScene.tsx`](src/components/FoodClubScene.tsx), styled in [`styles/screens/account.css`](src/styles/screens/account.css). The acid poster keeps the brand voice: EAT. (solid), LOG. (outlined), LIVE. (on persimmon), Momo reacting to the form (sleepy while you type a password), his line, and an example meal. On a phone the poster is compact and the Create account button docks at the bottom until the keyboard opens. From 900px the poster and the form sit side by side. The forgot and reset password screens and the session check are one plain card.
+
+### Starting up
+
+The brand splash plays once per browser session. Reloads, deep links and later sign-ins open the page as soon as the data is ready; the splash only fades in if loading takes a noticeable moment. The first run, the account screens and Coach load on demand, so the four tabs and the log flows are all the first visit downloads.
+
 ### Still on legacy
 
-Coach, Support, About, and the poster surfaces (the welcome page and sign-in). The four tabs have lost their poster strips and art; the poster system stays only where the brand voice belongs. The old `.insights-refresh`, `.you-refresh` and `.poster-ui` rules for Insights and You no longer match anything and leave with the legacy sheets in phase 4.
+The marketing welcome page (`/welcome`) keeps its own poster sheets. A few shared pieces are still styled by pruned legacy sheets (toggle base, swipe rows, the splash, the walking Momo), until phase 4 moves them into the system and removes the `legacy` layer.
 
 ---
 
@@ -248,7 +264,7 @@ Coach, Support, About, and the poster surfaces (the welcome page and sign-in). T
 | **Manual entry starts blank.** Drafts are restored; recent meals are never pre-filled | [`pages/ManualEntryPage.tsx`](src/pages/ManualEntryPage.tsx) |
 | **Over is information.** Past a goal the meter turns persimmon and the copy says "over the guide"; nothing turns red | `Meter`, Today budget |
 | **One "Log a meal" control.** On Today, exactly one control has that accessible name: the + button | Today, e2e `home.spec.ts` |
-| **Momo stays off the numbers.** Today's week strip and content, and the Insights and You columns, are marked `data-mascot-avoid`. When the app column has no clear spot and the screen leaves room (about 752px and wider), the walking Momo waits in a side lane beside the column. On a phone he stays off Today, and the one-line note speaks for him | `pages/HomePage.tsx`, `mascot/controller.ts` |
+| **Momo stays off the numbers.** Today's week strip and content, and the Insights, You, Coach, Support and About columns, are marked `data-mascot-avoid`; Support, Coach and the account screens hide the walking Momo entirely. When the app column has no clear spot and the screen leaves room (about 752px and wider), the walking Momo waits in a side lane beside the column. On a phone he stays off Today, and the one-line note speaks for him | `pages/HomePage.tsx`, `mascot/controller.ts` |
 
 ---
 
@@ -257,7 +273,7 @@ Coach, Support, About, and the poster surfaces (the welcome page and sign-in). T
 - **Touch targets:** at least 44×44px for every control, guarded by `e2e/tap-targets.spec.ts`. That covers week days at 360px, steppers, "Portion" and toast actions.
 - **Focus:** a 3px `--k-focus` outline with offset on every interactive primitive. It is acid in dark so it stays visible.
 - **Dialogs:** `Sheet`, `PortionSheet` and `DatePickerModal` use `useDialogFocus`. Focus moves in, Tab is trapped, and Escape closes only the topmost dialog.
-- **Navigation:** on a page change the new page's `h1` takes focus. Opening or closing the log sheet does not.
+- **Navigation:** on a page change the new page's `h1` takes focus, waiting briefly for a screen that loads on demand. It shows no focus ring, because a heading is not a control. Opening or closing the log sheet does not move focus.
 - **Structure:** meal groups are labelled regions, meters are named progress bars with a value text, and the + button has `aria-haspopup="dialog"`.
 - **Motion:** sheets fade and rise in 160–220ms; `a11y.css` removes all animation under `prefers-reduced-motion: reduce`.
 
@@ -295,6 +311,6 @@ Images land in `test-results/visual-matrix-*/` as `{surface}-{width}-{theme}.png
 | 1 | Daily loop: Today, log sheet, toast + Undo, rare celebrations, blank manual entry, snack default | Done |
 | 2 | Log flows (Describe, Photo, Manual, Review, Edit) and Saved on the system; `meal-flow.css` deleted | Done |
 | 3 | Insights and You on the system; charts drawn with system tokens | Done |
-| 4 | Poster surfaces reviewed against the system tokens (first run done); remove unused legacy sheets and the `legacy` layer | In progress |
+| 4 | Every app screen on the system (first run, Coach, Support, About, account screens); legacy sheets pruned to rules that can still match (458 → 188 KB, three sheets deleted); then move the last shared pieces and remove the `legacy` layer | In progress |
 
-When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change.
+When a legacy stylesheet has no class names left in `src/`, delete it and its import in the same change. To prune, remove only rules whose selectors name classes that no source file contains, and prove it with a computed-style comparison of every screen before and after.

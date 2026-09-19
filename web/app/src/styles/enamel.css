@@ -32,22 +32,6 @@
 }
 
 
-
-
-.home-xp-track {
-  height: 8px;
-  border-radius: 999px;
-  background: var(--chalk);
-  overflow: hidden;
-}
-
-.home-xp-fill {
-  height: 100%;
-  background: var(--apricot);
-  border-radius: inherit;
-}
-
-
 .ticket {
   background: var(--paper-card);
   border: 1px solid var(--chalk);
@@ -205,32 +189,6 @@
 }
 
 .celebrate-stat-value { color: var(--apricot); font-variant-numeric: tabular-nums; }
-
-.analyzing-overlay.is-sniff {
-  background: color-mix(in srgb, var(--paper) 90%, transparent);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.quest-stub {
-  background: var(--paper-card);
-  border: 1px solid var(--chalk);
-  border-radius: 16px;
-  padding: 14px 16px;
-  margin-bottom: 10px;
-}
-
-.quest-stub.is-done { outline: 2px solid var(--herb); }
-.quest-chest {
-  margin-top: 18px;
-  padding: 18px;
-  text-align: center;
-  background: var(--paper-card);
-  border: 1px dashed var(--chalk);
-  border-radius: 18px;
-}
 
 .insights-heat {
   display: grid;
@@ -451,22 +409,6 @@
 @keyframes momo-thought-pop {
   0%, 100% { opacity: 0.35; transform: scale(0.75); }
   50% { opacity: 1; transform: scale(1.12); }
-}
-@keyframes momo-raster-wave {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-1px) rotate(-2.5deg); }
-  55% { transform: translateY(0) rotate(1.5deg); }
-  78% { transform: translateY(-1px) rotate(-1.5deg); }
-}
-@keyframes momo-raster-look {
-  0%, 100% { transform: translateX(0) rotate(0deg); }
-  28% { transform: translateX(-2px) rotate(-1.5deg); }
-  68% { transform: translateX(2px) rotate(1.5deg); }
-}
-@keyframes momo-raster-stretch {
-  0%, 100% { transform: translateY(0) scale(1); }
-  38% { transform: translateY(-2px) scale(0.985, 1.035); }
-  72% { transform: translateY(1px) scale(1.012, 0.985); }
 }
 @keyframes momo-raster-wave-cues {
   0%, 100% { opacity: 0.25; transform: translate(1px, 2px); }
@@ -813,55 +755,6 @@
   .momo-raster-gesture-cues { display: none; }
 }
 
-/* ── Ring hero ───────────────────────────────────────────────
-   The ring is the hero and the ring is the action. Momo anchors here. */
-.home-ring-anchor { margin-bottom: var(--space-md); }
-
-.home-ring-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-xl) var(--space-lg);
-}
-
-.home-ring-sub {
-  margin: 0;
-  font-size: var(--text-label);
-  color: var(--ink-mute);
-  text-align: center;
-}
-
-.home-factual-readout {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  width: 100%;
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--rule);
-}
-
-.home-factual-copy {
-  display: grid;
-  gap: var(--space-sm);
-  min-width: 0;
-}
-
-.home-factual-copy .home-ring-say {
-  text-align: left;
-}
-
-@media (max-width: 360px) {
-  .home-factual-readout {
-    flex-direction: column;
-  }
-
-  .home-factual-copy .home-ring-say {
-    text-align: center;
-  }
-}
-
 /* The arc is decorative and aria-hidden, but it paints over the centre and
    would swallow every tap meant for the button underneath. */
 .calorie-ring-svg { pointer-events: none; }
@@ -900,174 +793,7 @@
   background: var(--paper-deep);
   box-shadow: var(--clay-inset);
 }
-
-/* ── Home, rebuilt to the prototype ──────────────────────────*/
-.home-counter-chips {
-  display: flex;
-  gap: var(--space-sm);
-  padding: var(--space-lg) var(--space-lg) var(--space-md);
-}
-
-.home-chip {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 4px;
-  border: none;
-  border-radius: var(--clay-radius-sm);
-  background: linear-gradient(160deg, var(--clay-lift), var(--clay-base));
-  box-shadow: var(--clay-e2);
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--ink);
-  cursor: default;
-}
-
-button.home-chip { cursor: pointer; }
-button.home-chip:focus-visible { outline: 3px solid var(--on-track); outline-offset: 3px; }
-.home-chip-icon { font-size: 1rem; line-height: 1; }
-
-.home-macro-chips {
-  display: flex;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
-}
-
-.home-macro-chip {
-  flex: 1;
-  padding: 10px 11px 12px;
-  border-radius: var(--clay-radius-sm);
-  background: linear-gradient(160deg, var(--clay-lift), var(--clay-base));
-  box-shadow: var(--clay-e2);
-}
-
-.home-macro-top { display: flex; justify-content: space-between; align-items: baseline; }
-.home-macro-label { font-size: 0.53rem; font-weight: 800; letter-spacing: 0.07em; color: var(--ink-mute); }
-.home-macro-value { font-family: var(--display); font-weight: 600; font-size: 0.82rem; }
-.tone-protein .home-macro-value { color: var(--protein-text); }
-.tone-carbs   .home-macro-value { color: var(--carbs-text); }
-.tone-fat     .home-macro-value { color: var(--fat-text); }
-
-.home-macro-track {
-  height: 8px;
-  border-radius: var(--radius-pill);
-  margin-top: 8px;
-  background: var(--paper-deep);
-  box-shadow: var(--clay-inset);
-  overflow: hidden;
-}
-
-.home-macro-fill {
-  display: block;
-  height: 100%;
-  border-radius: var(--radius-pill);
-  transition: width var(--motion-fill) cubic-bezier(0.22, 1, 0.36, 1);
-}
-.tone-protein .home-macro-fill { background: var(--protein); }
-.tone-carbs   .home-macro-fill { background: var(--carbs); }
-.tone-fat     .home-macro-fill { background: var(--fat); }
-
-.home-today-list { margin-bottom: var(--space-md); }
-
-.home-today-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 0 4px var(--space-sm);
-}
 .home-today-kicker { margin: 0; font-size: 0.56rem; font-weight: 800; letter-spacing: 0.13em; color: var(--ink-mute); }
-.home-today-count { font-size: 0.66rem; color: var(--ink-soft); }
-
-.home-today-empty {
-  margin: 0;
-  padding: 18px 16px;
-  border-radius: var(--clay-radius-md);
-  text-align: center;
-  font-size: 0.76rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
-  background: var(--paper-deep);
-  box-shadow: var(--clay-inset);
-}
-
-.home-today-rows { display: flex; flex-direction: column; gap: var(--space-sm); }
-
-.home-today-row {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  width: 100%;
-  text-align: left;
-  padding: 10px 13px;
-  border: none;
-  border-radius: var(--clay-radius-sm);
-  background: linear-gradient(160deg, var(--clay-lift), var(--clay-base));
-  /* e1 on purpose: this is a list, and e2 would cost a shadow per row. */
-  box-shadow: var(--clay-e1);
-  cursor: pointer;
-  font: inherit;
-  color: inherit;
-}
-.home-today-row:focus-visible { outline: 3px solid var(--on-track); outline-offset: 2px; }
-
-.home-today-emoji {
-  width: 34px; height: 34px; flex: none;
-  display: grid; place-items: center;
-  border-radius: 12px;
-  background: var(--paper-deep);
-  box-shadow: var(--clay-inset);
-  font-size: 1rem;
-}
-.home-today-name { flex: 1; font-family: var(--display); font-weight: 600; font-size: 0.82rem; }
-.home-today-name small {
-  display: block; margin-top: 1px;
-  font-family: var(--sans); font-weight: 500; font-size: 0.6rem; color: var(--ink-mute);
-}
-.home-today-kcal { font-family: var(--display); font-weight: 600; font-size: 0.8rem; color: var(--ink-soft); }
-
-.home-log-cta {
-  width: 100%;
-  height: 58px;
-  margin: var(--space-md) 0 var(--space-sm);
-  border: none;
-  border-radius: var(--clay-radius-lg);
-  color: var(--on-brand);
-  background: linear-gradient(160deg, var(--clay-coral-lift), var(--clay-coral-base));
-  box-shadow: var(--clay-coral-raised);
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 1.02rem;
-  letter-spacing: 0.04em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  cursor: pointer;
-  transition: transform var(--squish-out) var(--squish-ease), box-shadow var(--squish-out) ease;
-}
-.home-log-cta:active {
-  transform: translateY(4px) scale(0.985);
-  box-shadow: var(--clay-coral-squish);
-  transition-duration: var(--squish-in);
-}
-.home-log-cta:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-
-/* Momo's ambient line, under the ring. Poking him replaces it with banter. */
-.home-ring-say {
-  margin: 0;
-  padding: 9px 15px;
-  max-width: 270px;
-  border-radius: var(--clay-radius-sm);
-  background: var(--paper-deep);
-  box-shadow: var(--clay-inset);
-  font-size: 0.78rem;
-  line-height: 1.4;
-  color: var(--ink-soft);
-  text-align: center;
-}
 
 /* ── The signature moment ────────────────────────────────────
    This is the beat the whole habit loop turns on, so it gets the character,

@@ -7,14 +7,11 @@ import { coachSafetyResponse } from '../lib/coachSafety'
 import { providerLabel } from '../lib/aiConfig'
 import { useAiAccess } from '../lib/aiAccess'
 import { usesByok } from '../lib/aiClient'
-import { IconSend } from '../components/icons'
+import { IconArrowUpRight, IconSend } from '../components/icons'
 import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
-import { MessageCircle, Sparkles, Trash2 } from 'lucide-react'
+import { Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
-import { PoiemSectionLabel } from '../components/PoiemSectionLabel'
-import * as m from 'motion/react-m'
-import { motionSoftSpring } from '../lib/motionPresets'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
@@ -22,7 +19,7 @@ function CoachMessage({ text }: { text: string }) {
   const paragraphs = text.split(/\n{2,}/)
 
   return (
-    <div className="coach-msg">
+    <div className="k-coach-text">
       {paragraphs.map((para, pi) => {
         const lines = para.split('\n')
         const isList = lines.every(l => /^[-•*]\s/.test(l.trim()) || l.trim() === '')
@@ -30,7 +27,7 @@ function CoachMessage({ text }: { text: string }) {
 
         if (isList && trimmedLines.length > 0) {
           return (
-            <ul key={pi} className="coach-msg-list">
+            <ul key={pi}>
               {trimmedLines.map((l, li) => (
                 <li key={li}>{renderInline(l.replace(/^[-•*]\s+/, ''))}</li>
               ))}
@@ -39,7 +36,7 @@ function CoachMessage({ text }: { text: string }) {
         }
 
         return (
-          <p key={pi} className="coach-msg-para">
+          <p key={pi}>
             {lines.map((line, li) => (
               <span key={li}>
                 {renderInline(line)}
@@ -63,17 +60,22 @@ function renderInline(text: string): ReactNode[] {
 }
 
 const STARTERS = [
-  'Summarize my recent logging pattern.',
-  'What are some protein-rich meal ideas?',
-  'Help me plan a balanced next meal.',
+  { text: 'Summarize my recent logging pattern.', tone: 'butter' },
+  { text: 'What are some protein-rich meal ideas?', tone: 'peach' },
+  { text: 'Help me plan a balanced next meal.', tone: 'mint' },
+]
+
+const SUPPORT_LINKS = [
+  { label: 'Find a crisis helpline worldwide', href: 'https://findahelpline.com/' },
+  { label: 'U.S. 988', href: 'https://988lifeline.org/' },
+  { label: 'Canada 9-8-8', href: 'https://988.ca/' },
 ]
 
 function TypingIndicator() {
   return (
-    <div className="chat-bubble assistant chat-typing" role="status" aria-label="Coach is responding">
-      <span className="typing-dot" />
-      <span className="typing-dot" />
-      <span className="typing-dot" />
+    <div className="k-coach-msg is-assistant is-typing" role="status" aria-label="Coach is responding">
+      <span className="k-coach-avatar" aria-hidden="true"><MomoSticker mood="curious" pose="still" expression="thinking" /></span>
+      <div className="k-coach-bubble"><span className="k-coach-dot" /><span className="k-coach-dot" /><span className="k-coach-dot" /></div>
     </div>
   )
 }
@@ -158,19 +160,18 @@ export function CoachPage() {
   }
 
   return (
-    <div className="app-shell coach-shell food-club-app poster-ui">
-      <header className="coach-header-bar">
-        <div className="coach-header-avatar" aria-hidden><MomoSticker mood="excited" pose="still" /></div>
-        <div className="coach-header-info">
-          <PoiemSectionLabel>A fresh perspective</PoiemSectionLabel>
-          <span className="coach-header-title">AI Coach</span>
-          <span className="coach-header-sub">Powered by {providerLabel(state.aiSettings.provider)}</span>
+    <div className="app-shell k-screen k-coach">
+      <header className="k-coach-head" data-mascot-avoid>
+        <span className="k-coach-momo" aria-hidden="true"><MomoSticker mood="excited" pose="still" /></span>
+        <div className="k-coach-title">
+          <p className="k-eyebrow">A fresh perspective</p>
+          <h1>AI Coach</h1>
+          <p className="k-coach-sub">Powered by {providerLabel(state.aiSettings.provider)}</p>
         </div>
         {state.chatMessages.length > 0 && (
-          <m.button
+          <button
             type="button"
-            className="coach-clear-btn"
-            whileTap={{ scale: .96 }} transition={motionSoftSpring}
+            className="k-text-button k-coach-clear"
             onClick={() => {
               if (confirm('Clear chat history?')) {
                 clearChat()
@@ -178,12 +179,13 @@ export function CoachPage() {
               }
             }}
           >
-            <Trash2 size={15} aria-hidden="true" /> Clear
-          </m.button>
+            <Trash2 size={16} aria-hidden="true" /> Clear
+          </button>
         )}
       </header>
 
-      <main className="app-main coach-main motion-stagger">
+      {/* Momo walks beside the column on wide screens and stays off the conversation on a phone. */}
+      <main className="app-main k-coach-main" data-mascot-avoid>
         {error && <div className="error-banner" role="alert">{error}</div>}
 
         {!canChat && (
@@ -195,45 +197,45 @@ export function CoachPage() {
           />
         )}
 
-        <div className="chat-thread">
-          {state.chatMessages.length === 0 && (
-            <div className="chat-empty-state">
-              <div className="chat-empty-icon" aria-hidden><MessageCircle size={42} strokeWidth={1.7} /></div>
-              <p className="chat-empty-title">Ask me anything</p>
-              <p className="chat-empty-sub">Reflect on recent logging patterns or ask for general meal ideas.</p>
-              <p className="chat-empty-sub">
-                Your chat is stored with your Poiem data. When you send a message, limited recent log context is sent
-                {hasKey ? `directly to ${providerLabel(state.aiSettings.provider)}` : 'through Poiem’s managed provider'}; that provider controls its own retention.
-              </p>
-              <div className="starter-chips">
-                {STARTERS.map(s => (
-                  <m.button
-                    key={s}
-                    type="button"
-                    className="starter-chip"
-                    whileTap={{ scale: .97 }} transition={motionSoftSpring}
-                    onClick={() => send(s)}
-                    disabled={!canChat}
-                  >
-                    <Sparkles size={15} aria-hidden="true" /> {s}
-                  </m.button>
-                ))}
-              </div>
+        {state.chatMessages.length === 0 && (
+          <section className="k-card k-coach-empty" aria-labelledby="coach-empty-title">
+            <h2 id="coach-empty-title">Ask me anything</h2>
+            <p>Reflect on recent logging patterns or ask for general meal ideas.</p>
+            <div className="k-coach-starters">
+              {STARTERS.map(starter => (
+                <button
+                  key={starter.text}
+                  type="button"
+                  className={`k-coach-starter is-tone-${starter.tone}`}
+                  onClick={() => send(starter.text)}
+                  disabled={!canChat}
+                >
+                  <Sparkles size={16} aria-hidden="true" /> {starter.text}
+                </button>
+              ))}
             </div>
-          )}
+            <p className="k-coach-privacy">
+              Your chat is stored with your Poiem data. When you send a message, limited recent log context is sent
+              {hasKey ? ` directly to ${providerLabel(state.aiSettings.provider)}` : ' through Poiem’s managed provider'}; that provider controls its own retention.
+            </p>
+          </section>
+        )}
 
+        <div className="k-coach-thread">
           {state.chatMessages.map(msg => (
-            <div key={msg.id} className={`chat-bubble ${msg.role}`}>
+            <article key={msg.id} className={`k-coach-msg is-${msg.role}`} aria-label={msg.role === 'assistant' ? 'Coach' : 'You'}>
               {msg.role === 'assistant' && (
-                <span className="chat-bubble-avatar" aria-hidden><MomoSticker mood="cozy" pose="still" /></span>
+                <span className="k-coach-avatar" aria-hidden="true"><MomoSticker mood="cozy" pose="still" /></span>
               )}
-              {msg.role === 'assistant'
-                ? <CoachMessage text={msg.content} />
-                : <span className="chat-bubble-text">{msg.content}</span>
-              }
+              <div className="k-coach-bubble">
+                {msg.role === 'assistant'
+                  ? <CoachMessage text={msg.content} />
+                  : <p className="k-coach-text">{msg.content}</p>
+                }
+              </div>
               <button
                 type="button"
-                className="coach-message-delete"
+                className="k-coach-delete"
                 aria-label={`Delete ${msg.role === 'assistant' ? 'Coach response' : 'your message'}`}
                 onClick={() => replaceState({
                   ...state,
@@ -242,37 +244,44 @@ export function CoachPage() {
               >
                 Delete
               </button>
-            </div>
+            </article>
           ))}
 
           {loading && <TypingIndicator />}
           {showSafetySupport && (
-            <div className="no-key-banner" role="note">
-              <Link to="/support" onClick={() => track({ name: 'support_opened' })}>Open eating-disorder support</Link>
-              {' · '}
-              <a href="https://findahelpline.com/" target="_blank" rel="noreferrer">Find a crisis helpline worldwide</a>
-              {' · '}
-              <a href="https://988lifeline.org/" target="_blank" rel="noreferrer">U.S. 988</a>
-              {' · '}
-              <a href="https://988.ca/" target="_blank" rel="noreferrer">Canada 9-8-8</a>
-            </div>
+            <nav className="k-coach-help" aria-label="Support options">
+              <p className="k-eyebrow">Talk to someone</p>
+              <ul>
+                <li>
+                  <Link to="/support" onClick={() => track({ name: 'support_opened' })}>
+                    Open eating-disorder support <IconArrowUpRight size={16} />
+                  </Link>
+                </li>
+                {SUPPORT_LINKS.map(link => (
+                  <li key={link.href}>
+                    <a href={link.href} target="_blank" rel="noreferrer">{link.label} <IconArrowUpRight size={16} /></a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           )}
           <div ref={bottomRef} />
         </div>
       </main>
 
-      <div className="chat-input-bar">
+      <div className="k-coach-compose">
         {loading && (
           <PressableButton variant="secondary" label="Cancel response" onClick={() => requestRef.current?.abort()} />
         )}
         <AiAllowanceHint availability={ai} task="coach" />
         <form
-          className="chat-input-form"
+          className="k-coach-form"
           onSubmit={e => { e.preventDefault(); send(input) }}
         >
           <input
             ref={inputRef}
-            className="chat-input"
+            className="k-coach-input"
+            aria-label="Message Coach"
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder={canChat ? 'Ask Coach…' : 'Ask for support, or add an API key for coaching'}
@@ -280,11 +289,11 @@ export function CoachPage() {
           />
           <button
             type="submit"
-            className="chat-send-btn"
+            className="k-coach-send"
             disabled={loading || !input.trim()}
             aria-label="Send"
           >
-            <IconSend size={16} />
+            <IconSend size={18} />
           </button>
         </form>
       </div>

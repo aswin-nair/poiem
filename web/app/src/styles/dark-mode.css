@@ -9,14 +9,6 @@
   background: var(--paper);
 }
 
-:root[data-theme="dark"] .auth-refresh {
-  background: var(--paper);
-}
-
-:root[data-theme="dark"] .auth-refresh::before {
-  opacity: .05;
-}
-
 :root[data-theme="dark"] .app-shell :is(.page-heading, .card, .surface, .progress-card, .settings-card, .discover-card) {
   border-color: var(--edge-ink);
   box-shadow: var(--shadow-card);
@@ -46,205 +38,38 @@
   box-shadow: 0 4px 0 var(--shadow-ink), 0 10px 20px rgb(0 0 0 / 22%);
 }
 
-/* The orange ring carries the calorie colour, not the entire reading surface. */
-:root[data-theme="dark"] .today-refresh .home-ring-hero {
-  background: var(--paper-card);
-  border: 1px solid var(--edge-ink);
-}
-
-:root[data-theme="dark"] .today-refresh .calorie-ring {
-  background: var(--paper-raised);
-  border: 1px solid var(--edge-ink);
-}
-
-:root[data-theme="dark"] .today-refresh .home-today-empty,
-:root[data-theme="dark"] .today-refresh .today-momo-note,
 :root[data-theme="dark"] .habit-milestones {
   box-shadow: 0 3px 0 var(--shadow-ink), 0 10px 22px rgb(0 0 0 / 10%);
 }
 
-:root[data-theme="dark"] .today-refresh .home-today-empty {
-  background: var(--paper-raised);
-  border-color: var(--control-border);
-}
-
-:root[data-theme="dark"] .today-refresh .today-momo-note,
 :root[data-theme="dark"] .roast-preview {
   background: var(--paper-raised);
   border-color: var(--edge-ink);
 }
 
-/* Momo keeps a rich blue stage while the surrounding controls stay graphite. */
-:root[data-theme="dark"] .you-refresh .you-header {
-  background: linear-gradient(135deg, var(--scene), var(--scene-lift));
-  border-color: var(--scene-edge);
-  box-shadow: var(--shadow-card);
-}
-
-:root[data-theme="dark"] .you-refresh .you-header :is(.page-title, .page-sub, .you-eyebrow) {
-  color: var(--scene-ink);
-}
-
-:root[data-theme="dark"] .you-refresh .you-header .you-eyebrow {
-  color: var(--coral-start);
-}
-
-:root[data-theme="dark"] .you-refresh .you-avatar {
-  background: color-mix(in srgb, var(--scene-lift) 70%, var(--paper-card));
-  border-color: var(--scene-edge);
-}
-
-:root[data-theme="dark"] .you-refresh .you-toolbar,
-:root[data-theme="dark"] .you-refresh .you-save-bar {
-  background: color-mix(in srgb, var(--paper) 94%, transparent);
-  backdrop-filter: blur(12px);
-}
-
-:root[data-theme="dark"] .you-refresh .you-section + .you-section {
-  border-color: var(--rule-strong);
-}
-
-:root[data-theme="dark"] .you-refresh .settings-card,
-:root[data-theme="dark"] .you-refresh .you-disclosure {
-  background: var(--paper-raised);
-}
-
-:root[data-theme="dark"] .you-refresh .settings-input,
-:root[data-theme="dark"] .you-refresh .settings-select,
-:root[data-theme="dark"] .you-refresh .settings-textarea {
-  background: var(--paper-card);
-  border-color: var(--control-border);
-}
-
-:root[data-theme="dark"] .log-refresh .log-page-heading,
-:root[data-theme="dark"] .saved-refresh .page-heading,
-:root[data-theme="dark"] .insights-refresh .page-heading {
-  background: var(--paper-raised);
-  border-color: var(--edge-ink);
-}
-
-:root[data-theme="dark"] .insights-refresh .consistency-card {
-  background: var(--paper-raised);
-  border-color: var(--edge-ink);
-}
-
-:root[data-theme="dark"] .auth-refresh .login-card,
-:root[data-theme="dark"] .setup-refresh .setup-form,
-:root[data-theme="dark"] .welcome-refresh .welcome-content {
-  background: var(--paper-raised);
-  border-color: var(--edge-ink);
-  box-shadow: var(--shadow-card);
-}
-
-/* Small, luminous stickers give dark mode personality without coloured slabs. */
-:root[data-theme="dark"] .setup-refresh { --setup-pop: var(--apricot); }
-:root[data-theme="dark"] .setup-refresh[data-chapter="routine"] { --setup-pop: var(--selection); }
-:root[data-theme="dark"] .setup-refresh[data-chapter="ready"] { --setup-pop: var(--success-ink); }
-
-:root[data-theme="dark"] .setup-refresh :is(.setup-section-label, .setup-question-icon) {
-  background: var(--setup-pop);
-  color: var(--on-brand);
-  border-color: transparent;
-  box-shadow: none;
-}
-
-:root[data-theme="dark"] .setup-refresh .setup-footer { background: transparent; }
-
-:root[data-theme="dark"] .setup-refresh :is(.onboarding-chip, .activity-option):not(.active) {
-  background: var(--paper-card);
-  border-color: var(--control-border);
-  box-shadow: none;
-}
-
-:root[data-theme="dark"] .setup-refresh :is(.onboarding-chip, .activity-option).active {
-  background: var(--selection-soft);
-  border-color: var(--selection);
-  box-shadow: 0 0 0 1px var(--selection);
-}
-
-:root[data-theme="dark"] .setup-refresh .setup-note,
-:root[data-theme="dark"] .setup-refresh .setup-optional {
-  background: var(--paper-card);
-}
-
-:root[data-theme="dark"] .momo-sticker,
-:root[data-theme="dark"] .auth-momo-greeting .momo-sticker {
+:root[data-theme="dark"] .momo-sticker {
   background: var(--apricot);
   border-color: transparent;
   box-shadow: none;
-}
-
-/* These are bare artwork, not sticker cards. */
-:root[data-theme="dark"] .welcome-refresh .welcome-mascot-wrap .momo-sticker,
-:root[data-theme="dark"] .setup-companion-scene .momo-sticker { background: none; }
-
-:root[data-theme="dark"] .welcome-refresh .welcome-momo-speech,
-:root[data-theme="dark"] .auth-momo-greeting p { background: var(--paper-float); border-color: var(--edge-ink); }
-
-:root[data-theme="dark"] .welcome-ticket-icon,
-:root[data-theme="dark"] .setup-companion .setup-scene-spark {
-  background: var(--apricot);
-  color: var(--on-brand);
-  border-color: transparent;
-}
-
-:root[data-theme="dark"] .welcome-scene .welcome-food-sprout,
-:root[data-theme="dark"] .welcome-ticket-check {
-  background: var(--success-ink);
-  color: var(--on-brand);
-  border-color: transparent;
-}
-
-:root[data-theme="dark"] .welcome-scene .welcome-scene-sticker {
-  background: var(--selection);
-  color: var(--on-selection);
-  border-color: transparent;
 }
 
 /* The macro identity stays on the number, top edge and bar, across every page. */
-:root[data-theme="dark"] .today-refresh .home-macro-chip,
-:root[data-theme="dark"] .setup-refresh .onboarding-goal-card,
-:root[data-theme="dark"] .you-refresh .settings-goal-card,
 :root[data-theme="dark"] .flow-calories,
 :root[data-theme="dark"] .flow-macro,
-:root[data-theme="dark"] .meal-flow .flow-review-summary,
-:root[data-theme="dark"] .manual-refresh .manual-summary {
+:root[data-theme="dark"] .meal-flow .flow-review-summary {
   background: var(--paper-raised);
   border-color: var(--edge-ink);
   box-shadow: var(--shadow-sm);
 }
 
-:root[data-theme="dark"] .today-refresh .home-macro-chip.tone-protein,
 :root[data-theme="dark"] .setup-refresh .onboarding-goal-card:nth-child(2),
 :root[data-theme="dark"] .you-refresh .settings-goal-card:nth-child(2) { border-top: 3px solid var(--protein); }
 
-:root[data-theme="dark"] .today-refresh .home-macro-chip.tone-carbs,
 :root[data-theme="dark"] .setup-refresh .onboarding-goal-card:nth-child(3),
 :root[data-theme="dark"] .you-refresh .settings-goal-card:nth-child(3) { border-top: 3px solid var(--carbs); }
 
-:root[data-theme="dark"] .today-refresh .home-macro-chip.tone-fat,
 :root[data-theme="dark"] .setup-refresh .onboarding-goal-card:nth-child(4),
 :root[data-theme="dark"] .you-refresh .settings-goal-card:nth-child(4) { border-top: 3px solid var(--fat); }
-
-:root[data-theme="dark"] .setup-refresh .onboarding-goal-card:first-child,
-:root[data-theme="dark"] .you-refresh .settings-goal-card:first-child { border-top: 3px solid var(--coral-hue); }
-
-:root[data-theme="dark"] .you-refresh .you-section-heading h2 {
-  background: var(--paper-raised);
-  border-color: var(--edge-ink);
-  box-shadow: none;
-}
-
-:root[data-theme="dark"] .insights-refresh .consistency-card .consistency-streak {
-  background: var(--apricot);
-  color: var(--on-brand);
-  border-color: transparent;
-}
-
-:root[data-theme="dark"] .auth-refresh .auth-tabs {
-  background: var(--paper-card);
-  border-color: var(--edge-ink);
-}
 
 /* The native-looking controls should still read as controls on charcoal surfaces. */
 :root[data-theme="dark"] :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]) {
@@ -279,34 +104,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root[data-theme="dark"] body { background: var(--paper); }
-}
-
-/* Keep the auth screen on the same graphite hierarchy as the rest of the app. */
-:root[data-theme="dark"] .auth-refresh .login-card {
-  background: var(--paper-card);
-  border-color: var(--edge-ink);
-  box-shadow: 0 22px 60px rgb(0 0 0 / 34%);
-}
-
-:root[data-theme="dark"] .auth-refresh .auth-tabs {
-  background: var(--paper-warm);
-  border-color: transparent;
-}
-
-:root[data-theme="dark"] .auth-refresh .auth-form .field input {
-  background: var(--paper-raised);
-  border-color: transparent;
-  box-shadow: inset 0 0 0 1px var(--edge-ink);
-}
-
-:root[data-theme="dark"] .auth-refresh .auth-form .field input:focus {
-  background: var(--paper-float);
-  border-color: transparent;
-  box-shadow: inset 0 0 0 2px var(--selection);
-}
-
-:root[data-theme="dark"] .auth-refresh .auth-momo-greeting p {
-  background: var(--paper-float);
-  border-color: transparent;
 }
 }

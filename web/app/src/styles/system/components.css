@@ -307,6 +307,25 @@
   .celebrate-stat-value { font: 900 2.25rem/1 var(--k-font-display); color: var(--k-ink); }
   .celebrate-stat-label { font: 600 11px/1.3 var(--k-font-mono); letter-spacing: .04em; color: var(--k-muted); }
 
+  /* A page's heading takes focus on arrival so screen readers start there.
+     It is not a control, so it shows no focus ring. */
+  h1[tabindex="-1"]:focus { outline: none; }
+
+  /* ── Poiem logo (BrandLogo) ────────────────────────────────── */
+  .poiem-logo { display: inline-block; flex: none; overflow: visible; vertical-align: middle; }
+  .poiem-logo--wordmark { width: 126px; height: auto; color: var(--k-ink); }
+  .poiem-logo--mark { width: 48px; height: 48px; color: var(--k-ink); }
+  .poiem-logo-letter { fill: currentColor; }
+  .poiem-logo-spark, .poiem-logo-tile { fill: var(--k-action); }
+  .welcome-brand { display: inline-flex; align-items: center; min-height: 44px; color: var(--k-ink); }
+  .welcome-brand .poiem-logo { width: clamp(112px, 15vw, 145px); }
+  .welcome-brand:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 4px; }
+
+  /* ── Splash ────────────────────────────────────────────────── */
+  /* After the first open in a session the splash only shows if loading takes a moment. */
+  .splash-screen.is-quiet { animation: k-splash-in 200ms ease 350ms both; }
+  @keyframes k-splash-in { from { opacity: 0; } }
+
   /* ── Primitives for rebuilt screens ────────────────────────── */
   .k-screen { background: var(--k-ground); color: var(--k-ink); font-family: var(--k-font-body); }
   .k-eyebrow {

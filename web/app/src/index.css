@@ -19,7 +19,6 @@
 @import './styles/screens/settings.css';
 @import './styles/screens/coach.css';
 @import './styles/screens/journey.css';
-@import './styles/screens/auth.css';
 @import './styles/motion.css';
 @import './styles/redesign.css';
 @import './styles/clay.css';
@@ -37,12 +36,10 @@
 @import './styles/dark-mode.css';
 @import './styles/neo-brutalism.css';
 @import './styles/food-club.css';
-@import './styles/food-club-app.css';
 @import './styles/food-club-library.css';
 @import './styles/food-club-you.css';
 @import './styles/food-club-coach.css';
 @import './styles/poiem-brand.css';
-@import './styles/poster-system.css';
 @import './styles/system/tokens.css';
 @import './styles/system/components.css';
 @import './styles/system/momo.css';
@@ -52,4 +49,6 @@
 @import './styles/screens/you.css';
 @import './styles/screens/admin.css';
 @import './styles/screens/first-run.css';
+@import './styles/screens/pages.css';
+@import './styles/screens/account.css';
 @import './styles/a11y.css';

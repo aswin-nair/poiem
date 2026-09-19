@@ -75,39 +75,6 @@ a:hover { text-decoration: underline; }
 
 .card + .card { margin-top: 12px; }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: opacity 0.15s, transform 0.15s;
-}
-
-.btn:active { transform: scale(0.98); }
-.btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-.btn-primary {
-  background: var(--ink);
-  color: var(--paper-warm);
-}
-
-.btn-primary:hover:not(:disabled) { background: var(--ink-press); }
-
-.btn-secondary {
-  background: var(--coral-soft);
-  color: var(--coral-text);
-  border: 1px solid rgba(255, 122, 80, 0.3);
-}
-
-.btn-ghost {
-  color: var(--ink-soft);
-  border: 1px solid var(--rule);
-}
-
 .field { margin-bottom: 16px; }
 
 .field label {

@@ -1,38 +1,5 @@
 @layer legacy {
-/* Clay recipe. One light source (top-left). Depth is hierarchy, never status. */
 
-.clay-surface,
-.clay-e1,
-.clay-e2,
-.clay-e3 {
-  background: linear-gradient(160deg, var(--clay-lift), var(--clay-base));
-  border: none;
-}
-
-.clay-surface,
-.clay-e2 {
-  border-radius: var(--clay-radius-md);
-  box-shadow: var(--clay-e2);
-}
-
-.clay-e1 {
-  border-radius: var(--clay-radius-sm);
-  box-shadow: var(--clay-e1);
-}
-
-.clay-e3 {
-  border-radius: var(--clay-radius-lg);
-  box-shadow: var(--clay-e3);
-}
-
-.clay-coral {
-  background: linear-gradient(160deg, var(--clay-coral-lift), var(--clay-coral-base));
-  box-shadow: var(--clay-coral-raised);
-  color: var(--on-brand);
-  border: none;
-}
-
-.clay-inset,
 .clay-input {
   background: var(--paper-deep);
   border: none;
@@ -53,12 +20,6 @@
   transition-duration: var(--squish-in);
 }
 
-.clay-coral.clay-squish:active,
-.clay-coral.clay-squish.is-pressed {
-  box-shadow: var(--clay-coral-squish);
-}
-
-.clay-surface:focus-visible,
 .clay-squish:focus-visible,
 .path-node:focus-visible .path-node-face,
 .nav-item:focus-visible .nav-item-inner {
@@ -71,17 +32,12 @@
 .progress-card,
 .login-card,
 .settings-card,
-.onboarding-goal-card,
-.home-path-hero,
 .levelup-card,
 .celebrate-inner,
 .date-modal,
 .modal-sheet,
 .discover-card,
-.log-way-row,
-.log-quick-add,
 .food-section-card,
-.coach-no-key-card,
 .saved-card {
   background: linear-gradient(160deg, var(--clay-lift), var(--clay-base));
   border: none;
@@ -91,26 +47,19 @@
 
 .home-macro-progress,
 .counter,
-.home-icon-btn,
 .range-chip,
 .discover-chip,
-.onboarding-chip,
 .chip,
-.log-pick-row,
 .history-link-card,
 .settings-data-btn,
 .settings-link-row,
 .meal-type-btn,
-.photo-source-btn,
-.starter-chip,
-.activity-option {
+.photo-source-btn {
   background: linear-gradient(160deg, var(--clay-lift), var(--clay-base));
   border: none;
   border-radius: var(--clay-radius-sm);
   box-shadow: var(--clay-e1);
 }
-
-.home-icon-btn { border-radius: 999px; }
 
 .range-chip.active,
 .discover-chip.active,
@@ -121,8 +70,6 @@
   color: var(--on-brand);
 }
 
-.log-search-input,
-.chat-input,
 .clay-input {
   background: var(--paper-deep);
   border: none;
@@ -130,34 +77,21 @@
   box-shadow: var(--clay-inset);
 }
 
-.log-search-input:focus,
-.chat-input:focus,
 .clay-input:focus {
   outline: 3px solid var(--cobalt);
   outline-offset: 2px;
 }
 
-/* Lists stay at e1 so scroll paint stays cheap. */
-.log-pick-row,
-.food-card {
-  box-shadow: var(--clay-e1);
-}
-
 .surface.is-interactive:active,
-.log-way-row:active,
-.log-pick-row:active,
 .discover-card:active,
 .counter:active,
-.home-icon-btn:active,
 .range-chip:active,
 .discover-chip:active,
 .settings-data-btn:active,
 .settings-link-row:active,
 .history-link-card:active,
 .meal-type-btn:active,
-.photo-source-btn:active,
-.starter-chip:active,
-.log-quick-add:active {
+.photo-source-btn:active {
   transform: scale(0.97) translateY(2px);
   box-shadow: var(--clay-squish);
 }
@@ -209,13 +143,6 @@
 .nav-item:active .nav-item-inner {
   transform: scale(0.96) translateY(1px);
   box-shadow: var(--clay-squish);
-}
-
-/* Over-budget stays a type color. Depth never becomes an alarm. */
-.home-kcal-left.is-over {
-  color: var(--ink-soft);
-  box-shadow: none;
-  background: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -272,32 +199,6 @@
   box-shadow: var(--clay-inset);
 }
 
-.home-ring-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-xl) var(--space-lg);
-}
-
-.home-ring-wrap { position: relative; }
-
-/* Sits on the rim, and never overlaps the number. It is pokeable now, so it
-   has to sit above the ring and take its own hits. */
-.home-ring-mascot {
-  position: absolute;
-  right: -14px;
-  bottom: -2px;
-  z-index: 2;
-}
-
-.home-ring-sub {
-  font-size: var(--text-label);
-  color: var(--ink-mute);
-  text-align: center;
-  margin: 0;
-}
-
 /* The mascot's line, under the ring. */
 .mascot-say {
   position: relative;
@@ -326,44 +227,6 @@
   box-shadow: var(--clay-e2);
 }
 
-.btn {
-  border: none;
-  border-radius: var(--clay-radius-sm);
-  font-family: var(--display);
-  letter-spacing: 0.02em;
-  transition: transform var(--squish-out) var(--squish-ease),
-              box-shadow var(--squish-out) ease,
-              background var(--motion-press) ease;
-}
-
-.btn:active:not(:disabled) {
-  transform: translateY(3px) scale(0.985);
-  transition-duration: var(--squish-in);
-}
-
-.btn-primary {
-  background: linear-gradient(160deg, var(--clay-coral-lift), var(--clay-coral-base));
-  color: var(--on-brand);
-  box-shadow: var(--clay-coral-raised);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: linear-gradient(160deg, var(--clay-coral-lift), var(--clay-coral-base));
-}
-
-.btn-primary:active:not(:disabled) { box-shadow: var(--clay-coral-squish); }
-
-.btn-secondary,
-.btn-ghost {
-  background: linear-gradient(160deg, var(--clay-lift), var(--clay-base));
-  color: var(--ink);
-  border: none;
-  box-shadow: var(--clay-e1);
-}
-
-.btn-secondary:active:not(:disabled),
-.btn-ghost:active:not(:disabled) { box-shadow: var(--clay-squish); }
-
 /* Anything that takes input is pressed INTO the surface, never raised out of
    it — the natural claymorphic form for a field. */
 .field input,
@@ -389,28 +252,5 @@
 .screen-title {
   font-family: var(--display);
   font-weight: 600;
-}
-
-/* The row's text is a span wrapping a <strong> and a <span>, both inline by
-   default — so the title and its description ran together on one line. The
-   wrapper stacks them and takes the remaining width. */
-.log-way-row > span:last-child {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
-}
-
-.log-way-row > span:last-child > strong {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 0.88rem;
-}
-
-.log-way-row > span:last-child > .page-sub {
-  font-size: 0.72rem;
-  line-height: 1.35;
-  color: var(--ink-mute);
 }
 }

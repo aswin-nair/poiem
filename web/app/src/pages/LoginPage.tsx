@@ -9,7 +9,7 @@ import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
 import { FoodClubScene } from '../components/FoodClubScene'
 import { BrandLogo } from '../components/BrandLogo'
-import { ArrowUpRight, Check, ShieldCheck, Sparkles } from 'lucide-react'
+import { ArrowUpRight, Check, ShieldCheck } from 'lucide-react'
 import { AppearanceControl } from '../components/AppearanceControl'
 import { AnimatePresence, useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
@@ -112,203 +112,196 @@ export function LoginPage() {
   }
 
   return (
-    <main className={`login-page auth-refresh food-club-auth poiem-auth-${mode}`}>
-      <div className="food-club-frame">
-        <header className="food-club-header">
-          <Link to="/onboarding" className="welcome-brand" aria-label="Poiem welcome"><BrandLogo decorative /></Link>
-          <span className="food-club-header-note">A LITTLE TRACKING. <ArrowUpRight size={20} aria-hidden="true" /> A LOT OF LIVING.</span>
-          <div className="appearance-header-actions">
-            <AppearanceControl compact />
-          </div>
-        </header>
-        <div className="food-club-manifesto"><span>REAL FOOD. REAL LIFE.</span><Sparkles size={18} aria-hidden="true" /><span>ALL FOODS WELCOME.</span></div>
-        <div className="food-club-layout">
+    <main className={`k-screen k-account is-${mode}`}>
+      <header className="k-account-bar">
+        <Link to="/onboarding" className="welcome-brand" aria-label="Poiem welcome"><BrandLogo decorative /></Link>
+        <AppearanceControl compact />
+      </header>
+      <div className="k-account-layout">
         <FoodClubScene privateFocus={privateFocus} loading={loading} error={Boolean(error)} returning={mode === 'signin'} />
-        <section className="login-card login-card-wide" aria-labelledby="account-heading">
-        <div className="food-club-card-top"><span>{mode === 'signin' ? 'YOUR SEAT IS SAVED' : 'PULL UP A CHAIR'}</span><ArrowUpRight size={22} aria-hidden="true" /></div>
-        <div key={mode}>
-          <h1 id="account-heading" className="login-title">{mode === 'signin' ? 'Welcome back!' : 'Join Poiem.'}</h1>
-          <p className="login-sub">
-            {mode === 'signin'
-              ? claiming ? 'Pick up where you left off.' : 'Your journal is right where you left it.'
-              : claiming ? 'Save your first little win. Your journal comes with you.' : 'A home for your meals, your routine, and the little wins.'}
-          </p>
-        </div>
-        {claiming && <p className="food-club-claim"><Check size={17} aria-hidden="true" /> Connect the progress on this device.</p>}
-
-        <div className="auth-tabs" role="group" aria-label="Account access">
-          <m.button
-            type="button"
-            className={`auth-tab${mode === 'signin' ? ' active' : ''}`}
-            aria-pressed={mode === 'signin'}
-            disabled={loading}
-            onClick={() => switchMode('signin')}
-            whileTap={reducedMotion ? undefined : tactilePress}
-          >
-            {mode === 'signin' && <m.span className="auth-tab-marker" layoutId="account-access-marker" transition={snapSpring} aria-hidden="true" />}
-            <span className="auth-tab-label">Sign in</span>
-          </m.button>
-          <m.button
-            type="button"
-            className={`auth-tab${mode === 'signup' ? ' active' : ''}`}
-            aria-pressed={mode === 'signup'}
-            disabled={loading}
-            onClick={() => switchMode('signup')}
-            whileTap={reducedMotion ? undefined : tactilePress}
-          >
-            {mode === 'signup' && <m.span className="auth-tab-marker" layoutId="account-access-marker" transition={snapSpring} aria-hidden="true" />}
-            <span className="auth-tab-label">Sign up</span>
-          </m.button>
-        </div>
-
-        <AnimatePresence initial={false}>
-          {error && <m.div className="error-banner" role="alert" ref={errorRef} tabIndex={-1}
-            initial={false} animate={reducedMotion ? { opacity: 1 } : { x: [...microShake.animate.x], opacity: 1 }}
-            exit={{ opacity: 0 }} transition={reducedMotion ? motionFade : microShake.transition}>{error}</m.div>}
-        </AnimatePresence>
-
-        <form className="auth-form" onSubmit={handleEmailSubmit} aria-busy={loading}
-          onFocusCapture={event => setPrivateFocus(event.target instanceof HTMLInputElement && ['password', 'confirm'].includes(event.target.id))}
-          onBlurCapture={() => setPrivateFocus(false)}>
-          <fieldset disabled={loading} className="auth-fields">
-            <legend className="sr-only">{mode === 'signin' ? 'Sign in with email' : 'Create an email account'}</legend>
-          {mode === 'signup' && (
-            <div className="field">
-              <label htmlFor="name">Name</label>
-              <input
-                id="name"
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="Your name"
-                autoComplete="name"
-                required
-              />
-            </div>
-          )}
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              autoComplete="email"
-              autoCapitalize="none"
-              spellCheck={false}
-              required
-            />
+        <section className="login-card k-account-card" aria-labelledby="account-heading">
+          <p className="k-eyebrow k-account-kicker">{mode === 'signin' ? 'Your seat is saved' : 'Pull up a chair'}</p>
+          <div key={mode} className="k-account-title">
+            <h1 id="account-heading">{mode === 'signin' ? 'Welcome back!' : 'Join Poiem.'}</h1>
+            <p>
+              {mode === 'signin'
+                ? claiming ? 'Pick up where you left off.' : 'Your journal is right where you left it.'
+                : claiming ? 'Save your first little win. Your journal comes with you.' : 'A home for your meals, your routine, and the little wins.'}
+            </p>
           </div>
-          <div className="field">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder={mode === 'signup' ? 'At least 8 characters' : 'Your password'}
-              autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-              required
-              minLength={mode === 'signup' ? 8 : undefined}
-              aria-describedby={mode === 'signup' ? 'auth-password-hint auth-password-strength' : undefined}
-            />
-            <div className="auth-password-tools">
-              {mode === 'signup' && <span id="auth-password-hint">At least 8 characters</span>}
-              <button type="button" className="auth-show-password" aria-pressed={showPassword} onClick={() => setShowPassword(value => !value)}>
-                {showPassword ? 'Hide password' : 'Show password'}
-              </button>
-            </div>
-            {mode === 'signup' && (
-              <div className="auth-password-strength" id="auth-password-strength" aria-live="polite">
-                <div className="auth-password-meter" aria-hidden="true">
-                  {[0, 1, 2, 3].map(index => (
-                    <m.span
-                      key={index}
-                      className={`auth-password-meter-bar${index < passwordScore ? ' is-on' : ''}`}
-                      initial={false}
-                      animate={{ scaleX: index < passwordScore ? 1 : .55 }}
-                      transition={{ duration: .16, delay: index * .025 }}
-                    />
-                  ))}
+          {claiming && <p className="k-account-claim"><Check size={17} aria-hidden="true" /> Connect the progress on this device.</p>}
+
+          <div className="auth-tabs" role="group" aria-label="Account access">
+            <m.button
+              type="button"
+              className={`auth-tab${mode === 'signin' ? ' active' : ''}`}
+              aria-pressed={mode === 'signin'}
+              disabled={loading}
+              onClick={() => switchMode('signin')}
+              whileTap={reducedMotion ? undefined : tactilePress}
+            >
+              {mode === 'signin' && <m.span className="auth-tab-marker" layoutId="account-access-marker" transition={snapSpring} aria-hidden="true" />}
+              <span className="auth-tab-label">Sign in</span>
+            </m.button>
+            <m.button
+              type="button"
+              className={`auth-tab${mode === 'signup' ? ' active' : ''}`}
+              aria-pressed={mode === 'signup'}
+              disabled={loading}
+              onClick={() => switchMode('signup')}
+              whileTap={reducedMotion ? undefined : tactilePress}
+            >
+              {mode === 'signup' && <m.span className="auth-tab-marker" layoutId="account-access-marker" transition={snapSpring} aria-hidden="true" />}
+              <span className="auth-tab-label">Sign up</span>
+            </m.button>
+          </div>
+
+          <AnimatePresence initial={false}>
+            {error && <m.div className="error-banner" role="alert" ref={errorRef} tabIndex={-1}
+              initial={false} animate={reducedMotion ? { opacity: 1 } : { x: [...microShake.animate.x], opacity: 1 }}
+              exit={{ opacity: 0 }} transition={reducedMotion ? motionFade : microShake.transition}>{error}</m.div>}
+          </AnimatePresence>
+
+          <form className="auth-form" onSubmit={handleEmailSubmit} aria-busy={loading}
+            onFocusCapture={event => setPrivateFocus(event.target instanceof HTMLInputElement && ['password', 'confirm'].includes(event.target.id))}
+            onBlurCapture={() => setPrivateFocus(false)}>
+            <fieldset disabled={loading} className="auth-fields">
+              <legend className="sr-only">{mode === 'signin' ? 'Sign in with email' : 'Create an email account'}</legend>
+              {mode === 'signup' && (
+                <div className="field">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Your name"
+                    autoComplete="name"
+                    required
+                  />
                 </div>
-                <span className={`auth-password-strength-label strength-${passwordScore}`}>
-                  {password && password.length < 8 ? 'Use at least 8 characters to continue.'
-                    : password ? passwordStrengthLabel(passwordScore) : 'A longer, unique password works best.'}
-                </span>
+              )}
+              <div className="field">
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  required
+                />
               </div>
+              <div className="field">
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder={mode === 'signup' ? 'At least 8 characters' : 'Your password'}
+                  autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+                  required
+                  minLength={mode === 'signup' ? 8 : undefined}
+                  aria-describedby={mode === 'signup' ? 'auth-password-hint auth-password-strength' : undefined}
+                />
+                <div className="auth-password-tools">
+                  {mode === 'signup' && <span id="auth-password-hint">At least 8 characters</span>}
+                  <button type="button" className="auth-show-password" aria-pressed={showPassword} onClick={() => setShowPassword(value => !value)}>
+                    {showPassword ? 'Hide password' : 'Show password'}
+                  </button>
+                </div>
+                {mode === 'signup' && (
+                  <div className="auth-password-strength" id="auth-password-strength" aria-live="polite">
+                    <div className="auth-password-meter" aria-hidden="true">
+                      {[0, 1, 2, 3].map(index => (
+                        <m.span
+                          key={index}
+                          className={`auth-password-meter-bar${index < passwordScore ? ' is-on' : ''}`}
+                          initial={false}
+                          animate={{ scaleX: index < passwordScore ? 1 : .55 }}
+                          transition={{ duration: .16, delay: index * .025 }}
+                        />
+                      ))}
+                    </div>
+                    <span className={`auth-password-strength-label strength-${passwordScore}`}>
+                      {password && password.length < 8 ? 'Use at least 8 characters to continue.'
+                        : password ? passwordStrengthLabel(passwordScore) : 'A longer, unique password works best.'}
+                    </span>
+                  </div>
+                )}
+              </div>
+              {mode === 'signup' && (
+                <div className="field">
+                  <label htmlFor="confirm">Confirm password</label>
+                  <input
+                    id="confirm"
+                    type={showPassword ? 'text' : 'password'}
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                    placeholder="Repeat password"
+                    autoComplete="new-password"
+                    aria-describedby={confirmPassword ? 'auth-password-match' : undefined}
+                    required
+                  />
+                  {confirmPassword && (
+                    <span id="auth-password-match" className={`auth-password-match${password === confirmPassword ? ' is-match' : ' is-mismatch'}`} role="status">
+                      {password === confirmPassword ? 'Passwords match.' : 'Passwords don’t match yet.'}
+                    </span>
+                  )}
+                </div>
+              )}
+              <div className={`auth-submit-dock${keyboardOpen ? ' is-keyboard-open' : ''}`}>
+                <PressableButton type="submit" fullWidth disabled={loading}>
+                  {loading ? 'Please wait…' : <>{mode === 'signin' ? 'Sign in' : claiming ? 'Continue' : 'Create account'} <ArrowUpRight size={21} aria-hidden="true" /></>}
+                </PressableButton>
+              </div>
+            </fieldset>
+            {mode === 'signin' && isCloudBackend() && (
+              <p className="login-hint">
+                <Link to="/forgot-password">Forgot password?</Link>
+              </p>
             )}
-          </div>
-          {mode === 'signup' && (
-            <div className="field">
-              <label htmlFor="confirm">Confirm password</label>
-              <input
-                id="confirm"
-                type={showPassword ? 'text' : 'password'}
-                value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
-              placeholder="Repeat password"
-              autoComplete="new-password"
-              aria-describedby={confirmPassword ? 'auth-password-match' : undefined}
-              required
-            />
-            {confirmPassword && (
-              <span id="auth-password-match" className={`auth-password-match${password === confirmPassword ? ' is-match' : ' is-mismatch'}`} role="status">
-                {password === confirmPassword ? 'Passwords match.' : 'Passwords don’t match yet.'}
-              </span>
-            )}
-          </div>
+          </form>
+
+          {googleConfigured && (
+            <>
+              <div className="auth-divider">
+                <span>or</span>
+              </div>
+              <div className="login-google">
+                <GoogleLogin
+                  onSuccess={async cred => {
+                    try {
+                      track({ name: 'auth_method_selected', method: 'google', mode })
+                      await signInWithGoogle(cred)
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : 'Google sign-in failed')
+                    }
+                  }}
+                  onError={() => setError(
+                    'Google sign-in could not connect. Please try again or use email.',
+                  )}
+                  theme="outline"
+                  size="large"
+                  shape="rectangular"
+                  text={mode === 'signup' ? 'signup_with' : 'signin_with'}
+                />
+              </div>
+              {import.meta.env.DEV && error && <GoogleOriginHelp />}
+            </>
           )}
-          <div className={`auth-submit-dock${keyboardOpen ? ' is-keyboard-open' : ''}`}>
-          <PressableButton type="submit" fullWidth disabled={loading}>
-            {loading ? 'Please wait…' : <>{mode === 'signin' ? 'Sign in' : claiming ? 'Continue' : 'Create account'} <ArrowUpRight size={21} aria-hidden="true" /></>}
-          </PressableButton>
-          </div>
-          </fieldset>
-          {mode === 'signin' && isCloudBackend() && (
+
+          <p className="k-account-foot"><ShieldCheck size={16} aria-hidden="true" /> Your journal. Your pace. No food guilt.</p>
+          {!claiming && (
             <p className="login-hint">
-              <Link to="/forgot-password">Forgot password?</Link>
+              <Link to="/onboarding">Try Poiem first</Link>
             </p>
           )}
-        </form>
-
-        {googleConfigured && (
-          <>
-            <div className="auth-divider">
-              <span>or</span>
-            </div>
-            <div className="login-google">
-              <GoogleLogin
-                onSuccess={async cred => {
-                  try {
-                    track({ name: 'auth_method_selected', method: 'google', mode })
-                    await signInWithGoogle(cred)
-                  } catch (err) {
-                    setError(err instanceof Error ? err.message : 'Google sign-in failed')
-                  }
-                }}
-                onError={() => setError(
-                  'Google sign-in could not connect. Please try again or use email.',
-                )}
-                theme="outline"
-                size="large"
-                shape="rectangular"
-                text={mode === 'signup' ? 'signup_with' : 'signin_with'}
-              />
-            </div>
-            {import.meta.env.DEV && error && <GoogleOriginHelp />}
-          </>
-        )}
-
-        <p className="login-foot"><ShieldCheck size={16} aria-hidden="true" /> Your journal. Your pace. No food guilt.</p>
-        {!claiming && (
-          <p className="login-hint">
-            <Link to="/onboarding">Try Poiem first</Link>
-          </p>
-        )}
         </section>
-        </div>
-        <footer className="food-club-footer"><span>POIEM.APP <ArrowUpRight size={16} aria-hidden="true" /></span><span>Made for messy, delicious, real life.</span></footer>
       </div>
     </main>
   )

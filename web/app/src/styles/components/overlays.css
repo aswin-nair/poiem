@@ -67,8 +67,6 @@
   color: var(--coral-text);
 }
 
-.celebrate-flame { margin-right: 4px; }
-
 .celebrate-stat-label {
   font-size: var(--text-caption);
   color: var(--ink-mute);
@@ -104,81 +102,10 @@
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.celebrate-quest {
-  width: 100%;
-  padding: var(--space-lg);
-  background: var(--paper-card);
-  border: 2px solid var(--rule);
-  border-radius: var(--radius-lg);
-}
-
-.celebrate-quest.is-done { border-color: var(--coral); }
-
-.celebrate-quest-top {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-sm);
-  font-size: var(--text-label);
-  color: var(--ink);
-  margin-bottom: var(--space-sm);
-}
-
-.celebrate-quest-track {
-  height: 10px;
-  border-radius: var(--radius-pill);
-  background: var(--paper-deep);
-  overflow: hidden;
-}
-
-.celebrate-quest-fill {
-  display: block;
-  height: 100%;
-  border-radius: var(--radius-pill);
-  background: var(--coral);
-  transition: width var(--motion-fill) cubic-bezier(0.22, 1, 0.36, 1);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .celebrate-overlay,
   .celebrate-inner,
-  .celebrate-quest-fill,
   .celebrate-awards li { transition: none; animation: none; }
-}
-
-/* ── XP bar toward the next level ────────────────────────────*/
-.home-xp {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  min-width: 108px;
-}
-
-.home-xp-track {
-  width: 100%;
-  height: 7px;
-  border-radius: var(--radius-pill);
-  background: var(--paper-deep);
-  overflow: hidden;
-}
-
-.home-xp-fill {
-  display: block;
-  height: 100%;
-  border-radius: var(--radius-pill);
-  background: var(--coral);
-  transition: width var(--motion-fill) cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* The mascot's speech bubble now lives in clay.css — it sits centred under
-   the ring rather than beside the character, so it carries no side tail. */
-
-.home-say-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  padding: 0 var(--space-lg) var(--space-sm);
 }
 
 /* ── Streak week strip ───────────────────────────────────────*/
@@ -278,57 +205,9 @@
   .calorie-ring-arc { transition: none; }
 }
 
-/* ── Home, rebuilt to §9.2 ordering ──────────────────────────*/
-.home-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg) var(--space-sm);
-}
-
-.home-streak-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border-radius: var(--radius-pill);
-  background: var(--coral-soft);
-  font-weight: 700;
-  font-size: var(--text-label);
-  color: var(--ink);
-}
-
-.home-streak-flame { font-size: 1rem; }
-
-/* Only when the day is genuinely at risk — §7.3. */
-.home-streak-badge.is-at-risk .home-streak-flame {
-  animation: streak-pulse 0.9s ease-in-out infinite;
-}
-
 @keyframes streak-pulse {
   0%, 100% { transform: scale(1); }
   50%      { transform: scale(1.18); }
-}
-
-.home-points { text-align: right; line-height: 1.25; }
-.home-points strong { display: block; font-size: var(--text-label); color: var(--ink); }
-.home-points span { font-size: var(--text-caption); color: var(--ink-mute); }
-
-.home-ring-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg) var(--space-lg);
-}
-
-.home-ring-sub { font-size: var(--text-label); color: var(--ink-mute); }
-
-.home-ring-mascot {
-  position: absolute;
-  right: -28px;
-  bottom: 4px;
 }
 
 /* The primary action is pinned, so it is reachable without scrolling. */
@@ -345,18 +224,6 @@
 }
 
 .home-log-dock > * { pointer-events: auto; }
-
-/* Home pins its own primary action, so the coach FAB moves up to clear it
-   rather than sitting on top of the button. */
-.home-shell .fab {
-  bottom: calc(var(--nav-h) + var(--safe-bottom) + 78px);
-}
-
-.home-scroll-pad { height: 116px; }
-
-@media (prefers-reduced-motion: reduce) {
-  .home-streak-badge.is-at-risk .home-streak-flame { animation: none; }
-}
 
 /* ── Toast notifications ────────────────────────────────────── */
 
