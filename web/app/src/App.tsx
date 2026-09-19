@@ -69,7 +69,7 @@ function ScrollToTop() {
     let frame = 0
     let tries = 0
     const focusHeading = () => {
-      const heading = document.querySelector<HTMLElement>('main h1, .app-shell > header h1')
+      const heading = document.querySelector<HTMLElement>('main h1, .app-shell header h1')
       if (heading) {
         heading.tabIndex = -1
         heading.focus({ preventScroll: true })
