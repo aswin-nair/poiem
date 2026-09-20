@@ -1,9 +1,6 @@
 @layer legacy {
 .welcome-title > span:last-child { color: var(--neo-coral); }
 
-.setup-refresh .onboarding-goal-card:nth-child(3),
-.setup-refresh .onboarding-goal-card:nth-child(4) { border-radius: 10px; }
-
 .setup-optional {
   border: 3px dashed var(--neo-line);
   border-radius: 10px;

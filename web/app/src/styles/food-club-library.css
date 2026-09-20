@@ -1,4 +1,0 @@
-@layer legacy {
-:root .app-shell.food-club-app.saved-refresh .discover-card:nth-child(3n + 2) { border-top-color: var(--club-pink); }
-:root .app-shell.food-club-app.saved-refresh .discover-card:nth-child(3n) { border-top-color: var(--club-lemon); }
-}

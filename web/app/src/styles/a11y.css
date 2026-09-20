@@ -76,12 +76,6 @@
 
 /* Helpline numbers are the most important thing to hit correctly on Support:
    someone reaching for one should not have to aim. */
-.support-phone {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  margin-bottom: 0;
-}
 
 /* ── Reduced motion ──────────────────────────────────────────
    The app carries 191 animation and transition declarations across 20

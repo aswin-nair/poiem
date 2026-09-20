@@ -300,63 +300,7 @@
 .momo-raster-hop-cues { animation: momo-raster-hop-cues 600ms ease-out 2; }
 .momo-raster-ponder-cues { animation: momo-raster-ponder-cues 1.2s ease-in-out 2; }
 .momo-raster-bow-cues { animation: momo-raster-bow-cues 800ms ease-in-out 2; }
-
-
-.momo-ground-shadow {
-  fill: #3a2a22;
-  opacity: 0.15;
-  transform-origin: 50px 99px;
-  animation: momo-shadow-breathe 3s ease-in-out infinite;
-}
-
-.momo-body-group { transform-origin: 50px 88px; }
-.momo-outline {
-  fill: none;
-  stroke: #9f7548;
-  stroke-width: 1.8;
-  stroke-linejoin: round;
-  opacity: 0.65;
-}
-.momo-pleats,
-.momo-pleat-detail {
-  fill: none;
-  stroke: #c9975f;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.momo-pleats { stroke-width: 3.2; }
-.momo-pleat-detail { stroke-width: 1.6; opacity: 0.7; }
-.momo-highlight {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 4;
-  stroke-linecap: round;
-  opacity: 0.55;
-}
-.momo-arm {
-  fill: none;
-  stroke: #d8aa73;
-  stroke-width: 8;
-  stroke-linecap: round;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.momo-wave-lines,
-.momo-celebration-sparks path {
-  fill: none;
-  stroke: var(--coral, #ff7a50);
-  stroke-width: 2.2;
-  stroke-linecap: round;
-}
-.momo-celebration-sparks { fill: var(--cobalt, #416ec3); }
-.momo-blossom { fill: var(--coral, #ff7a50); }
-.momo-blossom-core { fill: #ffc85a; }
 .momo-open-eyes { fill: #fffdf8; stroke: #3a2a22; stroke-width: 1.8; }
-.momo-pupils { fill: #3a2a22; stroke: none; }
-.momo-eye-glint { fill: #fff; }
-.momo-lash,
-.momo-brow,
-.momo-mouth,
 .momo-sleepy-eyes path,
 .momo-blink-eyes path {
   fill: none;
@@ -365,30 +309,7 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.momo-lash { stroke-width: 1.8; }
-.momo-brow { opacity: 0.72; }
-.momo-mouth { stroke-width: 3; }
 .momo-mouth-fill { fill: #7e493d; }
-.momo-feet { fill: #c69057; }
-
-.momo-art.pose-wave_at_user .momo-arm-left {
-  animation: momo-arm-wave 420ms ease-in-out 4;
-}
-.momo-art.pose-point_at_target .momo-arm-right,
-.momo-art.pose-glance_at_log .momo-arm-right {
-  animation: momo-arm-point 700ms ease-in-out 2;
-}
-.momo-art.pose-celebrate_big .momo-arm-left,
-.momo-art.pose-celebrate_big .momo-arm-right {
-  animation: momo-arm-cheer 480ms ease-in-out 4 alternate;
-}
-.momo-art.mood-curious .momo-pupils { transform: translateX(1.5px); }
-.momo-art.mood-sleepy .momo-body-group { transform: scaleY(0.98); }
-.momo-art.is-thinking .momo-pupils { animation: momo-think-gaze 1.25s ease-in-out infinite; }
-.momo-thought-orbit { fill: var(--cobalt, #416ec3); }
-.momo-thought-orbit circle { animation: momo-thought-pop 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-.momo-thought-orbit circle:nth-child(2) { animation-delay: 140ms; }
-.momo-thought-orbit circle:nth-child(3) { animation-delay: 280ms; }
 
 @keyframes momo-shadow-breathe {
   50% { transform: scaleX(0.86); opacity: 0.1; }

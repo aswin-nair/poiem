@@ -285,7 +285,7 @@
   .k-coach-send:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
   .k-page-main { max-width: 880px; margin-inline: auto; }
   .k-coach .k-workspace-col { display: flex; flex-direction: column; min-height: 100dvh; padding-bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px)); }
-  .k-coach .k-workspace-col > :is(.k-coach-main, .k-coach-compose, .k-coach-header) { width: 100%; max-width: 880px; margin-inline: auto; }
+  .k-coach .k-workspace-col > :is(.k-coach-main, .k-coach-compose) { width: 100%; max-width: 880px; margin-inline: auto; }
   @media (min-width: 1120px) {
     .k-coach .k-workspace-col { padding-bottom: 0; }
     .k-coach-compose { bottom: 0; }

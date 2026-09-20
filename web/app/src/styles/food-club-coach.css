@@ -1,4 +1,0 @@
-@layer legacy {
-:root .app-shell.food-club-app.coach-shell .starter-chip:nth-child(2) { background: var(--club-mint); }
-:root .app-shell.food-club-app.coach-shell .starter-chip:nth-child(3) { background: var(--club-pink); }
-}
