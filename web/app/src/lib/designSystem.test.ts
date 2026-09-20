@@ -27,19 +27,10 @@ const LAYERED = {
 /** Held to the whole contract: type on the approved steps, nothing raised, nothing tilted. */
 const MIGRATED = [
   'styles/system/fonts.css',
+  'styles/system/components.css',
   'styles/system/foundations.css',
   'styles/system/momo.css',
   'styles/screens/today.css',
-] as const
-
-/**
- * Flattened but not yet retyped. These sheets are held to every rule except the
- * type steps, where `TYPE_DEBT` records exactly how many off-step sizes each one
- * still sets. Lower a number when you fix a size; the count has to match, so it
- * cannot quietly go stale in either direction.
- */
-const FLATTENED = [
-  'styles/system/components.css',
   'styles/screens/kitchen.css',
   'styles/screens/flows.css',
   'styles/screens/insights.css',
@@ -47,16 +38,7 @@ const FLATTENED = [
   'styles/screens/pages.css',
 ] as const
 
-const TYPE_DEBT: Record<(typeof FLATTENED)[number], number> = {
-  'styles/system/components.css': 8,
-  'styles/screens/kitchen.css': 2,
-  'styles/screens/flows.css': 10,
-  'styles/screens/insights.css': 8,
-  'styles/screens/you.css': 4,
-  'styles/screens/pages.css': 5,
-}
-
-const APPROVED_TYPE = new Set([12, 14, 16, 18, 40, 64])
+const APPROVED_TYPE = new Set([12, 14, 16, 18, 28, 40, 64])
 const CONTRACT_SPACE = new Set(['4px', '8px', '12px', '16px', '24px', '32px', '48px', '64px'])
 const MASCOT_ART = /momo|sticker|plate|burst|nav-fab-face svg|empty-plate/
 const GEOMETRIC_ROTATION = /(?:^|[^\d.])(?:-)?(?:45|90|135|180|225|270|315)(?:\.\d+)?deg/
@@ -130,9 +112,9 @@ describe('Poiem design system', () => {
     for (const path of MIGRATED) {
       const css = withoutComments(read(path))
       const offContract = offContractType(css)
-      expect(offContract.map(size => size.text), path).toEqual([])
+      expect(offContract.map(size => `${size.text} (${size.px}px)`), path).toEqual([])
     }
-    for (const path of [...MIGRATED, ...FLATTENED]) {
+    for (const path of MIGRATED) {
       const css = withoutComments(read(path))
       for (const match of css.matchAll(/var\(--k-space-([^)]+)\)/g)) {
         if (/^[1-8]$/.test(match[1])) continue
@@ -147,15 +129,8 @@ describe('Poiem design system', () => {
     }
   })
 
-  it('lets the flattened sheets keep their old type sizes without adding any', () => {
-    for (const path of FLATTENED) {
-      const sizes = offContractType(withoutComments(read(path)))
-      expect(sizes.length, `${path} sets ${sizes.length} sizes off the contract steps (${sizes.map(size => size.text).join(', ')}); TYPE_DEBT says ${TYPE_DEBT[path]}`).toBe(TYPE_DEBT[path])
-    }
-  })
-
   it('forbids resting tilt on migrated text, controls, cards and navigation', () => {
-    for (const path of [...MIGRATED, ...FLATTENED]) {
+    for (const path of MIGRATED) {
       const css = withoutComments(read(path))
       for (const { selector, body } of rulesOf(css)) {
         if (/:(?:hover|active)\b/.test(selector)) continue
@@ -169,7 +144,7 @@ describe('Poiem design system', () => {
   })
 
   it('keeps every resting surface flat, so only overlays, heroes and drawings cast a shadow', () => {
-    for (const path of [...MIGRATED, ...FLATTENED]) {
+    for (const path of MIGRATED) {
       const css = withoutComments(read(path))
       for (const { selector, body } of rulesOf(css)) {
         for (const shadow of body.matchAll(/box-shadow\s*:\s*([^;}]+)/g)) {

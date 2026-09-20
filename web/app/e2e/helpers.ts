@@ -10,13 +10,14 @@ export async function settlePageLayout(page: Page): Promise<void> {
     await document.fonts.ready
     // A paused animation never resolves `finished`, so wait only on running ones, and never
     // longer than a few seconds: entrances are short, and a stuck wait hides the real assertion.
-    // A sheet rises in a portal outside the shell, and a control measured part-way through that
-    // translate comes back a fraction under its real size, so wait for those too.
+    // Any entrance can move what we are about to measure, wherever it renders: a sheet
+    // rises in a portal outside the shell, and the first run has no shell at all. So the
+    // filter is "running, on an element, and it ends" rather than a list of containers,
+    // which leaves Momo's endless idling out without naming it.
     const entrances = document.getAnimations().filter(animation => {
       const effect = animation.effect
       return animation.playState === 'running'
         && effect instanceof KeyframeEffect && effect.target instanceof Element
-        && effect.target.closest('.app-shell, .k-sheet-backdrop')
         && Number.isFinite(effect.getComputedTiming().endTime)
     })
     const settled = Promise.all(entrances.map(animation => animation.finished.catch(() => undefined)))

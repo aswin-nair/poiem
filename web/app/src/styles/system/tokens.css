@@ -95,6 +95,10 @@
     --k-type-body: 16px;
     --k-type-lead: 18px;
     --k-type-section: 18px;
+    /* Between a section and a page title: headings on sheets, modals and panels,
+       and the numbers that are the point of a tile without being the page's. */
+    --k-type-panel: 28px;
+    --k-type-figure: 28px;
     --k-type-title: 40px;
     --k-type-metric: 64px;
 
