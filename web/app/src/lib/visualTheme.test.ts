@@ -127,7 +127,7 @@ describe('shared visual theme', () => {
 
   it('leaves accessibility rules last and pairs the colourful heatmap with its legend', () => {
     expect(imports.trim().endsWith("@import './styles/a11y.css';")).toBe(true)
-    expect(imports.indexOf('product-ui.css')).toBeGreaterThan(imports.indexOf('you-ui.css'))
+    expect(imports.indexOf('product-ui.css')).toBeGreaterThan(imports.indexOf('library-insights-ui.css'))
     const insights = readFileSync(new URL('../styles/screens/insights.css', import.meta.url), 'utf8')
     const rule = (selector: string) => insights.split('\n').find(line => line.includes(`${selector} {`)) ?? ''
     // The legend's swatches paint exactly like the heat cells they explain.

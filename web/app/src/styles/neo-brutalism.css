@@ -1,8 +1,0 @@
-@layer legacy {
-.welcome-title > span:last-child { color: var(--neo-coral); }
-
-.setup-optional {
-  border: 3px dashed var(--neo-line);
-  border-radius: 10px;
-}
-}
