@@ -1,4 +1,0 @@
-@layer legacy {
-.welcome-title > span { display: block; }
-.welcome-title > span:last-child { color: var(--coral-text); }
-}
