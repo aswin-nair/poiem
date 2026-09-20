@@ -1,6 +1,6 @@
 @layer legacy {
 /* Field appearance has one owner. Page files retain layout, not focus recipes. */
-:is(.app-shell, .login-page) :is(.field input, .field select, .field textarea, .settings-input, .settings-select, .settings-textarea, .log-search-input, .text-log-input, .chat-input, .clay-input) {
+:is(.app-shell, .login-page) :is(.field input, .field select, .field textarea, .settings-input, .settings-select, .settings-textarea, .text-log-input, .clay-input) {
   min-width: 0;
   max-width: 100%;
   min-height: var(--control-height);

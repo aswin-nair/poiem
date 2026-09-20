@@ -62,15 +62,6 @@
   box-shadow: var(--shadow-sm);
 }
 
-:root[data-theme="dark"] .setup-refresh .onboarding-goal-card:nth-child(2),
-:root[data-theme="dark"] .you-refresh .settings-goal-card:nth-child(2) { border-top: 3px solid var(--protein); }
-
-:root[data-theme="dark"] .setup-refresh .onboarding-goal-card:nth-child(3),
-:root[data-theme="dark"] .you-refresh .settings-goal-card:nth-child(3) { border-top: 3px solid var(--carbs); }
-
-:root[data-theme="dark"] .setup-refresh .onboarding-goal-card:nth-child(4),
-:root[data-theme="dark"] .you-refresh .settings-goal-card:nth-child(4) { border-top: 3px solid var(--fat); }
-
 /* The native-looking controls should still read as controls on charcoal surfaces. */
 :root[data-theme="dark"] :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]) {
   color-scheme: dark;

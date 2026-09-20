@@ -3,8 +3,6 @@
 .setup-optional { padding: 0 12px; border: 1px dashed var(--rule-strong); border-radius: 12px; margin-bottom: 8px; background: var(--paper); }
 .setup-optional summary { padding: 14px 0; min-height: 44px; font-size: .875rem; cursor: pointer; }
 .setup-optional summary span { color: var(--ink-soft); font-size: .75rem; margin-left: 6px; }
-.setup-refresh .onboarding-goal-card:nth-child(3) { background: var(--fun-yellow); }
-.setup-refresh .onboarding-goal-card:nth-child(4) { background: var(--fun-green); }
 .first-meal-methods {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

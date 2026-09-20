@@ -15,11 +15,34 @@ const files = []
 const apply = process.argv.includes('--apply')
 let removedRules = 0, removedSelectors = 0, before = 0, after = 0
 
-/* A selector can never match if any class it requires is dead — including as
-   an ancestor, since that ancestor is never rendered either. */
+/* Classes behave differently depending on where they sit in a selector:
+   - plain: required, so a dead one means the rule can never match, including as
+     an ancestor, since an ancestor that never renders takes its descendants too;
+   - `:is()` / `:where()`: alternatives, so a dead one only shortens the list, and
+     the rule dies only when nothing live is left;
+   - `:not()`: a dead class there always matches, so it can never kill a rule. */
+const ANY = /:(?:is|where)\(([^()]*)\)/g
+const NONE = /:not\(([^()]*)\)/g
+const classesIn = part => [...part.matchAll(/\.([a-zA-Z][\w-]*)/g)].map(match => match[1])
+const alternativesOf = inner => inner.split(',').map(part => part.trim()).filter(Boolean)
+const partIsLive = part => !classesIn(part).some(c => dead.has(c))
+
+/** Drops dead alternatives out of `:is()` and `:where()`, keeping the rest of the rule. */
+function trimAlternatives(sel) {
+  return sel.replace(ANY, (whole, inner) => {
+    const kept = alternativesOf(inner).filter(partIsLive)
+    return kept.length ? whole.replace(inner, kept.join(', ')) : whole
+  })
+}
+
 function selectorIsDead(sel) {
-  const classes = [...sel.matchAll(/\.([a-zA-Z][\w-]*)/g)].map(m => m[1])
-  return classes.length > 0 && classes.some(c => dead.has(c))
+  const required = classesIn(sel.replace(ANY, '').replace(NONE, ''))
+  if (required.some(c => dead.has(c))) return true
+  for (const [, inner] of sel.replace(NONE, '').matchAll(ANY)) {
+    const alternatives = alternativesOf(inner)
+    if (alternatives.length > 0 && !alternatives.some(partIsLive)) return true
+  }
+  return false
 }
 
 for (const file of files) {
@@ -31,11 +54,11 @@ for (const file of files) {
     // Keyframe steps (`from`, `50%`) are not selectors in this sense.
     if (rule.parent && rule.parent.type === 'atrule' && /keyframes/.test(rule.parent.name)) return
 
-    const kept = rule.selectors.filter(s => !selectorIsDead(s))
+    const kept = rule.selectors.filter(s => !selectorIsDead(s)).map(trimAlternatives)
     if (kept.length === 0) {
       removedRules++
       rule.remove()
-    } else if (kept.length !== rule.selectors.length) {
+    } else if (kept.length !== rule.selectors.length || kept.join(',') !== rule.selectors.join(',')) {
       removedSelectors += rule.selectors.length - kept.length
       rule.selectors = kept
     }

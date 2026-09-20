@@ -1,6 +1,0 @@
-@layer legacy {
-:root .app-shell.food-club-app.you-refresh .settings-goal-card:nth-child(1) { border-top: 6px solid var(--club-tomato); }
-:root .app-shell.food-club-app.you-refresh .settings-goal-card:nth-child(2) { border-top: 6px solid var(--club-mint); }
-:root .app-shell.food-club-app.you-refresh .settings-goal-card:nth-child(3) { border-top: 6px solid var(--club-lemon); }
-:root .app-shell.food-club-app.you-refresh .settings-goal-card:nth-child(4) { border-top: 6px solid var(--club-pink); }
-}

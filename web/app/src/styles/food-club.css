@@ -3,7 +3,6 @@
 .food-club-fallback { color: #20221D; }
 .food-club-bubble-wrap { position: relative; max-width: 100%; margin: 26px 0 0; }
 .auth-tab-label { position: relative; }
-:root .food-club-auth.auth-refresh .auth-password-meter-bar:nth-child(4).is-on { background: var(--club-green-text); }
 @media (max-width: 899px) {
   .food-club-momo { width: 122px; height: 138px; }
   .food-club-bubble-wrap { margin-top: 16px; }

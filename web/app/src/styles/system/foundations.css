@@ -9,8 +9,7 @@
   .k-workspace-col { min-width: 0; width: 100%; max-width: var(--k-workspace); margin-inline: auto; }
   .k-app:not(.has-nav) .k-workspace-col { max-width: 52rem; }
   .k-app > .app-main,
-  .k-workspace-col > .app-main,
-  .k-app-main {
+  .k-workspace-col > .app-main {
     width: 100%;
     max-width: var(--k-workspace);
     margin-inline: auto;
@@ -202,8 +201,7 @@
     .k-app .bottom-nav .nav-item span { font-size: var(--k-type-label); }
     .k-app .nav-fab { margin: var(--k-space-sm) auto; }
     .k-app > .app-main,
-    .k-workspace-col > .app-main,
-    .k-app-main {
+    .k-workspace-col > .app-main {
       padding-bottom: var(--k-space-3xl);
     }
   }

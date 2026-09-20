@@ -348,7 +348,6 @@
   }
   .k-section-head :is(h2, h3) { margin: 0; font: 700 var(--k-type-section)/1.3 var(--k-font-body); letter-spacing: 0; text-transform: none; color: var(--k-ink); }
   .k-section-head > span { font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
-  .k-muted { color: var(--k-muted); }
 
   .k-meter { position: relative; display: block; height: 8px; overflow: hidden; background: var(--k-hair); }
   .k-meter-fill { display: block; height: 100%; background: var(--k-ink); transition: width 500ms var(--k-ease); }

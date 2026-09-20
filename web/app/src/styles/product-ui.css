@@ -7,7 +7,7 @@
   font: 600 var(--page-heading-size)/1.1 var(--display);
   letter-spacing: -.025em;
 }
-.app-shell :is(.page-sub, .log-intro, .insights-intro) { color: var(--ink-soft); }
+.app-shell :is(.page-sub, .insights-intro) { color: var(--ink-soft); }
 .app-shell .page-heading {
   margin-bottom: var(--section-gap);
   padding: var(--page-gutter);
@@ -16,7 +16,7 @@
   background: var(--paper-card);
   box-shadow: var(--shadow-card);
 }
-.app-shell .page-heading :is(.page-sub, .log-intro, .insights-intro) { margin: 10px 0 0; color: var(--ink); }
+.app-shell .page-heading :is(.page-sub, .insights-intro) { margin: 10px 0 0; color: var(--ink); }
 .app-shell :is(.card, .surface, .progress-card, .settings-card, .discover-card) {
   background: var(--paper-card);
   border: var(--fun-outline);
@@ -53,8 +53,7 @@
   outline-offset: 4px;
 }
 .mascot-say { font-family: var(--mascot-display); }
-.expression-momo .momo-outline { stroke: #6A3E2A; stroke-width: 2; opacity: 1; }
-.expression-momo .momo-happy-eyes, .expression-momo .momo-wink-eye { fill: none; stroke: #3A2A22; stroke-width: 3; stroke-linecap: round; }
+.expression-momo .momo-wink-eye { fill: none; stroke: #3A2A22; stroke-width: 3; stroke-linecap: round; }
 .expression-momo .momo-happy-mouth { fill: #7E493D; stroke: #3A2A22; stroke-width: 1.5; stroke-linejoin: round; }
 .momo-sticker {
   display: block;
@@ -113,9 +112,6 @@
 .saved-refresh .discover-card:nth-child(3n + 2) .discover-card-emoji { background: var(--fun-pink); }
 .saved-refresh .discover-card:nth-child(3n) .discover-card-emoji { background: var(--fun-yellow); }
 .insights-range-control .range-chips { padding-bottom: 4px; }
-.you-refresh .settings-goal-card:nth-child(2) { background: var(--fun-blue); }
-.you-refresh .settings-goal-card:nth-child(3) { background: var(--fun-yellow); }
-.you-refresh .settings-goal-card:nth-child(4) { background: var(--fun-green); }
 .auth-fields { border: 0; padding: 0; margin: 0; min-width: 0; }
 .auth-password-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; font-size: .875rem; color: var(--ink-soft); }
 .auth-show-password { margin-left: auto; min-height: 44px; color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
