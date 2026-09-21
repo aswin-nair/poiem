@@ -19,6 +19,15 @@ export const motionFade = {
   ease: [0.22, 1, 0.36, 1],
 } as const
 
+/** CSS form of motionFade.ease. Welcome `--wp-ease` and screen fades use this. */
+export const motionCssEase = 'cubic-bezier(0.22, 1, 0.36, 1)'
+
+export const motionMs = {
+  fade: 240,
+  enter: 500,
+  press: 120,
+} as const
+
 /** Full props for an opacity-only entrance; motionFade is a transition, not props. */
 export const motionOpacity = {
   initial: { opacity: 0 },

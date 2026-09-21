@@ -13,6 +13,9 @@ vi.mock('../store/AppContext', () => ({
   useApp: () => ({ state, logSavedMeal: vi.fn(), toggleFavorite: vi.fn(), addWeightEntry: vi.fn(), deleteWeightEntry: vi.fn() }),
   isFavorite: () => false,
 }))
+vi.mock('../store/AuthContext', () => ({
+  useAuth: () => ({ user: { sub: 'insights-test', name: 'Sam', email: 'sam@example.test' } }),
+}))
 const savedHtml = () => renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: ['/discover'] }, createElement(SavedMealsPage)))
 const insightsHtml = () => renderToStaticMarkup(createElement(MemoryRouter, null, createElement(ProgressPage)))
 beforeEach(() => { state = freshState() })
@@ -40,6 +43,7 @@ describe('Saved UI', () => {
     expect(html).toContain('href="/log"')
     expect(html).toContain('role="group" aria-label="Filter saved meals by type"')
     expect(html).toContain('Your logged meals will appear here')
+    expect(html).toContain('Pinned')
     expect(html).toContain('class="app-shell k-app k-screen has-nav k-saved"')
     expect(html).not.toContain('poster-')
     expect(html).toContain('0 saved · 0 recent in your collection')
@@ -53,11 +57,12 @@ describe('Saved UI', () => {
     expect(html).toContain('<article class="discover-card" aria-label="Rice bowl"')
     expect(html).toContain('Total for 1× portion')
     expect(html).toContain('Protein 8g · Carbs 60g · Fat 5g')
-    for (const name of ['Rice bowl', 'Oats']) {
-      expect(html).toContain(`aria-label="Log ${name}, 1 times portion"`)
-      expect(html).toContain(`aria-label="Decrease servings for ${name}"`)
-      expect(html).toContain(`aria-label="Increase servings for ${name}"`)
-    }
+    expect(html).toContain('aria-label="Log Rice bowl, 1 times portion"')
+    expect(html).toContain('aria-label="Decrease servings for Rice bowl"')
+    expect(html).toContain('aria-label="Increase servings for Rice bowl"')
+    expect(html).toContain('aria-label="Log Oats, 1 times portion"')
+    expect(html).toContain('>Portion</button>')
+    expect(html).not.toContain('aria-label="Decrease servings for Oats"')
     expect(html).toContain('aria-label="Unfavorite Rice bowl" aria-pressed="true"')
     expect(html).toContain('aria-label="Favorite Oats" aria-pressed="false"')
   })
@@ -73,6 +78,9 @@ describe('Insights UI', () => {
     expect(html).toContain('role="status" aria-live="polite"')
     expect(html).toContain('All time')
     expect(html).toContain('class="progress-card consistency-card"')
+    expect(html).toContain('class="insights-more"')
+    expect(html).toContain('Ticket archive')
+    expect(html).toContain('Your first badge starts with your first log.')
   })
   it('does not present profile defaults as observed averages or changes', () => {
     const html = insightsHtml()

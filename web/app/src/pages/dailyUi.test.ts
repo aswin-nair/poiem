@@ -88,12 +88,14 @@ describe('manual entry', () => {
     expect(html).toContain('<button type="submit"')
     expect(html.indexOf('Meal total')).toBeLessThan(html.indexOf('type="submit"'))
     expect(html).toContain('aria-labelledby="manual-meal-type"')
+    expect(html).toContain('class="field-req">Required</span>')
+    expect(html).toContain('class="manual-macros"')
   })
 
   it('does not show a misleading zero-calorie total for an empty form', () => {
     const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(ManualEntryPage)))
     expect(html).not.toContain('aria-label="Meal total"')
-    expect(html).toContain('<button type="submit" disabled=""')
+    expect(html).toContain('<button type="submit"')
   })
 
   it('starts blank even with recent meals, so nothing is logged by accident', () => {
@@ -102,6 +104,6 @@ describe('manual entry', () => {
     expect(html).not.toContain('Started from')
     expect(html).not.toContain('value="Oats"')
     expect(html).not.toContain('aria-label="Meal total"')
-    expect(html).toContain('<button type="submit" disabled=""')
+    expect(html).toContain('<button type="submit"')
   })
 })

@@ -55,6 +55,7 @@ test('settings search supports keyboard jumps, recovery and unsaved preferences'
   await finder.getByRole('link', { name: /Account/ }).click()
   await expect(page.locator('#you-account')).toBeFocused()
   await expect(page.getByRole('status').filter({ hasText: 'Unsaved changes' })).toBeVisible()
+  await page.getByRole('link', { name: 'Momo', exact: true }).first().click()
   await expect(page.getByRole('switch', { name: 'Mute Momo' })).toBeChecked()
 
   await search.fill('xyz-no-match')

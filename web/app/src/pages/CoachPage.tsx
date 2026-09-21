@@ -160,8 +160,40 @@ export function CoachPage() {
     }
   }
 
+  const empty = state.chatMessages.length === 0 && !loading
+  const compose = (
+      <div className={`k-coach-compose${empty ? ' is-inline' : ''}`}>
+        {loading && (
+          <PressableButton variant="secondary" label="Cancel response" onClick={() => requestRef.current?.abort()} />
+        )}
+        <AiAllowanceHint availability={ai} task="coach" />
+        <form
+          className="k-coach-form"
+          onSubmit={e => { e.preventDefault(); send(input) }}
+        >
+          <input
+            ref={inputRef}
+            className="k-coach-input"
+            aria-label="Message Coach"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder={canChat ? 'Ask Coach…' : 'Ask for support, or add an API key for coaching'}
+            disabled={loading}
+          />
+          <button
+            type="submit"
+            className="k-coach-send"
+            disabled={loading || !input.trim()}
+            aria-label="Send"
+          >
+            <IconSend size={18} />
+          </button>
+        </form>
+      </div>
+  )
+
   return (
-    <AppShell screen="k-coach" nav={<BottomNav />}>
+    <AppShell screen={`k-coach${empty ? ' is-empty' : ''}`} nav={<BottomNav />}>
       <header className="k-coach-head" data-mascot-avoid>
         <span className="k-coach-momo" aria-hidden="true"><MomoSticker mood="excited" pose="still" /></span>
         <div className="k-coach-title">
@@ -219,6 +251,7 @@ export function CoachPage() {
               Your chat is stored with your Poiem data. When you send a message, limited recent log context is sent
               {hasKey ? ` directly to ${providerLabel(state.aiSettings.provider)}` : ' through Poiem’s managed provider'}; that provider controls its own retention.
             </p>
+            {compose}
           </section>
         )}
 
@@ -270,34 +303,7 @@ export function CoachPage() {
         </div>
       </main>
 
-      <div className="k-coach-compose">
-        {loading && (
-          <PressableButton variant="secondary" label="Cancel response" onClick={() => requestRef.current?.abort()} />
-        )}
-        <AiAllowanceHint availability={ai} task="coach" />
-        <form
-          className="k-coach-form"
-          onSubmit={e => { e.preventDefault(); send(input) }}
-        >
-          <input
-            ref={inputRef}
-            className="k-coach-input"
-            aria-label="Message Coach"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder={canChat ? 'Ask Coach…' : 'Ask for support, or add an API key for coaching'}
-            disabled={loading}
-          />
-          <button
-            type="submit"
-            className="k-coach-send"
-            disabled={loading || !input.trim()}
-            aria-label="Send"
-          >
-            <IconSend size={18} />
-          </button>
-        </form>
-      </div>
+      {!empty && compose}
 
     </AppShell>
   )

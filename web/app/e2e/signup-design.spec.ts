@@ -37,11 +37,18 @@ for (const width of [320, 390, 768, 1440]) {
       const fits = await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)
       expect(fits).toBe(true)
       const submit = page.getByRole('button', { name: 'Create account', exact: true })
-      await expect(submit).toBeInViewport()
       if (width < 900) {
         await page.evaluate(() => window.scrollTo(0, 0))
+        const email = await page.getByLabel('Email', { exact: true }).boundingBox()
+        const dock = await page.locator('.auth-submit-dock').boundingBox()
+        expect(email, 'email field is on the page').not.toBeNull()
+        expect(dock, 'submit stays after the fields at the top of the page').not.toBeNull()
+        expect(dock!.y).toBeGreaterThan(email!.y + email!.height)
+        await expect(page.locator('.auth-submit-dock')).not.toHaveCSS('position', 'fixed')
+        await submit.scrollIntoViewIfNeeded()
         await expect(submit).toBeInViewport()
-        await expect(page.locator('.auth-submit-dock')).toHaveCSS('position', 'fixed')
+      } else {
+        await expect(submit).toBeInViewport()
       }
       await page.evaluate(() => window.scrollTo(0, 0))
       await page.screenshot({ path: testInfo.outputPath(`signup-${theme.toLowerCase()}.png`), fullPage: true, animations: 'disabled' })

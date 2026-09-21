@@ -298,12 +298,14 @@ export function OnboardingPage() {
 
   const bar = (
     <div className="k-setup-bar">
-      <span className="welcome-brand"><BrandLogo /></span>
-      <div className="k-setup-bar-actions">
-        {user && !draft.blocked ? <span className="k-setup-account"><IconCheck size={16} /> Your account is ready</span>
-          : !user ? <Link to="/login" className="k-setup-signin">Already a member? Sign in</Link> : null}
-        <AppearanceControl compact />
+      <div className="k-setup-bar-row">
+        <span className="welcome-brand"><BrandLogo /></span>
+        <div className="k-setup-bar-actions">
+          {user && !draft.blocked ? <span className="k-setup-account"><IconCheck size={16} /> Your account is ready</span> : null}
+          <AppearanceControl compact />
+        </div>
       </div>
+      {!user ? <Link to="/login" className="k-setup-signin">Already a member? Sign in</Link> : null}
     </div>
   )
 

@@ -1,9 +1,11 @@
 import { useContext, useRef, useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useFeel } from '../hooks/useHaptic'
 import { LogSheetOpenContext } from '../lib/logSheetOpen'
 import { prefersReducedMotion } from '../lib/tokens'
 import { useAnchor } from '../mascot/anchors'
+import { useAuth } from '../store/AuthContext'
+import { BrandLogo } from './BrandLogo'
 import { IconHome, IconJourney, IconPlus, IconProgress, IconSettings } from './icons'
 
 /** Long enough to see the + pop before the sheet covers it; short enough to feel instant. */
@@ -21,6 +23,13 @@ export function BottomNav() {
   const fabAnchor = useAnchor('fab')
   const location = useLocation()
   const navigate = useNavigate()
+  let accountName = 'You'
+  try {
+    const user = useAuth().user
+    accountName = user?.name?.trim().split(/\s+/)[0] || user?.email?.split('@')[0] || 'You'
+  } catch {
+    accountName = 'You'
+  }
   const logOpen = useContext(LogSheetOpenContext) || location.pathname === '/log'
   const [pops, setPops] = useState(0)
   const opening = useRef(false)
@@ -54,6 +63,12 @@ export function BottomNav() {
 
   return (
     <nav className="bottom-nav-wrap" aria-label="Main">
+      <div className="nav-brand">
+        <Link to="/" className="nav-brand-mark" aria-label="Poiem home">
+          <BrandLogo variant="mark" decorative />
+        </Link>
+        <Link to="/settings" className="nav-brand-account">{accountName}</Link>
+      </div>
       <div className="bottom-nav">
         {TABS.slice(0, 2).map(tab)}
 
@@ -71,6 +86,7 @@ export function BottomNav() {
           onClick={openLog}
         >
           <span className="nav-fab-face" aria-hidden="true"><IconPlus size={28} /></span>
+          <span className="nav-fab-label">Log meal</span>
           {pops > 0 && <span key={pops} className="nav-fab-burst" aria-hidden="true"><i /><i /><i /><i /><i /></span>}
         </button>
 

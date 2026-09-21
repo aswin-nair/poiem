@@ -229,9 +229,20 @@
   to { stroke-dashoffset: 0; }
 }
 
+@keyframes splash-ring-spin {
+  to { transform: rotate(270deg); }
+}
+
 @keyframes splash-text-up {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+.splash-pending {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  background: var(--paper, var(--k-ground));
 }
 
 .splash-screen {
@@ -272,7 +283,11 @@
 .splash-ring-progress {
   stroke-dasharray: var(--circ);
   stroke-dashoffset: var(--circ);
-  animation: splash-ring-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  animation: splash-ring-draw 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+}
+
+.splash-screen.is-slow .splash-ring-svg {
+  animation: splash-ring-spin 1.1s linear infinite;
 }
 
 .splash-wordmark {
@@ -290,6 +305,15 @@
   animation: splash-text-up 0.5s ease 0.48s both;
 }
 
+.splash-status {
+  display: none;
+  margin: 10px 0 0;
+  font: 500 0.8rem/1.4 var(--k-font-body, inherit);
+  color: var(--ink-mute, var(--k-muted));
+}
+
+.splash-screen.is-slow .splash-status { display: block; }
+
 @media (prefers-reduced-motion: reduce) {
   .splash-screen {
     animation: none !important;
@@ -299,6 +323,7 @@
     animation: none !important;
     stroke-dashoffset: 0;
   }
+  .splash-screen.is-slow .splash-ring-svg { animation: none !important; }
   .splash-wordmark,
   .splash-tagline {
     animation: none !important;

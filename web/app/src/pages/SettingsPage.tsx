@@ -1,8 +1,8 @@
 import { AppShell } from '../components/system/AppShell'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Toggle, RadioDot } from '../components/Toggle'
 import { SettingsRow } from '../components/SettingsRow'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { useAuth } from '../store/AuthContext'
 import { BottomNav } from '../components/BottomNav'
@@ -34,17 +34,16 @@ import { clearUserState, exportData, importData } from '../lib/storage'
 import { clearAnalytics, track } from '../lib/analytics'
 import { clearNotificationHistory, requestNotifyPermission } from '../lib/notifications'
 import { userInitials } from '../lib/auth'
-import { IconArrowUpRight, IconChevronRight, IconCoach, IconTrophy } from '../components/icons'
+import { IconArrowUpRight, IconChevronRight, IconCoach } from '../components/icons'
 import { apiChangePassword, apiDeleteAccount, apiLogoutAll, loadAuthToken, saveAuthToken } from '../lib/apiClient'
 import { isCloudBackend } from '../lib/dataBackend'
 import { deleteLocalAccount } from '../lib/localAuth'
 import { clearDurableUser } from '../lib/durableState'
 import { clearOnboardingDraft } from '../lib/onboarding'
 import { clearAccountSeen } from '../lib/guestMode'
-import { getStreakWithFreezes, getAllBadges, getMonthConsistency } from '../lib/journey'
 import { MomoWardrobe } from '../components/MomoWardrobe'
 import { RoastPreview } from '../components/RoastPreview'
-import { SettingsNavigation } from '../components/SettingsNavigation'
+import { SettingsNavigation, YOU_PANELS, type YouPanel } from '../components/SettingsNavigation'
 import { AppearanceControl } from '../components/AppearanceControl'
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -80,15 +79,19 @@ export function SettingsPage() {
   const [passwordSaved, setPasswordSaved] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   const cloud = isCloudBackend()
+  const [params] = useSearchParams()
+  const panelParam = params.get('panel')
+  const panel = YOU_PANELS.some(([id]) => id === panelParam) ? panelParam as YouPanel : null
+  const isHub = panel == null
+
+  useEffect(() => {
+    if (!panel) return
+    document.getElementById(`you-${panel}`)?.focus({ preventScroll: true })
+  }, [panel])
 
   const goalTargets = computeTargets(profile)
   const currentProfileIssue = profileInputIssue(profile) ?? goalWeightIssue(profile)
   const modelPresets = provider === 'openrouter' ? OPENROUTER_MODELS : GEMINI_MODELS
-  const currentStreak = getStreakWithFreezes(
-    state.foodEntries,
-    state.gamification.freezeUsedDates,
-    state.gamification.pauseProtectedDates,
-  )
   const mascotVisible = state.gamification.mascotActivity !== 'off'
   const hasChanges = JSON.stringify(profile) !== JSON.stringify(state.profile)
     || provider !== state.aiSettings.provider
@@ -98,8 +101,6 @@ export function SettingsPage() {
     || instructions !== (state.aiSettings.customInstructions ?? '')
     || mascotEnabled !== (state.aiSettings.mascotEnabled !== false)
     || mascotPersonality !== (state.aiSettings.mascotPersonality ?? 'sassy')
-  const unlockedBadges = getAllBadges(state.foodEntries, currentStreak).filter(badge => badge.unlocked)
-
   function handleProviderChange(next: AIProvider) {
     setProvider(next)
     setModel(defaultModelFor(next))
@@ -252,6 +253,9 @@ export function SettingsPage() {
         </header>
         <p className="you-status">{profile.trackingPaused ? 'Tracking paused · your streak is held' : 'Your routine · your pace'}</p>
         <SettingsFinder />
+        <SettingsNavigation panel={panel} hasChanges={hasChanges} saved={saved} invalid={Boolean(currentProfileIssue)} onSave={saveProfile} />
+
+        {isHub && <>
         <section className="appearance-settings" id="you-appearance" tabIndex={-1} aria-labelledby="appearance-settings-title">
           <div className="appearance-settings-copy">
             <h2 id="appearance-settings-title">Make yourself at home</h2>
@@ -259,9 +263,51 @@ export function SettingsPage() {
           </div>
           <AppearanceControl />
         </section>
-        <SettingsNavigation hasChanges={hasChanges} saved={saved} invalid={Boolean(currentProfileIssue)} onSave={saveProfile} />
+        {profile.trackingPaused ? <p className="you-pause-note">Tracking is paused. Your daily target numbers are hidden.</p> : currentProfileIssue ? <p className="you-pause-note">Check your profile details to preview daily targets.</p> : <>
+        <SectionLabel>Daily goals</SectionLabel>
+        {goalTargets.clamped && <p className="settings-clamp-note">{goalTargets.clamped}</p>}
+        <div className="settings-goals-grid">
+          <div className="settings-goal-card">
+            <span className="settings-goal-label">Calories</span>
+            <strong className="settings-goal-value">{goalTargets.calories}</strong>
+          </div>
+          <div className="settings-goal-card">
+            <span className="settings-goal-label">Protein</span>
+            <strong className="settings-goal-value">{effectiveProtein(profile)}g</strong>
+          </div>
+          <div className="settings-goal-card">
+            <span className="settings-goal-label">Carbs</span>
+            <strong className="settings-goal-value">{effectiveCarbs(profile)}g</strong>
+          </div>
+          <div className="settings-goal-card">
+            <span className="settings-goal-label">Fat</span>
+            <strong className="settings-goal-value">{effectiveFat(profile)}g</strong>
+          </div>
+        </div>
+        </>}
+        <SectionLabel>Quick preferences</SectionLabel>
+        <SettingsCard>
+          <SettingsRow label="Sound" hint="Short cues when you log a meal">
+            <Toggle checked={profile.soundEnabled !== false} onChange={next => setProfile(p => ({ ...p, soundEnabled: next }))} />
+          </SettingsRow>
+          <SettingsRow label="Pause tracking" hint={profile.trackingPaused ? 'Numbers are hidden and your streak is held.' : 'Hide numbers and hold your streak.'}>
+            <Toggle checked={Boolean(profile.trackingPaused)} onChange={next => setProfile(p => ({ ...p, trackingPaused: next }))} />
+          </SettingsRow>
+          <SettingsRow label="Notifications" hint="At most two per day. Never about calories.">
+            <button type="button" className="settings-data-btn" onClick={() => void requestNotifyPermission()}>Allow</button>
+          </SettingsRow>
+        </SettingsCard>
+        <nav className="you-destinations" aria-label="More in You">
+          {YOU_PANELS.map(([id, label]) => (
+            <Link key={id} className="settings-data-btn settings-link-row" to={`/settings?panel=${id}`}>
+              <span>{label}</span>
+              <IconChevronRight size={16} className="settings-link-chevron" />
+            </Link>
+          ))}
+        </nav>
+        </>}
 
-        <section className="you-section" id="you-profile" aria-labelledby="you-profile-title" tabIndex={-1}>
+        {panel === 'profile' && <section className="you-section" id="you-profile" aria-labelledby="you-profile-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-profile-title">Profile &amp; goals</h2>
             <p>Your daily guide updates as you edit. Save when it feels right.</p>
@@ -385,9 +431,9 @@ export function SettingsPage() {
             </SettingsRow>
           )}
         </SettingsCard>
-        </section>
+        </section>}
 
-        <section className="you-section" id="you-preferences" aria-labelledby="you-preferences-title" tabIndex={-1}>
+        {panel === 'preferences' && <section className="you-section" id="you-preferences" aria-labelledby="you-preferences-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-preferences-title">Everyday preferences</h2>
             <p>Choose how the app feels. Use Save settings to apply your changes.</p>
@@ -441,40 +487,13 @@ export function SettingsPage() {
             <IconCoach size={16} className="settings-link-chevron" />
           </Link>
         </SettingsCard>
-        </section>
+        </section>}
 
-        <section className="you-section" id="you-momo" aria-labelledby="you-momo-title" tabIndex={-1}>
+        {panel === 'momo' && <section className="you-section" id="you-momo" aria-labelledby="you-momo-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-momo-title">Your kitchen companion</h2>
-            <p>A little company, on your terms.</p>
+            <p>A little company, on your terms. Streaks and badges now live in Insights.</p>
           </header>
-        <SectionLabel>Streak</SectionLabel>
-        <SettingsCard>
-          <p className="page-sub">
-            {currentStreak}-day streak · {state.gamification.streakFreezes} {state.gamification.streakFreezes === 1 ? 'freeze' : 'freezes'}
-          </p>
-          <div className="insights-heat" aria-hidden>
-            {getMonthConsistency(state.foodEntries).days.map((logged, i) => (
-              <span key={i} className={`insights-heat-cell${logged ? ' is-logged' : ''}`} />
-            ))}
-          </div>
-          <p className="page-sub">
-            One refreshes monthly, and a 7-day streak can add another. Taking a break is always available below.
-          </p>
-        </SettingsCard>
-
-        <SectionLabel>Achievements</SectionLabel>
-        <SettingsCard>
-          {unlockedBadges.length === 0 && <p className="page-sub">Your first badge starts with your first log. There’s no rush.</p>}
-          <div className="wardrobe-grid">
-            {unlockedBadges.map(badge => (
-              <div key={badge.id} className="wardrobe-item is-owned">
-                <IconTrophy size={18} /> {badge.name}
-              </div>
-            ))}
-          </div>
-        </SettingsCard>
-
         <SectionLabel>Mascot</SectionLabel>
         <SettingsCard>
           <p className="page-sub">A small kitchen companion. Never sad, never scoring your food.</p>
@@ -533,9 +552,9 @@ export function SettingsPage() {
           <MomoWardrobe />
         </SettingsCard>
         </details>
-        </section>
+        </section>}
 
-        <section className="you-section" id="you-ai" aria-labelledby="you-ai-title" tabIndex={-1}>
+        {panel === 'ai' && <section className="you-section" id="you-ai" aria-labelledby="you-ai-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-ai-title">AI setup</h2>
             <p>After you sign up, photo and text logging use Poiem’s OpenRouter key and {MANAGED_OPENROUTER_MODEL}. Add your own key only if you want a different provider or model.</p>
@@ -659,9 +678,9 @@ export function SettingsPage() {
           </p>
         </SettingsCard>
         </details>
-        </section>
+        </section>}
 
-        <section className="you-section" id="you-account" aria-labelledby="you-account-title" tabIndex={-1}>
+        {panel === 'account' && <section className="you-section" id="you-account" aria-labelledby="you-account-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-account-title">Account &amp; security</h2>
             <p>Manage your sign-in and account access.</p>
@@ -784,9 +803,9 @@ export function SettingsPage() {
             </button>
           </div>
         )}
-        </section>
+        </section>}
 
-        <section className="you-section" id="you-data" aria-labelledby="you-data-title" tabIndex={-1}>
+        {panel === 'data' && <section className="you-section" id="you-data" aria-labelledby="you-data-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-data-title">Your data</h2>
             <p>Keep a backup, restore your journal, or manage stored data.</p>
@@ -830,7 +849,7 @@ export function SettingsPage() {
             <IconChevronRight size={16} className="settings-link-chevron" />
           </Link>
         </SettingsCard>
-        </section>
+        </section>}
 
         <p className="settings-footer">Poiem · Poiem AI or your own key · Privacy-first</p>
       </main>

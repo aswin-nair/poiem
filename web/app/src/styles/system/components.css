@@ -134,6 +134,8 @@
   .toast :is(.toast-action-btn, .toast-x):focus-visible { outline: 3px solid var(--k-acid); outline-offset: 2px; }
 
   /* ── Tab bar (BottomNav) ───────────────────────────────────── */
+  .nav-brand,
+  .nav-fab-label { display: none; }
   .bottom-nav-wrap {
     max-width: var(--k-shell);
     padding: 0 12px calc(10px + var(--safe-bottom, 0px));
@@ -324,9 +326,15 @@
   .welcome-brand:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 4px; }
 
   /* ── Splash ────────────────────────────────────────────────── */
-  /* After the first open in a session the splash only shows if loading takes a moment. */
-  .splash-screen.is-quiet { animation: k-splash-in 200ms ease 350ms both; }
-  @keyframes k-splash-in { from { opacity: 0; } }
+  .splash-ring-wrap .poiem-logo--mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 72px;
+    height: 72px;
+    transform: translate(-50%, -50%);
+  }
+  .splash-wordmark .poiem-logo--wordmark { width: 190px; }
 
   /* ── Primitives for rebuilt screens ────────────────────────── */
   .k-screen { background: var(--k-ground); color: var(--k-ink); font-family: var(--k-font-body); }

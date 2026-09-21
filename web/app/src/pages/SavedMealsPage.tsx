@@ -94,6 +94,7 @@ function MealRow({
   onLog: (servings: number) => void; onStar?: () => void; starred?: boolean
 }) {
   const [servings, setServings] = useState(1)
+  const [adjusting, setAdjusting] = useState(false)
 
   function changeServings(next: number) {
     setServings(Math.max(0.25, Math.round(next * 4) / 4))
@@ -131,11 +132,15 @@ function MealRow({
             <IconStar active={starred} size={17} />
           </m.button>
         )}
-        <div className="serving-stepper-compact">
-          <button type="button" className="ssc-btn" onClick={() => changeServings(servings - 0.25)} disabled={servings <= 0.25} aria-label={`Decrease servings for ${name}`}><IconMinus size={13} strokeWidth={2.6} /></button>
-          <span className="ssc-val">{servings}×</span>
-          <button type="button" className="ssc-btn" onClick={() => changeServings(servings + 0.25)} aria-label={`Increase servings for ${name}`}><IconPlus size={13} strokeWidth={2.6} /></button>
-        </div>
+        {adjusting ? (
+          <div className="serving-stepper-compact">
+            <button type="button" className="ssc-btn" onClick={() => changeServings(servings - 0.25)} disabled={servings <= 0.25} aria-label={`Decrease servings for ${name}`}><IconMinus size={13} strokeWidth={2.6} /></button>
+            <span className="ssc-val">{servings}×</span>
+            <button type="button" className="ssc-btn" onClick={() => changeServings(servings + 0.25)} aria-label={`Increase servings for ${name}`}><IconPlus size={13} strokeWidth={2.6} /></button>
+          </div>
+        ) : (
+          <button type="button" className="saved-reset" aria-expanded={false} onClick={() => setAdjusting(true)}>Portion</button>
+        )}
         <button type="button" className="log-pill-btn" aria-label={`Log ${name}, ${servings} times portion`} onClick={() => onLog(servings)}>Log meal</button>
       </div>
     </article>
@@ -148,7 +153,7 @@ export function SavedMealsPage() {
   const location = useLocation()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
-  const recents = recentMeals(state.foodEntries)
+  const recents = recentMeals(state.foodEntries).filter(entry => !isFavorite(state, entry))
 
   // Reached both as the "Saved" tab and as a shortcut from the Log menu — only
   // the latter is a sub-page that needs a way back.
@@ -195,7 +200,7 @@ export function SavedMealsPage() {
         <header className="page-heading">
           <p className="k-eyebrow">Your usuals</p>
           <h1 className="page-title">Saved</h1>
-          <p className="page-sub">Your familiar meals, ready for another day. Adjust the portion, then log.</p>
+          <p className="page-sub">Pinned meals stay up top. Recents skip anything already pinned.</p>
         </header>
 
         <label className="saved-search-label" htmlFor="saved-meal-search">Find a saved or recent meal</label>
@@ -229,9 +234,9 @@ export function SavedMealsPage() {
         </p>
 
         <div className="saved-collections">
-        <section className="saved-collection" aria-label="Your saved meals">
+        <section className="saved-collection" aria-label="Pinned meals">
         <div className="discover-section-header">
-          <h2 className="discover-section-title">Your saved meals</h2>
+          <h2 className="discover-section-title">Pinned</h2>
           <span className="discover-count-badge">{filteredFavorites.length}</span>
         </div>
 

@@ -178,12 +178,37 @@
       right: auto;
       bottom: auto;
       left: auto;
+      display: flex;
+      flex-direction: column;
       transform: none;
       height: 100dvh;
       max-width: none;
       width: var(--k-nav-side);
       padding: var(--k-space-xl) var(--k-space-lg);
       pointer-events: auto;
+    }
+    .k-app .nav-brand {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 var(--k-space-lg);
+    }
+    .k-app .nav-brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+    }
+    .k-app .nav-brand-mark .poiem-logo { display: block; width: 44px; height: 44px; }
+    .k-app .nav-brand-account {
+      min-width: 0;
+      overflow: hidden;
+      color: var(--k-ink);
+      font: 700 var(--k-type-label)/1.2 var(--k-font-body);
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .k-app .bottom-nav {
       display: grid;
@@ -199,7 +224,24 @@
     }
     .k-app .bottom-nav .nav-item-inner { flex-direction: row; justify-content: flex-start; gap: var(--k-space-md); width: 100%; min-height: 52px; padding: var(--k-space-md); }
     .k-app .bottom-nav .nav-item span { font-size: var(--k-type-label); }
-    .k-app .nav-fab { margin: var(--k-space-sm) auto; }
+    .k-app .bottom-nav .nav-fab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      width: 100%;
+      height: auto;
+      min-height: 52px;
+      margin: var(--k-space-sm) 0;
+      padding: 0;
+      color: var(--k-ink);
+    }
+    .k-app .bottom-nav .nav-fab-face { width: 44px; height: 44px; }
+    .k-app .bottom-nav .nav-fab-label {
+      display: inline;
+      color: var(--k-ink);
+      font: 700 var(--k-type-label)/1 var(--k-font-body);
+    }
     .k-app > .app-main,
     .k-workspace-col > .app-main {
       padding-bottom: var(--k-space-3xl);

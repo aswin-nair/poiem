@@ -250,6 +250,15 @@
     padding: 10px var(--k-pad-panel) 8px; border-top: 1px solid var(--k-hair-strong);
     background: var(--k-ground);
   }
+  .k-coach.is-empty .k-coach-main { padding-bottom: var(--k-space-xl); }
+  .k-coach-compose.is-inline {
+    position: static;
+    z-index: auto;
+    margin: 8px 0 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
   .k-coach-compose .flow-allowance { margin: 0; }
   .k-coach-compose .pressable { justify-self: start; --action-height: 2.75rem; }
   .k-coach-form { display: grid; grid-template-columns: minmax(0, 1fr) 52px; gap: 8px; margin: 0; }
