@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { settlePageLayout, signUpAndOnboard } from './helpers'
+import { openYouDestination, settlePageLayout, signUpAndOnboard, youNav } from './helpers'
 
 for (const width of [320, 390, 768, 1280]) {
   test(`You page stays useful and expressive at ${width}px`, async ({ page }, testInfo) => {
@@ -15,8 +15,8 @@ for (const width of [320, 390, 768, 1280]) {
       await page.emulateMedia({ colorScheme })
       await page.reload()
       await expect(page.locator('html')).toHaveAttribute('data-theme', colorScheme)
-      await expect(page.getByRole('link', { name: 'Momo' })).toBeVisible()
-      await page.getByRole('link', { name: 'Momo' }).click()
+      await expect(youNav(page).getByRole('link', { name: 'Momo' })).toBeVisible()
+      await openYouDestination(page, 'Momo')
       await expect(page.getByRole('heading', { name: 'Your kitchen companion' })).toBeVisible()
       await page.getByRole('switch', { name: 'Mute Momo' }).setChecked(colorScheme === 'light')
       await page.getByRole('switch', { name: 'Reduce Momo motion' }).setChecked(colorScheme === 'light')

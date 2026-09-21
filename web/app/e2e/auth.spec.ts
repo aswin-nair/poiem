@@ -6,6 +6,7 @@ import {
   signUp,
   uniqueEmail,
   signInWithEmail,
+  openYouDestination,
 } from './helpers'
 
 test.describe('Authentication', () => {
@@ -64,6 +65,7 @@ test.describe('Authentication', () => {
     await completeOnboarding(page)
 
     await page.getByLabel('Main').getByRole('link', { name: 'You' }).click()
+    await openYouDestination(page, 'Account')
     await page.getByRole('button', { name: 'Sign out' }).click()
     await expect(page).toHaveURL(/\/login/)
 

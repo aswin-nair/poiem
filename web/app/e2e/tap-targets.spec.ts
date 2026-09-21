@@ -127,6 +127,7 @@ test.describe('Tap targets', () => {
     await pause.uncheck()
     await expect(pause).not.toBeChecked()
 
+    await page.goto('/settings?panel=momo')
     const calm = page.locator('.settings-row').filter({ hasText: 'Calm' }).locator('input[type="radio"]')
     await calm.check()
     await expect(calm).toBeChecked()
