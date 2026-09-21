@@ -7,7 +7,7 @@ test('the saved reduced-motion preference stops every Momo animation but keeps e
   await page.setViewportSize({ width: 1440, height: 1000 })
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await signUpAndOnboard(page)
-  await page.goto('/settings')
+  await page.goto('/settings?panel=momo')
   await page.getByRole('switch', { name: 'Reduce Momo motion', exact: true }).check()
   await page.getByRole('button', { name: 'Save settings', exact: true }).click()
   await expect(page.locator('.you-save-bar')).toContainText('Settings saved')

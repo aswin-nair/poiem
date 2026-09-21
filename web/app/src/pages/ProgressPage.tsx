@@ -188,17 +188,7 @@ export function ProgressPage() {
             <span className="consistency-streak">{streak}-day streak</span>
           </div>
 
-          <div className="consistency-headline">
-            <strong className="consistency-number">{consistency.logged}</strong>
-            <span className="consistency-unit">
-              {consistency.logged === 1 ? 'day logged' : 'days logged'}
-            </span>
-          </div>
-          <p className="consistency-sub">
-            of {consistency.elapsed} {consistency.elapsed === 1 ? 'day' : 'days'} so far this month
-          </p>
-
-          <p className="page-sub">Days you logged, not how the numbers landed.</p>
+          <div className="consistency-layout">
           <div className="insights-heat" aria-hidden>
             {consistency.days.map((logged, i) => (
               <span
@@ -210,6 +200,19 @@ export function ProgressPage() {
                 }
               />
             ))}
+          </div>
+          <div className="consistency-summary">
+          <div className="consistency-headline">
+            <strong className="consistency-number">{consistency.logged}</strong>
+            <span className="consistency-unit">
+              {consistency.logged === 1 ? 'day logged' : 'days logged'}
+            </span>
+          </div>
+          <p className="consistency-sub">
+            of {consistency.elapsed} {consistency.elapsed === 1 ? 'day' : 'days'} so far this month
+          </p>
+          <p className="page-sub">Days you logged, not how the numbers landed.</p>
+          </div>
           </div>
           <ol className="sr-only">
             {consistency.days.map((logged, i) => (
@@ -322,27 +325,32 @@ export function ProgressPage() {
           )}
         </div>
 
-        <div className="progress-card">
-          <h2 className="progress-card-title">Ticket archive</h2>
-          <p className="page-sub">Your eight most recent logged days · All time</p>
-          {archiveDays.length === 0 && <p className="insights-empty">Your logged days will appear here.</p>}
-          <div className="torn-archive">
-            {archiveDays.map(day => (
-              <div key={day} className="torn-stub">
-                {new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })}
-              </div>
-            ))}
+        <details className="insights-more">
+          <summary>
+            <h2>Ticket archive</h2>
+            <span className="page-sub">Eight recent logged days</span>
+          </summary>
+          <div className="insights-more-body">
+            {archiveDays.length === 0 && <p className="insights-empty">Your logged days will appear here.</p>}
+            <div className="torn-archive">
+              {archiveDays.map(day => (
+                <div key={day} className="torn-stub">
+                  {new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </details>
 
-        {/* Badges */}
-        <div className="progress-card">
-          <div className="progress-card-header">
-            <h2 className="progress-card-title">Achievements</h2>
+        <details className="insights-more">
+          <summary>
+            <h2>Achievements</h2>
             <span className="badge-count-pill">
               {badges.filter(b => b.unlocked).length}/{badges.length}
             </span>
-          </div>
+          </summary>
+          <div className="insights-more-body">
+          {badges.every(b => !b.unlocked) && <p className="insights-empty">Your first badge starts with your first log.</p>}
           {streak > 0 && (
             <div className="streak-banner">
               <span className="streak-banner-fire"><IconFlame size={30} /></span>
@@ -365,7 +373,8 @@ export function ProgressPage() {
               ))
             })()}
           </div>
-        </div>
+          </div>
+        </details>
 
       </main>
 

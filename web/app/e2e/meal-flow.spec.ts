@@ -7,7 +7,7 @@ const aiReply = (route: Route, food = FOOD) => route.fulfill({ json: { choices: 
 
 async function configureTestAI(page: Page) {
   // Only a dummy key, and every provider request is intercepted by the test.
-  await page.goto('/settings')
+  await page.goto('/settings?panel=momo')
   await page.getByRole('switch', { name: 'Show Momo', exact: true }).uncheck()
   await page.getByRole('link', { name: 'AI setup' }).click()
   await page.getByRole('switch', { name: 'Use my own API key' }).check()

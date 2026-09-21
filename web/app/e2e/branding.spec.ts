@@ -1,5 +1,21 @@
 import { test, expect } from '@playwright/test'
 
+for (const width of [390, 1440]) {
+  test(`loading mark stays centered in its ring at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.addInitScript(() => sessionStorage.removeItem('poiem-splash-seen'))
+    await page.goto('/')
+    const ring = page.locator('.splash-ring-wrap')
+    await expect(ring).toBeVisible({ timeout: 4000 })
+    const markBox = await ring.locator('.poiem-logo--mark').boundingBox()
+    const ringBox = await ring.boundingBox()
+    expect(markBox).not.toBeNull()
+    expect(ringBox).not.toBeNull()
+    expect(Math.abs(markBox!.x + markBox!.width / 2 - ringBox!.x - ringBox!.width / 2)).toBeLessThanOrEqual(1)
+    expect(Math.abs(markBox!.y + markBox!.height / 2 - ringBox!.y - ringBox!.height / 2)).toBeLessThanOrEqual(1)
+  })
+}
+
 for (const width of [320, 390, 768, 1440]) {
   for (const theme of ['light', 'dark'] as const) {
     test(`Poiem entry screens at ${width}px in ${theme}`, async ({ page }, testInfo) => {

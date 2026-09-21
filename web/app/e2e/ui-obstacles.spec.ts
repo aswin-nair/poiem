@@ -49,11 +49,10 @@ test('daily summary, settings navigation and editor stay clear on a phone', asyn
   console.log('You layout', { sectionLinks: await page.getByRole('navigation', { name: 'You page sections' }).boundingBox(), goals: await page.locator('.settings-goals-grid').boundingBox() })
   const sections = page.getByRole('navigation', { name: 'You page sections' })
   expect((await sections.boundingBox())!.height).toBeLessThanOrEqual(72)
-  await expect(sections.getByRole('link', { name: 'Profile & goals' })).toHaveAttribute('aria-current', 'location')
-  // Keyboard navigation reveals the offscreen link and reaches its real section.
+  await expect(sections.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page')
   await sections.getByRole('link', { name: 'Your data' }).focus()
   await page.keyboard.press('Enter')
-  await expect(sections.getByRole('link', { name: 'Your data' })).toHaveAttribute('aria-current', 'location')
+  await expect(sections.getByRole('link', { name: 'Your data' })).toHaveAttribute('aria-current', 'page')
   const toolbar = await page.locator('.you-toolbar').boundingBox()
   const dataHeading = await page.getByRole('heading', { name: 'Your data', exact: true }).boundingBox()
   expect(toolbar!.y).toBeGreaterThanOrEqual(-1)

@@ -13,20 +13,20 @@ vi.mock('../store/AuthContext', () => ({
   useAuth: () => ({ user: null, signOut: vi.fn() }),
 }))
 vi.mock('../components/Momo', () => ({ Momo: () => null }))
-const renderPage = () => renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: ['/settings'] }, createElement(SettingsPage)))
+const renderPage = (url = '/settings') => renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: [url] }, createElement(SettingsPage)))
 beforeEach(() => { state = freshState() })
 
 describe('You page UI', () => {
   it('offers an opt-in roast preview without an AI key, honoring mute and hide', () => {
-    expect(renderPage()).toContain('Roast mode')
-    expect(renderPage()).not.toContain('Roast me')
+    expect(renderPage('/settings?panel=momo')).toContain('Roast mode')
+    expect(renderPage('/settings?panel=momo')).not.toContain('Roast me')
     state.profile.mascotRoasts = true
-    expect(renderPage()).toContain('Roast me')
+    expect(renderPage('/settings?panel=momo')).toContain('Roast me')
     state.profile.mascotMuted = true
-    expect(renderPage()).not.toContain('Roast me')
+    expect(renderPage('/settings?panel=momo')).not.toContain('Roast me')
     state.profile.mascotMuted = false
     state.gamification.mascotActivity = 'off'
-    expect(renderPage()).not.toContain('Roast me')
+    expect(renderPage('/settings?panel=momo')).not.toContain('Roast me')
   })
   /* The header carries the page's own words now, with no decorative Momo to
      hide, so nothing here depends on the Hide Momo setting. */
@@ -34,17 +34,21 @@ describe('You page UI', () => {
     expect(renderPage()).not.toContain('class="momo-sticker"')
   })
 
-  it('puts profile and preferences before Momo and account actions', () => {
-    const html = renderPage()
-    const sections = ['you-profile', 'you-preferences', 'you-momo', 'you-ai', 'you-account', 'you-data']
-    let previous = -1
+  it('keeps the hub short and opens each destination as its own view', () => {
+    const hub = renderPage()
+    expect(hub).toContain('id="you-appearance"')
+    expect(hub).toContain('Quick preferences')
+    expect(hub).not.toContain('id="you-profile"')
+    expect(hub).not.toContain('id="you-momo"')
+    expect(hub).not.toContain('id="you-account"')
+    const sections = ['profile', 'preferences', 'momo', 'ai', 'account', 'data']
     for (const id of sections) {
-      const index = html.indexOf(`id="${id}"`)
-      expect(index).toBeGreaterThan(previous)
-      expect(html).toContain(`href="#${id}"`)
-      expect(html).toContain(`aria-labelledby="${id}-title" tabindex="-1"`)
-      expect(html).toContain(`<h2 id="${id}-title">`)
-      previous = index
+      expect(hub).toContain(`href="/settings?panel=${id}"`)
+      const html = renderPage(`/settings?panel=${id}`)
+      expect(html).toContain(`id="you-${id}"`)
+      expect(html).toContain(`aria-labelledby="you-${id}-title" tabindex="-1"`)
+      expect(html).toContain(`<h2 id="you-${id}-title">`)
+      expect(html).toContain('aria-current="page"')
     }
   })
 
@@ -52,39 +56,44 @@ describe('You page UI', () => {
     const html = renderPage()
     expect(html.match(/>Save settings</g)).toHaveLength(1)
     expect(html).toMatch(/role="status" aria-live="polite">[\s\S]*?All saved<\/div>/)
-    expect(html).toContain('aria-current="location">Profile &amp; goals</a>')
-    expect(html.indexOf('>Save settings<')).toBeLessThan(html.indexOf('id="you-profile"'))
+    expect(html).toContain('>Overview</a>')
+    expect(html).toContain('aria-current="page"')
+    expect(html.indexOf('>Save settings<')).toBeLessThan(html.indexOf('id="you-appearance"'))
     expect(html).toMatch(/<button type="button" disabled="" class="pressable/)
   })
 
   it('keeps wardrobe and Momo live AI in native, initially closed disclosures', () => {
-    const html = renderPage()
-    expect(html.match(/<details class="you-disclosure">/g)).toHaveLength(2)
-    expect(html).toContain('Use my own API key')
-    expect(html).toContain('google/gemma-4-31b-it')
-    expect(html).toContain('role="switch"')
-    expect(html).not.toContain('<details class="you-disclosure" open=')
+    const momo = renderPage('/settings?panel=momo')
+    expect(momo.match(/<details class="you-disclosure">/g)).toHaveLength(1)
+    expect(momo).toContain('role="switch"')
+    expect(momo).not.toContain('<details class="you-disclosure" open=')
+    const ai = renderPage('/settings?panel=ai')
+    expect(ai.match(/<details class="you-disclosure">/g)).toHaveLength(1)
+    expect(ai).toContain('Use my own API key')
+    expect(ai).toContain('google/gemma-4-31b-it')
+    expect(ai).not.toContain('<details class="you-disclosure" open=')
   })
 
   it('does not imply that an untested key is connected', () => {
     state.aiSettings = { ...state.aiSettings, accessMode: 'byok', apiKey: 'test-placeholder' }
-    expect(renderPage()).toContain('aria-label="API key"')
-    expect(renderPage()).toContain('Uses your key when added')
+    expect(renderPage('/settings?panel=ai')).toContain('aria-label="API key"')
+    expect(renderPage('/settings?panel=ai')).toContain('Uses your key when added')
   })
 
-  it('explains immediate mascot changes and provides an achievements empty state', () => {
-    const html = renderPage()
-    expect(html).toContain('Your first badge starts with your first log.')
+  it('explains immediate mascot changes and points streaks to Insights', () => {
+    const html = renderPage('/settings?panel=momo')
+    expect(html).toContain('Streaks and badges now live in Insights.')
     expect(html).toContain('Keep your companion around the app · saves immediately')
     expect(html).toContain('Silence speech bubbles · apply with Save settings')
     expect(html).toContain('Changes save right away.')
     expect(html).toContain('role="group" aria-label="Wardrobe slot"')
-    expect(html).toContain('href="/support"')
-    expect(html).toContain('href="/coach"')
+    const preferences = renderPage('/settings?panel=preferences')
+    expect(preferences).toContain('href="/support"')
+    expect(preferences).toContain('href="/coach"')
   })
 
   it('supports fractional body measurements without an integer-only input step', () => {
-    const html = renderPage()
+    const html = renderPage('/settings?panel=profile')
     expect(html.match(/inputMode="decimal" step="0.1"/g)).toHaveLength(2)
     expect(html).toContain('autoComplete="given-name"')
   })

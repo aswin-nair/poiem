@@ -1,6 +1,8 @@
 /* Motion that waits for its section. On a phone most of the page starts below the fold,
    so each piece plays when it arrives on screen instead of while it is out of sight.
-   Everything here is off under prefers-reduced-motion (see welcome-poster.css). */
+   Shared ease and fade/enter/press times live on --wp-ease / --wp-duration-*
+   (from motionCssEase and motionMs). Everything here is off under
+   prefers-reduced-motion (see welcome-poster.css). */
 
 /* Hero scan: the grid, sweep, markers and food list hold their first frame until the plate is visible. */
 .wp-scan:not([data-play='true']) :is(.wp-scan-stage, .wp-scan-legend) * { animation-play-state: paused; }

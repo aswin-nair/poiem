@@ -354,6 +354,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
 
                 {isToday && !guest && (
                   <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
+                    <div className="k-water-block">
                     <div className="k-water">
                       <span className="k-extras-label"><IconWater size={18} /> Water</span>
                       <span className="k-glasses" aria-hidden="true">
@@ -367,9 +368,10 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                       <span className="tabular" aria-live="polite">{water}/{WATER_GLASSES}</span>
                       <button type="button" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
                     </div>
+                    </div>
                     <button
                       type="button"
-                      className="k-text-button"
+                      className="k-text-button k-note-row"
                       disabled={notes >= NOTE_LIMIT}
                       onClick={() => { feel('tap'); patchGamification(g => applyNote(g, selectedDayKey)) }}
                     >

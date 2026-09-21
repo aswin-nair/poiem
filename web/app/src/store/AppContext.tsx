@@ -62,8 +62,15 @@ import { finalizeGuestClaim, guestUserId, hasPendingGuestClaim } from '../lib/gu
 
 import { SplashScreen } from '../components/SplashScreen'
 import { PressableButton } from '../components/PressableButton'
-
-const MIN_SPLASH_MS = 1100
+import {
+  SPLASH_EXIT_MS,
+  SPLASH_HOLD_MS,
+  SPLASH_SHOW_AFTER_MS,
+  SPLASH_SLOW_MS,
+  shouldSkipSplash,
+  splashHoldRemaining,
+  splashRevealWait,
+} from '../lib/splashTiming'
 
 /* The brand splash plays once per browser session. Reloads, deep links and
    sign-ins after that go straight to the page as soon as the data is ready. */
@@ -76,8 +83,6 @@ function splashSeenThisSession(): boolean {
 function markSplashSeen(): void {
   try { sessionStorage.setItem(SPLASH_SEEN_KEY, '1') } catch { /* private mode */ }
 }
-
-const SPLASH_EXIT_MS = 320
 
 class CloudSyncUnavailableError extends Error {
   constructor() {
@@ -183,7 +188,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
   const [state, setState] = useState<AppState>(() => (cloud ? freshState() : loadState(userId)))
 
   const [loading, setLoading] = useState(true)
-  const [quietSplash] = useState(splashSeenThisSession)
+  const [showSplash, setShowSplash] = useState(false)
+  const [slowSplash, setSlowSplash] = useState(false)
 
   const [cloudLoadError, setCloudLoadError] = useState(false)
 
@@ -430,6 +436,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
   useEffect(() => {
 
     let cancelled = false
+    let showTimer: ReturnType<typeof setTimeout> | undefined
+    let slowTimer: ReturnType<typeof setTimeout> | undefined
 
     const epoch = syncEpoch.current + 1
     const currentLeaseOwner = leaseOwner.current
@@ -473,6 +481,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     setPendingImagePreview(null)
 
     setSplashExiting(false)
+    setShowSplash(false)
+    setSlowSplash(false)
 
     if (exitTimer.current) clearTimeout(exitTimer.current)
 
@@ -481,7 +491,21 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     async function hydrate() {
 
       const quiet = splashSeenThisSession()
-      const minTime = quiet ? Promise.resolve() : delay(MIN_SPLASH_MS)
+      const startedAt = typeof performance !== 'undefined' ? performance.now() : Date.now()
+      let splashShown = false
+      let splashShownAt = 0
+
+      const revealSplash = () => {
+        if (cancelled || splashShown) return
+        splashShown = true
+        splashShownAt = typeof performance !== 'undefined' ? performance.now() : Date.now()
+        setShowSplash(true)
+        slowTimer = setTimeout(() => {
+          if (!cancelled) setSlowSplash(true)
+        }, SPLASH_SLOW_MS)
+      }
+
+      showTimer = setTimeout(revealSplash, SPLASH_SHOW_AFTER_MS)
 
       let hydrationFailed = false
 
@@ -644,11 +668,13 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
         }
       })()
 
-      await Promise.all([hydration, minTime])
+      await hydration
 
       if (cancelled) return
 
       if (hydrationFailed) {
+        clearTimeout(showTimer)
+        clearTimeout(slowTimer)
         hydrated.current = false
         cloudWritable.current = false
         setLoading(false)
@@ -666,12 +692,22 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       if (cloud) void drainOutboxRef.current()
 
       markSplashSeen()
-      if (quiet) {
+
+      if (shouldSkipSplash(quiet, splashShown)) {
+        clearTimeout(showTimer)
         setLoading(false)
         return
       }
 
-      // Play the splash's fade/scale-out transition before unmounting it.
+      if (!splashShown) {
+        await delay(splashRevealWait(startedAt, typeof performance !== 'undefined' ? performance.now() : Date.now()))
+        if (cancelled) return
+        revealSplash()
+      }
+
+      const now = typeof performance !== 'undefined' ? performance.now() : Date.now()
+      await delay(splashHoldRemaining(splashShownAt || now, now, SPLASH_HOLD_MS))
+      if (cancelled) return
 
       setSplashExiting(true)
 
@@ -696,6 +732,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     return () => {
 
       cancelled = true
+      clearTimeout(showTimer)
+      clearTimeout(slowTimer)
 
       // Invalidate both queued work and the result handlers of in-flight work.
       if (syncEpoch.current === epoch) syncEpoch.current += 1
@@ -1124,7 +1162,10 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
   if (loading) {
 
-    return <SplashScreen exiting={splashExiting} quiet={quietSplash} />
+    if (!showSplash) {
+      return <div className="splash-pending" role="status" aria-busy="true" aria-label="Loading Poiem" />
+    }
+    return <SplashScreen exiting={splashExiting} slow={slowSplash} />
 
   }
 

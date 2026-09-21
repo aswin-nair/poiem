@@ -7,8 +7,6 @@
 :root .welcome-brand { display: inline-flex; align-items: center; line-height: 1; text-decoration: none; flex-shrink: 0; }
 .welcome-brand .poiem-logo { width: clamp(112px, 15vw, 145px); }
 .welcome-brand:focus-visible { outline: 3px solid var(--selection); outline-offset: 8px; border-radius: 4px; }
-.splash-wordmark .poiem-logo { width: 190px; }
-.splash-ring-wrap .poiem-logo--mark { position: absolute; inset: 28px; width: 72px; height: 72px; }
 
 /* One signature across the journal, tools and personal space. */
 .poiem-section-label {

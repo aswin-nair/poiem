@@ -73,6 +73,7 @@ test.describe('Release journey', () => {
   test('Momo visibility, dialogue, and motion controls persist', async ({ page }) => {
     await signUpAndOnboard(page)
     await nav(page).getByRole('link', { name: 'You' }).click()
+    await page.getByRole('link', { name: 'Momo', exact: true }).first().click()
 
     const showMomo = page.getByRole('switch', { name: 'Show Momo' })
     await expect(showMomo).toBeChecked()

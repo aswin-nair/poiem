@@ -1,18 +1,20 @@
-import { useId, useRef, useState, type MouseEvent } from 'react'
+import { useId, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowUpRight, Search, X } from 'lucide-react'
 
 const DESTINATIONS = [
-  { id: 'you-appearance', label: 'Appearance', detail: 'Light, dark or system', words: 'theme colour color night display mode' },
-  { id: 'you-profile', label: 'Profile & goals', detail: 'Your details and daily targets', words: 'name age birthday date birth gender height weight activity calorie protein carbs fat pace routine' },
-  { id: 'you-preferences', label: 'Everyday preferences', detail: 'Sound, reminders and taking a break', words: 'notifications haptics vibration pause tracking support coach' },
-  { id: 'you-momo', label: 'Momo', detail: 'Personality, movement and outfits', words: 'mascot hide mute quiet sound reduced motion wardrobe roast jokes companion streak freeze' },
-  { id: 'you-ai', label: 'AI setup', detail: 'Meal estimates and your own API key', words: 'key provider gemini openrouter model photo text api gemma' },
-  { id: 'you-account', label: 'Account', detail: 'Sign-in and account access', words: 'email password google sign out logout delete' },
-  { id: 'you-data', label: 'Your data', detail: 'Export, import and a fresh start', words: 'backup restore download reset clear journal privacy' },
+  { href: '/settings#you-appearance', label: 'Appearance', detail: 'Light, dark or system', words: 'theme colour color night display mode' },
+  { href: '/settings?panel=profile', label: 'Profile & goals', detail: 'Your details and daily targets', words: 'name age birthday date birth gender height weight activity calorie protein carbs fat pace routine' },
+  { href: '/settings?panel=preferences', label: 'Everyday preferences', detail: 'Sound, reminders and taking a break', words: 'notifications haptics vibration pause tracking support coach' },
+  { href: '/settings?panel=momo', label: 'Momo', detail: 'Personality, movement and outfits', words: 'mascot hide mute quiet sound reduced motion wardrobe roast jokes companion' },
+  { href: '/settings?panel=ai', label: 'AI setup', detail: 'Meal estimates and your own API key', words: 'key provider gemini openrouter model photo text api gemma' },
+  { href: '/settings?panel=account', label: 'Account', detail: 'Sign-in and account access', words: 'email password google sign out logout delete' },
+  { href: '/settings?panel=data', label: 'Your data', detail: 'Export, import and a fresh start', words: 'backup restore download reset clear journal privacy' },
 ]
 
 export function SettingsFinder() {
   const [query, setQuery] = useState('')
+  const navigate = useNavigate()
   const input = useRef<HTMLInputElement>(null)
   const resultsId = useId()
   const term = query.trim().toLowerCase()
@@ -24,15 +26,14 @@ export function SettingsFinder() {
     ? `${matches.length} ${matches.length === 1 ? 'place' : 'places'} to look`
     : 'No match yet. Try “dark”, “Momo” or “password”.'
 
-  function jump(event: MouseEvent<HTMLAnchorElement>, id: string) {
-    const target = document.getElementById(id)
-    if (!target) return
-    event.preventDefault()
+  function jump(href: string) {
     setQuery('')
-    // Let the results close before measuring the destination's scroll position.
+    navigate(href)
+    const hash = href.split('#')[1]
+    if (!hash) return
     requestAnimationFrame(() => {
-      target.focus({ preventScroll: true })
-      target.scrollIntoView({ block: 'start', behavior: 'instant' })
+      document.getElementById(hash)?.focus({ preventScroll: true })
+      document.getElementById(hash)?.scrollIntoView({ block: 'start', behavior: 'instant' })
     })
   }
 
@@ -50,10 +51,10 @@ export function SettingsFinder() {
     <p className="sr-only" role="status">{status}</p>
     {term && <div className="poiem-settings-results" id={resultsId}>
       <p className="poiem-search-status" aria-hidden="true">{status}</p>
-      {matches.length > 0 && <ul>{matches.map(item => <li key={item.id}>
-        <a href={`#${item.id}`} onClick={event => jump(event, item.id)}>
+      {matches.length > 0 && <ul>{matches.map(item => <li key={item.href}>
+        <Link to={item.href} onClick={event => { event.preventDefault(); jump(item.href) }}>
           <span><strong>{item.label}</strong><small>{item.detail}</small></span><ArrowUpRight size={20} aria-hidden="true" />
-        </a>
+        </Link>
       </li>)}</ul>}
     </div>}
   </div>

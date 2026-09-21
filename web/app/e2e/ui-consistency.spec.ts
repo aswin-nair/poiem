@@ -152,6 +152,7 @@ test('Momo yields to the primary action and stays quiet while editing', async ({
   const input = page.getByLabel('Your meal, your words')
   await input.fill('Toast')
   // A real hit test: the decorative mascot must not intercept the field.
+  await input.click()
   await expect(input).toBeFocused()
   await expect(page.locator('.mascot-host:not(.is-user-busy)')).toHaveCount(0)
 })

@@ -135,6 +135,14 @@ export function nav(page: Page) {
   return page.getByLabel('Main')
 }
 
+export function youNav(page: Page) {
+  return page.getByRole('navigation', { name: 'You page sections' })
+}
+
+export async function openYouDestination(page: Page, name: string | RegExp) {
+  await youNav(page).getByRole('link', { name }).click()
+}
+
 export async function logManualMeal(
   page: Page,
   meal: { name: string; calories: string; protein?: string; carbs?: string; fat?: string },

@@ -10,16 +10,16 @@
   .admin-back { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--k-ink); font-size: .8125rem; font-weight: 800; }
   .admin-workspace .admin-page { width: 100%; max-width: 1240px; margin: 0 auto; padding: 28px clamp(16px, 3vw, 40px) 40px; }
   .admin-eyebrow { display: flex; align-items: center; gap: 8px; font: 600 var(--k-type-meta)/1.5 var(--k-font-mono); letter-spacing: .07em; text-transform: uppercase; }
-  .admin-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, .7fr); align-items: end; gap: 32px; padding: clamp(22px, 4vw, 44px); border: 3px solid var(--k-line); background: var(--k-acid); color: var(--k-on-acid); box-shadow: 6px 6px 0 var(--k-shadow-color); }
-  .admin-hero h1 { margin: 18px 0; font: 900 clamp(3.3rem, 8vw, 7.25rem)/.86 var(--k-font-display); letter-spacing: -.01em; }
-  .admin-hero-copy { font-size: .9375rem; line-height: 1.6; font-weight: 600; }
-  .admin-hero-side { display: grid; justify-items: end; gap: 34px; }
-  .admin-hero-stamp { display: inline-flex; align-items: center; gap: 12px; padding: 14px 16px; border: 3px solid var(--k-on-acid); background: var(--k-action); color: var(--k-on-action); box-shadow: 4px 4px 0 var(--k-on-acid); rotate: none; font: 800 1.3125rem/1 var(--k-font-display); letter-spacing: .04em; }
-  .admin-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; border-top: 2px solid var(--k-on-acid); padding-top: 16px; }
-  .admin-overview > div { display: flex; flex-direction: column; gap: 10px; padding: 0 12px; border-left: 1px solid rgb(32 34 29 / 30%); }
+  .admin-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, .7fr); align-items: end; gap: var(--k-space-xl); padding: var(--k-space-xl); border: 2px solid var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid); box-shadow: none; }
+  .admin-hero h1 { margin: var(--k-space-md) 0; font: 900 clamp(2.5rem, 5vw, 4rem)/.9 var(--k-font-display); letter-spacing: -.01em; }
+  .admin-hero-copy { font: 600 var(--k-type-body)/1.5 var(--k-font-body); }
+  .admin-hero-side { display: grid; justify-items: end; gap: var(--k-space-xl); }
+  .admin-hero-stamp { display: inline-flex; align-items: center; gap: var(--k-space-sm); padding: var(--k-space-sm) var(--k-space-md); border: 2px solid var(--k-on-acid); background: var(--k-action); color: var(--k-on-action); box-shadow: none; rotate: none; font: 800 var(--k-type-label)/1 var(--k-font-display); letter-spacing: .04em; }
+  .admin-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; border-top: 1px solid var(--k-on-acid); padding-top: var(--k-space-lg); }
+  .admin-overview > div { display: flex; flex-direction: column; gap: var(--k-space-sm); padding: 0 var(--k-space-md); border-left: 1px solid rgb(32 34 29 / 30%); }
   .admin-overview > div:first-child { padding-left: 0; border-left: 0; }
   .admin-overview dt { min-height: 30px; font: 600 var(--k-type-meta)/1.5 var(--k-font-mono); text-transform: uppercase; }
-  .admin-overview dd { font: 900 2.75rem/.95 var(--k-font-display); }
+  .admin-overview dd { font: 900 var(--k-type-title)/.95 var(--k-font-display); }
   .admin-overview dd > span { display: block; margin-top: 6px; font: 600 var(--k-type-meta)/1.5 var(--k-font-mono); }
   .admin-preview-notice { display: flex; align-items: center; gap: 14px; margin: 24px 0 0; padding: 16px 18px; border: 2px dashed var(--k-line); background: var(--k-sky); color: var(--k-on-tone); }
   .admin-preview-notice > svg { flex: none; }
@@ -44,29 +44,29 @@
   .admin-section { min-width: 0; scroll-margin-top: 24px; }
   .admin-section-heading { display: flex; align-items: start; gap: 14px; margin-bottom: 20px; }
   .admin-section-number { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border: 2px solid var(--k-line); background: var(--k-ink); color: var(--k-ground); font: 600 .8125rem/1 var(--k-font-mono); }
-  .admin-section-heading h2 { margin: -3px 0 4px; font: 900 clamp(1.75rem, 3.3vw, 2.375rem)/1 var(--k-font-display); letter-spacing: .015em; }
+  .admin-section-heading h2 { margin: -3px 0 4px; font: 900 var(--k-type-section)/1.2 var(--k-font-display); letter-spacing: 0; text-transform: none; }
   .admin-section-heading p { font-size: .8125rem; line-height: 1.7; color: var(--k-muted); }
   .admin-plans-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-  .admin-plan-card { display: flex; flex-direction: column; min-width: 0; border: 2px solid var(--k-line); background: var(--k-card); box-shadow: var(--k-shadow); }
-  .admin-plan-cap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; border-bottom: 2px solid var(--k-line); background: var(--k-butter); color: var(--k-on-tone); }
-  .admin-plan-card--premium .admin-plan-cap { background: var(--k-pink); }
-  .admin-plan-cap h3 { margin: 5px 0 0; font: 900 2.75rem/.95 var(--k-font-display); }
-  .admin-plan-icon { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border: 2px solid var(--k-line); background: var(--k-card); color: var(--k-ink); rotate: none; box-shadow: 2px 2px 0 var(--k-shadow-color); }
+  .admin-plan-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--k-hair-strong); background: var(--k-card); box-shadow: none; }
+  .admin-plan-cap { display: flex; align-items: center; justify-content: space-between; gap: var(--k-space-md); padding: var(--k-space-lg); border-bottom: 1px solid var(--k-hair-strong); background: var(--k-sunken); color: var(--k-ink); }
+  .admin-plan-card--premium .admin-plan-cap { background: var(--k-sunken); }
+  .admin-plan-cap h3 { margin: 5px 0 0; font: 900 var(--k-type-title)/.95 var(--k-font-display); }
+  .admin-plan-icon { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border: 1px solid var(--k-hair-strong); background: var(--k-card); color: var(--k-ink); rotate: none; box-shadow: none; }
   .admin-workspace fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
   .admin-workspace .admin-plan-fields { display: grid; gap: 16px; padding: 20px; }
   .admin-field { display: grid; gap: 8px; min-width: 0; }
   .admin-field > span { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .8125rem; font-weight: 800; }
   .admin-field > small, .admin-field-help { color: var(--k-muted); font-size: .75rem; font-weight: 500; line-height: 1.65; }
   .admin-field > span > small { font-size: var(--k-type-meta); font-weight: 500; color: var(--k-muted); }
-  .admin-workspace :is(input:not([type="radio"]), select) { display: block; width: 100%; max-width: 100%; min-width: 0; min-height: 48px; margin: 0; padding: 10px 12px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-ground); color: var(--k-ink); box-shadow: none; font: 500 1rem/1.4 var(--k-font-body); }
+  .admin-workspace :is(input:not([type="radio"]), select) { display: block; width: 100%; max-width: 100%; min-width: 0; min-height: 48px; margin: 0; padding: 0 var(--k-space-md); border: 2px solid var(--k-role-border); border-radius: 0; background: var(--k-role-surface-raised); color: var(--k-role-text); box-shadow: none; font: 500 var(--k-type-body)/1.3 var(--k-font-body); }
   .admin-workspace input::placeholder { color: var(--k-muted); opacity: 1; }
   .admin-workspace :is(input, select):disabled { opacity: 1; color: var(--k-muted); -webkit-text-fill-color: var(--k-muted); cursor: not-allowed; }
   .admin-allowances { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .admin-quota-field { display: grid; gap: 8px; min-width: 0; }
   .admin-quota-field > span { display: flex; align-items: center; gap: 6px; font-size: var(--k-type-meta); font-weight: 800; }
   .admin-quota-field > span svg { flex: none; }
-  .admin-quota-field > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 8px 10px; border: 2px solid var(--k-line); background: var(--k-sunken); }
-  .admin-workspace .admin-quota-field input { min-height: 40px; padding: 0; border: 0; background: transparent; font: 900 2rem/1 var(--k-font-display); font-variant-numeric: tabular-nums; appearance: textfield; }
+  .admin-quota-field > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: var(--k-space-sm) var(--k-space-md); border: 1px solid var(--k-hair-strong); background: var(--k-sunken); }
+  .admin-workspace .admin-quota-field input { min-height: 40px; padding: 0; border: 0; background: transparent; font: 700 var(--k-type-lead)/1 var(--k-font-body); font-variant-numeric: tabular-nums; appearance: textfield; }
   .admin-quota-field input::-webkit-inner-spin-button, .admin-quota-field input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   .admin-quota-field > div > span { padding-left: 4px; color: var(--k-muted); font: 500 var(--k-type-meta)/1.4 var(--k-font-mono); }
   .admin-fallbacks { border-top: 1px dashed var(--k-hair-strong); }
@@ -90,9 +90,9 @@
   .admin-text-button:disabled { color: var(--k-muted); text-decoration: none; }
   .admin-section-note { display: flex; align-items: start; gap: 8px; margin-top: 16px; color: var(--k-muted); font-size: .75rem; line-height: 1.7; }
   .admin-section-note svg { flex: none; margin-top: 3px; }
-  .admin-panel { padding: 22px; border: 2px solid var(--k-line); background: var(--k-card); box-shadow: var(--k-shadow); }
+  .admin-panel { padding: var(--k-space-xl); border: 1px solid var(--k-hair-strong); background: var(--k-card); box-shadow: none; }
   .admin-catalogue-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: start; }
-  .admin-search { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 48px; padding: 0 12px; border: 2px solid var(--k-line); background: var(--k-ground); }
+  .admin-search { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 48px; padding: 0 var(--k-space-md); border: 2px solid var(--k-role-border); background: var(--k-role-surface-raised); }
   .admin-search > svg { flex: none; color: var(--k-muted); }
   .admin-workspace .admin-search input { min-height: 44px; padding: 8px 0; border: 0; outline: 0; background: transparent; }
   .admin-search:focus-within { outline: 3px solid var(--k-focus); outline-offset: 3px; }
@@ -144,8 +144,8 @@
   .admin-account-message { margin-top: 18px; padding: 14px; border: 1px solid var(--k-hair-strong); background: var(--k-sky); color: var(--k-on-tone); font-size: .8125rem; line-height: 1.7; }
   .admin-loading { display: grid; justify-items: center; gap: 12px; padding: 80px 20px; font-size: .875rem; color: var(--k-muted); }
   .admin-loading strong { color: var(--k-ink); }
-  .admin-connection-error { display: grid; justify-items: start; gap: var(--k-space-xl); margin-top: 40px; padding: 32px; border: 2px solid var(--k-line); background: var(--k-card); }
-  .admin-connection-error h2 { font: 900 2.25rem/1 var(--k-font-display); }
+  .admin-connection-error { display: grid; justify-items: start; gap: var(--k-space-xl); margin-top: 40px; padding: var(--k-space-2xl); border: 1px solid var(--k-hair-strong); background: var(--k-card); }
+  .admin-connection-error h2 { font: 900 var(--k-type-title)/1 var(--k-font-display); }
   .admin-connection-error p { font-size: .875rem; line-height: 1.7; }
   .admin-connection-error > a { display: flex; align-items: center; gap: 6px; min-height: 44px; color: var(--k-ink); font-size: .8125rem; font-weight: 700; }
   .admin-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; padding: 22px 0 0; border-top: 2px solid var(--k-line); color: var(--k-muted); font: 500 var(--k-type-meta)/1.7 var(--k-font-mono); }
@@ -164,11 +164,11 @@
     .admin-workspace .admin-page { padding-top: 20px; }
     .admin-hero { grid-template-columns: 1fr; gap: 26px; }
     .admin-hero-side { gap: 24px; }
-    .admin-hero-stamp { font-size: 1.125rem; padding: 10px 12px; }
-    .admin-hero-stamp svg { width: 20px; height: 20px; }
-    .admin-hero h1 { font-size: clamp(3.3rem, 12vw, 6rem); }
+    .admin-hero-stamp { font-size: var(--k-type-label); padding: var(--k-space-sm) var(--k-space-md); }
+    .admin-hero-stamp svg { width: 16px; height: 16px; }
+    .admin-hero h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
     .admin-overview dt { min-height: 30px; }
-    .admin-overview dd { font-size: 2.25rem; }
+    .admin-overview dd { font-size: var(--k-type-title); }
     .admin-preview-notice { align-items: start; gap: 10px; padding: 14px; }
     .admin-preview-notice > .admin-badge { display: none; }
     .admin-body { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
@@ -206,12 +206,12 @@
   }
   .admin-diff { margin: 0 0 10px; padding-left: 18px; font: 600 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-ink); }
   .admin-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 0; }
-  .admin-metrics > div { display: grid; gap: 4px; padding: 12px; border: 2px solid var(--k-line); background: var(--k-card); }
+  .admin-metrics > div { display: grid; gap: 4px; padding: var(--k-space-md); border: 1px solid var(--k-hair-strong); background: var(--k-card); }
   .admin-metrics dt { font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
-  .admin-metrics dd { margin: 0; font: 900 1.75rem/1 var(--k-font-display); color: var(--k-ink); }
+  .admin-metrics dd { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); color: var(--k-ink); }
   .admin-metrics dd[data-unavailable="true"] { font: 800 1rem/1.2 var(--k-font-body); color: var(--k-muted); }
   .admin-audit { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
-  .admin-audit li { display: grid; gap: 4px; padding: 12px; border: 2px solid var(--k-line); background: var(--k-card); }
+  .admin-audit li { display: grid; gap: 4px; padding: var(--k-space-md); border: 1px solid var(--k-hair-strong); background: var(--k-card); }
   .admin-audit strong { font: 800 var(--k-text-md)/1.2 var(--k-font-body); }
   .admin-audit span, .admin-audit small { font: 500 var(--k-text-xs)/1.4 var(--k-font-body); color: var(--k-muted); overflow-wrap: anywhere; }
 }

@@ -50,9 +50,10 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
   const [privateFocus, setPrivateFocus] = useState(false)
-  const [keyboardOpen, setKeyboardOpen] = useState(false)
+  const [docked, setDocked] = useState(false)
   const reducedMotion = useReducedMotion()
   const errorRef = useRef<HTMLDivElement>(null)
+  const dockSlotRef = useRef<HTMLDivElement>(null)
   const passwordScore = mode === 'signup' ? passwordStrength(password) : 0
 
   useEffect(() => { if (error) errorRef.current?.focus() }, [error])
@@ -60,21 +61,27 @@ export function LoginPage() {
   useEffect(() => track({ name: 'welcome_viewed' }), [])
 
   useEffect(() => {
-    const viewport = window.visualViewport
-    if (!viewport) return
-    const update = () => setKeyboardOpen(
-      document.activeElement instanceof HTMLInputElement
-      && viewport.scale === 1 && window.innerHeight - viewport.height > 150,
-    )
-    viewport.addEventListener('resize', update)
-    document.addEventListener('focusin', update)
-    document.addEventListener('focusout', update)
-    return () => {
-      viewport.removeEventListener('resize', update)
-      document.removeEventListener('focusin', update)
-      document.removeEventListener('focusout', update)
+    const slot = dockSlotRef.current
+    if (!slot) return
+    const update = () => {
+      if (window.matchMedia('(min-width: 900px)').matches) {
+        setDocked(false)
+        return
+      }
+      const rect = slot.getBoundingClientRect()
+      const line = window.innerHeight - 24
+      // In flow while the slot is still below the fold. Dock only as it
+      // approaches the viewport, then let sticky take over once it is on screen.
+      setDocked(rect.top > line && rect.top < line + 160)
     }
-  }, [])
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [mode])
 
   async function handleEmailSubmit(e: FormEvent) {
     e.preventDefault()
@@ -163,7 +170,13 @@ export function LoginPage() {
           </AnimatePresence>
 
           <form className="auth-form" onSubmit={handleEmailSubmit} aria-busy={loading}
-            onFocusCapture={event => setPrivateFocus(event.target instanceof HTMLInputElement && ['password', 'confirm'].includes(event.target.id))}
+            onFocusCapture={event => {
+              const field = event.target
+              setPrivateFocus(field instanceof HTMLInputElement && ['password', 'confirm'].includes(field.id))
+              if (field instanceof HTMLInputElement) {
+                requestAnimationFrame(() => field.scrollIntoView({ block: 'center', inline: 'nearest' }))
+              }
+            }}
             onBlurCapture={() => setPrivateFocus(false)}>
             <fieldset disabled={loading} className="auth-fields">
               <legend className="sr-only">{mode === 'signin' ? 'Sign in with email' : 'Create an email account'}</legend>
@@ -254,10 +267,12 @@ export function LoginPage() {
                   )}
                 </div>
               )}
-              <div className={`auth-submit-dock${keyboardOpen ? ' is-keyboard-open' : ''}`}>
-                <PressableButton type="submit" fullWidth disabled={loading}>
-                  {loading ? 'Please wait…' : <>{mode === 'signin' ? 'Sign in' : claiming ? 'Continue' : 'Create account'} <ArrowUpRight size={21} aria-hidden="true" /></>}
-                </PressableButton>
+              <div ref={dockSlotRef} className="auth-submit-slot">
+                <div className={`auth-submit-dock${docked ? ' is-docked' : ''}`}>
+                  <PressableButton type="submit" fullWidth disabled={loading}>
+                    {loading ? 'Please wait…' : <>{mode === 'signin' ? 'Sign in' : claiming ? 'Continue' : 'Create account'} <ArrowUpRight size={21} aria-hidden="true" /></>}
+                  </PressableButton>
+                </div>
               </div>
             </fieldset>
             {mode === 'signin' && isCloudBackend() && (

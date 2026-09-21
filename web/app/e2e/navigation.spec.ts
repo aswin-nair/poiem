@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { clearAppStorage, nav, signUpAndOnboard } from './helpers'
+import { clearAppStorage, nav, openYouDestination, signUpAndOnboard } from './helpers'
 
 test.describe('Navigation', () => {
   test.beforeEach(async ({ page }) => {
@@ -17,8 +17,10 @@ test.describe('Navigation', () => {
 
     await nav(page).getByRole('link', { name: 'You' }).click()
     await expect(page).toHaveURL('/settings')
+    await openYouDestination(page, 'Account')
     await expect(page.getByRole('button', { name: 'Sign out' })).toBeVisible()
 
+    await openYouDestination(page, 'Your data')
     await page.getByRole('link', { name: 'About Poiem' }).click()
     await expect(page).toHaveURL('/about')
     await expect(page.getByRole('heading', { name: 'About' })).toBeVisible()
@@ -37,6 +39,7 @@ test.describe('Navigation', () => {
     await expect(page).toHaveURL('/')
 
     await nav(page).getByRole('link', { name: 'You' }).click()
+    await openYouDestination(page, 'Preferences')
     await page.getByLabel('Chat with your coach').click()
     await expect(page).toHaveURL('/coach')
     await expect(page.getByText('AI Coach')).toBeVisible()
@@ -70,6 +73,7 @@ test.describe('Navigation', () => {
      account — covered by the test below. */
   test('sign out returns a known account to the login screen', async ({ page }) => {
     await nav(page).getByRole('link', { name: 'You' }).click()
+    await openYouDestination(page, 'Account')
     await page.getByRole('button', { name: 'Sign out' }).click()
     await expect(page).toHaveURL(/\/login/)
   })

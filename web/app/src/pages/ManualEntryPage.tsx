@@ -28,6 +28,7 @@ export function ManualEntryPage() {
   const [mealType, setMealType] = useState<MealType>(initialMealType)
   const [servings, setServings] = useState(saved?.servings ?? 1)
   const [error, setError] = useState<string | null>(null)
+  const [attempted, setAttempted] = useState(false)
   const edited = useRef(false)
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export function ManualEntryPage() {
   const scaledFat = validated.ok ? validated.value.fat : 0
 
   function save() {
+    setAttempted(true)
     const result = validateManualFood({ name, calories, protein, carbs, fat, servings })
     if (!result.ok) {
       setError(result.error)
@@ -98,7 +100,7 @@ export function ManualEntryPage() {
 
         <form className="manual-entry-form" noValidate onChangeCapture={() => { edited.current = true }} onSubmit={event => { event.preventDefault(); save() }}>
         <div className="field">
-          <label htmlFor="manual-name">Food name</label>
+          <label htmlFor="manual-name">Food name <span className="field-req">Required</span></label>
           <input
             id="manual-name"
             value={name}
@@ -106,16 +108,34 @@ export function ManualEntryPage() {
             maxLength={500}
             autoComplete="off"
             required
+            aria-invalid={attempted && !name.trim() ? true : undefined}
+            aria-describedby={attempted && !name.trim() ? 'manual-name-error' : undefined}
             placeholder="e.g. Protein shake"
           />
+          {attempted && !name.trim() && <p id="manual-name-error" className="field-error" role="status">Enter a food name.</p>}
         </div>
 
         <div className="field">
-          <label htmlFor="manual-calories">Calories <span>per serving</span></label>
-          <input id="manual-calories" type="number" inputMode="decimal" min="0" max="100000" step="any" required placeholder="0" value={calories} onChange={e => { setCalories(e.target.value); setError(null) }} />
+          <label htmlFor="manual-calories">Calories <span>per serving</span> <span className="field-req">Required</span></label>
+          <input
+            id="manual-calories"
+            type="number"
+            inputMode="decimal"
+            min="0"
+            max="100000"
+            step="any"
+            required
+            placeholder="0"
+            value={calories}
+            onChange={e => { setCalories(e.target.value); setError(null) }}
+            aria-invalid={attempted && !calories.trim() ? true : undefined}
+            aria-describedby={attempted && !calories.trim() ? 'manual-calories-error' : undefined}
+          />
+          {attempted && !calories.trim() && <p id="manual-calories-error" className="field-error" role="status">Enter calories per serving.</p>}
         </div>
 
-        <p className="manual-macro-hint">Macros per serving <span>Optional</span></p>
+        <fieldset className="manual-macros">
+          <legend className="manual-macro-hint">Macros per serving <span>Optional</span></legend>
         <div className="review-grid">
           <div className="field">
             <label htmlFor="manual-protein">Protein (g)</label>
@@ -130,6 +150,7 @@ export function ManualEntryPage() {
             <input id="manual-fat" type="number" inputMode="decimal" step="any" min="0" max="10000" value={fat} onChange={e => { setFat(e.target.value); setError(null) }} />
           </div>
         </div>
+        </fieldset>
 
         {/* Serving size stepper */}
         <div className="serving-row">
@@ -179,7 +200,6 @@ export function ManualEntryPage() {
           fullWidth
           label="Log meal"
           type="submit"
-          disabled={!name.trim() || !calories}
         />
         </form>
       </main>

@@ -9,13 +9,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: var(--k-space-md);
     width: 100%;
     max-width: 1120px;
     margin: 0 auto;
-    padding: 14px var(--k-gutter) 0;
+    padding: var(--k-space-md) var(--k-gutter) 0;
   }
-  .k-account-bar .appearance-options { display: flex; gap: 0; padding: 0; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: var(--k-shadow-sm); }
+  .k-account-bar .appearance-options { display: flex; gap: 0; padding: 0; border: 2px solid var(--k-role-border); border-radius: 0; background: var(--k-role-surface-raised); box-shadow: none; }
   .k-account-bar .appearance-option { flex: 0 0 44px; }
   .k-account-bar .appearance-option-face { width: 44px; min-height: 44px; padding: 0; border-radius: 0; background: transparent; color: var(--k-ink); transform: none; }
   .k-account-bar .appearance-option:hover input:not(:checked) + .appearance-option-face { background: var(--k-sunken); color: var(--k-ink); transform: none; }
@@ -99,15 +99,15 @@
   /* ── The form card ─────────────────────────────────────────── */
   .k-account-card {
     display: grid;
-    gap: 14px;
+    gap: var(--k-space-md);
     min-width: 0;
     margin: 0;
-    padding: 20px;
-    border: 2px solid var(--k-line);
+    padding: var(--k-space-xl);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
-    background: var(--k-card);
-    color: var(--k-ink);
-    box-shadow: var(--k-shadow);
+    background: var(--k-role-surface-raised);
+    color: var(--k-role-text);
+    box-shadow: none;
     text-align: left;
     animation: none;
   }
@@ -140,26 +140,26 @@
   .k-account .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); box-shadow: none; font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
   .k-account .error-banner:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
 
-  .k-account .auth-form { display: grid; gap: 14px; margin: 0; text-align: left; }
-  .k-account .auth-fields { display: grid; gap: 14px; min-width: 0; margin: 0; padding: 0; border: 0; }
-  .k-account .field { display: grid; gap: 6px; min-width: 0; margin: 0; }
-  .k-account .field > label { margin: 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
+  .k-account .auth-form { display: grid; gap: var(--k-space-md); margin: 0; text-align: left; }
+  .k-account .auth-fields { display: grid; gap: var(--k-space-md); min-width: 0; margin: 0; padding: 0; border: 0; }
+  .k-account .field { display: grid; gap: var(--k-space-xs); min-width: 0; margin: 0; }
+  .k-account .field > label { margin: 0; font: 600 var(--k-type-label)/1.3 var(--k-font-body); letter-spacing: .04em; text-transform: uppercase; color: var(--k-role-text-muted); }
   .k-account .field input {
     width: 100%;
     min-width: 0;
-    min-height: 50px;
+    min-height: 48px;
     margin: 0;
-    padding: 0 12px;
-    border: 2px solid var(--k-line);
+    padding: 0 var(--k-space-md);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
-    background: var(--k-ground);
-    color: var(--k-ink);
+    background: var(--k-role-surface-raised);
+    color: var(--k-role-text);
     box-shadow: none;
-    font: 700 var(--k-text-md)/1.2 var(--k-font-body);
+    font: 500 var(--k-type-body)/1.3 var(--k-font-body);
     transform: none;
   }
-  .k-account .field input::placeholder { color: var(--k-muted); font-weight: 500; opacity: 1; }
-  .k-account .field input:focus { border-color: var(--k-line); box-shadow: none; outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-account .field input::placeholder { color: var(--k-role-text-muted); font-weight: 500; opacity: 1; }
+  .k-account .field input:focus { border-color: var(--k-role-border); box-shadow: none; outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .k-account .auth-password-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; font: 500 var(--k-text-xs)/1.3 var(--k-font-body); color: var(--k-muted); }
   .k-account .auth-show-password {
     min-height: 44px;
@@ -212,22 +212,34 @@
   .k-account-card.is-session { justify-items: center; text-align: center; box-shadow: none; }
   .k-account-card.is-session .k-account-logo { width: 150px; }
 
-  /* A phone: the submit button docks at the bottom until the keyboard opens. */
+  /* A phone: the action stays in the form until it reaches the viewport,
+     then docks above the safe area. Fields keep a scroll pad so a focused
+     input is never hidden underneath. */
   @media (max-width: 899px) {
-    .k-account:not(.is-simple) { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+    .k-account:not(.is-simple) {
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      scroll-padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px));
+    }
+    .k-account .auth-form { scroll-padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)); }
+    .k-account .auth-submit-slot { min-height: 76px; }
     .k-account .auth-submit-dock {
+      position: sticky;
+      bottom: 0;
+      z-index: 30;
+      margin: 8px 0 0;
+      padding: 10px 0 calc(12px + env(safe-area-inset-bottom, 0px));
+      border-top: 2px solid var(--k-line);
+      background: var(--k-ground);
+    }
+    .k-account .auth-submit-dock.is-docked {
       position: fixed;
       right: 0;
       bottom: 0;
       left: 0;
-      z-index: 30;
       margin: 0;
       padding: 10px max(var(--k-gutter), calc((100vw - 440px) / 2)) calc(14px + env(safe-area-inset-bottom, 0px));
-      border-top: 2px solid var(--k-line);
-      background: var(--k-ground);
     }
-    .k-account .auth-submit-dock.is-keyboard-open { position: static; padding: 4px 0 0; border-top: 0; background: transparent; }
-    .k-account :is(input, button, a, .error-banner) { scroll-margin-block: 120px; }
+    .k-account :is(input, button, a, .error-banner) { scroll-margin-bottom: calc(108px + env(safe-area-inset-bottom, 0px)); }
   }
 
   /* Wide screens: the poster and the form side by side. */

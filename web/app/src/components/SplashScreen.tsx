@@ -7,16 +7,16 @@ const CIRC = 2 * Math.PI * RADIUS
 interface SplashScreenProps {
   /** When true, plays the fade/scale-out transition before the parent unmounts this component. */
   exiting?: boolean
-  /** After the first open in a session: stays invisible unless loading takes a noticeable moment. */
-  quiet?: boolean
+  /** After two seconds the ring loops and a status line appears. */
+  slow?: boolean
 }
 
-export function SplashScreen({ exiting = false, quiet = false }: SplashScreenProps) {
+export function SplashScreen({ exiting = false, slow = false }: SplashScreenProps) {
   return (
     <div
-      className={`splash-screen${exiting ? ' splash-exit' : ''}${quiet ? ' is-quiet' : ''}`}
+      className={`splash-screen${exiting ? ' splash-exit' : ''}${slow ? ' is-slow' : ''}`}
       role="status"
-      aria-label="Loading Poiem"
+      aria-label={slow ? 'Still loading Poiem' : 'Loading Poiem'}
     >
       <div className="splash-ring-wrap">
         <svg className="splash-ring-svg" viewBox="0 0 128 128" aria-hidden>
@@ -47,6 +47,7 @@ export function SplashScreen({ exiting = false, quiet = false }: SplashScreenPro
 
       <div className="splash-wordmark"><BrandLogo decorative /></div>
       <div className="splash-tagline">{identity.tagline}</div>
+      <p className="splash-status">Still setting the table…</p>
     </div>
   )
 }
