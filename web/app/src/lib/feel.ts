@@ -9,9 +9,10 @@
  *  - Both channels honour the profile toggles. Every haptic in the app routes
  *    through here, so Settings > Haptics actually turns them off.
  *  - Nothing plays before those toggles are known. The module stays silent
- *    until `setFeelEnabled` has been called, which the app provider does
- *    before any screen can fire a cue. A surface outside the provider (the
- *    welcome page, error screens) is therefore silent, which is the safe side.
+ *    until the app provider first applies the saved toggles with
+ *    `setFeelEnabled`, which it does before any screen can fire a cue. The
+ *    last applied toggles persist after the provider unmounts, and no cue
+ *    site lives outside a provider.
  *  - No cue is ever punitive. §2.4 rules out shaming the user for what they
  *    ate, and that applies to audio: every cue is consonant, nothing buzzes,
  *    nothing resolves downward to say "wrong".
@@ -58,15 +59,16 @@ export function feelPreferencesFromProfile(
 }
 
 /**
- * What to apply right now. Before the account has loaded, the profile in hand
- * is the default one, which says On, so both channels stay silent until the
- * saved toggles are actually known.
+ * What to apply right now. `known` is whether the profile in hand holds the
+ * saved toggles. Before the account has loaded it is the default profile,
+ * which says On, so both channels stay silent until the saved toggles are
+ * actually known.
  */
 export function feelPreferencesFor(
-  hydrated: boolean,
+  known: boolean,
   profile: { soundEnabled?: boolean; hapticsEnabled?: boolean },
 ): { sound: boolean; haptics: boolean } {
-  return hydrated ? feelPreferencesFromProfile(profile) : { sound: false, haptics: false }
+  return known ? feelPreferencesFromProfile(profile) : { sound: false, haptics: false }
 }
 
 export function prefersReducedMotion(): boolean {

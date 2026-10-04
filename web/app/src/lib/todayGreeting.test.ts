@@ -3,7 +3,8 @@ import { MOMO_POKES, todayGreeting } from './todayGreeting'
 
 const base = { hour: 9, mealsToday: 0, isToday: true }
 
-const NUTRITION_WORDS = /(big food day|fresh plate|over|under|deficit|calorie|kcal|budget|goal|target|macro|protein)/i
+// Whole words (with their plurals), so "cover" or "wonder" do not trip it; the two phrases stay as phrases.
+const NUTRITION_WORDS = /\b(?:big food day|fresh plate|over|under|goals?|targets?|macros?|protein|budget|deficit|calories?|kcal)\b/i
 
 describe('Momo’s greeting on Today', () => {
   it('says hello by first name and time of day', () => {

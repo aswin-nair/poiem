@@ -200,8 +200,11 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
   // before a parent's passive effects but after every layout effect. The
   // provider remounts per account, so a switch re-applies the right settings.
   // Local and guest state is read synchronously above, so it is known at once.
-  // A cloud account holds default settings (On) until hydration lands, so it
-  // stays silent while loading and on the load-error screen.
+  // A cloud account holds default settings (On) until hydration lands. The
+  // invariant that makes this safe: children never render while `loading` (or
+  // on the load-error screen), and the stored snapshot replaces the local one
+  // during the splash, so by the time any child can fire a cue the saved
+  // toggles are in `state.profile`.
   const feelKnown = !cloud || (!loading && !cloudLoadError)
   const { soundEnabled, hapticsEnabled } = state.profile
   useLayoutEffect(() => {

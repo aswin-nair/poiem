@@ -1,4 +1,4 @@
-import { MAX_NOTIFICATIONS_PER_DAY } from '@fud-ai/domain/notifications'
+import { MAX_NOTIFICATIONS_PER_DAY, NOTIFICATION_KINDS } from '@fud-ai/domain/notifications'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { localDayKey } from './dates'
@@ -86,6 +86,26 @@ describe('the two-per-day cap', () => {
     expect(sent.length).toBe(0)
     expect(notificationsSentToday()).toBe(2)
   })
+
+  it('a stored log with a single legacy kind still lets the routine nudge send once', async () => {
+    localStorage.setItem(
+      'fud-notify-log',
+      JSON.stringify({ date: localDayKey(new Date()), kinds: ['save'] }),
+    )
+
+    await evaluateNotifications(RIPE)
+    await evaluateNotifications(RIPE)
+
+    // The legacy entry counts toward the cap, so the day ends at two.
+    expect(sent.length).toBe(1)
+    expect(notificationsSentToday()).toBe(2)
+  })
+})
+
+describe('kinds', () => {
+  it('has the routine nudge and nothing else', () => {
+    expect(NOTIFICATION_KINDS).toEqual(['routine'])
+  })
 })
 
 describe('suppression rules', () => {
@@ -135,8 +155,12 @@ describe('copy', () => {
     expect(bannedNotificationCopy(sent[0]!)).toBe(false)
   })
 
-  it('never mentions calories, weight or amounts', () => {
-    expect(bannedNotificationCopy(NUDGE)).toBe(false)
+  it('never mentions calories, weight or amounts', async () => {
+    // Checked against the body the adapter really sent, not this file's own copy of it.
+    await evaluateNotifications(RIPE)
+
+    expect(sent.length).toBe(1)
+    expect(bannedNotificationCopy(sent[0]!)).toBe(false)
   })
 
   it('rejects the copy the spec calls out as wrong', () => {
@@ -159,9 +183,11 @@ describe('copy', () => {
     for (const text of lossFramed) expect(bannedNotificationCopy(text)).toBe(true)
   })
 
-  it('never moralises about food', () => {
+  it('never moralises about food', async () => {
     const banned = /\b(bad|cheat|guilty|earned|naughty|sinful|damage)\b/i
+    await evaluateNotifications(RIPE)
 
-    expect(NUDGE).not.toMatch(banned)
+    expect(sent.length).toBe(1)
+    expect(sent[0]!).not.toMatch(banned)
   })
 })

@@ -15,9 +15,13 @@ import { localDayKey } from './dates'
 const LOG_KEY = 'fud-notify-log'
 const MAX_PER_DAY = 2
 
-const ROUTINE_BODY = 'Your journal is here whenever you’re ready.'
-
 type NotifyKind = NotificationKind
+
+// Typed over every kind, so adding a kind to the policy is a type error until
+// it has quiet, loss-free copy here.
+const COPY: Record<NotifyKind, string> = {
+  routine: 'Your journal is here whenever you’re ready.',
+}
 
 // A log written before the loss-framed reminders were retired may still hold
 // the old `save` and `freeze` kinds. They are read as plain strings so they
@@ -70,11 +74,10 @@ async function deliver(kind: NotifyKind): Promise<boolean> {
   if (typeof Notification === 'undefined') return false
   if (Notification.permission !== 'granted') return false
 
-  const body = ROUTINE_BODY
-  if (bannedNotificationCopy(body)) return false
+  if (bannedNotificationCopy(COPY[kind])) return false
 
   try {
-    new Notification('Poiem', { body, silent: true })
+    new Notification('Poiem', { body: COPY[kind], silent: true })
     record(kind)
     return true
   } catch {
