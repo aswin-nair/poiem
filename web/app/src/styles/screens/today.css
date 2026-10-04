@@ -256,6 +256,7 @@
   .k-today .k-notice-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--k-space-md); margin-top: var(--k-space-xs); }
 
   .k-today-layout { display: grid; gap: var(--k-space-xl); }
+  .k-today-summary { display: grid; gap: var(--k-space-xl); }
 
   @media (min-width: 768px) {
     .k-today-main { gap: var(--k-space-xl); }
@@ -267,6 +268,5 @@
       grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
       align-items: start;
     }
-    .k-today-summary { display: grid; gap: var(--k-space-xl); }
   }
 }
