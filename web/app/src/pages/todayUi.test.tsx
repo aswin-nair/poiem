@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { freshState } from '../lib/storage'
 import type { FoodEntry } from '../types'
 import { HomePage } from './HomePage'
@@ -20,6 +20,7 @@ const meal = (over: Partial<FoodEntry> = {}): FoodEntry => ({
   timestamp: new Date().toISOString(), source: 'manual', mealType: 'breakfast', ...over,
 })
 beforeEach(() => { state = freshState() })
+afterEach(() => { vi.useRealTimers() })
 
 describe('Today', () => {
   it('only offers the direct roast action after consent', () => {
@@ -76,19 +77,46 @@ describe('Today', () => {
   })
 
   it('says plainly how far over the guide the day went, and Momo says nothing different', () => {
-    // Momo’s note, with React’s per-tree SVG ids stripped so only what he says and does is compared.
-    const momoNote = (markup: string) => (markup.match(/<aside class="k-momo"[\s\S]*?<\/aside>/)?.[0] ?? '')
-      .replace(/momo-clip-\w+/g, 'momo-clip')
-    state.foodEntries = [meal({ calories: 9_000 })]
-    const over = render()
+    // Freeze the clock so no render can straddle an hour (Momo’s opener is part-of-day aware).
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 9, 5, 10, 30))
+    const loggedAt = new Date(2026, 9, 5, 8, 15).toISOString()
+    const momoNote = (markup: string) => markup.match(/<aside class="k-momo"[\s\S]*?<\/aside>/)?.[0] ?? ''
+    // One breakfast at the same time every render: the entry count, meal type and timestamp
+    // (Momo’s interaction context) never change. Only calories, macros and targets do.
+    const day = (entry: Partial<FoodEntry>, targets: Partial<typeof state.profile> = {}) => {
+      state = freshState()
+      Object.assign(state.profile, targets)
+      state.foodEntries = [meal({ timestamp: loggedAt, ...entry })]
+      return render()
+    }
+
+    const under = day({ calories: 100 })
+    const over = day({ calories: 9_000 })
     expect(over).toContain('kcal over the guide')
     expect(over).not.toContain('kcal left')
     expect(over).not.toContain('fresh plate')
-    state.foodEntries = [meal({ calories: 100 })]
-    const under = render()
     expect(under).toContain('kcal left')
-    expect(momoNote(over)).toContain('A note from Momo')
-    expect(momoNote(over)).toBe(momoNote(under))
+
+    const variants = [
+      under,
+      over,
+      // Macro-heavy and macro-empty days at the same calories and the same single entry.
+      day({ calories: 250, protein: 400, carbs: 900, fat: 300 }),
+      day({ calories: 250, protein: 0, carbs: 0, fat: 0 }),
+      // Different targets, calories and macros held at the baseline day.
+      day({ calories: 100 }, { customCalories: 1_200, customProtein: 40, customCarbs: 80, customFat: 20 }),
+      day({ calories: 100 }, { customCalories: 4_000, customProtein: 300, customCarbs: 500, customFat: 150 }),
+      // Everything at once: over the calories, over every macro, under tiny targets.
+      day({ calories: 9_000, protein: 400, carbs: 900, fat: 300 }, { customCalories: 1_200, customProtein: 40, customCarbs: 80, customFat: 20 }),
+      day({ calories: 9_000, protein: 400, carbs: 900, fat: 300 }, { customCalories: 4_000, customProtein: 300, customCarbs: 500, customFat: 150 }),
+    ]
+
+    // The pages themselves do change, so the equality below is not vacuous.
+    expect(new Set(variants).size).toBe(variants.length)
+    const baseline = momoNote(variants[0]!)
+    expect(baseline).toContain('A note from Momo')
+    for (const html of variants) expect(momoNote(html)).toBe(baseline)
   })
 
   it('hides nutrition during tracking pause', () => {
