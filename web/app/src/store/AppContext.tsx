@@ -1,5 +1,6 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { restoreDeletedEntry } from '../lib/entryUndo'
+import { feelPreferencesFor, setFeelEnabled } from '../lib/feel'
 import { IconCloud, IconOffline, IconShield } from '../components/icons'
 
 import type {
@@ -192,6 +193,20 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
   const [slowSplash, setSlowSplash] = useState(false)
 
   const [cloudLoadError, setCloudLoadError] = useState(false)
+
+  // Saved Sound and Haptics apply here, at the product boundary, so every
+  // screen honours them, not only Today. A layout effect, not useEffect: a
+  // screen's mount-time cue runs in a child passive effect, and those run
+  // before a parent's passive effects but after every layout effect. The
+  // provider remounts per account, so a switch re-applies the right settings.
+  // Local and guest state is read synchronously above, so it is known at once.
+  // A cloud account holds default settings (On) until hydration lands, so it
+  // stays silent while loading and on the load-error screen.
+  const feelKnown = !cloud || (!loading && !cloudLoadError)
+  const { soundEnabled, hapticsEnabled } = state.profile
+  useLayoutEffect(() => {
+    setFeelEnabled(feelPreferencesFor(feelKnown, { soundEnabled, hapticsEnabled }))
+  }, [feelKnown, soundEnabled, hapticsEnabled])
 
   const [cloudSyncError, setCloudSyncError] = useState<string | null>(null)
 

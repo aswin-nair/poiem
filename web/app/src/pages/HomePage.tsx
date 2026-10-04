@@ -22,7 +22,7 @@ import { getAllBadges, getStreakWithFreezes } from '../lib/journey'
 import { applyNote, applyWaterChange } from '../lib/enamelEconomy'
 import { useFeel } from '../hooks/useHaptic'
 import { useCountUp } from '../hooks/useCountUp'
-import { playLogConfirm, setFeelEnabled } from '../lib/feel'
+import { playLogConfirm } from '../lib/feel'
 import { evaluateNotifications } from '../lib/notifications'
 import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../lib/today'
 import { shouldCelebrateLog } from '../lib/logFeedback'
@@ -115,13 +115,6 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     const timer = window.setTimeout(() => setFreshId(null), FRESH_MS)
     return () => window.clearTimeout(timer)
   }, [freshId])
-
-  useEffect(() => {
-    setFeelEnabled({
-      sound: profile.soundEnabled !== false,
-      haptics: profile.hapticsEnabled !== false,
-    })
-  }, [profile.soundEnabled, profile.hapticsEnabled])
 
   useEffect(() => {
     if (paused) return

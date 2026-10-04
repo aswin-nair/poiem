@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test'
+import type { AppState } from '../src/types'
 import { VISUAL_NOW, VISUAL_USER, visualSeedState } from '../src/lib/visualSeed'
 
 export { VISUAL_DAY, VISUAL_NOW, VISUAL_USER, VISUAL_USER_ID, visualSeedState } from '../src/lib/visualSeed'
@@ -6,9 +7,9 @@ export { VISUAL_DAY, VISUAL_NOW, VISUAL_USER, VISUAL_USER_ID, visualSeedState } 
 /** Keep this string in sync with `AUTH_SESSION_STORAGE_KEY` in `src/lib/auth.ts`. */
 const AUTH_SESSION_STORAGE_KEY = 'fud-ai-auth-session'
 
-export async function applyVisualSeed(page: Page): Promise<void> {
+/** Seeds the visual account. Pass `state` to persist a variation of it (for example other settings). */
+export async function applyVisualSeed(page: Page, state: AppState = visualSeedState()): Promise<void> {
   const user = VISUAL_USER
-  const state = visualSeedState()
   await page.addInitScript(({ user, state, sessionKey }) => {
     window.__POIEM_TEST__ = { rng: () => 0.5, hideOverlay: true }
     try {
