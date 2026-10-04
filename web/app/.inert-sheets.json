@@ -1,0 +1,19 @@
+[
+  "styles/components/mascot.css",
+  "styles/components/overlays.css",
+  "styles/components/gamification.css",
+  "styles/screens/onboarding.css",
+  "styles/screens/settings.css",
+  "styles/screens/journey.css",
+  "styles/motion.css",
+  "styles/clay.css",
+  "styles/welcome-ui.css",
+  "styles/setup-ui.css",
+  "styles/you-ui.css",
+  "styles/components/buttons.css",
+  "styles/icon-motion.css",
+  "styles/dark-mode.css",
+  "styles/neo-brutalism.css",
+  "styles/food-club.css",
+  "styles/poiem-brand.css"
+]
