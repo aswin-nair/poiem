@@ -1,0 +1,159 @@
+{
+  "control": {
+    "unstableTuples": 421,
+    "changesOnSecondPass": 349,
+    "routesAffected": [
+      "you",
+      "admin",
+      "welcome"
+    ],
+    "sample": {
+      "you": [
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1",
+          "tag": "DIV|settings-row",
+          "prop": "1440-light grid-template-columns",
+          "from": "347.547px 434.438px",
+          "to": "260.656px 521.344px"
+        },
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1/0",
+          "tag": "DIV|settings-row-labels",
+          "prop": "1440-light box",
+          "from": "375,3754.42,347.55,38.19",
+          "to": "375,3754.42,260.66,38.19"
+        },
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1/0",
+          "tag": "DIV|settings-row-labels",
+          "prop": "1440-light width",
+          "from": "347.547px",
+          "to": "260.656px"
+        },
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1/0",
+          "tag": "DIV|settings-row-labels",
+          "prop": "1440-light transform-origin",
+          "from": "173.773px 19.0938px",
+          "to": "130.328px 19.0938px"
+        },
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1/0",
+          "tag": "DIV|settings-row-labels",
+          "prop": "1440-light grid-template-columns",
+          "from": "347.547px",
+          "to": "260.656px"
+        },
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1/0/0",
+          "tag": "SPAN|settings-row-label",
+          "prop": "1440-light box",
+          "from": "375,3754.42,347.55,20",
+          "to": "375,3754.42,260.66,20"
+        },
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1/0/0",
+          "tag": "SPAN|settings-row-label",
+          "prop": "1440-light width",
+          "from": "347.547px",
+          "to": "260.656px"
+        },
+        {
+          "key": "0/1/0/0/0/1/0/8/2/1/1/0/0",
+          "tag": "SPAN|settings-row-label",
+          "prop": "1440-light transform-origin",
+          "from": "173.773px 10px",
+          "to": "130.328px 10px"
+        }
+      ],
+      "admin": [
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/1/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-top-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        },
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/1/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-right-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        },
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/1/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-bottom-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        },
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/1/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-left-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        },
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/2/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-top-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        },
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/2/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-right-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        },
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/2/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-bottom-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        },
+        {
+          "key": "0/1/0/0/0/1/2/1/2/1/2/1/1/2/0",
+          "tag": "INPUT|",
+          "prop": "1440-light border-left-color",
+          "from": "rgba(118, 118, 118, 0.3)",
+          "to": "rgb(90, 86, 76)"
+        }
+      ],
+      "welcome": [
+        {
+          "key": "0/1/0/0/3/3/0",
+          "tag": "DIV|wp-wrap",
+          "prop": "1440-light margin-right",
+          "from": "40px",
+          "to": "0px"
+        },
+        {
+          "key": "0/1/0/0/3/3/0",
+          "tag": "DIV|wp-wrap",
+          "prop": "1440-light margin-left",
+          "from": "40px",
+          "to": "0px"
+        },
+        {
+          "key": "0/1/0/0/3/3/0",
+          "tag": "DIV|wp-wrap",
+          "prop": "1440-dark margin-right",
+          "from": "40px",
+          "to": "0px"
+        },
+        {
+          "key": "0/1/0/0/3/3/0",
+          "tag": "DIV|wp-wrap",
+          "prop": "1440-dark margin-left",
+          "from": "40px",
+          "to": "0px"
+        }
+      ]
+    }
+  }
+}

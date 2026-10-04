@@ -83,4 +83,8 @@ jobs:
       - uses: github/codeql-action/init@v4
         with:
           languages: javascript-typescript
+          # Patched copies of upstream npm packages; findings there belong upstream.
+          config: |
+            paths-ignore:
+              - mobile/overrides
       - uses: github/codeql-action/analyze@v4

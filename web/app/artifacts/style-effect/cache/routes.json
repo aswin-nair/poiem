@@ -1,0 +1,23 @@
+{
+  "landed": {
+    "today": "/",
+    "reference": "/dev/components",
+    "log-sheet": "/log",
+    "describe": "/log/text",
+    "manual": "/log/manual",
+    "photo": "/log/photo",
+    "saved": "/discover",
+    "insights": "/progress",
+    "you": "/settings",
+    "coach": "/coach",
+    "journey": "/progress",
+    "about": "/about",
+    "support": "/support",
+    "admin": "/admin",
+    "review": "/review",
+    "welcome": "/welcome",
+    "login": "/login",
+    "onboarding": "/onboarding"
+  },
+  "rules": 3117
+}
