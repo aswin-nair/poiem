@@ -1,12 +1,20 @@
 [extend]
 useDefault = true
 
+[allowlist]
+description = "Vendored upstream packages, plus storage and UserDefaults key names"
+
+# mobile/overrides holds patched copies of upstream npm packages (see the
+# overrides field in mobile/package.json). Their docs and source carry example
+# passwords and `Key` identifiers that the default rules read as credentials.
+paths = [
+  '''^mobile/overrides/''',
+]
+
 # Storage key names, not credentials. The default generic-api-key rule fires on
 # any quoted value assigned to an identifier ending in KEY or Key. These three
 # are the names of a localStorage bucket and two UserDefaults flags, so the
 # allowlist matches the literal values instead of muting the whole file.
-[allowlist]
-description = "Local storage and UserDefaults key names"
 regexes = [
   '''fud-crashes-v1''',
   '''energyBurnEnabledV2''',
