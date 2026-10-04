@@ -121,13 +121,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     const hours = state.foodEntries.map(entry => new Date(entry.timestamp).getHours())
     void evaluateNotifications({
       loggedToday: hasLoggedToday,
-      streak,
-      freezeAvailable: state.gamification.streakFreezes,
       firstLogHours: hours,
       localHour: new Date().getHours(),
       trackingPaused: paused,
     })
-  }, [paused, hasLoggedToday, streak, state.gamification.streakFreezes, state.foodEntries])
+  }, [paused, hasLoggedToday, state.foodEntries])
 
   useEffect(() => {
     const justLogged = (location.state as { justLogged?: JustLogged } | null)?.justLogged

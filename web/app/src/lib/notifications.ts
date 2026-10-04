@@ -7,16 +7,22 @@ import {
 import { localDayKey } from './dates'
 
 /**
- * Two scheduled notifications, hard-capped. Per §2.6 / Phase 8.
- * Copy never mentions calories, weight, or how much someone ate.
+ * One quiet routine nudge, hard-capped at two notifications a day. Per §2.6 / Phase 8.
+ * Copy never mentions calories, weight, how much someone ate, a streak, or
+ * anything that could be lost by not logging.
  */
 
 const LOG_KEY = 'fud-notify-log'
 const MAX_PER_DAY = 2
 
+const ROUTINE_BODY = 'Your journal is here whenever you’re ready.'
+
 type NotifyKind = NotificationKind
 
-type NotifyLog = { date: string; kinds: NotifyKind[] }
+// A log written before the loss-framed reminders were retired may still hold
+// the old `save` and `freeze` kinds. They are read as plain strings so they
+// keep counting toward the day's cap.
+type NotifyLog = { date: string; kinds: string[] }
 
 function todayKey(): string {
   return localDayKey(new Date())
@@ -25,7 +31,7 @@ function todayKey(): string {
 function readLog(): NotifyLog {
   try {
     const raw = JSON.parse(localStorage.getItem(LOG_KEY) ?? 'null') as NotifyLog | null
-    if (raw && raw.date === todayKey()) return raw
+    if (raw && raw.date === todayKey() && Array.isArray(raw.kinds)) return raw
   } catch { /* ignore */ }
   return { date: todayKey(), kinds: [] }
 }
@@ -55,30 +61,16 @@ function record(kind: NotifyKind): void {
   writeLog(log)
 }
 
-const COPY: Record<NotifyKind, (streak: number) => string> = {
-  routine: (streak) =>
-    streak > 0
-      ? `Two minutes to keep your ${streak}-day streak going.`
-      // With no streak yet there is nothing to "keep alive" — claiming
-      // otherwise is the kind of small lie that costs trust.
-      : 'Log anything today and the day counts.',
-  save: (streak) =>
-    streak > 0
-      ? `Your streak's still alive — log anything to keep it.`
-      : 'Log anything today and the day counts.',
-  freeze: (streak) => `Freeze used. Streak safe at ${streak}.`,
-}
-
 export function bannedNotificationCopy(text: string): boolean {
   return sharedBannedNotificationCopy(text)
 }
 
-async function deliver(kind: NotifyKind, streak: number): Promise<boolean> {
+async function deliver(kind: NotifyKind): Promise<boolean> {
   if (!canSend(kind)) return false
   if (typeof Notification === 'undefined') return false
   if (Notification.permission !== 'granted') return false
 
-  const body = COPY[kind](streak)
+  const body = ROUTINE_BODY
   if (bannedNotificationCopy(body)) return false
 
   try {
@@ -104,33 +96,27 @@ export async function requestNotifyPermission(): Promise<boolean> {
 }
 
 /**
- * Evaluates the two allowed nudges. Call on app open and when the hour changes.
- * `loggedToday` suppresses the routine nudge. A freeze available suppresses the save nudge.
+ * Evaluates the one routine nudge. Call on app open and when the hour changes.
+ * `loggedToday` and a pause both suppress it; nothing else about the journal
+ * (no streak, no freezes) is read.
  */
 export async function evaluateNotifications(input: {
   loggedToday: boolean
-  streak: number
-  freezeAvailable: number
   firstLogHours: number[]
   localHour: number
   trackingPaused?: boolean
-  freezeJustApplied?: { protectedStreak: number }
 }): Promise<void> {
   const kinds = eligibleNotificationKinds({
     loggedToday: input.loggedToday,
-    streak: input.streak,
-    freezeAvailable: input.freezeAvailable,
     firstLogHours: input.firstLogHours,
     localHour: input.localHour,
     trackingPaused: input.trackingPaused,
-    freezeJustApplied: Boolean(input.freezeJustApplied),
-    sentKinds: readLog().kinds,
+    // The stored log is plain strings (it may hold legacy kinds); the policy
+    // only ever counts them, so the narrower type is safe here.
+    sentKinds: readLog().kinds as NotificationKind[],
   })
 
   for (const kind of kinds) {
-    const streak = kind === 'freeze' && input.freezeJustApplied
-      ? input.freezeJustApplied.protectedStreak
-      : input.streak
-    await deliver(kind, streak)
+    await deliver(kind)
   }
 }

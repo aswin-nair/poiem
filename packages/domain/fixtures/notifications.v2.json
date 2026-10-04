@@ -1,12 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "cases": [
     {
       "id": "paused",
       "input": {
         "loggedToday": false,
-        "streak": 12,
-        "freezeAvailable": 0,
         "firstLogHours": [],
         "localHour": 20,
         "trackingPaused": true,
@@ -18,8 +16,6 @@
       "id": "logged-today",
       "input": {
         "loggedToday": true,
-        "streak": 12,
-        "freezeAvailable": 0,
         "firstLogHours": [],
         "localHour": 20,
         "sentKinds": []
@@ -27,23 +23,9 @@
       "kinds": []
     },
     {
-      "id": "routine-and-save",
+      "id": "routine-evening",
       "input": {
         "loggedToday": false,
-        "streak": 12,
-        "freezeAvailable": 0,
-        "firstLogHours": [],
-        "localHour": 20,
-        "sentKinds": []
-      },
-      "kinds": ["routine", "save"]
-    },
-    {
-      "id": "save-suppressed-by-freeze",
-      "input": {
-        "loggedToday": false,
-        "streak": 12,
-        "freezeAvailable": 1,
         "firstLogHours": [],
         "localHour": 20,
         "sentKinds": []
@@ -51,17 +33,34 @@
       "kinds": ["routine"]
     },
     {
-      "id": "two-per-day-cap",
+      "id": "before-routine-hour",
       "input": {
         "loggedToday": false,
-        "streak": 12,
-        "freezeAvailable": 0,
         "firstLogHours": [],
-        "localHour": 20,
-        "freezeJustApplied": true,
+        "localHour": 10,
         "sentKinds": []
       },
-      "kinds": ["freeze", "routine"]
+      "kinds": []
+    },
+    {
+      "id": "personal-hour",
+      "input": {
+        "loggedToday": false,
+        "firstLogHours": [8, 8, 9, 9, 9, 10, 10],
+        "localHour": 10,
+        "sentKinds": []
+      },
+      "kinds": ["routine"]
+    },
+    {
+      "id": "already-sent",
+      "input": {
+        "loggedToday": false,
+        "firstLogHours": [],
+        "localHour": 20,
+        "sentKinds": ["routine"]
+      },
+      "kinds": []
     }
   ]
 }
