@@ -654,7 +654,7 @@ export function SettingsPage() {
           <SettingsRow
             label="Momo live AI"
             hint={apiKey.trim()
-              ? 'She writes fresh reactions in the background.'
+              ? 'He writes fresh reactions in the background.'
               : 'Add a key to unlock live dialogue; animation still works without one.'}
           >
             <Toggle checked={mascotEnabled} onChange={setMascotEnabled} />

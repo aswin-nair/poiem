@@ -75,12 +75,20 @@ describe('Today', () => {
     expect(html).toContain('You showed up.')
   })
 
-  it('says plainly how far over the guide the day went', () => {
+  it('says plainly how far over the guide the day went, and Momo says nothing different', () => {
+    // Momo’s note, with React’s per-tree SVG ids stripped so only what he says and does is compared.
+    const momoNote = (markup: string) => (markup.match(/<aside class="k-momo"[\s\S]*?<\/aside>/)?.[0] ?? '')
+      .replace(/momo-clip-\w+/g, 'momo-clip')
     state.foodEntries = [meal({ calories: 9_000 })]
-    const html = render()
-    expect(html).toContain('kcal over the guide')
-    expect(html).not.toContain('kcal left')
-    expect(html).toContain('Tomorrow’s a fresh plate.')
+    const over = render()
+    expect(over).toContain('kcal over the guide')
+    expect(over).not.toContain('kcal left')
+    expect(over).not.toContain('fresh plate')
+    state.foodEntries = [meal({ calories: 100 })]
+    const under = render()
+    expect(under).toContain('kcal left')
+    expect(momoNote(over)).toContain('A note from Momo')
+    expect(momoNote(over)).toBe(momoNote(under))
   })
 
   it('hides nutrition during tracking pause', () => {

@@ -100,7 +100,6 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     hour: new Date().getHours(),
     name: profile.name,
     mealsToday: dayEntries.length,
-    over: budget.over > 0,
     isToday,
   })
   const macros = [

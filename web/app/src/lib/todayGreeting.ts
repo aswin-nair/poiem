@@ -14,7 +14,6 @@ interface GreetingInput {
   hour: number
   name?: string
   mealsToday: number
-  over: boolean
   isToday: boolean
 }
 
@@ -37,12 +36,11 @@ const INVITES: Record<PartOfDay, string> = {
 }
 
 /** Momo's opener on Today. Warm and specific to the moment, never a verdict on the numbers. */
-export function todayGreeting({ hour, name, mealsToday, over, isToday }: GreetingInput): TodayGreeting {
+export function todayGreeting({ hour, name, mealsToday, isToday }: GreetingInput): TodayGreeting {
   const part = partOfDay(hour)
   const first = name?.trim().split(/\s+/)[0]
   const hello = `${HELLO[part]}${first ? `, ${first}` : ''}!`
   if (!isToday) return { hello, line: 'A page from your food story. No grades attached.', expression: 'proud', pose: 'still' }
-  if (over) return { hello, line: 'Big food day. Tomorrow’s a fresh plate.', expression: 'happy', pose: 'wave_at_user' }
   if (mealsToday > 0) return { hello, line: 'You showed up. That’s the part worth celebrating.', expression: 'proud', pose: 'tiny_dance' }
   return { hello, line: INVITES[part], expression: 'curious', pose: 'look_around' }
 }
