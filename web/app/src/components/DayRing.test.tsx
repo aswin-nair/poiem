@@ -24,3 +24,8 @@ it('adds the closing class only when justClosed', () => {
   expect(renderToStaticMarkup(<DayRing progress={complete} />)).not.toContain('is-just-closed')
   expect(renderToStaticMarkup(<DayRing progress={complete} justClosed />)).toContain('is-just-closed')
 })
+it('plays the check for the log’s capped duration', () => {
+  expect(renderToStaticMarkup(<DayRing progress={complete} justClosed />)).toContain('--k-ring-check-ms:240ms')
+  expect(renderToStaticMarkup(<DayRing progress={complete} justClosed closeMs={120} />)).toContain('--k-ring-check-ms:120ms')
+  expect(renderToStaticMarkup(<DayRing progress={complete} closeMs={120} />)).not.toContain('--k-ring-check-ms')
+})

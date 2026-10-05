@@ -165,13 +165,62 @@ describe('log feedback planner', () => {
   })
 
   it('calories and targets do not change the plan', () => {
-    const lower = { ...input(), profile: { customCalories: 1800, customProtein: 80 } }
+    // Targets are not an input at all (the planner takes no profile), so only the food numbers vary here.
+    const lower = input()
     const higher = {
       ...lower, receipt: { ...lower.receipt, calories: 4000 },
       entries: lower.entries.map(entry => ({ ...entry, calories: 4000, protein: 200, carbs: 500, fat: 150 })),
-      profile: { customCalories: 1200, customProtein: 50 },
     }
     expect(planLogFeedback(higher)).toEqual(planLogFeedback(lower))
+  })
+
+  it('first-of-day at tier full', () => {
+    expect(planLogFeedback(input())).toMatchObject({
+      kind: 'first-of-day', tier: 'full', maxMotionMs: 480, mascotEvent: 'log_success',
+      cue: 'log-confirm', headline: 'Logged.', announcement: 'Logged Lunch.', ringClosed: false,
+    })
+  })
+
+  it('paused is quiet at tiers second and repeat', () => {
+    const second = planLogFeedback(input({ paused: true, entries: [meal('earlier', 8), logged] }))
+    const repeat = planLogFeedback(withMilestone({
+      paused: true, newPieces: [pencil], entries: [meal('earlier', 8), meal('another', 10), logged],
+      gamification: g({ pendingLevelUp: 3, awardedKeys: ['streak-7'], xpEvents: [award('streak-7')] }),
+    }))
+    for (const [plan, tier] of [[second, 'second'], [repeat, 'repeat']] as const) {
+      expect(plan).toMatchObject({
+        kind: 'quiet', tier, headline: 'Logged.', announcement: 'Logged Lunch.', pieces: [],
+        cue: 'tap', mascotEvent: null, maxMotionMs: 0, ringClosed: false, levelUp: null,
+      })
+      expect(plan.detail).toBeUndefined()
+    }
+  })
+
+  it('a detail plus a level-up combine into one announcement', () => {
+    const plan = planLogFeedback(withMilestone({
+      gamification: g({ pendingLevelUp: 3, awardedKeys: ['streak-7'], xpEvents: [award('streak-7', 'Seven logged days')] }),
+    }))
+    expect(plan).toMatchObject({ kind: 'milestone', levelUp: 3 })
+    expect(plan.announcement).toBe('Logged Lunch. Seven logged days. Level 3.')
+  })
+
+  it('a food name that ends in punctuation is not given a second full stop', () => {
+    const named = (name: string, over: Partial<FeedbackInput> = {}) => {
+      const entry = { ...logged, name }
+      return planLogFeedback(input({ receipt: makeLogReceipt(entry, 0), entries: [meal('yesterday', 12, -1), entry], ...over }))
+    }
+    expect(named('Rice.').announcement).toBe('Logged Rice.')
+    expect(named('Pho!').announcement).toBe('Logged Pho!')
+    expect(named('Rice. ').announcement).toBe('Logged Rice.')
+    expect(named(' Rice').announcement).toBe('Logged Rice.')
+    expect(named('Rice.', { ring: { before: ring(false), after: ring(true) } }).announcement)
+      .toBe('Logged Rice. Your chosen logging steps are complete.')
+    expect(named('Rice.', { gamification: g({ pendingLevelUp: 2 }) }).announcement).toBe('Logged Rice. Level 2.')
+    for (const name of ['Rice.', 'Pho!', 'Rice. ']) {
+      const plan = named(name)
+      expect(plan.headline).toBe('Logged.')
+      expect(plan.announcement).not.toMatch(/[.!?]\./)
+    }
   })
 
   it('counts the current local day and preserves stamped entry dates', () => {

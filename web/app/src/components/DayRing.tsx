@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from 'react'
+import { useId, type CSSProperties, type ReactNode } from 'react'
 import type { DayRingProgress } from '../lib/dayRing'
 
 // The streak-bearing log is the protected inner arc; optional ambition grows
@@ -6,10 +6,20 @@ import type { DayRingProgress } from '../lib/dayRing'
 const SIZES = [52, 72, 92]
 const COLORS = ['var(--k-action)', 'var(--k-sky-strong)', 'var(--k-role-text-muted)']
 
-export function DayRing({ progress, justClosed = false, note }: { progress: DayRingProgress; justClosed?: boolean; note?: ReactNode }) {
+export function DayRing({ progress, justClosed = false, closeMs = 240, note }: {
+  progress: DayRingProgress
+  /** The ring closed just now: the check plays once, for `closeMs` (the log's motion cap, 0 when still). */
+  justClosed?: boolean
+  closeMs?: number
+  note?: ReactNode
+}) {
   const titleId = `ring-title-${useId()}`
   return (
-    <section className={`k-ring${justClosed ? ' is-just-closed' : ''}`} aria-labelledby={titleId}>
+    <section
+      className={`k-ring${justClosed ? ' is-just-closed' : ''}`}
+      aria-labelledby={titleId}
+      style={justClosed ? { '--k-ring-check-ms': `${closeMs}ms` } as CSSProperties : undefined}
+    >
       <div className="k-ring-graphic">
         <svg viewBox="0 0 112 112" role="img" aria-label={`${progress.requiredComplete} of ${progress.requiredTotal} chosen steps complete`}>
           {progress.arcs.map((arc, index) => {

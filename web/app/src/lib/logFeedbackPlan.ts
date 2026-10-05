@@ -23,6 +23,12 @@ export interface LogFeedbackPlan {
   levelUp: number | null
 }
 
+/** Ends a phrase with one full stop, so a food called "Rice." is "Logged Rice.", never "Logged Rice..". */
+function sentence(text: string): string {
+  const trimmed = text.trim()
+  return /[.!?…]$/.test(trimmed) ? trimmed : `${trimmed}.`
+}
+
 export function planLogFeedback(input: {
   receipt: LogReceipt
   entries: readonly FoodEntry[]
@@ -39,7 +45,7 @@ export function planLogFeedback(input: {
   const dayLogs = entries.filter(entry => entryDayKey(entry) === today).length
   const tier: FeedbackTier = dayLogs < 2 ? 'full' : dayLogs === 2 ? 'second' : 'repeat'
   const awards = awardsSince(receipt, gamification)
-  const loggedAnnouncement = `Logged ${receipt.name}.`
+  const loggedAnnouncement = sentence(`Logged ${receipt.name.trim()}`)
 
   if (input.paused) return {
     kind: 'quiet', tier, headline: 'Logged.', announcement: loggedAnnouncement,
@@ -78,7 +84,7 @@ export function planLogFeedback(input: {
     : null
   const levelUp = gamification.pendingLevelUp
   const sentences = [loggedAnnouncement]
-  if (detail) sentences.push(/[.!?]$/.test(detail) ? detail : `${detail}.`)
+  if (detail) sentences.push(sentence(detail))
   if (levelUp !== null) sentences.push(`Level ${levelUp}.`)
 
   return {

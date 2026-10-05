@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useReducedMotion } from 'motion/react'
 import { DayRing } from '../components/DayRing'
@@ -25,7 +26,9 @@ import { useCountUp } from '../hooks/useCountUp'
 import { evaluateNotifications } from '../lib/notifications'
 import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../lib/today'
 import { planLogFeedback, type LogFeedbackPlan } from '../lib/logFeedbackPlan'
+import { RING_CHECK_MS, levelUpToToast, presentLogFeedback, ringCheckMs } from '../lib/logPresentation'
 import type { LogReceipt } from '../lib/logReceipt'
+import { LogSheetOpenContext } from '../lib/logSheetOpen'
 import { dayRingEntries } from '../lib/dayRingEntries'
 import { dayRingProgress } from '../lib/dayRing'
 import { progressNote } from '../lib/progressNote'
@@ -63,11 +66,17 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const [selectedDate, setSelectedDate] = useState(() => startOfDay())
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)
-  const [justClosed, setJustClosed] = useState(false)
+  /** The Day ring's check acknowledgement in ms while it plays, else null. */
+  const [ringCheck, setRingCheck] = useState<number | null>(null)
   const [freshId, setFreshId] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
   const loggedNavKey = useRef('')
   const mascotTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  /** False only after a real unmount; StrictMode's rehearsal unmount sets it straight back. */
+  const onPage = useRef(false)
+  const levelToasted = useRef<number | null>(null)
+  const mealsTitle = useRef<HTMLHeadingElement>(null)
+  const sheetOpen = useContext(LogSheetOpenContext)
   const reduced = useReducedMotion()
 
   const profile = state.profile
@@ -86,8 +95,12 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const water = state.gamification.waterByDate[selectedDayKey] ?? 0
   const notes = state.gamification.notesByDate[selectedDayKey] ?? 0
   const loggedDays = useMemo(() => new Set(state.foodEntries.map(entry => localDayKey(entry.timestamp))), [state.foodEntries])
+  // The note counts logged days exactly as wardrobe unlocks do (a stored local date wins over the timestamp).
+  const loggedDayCount = useMemo(() => wardrobeProgress(state).loggedDays, [state])
   const frozenDays = useMemo(() => new Set(state.gamification.freezeUsedDates), [state.gamification.freezeUsedDates])
   const showMomo = state.gamification.mascotActivity !== 'off' && !profile.mascotMuted
+  const momoReacts = !paused && showMomo && !reduced && !profile.mascotReducedMotion
+  const momoReactsNow = useRef(momoReacts)
   const ring = dayRingProgress(dayRingEntries(dayEntries), notes, profile.loggingCommitment)
   const greeting = todayGreeting({
     hour: new Date().getHours(),
@@ -102,6 +115,13 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   ]
 
   useEffect(() => { setMounted(true) }, [])
+
+  useEffect(() => {
+    onPage.current = true
+    return () => { onPage.current = false }
+  }, [])
+
+  useEffect(() => { momoReactsNow.current = momoReacts }, [momoReacts])
 
   useEffect(() => {
     if (!freshId) return
@@ -120,15 +140,12 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     })
   }, [paused, hasLoggedToday, state.foodEntries])
 
+  // The class stays a little longer than the check plays, so it can be observed without racing it.
   useEffect(() => {
-    if (!justClosed) return
-    const timer = setTimeout(() => setJustClosed(false), 3_000)
+    if (ringCheck === null) return
+    const timer = setTimeout(() => setRingCheck(null), 3_000)
     return () => clearTimeout(timer)
-  }, [justClosed])
-
-  useEffect(() => {
-    return () => clearTimeout(mascotTimer.current)
-  }, [paused, showMomo, reduced, profile.mascotReducedMotion])
+  }, [ringCheck])
 
   useEffect(() => {
     const justLogged = (location.state as { justLogged?: LogReceipt } | null)?.justLogged
@@ -155,6 +172,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       ringAckedToday: readRingAck() === todayKey,
       now,
     })
+    const view = presentLogFeedback(plan, justLogged.name)
     if (plan.cue) feel(plan.cue)
     if (plan.pieces.length) patchGamification(g => {
       const claimed = claimPieces(g, plan.pieces.map(piece => piece.id))
@@ -162,35 +180,54 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
         ? { ...claimed, outfit: { ...claimed.outfit, head: FIRST_PIECE } }
         : claimed
     })
-    if (plan.ringClosed) {
+    // The ring's check plays on any tier, inside the log's motion cap.
+    const check = ringCheckMs(plan, Boolean(reduced))
+    if (check !== null) {
       writeRingAck(todayKey)
-      setJustClosed(plan.tier === 'full' && !reduced)
+      setRingCheck(check)
     }
-    if (plan.levelUp !== null) ackLevelUp()
+    if (plan.levelUp !== null) {
+      // The card carries "Level N."; a toasted log leaves the level to Insights.
+      levelToasted.current = plan.levelUp
+      ackLevelUp()
+    }
     clearFirstMealJourney()
     setFreshId(justLogged.id)
     clearTimeout(mascotTimer.current)
-    if (plan.mascotEvent && showMomo && !reduced && !profile.mascotReducedMotion) {
+    if (plan.mascotEvent && momoReactsNow.current) {
       const event = plan.mascotEvent
-      mascotTimer.current = setTimeout(() => mascotEvent(event), 120)
+      // Not cancelled by an effect cleanup: StrictMode's rehearsal unmount would drop it.
+      mascotTimer.current = setTimeout(() => {
+        if (onPage.current && momoReactsNow.current) mascotEvent(event)
+      }, 120)
     }
-    // Every repeat stays light, even when it also unlocks a piece or closes the ring.
-    if (plan.kind !== 'quiet' && plan.tier === 'full') {
+    if (view.surface === 'card') {
       setMoment({ receipt: justLogged, plan })
     } else {
       setMoment(null)
-      const details = plan.kind === 'quiet' ? [] : [plan.detail, plan.pieces.length ? `New for Momo: ${plan.pieces.map(piece => piece.name).join(', ')}` : undefined, ...plan.awards.map(award => award.label), plan.levelUp !== null ? `Level ${plan.levelUp}.` : undefined].filter(Boolean)
-      toast(`Logged ${justLogged.name}${details.length ? ` · ${details.join(' · ')}` : ''}`, {
-        action: { label: 'Undo', fn: () => deleteEntry(justLogged.id) },
-      })
+      toast(view.toastText, { action: { label: 'Undo', fn: () => deleteEntry(justLogged.id) } })
     }
   }, [location.key]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (paused || location.state?.justLogged || !state.gamification.pendingLevelUp) return
-    toast(`Level ${state.gamification.pendingLevelUp}.`)
+    const level = levelUpToToast({
+      pendingLevel: state.gamification.pendingLevelUp,
+      paused,
+      receiptPending: Boolean((location.state as { justLogged?: LogReceipt } | null)?.justLogged),
+      sheetOpen,
+      lastToasted: levelToasted.current,
+    })
+    if (level === null) return
+    levelToasted.current = level
+    toast(`Level ${level}.`)
     ackLevelUp()
-  }, [state.gamification.pendingLevelUp, location.key, paused]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [state.gamification.pendingLevelUp, location.key, paused, sheetOpen]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function closeMoment(moveFocus: boolean) {
+    // Focus moves before the card unmounts, so it never falls to the page body.
+    if (moveFocus) mealsTitle.current?.focus({ preventScroll: true })
+    setMoment(null)
+  }
 
   function openLog(mealType?: MealType) {
     feel('press')
@@ -215,7 +252,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     const nextRing = dayRingProgress(dayRingEntries(dayEntries), notes + 1, profile.loggingCommitment)
     if (!ring.complete && nextRing.complete && readRingAck() !== selectedDayKey) {
       writeRingAck(selectedDayKey)
-      setJustClosed(!reduced)
+      setRingCheck(reduced ? 0 : RING_CHECK_MS)
     }
     patchGamification(g => applyNote(g, selectedDayKey))
   }
@@ -295,17 +332,12 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   />
                 )}
 
-                <DayRing progress={ring} justClosed={isToday && justClosed} note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDays.size, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>} />
-
-                {moment && <LogMoment
-                  key={moment.receipt.id}
-                  plan={{ ...moment.plan, maxMotionMs: reduced ? 0 : moment.plan.maxMotionMs }}
-                  foodName={moment.receipt.name}
-                  outfit={state.gamification.outfit}
-                  showMomo={showMomo && !profile.mascotReducedMotion}
-                  onUndo={() => { deleteEntry(moment.receipt.id); setMoment(null) }}
-                  onDone={() => setMoment(null)}
-                />}
+                <DayRing
+                  progress={ring}
+                  justClosed={isToday && ringCheck !== null}
+                  closeMs={ringCheck ?? RING_CHECK_MS}
+                  note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
+                />
 
                 <Surface
                   variant="hero"
@@ -378,6 +410,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
               <Section
                 className="k-meals"
                 titleId="meals-title"
+                titleRef={mealsTitle}
                 title="Meals"
                 meta={(
                   <span className="tabular">
@@ -442,6 +475,19 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
           )}
         </main>
       </PullToRefresh>
+      {/* Out of the page flow and out of the pull-to-refresh transform, so it moves nothing when it comes and goes. */}
+      {moment && !paused && createPortal(
+        <LogMoment
+          key={moment.receipt.id}
+          plan={moment.plan}
+          foodName={moment.receipt.name}
+          outfit={state.gamification.outfit}
+          showMomo={showMomo && !profile.mascotReducedMotion}
+          onUndo={() => deleteEntry(moment.receipt.id)}
+          onDone={closeMoment}
+        />,
+        document.body,
+      )}
     </AppShell>
   )
 }

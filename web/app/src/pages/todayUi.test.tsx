@@ -1,6 +1,8 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { wardrobeProgress } from '@fud-ai/product/wardrobe'
+import { progressNote } from '../lib/progressNote'
 import { freshState } from '../lib/storage'
 import type { FoodEntry } from '../types'
 import { HomePage } from './HomePage'
@@ -117,6 +119,21 @@ describe('Today', () => {
     const baseline = momoNote(variants[0]!)
     expect(baseline).toContain('A note from Momo')
     for (const html of variants) expect(momoNote(html)).toBe(baseline)
+  })
+
+  it('counts the progress note’s logged days the way wardrobe unlocks do', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 9, 5, 10, 30))
+    // Logged just after midnight while travelling: the stored local day is the 4th, the timestamp says the 5th.
+    state.foodEntries = [
+      meal({ id: 'late', timestamp: new Date(2026, 9, 5, 0, 20).toISOString(), localDate: '2026-10-04' }),
+      meal({ id: 'oats', timestamp: new Date(2026, 9, 5, 8, 15).toISOString() }),
+    ]
+    const days = wardrobeProgress(state).loggedDays
+    expect(days).toBe(2)
+    const note = render().match(/<p class="k-ring-note">([^<]*)<\/p>/)?.[1]
+    expect(note).toBe(progressNote({ loggedDays: days, ownedPieceIds: state.gamification.ownedCosmeticIds }).text)
+    expect(note).toMatch(/^2 logged days/)
   })
 
   it('hides nutrition during tracking pause', () => {
