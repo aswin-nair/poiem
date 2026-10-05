@@ -45,7 +45,7 @@ export function ReviewFoodPage() {
   const [error, setError] = useState<string | null>(null)
   const baseRef = useRef<FoodAnalysis | null>(pendingAnalysis ?? saved?.baseAnalysis ?? null)
   const [loadingDraft, setLoadingDraft] = useState(!initialAnalysis)
-  const saveGuard = useRef(createOnceGuard())
+  const [saveGuard] = useState(createOnceGuard)
   const reviewTracked = useRef(false)
   const correctionTracked = useRef(false)
 
@@ -137,11 +137,11 @@ export function ReviewFoodPage() {
 
   function save() {
     if (!analysis) return
-    saveGuard.current.run(() => {
+    saveGuard.run(() => {
       const issue = reviewFoodIssue(analysis, emptyNumericFields)
       if (issue) {
         setError(issue)
-        saveGuard.current.reset()
+        saveGuard.reset()
         return
       }
       const cals = Math.round(Number(analysis.calories))

@@ -33,7 +33,7 @@ export function ManualEntryPage() {
   const [error, setError] = useState<string | null>(null)
   const [attempted, setAttempted] = useState(false)
   const edited = useRef(false)
-  const saveGuard = useRef(createOnceGuard())
+  const [saveGuard] = useState(createOnceGuard)
   const feel = useFeel()
 
   useEffect(() => {
@@ -73,13 +73,13 @@ export function ManualEntryPage() {
   const scaledFat = validated.ok ? validated.value.fat : 0
 
   function save() {
-    saveGuard.current.run(() => {
+    saveGuard.run(() => {
       setAttempted(true)
       const result = validateManualFood({ name, calories, protein, carbs, fat, servings })
       if (!result.ok) {
         setError(result.error)
         mascotEvent('form_fumble')
-        saveGuard.current.reset()
+        saveGuard.reset()
         return
       }
       const entry = {

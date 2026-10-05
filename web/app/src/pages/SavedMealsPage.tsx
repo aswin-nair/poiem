@@ -1,5 +1,5 @@
 import { AppShell } from '../components/system/AppShell'
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { BackLink } from '../components/BackLink'
@@ -160,7 +160,7 @@ export function SavedMealsPage() {
   const location = useLocation()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
-  const logGuard = useRef(createOnceGuard())
+  const [logGuard] = useState(createOnceGuard)
   const feel = useFeel()
   const recents = recentMeals(state.foodEntries).filter(entry => !isFavorite(state, entry))
 
@@ -175,7 +175,7 @@ export function SavedMealsPage() {
   function resetFilters() { setQuery(''); setFilter('all') }
 
   function logEntry(entry: FoodEntry, servings: number) {
-    logGuard.current.run(() => {
+    logGuard.run(() => {
       const awardedFrom = state.gamification.awardedKeys.length
       const cals = Math.round(entry.calories * servings)
       const logged = logSavedMeal({
@@ -194,7 +194,7 @@ export function SavedMealsPage() {
   }
 
   function logMeal(meal: SavedMeal, servings: number) {
-    logGuard.current.run(() => {
+    logGuard.run(() => {
       const awardedFrom = state.gamification.awardedKeys.length
       const cals = Math.round(meal.calories * servings)
       const logged = logSavedMeal({

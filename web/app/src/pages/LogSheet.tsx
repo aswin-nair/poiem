@@ -66,7 +66,7 @@ export function LogSheet() {
   const [showAllRecents, setShowAllRecents] = useState(false)
   const [portionFor, setPortionFor] = useState<{ item: FoodEntry | SavedMeal; source: LogMethod } | null>(null)
   const lastEmptyTease = useRef('')
-  const commitGuard = useRef(createOnceGuard())
+  const [commitGuard] = useState(createOnceGuard)
   const [quick] = useState(() => lastSheetCloseAt !== null && Date.now() - lastSheetCloseAt < 60_000)
 
   useEffect(() => () => { lastSheetCloseAt = Date.now() }, [])
@@ -112,7 +112,7 @@ export function LogSheet() {
   }
 
   function commit(entry: FoodEntry, source: LogMethod) {
-    commitGuard.current.run(() => {
+    commitGuard.run(() => {
       selectLogMethod(source)
       const logged: FoodEntry = { ...entry, mealType }
       const receipt = makeLogReceipt(logged, state.gamification.awardedKeys.length)

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useFeel } from '../hooks/useHaptic'
 import { LogSheetOpenContext } from '../lib/logSheetOpen'
@@ -15,6 +15,9 @@ const TABS = [
   { to: '/settings', label: 'You', Icon: IconSettings },
 ] as const
 
+/** Long enough to swallow a double tap, short enough that a stranded claim is never noticed. */
+const FAB_RELEASE_MS = 400
+
 export function BottomNav() {
   const feel = useFeel()
   const fabAnchor = useAnchor('fab')
@@ -29,15 +32,20 @@ export function BottomNav() {
   }
   const logOpen = useContext(LogSheetOpenContext) || location.pathname === '/log'
   const [pops, setPops] = useState(0)
-  const openGuard = useRef(createOnceGuard())
+  // A double tap opens one sheet. The claim is released when the sheet closes, or after
+  // FAB_RELEASE_MS if the sheet never opened (a fast back before /log commits).
+  const [openGuard] = useState(() => createOnceGuard({ releaseAfterMs: FAB_RELEASE_MS }))
 
   useEffect(() => {
-    if (!logOpen) openGuard.current.reset()
-  }, [logOpen])
+    if (!logOpen) openGuard.reset()
+  }, [logOpen, openGuard])
+
+  // Clears a pending timed release when the tab bar unmounts.
+  useEffect(() => () => openGuard.reset(), [openGuard])
 
   function openLog() {
     if (logOpen) return
-    openGuard.current.run(() => {
+    openGuard.run(() => {
       setPops(count => count + 1)
       feel('open')
       navigate('/log', { state: { background: location } })
