@@ -31,12 +31,19 @@
   /* The moment card floats where the toasts do, above the tab bar and under sheets, so
      nothing on the page moves when it arrives or leaves. Flat and outlined, like a toast
      without the offset block. Rendered into <body>, outside any transformed ancestor. */
+  .k-log-moment, .k-today-main {
+    --k-moment-max-height: max(0px, calc(100dvh - var(--k-tabbar-h) - var(--safe-bottom, 0px) - 2 * var(--k-space-4xl)));
+  }
   .k-log-moment {
     position: fixed;
     inset-inline: var(--k-pad-panel);
     bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + var(--k-space-sm));
     z-index: calc(var(--k-z-toast) - 1);
     max-width: var(--k-shell);
+    /* Leave room above the card for one final meal action, even in phone landscape. */
+    max-height: var(--k-moment-max-height);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     margin-inline: auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -123,7 +130,7 @@
   .k-today-main {
     display: grid;
     gap: var(--k-space-xl);
-    padding: var(--k-space-lg) var(--k-pad-panel) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + var(--k-space-3xl));
+    padding: var(--k-space-lg) var(--k-pad-panel) calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + var(--k-space-3xl) + min(var(--k-moment-clearance, 0px), var(--k-moment-max-height)));
   }
 
   .k-today .k-momo { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: var(--k-space-md); }
@@ -317,17 +324,17 @@
   .k-today .k-notice-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--k-space-md); margin-top: var(--k-space-xs); }
 
   .k-today-layout { display: grid; gap: var(--k-space-xl); }
+  .k-today-summary { display: grid; gap: var(--k-space-xl); }
 
   @media (min-width: 768px) {
     .k-today-main { gap: var(--k-space-xl); }
   }
 
   @media (min-width: 1120px) {
-    .k-today-main { padding-bottom: var(--k-space-3xl); }
+    .k-today-main { padding-bottom: calc(var(--k-space-3xl) + min(var(--k-moment-clearance, 0px), var(--k-moment-max-height))); }
     .k-today-layout {
       grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
       align-items: start;
     }
-    .k-today-summary { display: grid; gap: var(--k-space-xl); }
   }
 }

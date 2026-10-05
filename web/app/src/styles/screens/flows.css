@@ -565,7 +565,8 @@
   .k-saved .discover-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
   .k-saved :is(.discover-card-emoji, .saved-meal-emoji) { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 0; color: var(--k-on-tone); rotate: none; }
   /* The legacy star pops to 1.18x on an overshoot curve; here it is the same flat 2px depress as every control. */
-  .k-saved .star-btn { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; cursor: pointer; transition: transform var(--k-press) var(--k-ease); }
+  .k-saved .star-btn { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; transform: none; cursor: pointer; transition: transform var(--k-press) var(--k-ease); }
+  .k-saved .star-btn:hover { transform: none; }
   .k-saved .star-btn:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-saved .star-btn[aria-pressed="true"] { background: var(--k-butter); color: var(--k-on-tone); }
   .k-saved .star-btn:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }

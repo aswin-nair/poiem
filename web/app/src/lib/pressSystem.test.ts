@@ -61,6 +61,15 @@ describe('shared press vocabulary', () => {
 })
 
 describe('flat press on the remaining daily controls', () => {
+  it('resets the Saved star hover scale before applying its flat press', () => {
+    const hover = flows.findIndex(rule => rule.parts.includes('.k-saved .star-btn:hover'))
+    const active = flows.findIndex(rule => rule.parts.includes('.k-saved .star-btn:active'))
+    expect(hover).toBeGreaterThanOrEqual(0)
+    expect(flows[hover].body).toMatch(/transform:\s*none\s*;/)
+    expect(flows[hover].body).not.toMatch(/scale\(/)
+    expect(active).toBeGreaterThan(hover)
+    expect(flows[active].body).toMatch(/transform:\s*translate\(2px,\s*2px\)/)
+  })
   const controls: [string, Rule[], string][] = [
     ['.k-saved .discover-chip', flows, 'flows.css'],
     ['.k-flow .chip', flows, 'flows.css'],

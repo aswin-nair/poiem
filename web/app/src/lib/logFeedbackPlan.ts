@@ -24,7 +24,7 @@ export interface LogFeedbackPlan {
 }
 
 /** Ends a phrase with one full stop, so a food called "Rice." is "Logged Rice.", never "Logged Rice..". */
-function sentence(text: string): string {
+export function sentence(text: string): string {
   const trimmed = text.trim()
   return /[.!?…]$/.test(trimmed) ? trimmed : `${trimmed}.`
 }
@@ -85,6 +85,12 @@ export function planLogFeedback(input: {
   const levelUp = gamification.pendingLevelUp
   const sentences = [loggedAnnouncement]
   if (detail) sentences.push(sentence(detail))
+  if (kind === 'first-meal') {
+    sentences.push('First meal in.')
+    const [handover, ...others] = pieces
+    if (handover) sentences.push(sentence(`Momo’s first piece: ${handover.name}`))
+    if (others.length) sentences.push(sentence(`New for Momo: ${others.map(piece => piece.name).join(', ')}`))
+  }
   if (levelUp !== null) sentences.push(`Level ${levelUp}.`)
 
   return {

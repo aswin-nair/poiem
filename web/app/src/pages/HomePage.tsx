@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useReducedMotion } from 'motion/react'
@@ -54,7 +54,7 @@ const MEAL_ICONS: Record<MealType, typeof IconMeal> = {
 /**
  * Today: Momo says hello, the number that matters sits on a bright card, and
  * meals are grouped the way the day went, each in its own colour. Streaks,
- * levels and XP live on Insights.
+ * the progress dashboard lives on Insights; a log receipt can acknowledge its XP and level once.
  */
 export function HomePage({ guest = false }: { guest?: boolean }) {
   const { state, ackLevelUp, patchGamification, deleteEntry, restoreEntry, refresh } = useApp()
@@ -66,6 +66,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const [selectedDate, setSelectedDate] = useState(() => startOfDay())
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)
+  // Retain clearance until Today unmounts: dismissing a card at the scroll end must not jump the page.
+  const [momentClearance, setMomentClearance] = useState(0)
+  const reserveMomentSpace = useCallback((height: number) => {
+    setMomentClearance(previous => Math.max(previous, height))
+  }, [])
   /** The Day ring's check acknowledgement in ms while it plays, else null. */
   const [ringCheck, setRingCheck] = useState<number | null>(null)
   const [freshId, setFreshId] = useState<string | null>(null)
@@ -210,17 +215,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   }, [location.key]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const level = levelUpToToast({
+    const decision = levelUpToToast({
       pendingLevel: state.gamification.pendingLevelUp,
       paused,
       receiptPending: Boolean((location.state as { justLogged?: LogReceipt } | null)?.justLogged),
       sheetOpen,
       lastToasted: levelToasted.current,
     })
-    if (level === null) return
-    levelToasted.current = level
-    toast(`Level ${level}.`)
-    ackLevelUp()
+    if (decision.toastLevel !== null) {
+      levelToasted.current = decision.toastLevel
+      toast(`Level ${decision.toastLevel}.`)
+    }
+    if (decision.acknowledge) ackLevelUp()
   }, [state.gamification.pendingLevelUp, location.key, paused, sheetOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function closeMoment(moveFocus: boolean) {
@@ -297,7 +303,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
 
       <PullToRefresh onRefresh={refresh}>
         {/* The walking Momo never stands on the day's numbers or meals: he waits beside the column on wide screens and stays off Today on a phone. */}
-        <main className="app-main k-today-main" data-mascot-avoid>
+        <main className="app-main k-today-main" data-mascot-avoid style={{ '--k-moment-clearance': `${momentClearance}px` } as CSSProperties}>
           {paused ? (
             <Surface variant="outlined" as="section" className="k-notice" aria-labelledby="paused-title">
               <h2 id="paused-title">Tracking is paused</h2>
@@ -485,6 +491,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
           showMomo={showMomo && !profile.mascotReducedMotion}
           onUndo={() => deleteEntry(moment.receipt.id)}
           onDone={closeMoment}
+          onHeight={reserveMomentSpace}
         />,
         document.body,
       )}

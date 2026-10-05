@@ -196,6 +196,10 @@ describe('presentLogFeedback', () => {
     expect(presentLogFeedback(plan('repeat'), ' Rice. ').toastText).toBe('Logged Rice.')
   })
 
+  it.each(['Rice…', 'Rice...'])('keeps the existing punctuation in %s when adding a level', name => {
+    expect(presentLogFeedback(plan('repeat', { levelUp: 3 }), ` ${name} `).toastText).toBe(`Logged ${name} Level 3.`)
+  })
+
   it('presents nothing but the fact while paused', () => {
     for (const tier of TIERS) {
       const view = presentLogFeedback(plan(tier, { paused: true, newPieces: [whisk], milestone: true, levelUp: 4 }), 'Dinner')
@@ -221,19 +225,20 @@ describe('ringCheckMs', () => {
 describe('levelUpToToast', () => {
   const quiet = { pendingLevel: 4, paused: false, receiptPending: false, sheetOpen: false, lastToasted: null }
   it('toasts a pending level when nothing else owns it', () => {
-    expect(levelUpToToast(quiet)).toBe(4)
+    expect(levelUpToToast(quiet)).toEqual({ toastLevel: 4, acknowledge: true })
   })
   it('toasts each level once, so a second effect run stays silent', () => {
-    expect(levelUpToToast({ ...quiet, lastToasted: 4 })).toBeNull()
-    expect(levelUpToToast({ ...quiet, pendingLevel: 5, lastToasted: 4 })).toBe(5)
+    expect(levelUpToToast({ ...quiet, lastToasted: 4 })).toEqual({ toastLevel: null, acknowledge: true })
+    expect(levelUpToToast({ ...quiet, pendingLevel: 5, lastToasted: 4 })).toEqual({ toastLevel: 5, acknowledge: true })
   })
   it('leaves the level to the log card while a receipt or the log sheet is open', () => {
-    expect(levelUpToToast({ ...quiet, receiptPending: true })).toBeNull()
-    expect(levelUpToToast({ ...quiet, sheetOpen: true })).toBeNull()
+    expect(levelUpToToast({ ...quiet, receiptPending: true })).toEqual({ toastLevel: null, acknowledge: false })
+    expect(levelUpToToast({ ...quiet, sheetOpen: true })).toEqual({ toastLevel: null, acknowledge: false })
+    expect(levelUpToToast({ ...quiet, lastToasted: 4, receiptPending: true })).toEqual({ toastLevel: null, acknowledge: false })
   })
   it('stays silent while paused or with nothing pending', () => {
-    expect(levelUpToToast({ ...quiet, paused: true })).toBeNull()
-    expect(levelUpToToast({ ...quiet, pendingLevel: null })).toBeNull()
+    expect(levelUpToToast({ ...quiet, paused: true })).toEqual({ toastLevel: null, acknowledge: false })
+    expect(levelUpToToast({ ...quiet, pendingLevel: null })).toEqual({ toastLevel: null, acknowledge: false })
   })
 })
 

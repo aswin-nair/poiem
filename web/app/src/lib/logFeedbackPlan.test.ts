@@ -51,10 +51,18 @@ describe('log feedback planner', () => {
   it('first meal ever', () => {
     const plan = planLogFeedback(input({ entries: [logged], gamification: g({ ownedCosmeticIds: [] }) }))
     expect(plan).toMatchObject({
-      kind: 'first-meal', tier: 'full', headline: 'First meal in.', announcement: 'Logged Lunch.',
+      kind: 'first-meal', tier: 'full', headline: 'First meal in.', announcement: 'Logged Lunch. First meal in. Momo’s first piece: Blossom clip.',
       pieces: [firstPiece], cue: 'log-confirm', mascotEvent: 'milestone', maxMotionMs: 720,
     })
     expect(plan.detail).toBeUndefined()
+  })
+
+  it('announces the first piece, other new pieces and level once in one message', () => {
+    const plan = planLogFeedback(input({
+      entries: [logged], gamification: g({ ownedCosmeticIds: [], pendingLevelUp: 2 }),
+      newPieces: [pencil, scarf],
+    }))
+    expect(plan.announcement).toBe('Logged Lunch. First meal in. Momo’s first piece: Blossom clip. New for Momo: Pencil, Scarf. Level 2.')
   })
 
   it('first meal rule uses ownership of the first piece, not an empty journal', () => {

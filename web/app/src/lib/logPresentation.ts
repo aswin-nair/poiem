@@ -1,4 +1,4 @@
-import type { FeedbackKind, LogFeedbackPlan } from './logFeedbackPlan'
+import { sentence, type FeedbackKind, type LogFeedbackPlan } from './logFeedbackPlan'
 
 /** What Today shows for one accepted log: the moment card or the ordinary toast, never both. */
 export interface LogPresentation {
@@ -25,7 +25,7 @@ export function presentLogFeedback(plan: LogFeedbackPlan, foodName: string): Log
   const logged = `Logged ${foodName.trim()}`
   // A plain log's toast is one line with a level-up folded in; a card carries the level as its own line.
   const toastText = surface === 'toast' && plan.levelUp !== null
-    ? `${logged}${/[.!?]$/.test(logged) ? '' : '.'} Level ${plan.levelUp}.`
+    ? `${sentence(logged)} Level ${plan.levelUp}.`
     : logged
   if (plan.kind === 'quiet') return { surface, headline: plan.headline, lines: [], showMomo: false, toastText }
 
@@ -60,7 +60,7 @@ export function ringCheckMs(plan: Pick<LogFeedbackPlan, 'ringClosed' | 'maxMotio
 }
 
 /**
- * The level Today should toast on its own, or null. A log's card owns its
+ * The level Today should toast on its own, and whether to clear it. A log's card owns its
  * "Level N." line, so nothing is toasted while a receipt is still on its way in
  * or the log sheet is open (a quick add commits the new level a moment before
  * its navigation lands), and each level is toasted once, however often the
@@ -72,10 +72,12 @@ export function levelUpToToast(input: {
   receiptPending: boolean
   sheetOpen: boolean
   lastToasted: number | null
-}): number | null {
+}): { toastLevel: number | null; acknowledge: boolean } {
   const { pendingLevel } = input
-  if (pendingLevel === null || input.paused || input.receiptPending || input.sheetOpen) return null
-  return pendingLevel === input.lastToasted ? null : pendingLevel
+  if (pendingLevel === null || input.paused || input.receiptPending || input.sheetOpen) {
+    return { toastLevel: null, acknowledge: false }
+  }
+  return { toastLevel: pendingLevel === input.lastToasted ? null : pendingLevel, acknowledge: true }
 }
 
 export type MomentExit = 'undo' | 'dismiss' | 'timeout'

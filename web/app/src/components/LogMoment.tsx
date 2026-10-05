@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactElement } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactElement } from 'react'
 import { useReducedMotion } from 'motion/react'
 import type { LogFeedbackPlan } from '../lib/logFeedbackPlan'
 import { movesFocusOnExit, presentLogFeedback, scheduleAnnouncement } from '../lib/logPresentation'
@@ -12,7 +12,7 @@ const VISIBLE_MS = 10_000
  * It never takes focus. Undo and Dismiss, and a timeout while focus is inside,
  * report `moveFocus` so the page can put focus somewhere stable.
  */
-export function LogMoment({ plan, foodName, outfit, showMomo, onUndo, onDone }: {
+export function LogMoment({ plan, foodName, outfit, showMomo, onUndo, onDone, onHeight }: {
   plan: LogFeedbackPlan
   foodName: string
   outfit?: MomoOutfit
@@ -20,6 +20,8 @@ export function LogMoment({ plan, foodName, outfit, showMomo, onUndo, onDone }: 
   showMomo: boolean
   onUndo?: () => void
   onDone: (moveFocus: boolean) => void
+  /** Reserve scroll clearance below the final row without inserting the card in the layout. */
+  onHeight?: (height: number) => void
 }): ReactElement {
   const reduced = useReducedMotion()
   const view = presentLogFeedback(plan, foodName)
@@ -35,6 +37,15 @@ export function LogMoment({ plan, foodName, outfit, showMomo, onUndo, onDone }: 
 
   useEffect(() => { done.current = onDone })
   useEffect(() => scheduleAnnouncement(() => setAnnouncement(plan.announcement)), [plan.announcement])
+  useLayoutEffect(() => {
+    const element = card.current
+    if (!element || !onHeight) return
+    const measure = () => onHeight(Math.ceil(element.getBoundingClientRect().height))
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [onHeight])
 
   function pause() {
     if (timer.current !== undefined) {
