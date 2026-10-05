@@ -191,16 +191,13 @@
 .history-link-card,
 .settings-data-btn,
 .settings-link-row {
-  transition:
-    transform var(--motion-press) cubic-bezier(0.34, 1.56, 0.64, 1),
-    border-bottom-width var(--motion-press);
+  transition: transform var(--motion-press) cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .history-link-card:active,
 .settings-data-btn:active,
 .settings-link-row:active {
   transform: translateY(2px);
-  border-bottom-width: var(--edge-width);
 }
 
 .discover-card,
@@ -257,11 +254,6 @@
 
 .login-card {
   animation: hero-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.field input:focus,
-.field textarea:focus {
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 /* ── Reduced-motion: kill all animations ────────────────────── */
