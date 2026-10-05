@@ -13,11 +13,15 @@
   .k-ring-graphic svg { display: block; width: 100%; height: 100%; }
   .k-ring-track, .k-ring-fill { fill: none; stroke-width: 6; }
   .k-ring-track { stroke: var(--k-role-border-subtle); }
+  .k-ring-fill { stroke-linecap: round; }
+  /* A round cap on an empty dash would still paint a dot at 12 o'clock. */
+  .k-ring-fill.is-empty { stroke-linecap: butt; }
   .k-ring-center { position: absolute; inset: 0; display: grid; place-items: center; font: 700 var(--k-type-meta)/1 var(--k-font-body); }
   .k-ring-copy { min-width: 0; }
   .k-ring h2 { margin: 0 0 var(--k-space-sm); font: 700 var(--k-type-section)/1.2 var(--k-font-body); }
   .k-ring-legend { display: grid; gap: var(--k-space-xs); padding: 0; margin: 0; list-style: none; }
-  .k-ring-legend li { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; align-items: center; gap: var(--k-space-sm); font: 500 var(--k-type-meta)/1.4 var(--k-font-body); }
+  .k-ring-legend li { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; align-items: center; gap: var(--k-space-sm); color: var(--k-role-text-muted); font: 500 var(--k-type-meta)/1.4 var(--k-font-body); }
+  .k-ring-legend li.is-done { color: var(--k-role-text); font-weight: 700; }
   .k-ring-legend small { font: inherit; color: var(--k-role-text-muted); }
   .k-ring-dot { width: 8px; height: 8px; border-radius: 50%; }
   .k-ring-note { grid-column: 1 / -1; margin: 0; color: var(--k-role-text-muted); font: 600 var(--k-type-label)/1.5 var(--k-font-body); overflow-wrap: anywhere; }
