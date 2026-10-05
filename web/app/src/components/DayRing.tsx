@@ -1,5 +1,6 @@
 import { useId, type CSSProperties, type ReactNode } from 'react'
 import type { DayRingArc, DayRingProgress } from '../lib/dayRing'
+import { RING_CHECK_MS } from '../lib/logPresentation'
 
 // The streak-bearing log is the protected inner arc; optional ambition grows
 // outward from it and can never make the inner promise look incomplete.
@@ -12,7 +13,7 @@ const SIZES = [52, 72, 92]
  */
 const arcColor = (arc: DayRingArc) => arc.required ? 'var(--k-role-text)' : 'var(--k-role-text-muted)'
 
-export function DayRing({ progress, justClosed = false, closeMs = 240, note }: {
+export function DayRing({ progress, justClosed = false, closeMs = RING_CHECK_MS, note }: {
   progress: DayRingProgress
   /** The ring closed just now: the check plays once, for `closeMs` (the log's motion cap, 0 when still). */
   justClosed?: boolean
