@@ -1,3 +1,5 @@
+import { feel } from '../../lib/feel'
+
 export function FilterGroup({
   label,
   options,
@@ -32,5 +34,3 @@ export function FilterGroup({
     </div>
   )
 }
-import { feel } from '../../lib/feel'
-

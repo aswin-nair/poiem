@@ -37,6 +37,7 @@ import * as m from 'motion/react-m'
 import { motionOpacity, motionPop, motionSpring, motionStep, plateReveal } from '../lib/motionPresets'
 import { ProgressRecipe } from '../components/SnackAttackPrimitives'
 import { makeLogReceipt } from '../lib/logReceipt'
+import { feel } from '../lib/feel'
 
 const STEPS = ['Age', 'About you', 'Body', 'Goal', 'Activity', 'Your pace', 'Review', 'First meal']
 const FIRST_MEAL_STEP = STEPS.length - 1
@@ -410,7 +411,10 @@ export function OnboardingPage() {
                     aria-pressed={profile.gender === gender}
                     whileTap={reducedMotion ? undefined : { scale: 0.97 }}
                     transition={motionSpring}
-                    onClick={() => updateDraftProfile(current => ({ ...current, gender }))}
+                    onClick={() => {
+                      if (profile.gender !== gender) feel('select')
+                      updateDraftProfile(current => ({ ...current, gender }))
+                    }}
                   >
                     <span className="k-choice-copy"><strong>{gender === 'female' ? 'Female equation' : 'Male equation'}</strong></span>
                     <span className="setup-selected" aria-hidden="true">{profile.gender === gender && <IconCheck size={17} />}</span>
@@ -495,7 +499,10 @@ export function OnboardingPage() {
                   aria-pressed={profile.activityLevel === level}
                   whileTap={reducedMotion ? undefined : { scale: 0.98 }}
                   transition={motionSpring}
-                  onClick={() => updateDraftProfile(current => ({ ...current, activityLevel: level }))}
+                  onClick={() => {
+                    if (profile.activityLevel !== level) feel('select')
+                    updateDraftProfile(current => ({ ...current, activityLevel: level }))
+                  }}
                 >
                   <span className="k-choice-icon" aria-hidden="true"><ActivityIcon size={24} /></span>
                   <span className="k-choice-copy"><strong>{ACTIVITY_LABELS[level]}</strong><small>{ACTIVITY_DESCRIPTIONS[level]}</small></span>
@@ -521,7 +528,10 @@ export function OnboardingPage() {
                   aria-pressed={(profile.loggingCommitment ?? 'light') === commitment.id}
                   whileTap={reducedMotion ? undefined : { scale: 0.98 }}
                   transition={motionSpring}
-                  onClick={() => updateDraftProfile(current => ({ ...current, loggingCommitment: commitment.id }))}
+                  onClick={() => {
+                    if ((profile.loggingCommitment ?? 'light') !== commitment.id) feel('select')
+                    updateDraftProfile(current => ({ ...current, loggingCommitment: commitment.id }))
+                  }}
                 >
                   <span className="k-choice-icon" aria-hidden="true"><commitment.Icon size={24} /></span>
                   <span className="k-choice-copy">
@@ -548,11 +558,14 @@ export function OnboardingPage() {
                   aria-pressed={profile.goal === goal}
                   whileTap={reducedMotion ? undefined : { scale: 0.98 }}
                   transition={motionSpring}
-                  onClick={() => updateDraftProfile(current => ({
-                    ...current,
-                    goal,
-                    goalWeightKg: goal === 'maintain' ? undefined : current.goalWeightKg,
-                  }))}
+                  onClick={() => {
+                    if (profile.goal !== goal) feel('select')
+                    updateDraftProfile(current => ({
+                      ...current,
+                      goal,
+                      goalWeightKg: goal === 'maintain' ? undefined : current.goalWeightKg,
+                    }))
+                  }}
                 >
                   <span className="k-choice-icon" aria-hidden="true">{goal === 'lose' ? <IconSprout size={24} /> : goal === 'maintain' ? <IconShield size={24} /> : <IconEnergy size={24} />}</span>
                   <span className="k-choice-copy"><strong>{GOAL_LABELS[goal]}</strong><small>{GOAL_DESCRIPTIONS[goal]}</small></span>
@@ -725,7 +738,10 @@ export function OnboardingPage() {
                     aria-pressed={firstMeal.mealType === mealType}
                     whileTap={reducedMotion ? undefined : { scale: 0.96 }}
                     transition={motionSpring}
-                    onClick={() => updateFirstMeal('mealType', mealType)}
+                    onClick={() => {
+                      if (firstMeal.mealType !== mealType) feel('select')
+                      updateFirstMeal('mealType', mealType)
+                    }}
                   >
                     {MEAL_LABELS[mealType]}
                   </m.button>

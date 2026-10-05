@@ -85,8 +85,9 @@ export function WeekStrip({
               className="week-day"
               disabled={isFuture}
               onClick={() => {
-                if (isSelected) return
-                feel('tap')
+                /* The same cue as the calendar's day picker. Choosing the day already
+                   shown is still a request (callers may refresh), just a silent one. */
+                if (!isSelected) feel('select')
                 onSelect(d)
               }}
               aria-label={`${d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}${stateLabel}`}

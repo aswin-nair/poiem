@@ -120,11 +120,13 @@
   .k-insights .insights-range-control h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
   .k-insights .insights-range-control p { margin: 0; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
   .k-insights .range-chips { display: flex; gap: 6px; }
-  .k-insights .range-chip { min-width: 76px; min-height: 44px; padding: 0 14px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; }
+  .k-insights .range-chip { min-width: 76px; min-height: 44px; padding: 0 14px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; transition: transform var(--k-press) var(--k-ease); }
+  .k-insights .range-chip:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-insights .range-chip[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); box-shadow: none; }
   .k-insights .range-chip:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
-  .k-insights .progress-log-btn { min-height: 44px; padding: 0 14px; border: 2px solid var(--k-on-action); border-radius: 0; background: var(--k-action); color: var(--k-on-action); box-shadow: none; font: 800 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; }
-  .k-insights .progress-log-btn:active { translate: 2px 2px; box-shadow: none; }
+  .k-insights .progress-log-btn { min-height: 44px; padding: 0 14px; border: 2px solid var(--k-on-action); border-radius: 0; background: var(--k-action); color: var(--k-on-action); box-shadow: none; font: 800 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; transition: transform var(--k-press) var(--k-ease); }
+  /* One flat depress: `transform` replaces the legacy `scale(.96)` instead of stacking on it. */
+  .k-insights .progress-log-btn:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-insights .progress-log-btn:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
   .k-insights .progress-avg-pill { padding: 6px 10px; border: 2px solid var(--k-on-acid); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); font: 600 var(--k-text-xs)/1 var(--k-font-mono); }
   .k-insights .progress-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 12px; }
@@ -155,8 +157,10 @@
     font: inherit;
     text-align: left;
     cursor: pointer;
+    transition: transform var(--k-press) var(--k-ease);
   }
-  .k-insights .history-link-card:active { translate: 2px 2px; box-shadow: none; }
+  /* One flat depress: `transform` replaces the legacy `translateY(2px)` and clay squash instead of stacking on them. */
+  .k-insights .history-link-card:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-insights .history-link-card:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
   .k-insights .history-link-icon { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-mint); color: var(--k-on-tone); }
   .k-insights .history-link-text { display: grid; gap: 2px; min-width: 0; }

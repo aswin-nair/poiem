@@ -85,7 +85,9 @@
     color: var(--k-ink);
     font: 700 var(--k-text-sm)/1 var(--k-font-body);
     cursor: pointer;
+    transition: transform var(--k-press) var(--k-ease);
   }
+  .k-shelf button:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-shelf button + button { border-left: 2px solid var(--k-line); }
   .k-shelf button[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); }
   .k-shelf button:focus-visible { outline: 3px solid var(--k-focus); outline-offset: -3px; }

@@ -354,8 +354,10 @@
     box-shadow: none;
     font: 700 var(--k-text-sm)/1 var(--k-font-body);
     cursor: pointer;
+    transition: transform var(--k-press) var(--k-ease);
     --tone: var(--k-mint);
   }
+  .flow-meal-options button:active { transform: translate(2px, 2px); box-shadow: none; }
   .flow-meal-options button svg { box-sizing: content-box; padding: 4px; border: 1.5px solid var(--k-line); background: var(--tone); color: var(--k-on-tone); }
   .flow-meal-options .is-breakfast { --tone: var(--k-butter); }
   .flow-meal-options .is-lunch { --tone: var(--k-peach); }
@@ -491,7 +493,8 @@
   .k-flow .serving-input { width: 100%; min-height: 44px; border: 0; border-inline: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); color: var(--k-ink); text-align: center; font: 900 var(--k-type-lead)/1 var(--k-font-display); }
   .k-flow .serving-hint { font: 600 var(--k-text-xs)/1 var(--k-font-mono); color: var(--k-muted); }
   .k-flow .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .k-flow .chip { min-height: 44px; padding: 0 14px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; }
+  .k-flow .chip { min-height: 44px; padding: 0 14px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer; transition: transform var(--k-press) var(--k-ease); }
+  .k-flow .chip:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-flow .chip[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); box-shadow: none; }
   .k-flow .chip:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .manual-summary { display: grid; gap: 4px; margin: 0; padding: 14px; border: 2px solid var(--k-on-acid); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); box-shadow: 4px 4px 0 var(--k-on-acid); }
@@ -531,7 +534,7 @@
   .k-saved .discover-search input { flex: 1; min-width: 0; min-height: 48px; border: 0; background: transparent; color: var(--k-ink); font: 500 var(--k-text-md)/1.2 var(--k-font-body); outline: none; }
   .k-saved .discover-search:focus-within { outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .k-saved .discover-chip-row { display: grid; flex-wrap: wrap; gap: var(--k-space-sm);  grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .k-saved .discover-chip { min-height: 44px; padding: 0 8px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer;  transform: none;  translate: none; }
+  .k-saved .discover-chip { min-height: 44px; padding: 0 8px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1 var(--k-font-body); cursor: pointer;  transform: none;  translate: none; transition: transform var(--k-press) var(--k-ease); }
   .k-saved .discover-chip[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); box-shadow: none; }
   .k-saved .discover-chip:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .k-saved .saved-reset {
@@ -561,7 +564,9 @@
   .k-saved .discover-card { display: grid; align-content: start; gap: var(--k-space-sm); padding: var(--k-pad-panel); border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; }
   .k-saved .discover-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
   .k-saved :is(.discover-card-emoji, .saved-meal-emoji) { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 0; color: var(--k-on-tone); rotate: none; }
-  .k-saved .star-btn { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; cursor: pointer; }
+  /* The legacy star pops to 1.18x on an overshoot curve; here it is the same flat 2px depress as every control. */
+  .k-saved .star-btn { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; cursor: pointer; transition: transform var(--k-press) var(--k-ease); }
+  .k-saved .star-btn:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-saved .star-btn[aria-pressed="true"] { background: var(--k-butter); color: var(--k-on-tone); }
   .k-saved .star-btn:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .k-saved :is(.discover-card-name, .saved-meal-name) { margin: 2px 0 0; font: 800 var(--k-text-md)/1.25 var(--k-font-body); color: var(--k-ink); overflow-wrap: anywhere; }
@@ -602,7 +607,8 @@
   .k-saved .saved-meal-actions .log-pill-btn { margin-left: auto; }
   .k-saved .saved-collections { display: grid; gap: var(--k-space-2xl); align-items: start; }
   .k-saved .saved-collection { display: grid; gap: var(--k-space-lg); min-width: 0; }
-  .k-saved .discover-chip:is(:hover, :active) { transform: none; translate: none; box-shadow: none; }
+  .k-saved .discover-chip:hover { transform: none; translate: none; box-shadow: none; }
+  .k-saved .discover-chip:active { transform: translate(2px, 2px); box-shadow: none; }
   @media (min-width: 768px) {
     .k-saved .discover-chip-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .k-saved .saved-collections { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }

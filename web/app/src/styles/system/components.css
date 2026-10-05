@@ -211,7 +211,7 @@
   }
   .bottom-nav .nav-fab-face svg { stroke-width: 3; rotate: none; transition: transform 240ms var(--k-ease); }
   .bottom-nav .nav-fab:hover .nav-fab-face svg { transform: rotate(90deg); }
-  .bottom-nav .nav-fab:active .nav-fab-face { transform: translate(3px, 3px) scale(.92); box-shadow: none; }
+  .bottom-nav .nav-fab:active .nav-fab-face { transform: translate(3px, 3px); box-shadow: none; }
   .bottom-nav .nav-fab.active .nav-fab-face {
     transform: translate(2px, 2px);
     background: var(--k-acid);
@@ -219,7 +219,7 @@
     color: var(--k-on-acid);
     box-shadow: 2px 2px 0 var(--k-shadow-color);
   }
-  .bottom-nav .nav-fab.active:active .nav-fab-face { transform: translate(3px, 3px) scale(.92); }
+  .bottom-nav .nav-fab.active:active .nav-fab-face { transform: translate(3px, 3px); }
   .bottom-nav .nav-fab.active .nav-fab-face svg { transform: rotate(135deg); }
   .bottom-nav .nav-fab:focus-visible { outline: none; }
   .bottom-nav .nav-fab:focus-visible .nav-fab-face { outline: 3px solid var(--k-focus); outline-offset: 3px; }

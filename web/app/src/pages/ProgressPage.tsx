@@ -13,6 +13,7 @@ import { FoodIcon, IconChevronRight, IconMenuLines, IconFlame, IconTrophy } from
 import { PressableButton } from '../components/PressableButton'
 import { WeightLogSheet } from '../components/WeightLogSheet'
 import { foodToneFor } from '../lib/foodGlyph'
+import { feel } from '../lib/feel'
 
 const RANGES = [
   { id: '1W', label: 'Week', days: 7 },
@@ -232,7 +233,7 @@ export function ProgressPage() {
           <h2>Weight &amp; calories</h2>
           <div className="range-chips" role="group" aria-label="Chart time range">
             {RANGES.map(r => <button key={r.id} type="button" className={`range-chip${range === r.id ? ' active' : ''}`}
-              aria-pressed={range === r.id} onClick={() => setRange(r.id)}>{r.label}</button>)}
+              aria-pressed={range === r.id} onClick={() => { if (range === r.id) return; feel('select'); setRange(r.id) }}>{r.label}</button>)}
           </div>
           <p role="status" aria-live="polite">Last {days} days · Applies to the two charts below.</p>
         </section>
