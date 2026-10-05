@@ -8,7 +8,7 @@ export interface LogPresentation {
   lines: string[]
   /** A small Momo on the card, only for the first meal and a new wardrobe piece. */
   showMomo: boolean
-  /** The toast, when there is one, names the food and nothing else. */
+  /** The toast, when there is one, names the food, plus "Level N." when the log gained a level. */
   toastText: string
 }
 
@@ -22,7 +22,11 @@ const MOMO_KINDS: ReadonlySet<FeedbackKind> = new Set(['first-meal', 'wardrobe']
 
 export function presentLogFeedback(plan: LogFeedbackPlan, foodName: string): LogPresentation {
   const surface = CARD_KINDS.has(plan.kind) || (plan.kind === 'first-of-day' && plan.tier === 'full') ? 'card' : 'toast'
-  const toastText = `Logged ${foodName.trim()}`
+  const logged = `Logged ${foodName.trim()}`
+  // A plain log's toast is one line with a level-up folded in; a card carries the level as its own line.
+  const toastText = surface === 'toast' && plan.levelUp !== null
+    ? `${logged}${/[.!?]$/.test(logged) ? '' : '.'} Level ${plan.levelUp}.`
+    : logged
   if (plan.kind === 'quiet') return { surface, headline: plan.headline, lines: [], showMomo: false, toastText }
 
   const lines: string[] = []

@@ -187,7 +187,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       setRingCheck(check)
     }
     if (plan.levelUp !== null) {
-      // The card carries "Level N."; a toasted log leaves the level to Insights.
+      // The card or the toast carries "Level N."; acknowledge it so it is not toasted again.
       levelToasted.current = plan.levelUp
       ackLevelUp()
     }

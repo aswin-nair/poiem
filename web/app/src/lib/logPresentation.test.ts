@@ -70,14 +70,14 @@ function plan(tier: FeedbackTier, over: {
 }
 
 const TIERS: FeedbackTier[] = ['full', 'second', 'repeat']
-const SCENARIOS: { name: string; kind: FeedbackKind; tiers: FeedbackTier[]; make: (tier: FeedbackTier) => LogFeedbackPlan }[] = [
-  { name: 'first meal', kind: 'first-meal', tiers: TIERS, make: tier => plan(tier, { firstMeal: true }) },
-  { name: 'wardrobe piece', kind: 'wardrobe', tiers: TIERS, make: tier => plan(tier, { newPieces: [whisk], milestone: true, ringCloses: true }) },
-  { name: 'milestone', kind: 'milestone', tiers: TIERS, make: tier => plan(tier, { milestone: true, ringCloses: true }) },
-  { name: 'ring', kind: 'ring', tiers: TIERS, make: tier => plan(tier, { ringCloses: true }) },
-  { name: 'first log of the day', kind: 'first-of-day', tiers: ['full'], make: tier => plan(tier) },
-  { name: 'ordinary log', kind: 'ordinary', tiers: ['second', 'repeat'], make: tier => plan(tier) },
-  { name: 'paused log', kind: 'quiet', tiers: TIERS, make: tier => plan(tier, { paused: true, newPieces: [whisk], milestone: true, levelUp: 4 }) },
+const SCENARIOS: { name: string; kind: FeedbackKind; tiers: FeedbackTier[]; make: (tier: FeedbackTier, levelUp?: number) => LogFeedbackPlan }[] = [
+  { name: 'first meal', kind: 'first-meal', tiers: TIERS, make: (tier, levelUp) => plan(tier, { firstMeal: true, levelUp }) },
+  { name: 'wardrobe piece', kind: 'wardrobe', tiers: TIERS, make: (tier, levelUp) => plan(tier, { newPieces: [whisk], milestone: true, ringCloses: true, levelUp }) },
+  { name: 'milestone', kind: 'milestone', tiers: TIERS, make: (tier, levelUp) => plan(tier, { milestone: true, ringCloses: true, levelUp }) },
+  { name: 'ring', kind: 'ring', tiers: TIERS, make: (tier, levelUp) => plan(tier, { ringCloses: true, levelUp }) },
+  { name: 'first log of the day', kind: 'first-of-day', tiers: ['full'], make: (tier, levelUp) => plan(tier, { levelUp }) },
+  { name: 'ordinary log', kind: 'ordinary', tiers: ['second', 'repeat'], make: (tier, levelUp) => plan(tier, { levelUp }) },
+  { name: 'paused log', kind: 'quiet', tiers: TIERS, make: (tier, levelUp) => plan(tier, { paused: true, newPieces: [whisk], milestone: true, levelUp: levelUp ?? 4 }) },
 ]
 const CARD_KINDS: FeedbackKind[] = ['first-meal', 'wardrobe', 'milestone', 'ring', 'first-of-day']
 
@@ -164,6 +164,35 @@ describe('presentLogFeedback', () => {
         expect(presentLogFeedback(scenario.make(tier), 'Dinner').toastText).toBe('Logged Dinner')
       }
     }
+    expect(presentLogFeedback(plan('repeat'), ' Rice. ').toastText).toBe('Logged Rice.')
+  })
+
+  it('puts the level in the toast of a log that has one: one line, one fact each', () => {
+    for (const scenario of SCENARIOS) {
+      for (const tier of scenario.tiers) {
+        const view = presentLogFeedback(scenario.make(tier, 4), 'Dinner')
+        const label = `${scenario.name} at ${tier}`
+        if (scenario.kind === 'quiet') {
+          // Paused tracking drops the level in the planner, so its toast stays the bare fact.
+          expect(view.toastText, label).toBe('Logged Dinner')
+        } else if (view.surface === 'toast') {
+          expect(view.toastText, label).toBe('Logged Dinner. Level 4.')
+        } else {
+          // A card carries the level as its own last line and its toast text is unchanged.
+          expect(view.toastText, label).toBe('Logged Dinner')
+          expect(view.lines.at(-1), label).toBe('Level 4.')
+        }
+      }
+    }
+  })
+
+  it('adds nothing to a toast without a level, and takes the level from the plan, not the food', () => {
+    expect(presentLogFeedback(plan('second'), 'Dinner').toastText).toBe('Logged Dinner')
+    expect(presentLogFeedback(plan('repeat', { levelUp: 12 }), '  Rice bowl ').toastText).toBe('Logged Rice bowl. Level 12.')
+  })
+
+  it('does not double the full stop of a food name that ends in one', () => {
+    expect(presentLogFeedback(plan('repeat', { levelUp: 3 }), ' Rice. ').toastText).toBe('Logged Rice. Level 3.')
     expect(presentLogFeedback(plan('repeat'), ' Rice. ').toastText).toBe('Logged Rice.')
   })
 
