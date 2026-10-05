@@ -239,7 +239,9 @@ rebrand touches one block.
   rather than restarting from empty. Over target draws a second arc in
   `--on-track-soft` with a factual label.
 - **`Mascot`** — SVG, six states, rounded shapes only. See §3.5.
-- **`LogCelebration`** — full-screen post-log moment, itemises real XP awards.
+- **`LogMoment`** — non-modal card for a special log (first meal, new wardrobe
+  piece, milestone, Day ring closing); every other log gets a toast with Undo.
+  The pure `planLogFeedback` decides the moment and `presentLogFeedback` its words.
 - **`MascotSay`** — speech bubble, lines keyed to mascot state.
 
 ### Copy rules

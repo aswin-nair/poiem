@@ -134,7 +134,7 @@ These React components render the same markup as before. `components.css` gives 
 | `BottomNav` | Card-coloured bar with a 2px line; active tab is solid ink. The + is a 58px persimmon sticker rising out of the bar: it squashes when pressed, pops a small acid burst, and turns into an acid × while the log sheet is open. From 1120px the same component is a sticky rail in the left column instead: no bar, no border, each icon beside its label, and the + still in its place in the middle of the list |
 | `SwipeRow` | Ink Edit action, danger-ink Delete action |
 | `PortionSheet`, `DatePickerModal` | Square cards on the scrim, display-type titles, acid default choice |
-| `LogCelebration` | The full-screen "Logged." moment on the ground colour, awards on acid; a new wardrobe piece arrives worn, named on acid |
+| `LogMoment` | A small non-modal card for a special log (the first meal, a new wardrobe piece, a logged-day milestone, the Day ring closing): flat and outlined, fixed above the tab bar out of the page flow, Undo and Dismiss for ten seconds. It never takes focus and is announced once. A new piece arrives worn on its small Momo. Every other log gets the toast. The pure planner `lib/logFeedbackPlan.ts` decides the moment and `lib/logPresentation.ts` what it says |
 
 ### Primitives (`k-*`)
 

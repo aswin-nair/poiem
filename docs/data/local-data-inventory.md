@@ -100,6 +100,7 @@ the server boundary.
 | `fud-analytics` | legacy unversioned event rows | Pseudonymous | No longer read or written; removed by explicit data deletion |
 | `fud-notify-log` | `{ date, kinds[] }`, where kind is `routine`; logs written before the loss-framed reminders were retired may still hold `save` or `freeze`, which are never migrated and are harmless (they only count toward the daily cap) | Preference | Replaced as the local day changes and removed by explicit data deletion |
 | `fud-seen-badges` | badge-ID string array | Preference | Legacy side store; partially normalized into `AppState` and removed by explicit data deletion |
+| `poiem-ring-ack-v1` | local `YYYY-MM-DD` string; absent by default | Preference | Device-local. Written when the Day ring closes for the first time that local day, so its flourish plays once per local day (another device may play it once more). Replaced the next local day it closes; removed by explicit data reset or account deletion, alongside the notification log. Never synced, exported, or carried by guest claim |
 
 The durable browser record is schema-versioned and preserves an ordered,
 idempotent outbox. It retains bounded malformed-state recovery copies and
