@@ -71,8 +71,7 @@
 :root[data-theme="dark"] .date-modal,
 :root[data-theme="dark"] .modal-sheet,
 :root[data-theme="dark"] .portion-sheet,
-:root[data-theme="dark"] .activity-sheet,
-:root[data-theme="dark"] .levelup-card {
+:root[data-theme="dark"] .activity-sheet {
   background: var(--paper-float);
   border-color: var(--edge-ink);
   box-shadow: 0 4px 0 var(--shadow-ink), 0 22px 50px rgb(0 0 0 / 30%);

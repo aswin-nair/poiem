@@ -60,8 +60,6 @@ const BLOCKING_SURFACE_SELECTOR = [
   '.modal-backdrop',
   '.date-modal-overlay',
   '.activity-sheet-backdrop',
-  '.celebrate-overlay',
-  '.levelup-overlay',
   '.toast',
 ].join(',')
 
