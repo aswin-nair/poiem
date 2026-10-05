@@ -33,6 +33,7 @@ import {
 import { clearUserState, exportData, importData } from '../lib/storage'
 import { clearAnalytics, track } from '../lib/analytics'
 import { clearNotificationHistory, requestNotifyPermission } from '../lib/notifications'
+import { clearRingAck } from '../lib/ringAck'
 import { userInitials } from '../lib/auth'
 import { IconArrowUpRight, IconChevronRight, IconCoach } from '../components/icons'
 import { apiChangePassword, apiDeleteAccount, apiLogoutAll, loadAuthToken, saveAuthToken } from '../lib/apiClient'
@@ -221,6 +222,7 @@ export function SettingsPage() {
         () => clearUserState(user.sub),
         () => clearOnboardingDraft(user.sub),
         clearNotificationHistory,
+        clearRingAck,
         clearAnalytics,
         // The account is gone, so this device is genuinely new again and should
         // start at onboarding rather than a login screen for an account that
