@@ -11,9 +11,12 @@ import { useAuth } from '../store/AuthContext'
 import { defaultMealType } from '../lib/meals'
 import { mascotEvent } from '../mascot/MascotOverlay'
 import { LogFlowHeader } from '../components/LogFlowUI'
+import { makeLogReceipt } from '../lib/logReceipt'
+import { createOnceGuard } from '../lib/onceGuard'
+import { useFeel } from '../hooks/useHaptic'
 
 export function ManualEntryPage() {
-  const { addEntry } = useApp()
+  const { state, addEntry } = useApp()
   const { user } = useAuth()
   const navigate = useNavigate()
   const requestedSlot = (useLocation().state as { mealType?: MealType } | null)?.mealType
@@ -30,6 +33,8 @@ export function ManualEntryPage() {
   const [error, setError] = useState<string | null>(null)
   const [attempted, setAttempted] = useState(false)
   const edited = useRef(false)
+  const saveGuard = useRef(createOnceGuard())
+  const feel = useFeel()
 
   useEffect(() => {
     let cancelled = false
@@ -55,8 +60,10 @@ export function ManualEntryPage() {
 
   function changeServings(next: number) {
     if (!Number.isFinite(next)) return
+    const value = Math.min(1_000, Math.max(0.25, Math.round(next * 4) / 4))
+    if (value === servings) return
     edited.current = true
-    setServings(Math.min(1_000, Math.max(0.25, Math.round(next * 4) / 4)))
+    setServings(value)
   }
 
   const validated = validateManualFood({ name, calories, protein, carbs, fat, servings })
@@ -66,28 +73,32 @@ export function ManualEntryPage() {
   const scaledFat = validated.ok ? validated.value.fat : 0
 
   function save() {
-    setAttempted(true)
-    const result = validateManualFood({ name, calories, protein, carbs, fat, servings })
-    if (!result.ok) {
-      setError(result.error)
-      mascotEvent('form_fumble')
-      return
-    }
-    const entry = {
-      id: crypto.randomUUID(),
-      name: result.value.name,
-      calories: result.value.calories,
-      protein: result.value.protein,
-      carbs: result.value.carbs,
-      fat: result.value.fat,
-      timestamp: new Date().toISOString(),
-      emoji: '🍽️',
-      source: 'manual',
-      mealType,
-    } as const
-    addEntry(entry)
-    clearLogDraft(userId, 'manual')
-    navigate('/', { state: { justLogged: { id: entry.id, calories: entry.calories, name: entry.name } } })
+    saveGuard.current.run(() => {
+      setAttempted(true)
+      const result = validateManualFood({ name, calories, protein, carbs, fat, servings })
+      if (!result.ok) {
+        setError(result.error)
+        mascotEvent('form_fumble')
+        saveGuard.current.reset()
+        return
+      }
+      const entry = {
+        id: crypto.randomUUID(),
+        name: result.value.name,
+        calories: result.value.calories,
+        protein: result.value.protein,
+        carbs: result.value.carbs,
+        fat: result.value.fat,
+        timestamp: new Date().toISOString(),
+        emoji: '🍽️',
+        source: 'manual',
+        mealType,
+      } as const
+      const receipt = makeLogReceipt(entry, state.gamification.awardedKeys.length)
+      addEntry(entry)
+      clearLogDraft(userId, 'manual')
+      navigate('/', { state: { justLogged: receipt } })
+    })
   }
 
   return (
@@ -156,7 +167,7 @@ export function ManualEntryPage() {
         <div className="serving-row">
           <span className="serving-label">Servings</span>
           <div className="serving-stepper">
-            <button type="button" className="serving-btn" onClick={() => changeServings(servings - 0.25)} disabled={servings <= 0.25} aria-label="Decrease servings">−</button>
+            <button type="button" className="serving-btn" onClick={() => { if (servings > 0.25) feel('select'); changeServings(servings - 0.25) }} disabled={servings <= 0.25} aria-label="Decrease servings">−</button>
             <input
               className="serving-input"
               type="number"
@@ -167,7 +178,7 @@ export function ManualEntryPage() {
               onChange={e => changeServings(Number(e.target.value))}
               aria-label="Servings"
             />
-            <button type="button" className="serving-btn" onClick={() => changeServings(servings + 0.25)} aria-label="Increase servings">+</button>
+            <button type="button" className="serving-btn" onClick={() => { if (servings < 1_000) feel('select'); changeServings(servings + 0.25) }} disabled={servings >= 1_000} aria-label="Increase servings">+</button>
           </div>
           <span className="serving-hint">{servings === 1 ? '1 serving' : `${servings} servings`}</span>
         </div>
@@ -180,7 +191,7 @@ export function ManualEntryPage() {
                 key={m}
                 type="button"
                 className={`chip${mealType === m ? ' active' : ''}`}
-                onClick={() => { edited.current = true; setMealType(m) }}
+                onClick={() => { if (mealType === m) return; feel('select'); edited.current = true; setMealType(m) }}
                 aria-pressed={mealType === m}
               >
                 {MEAL_LABELS[m]}
@@ -200,6 +211,7 @@ export function ManualEntryPage() {
           fullWidth
           label="Log meal"
           type="submit"
+          cue={null}
         />
         </form>
       </main>

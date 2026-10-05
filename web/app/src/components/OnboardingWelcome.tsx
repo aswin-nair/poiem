@@ -7,6 +7,7 @@ import { IconChevronLeft, IconChevronRight } from './icons'
 import { MomoSticker } from './MomoSticker'
 import { BrandLogo } from './BrandLogo'
 import { PressableButton } from './PressableButton'
+import { feel } from '../lib/feel'
 import { useApp } from '../store/AppContext'
 import { AppearanceControl } from './AppearanceControl'
 import { useReducedMotion } from 'motion/react'
@@ -120,7 +121,7 @@ export function OnboardingWelcome({ index, onSlideChange, onStart, signedIn }: {
           {onSteam && <div className="k-intro-moods" role="group" aria-label="Try Momo’s moods">
             {STEAM_MOODS.map(mood => (
               <button key={mood.id} type="button" className={`k-chip is-${mood.id}`} aria-pressed={mood.id === moodId}
-                onClick={() => setMoodId(mood.id)}>{mood.label}</button>
+                onClick={() => { if (mood.id !== moodId) { feel('select'); setMoodId(mood.id) } }}>{mood.label}</button>
             ))}
           </div>}
 

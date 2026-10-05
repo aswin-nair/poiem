@@ -20,7 +20,11 @@ export function Toggle({
         role="switch"
         className="toggle-input"
         checked={checked}
-        onChange={e => onChange(e.target.checked)}
+        onChange={e => {
+          if (e.target.checked === checked) return
+          feel('select')
+          onChange(e.target.checked)
+        }}
         {...aria}
       />
       <span className="toggle-track" aria-hidden>
@@ -43,7 +47,11 @@ export function RadioDot({
         className="toggle-input"
         name={name}
         checked={checked}
-        onChange={onChange}
+        onChange={() => {
+          if (checked) return
+          feel('select')
+          onChange()
+        }}
         {...aria}
       />
       <span className="radio-dot-ring" aria-hidden>
@@ -52,3 +60,5 @@ export function RadioDot({
     </label>
   )
 }
+import { feel } from '../lib/feel'
+

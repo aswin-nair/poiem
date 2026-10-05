@@ -51,14 +51,14 @@ async function seedFeel(page: Page, on: boolean): Promise<void> {
   await spyOnFeel(page)
 }
 
-/* Log meal is a PressableButton, which plays `press` (sound plus a haptic) on
-   pointer down and on Enter. The form is left empty so the page stays put. */
+/* A changed meal choice plays select. Selection is deliberate, stays on the
+   direct logging route, and does not depend on the save-confirmation planner. */
 async function pressCueButtons(page: Page): Promise<void> {
   await page.goto('/log/manual')
-  const logMeal = page.getByRole('button', { name: 'Log meal' })
-  await logMeal.click()
-  await expect(page.getByRole('alert')).toBeVisible()
-  await logMeal.focus()
+  const lunch = page.getByRole('button', { name: 'Lunch', exact: true })
+  const breakfast = page.getByRole('button', { name: 'Breakfast', exact: true })
+  await lunch.click()
+  await breakfast.focus()
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL(/\/log\/manual$/)
 }

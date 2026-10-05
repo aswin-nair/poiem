@@ -25,7 +25,7 @@ export function DatePickerModal({ selectedDate, onSelect, onClose }: DatePickerM
     onClose()
   }
   const choose = (d: Date) => {
-    feel('select')
+    if (!sameDay(d, selectedDate)) feel('select')
     onSelect(d)
     onClose()
   }

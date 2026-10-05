@@ -4,6 +4,7 @@ import { MEAL_LABELS } from '../types'
 import { FoodIcon, IconBreakfast, IconCarbs, IconDinner, IconEdit, IconLunch, IconMeal, IconMinus, IconPlus, IconProtein, IconWater } from './icons'
 import { normalizeServings } from '../lib/mealReview'
 import { foodToneFor } from '../lib/foodGlyph'
+import { feel } from '../lib/feel'
 
 const NUTRITION_FIELDS = ['calories', 'protein', 'carbs', 'fat'] as const
 export type NutritionField = typeof NUTRITION_FIELDS[number]
@@ -54,7 +55,11 @@ export function MealTypePicker({ value, onChange }: { value: MealType; onChange:
     <div className="flow-meal-options">
       {(Object.keys(MEAL_LABELS) as MealType[]).map(meal => {
         const Icon = MEAL_ICONS[meal]
-        return <button type="button" key={meal} className={`is-${meal}`} aria-pressed={meal === value} onClick={() => onChange(meal)}>
+        return <button type="button" key={meal} className={`is-${meal}`} aria-pressed={meal === value} onClick={() => {
+          if (meal === value) return
+          feel('select')
+          onChange(meal)
+        }}>
           <Icon size={21} /><span>{MEAL_LABELS[meal]}</span>
         </button>
       })}
@@ -74,11 +79,11 @@ export function PortionControl({ value, grams, onChange }: { value: number; gram
   return <fieldset className="flow-portion"><legend>Adjust the portion</legend>
     <p id={`${id}-hint`} className="flow-field-hint">1× is the meal you described or photographed. Changing this scales all the numbers.</p>
     <div className="flow-portion-controls">
-      <button type="button" onClick={() => onChange(normalizeServings(value - 0.25))} disabled={value <= 0.25} aria-label="Decrease servings"><IconMinus /></button>
+      <button type="button" onClick={() => { feel('select'); onChange(normalizeServings(value - 0.25)) }} disabled={value <= 0.25} aria-label="Decrease servings"><IconMinus /></button>
       <label htmlFor={id}><input id={id} type="number" min="0.25" max="1000" step="0.25" inputMode="decimal" value={draft}
         onChange={event => setDraft(event.target.value)} onBlur={commit} aria-label="Servings" aria-describedby={`${id}-hint`}
         onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} />× portion</label>
-      <button type="button" onClick={() => onChange(normalizeServings(value + 0.25))} disabled={value >= 1000} aria-label="Increase servings"><IconPlus /></button>
+      <button type="button" onClick={() => { feel('select'); onChange(normalizeServings(value + 0.25)) }} disabled={value >= 1000} aria-label="Increase servings"><IconPlus /></button>
     </div>
     {grams > 0 && <p className="flow-portion-weight">Estimated weight: {Math.round(grams)} g</p>}
   </fieldset>

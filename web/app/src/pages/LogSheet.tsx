@@ -15,6 +15,10 @@ import { recordFoodSearch, selectLogMethod, startLogFlow, type LogMethod } from 
 import { defaultMealType, mealKey, parseQuickAdd, quickAddEntry, recentMeals, savedToEntry, scaleMeal } from '../lib/meals'
 import { MEAL_LABELS, type FoodEntry, type MealType, type SavedMeal } from '../types'
 import { mascotEvent } from '../mascot/MascotOverlay'
+import { makeLogReceipt } from '../lib/logReceipt'
+import { createOnceGuard } from '../lib/onceGuard'
+
+let lastSheetCloseAt: number | null = null
 
 const METHODS = [
   { to: '/log/photo', short: 'Photo', hint: 'Point, shoot, check', name: 'Snap a photo', method: 'photo_ai', Icon: IconCamera, tone: 'butter' },
@@ -62,6 +66,10 @@ export function LogSheet() {
   const [showAllRecents, setShowAllRecents] = useState(false)
   const [portionFor, setPortionFor] = useState<{ item: FoodEntry | SavedMeal; source: LogMethod } | null>(null)
   const lastEmptyTease = useRef('')
+  const commitGuard = useRef(createOnceGuard())
+  const [quick] = useState(() => lastSheetCloseAt !== null && Date.now() - lastSheetCloseAt < 60_000)
+
+  useEffect(() => () => { lastSheetCloseAt = Date.now() }, [])
 
   useEffect(() => {
     startLogFlow('search', state.foodEntries.length === 0)
@@ -104,10 +112,13 @@ export function LogSheet() {
   }
 
   function commit(entry: FoodEntry, source: LogMethod) {
-    selectLogMethod(source)
-    const logged: FoodEntry = { ...entry, mealType }
-    addEntry(logged)
-    navigate('/', { replace: true, state: { justLogged: { id: logged.id, calories: logged.calories, name: logged.name } } })
+    commitGuard.current.run(() => {
+      selectLogMethod(source)
+      const logged: FoodEntry = { ...entry, mealType }
+      const receipt = makeLogReceipt(logged, state.gamification.awardedKeys.length)
+      addEntry(logged)
+      navigate('/', { replace: true, state: { justLogged: receipt } })
+    })
   }
 
   function logAgain(item: FoodEntry | SavedMeal, source: LogMethod, multiplier = 1) {
@@ -125,7 +136,7 @@ export function LogSheet() {
 
   return (
     <>
-      <Sheet labelledBy="log-sheet-title" onClose={() => { if (!portionFor) close() }} className="k-log-sheet">
+      <Sheet labelledBy="log-sheet-title" onClose={() => { if (!portionFor) close() }} className={`k-log-sheet${quick ? ' is-quick' : ''}`}>
         <header className="k-sheet-head k-log-head">
           <span className="k-log-momo"><MomoSticker mood="curious" pose="still" expression="curious" /></span>
           <div className="k-log-title">
@@ -158,7 +169,7 @@ export function LogSheet() {
                 type="button"
                 className={`k-chip is-${choice}`}
                 aria-pressed={choice === mealType}
-                onClick={() => { feel('select'); setMealType(choice); setChoosingMeal(false) }}
+                onClick={() => { if (choice !== mealType) feel('select'); setMealType(choice); setChoosingMeal(false) }}
               >
                 {MEAL_LABELS[choice]}
               </button>
@@ -196,10 +207,10 @@ export function LogSheet() {
             <>
               {recents.length > 0 && favourites.length > 0 && (
                 <div className="k-shelf" role="group" aria-label="Your meal shortcuts">
-                  <button type="button" aria-pressed={activeShelf === 'recent'} onClick={() => setShelf('recent')}>
+                  <button type="button" aria-pressed={activeShelf === 'recent'} onClick={() => { if (activeShelf === 'recent') return; feel('select'); setShelf('recent') }}>
                     <IconHistory size={16} /> Recent
                   </button>
-                  <button type="button" aria-pressed={activeShelf === 'favourite'} onClick={() => setShelf('favourite')}>
+                  <button type="button" aria-pressed={activeShelf === 'favourite'} onClick={() => { if (activeShelf === 'favourite') return; feel('select'); setShelf('favourite') }}>
                     <IconStar size={16} /> Favourites
                   </button>
                 </div>
@@ -258,6 +269,7 @@ export function LogSheet() {
 
       {portionFor && (
         <PortionSheet
+          cue={null}
           name={portionFor.item.name}
           calories={portionFor.item.calories}
           onPick={multiplier => {

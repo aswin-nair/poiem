@@ -44,11 +44,11 @@ const MASCOT_ART = /momo|sticker|plate|burst|nav-fab-face svg|empty-plate/
 const GEOMETRIC_ROTATION = /(?:^|[^\d.])(?:-)?(?:45|90|135|180|225|270|315)(?:\.\d+)?deg/
 
 /* An offset block says "this floats above the page", so overlays and the tab bar keep theirs. */
-const FLOATS = /toast|k-sheet|portion-sheet|modal-sheet|date-modal(?!-)|bottom-nav|nav-fab|settings-results|celebrate-inner/
+const FLOATS = /toast|k-sheet|portion-sheet|modal-sheet|date-modal(?!-)|bottom-nav|nav-fab|settings-results/
 /* One hero per route stays the loudest surface on it. */
 const HERO = /is-hero|about-hero|flow-analysis|flow-review-summary|manual-summary/
 /* Drawn rather than built: the mascot, his wardrobe, a torn ticket stub. */
-const DRAWN = /momo|wardrobe|celebrate-piece|torn-stub/
+const DRAWN = /momo|wardrobe|torn-stub/
 
 /** Innermost blocks are declarations; removing them leaves selectors and at-rules. */
 const selectorsOf = (css: string) => withoutComments(css).replace(/\{[^{}]*\}/g, ';')

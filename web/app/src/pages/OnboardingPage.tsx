@@ -36,6 +36,7 @@ import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 import { motionOpacity, motionPop, motionSpring, motionStep, plateReveal } from '../lib/motionPresets'
 import { ProgressRecipe } from '../components/SnackAttackPrimitives'
+import { makeLogReceipt } from '../lib/logReceipt'
 
 const STEPS = ['Age', 'About you', 'Body', 'Goal', 'Activity', 'Your pace', 'Review', 'First meal']
 const FIRST_MEAL_STEP = STEPS.length - 1
@@ -270,6 +271,7 @@ export function OnboardingPage() {
     const name = firstMeal.name.trim()
     const calories = Math.round(firstMealCalories)
     const entryId = crypto.randomUUID()
+    const receipt = makeLogReceipt({ id: entryId, calories, name }, state.gamification.awardedKeys.length)
     if (targets.clamped) track({ name: 'goal_clamped' })
     updateProfile(profile)
     addEntry({
@@ -292,7 +294,7 @@ export function OnboardingPage() {
     // triggers its wildcard redirect. Navigate with the celebration payload on
     // the next task so that redirect cannot discard the location state.
     window.setTimeout(() => {
-      navigate('/', { replace: true, state: { justLogged: { id: entryId, calories, name } } })
+      navigate('/', { replace: true, state: { justLogged: receipt } })
     }, 0)
   }
 
@@ -744,6 +746,7 @@ export function OnboardingPage() {
             </PressableButton>
           <PressableButton
             type="submit"
+            cue={step === FIRST_MEAL_STEP ? null : 'press'}
             disabled={step === FIRST_MEAL_STEP && !firstMealReady}
             className="is-full"
           >

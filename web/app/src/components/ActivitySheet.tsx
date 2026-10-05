@@ -73,7 +73,7 @@ export function ActivitySheet({ defaultPreset, onClose, onLogged }: ActivityShee
               key={preset.id}
               type="button"
               className={`activity-preset-chip${selected.id === preset.id ? ' active' : ''}`}
-              onClick={() => { setSelected(preset); feel('select') }}
+              onClick={() => { if (selected.id !== preset.id) { setSelected(preset); feel('select') } }}
             >
               <span className="activity-preset-emoji">{preset.emoji}</span>
               <span className="activity-preset-name">{preset.name}</span>
@@ -90,7 +90,7 @@ export function ActivitySheet({ defaultPreset, onClose, onLogged }: ActivityShee
                 key={d}
                 type="button"
                 className={`activity-dur-chip${durationMins === d ? ' active' : ''}`}
-                onClick={() => { setDurationMins(d); feel('select') }}
+                onClick={() => { if (durationMins !== d) { setDurationMins(d); feel('select') } }}
               >
                 {d}m
               </button>

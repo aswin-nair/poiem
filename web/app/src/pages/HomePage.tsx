@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { LevelUpOverlay } from '../components/LevelUpOverlay'
+import { useReducedMotion } from 'motion/react'
+import { DayRing } from '../components/DayRing'
+import { LogMoment } from '../components/LogMoment'
 import { DatePickerModal } from '../components/DatePickerModal'
 import { BottomNav } from '../components/BottomNav'
 import { AppShell, EmptyState, MealRow, PageHeader, Section, Surface } from '../components/system'
@@ -13,37 +15,30 @@ import {
 import { SwipeRow } from '../components/SwipeRow'
 import { PullToRefresh } from '../components/PullToRefresh'
 import { useToast } from '../components/Toast'
-import { LogCelebration } from '../components/LogCelebration'
 import { useApp } from '../store/AppContext'
 import { entriesForDay, macroTotals } from '../lib/storage'
 import { effectiveCalories, effectiveCarbs, effectiveFat, effectiveProtein } from '../lib/profile'
 import { formatDayLabel, localDayKey, sameDay, startOfDay } from '../lib/dates'
-import { getAllBadges, getStreakWithFreezes } from '../lib/journey'
 import { applyNote, applyWaterChange } from '../lib/enamelEconomy'
 import { useFeel } from '../hooks/useHaptic'
 import { useCountUp } from '../hooks/useCountUp'
-import { playLogConfirm } from '../lib/feel'
 import { evaluateNotifications } from '../lib/notifications'
 import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../lib/today'
-import { shouldCelebrateLog } from '../lib/logFeedback'
+import { planLogFeedback, type LogFeedbackPlan } from '../lib/logFeedbackPlan'
+import type { LogReceipt } from '../lib/logReceipt'
+import { dayRingEntries } from '../lib/dayRingEntries'
+import { dayRingProgress } from '../lib/dayRing'
+import { progressNote } from '../lib/progressNote'
+import { readRingAck, writeRingAck } from '../lib/ringAck'
 import { foodToneFor } from '../lib/foodGlyph'
 import { todayGreeting } from '../lib/todayGreeting'
-import { FIRST_PIECE, claimPieces, newPieces, wardrobePiece, wardrobeProgress, type WardrobePiece } from '@fud-ai/product/wardrobe'
-import type { FoodEntry, MealType, XpEvent } from '../types'
+import { FIRST_PIECE, claimPieces, newPieces, wardrobeProgress } from '@fud-ai/product/wardrobe'
+import type { FoodEntry, MealType } from '../types'
 import { useAnchor } from '../mascot/anchors'
 import { mascotEvent } from '../mascot/MascotOverlay'
 import { clearFirstMealJourney, isFirstMealJourney } from '../lib/firstMeal'
 
-interface JustLogged { id?: string; calories: number; name: string }
-
-interface CelebrationState {
-  entryId?: string
-  foodName: string
-  awards: XpEvent[]
-  pieces: WardrobePiece[]
-  mascotEvent: 'log_success' | 'milestone'
-  firstMeal: boolean
-}
+interface MomentState { receipt: LogReceipt; plan: LogFeedbackPlan }
 
 const WATER_GLASSES = 8
 const NOTE_LIMIT = 3
@@ -67,11 +62,13 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const budgetAnchor = useAnchor('calorie_ring')
   const [selectedDate, setSelectedDate] = useState(() => startOfDay())
   const [showDatePicker, setShowDatePicker] = useState(false)
-  const [celebration, setCelebration] = useState<CelebrationState | null>(null)
+  const [moment, setMoment] = useState<MomentState | null>(null)
+  const [justClosed, setJustClosed] = useState(false)
   const [freshId, setFreshId] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
   const loggedNavKey = useRef('')
-  const prevSeenBadgeCount = useRef(state.gamification.seenBadgeIds.length)
+  const mascotTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const reduced = useReducedMotion()
 
   const profile = state.profile
   const paused = Boolean(profile.trackingPaused)
@@ -85,17 +82,13 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const dayLabel = formatDayLabel(selectedDate)
   const isToday = sameDay(selectedDate, new Date())
   const snapshotLabel = isToday ? 'Today’s snapshot' : dayLabel === 'Yesterday' ? 'Yesterday’s snapshot' : `${dayLabel} snapshot`
-  const streak = getStreakWithFreezes(
-    state.foodEntries,
-    state.gamification.freezeUsedDates,
-    state.gamification.pauseProtectedDates,
-  )
   const hasLoggedToday = state.foodEntries.some(entry => sameDay(new Date(entry.timestamp), new Date()))
   const water = state.gamification.waterByDate[selectedDayKey] ?? 0
   const notes = state.gamification.notesByDate[selectedDayKey] ?? 0
   const loggedDays = useMemo(() => new Set(state.foodEntries.map(entry => localDayKey(entry.timestamp))), [state.foodEntries])
   const frozenDays = useMemo(() => new Set(state.gamification.freezeUsedDates), [state.gamification.freezeUsedDates])
   const showMomo = state.gamification.mascotActivity !== 'off' && !profile.mascotMuted
+  const ring = dayRingProgress(dayRingEntries(dayEntries), notes, profile.loggingCommitment)
   const greeting = todayGreeting({
     hour: new Date().getHours(),
     name: profile.name,
@@ -128,65 +121,76 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   }, [paused, hasLoggedToday, state.foodEntries])
 
   useEffect(() => {
-    const justLogged = (location.state as { justLogged?: JustLogged } | null)?.justLogged
+    if (!justClosed) return
+    const timer = setTimeout(() => setJustClosed(false), 3_000)
+    return () => clearTimeout(timer)
+  }, [justClosed])
+
+  useEffect(() => {
+    return () => clearTimeout(mascotTimer.current)
+  }, [paused, showMomo, reduced, profile.mascotReducedMotion])
+
+  useEffect(() => {
+    const justLogged = (location.state as { justLogged?: LogReceipt } | null)?.justLogged
     if (!justLogged) return
     if (loggedNavKey.current === location.key) return
     loggedNavKey.current = location.key
     navigate('.', { replace: true, state: null })
-    const mealEvent = justLogged.id
-      ? state.gamification.xpEvents.find(event => event.key === `meal-${justLogged.id}` || event.key === `enamel-manual-${justLogged.id}` || event.key === `enamel-photo-${justLogged.id}`)
-      : undefined
-    const fresh = mealEvent
-      ? state.gamification.xpEvents.filter(event => (
-          Math.abs(new Date(event.timestamp).getTime() - new Date(mealEvent.timestamp).getTime()) < 2_000
-        ))
-      : state.gamification.xpEvents.slice(0, 4)
-    const streakMilestone = fresh.some(event => event.key.startsWith('streak-'))
-    playLogConfirm({ streakMilestone })
-    const firstMeal = isFirstMealJourney() || state.foodEntries.filter(entry => entry.id !== justLogged.id).length === 0
-    // A wardrobe piece unlocked since the last reveal arrives in the celebration, worn, exactly once.
-    // The first meal, typed, photographed or described, hands over Momo's first piece and puts it on him.
-    const owned = state.gamification.ownedCosmeticIds
-    const handedOver = firstMeal && !owned.includes(FIRST_PIECE) ? wardrobePiece(FIRST_PIECE) : undefined
-    const pieces = paused ? [] : [...(handedOver ? [handedOver] : []), ...newPieces(owned, wardrobeProgress(state))]
-    if (pieces.length) patchGamification(g => {
-      const claimed = claimPieces(g, pieces.map(piece => piece.id))
-      return handedOver && !claimed.outfit.head ? { ...claimed, outfit: { ...claimed.outfit, head: FIRST_PIECE } } : claimed
+    // Navigation confirms accepted local product state, not a completed cloud write.
+    const now = new Date()
+    const todayKey = localDayKey(now)
+    const entries = entriesForDay(state.foodEntries, now)
+    const noteCount = state.gamification.notesByDate[todayKey] ?? 0
+    const plan = planLogFeedback({
+      receipt: justLogged,
+      entries: state.foodEntries,
+      gamification: state.gamification,
+      newPieces: newPieces(state.gamification.ownedCosmeticIds, wardrobeProgress(state)),
+      firstMealJourney: isFirstMealJourney(),
+      paused,
+      ring: {
+        before: dayRingProgress(dayRingEntries(entries.filter(entry => entry.id !== justLogged.id)), noteCount, profile.loggingCommitment),
+        after: dayRingProgress(dayRingEntries(entries), noteCount, profile.loggingCommitment),
+      },
+      ringAckedToday: readRingAck() === todayKey,
+      now,
     })
-    if (!paused && (firstMeal || shouldCelebrateLog({ entries: state.foodEntries, entryId: justLogged.id, awards: fresh, newPieces: pieces.length }))) {
-      setCelebration({
-        entryId: justLogged.id,
-        foodName: justLogged.name,
-        awards: fresh,
-        pieces,
-        mascotEvent: streakMilestone || pieces.length ? 'milestone' : 'log_success',
-        firstMeal,
-      })
-      return
+    if (plan.cue) feel(plan.cue)
+    if (plan.pieces.length) patchGamification(g => {
+      const claimed = claimPieces(g, plan.pieces.map(piece => piece.id))
+      return plan.kind === 'first-meal' && !claimed.outfit.head
+        ? { ...claimed, outfit: { ...claimed.outfit, head: FIRST_PIECE } }
+        : claimed
+    })
+    if (plan.ringClosed) {
+      writeRingAck(todayKey)
+      setJustClosed(plan.tier === 'full' && !reduced)
     }
-    const entryId = justLogged.id
-    if (entryId) setFreshId(entryId)
-    toast(`Logged ${justLogged.name}`, entryId ? { action: { label: 'Undo', fn: () => deleteEntry(entryId) } } : undefined)
-    window.setTimeout(() => mascotEvent('log_success'), 120)
+    if (plan.levelUp !== null) ackLevelUp()
+    clearFirstMealJourney()
+    setFreshId(justLogged.id)
+    clearTimeout(mascotTimer.current)
+    if (plan.mascotEvent && showMomo && !reduced && !profile.mascotReducedMotion) {
+      const event = plan.mascotEvent
+      mascotTimer.current = setTimeout(() => mascotEvent(event), 120)
+    }
+    // Every repeat stays light, even when it also unlocks a piece or closes the ring.
+    if (plan.kind !== 'quiet' && plan.tier === 'full') {
+      setMoment({ receipt: justLogged, plan })
+    } else {
+      setMoment(null)
+      const details = plan.kind === 'quiet' ? [] : [plan.detail, plan.pieces.length ? `New for Momo: ${plan.pieces.map(piece => piece.name).join(', ')}` : undefined, ...plan.awards.map(award => award.label), plan.levelUp !== null ? `Level ${plan.levelUp}.` : undefined].filter(Boolean)
+      toast(`Logged ${justLogged.name}${details.length ? ` · ${details.join(' · ')}` : ''}`, {
+        action: { label: 'Undo', fn: () => deleteEntry(justLogged.id) },
+      })
+    }
   }, [location.key]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const prev = prevSeenBadgeCount.current
-    const current = state.gamification.seenBadgeIds.length
-    if (current > prev) {
-      const allBadges = getAllBadges(state.foodEntries, streak)
-      const newIds = state.gamification.seenBadgeIds.slice(prev)
-      const newBadge = allBadges.find(badge => newIds.includes(badge.id))
-      if (newBadge) {
-        feel('badge')
-        toast(`Badge unlocked: ${newBadge.name}!`)
-        mascotEvent('milestone')
-      }
-    }
-    prevSeenBadgeCount.current = current
-  }, [state.gamification.seenBadgeIds.length]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const pendingLevelUp = state.gamification.pendingLevelUp
+    if (paused || location.state?.justLogged || !state.gamification.pendingLevelUp) return
+    toast(`Level ${state.gamification.pendingLevelUp}.`)
+    ackLevelUp()
+  }, [state.gamification.pendingLevelUp, location.key, paused]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function openLog(mealType?: MealType) {
     feel('press')
@@ -206,30 +210,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     patchGamification(g => applyWaterChange(g, selectedDayKey, Math.max(0, Math.min(WATER_GLASSES, next))))
   }
 
+  function addNote() {
+    feel('tap')
+    const nextRing = dayRingProgress(dayRingEntries(dayEntries), notes + 1, profile.loggingCommitment)
+    if (!ring.complete && nextRing.complete && readRingAck() !== selectedDayKey) {
+      writeRingAck(selectedDayKey)
+      setJustClosed(!reduced)
+    }
+    patchGamification(g => applyNote(g, selectedDayKey))
+  }
+
   return (
     <AppShell screen="k-today" nav={!guest ? <BottomNav /> : undefined}>
-      {!paused && pendingLevelUp && <LevelUpOverlay level={pendingLevelUp} onDone={ackLevelUp} />}
-      {!paused && celebration && !pendingLevelUp && (
-        <LogCelebration
-          foodName={celebration.foodName}
-          firstMeal={celebration.firstMeal}
-          streak={streak}
-          awards={celebration.awards}
-          outfit={state.gamification.outfit}
-          pieces={celebration.pieces}
-          onDone={() => {
-            const { entryId, foodName, mascotEvent: event } = celebration
-            if (entryId) {
-              setFreshId(entryId)
-              toast(`Logged ${foodName}`, { action: { label: 'Undo', fn: () => deleteEntry(entryId) } })
-            }
-            setCelebration(null)
-            clearFirstMealJourney()
-            window.setTimeout(() => mascotEvent(event), 120)
-          }}
-        />
-      )}
-
       <PageHeader
         className="k-today-header"
         avoid
@@ -303,6 +295,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   />
                 )}
 
+                <DayRing progress={ring} justClosed={isToday && justClosed} note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDays.size, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>} />
+
+                {moment && <LogMoment
+                  key={moment.receipt.id}
+                  plan={{ ...moment.plan, maxMotionMs: reduced ? 0 : moment.plan.maxMotionMs }}
+                  foodName={moment.receipt.name}
+                  outfit={state.gamification.outfit}
+                  showMomo={showMomo && !profile.mascotReducedMotion}
+                  onUndo={() => { deleteEntry(moment.receipt.id); setMoment(null) }}
+                  onDone={() => setMoment(null)}
+                />}
+
                 <Surface
                   variant="hero"
                   as="section"
@@ -363,7 +367,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                       type="button"
                       className="k-text-button k-note-row"
                       disabled={notes >= NOTE_LIMIT}
-                      onClick={() => { feel('tap'); patchGamification(g => applyNote(g, selectedDayKey)) }}
+                      onClick={addNote}
                     >
                       {notes >= NOTE_LIMIT ? 'Notes logged' : 'Add a kitchen note'}
                     </button>

@@ -1,5 +1,5 @@
 import { AppShell } from '../components/system/AppShell'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { BackLink } from '../components/BackLink'
@@ -12,8 +12,9 @@ import { MEAL_LABELS } from '../types'
 import type { SavedMeal } from '../types'
 import type { FoodEntry } from '../types'
 import { History } from 'lucide-react'
-import * as m from 'motion/react-m'
-import { motionSpring } from '../lib/motionPresets'
+import { makeLogReceipt } from '../lib/logReceipt'
+import { createOnceGuard } from '../lib/onceGuard'
+import { useFeel } from '../hooks/useHaptic'
 
 const FILTERS = ['all', ...Object.keys(MEAL_LABELS)] as const
 type Filter = (typeof FILTERS)[number]
@@ -40,26 +41,29 @@ function DiscoverCard({
   onLog: (servings: number) => void; onStar: () => void; starred: boolean
 }) {
   const [servings, setServings] = useState(1)
+  const feel = useFeel()
   const ratio = macroRatio(protein, carbs, fat)
 
   function changeServings(next: number) {
-    setServings(Math.max(0.25, Math.round(next * 4) / 4))
+    const value = Math.max(0.25, Math.round(next * 4) / 4)
+    if (value === servings) return
+    feel('select')
+    setServings(value)
   }
 
   return (
     <article className="discover-card" aria-label={name}>
       <div className="discover-card-top">
         <span className={`discover-card-emoji is-tone-${foodToneFor(name)}`}><FoodIcon emoji={emoji} name={name} size={26} /></span>
-        <m.button
+        <button
           type="button"
           className={`star-btn${starred ? ' active' : ''}`}
-          whileTap={{ scale: .9 }} transition={motionSpring}
-          onClick={onStar}
+          onClick={() => { feel('select'); onStar() }}
           aria-label={`${starred ? 'Unfavorite' : 'Favorite'} ${name}`}
           aria-pressed={starred}
         >
           <IconStar active={starred} size={17} />
-        </m.button>
+        </button>
       </div>
 
       <h3 className="discover-card-name">{name}</h3>
@@ -95,9 +99,13 @@ function MealRow({
 }) {
   const [servings, setServings] = useState(1)
   const [adjusting, setAdjusting] = useState(false)
+  const feel = useFeel()
 
   function changeServings(next: number) {
-    setServings(Math.max(0.25, Math.round(next * 4) / 4))
+    const value = Math.max(0.25, Math.round(next * 4) / 4)
+    if (value === servings) return
+    feel('select')
+    setServings(value)
   }
 
   return (
@@ -121,16 +129,15 @@ function MealRow({
       </div>
       <div className="saved-meal-actions">
         {onStar && (
-          <m.button
+          <button
             type="button"
             className={`star-btn${starred ? ' active' : ''}`}
-            whileTap={{ scale: .9 }} transition={motionSpring}
-            onClick={onStar}
+            onClick={() => { feel('select'); onStar() }}
             aria-label={`${starred ? 'Unfavorite' : 'Favorite'} ${name}`}
             aria-pressed={Boolean(starred)}
           >
             <IconStar active={starred} size={17} />
-          </m.button>
+          </button>
         )}
         {adjusting ? (
           <div className="serving-stepper-compact">
@@ -153,6 +160,8 @@ export function SavedMealsPage() {
   const location = useLocation()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
+  const logGuard = useRef(createOnceGuard())
+  const feel = useFeel()
   const recents = recentMeals(state.foodEntries).filter(entry => !isFavorite(state, entry))
 
   // Reached both as the "Saved" tab and as a shortcut from the Log menu — only
@@ -166,31 +175,37 @@ export function SavedMealsPage() {
   function resetFilters() { setQuery(''); setFilter('all') }
 
   function logEntry(entry: FoodEntry, servings: number) {
-    const cals = Math.round(entry.calories * servings)
-    const logged = logSavedMeal({
-      id: mealKey(entry),
-      name: entry.name,
-      calories: cals,
-      protein: Math.round(entry.protein * servings * 10) / 10,
-      carbs: Math.round(entry.carbs * servings * 10) / 10,
-      fat: Math.round(entry.fat * servings * 10) / 10,
-      emoji: entry.emoji,
-      mealType: entry.mealType,
-      servingSizeGrams: entry.servingSizeGrams,
+    logGuard.current.run(() => {
+      const awardedFrom = state.gamification.awardedKeys.length
+      const cals = Math.round(entry.calories * servings)
+      const logged = logSavedMeal({
+        id: mealKey(entry),
+        name: entry.name,
+        calories: cals,
+        protein: Math.round(entry.protein * servings * 10) / 10,
+        carbs: Math.round(entry.carbs * servings * 10) / 10,
+        fat: Math.round(entry.fat * servings * 10) / 10,
+        emoji: entry.emoji,
+        mealType: entry.mealType,
+        servingSizeGrams: entry.servingSizeGrams,
+      })
+      navigate('/', { state: { justLogged: makeLogReceipt(logged, awardedFrom) } })
     })
-    navigate('/', { state: { justLogged: { id: logged.id, calories: cals, name: entry.name } } })
   }
 
   function logMeal(meal: SavedMeal, servings: number) {
-    const cals = Math.round(meal.calories * servings)
-    const logged = logSavedMeal({
-      ...meal,
-      calories: cals,
-      protein: Math.round(meal.protein * servings * 10) / 10,
-      carbs: Math.round(meal.carbs * servings * 10) / 10,
-      fat: Math.round(meal.fat * servings * 10) / 10,
+    logGuard.current.run(() => {
+      const awardedFrom = state.gamification.awardedKeys.length
+      const cals = Math.round(meal.calories * servings)
+      const logged = logSavedMeal({
+        ...meal,
+        calories: cals,
+        protein: Math.round(meal.protein * servings * 10) / 10,
+        carbs: Math.round(meal.carbs * servings * 10) / 10,
+        fat: Math.round(meal.fat * servings * 10) / 10,
+      })
+      navigate('/', { state: { justLogged: makeLogReceipt(logged, awardedFrom) } })
     })
-    navigate('/', { state: { justLogged: { id: logged.id, calories: cals, name: meal.name } } })
   }
 
   return (
@@ -222,7 +237,7 @@ export function SavedMealsPage() {
               type="button"
               className={`discover-chip${filter === f ? ' active' : ''}`}
               aria-pressed={filter === f}
-              onClick={() => setFilter(f)}
+              onClick={() => { if (filter === f) return; feel('select'); setFilter(f) }}
             >
               {FILTER_LABELS[f]}
             </button>
@@ -245,7 +260,7 @@ export function SavedMealsPage() {
         ) : filteredFavorites.length === 0 ? (
           <div className="saved-empty">No saved meals match these filters. Try another name or clear the filters above.</div>
         ) : (
-          <div className="discover-grid motion-list">
+          <div className="discover-grid">
             {filteredFavorites.map(meal => (
               <DiscoverCard
                 key={meal.id}

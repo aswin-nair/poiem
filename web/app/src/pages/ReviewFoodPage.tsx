@@ -15,9 +15,12 @@ import { sourceToMethod, track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
 import { defaultMealType } from '../lib/meals'
 import { firstMealFromNavState } from '../lib/firstMeal'
+import { makeLogReceipt } from '../lib/logReceipt'
+import { createOnceGuard } from '../lib/onceGuard'
 
 export function ReviewFoodPage() {
   const {
+    state,
     pendingAnalysis,
     setPendingAnalysis,
     pendingImagePreview,
@@ -42,7 +45,7 @@ export function ReviewFoodPage() {
   const [error, setError] = useState<string | null>(null)
   const baseRef = useRef<FoodAnalysis | null>(pendingAnalysis ?? saved?.baseAnalysis ?? null)
   const [loadingDraft, setLoadingDraft] = useState(!initialAnalysis)
-  const saving = useRef(false)
+  const saveGuard = useRef(createOnceGuard())
   const reviewTracked = useRef(false)
   const correctionTracked = useRef(false)
 
@@ -133,34 +136,37 @@ export function ReviewFoodPage() {
   }
 
   function save() {
-    if (!analysis || saving.current) return
-    const issue = reviewFoodIssue(analysis, emptyNumericFields)
-    if (issue) {
-      setError(issue)
-      return
-    }
-    saving.current = true
-    const cals = Math.round(Number(analysis.calories))
-    const entry = {
-      id: crypto.randomUUID(),
-      name: analysis.name.trim(),
-      calories: cals,
-      protein: Number(analysis.protein),
-      carbs: Number(analysis.carbs),
-      fat: Number(analysis.fat),
-      timestamp: new Date().toISOString(),
-      emoji: analysis.emoji,
-      source,
-      mealType,
-      servingSizeGrams: analysis.servingSizeGrams,
-      ingredients: analysis.ingredients,
-      detailAdded: source === 'snapFood' || correctionTracked.current,
-    } as const
-    addEntry(entry)
-    setPendingAnalysis(null)
-    setPendingImagePreview(null)
-    clearLogDraft(userId, 'review')
-    navigate('/', { state: { justLogged: { id: entry.id, calories: cals, name: analysis.name } } })
+    if (!analysis) return
+    saveGuard.current.run(() => {
+      const issue = reviewFoodIssue(analysis, emptyNumericFields)
+      if (issue) {
+        setError(issue)
+        saveGuard.current.reset()
+        return
+      }
+      const cals = Math.round(Number(analysis.calories))
+      const entry = {
+        id: crypto.randomUUID(),
+        name: analysis.name.trim(),
+        calories: cals,
+        protein: Number(analysis.protein),
+        carbs: Number(analysis.carbs),
+        fat: Number(analysis.fat),
+        timestamp: new Date().toISOString(),
+        emoji: analysis.emoji,
+        source,
+        mealType,
+        servingSizeGrams: analysis.servingSizeGrams,
+        ingredients: analysis.ingredients,
+        detailAdded: source === 'snapFood' || correctionTracked.current,
+      } as const
+      const receipt = makeLogReceipt(entry, state.gamification.awardedKeys.length)
+      addEntry(entry)
+      setPendingAnalysis(null)
+      setPendingImagePreview(null)
+      clearLogDraft(userId, 'review')
+      navigate('/', { state: { justLogged: receipt } })
+    })
   }
 
   function discard() {
@@ -207,7 +213,7 @@ export function ReviewFoodPage() {
             <div className="flow-review-summary">
               {!issue ? <MealTotals name={analysis.name} calories={analysis.calories} mealType={mealType} servings={servings} />
                 : <p className="flow-summary-hint">Fill in the meal details to see your final total here.</p>}
-              <PressableButton fullWidth type="submit"><IconPlus size={20} /> Log meal</PressableButton>
+              <PressableButton fullWidth type="submit" cue={null}><IconPlus size={20} /> Log meal</PressableButton>
               <p className="flow-save-hint"><IconCheck size={18} /> Logs to {MEAL_LABELS[mealType].toLowerCase()} today. You can edit it later.</p>
             </div>
             {analysis.ingredients && analysis.ingredients.length > 0 && <details className="flow-breakdown">

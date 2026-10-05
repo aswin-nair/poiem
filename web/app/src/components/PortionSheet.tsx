@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { feel } from '../lib/feel'
+import { feel, type SoundCue } from '../lib/feel'
 import { useDialogFocus } from '../hooks/useDialogFocus'
 import { IconClose } from './icons'
 
@@ -19,11 +19,13 @@ export function PortionSheet({
   calories,
   onPick,
   onClose,
+  cue = 'select',
 }: {
   name: string
   calories: number
   onPick: (multiplier: Portion) => void
   onClose: () => void
+  cue?: SoundCue | null
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const dismiss = () => { feel('close'); onClose() }
@@ -56,7 +58,7 @@ export function PortionSheet({
               key={p}
               type="button"
               className={`portion-option${p === 1 ? ' is-default' : ''}`}
-              onClick={() => { feel('select'); onPick(p) }}
+              onClick={() => { if (cue) feel(cue); onPick(p) }}
             >
               <span className="portion-mult">{p}×</span>
               <span className="portion-kcal tabular">{Math.round(calories * p)} kcal</span>

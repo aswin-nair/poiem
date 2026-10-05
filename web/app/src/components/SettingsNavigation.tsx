@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { IconCheck } from './icons'
 import { PressableButton } from './PressableButton'
+import { feel } from '../lib/feel'
 
 export const YOU_PANELS = [
   ['profile', 'Profile & goals'],
@@ -23,9 +24,9 @@ export function SettingsNavigation({ panel, hasChanges, saved, invalid, onSave }
   return <div className={`you-toolbar${hasChanges ? ' has-changes' : ''}`}>
     <div className="you-section-picker">
       <nav className="you-shortcuts" aria-label="You page sections">
-        <Link to="/settings" aria-current={panel == null ? 'page' : undefined}>Overview</Link>
+        <Link to="/settings" aria-current={panel == null ? 'page' : undefined} onClick={() => { if (panel != null) feel('tap') }}>Overview</Link>
         {YOU_PANELS.map(([id, label]) => (
-          <Link key={id} to={`/settings?panel=${id}`} aria-current={panel === id ? 'page' : undefined}>{label}</Link>
+          <Link key={id} to={`/settings?panel=${id}`} aria-current={panel === id ? 'page' : undefined} onClick={() => { if (panel !== id) feel('tap') }}>{label}</Link>
         ))}
       </nav>
     </div>

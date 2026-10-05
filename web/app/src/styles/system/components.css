@@ -42,7 +42,7 @@
     text-transform: none;
     text-align: center;
     overflow-wrap: anywhere;
-    transition: transform var(--k-press) ease, box-shadow var(--k-press) ease, background-color 160ms ease;
+    transition: transform var(--k-press) var(--k-ease);
   }
   .pressable-primary .pressable-face { background: var(--k-action); color: var(--k-on-action); }
   .pressable-secondary .pressable-face { background: var(--k-card); color: var(--k-ink); }
@@ -73,7 +73,6 @@
     border-radius: 0;
     background: var(--k-card);
     box-shadow: none;
-    transition: background-color 160ms ease;
   }
   .toggle-knob {
     width: 20px;
@@ -81,7 +80,7 @@
     border-radius: 0;
     background: var(--k-ink);
     box-shadow: none;
-    transition: transform 160ms var(--k-ease), background-color 160ms ease;
+    transition: transform var(--k-press) var(--k-ease);
   }
   .toggle.is-on .toggle-track { background: var(--k-switch-on-track); }
   .toggle.is-on .toggle-knob { background: var(--k-switch-on-knob); transform: translateX(22px); }
@@ -204,22 +203,24 @@
     background: var(--k-action);
     color: var(--k-on-action);
     box-shadow: 4px 4px 0 var(--k-shadow-color);
-    rotate: 0deg;
-    transition: rotate 240ms cubic-bezier(.3, 1.6, .5, 1), translate var(--k-press) ease, scale var(--k-press) ease, box-shadow var(--k-press) ease, background-color 160ms ease;
+    rotate: none;
+    translate: none;
+    scale: none;
+    transform: none;
+    transition: transform var(--k-press) var(--k-ease);
   }
-  .bottom-nav .nav-fab-face svg { stroke-width: 3; transition: rotate 280ms cubic-bezier(.3, 1.6, .5, 1); }
-  .bottom-nav .nav-fab:hover .nav-fab-face { rotate: 0deg; }
-  .bottom-nav .nav-fab:hover .nav-fab-face svg { rotate: 90deg; }
-  .bottom-nav .nav-fab:active .nav-fab-face { translate: 3px 3px; scale: .92; box-shadow: 0 0 0 var(--k-shadow-color); }
+  .bottom-nav .nav-fab-face svg { stroke-width: 3; rotate: none; transition: transform 240ms var(--k-ease); }
+  .bottom-nav .nav-fab:hover .nav-fab-face svg { transform: rotate(90deg); }
+  .bottom-nav .nav-fab:active .nav-fab-face { transform: translate(3px, 3px) scale(.92); box-shadow: none; }
   .bottom-nav .nav-fab.active .nav-fab-face {
-    rotate: 0deg;
-    translate: 2px 2px;
+    transform: translate(2px, 2px);
     background: var(--k-acid);
     border-color: var(--k-on-acid);
     color: var(--k-on-acid);
     box-shadow: 2px 2px 0 var(--k-shadow-color);
   }
-  .bottom-nav .nav-fab.active .nav-fab-face svg { rotate: 135deg; }
+  .bottom-nav .nav-fab.active:active .nav-fab-face { transform: translate(3px, 3px) scale(.92); }
+  .bottom-nav .nav-fab.active .nav-fab-face svg { transform: rotate(135deg); }
   .bottom-nav .nav-fab:focus-visible { outline: none; }
   .bottom-nav .nav-fab:focus-visible .nav-fab-face { outline: 3px solid var(--k-focus); outline-offset: 3px; }
   .bottom-nav .nav-fab-burst { position: absolute; inset: 0; pointer-events: none; }
@@ -290,27 +291,6 @@
   .date-modal-cell:disabled { color: var(--k-hair-strong); }
   .date-modal-today-btn { min-height: 44px; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-acid); color: var(--k-on-acid); box-shadow: none; font: 800 var(--k-text-sm)/1 var(--k-font-body); }
 
-  /* ── The log moment (first meal of the day and milestones) ─── */
-  .celebrate-overlay { background: var(--k-ground); }
-  .celebrate-burst { display: none; }
-  .celebrate-inner {
-    gap: var(--k-space-3);
-    max-width: 380px;
-    padding: 28px 20px;
-    border: 2px solid var(--k-line);
-    border-radius: 0;
-    background: var(--k-card);
-    box-shadow: var(--k-shadow);
-  }
-  .celebrate-title { margin-top: var(--k-space-2); font: 900 var(--k-type-title)/.85 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
-  .celebrate-sub { font: 700 var(--k-text-md)/1.4 var(--k-font-body); color: var(--k-muted); }
-  .celebrate-first { max-width: 28ch; margin: 0 auto; font: 600 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-ink); }
-  .celebrate-awards li { border: 2px solid var(--k-line); border-radius: 0; box-shadow: none; background: var(--k-card); color: var(--k-ink); font: 600 var(--k-text-sm)/1.3 var(--k-font-body); }
-  .celebrate-awards strong { padding: 2px 6px; background: var(--k-acid); color: var(--k-on-acid); }
-  .celebrate-stat { border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: none; }
-  .celebrate-stat-value { font: 900 var(--k-type-title)/1 var(--k-font-display); color: var(--k-ink); }
-  .celebrate-stat-label { font: 600 var(--k-type-meta)/1.3 var(--k-font-mono); letter-spacing: .04em; color: var(--k-muted); }
-
   /* A page's heading takes focus on arrival so screen readers start there.
      It is not a control, so it shows no focus ring. */
   h1[tabindex="-1"]:focus { outline: none; }
@@ -358,7 +338,7 @@
   .k-section-head > span { font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
 
   .k-meter { position: relative; display: block; height: 8px; overflow: hidden; background: var(--k-hair); }
-  .k-meter-fill { display: block; height: 100%; background: var(--k-ink); transition: width 500ms var(--k-ease); }
+  .k-meter-fill { display: block; width: 100%; height: 100%; background: var(--k-ink); transform-origin: left center; transition: transform 240ms var(--k-ease); }
   .k-meter-acid { height: 16px; border: 2px solid var(--k-line); background: var(--k-card); }
   .k-meter-acid .k-meter-fill { background: var(--k-acid); }
   .k-meter.is-over .k-meter-fill { background: var(--k-over-fill); }
@@ -377,7 +357,7 @@
     font: 800 var(--k-text-md)/1.2 var(--k-font-body);
     text-decoration: none;
     cursor: pointer;
-    transition: transform var(--k-press) ease, box-shadow var(--k-press) ease;
+    transition: transform var(--k-press) var(--k-ease);
   }
   .k-button:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-button.is-primary { background: var(--k-action); color: var(--k-on-action); }
@@ -425,6 +405,15 @@
   .k-chip[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); }
   .k-chip:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
 
+  /* One flat depression for daily controls; selected geometry never changes. */
+  :is(.k-chip, .k-filter, .k-icon-button, .k-add-row, .k-text-button, .k-wardrobe-piece) {
+    transition: transform var(--k-press) var(--k-ease);
+  }
+  :is(.k-chip, .k-filter, .k-icon-button, .k-add-row, .k-text-button, .k-wardrobe-piece):not(:disabled):not([aria-disabled="true"]):active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
   .k-food-tile {
     display: grid;
     flex: none;
@@ -445,8 +434,9 @@
     align-items: flex-end;
     justify-content: center;
     background: var(--k-scrim);
-    animation: k-fade 160ms ease both;
+    animation: k-fade 240ms var(--k-ease) both;
   }
+  .k-sheet-backdrop:has(> .k-sheet.is-quick) { animation-duration: 120ms; }
   .k-sheet {
     position: relative;
     width: 100%;
@@ -460,7 +450,7 @@
     border-radius: var(--k-radius-sheet) var(--k-radius-sheet) 0 0;
     background: var(--k-card);
     color: var(--k-ink);
-    animation: k-sheet-up 220ms var(--k-ease) both;
+    animation: k-sheet-up 240ms var(--k-ease) both;
   }
   .k-sheet-grab { display: block; width: 44px; height: 4px; margin: 2px auto 10px; border-radius: 4px; background: var(--k-hair-strong); }
   @media (min-width: 720px) {

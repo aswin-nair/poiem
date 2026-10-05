@@ -58,6 +58,7 @@ import { advanceAfterLog, openSession, transitionTrackingPause } from '../lib/ga
 import { clearAnalytics, finishLogFlow } from '../lib/analytics'
 import { clearOnboardingDraft } from '../lib/onboarding'
 import { clearNotificationHistory } from '../lib/notifications'
+import { clearRingAck } from '../lib/ringAck'
 import { clearLogDraft, hydrateLogDrafts } from '../lib/logDrafts'
 import { finalizeGuestClaim, guestUserId, hasPendingGuestClaim } from '../lib/guestMode'
 
@@ -334,6 +335,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
               clearOnboardingDraft(userId)
               clearLogDraft(userId)
               clearNotificationHistory()
+              clearRingAck()
               clearAnalytics()
             } catch {
               setStorageRecovery('Server deletion was confirmed, but some browser recovery storage still needs cleanup.')
@@ -1158,6 +1160,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       clearOnboardingDraft(userId)
       clearLogDraft(userId)
       clearNotificationHistory()
+      clearRingAck()
       clearAnalytics()
       return true
     },

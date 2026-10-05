@@ -27,7 +27,7 @@ export function Meter({
       aria-valuenow={Math.round(Math.min(Math.max(0, value), max))}
       aria-valuetext={valueText}
     >
-      <span className="k-meter-fill" style={{ width: `${progress * 100}%` }} />
+      <span className="k-meter-fill" style={{ transform: `scaleX(${progress})` }} />
     </span>
   )
 }

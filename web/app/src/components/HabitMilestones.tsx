@@ -1,6 +1,5 @@
 import { IconCheck, IconTrophy } from './icons'
-
-const HABIT_MILESTONES = [1, 3, 7, 14, 30] as const
+import { HABIT_MILESTONES } from '../lib/habitMilestones'
 
 /** Lifetime logged days: breaks never erase progress, and calories are not a score. */
 export function HabitMilestones({ loggedDays }: { loggedDays: number }) {

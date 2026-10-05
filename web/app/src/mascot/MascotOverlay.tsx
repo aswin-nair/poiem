@@ -35,6 +35,7 @@ import {
 import { recentLines, rememberLine, sessionVariant } from '../lib/mascotMemory'
 import { pickRoast } from '../lib/mascotRoasts'
 import { dayRingProgress } from '../lib/dayRing'
+import { dayRingEntries } from '../lib/dayRingEntries'
 import { Momo } from '../components/Momo'
 import {
   generateMascotLines,
@@ -190,7 +191,7 @@ export function MascotOverlay() {
   const todayEntries = state.foodEntries.filter(e => localDayKey(new Date(e.timestamp)) === todayKey)
   const loggedToday = todayEntries.length > 0
   const ringComplete = dayRingProgress(
-    todayEntries,
+    dayRingEntries(todayEntries),
     state.gamification.notesByDate[todayKey] ?? 0,
     state.profile.loggingCommitment ?? 'light',
   ).complete

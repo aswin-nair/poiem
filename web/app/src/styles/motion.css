@@ -14,25 +14,28 @@
 }
 
 @keyframes page-enter-forward {
-  from { opacity: 0; transform: translateX(22px); }
+  from { opacity: 0; transform: translateX(12px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes page-enter-back {
-  from { opacity: 0; transform: translateX(-22px); }
+  from { opacity: 0; transform: translateX(-12px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.app-shell > .app-main {
-  animation: page-enter 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+.app-shell > .app-main,
+.app-shell > .k-workspace-col > .app-main {
+  animation: page-enter 240ms cubic-bezier(.22, 1, .36, 1);
 }
 
-.nav-dir-forward .app-shell > .app-main {
-  animation: page-enter-forward 0.26s cubic-bezier(0.32, 0.72, 0, 1);
+.nav-dir-forward .app-shell > .app-main,
+.nav-dir-forward .app-shell > .k-workspace-col > .app-main {
+  animation: page-enter-forward 240ms cubic-bezier(.22, 1, .36, 1);
 }
 
-.nav-dir-back .app-shell > .app-main {
-  animation: page-enter-back 0.26s cubic-bezier(0.32, 0.72, 0, 1);
+.nav-dir-back .app-shell > .app-main,
+.nav-dir-back .app-shell > .k-workspace-col > .app-main {
+  animation: page-enter-back 240ms cubic-bezier(.22, 1, .36, 1);
 }
 
 /* The app already has a `.motion-stagger` utility further down that does this
@@ -276,7 +279,8 @@
   .meal-path-mascot,
   .meal-path-progress,
   .app-shell,
-  .app-shell > .app-main {
+  .app-shell > .app-main,
+  .app-shell > .k-workspace-col > .app-main {
     animation: none !important;
     transition: none !important;
   }

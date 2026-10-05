@@ -14,6 +14,7 @@ import { PressableButton } from '../components/PressableButton'
 import { Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
+import { prefersReducedMotion } from '../lib/tokens'
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
 function CoachMessage({ text }: { text: string }) {
@@ -88,6 +89,7 @@ export function CoachPage() {
   const [error, setError] = useState<string | null>(null)
   const [showSafetySupport, setShowSafetySupport] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
+  const followConversation = useRef(true)
   const inputRef = useRef<HTMLInputElement>(null)
   const requestRef = useRef<AbortController | null>(null)
   const { availability, refresh } = useAiAccess()
@@ -95,7 +97,18 @@ export function CoachPage() {
   useEffect(() => () => requestRef.current?.abort(), [])
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const onScroll = () => {
+      const scroller = document.scrollingElement
+      if (!scroller) return
+      followConversation.current = scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop <= 80
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!followConversation.current) return
+    bottomRef.current?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'end' })
   }, [state.chatMessages, loading])
 
   const ai = availability(state.aiSettings, 'coach')
