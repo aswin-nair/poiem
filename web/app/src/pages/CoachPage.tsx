@@ -15,6 +15,7 @@ import { Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
 import { prefersReducedMotion } from '../lib/tokens'
+import { distanceFromBottom, followScrollBehavior, shouldFollowConversation } from '../lib/coachScroll'
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
 function CoachMessage({ text }: { text: string }) {
@@ -100,7 +101,7 @@ export function CoachPage() {
     const onScroll = () => {
       const scroller = document.scrollingElement
       if (!scroller) return
-      followConversation.current = scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop <= 80
+      followConversation.current = shouldFollowConversation(distanceFromBottom(scroller))
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -108,7 +109,9 @@ export function CoachPage() {
 
   useEffect(() => {
     if (!followConversation.current) return
-    bottomRef.current?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'end' })
+    /* No `block`: the default clamps to the maximum scroll, which keeps the newest
+       message above the sticky compose bar and the tab bar. */
+    bottomRef.current?.scrollIntoView({ behavior: followScrollBehavior(prefersReducedMotion()) })
   }, [state.chatMessages, loading])
 
   const ai = availability(state.aiSettings, 'coach')
@@ -119,6 +122,8 @@ export function CoachPage() {
   async function send(text: string) {
     const trimmed = text.trim()
     if (!trimmed || loading) return
+    /* Sending is a request to see the answer: follow again, even from far up the thread. */
+    followConversation.current = true
     const safety = coachSafetyResponse(trimmed)
     if (!safety && !canChat) {
       if (ai.kind === 'premium_required' && foodAi.kind === 'ready') setError('Coach is a Premium feature. You can still log meals with managed AI.')
