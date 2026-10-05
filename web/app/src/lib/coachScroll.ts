@@ -17,6 +17,21 @@ export function shouldFollowConversation(distance: number): boolean {
   return distance <= FOLLOW_THRESHOLD_PX
 }
 
+/**
+ * The follow flag after one scroll event. Near the bottom the reader is following, whatever
+ * the direction. Further up, only the reader scrolling up (scrollTop fell) stops following:
+ * the page's own follow scrolls only move down, so while one is still in flight (more than
+ * the threshold remaining) it must not clear a flag the send just set.
+ */
+export function nextFollowState({ previous, distanceFromBottom, scrolledUp }: {
+  previous: boolean
+  distanceFromBottom: number
+  scrolledUp: boolean
+}): boolean {
+  if (shouldFollowConversation(distanceFromBottom)) return true
+  return scrolledUp ? false : previous
+}
+
 /** Smooth scrolling is decoration: the OS reduced-motion preference gets an instant jump. */
 export function followScrollBehavior(reducedMotion: boolean): ScrollBehavior {
   return reducedMotion ? 'auto' : 'smooth'

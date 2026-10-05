@@ -15,7 +15,7 @@ import { Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
 import { prefersReducedMotion } from '../lib/tokens'
-import { distanceFromBottom, followScrollBehavior, shouldFollowConversation } from '../lib/coachScroll'
+import { distanceFromBottom, followScrollBehavior, nextFollowState } from '../lib/coachScroll'
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
 function CoachMessage({ text }: { text: string }) {
@@ -98,10 +98,16 @@ export function CoachPage() {
   useEffect(() => () => requestRef.current?.abort(), [])
 
   useEffect(() => {
+    let lastTop = document.scrollingElement?.scrollTop ?? 0
     const onScroll = () => {
       const scroller = document.scrollingElement
       if (!scroller) return
-      followConversation.current = shouldFollowConversation(distanceFromBottom(scroller))
+      followConversation.current = nextFollowState({
+        previous: followConversation.current,
+        distanceFromBottom: distanceFromBottom(scroller),
+        scrolledUp: scroller.scrollTop < lastTop,
+      })
+      lastTop = scroller.scrollTop
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -122,8 +128,6 @@ export function CoachPage() {
   async function send(text: string) {
     const trimmed = text.trim()
     if (!trimmed || loading) return
-    /* Sending is a request to see the answer: follow again, even from far up the thread. */
-    followConversation.current = true
     const safety = coachSafetyResponse(trimmed)
     if (!safety && !canChat) {
       if (ai.kind === 'premium_required' && foodAi.kind === 'ready') setError('Coach is a Premium feature. You can still log meals with managed AI.')
@@ -132,6 +136,9 @@ export function CoachPage() {
       else setError('Managed AI is not available right now. You can add your own key in Advanced settings.')
       return
     }
+    /* Sending is a request to see the answer: follow again, even from far up the thread.
+       Only a send that goes through re-arms it; an ignored or refused one leaves it alone. */
+    followConversation.current = true
     setError(null)
     setInput('')
     const userMsg = {
