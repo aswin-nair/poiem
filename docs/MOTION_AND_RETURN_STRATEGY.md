@@ -76,7 +76,7 @@ Use fixed-size artwork/status space and one polite, atomic success announcement.
 - **Route:** take `pageWipe`/`motionStep`'s direction but omit rotation and limit travel to 12px; use `motionFade` for the 240ms daily transition. Animate the arriving content, never the fixed nav or entire shell. Same-day reopening uses only a 120ms fade and never restages the whole screen.
 - **Idle:** existing `motionIdle` for one visible Momo artwork only, y travel ≤2px. No dashboard/card/icon loops.
 
-Only **transform and opacity** animate. Static color selection and final geometry may update immediately. Meters must stop transitioning `width`; use a full-width fill with `scaleX` and a fixed origin. Day-ring values update immediately without tweening SVG stroke, mask, path or dash geometry; an opacity/scale acknowledgement on the existing ring/check artwork supplies closure. No animated height, border width, blur, shadow, chart path or full-screen canvas.
+Only **transform and opacity** animate. Static color selection and final geometry may update immediately. Meters must stop transitioning `width`; use a full-width fill moved with `translateX` inside an `overflow: hidden` track (not `scaleX`: scaling would squash a striped fill in proportion to its value). Day-ring values update immediately without tweening SVG stroke, mask, path or dash geometry; an opacity/scale acknowledgement on the existing ring/check artwork supplies closure. No animated height, border width, blur, shadow, chart path or full-screen canvas.
 
 ### The eight moments
 

@@ -338,7 +338,9 @@
   .k-section-head > span { font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
 
   .k-meter { position: relative; display: block; height: 8px; overflow: hidden; background: var(--k-hair); }
-  .k-meter-fill { display: block; width: 100%; height: 100%; background: var(--k-ink); transform-origin: left center; transition: transform 240ms var(--k-ease); }
+  /* The fill is always full width and Meter slides it left with translateX, so a
+     striped fill keeps its stripe period at every value; width is never animated. */
+  .k-meter-fill { display: block; width: 100%; height: 100%; background: var(--k-ink); transition: transform 240ms var(--k-ease); }
   .k-meter-acid { height: 16px; border: 2px solid var(--k-line); background: var(--k-card); }
   .k-meter-acid .k-meter-fill { background: var(--k-acid); }
   .k-meter.is-over .k-meter-fill { background: var(--k-over-fill); }
