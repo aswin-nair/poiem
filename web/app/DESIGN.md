@@ -212,7 +212,15 @@ The four tabs, Coach, Support, About and the component reference render inside `
 5. **Meals.** Grouped as Breakfast, Lunch, Dinner, Snack (plus Other when used), each with a coloured icon and its kcal. Rows show a food tile tinted by kind of food, the name, time and P · C · F, and swipe to edit or delete. A meal you just logged flashes acid. Each group ends with an "Add breakfast" row that opens the log sheet for that meal.
 6. **Water and notes.** Eight little glasses that fill, a stepper, and "Add a kitchen note".
 
-Today shows no poster masthead, stickers, streak chip or level chip. Streak, level, XP and freezes live in the **Journey** card on Insights. Tracking pause replaces the numbers with a notice. Guests see a claim-your-progress card and no log shortcuts.
+Today shows no poster masthead, stickers, streak chip or level chip. The ongoing streak, level, XP and freezes dashboard lives in the **Journey** card on Insights. A transient log confirmation may acknowledge its actual XP and level once. Tracking pause replaces the numbers with a notice. Guests see a claim-your-progress card and no log shortcuts.
+
+### Motion and feedback
+
+`logReceipt.ts` associates an accepted save with award keys; `logFeedbackPlan.ts` coalesces first meal, piece, milestone, ring, first daily and ordinary feedback, in that order. `logPresentation.ts` chooses one card or toast. `LogMoment.tsx` is a flat non-modal aside with immediate Undo/Dismiss and one polite atomic announcement. It does not take focus or move existing content; measured bottom clearance stays until Today unmounts so dismissal at the scroll end does not jump. Short-screen overflow keeps the card operable.
+
+`DayRing.tsx` sits below Momo and above the sole calorie hero. Its static arcs describe chosen logging steps; nutrition targets do not affect completion. `progressNote.ts` shows one next existing cumulative step. Paused tracking hides both. Reduced motion settles the same facts immediately.
+
+Daily flat controls use one 2 px translation on `--k-press` (FAB 3 px), with no hover scale or stacked transform. Selections emit one `select` cue only when changed; saving has one outcome cue. Meters translate a full-width fill, preserving stripe period. Route arrival is at most 12 px/240 ms; the sheet opens immediately, with no child delays, at most 28 px travel and a 120 ms fade on quick reopening. Coach follows its own send and downward follow scroll; reading history suspends follow. This is fixed Standard behavior; whole-app intensity and new return hooks remain paused.
 
 ### Log sheet (`/log`)
 

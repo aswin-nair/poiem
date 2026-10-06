@@ -59,8 +59,8 @@ const MEAL_ICONS: Record<MealType, typeof IconMeal> = {
 
 /**
  * Today: Momo says hello, the number that matters sits on a bright card, and
- * meals are grouped the way the day went, each in its own colour. Streaks,
- * the progress dashboard lives on Insights; a log receipt can acknowledge its XP and level once.
+ * meals are grouped the way the day went, each in its own colour. The ongoing
+ * progress dashboard lives on Insights; a log receipt can acknowledge XP and level once.
  */
 export function HomePage({ guest = false }: { guest?: boolean }) {
   const { state, ackLevelUp, patchGamification, deleteEntry, restoreEntry, refresh } = useApp()
