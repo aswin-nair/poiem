@@ -19,11 +19,29 @@ test.describe('Today & food logging', () => {
     await expect(page.locator('.ticket')).toHaveCount(0)
 
     const water = page.getByRole('group', { name: 'Water glasses' })
-    await water.getByRole('button', { name: 'Add a glass of water' }).click()
-    await water.getByRole('button', { name: 'Add a glass of water' }).click()
-    await expect(water).toContainText('2/8')
+    const count = water.locator('.tabular')
+    const add = water.getByRole('button', { name: 'Add a glass of water' })
+    await add.click()
+    await expect(count).toHaveText('1/8')
+    await add.click()
+    await expect(count).toHaveText('2/8')
+    await expect.poll(async () => page.evaluate(async () => {
+      const db = await new Promise<IDBDatabase>((resolve, reject) => {
+        const request = indexedDB.open('fud-ai-web-durable', 1)
+        request.onsuccess = () => resolve(request.result)
+        request.onerror = () => reject(request.error)
+      })
+      const account = await new Promise<{ state?: { gamification?: { waterByDate?: Record<string, number> } } } | undefined>((resolve, reject) => {
+        const transaction = db.transaction('accounts', 'readonly')
+        const request = transaction.objectStore('accounts').getAll()
+        request.onsuccess = () => resolve(request.result[0])
+        request.onerror = () => reject(request.error)
+      })
+      const glasses = Object.values(account?.state?.gamification?.waterByDate ?? {})
+      return glasses[0] ?? 0
+    })).toBe(2)
     await page.reload()
-    await expect(page.getByRole('group', { name: 'Water glasses' })).toContainText('2/8')
+    await expect(page.getByRole('group', { name: 'Water glasses' }).locator('.tabular')).toHaveText('2/8')
   })
 
   test('streak, level and XP live on Insights', async ({ page }) => {

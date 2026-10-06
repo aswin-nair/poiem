@@ -1,0 +1,8723 @@
+[
+  {
+    "kind": "keyboard",
+    "surface": "log-sheet",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "Search your foods, or type calories",
+        "top": 196,
+        "bottom": 248,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "describe",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "YOUR MEAL, YOUR WORDS",
+        "top": 175.390625,
+        "bottom": 325.390625,
+        "height": 400,
+        "hit": true,
+        "occluders": [
+          "toast-stack"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "manual",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "Food name Required",
+        "top": 255.1875,
+        "bottom": 303.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Calories per serving Required",
+        "top": 352.375,
+        "bottom": 400.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Protein (g)",
+        "top": 175.75,
+        "bottom": 223.75,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Carbs (g)",
+        "top": 175.75,
+        "bottom": 223.75,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Fat (g)",
+        "top": 175.75,
+        "bottom": 223.75,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Servings",
+        "top": 261.75,
+        "bottom": 305.75,
+        "height": 400,
+        "hit": true,
+        "occluders": [
+          "toast-stack"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "review",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "FOOD NAME",
+        "top": 351.59375,
+        "bottom": 399.59375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "× portion",
+        "top": 177.59375,
+        "bottom": 221.59375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Calories\nkcal",
+        "top": 342.1875,
+        "bottom": 400.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Protein\ng",
+        "top": 178.375,
+        "bottom": 222.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Carbs\ng",
+        "top": 178.375,
+        "bottom": 222.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Fat\ng",
+        "top": 178.375,
+        "bottom": 222.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "edit",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "FOOD NAME",
+        "top": 245,
+        "bottom": 293,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Calories\nkcal",
+        "top": 342,
+        "bottom": 400,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Protein\ng",
+        "top": 178.1875,
+        "bottom": 222.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Carbs\ng",
+        "top": 178.1875,
+        "bottom": 222.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Fat\ng",
+        "top": 178.1875,
+        "bottom": 222.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "you-profile",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "Find a setting",
+        "top": 166.78125,
+        "bottom": 214.78125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 178.328125,
+        "bottom": 222.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 247.328125,
+        "bottom": 291.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 316.328125,
+        "bottom": 360.328125,
+        "height": 400,
+        "hit": false,
+        "occluders": [
+          "bottom-nav-wrap"
+        ]
+      },
+      {
+        "name": null,
+        "top": 356.328125,
+        "bottom": 400.328125,
+        "height": 400,
+        "hit": false,
+        "occluders": [
+          "bottom-nav-wrap"
+        ]
+      },
+      {
+        "name": null,
+        "top": 178.328125,
+        "bottom": 222.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 252.515625,
+        "bottom": 296.515625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 326.703125,
+        "bottom": 370.703125,
+        "height": 400,
+        "hit": false,
+        "occluders": [
+          "bottom-nav-wrap"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "coach",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "Message Coach",
+        "top": 204.8125,
+        "bottom": 256.8125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "login",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "EMAIL",
+        "top": 122.046875,
+        "bottom": 170.046875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "PASSWORD",
+        "top": 122.125,
+        "bottom": 170.125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "signup",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "NAME",
+        "top": 122.234375,
+        "bottom": 170.234375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "EMAIL",
+        "top": 122.421875,
+        "bottom": 170.421875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "PASSWORD",
+        "top": 121.5,
+        "bottom": 169.5,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "CONFIRM PASSWORD",
+        "top": 121.875,
+        "bottom": 169.875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "forgot",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "EMAIL",
+        "top": 244.328125,
+        "bottom": 292.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-1",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "DATE OF BIRTH",
+        "top": 175.953125,
+        "bottom": 223.953125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-2",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "YOUR NAME (optional)",
+        "top": 176.0625,
+        "bottom": 224.0625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-3",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "HEIGHT (CM)",
+        "top": 175.859375,
+        "bottom": 223.859375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "WEIGHT (KG)",
+        "top": 175.859375,
+        "bottom": 223.859375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-4",
+    "theme": "light",
+    "fields": []
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-8",
+    "theme": "light",
+    "fields": [
+      {
+        "name": "MEAL NAME",
+        "top": 176.453125,
+        "bottom": 224.453125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "CALORIES",
+        "top": 258.640625,
+        "bottom": 306.640625,
+        "height": 400,
+        "hit": true,
+        "occluders": [
+          "toast-stack"
+        ]
+      },
+      {
+        "name": "PROTEIN (G)",
+        "top": 178.40625,
+        "bottom": 222.40625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "CARBS (G)",
+        "top": 169.3125,
+        "bottom": 222.40625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "FAT (G)",
+        "top": 169.3125,
+        "bottom": 222.40625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "sheet",
+    "theme": "light",
+    "before": 300,
+    "after": 656,
+    "escapeClosed": true,
+    "backdropClosed": true,
+    "focus": {
+      "dialog": true,
+      "name": "Dinner "
+    },
+    "small": []
+  },
+  {
+    "kind": "sheet-back",
+    "theme": "light",
+    "backClosed": true,
+    "url": "http://localhost:5174/"
+  },
+  {
+    "kind": "calendar",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "device": "Pixel 7"
+    },
+    "rect": {
+      "x": 24,
+      "y": 228.140625,
+      "width": 272,
+      "height": 387.71875
+    },
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Previous month",
+        "x": 44,
+        "y": 261.140625,
+        "w": 30,
+        "h": 30,
+        "right": 74,
+        "bottom": 291.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Next month",
+        "x": 212,
+        "y": 261.140625,
+        "w": 30,
+        "h": 30,
+        "right": 242,
+        "bottom": 291.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-close",
+        "name": "Close",
+        "x": 250,
+        "y": 263.140625,
+        "w": 26,
+        "h": 26,
+        "right": 276,
+        "bottom": 289.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 1 August 2026",
+        "x": 242.84375,
+        "y": 341.015625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 374.15625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 2 August 2026",
+        "x": 44,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 3 August 2026",
+        "x": 77.140625,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 4 August 2026",
+        "x": 110.28125,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 5 August 2026",
+        "x": 143.421875,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 6 August 2026",
+        "x": 176.5625,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 7 August 2026",
+        "x": 209.703125,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 8 August 2026",
+        "x": 242.84375,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 9 August 2026",
+        "x": 44,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 10 August 2026",
+        "x": 77.140625,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 11 August 2026",
+        "x": 110.28125,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 12 August 2026",
+        "x": 143.421875,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 13 August 2026",
+        "x": 176.5625,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 14 August 2026",
+        "x": 209.703125,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 15 August 2026",
+        "x": 242.84375,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 16 August 2026",
+        "x": 44,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 17 August 2026",
+        "x": 77.140625,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 18 August 2026",
+        "x": 110.28125,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 19 August 2026",
+        "x": 143.421875,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 20 August 2026",
+        "x": 176.5625,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 21 August 2026",
+        "x": 209.703125,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 22 August 2026",
+        "x": 242.84375,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 23 August 2026",
+        "x": 44,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 24 August 2026",
+        "x": 77.140625,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 25 August 2026",
+        "x": 110.28125,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 26 August 2026",
+        "x": 143.421875,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 27 August 2026",
+        "x": 176.5625,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 28 August 2026",
+        "x": 209.703125,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 29 August 2026",
+        "x": 242.84375,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 30 August 2026",
+        "x": 44,
+        "y": 506.71875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 539.859375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 31 August 2026",
+        "x": 77.140625,
+        "y": 506.71875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 539.859375
+      }
+    ]
+  },
+  {
+    "kind": "calendar",
+    "theme": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "device": "iPhone 13"
+    },
+    "rect": {
+      "x": 35,
+      "y": 220.5625,
+      "width": 320,
+      "height": 402.875
+    },
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Previous month",
+        "x": 55,
+        "y": 240.5625,
+        "w": 30,
+        "h": 30,
+        "right": 85,
+        "bottom": 270.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Next month",
+        "x": 271,
+        "y": 240.5625,
+        "w": 30,
+        "h": 30,
+        "right": 301,
+        "bottom": 270.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-close",
+        "name": "Close",
+        "x": 309,
+        "y": 242.5625,
+        "w": 26,
+        "h": 26,
+        "right": 335,
+        "bottom": 268.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 1 August 2026",
+        "x": 295,
+        "y": 307.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 347.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 2 August 2026",
+        "x": 55,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 3 August 2026",
+        "x": 95,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 4 August 2026",
+        "x": 135,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 5 August 2026",
+        "x": 175,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 6 August 2026",
+        "x": 215,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 7 August 2026",
+        "x": 255,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 8 August 2026",
+        "x": 295,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 9 August 2026",
+        "x": 55,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 10 August 2026",
+        "x": 95,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 11 August 2026",
+        "x": 135,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 12 August 2026",
+        "x": 175,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 13 August 2026",
+        "x": 215,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 14 August 2026",
+        "x": 255,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 15 August 2026",
+        "x": 295,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 16 August 2026",
+        "x": 55,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 17 August 2026",
+        "x": 95,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 18 August 2026",
+        "x": 135,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 19 August 2026",
+        "x": 175,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 20 August 2026",
+        "x": 215,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 21 August 2026",
+        "x": 255,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 22 August 2026",
+        "x": 295,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 23 August 2026",
+        "x": 55,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 24 August 2026",
+        "x": 95,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 25 August 2026",
+        "x": 135,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 26 August 2026",
+        "x": 175,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 27 August 2026",
+        "x": 215,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 28 August 2026",
+        "x": 255,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 29 August 2026",
+        "x": 295,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 30 August 2026",
+        "x": 55,
+        "y": 507.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 547.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 31 August 2026",
+        "x": 95,
+        "y": 507.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 547.4375
+      }
+    ]
+  },
+  {
+    "kind": "calendar",
+    "theme": "light",
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "device": "Pixel 7"
+    },
+    "rect": {
+      "x": 262,
+      "y": -6.4375,
+      "width": 320,
+      "height": 402.875
+    },
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Previous month",
+        "x": 282,
+        "y": 13.5625,
+        "w": 30,
+        "h": 30,
+        "right": 312,
+        "bottom": 43.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Next month",
+        "x": 498,
+        "y": 13.5625,
+        "w": 30,
+        "h": 30,
+        "right": 528,
+        "bottom": 43.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-close",
+        "name": "Close",
+        "x": 536,
+        "y": 15.5625,
+        "w": 26,
+        "h": 26,
+        "right": 562,
+        "bottom": 41.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 1 August 2026",
+        "x": 522,
+        "y": 80.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 120.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 2 August 2026",
+        "x": 282,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 3 August 2026",
+        "x": 322,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 4 August 2026",
+        "x": 362,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 5 August 2026",
+        "x": 402,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 6 August 2026",
+        "x": 442,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 7 August 2026",
+        "x": 482,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 8 August 2026",
+        "x": 522,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 9 August 2026",
+        "x": 282,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 10 August 2026",
+        "x": 322,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 11 August 2026",
+        "x": 362,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 12 August 2026",
+        "x": 402,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 13 August 2026",
+        "x": 442,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 14 August 2026",
+        "x": 482,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 15 August 2026",
+        "x": 522,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 16 August 2026",
+        "x": 282,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 17 August 2026",
+        "x": 322,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 18 August 2026",
+        "x": 362,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 19 August 2026",
+        "x": 402,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 20 August 2026",
+        "x": 442,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 21 August 2026",
+        "x": 482,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 22 August 2026",
+        "x": 522,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 23 August 2026",
+        "x": 282,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 24 August 2026",
+        "x": 322,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 25 August 2026",
+        "x": 362,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 26 August 2026",
+        "x": 402,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 27 August 2026",
+        "x": 442,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 28 August 2026",
+        "x": 482,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 29 August 2026",
+        "x": 522,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 30 August 2026",
+        "x": 282,
+        "y": 280.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 320.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 31 August 2026",
+        "x": 322,
+        "y": 280.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 320.4375
+      }
+    ]
+  },
+  {
+    "kind": "stress",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1986
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 169.59375,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 245.59375
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Big food day. Tomorrow’s a fresh plate.",
+        "x": 92,
+        "y": 249.59375,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 269.1875
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget is-over",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget is-over → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "today-empty",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1452
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 169.59375,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 245.59375
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Dinner plans? I’m all ears.",
+        "x": 92,
+        "y": 249.59375,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 269.1875
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "today-guest",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1915
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 468.78125,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 544.78125
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Big food day. Tomorrow’s a fresh plate.",
+        "x": 92,
+        "y": 548.78125,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 568.375
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-surface is-outlined k-notice → k-momo",
+        "px": 24
+      },
+      {
+        "between": "k-momo → k-surface is-hero k-budget is-over",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget is-over → k-macros",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "log-sheet",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2079
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/log",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 216.375,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 292.375
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Big food day. Tomorrow’s a fresh plate.",
+        "x": 92,
+        "y": 296.375,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 315.96875
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 195.375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Search your foods, or type calories",
+        "x": 22,
+        "y": 331.59375,
+        "w": 268,
+        "h": 52,
+        "right": 290,
+        "bottom": 383.59375,
+        "font": "32px",
+        "type": "text",
+        "inputmode": "text",
+        "autocomplete": "off",
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget is-over",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget is-over → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "describe",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2507
+    },
+    "bodyOverflow": "visible",
+    "heading": "WHAT’S ON THE MENU?",
+    "url": "/log/text",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "TEXTAREA",
+        "cls": "text-log-input",
+        "name": "YOUR MEAL, YOUR WORDS",
+        "x": 31,
+        "y": 1254.390625,
+        "w": 258,
+        "h": 266,
+        "right": 289,
+        "bottom": 1520.390625,
+        "font": "32px",
+        "type": "textarea",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "photo",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 844
+    },
+    "bodyOverflow": "visible",
+    "heading": "GIVE YOUR MEAL A CLOSE-UP.",
+    "url": "/log/photo",
+    "overflow": [],
+    "small": [
+      {
+        "tag": "A",
+        "cls": "",
+        "name": "Use manual entry without uploading",
+        "x": 86.84375,
+        "y": 645.328125,
+        "w": 208.484375,
+        "h": 15,
+        "right": 295.328125,
+        "bottom": 660.328125
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "manual",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1216
+    },
+    "bodyOverflow": "visible",
+    "heading": "JOT IT DOWN.",
+    "url": "/log/manual",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Food name Required",
+        "x": 33,
+        "y": 255.1875,
+        "w": 254,
+        "h": 48,
+        "right": 287,
+        "bottom": 303.1875,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Calories per serving Required",
+        "x": 33,
+        "y": 359.375,
+        "w": 254,
+        "h": 48,
+        "right": 287,
+        "bottom": 407.375,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Protein (g)",
+        "x": 46,
+        "y": 523.75,
+        "w": 228,
+        "h": 48,
+        "right": 274,
+        "bottom": 571.75,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Carbs (g)",
+        "x": 46,
+        "y": 611.9375,
+        "w": 228,
+        "h": 48,
+        "right": 274,
+        "bottom": 659.9375,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Fat (g)",
+        "x": 46,
+        "y": 700.125,
+        "w": 228,
+        "h": 48,
+        "right": 274,
+        "bottom": 748.125,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "serving-input",
+        "name": "Servings",
+        "x": 78,
+        "y": 817.515625,
+        "w": 72,
+        "h": 44,
+        "right": 150,
+        "bottom": 861.515625,
+        "font": "18px",
+        "type": "number",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "review",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2877
+    },
+    "bodyOverflow": "visible",
+    "heading": "MAKE IT YOUR MEAL.",
+    "url": "/review",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FOOD NAME",
+        "x": 101,
+        "y": 815.359375,
+        "w": 186,
+        "h": 48,
+        "right": 287,
+        "bottom": 863.359375,
+        "font": "36px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Servings",
+        "x": 118,
+        "y": 1102.359375,
+        "w": 84,
+        "h": 44,
+        "right": 202,
+        "bottom": 1146.359375,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Calories\nkcal",
+        "x": 49,
+        "y": 1501.734375,
+        "w": 106.390625,
+        "h": 106,
+        "right": 155.390625,
+        "bottom": 1607.734375,
+        "font": "80px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Protein\ng",
+        "x": 167,
+        "y": 1627.734375,
+        "w": 99.59375,
+        "h": 44,
+        "right": 266.59375,
+        "bottom": 1671.734375,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Carbs\ng",
+        "x": 167,
+        "y": 1679.734375,
+        "w": 99.59375,
+        "h": 44,
+        "right": 266.59375,
+        "bottom": 1723.734375,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Fat\ng",
+        "x": 167,
+        "y": 1731.734375,
+        "w": 99.59375,
+        "h": 44,
+        "right": 266.59375,
+        "bottom": 1775.734375,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "review-empty",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 844
+    },
+    "bodyOverflow": "visible",
+    "heading": "LET’S START WITH A MEAL.",
+    "url": "/review",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "edit",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1452
+    },
+    "bodyOverflow": "visible",
+    "heading": "A LITTLE FINE-TUNING.",
+    "url": "/edit/seed-bowl",
+    "overflow": [],
+    "small": [],
+    "unnamed": [
+      {
+        "tag": "BUTTON",
+        "cls": "flow-text-action",
+        "name": "",
+        "x": 32,
+        "y": 1521.171875,
+        "w": 74.359375,
+        "h": 44,
+        "right": 106.359375,
+        "bottom": 1565.171875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "pressable pressable-destructive is-full",
+        "name": "",
+        "x": 32,
+        "y": 1571.171875,
+        "w": 256,
+        "h": 54,
+        "right": 288,
+        "bottom": 1625.171875
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FOOD NAME",
+        "x": 101,
+        "y": 309,
+        "w": 186,
+        "h": 48,
+        "right": 287,
+        "bottom": 357,
+        "font": "18px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Calories\nkcal",
+        "x": 49,
+        "y": 485,
+        "w": 135.1875,
+        "h": 58,
+        "right": 184.1875,
+        "bottom": 543,
+        "font": "40px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Protein\ng",
+        "x": 167,
+        "y": 563,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 607,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Carbs\ng",
+        "x": 167,
+        "y": 615,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 659,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Fat\ng",
+        "x": 167,
+        "y": 667,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 711,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "saved",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1210
+    },
+    "bodyOverflow": "visible",
+    "heading": "SAVED",
+    "url": "/log/saved",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FIND A SAVED OR RECENT MEAL",
+        "x": 55,
+        "y": 246.984375,
+        "w": 236,
+        "h": 44,
+        "right": 291,
+        "bottom": 290.984375,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "insights",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2892
+    },
+    "bodyOverflow": "visible",
+    "heading": "INSIGHTS",
+    "url": "/progress",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "you-overview",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2408
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings",
+    "overflow": [
+      {
+        "tag": "DIV",
+        "cls": "settings-row",
+        "name": "Sound\nShort cues when you log a meal",
+        "x": 33,
+        "y": 1381.296875,
+        "w": 321.25,
+        "h": 122.78125,
+        "right": 354.25,
+        "bottom": 1504.078125
+      },
+      {
+        "tag": "DIV",
+        "cls": "settings-row-control",
+        "name": "",
+        "x": 294.25,
+        "y": 1420.6875,
+        "w": 60,
+        "h": 44,
+        "right": 354.25,
+        "bottom": 1464.6875
+      },
+      {
+        "tag": "LABEL",
+        "cls": "toggle",
+        "name": "",
+        "x": 294.25,
+        "y": 1420.6875,
+        "w": 60,
+        "h": 44,
+        "right": 354.25,
+        "bottom": 1464.6875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "toggle-track",
+        "name": "",
+        "x": 298.25,
+        "y": 1427.6875,
+        "w": 52,
+        "h": 30,
+        "right": 350.25,
+        "bottom": 1457.6875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "toggle-knob",
+        "name": "",
+        "x": 303.25,
+        "y": 1432.6875,
+        "w": 20,
+        "h": 20,
+        "right": 323.25,
+        "bottom": 1452.6875
+      },
+      {
+        "tag": "DIV",
+        "cls": "settings-row",
+        "name": "Pause tracking\nHide numbers and hold your streak.",
+        "x": 33,
+        "y": 1504.078125,
+        "w": 321.25,
+        "h": 123.78125,
+        "right": 354.25,
+        "bottom": 1627.859375
+      },
+      {
+        "tag": "DIV",
+        "cls": "settings-row-control",
+        "name": "",
+        "x": 294.25,
+        "y": 1544.46875,
+        "w": 60,
+        "h": 44,
+        "right": 354.25,
+        "bottom": 1588.46875
+      },
+      {
+        "tag": "LABEL",
+        "cls": "toggle",
+        "name": "",
+        "x": 294.25,
+        "y": 1544.46875,
+        "w": 60,
+        "h": 44,
+        "right": 354.25,
+        "bottom": 1588.46875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "toggle-track",
+        "name": "",
+        "x": 298.25,
+        "y": 1551.46875,
+        "w": 52,
+        "h": 30,
+        "right": 350.25,
+        "bottom": 1581.46875
+      },
+      {
+        "tag": "SPAN",
+        "cls": "toggle-knob",
+        "name": "",
+        "x": 303.25,
+        "y": 1556.46875,
+        "w": 20,
+        "h": 20,
+        "right": 323.25,
+        "bottom": 1576.46875
+      },
+      {
+        "tag": "DIV",
+        "cls": "settings-row",
+        "name": "Notifications\nAt most two per day. Never about calories.\nAllow",
+        "x": 33,
+        "y": 1627.859375,
+        "w": 321.25,
+        "h": 156.171875,
+        "right": 354.25,
+        "bottom": 1784.03125
+      },
+      {
+        "tag": "DIV",
+        "cls": "settings-row-control",
+        "name": "Allow",
+        "x": 245.703125,
+        "y": 1684.4375,
+        "w": 108.546875,
+        "h": 44,
+        "right": 354.25,
+        "bottom": 1728.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "settings-data-btn",
+        "name": "Allow",
+        "x": 245.703125,
+        "y": 1684.4375,
+        "w": 108.546875,
+        "h": 44,
+        "right": 354.25,
+        "bottom": 1728.4375
+      }
+    ],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 371.15625,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 419.15625,
+        "font": "32px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Overview",
+      "x": 16,
+      "y": 451.15625,
+      "w": 158.53125,
+      "h": 44,
+      "right": 174.53125,
+      "bottom": 495.15625
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-profile",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2443
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=profile",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 371.15625,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 419.15625,
+        "font": "32px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "",
+        "x": 33,
+        "y": 1263.90625,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1307.90625,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "given-name",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Male\nFemale\nOther",
+        "x": 33,
+        "y": 1380.90625,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1424.90625,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "",
+        "x": 33,
+        "y": 1532.296875,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1576.296875,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "",
+        "x": 33,
+        "y": 1683.6875,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1727.6875,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Sedentary\nLight\nModerate\nActive\nVery Active\nExtra Active",
+        "x": 33,
+        "y": 1800.6875,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1844.6875,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Light · one log\nRegular · main meals\nDetailed · meals + detail",
+        "x": 33,
+        "y": 1984.46875,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 2028.46875,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Lose Weight\nMaintain\nGain Weight",
+        "x": 33,
+        "y": 2101.46875,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 2145.46875,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Profile & goals",
+      "x": 180.53125,
+      "y": 451.15625,
+      "w": 220.5625,
+      "h": 44,
+      "right": 401.09375,
+      "bottom": 495.15625
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-preferences",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1269
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=preferences",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Preferences",
+      "x": 243.546875,
+      "y": 267.578125,
+      "w": 109.3125,
+      "h": 44,
+      "right": 352.859375,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-momo",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2983
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=momo",
+    "overflow": [],
+    "small": [],
+    "unnamed": [
+      {
+        "tag": "BUTTON",
+        "cls": "k-button is-primary",
+        "name": "",
+        "x": 51,
+        "y": 3035.90625,
+        "w": 218,
+        "h": 80.78125,
+        "right": 269,
+        "bottom": 3116.6875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-text-button",
+        "name": "",
+        "x": 116.234375,
+        "y": 3124.6875,
+        "w": 87.53125,
+        "h": 44,
+        "right": 203.765625,
+        "bottom": 3168.6875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 33,
+        "y": 3206.6875,
+        "w": 68.328125,
+        "h": 44,
+        "right": 101.328125,
+        "bottom": 3250.6875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 109.328125,
+        "y": 3206.6875,
+        "w": 65.09375,
+        "h": 44,
+        "right": 174.421875,
+        "bottom": 3250.6875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 182.421875,
+        "y": 3206.6875,
+        "w": 67.546875,
+        "h": 44,
+        "right": 249.96875,
+        "bottom": 3250.6875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 33,
+        "y": 3258.6875,
+        "w": 68.421875,
+        "h": 44,
+        "right": 101.421875,
+        "bottom": 3302.6875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 109.421875,
+        "y": 3258.6875,
+        "w": 68.09375,
+        "h": 44,
+        "right": 177.515625,
+        "bottom": 3302.6875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 3318.6875,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 3435.671875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 3447.671875,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 3564.65625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 3576.65625,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 3693.640625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 3705.640625,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 3822.625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 3834.625,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 3951.609375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 3963.609375,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 4080.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 4092.59375,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 4209.578125
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 371.15625,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 419.15625,
+        "font": "32px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Momo",
+      "x": 605.703125,
+      "y": 451.15625,
+      "w": 113.390625,
+      "h": 44,
+      "right": 719.09375,
+      "bottom": 495.15625
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-ai",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1073
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=ai",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Momo's personality",
+        "x": 33,
+        "y": 999.953125,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1043.953125,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "AI setup",
+      "x": 434.5625,
+      "y": 267.578125,
+      "w": 81.625,
+      "h": 44,
+      "right": 516.1875,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-account",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1330
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=account",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 371.15625,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 419.15625,
+        "font": "32px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Account",
+      "x": 868.34375,
+      "y": 451.15625,
+      "w": 142.453125,
+      "h": 44,
+      "right": 1010.796875,
+      "bottom": 495.15625
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-data",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1455
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=data",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 371.15625,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 419.15625,
+        "font": "32px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Your data",
+      "x": 1016.796875,
+      "y": 451.15625,
+      "w": 154.71875,
+      "h": 44,
+      "right": 1171.515625,
+      "bottom": 495.15625
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "coach",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 979
+    },
+    "bodyOverflow": "visible",
+    "heading": "AI COACH",
+    "url": "/coach",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "k-coach-input",
+        "name": "Message Coach",
+        "x": 33,
+        "y": 766.59375,
+        "w": 194,
+        "h": 52,
+        "right": 227,
+        "bottom": 818.59375,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "coach-chat",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 844
+    },
+    "bodyOverflow": "visible",
+    "heading": "AI COACH",
+    "url": "/coach",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "k-coach-input",
+        "name": "Message Coach",
+        "x": 16,
+        "y": 696,
+        "w": 228,
+        "h": 52,
+        "right": 244,
+        "bottom": 748,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "about",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2302
+    },
+    "bodyOverflow": "visible",
+    "heading": "ABOUT",
+    "url": "/about",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "support",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2131
+    },
+    "bodyOverflow": "visible",
+    "heading": "SUPPORT",
+    "url": "/support",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "journey",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 4867
+    },
+    "bodyOverflow": "visible",
+    "heading": "INSIGHTS",
+    "url": "/progress",
+    "overflow": [
+      {
+        "tag": "DT",
+        "cls": "",
+        "name": "FREEZES",
+        "x": 217.65625,
+        "y": 387.9375,
+        "w": 107.53125,
+        "h": 43.1875,
+        "right": 325.1875,
+        "bottom": 431.125
+      },
+      {
+        "tag": "DD",
+        "cls": "tabular",
+        "name": "1",
+        "x": 217.65625,
+        "y": 433.125,
+        "w": 107.53125,
+        "h": 42.40625,
+        "right": 325.1875,
+        "bottom": 475.53125
+      }
+    ],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-1",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 846
+    },
+    "bodyOverflow": "visible",
+    "heading": "WHAT IS YOUR DATE OF BIRTH?",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "DATE OF BIRTH",
+        "x": 38,
+        "y": 584.546875,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 632.546875,
+        "font": "16px",
+        "type": "date",
+        "inputmode": null,
+        "autocomplete": "bday",
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-2",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1968
+    },
+    "bodyOverflow": "visible",
+    "heading": "ABOUT YOU",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "YOUR NAME (optional)",
+        "x": 38,
+        "y": 1071.515625,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 1119.515625,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "name",
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-3",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1792
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOUR BODY",
+    "url": "/onboarding",
+    "overflow": [
+      {
+        "tag": "H1",
+        "cls": "k-setup-title",
+        "name": "YOUR BODY",
+        "x": 38,
+        "y": 821.09375,
+        "w": 340.453125,
+        "h": 64.796875,
+        "right": 378.453125,
+        "bottom": 885.890625
+      },
+      {
+        "tag": "P",
+        "cls": "k-setup-sub",
+        "name": "Check these starting values and replace them with your measurements. We use them to estima",
+        "x": 38,
+        "y": 895.890625,
+        "w": 340.453125,
+        "h": 288,
+        "right": 378.453125,
+        "bottom": 1183.890625
+      },
+      {
+        "tag": "DIV",
+        "cls": "k-setup-fields is-pair",
+        "name": "HEIGHT (CM)\nWEIGHT (KG)",
+        "x": 38,
+        "y": 1197.890625,
+        "w": 340.453125,
+        "h": 70.1875,
+        "right": 378.453125,
+        "bottom": 1268.078125
+      },
+      {
+        "tag": "DIV",
+        "cls": "field",
+        "name": "WEIGHT (KG)",
+        "x": 214.21875,
+        "y": 1197.890625,
+        "w": 164.234375,
+        "h": 70.1875,
+        "right": 378.453125,
+        "bottom": 1268.078125
+      },
+      {
+        "tag": "LABEL",
+        "cls": "",
+        "name": "WEIGHT (KG)",
+        "x": 214.21875,
+        "y": 1197.890625,
+        "w": 164.234375,
+        "h": 18.1875,
+        "right": 378.453125,
+        "bottom": 1216.078125
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "WEIGHT (KG)",
+        "x": 214.21875,
+        "y": 1220.078125,
+        "w": 164.234375,
+        "h": 48,
+        "right": 378.453125,
+        "bottom": 1268.078125
+      },
+      {
+        "tag": "DETAILS",
+        "cls": "setup-optional",
+        "name": "Add body fat percentage\nOptional",
+        "x": 38,
+        "y": 1282.078125,
+        "w": 340.453125,
+        "h": 104.78125,
+        "right": 378.453125,
+        "bottom": 1386.859375
+      },
+      {
+        "tag": "SUMMARY",
+        "cls": "",
+        "name": "Add body fat percentage\nOptional",
+        "x": 52,
+        "y": 1284.078125,
+        "w": 312.453125,
+        "h": 100.78125,
+        "right": 364.453125,
+        "bottom": 1384.859375
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "name": "Optional",
+        "x": 220.3125,
+        "y": 1322.46875,
+        "w": 115.203125,
+        "h": 24,
+        "right": 335.515625,
+        "bottom": 1346.46875
+      },
+      {
+        "tag": "P",
+        "cls": "k-setup-hint",
+        "name": "",
+        "x": 52,
+        "y": 1384.859375,
+        "w": 312.453125,
+        "h": 121.78125,
+        "right": 364.453125,
+        "bottom": 1506.640625
+      },
+      {
+        "tag": "DIV",
+        "cls": "field",
+        "name": "",
+        "x": 52,
+        "y": 1506.640625,
+        "w": 312.453125,
+        "h": 70.390625,
+        "right": 364.453125,
+        "bottom": 1577.03125
+      },
+      {
+        "tag": "LABEL",
+        "cls": "",
+        "name": "",
+        "x": 52,
+        "y": 1506.640625,
+        "w": 312.453125,
+        "h": 18.390625,
+        "right": 364.453125,
+        "bottom": 1525.03125
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "e.g. 18",
+        "x": 52,
+        "y": 1529.03125,
+        "w": 312.453125,
+        "h": 48,
+        "right": 364.453125,
+        "bottom": 1577.03125
+      }
+    ],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "HEIGHT (CM)",
+        "x": 38,
+        "y": 1220.078125,
+        "w": 164.21875,
+        "h": 48,
+        "right": 202.21875,
+        "bottom": 1268.078125,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "WEIGHT (KG)",
+        "x": 214.21875,
+        "y": 1220.078125,
+        "w": 164.234375,
+        "h": 48,
+        "right": 378.453125,
+        "bottom": 1268.078125,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "e.g. 18",
+        "x": 52,
+        "y": 1529.03125,
+        "w": 312.453125,
+        "h": 48,
+        "right": 364.453125,
+        "bottom": 1577.03125,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-4",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1212
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOUR GOAL",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-5",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1392
+    },
+    "bodyOverflow": "visible",
+    "heading": "ACTIVITY LEVEL",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-6",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1069
+    },
+    "bodyOverflow": "visible",
+    "heading": "CHOOSE YOUR PACE",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-7",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1499
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOUR DAILY TARGETS",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-8",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 4036
+    },
+    "bodyOverflow": "visible",
+    "heading": "LOG YOUR FIRST MEAL",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "MEAL NAME",
+        "x": 38,
+        "y": 2202.015625,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 2250.015625,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "CALORIES",
+        "x": 38,
+        "y": 2284.203125,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 2332.203125,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "numeric",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "PROTEIN (G)",
+        "x": 48,
+        "y": 2426.96875,
+        "w": 60.09375,
+        "h": 44,
+        "right": 108.09375,
+        "bottom": 2470.96875,
+        "font": "32px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "CARBS (G)",
+        "x": 132,
+        "y": 2426.96875,
+        "w": 56,
+        "h": 44,
+        "right": 188,
+        "bottom": 2470.96875,
+        "font": "32px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FAT (G)",
+        "x": 216,
+        "y": 2417.875,
+        "w": 56,
+        "h": 53.09375,
+        "right": 272,
+        "bottom": 2470.96875,
+        "font": "32px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "byok",
+    "theme": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 390,
+      "clientWidth": 390,
+      "height": 1377
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=ai",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 166.78125,
+        "w": 260,
+        "h": 48,
+        "right": 321,
+        "bottom": 214.78125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "OpenRouter\nGoogle Gemini",
+        "x": 185.875,
+        "y": 700.921875,
+        "w": 171.125,
+        "h": 44,
+        "right": 357,
+        "bottom": 744.921875,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "API key",
+        "x": 33,
+        "y": 797.921875,
+        "w": 262,
+        "h": 44,
+        "right": 295,
+        "bottom": 841.921875,
+        "font": "16px",
+        "type": "password",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "Model",
+        "x": 33,
+        "y": 894.921875,
+        "w": 324,
+        "h": 44,
+        "right": 357,
+        "bottom": 938.921875,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "TEXTAREA",
+        "cls": "settings-textarea",
+        "name": "Custom instructions",
+        "x": 33,
+        "y": 991.921875,
+        "w": 324,
+        "h": 85,
+        "right": 357,
+        "bottom": 1076.921875,
+        "font": "14px",
+        "type": "textarea",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Momo's personality",
+        "x": 185.875,
+        "y": 1273.484375,
+        "w": 171.125,
+        "h": 44,
+        "right": 357,
+        "bottom": 1317.484375,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "AI setup",
+      "x": 434.5625,
+      "y": 246.78125,
+      "w": 81.625,
+      "h": 44,
+      "right": 516.1875,
+      "bottom": 290.78125
+    }
+  },
+  {
+    "kind": "keyboard",
+    "surface": "log-sheet",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "Search your foods, or type calories",
+        "top": 196,
+        "bottom": 248,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "describe",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "YOUR MEAL, YOUR WORDS",
+        "top": 175.390625,
+        "bottom": 325.390625,
+        "height": 400,
+        "hit": true,
+        "occluders": [
+          "toast-stack"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "manual",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "Food name Required",
+        "top": 255.1875,
+        "bottom": 303.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Calories per serving Required",
+        "top": 352.375,
+        "bottom": 400.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Protein (g)",
+        "top": 175.75,
+        "bottom": 223.75,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Carbs (g)",
+        "top": 175.75,
+        "bottom": 223.75,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Fat (g)",
+        "top": 175.75,
+        "bottom": 223.75,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Servings",
+        "top": 261.75,
+        "bottom": 305.75,
+        "height": 400,
+        "hit": true,
+        "occluders": [
+          "toast-stack"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "review",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "FOOD NAME",
+        "top": 351.59375,
+        "bottom": 399.59375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "× portion",
+        "top": 177.59375,
+        "bottom": 221.59375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Calories\nkcal",
+        "top": 342.1875,
+        "bottom": 400.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Protein\ng",
+        "top": 178.375,
+        "bottom": 222.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Carbs\ng",
+        "top": 178.375,
+        "bottom": 222.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Fat\ng",
+        "top": 178.375,
+        "bottom": 222.375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "edit",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "FOOD NAME",
+        "top": 245,
+        "bottom": 293,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Calories\nkcal",
+        "top": 342,
+        "bottom": 400,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Protein\ng",
+        "top": 178.1875,
+        "bottom": 222.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Carbs\ng",
+        "top": 178.1875,
+        "bottom": 222.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "Fat\ng",
+        "top": 178.1875,
+        "bottom": 222.1875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "you-profile",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "Find a setting",
+        "top": 166.78125,
+        "bottom": 214.78125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 178.328125,
+        "bottom": 222.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 247.328125,
+        "bottom": 291.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 316.328125,
+        "bottom": 360.328125,
+        "height": 400,
+        "hit": false,
+        "occluders": [
+          "bottom-nav-wrap"
+        ]
+      },
+      {
+        "name": null,
+        "top": 356.328125,
+        "bottom": 400.328125,
+        "height": 400,
+        "hit": false,
+        "occluders": [
+          "bottom-nav-wrap"
+        ]
+      },
+      {
+        "name": null,
+        "top": 178.328125,
+        "bottom": 222.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 252.515625,
+        "bottom": 296.515625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": null,
+        "top": 326.703125,
+        "bottom": 370.703125,
+        "height": 400,
+        "hit": false,
+        "occluders": [
+          "bottom-nav-wrap"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "coach",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "Message Coach",
+        "top": 204.8125,
+        "bottom": 256.8125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "login",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "EMAIL",
+        "top": 122.046875,
+        "bottom": 170.046875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "PASSWORD",
+        "top": 122.125,
+        "bottom": 170.125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "signup",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "NAME",
+        "top": 122.234375,
+        "bottom": 170.234375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "EMAIL",
+        "top": 122.421875,
+        "bottom": 170.421875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "PASSWORD",
+        "top": 121.5,
+        "bottom": 169.5,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "CONFIRM PASSWORD",
+        "top": 121.875,
+        "bottom": 169.875,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "forgot",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "EMAIL",
+        "top": 208.328125,
+        "bottom": 256.328125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-1",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "DATE OF BIRTH",
+        "top": 175.953125,
+        "bottom": 223.953125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-2",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "YOUR NAME (optional)",
+        "top": 176.0625,
+        "bottom": 224.0625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-3",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "HEIGHT (CM)",
+        "top": 175.859375,
+        "bottom": 223.859375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "WEIGHT (KG)",
+        "top": 175.859375,
+        "bottom": 223.859375,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-4",
+    "theme": "dark",
+    "fields": []
+  },
+  {
+    "kind": "keyboard",
+    "surface": "onboarding-8",
+    "theme": "dark",
+    "fields": [
+      {
+        "name": "MEAL NAME",
+        "top": 176.453125,
+        "bottom": 224.453125,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "CALORIES",
+        "top": 258.640625,
+        "bottom": 306.640625,
+        "height": 400,
+        "hit": true,
+        "occluders": [
+          "toast-stack"
+        ]
+      },
+      {
+        "name": "PROTEIN (G)",
+        "top": 178.40625,
+        "bottom": 222.40625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "CARBS (G)",
+        "top": 169.3125,
+        "bottom": 222.40625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      },
+      {
+        "name": "FAT (G)",
+        "top": 169.3125,
+        "bottom": 222.40625,
+        "height": 400,
+        "hit": true,
+        "occluders": []
+      }
+    ]
+  },
+  {
+    "kind": "sheet",
+    "theme": "dark",
+    "before": 300,
+    "after": 656,
+    "escapeClosed": true,
+    "backdropClosed": true,
+    "focus": {
+      "dialog": true,
+      "name": "Dinner "
+    },
+    "small": []
+  },
+  {
+    "kind": "sheet-back",
+    "theme": "dark",
+    "backClosed": true,
+    "url": "http://localhost:5174/"
+  },
+  {
+    "kind": "calendar",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "device": "Pixel 7"
+    },
+    "rect": {
+      "x": 24,
+      "y": 228.140625,
+      "width": 272,
+      "height": 387.71875
+    },
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Previous month",
+        "x": 44,
+        "y": 261.140625,
+        "w": 30,
+        "h": 30,
+        "right": 74,
+        "bottom": 291.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Next month",
+        "x": 212,
+        "y": 261.140625,
+        "w": 30,
+        "h": 30,
+        "right": 242,
+        "bottom": 291.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-close",
+        "name": "Close",
+        "x": 250,
+        "y": 263.140625,
+        "w": 26,
+        "h": 26,
+        "right": 276,
+        "bottom": 289.140625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 1 August 2026",
+        "x": 242.84375,
+        "y": 341.015625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 374.15625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 2 August 2026",
+        "x": 44,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 3 August 2026",
+        "x": 77.140625,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 4 August 2026",
+        "x": 110.28125,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 5 August 2026",
+        "x": 143.421875,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 6 August 2026",
+        "x": 176.5625,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 7 August 2026",
+        "x": 209.703125,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 8 August 2026",
+        "x": 242.84375,
+        "y": 374.15625,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 407.296875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 9 August 2026",
+        "x": 44,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 10 August 2026",
+        "x": 77.140625,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 11 August 2026",
+        "x": 110.28125,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 12 August 2026",
+        "x": 143.421875,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 13 August 2026",
+        "x": 176.5625,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 14 August 2026",
+        "x": 209.703125,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 15 August 2026",
+        "x": 242.84375,
+        "y": 407.296875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 440.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 16 August 2026",
+        "x": 44,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 17 August 2026",
+        "x": 77.140625,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 18 August 2026",
+        "x": 110.28125,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 19 August 2026",
+        "x": 143.421875,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 20 August 2026",
+        "x": 176.5625,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 21 August 2026",
+        "x": 209.703125,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 22 August 2026",
+        "x": 242.84375,
+        "y": 440.4375,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 473.578125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 23 August 2026",
+        "x": 44,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 24 August 2026",
+        "x": 77.140625,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 25 August 2026",
+        "x": 110.28125,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 143.421875,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 26 August 2026",
+        "x": 143.421875,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 176.5625,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 27 August 2026",
+        "x": 176.5625,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 209.703125,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 28 August 2026",
+        "x": 209.703125,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 242.84375,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 29 August 2026",
+        "x": 242.84375,
+        "y": 473.578125,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 275.984375,
+        "bottom": 506.71875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 30 August 2026",
+        "x": 44,
+        "y": 506.71875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 77.140625,
+        "bottom": 539.859375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 31 August 2026",
+        "x": 77.140625,
+        "y": 506.71875,
+        "w": 33.140625,
+        "h": 33.140625,
+        "right": 110.28125,
+        "bottom": 539.859375
+      }
+    ]
+  },
+  {
+    "kind": "calendar",
+    "theme": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "device": "iPhone 13"
+    },
+    "rect": {
+      "x": 35,
+      "y": 220.5625,
+      "width": 320,
+      "height": 402.875
+    },
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Previous month",
+        "x": 55,
+        "y": 240.5625,
+        "w": 30,
+        "h": 30,
+        "right": 85,
+        "bottom": 270.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Next month",
+        "x": 271,
+        "y": 240.5625,
+        "w": 30,
+        "h": 30,
+        "right": 301,
+        "bottom": 270.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-close",
+        "name": "Close",
+        "x": 309,
+        "y": 242.5625,
+        "w": 26,
+        "h": 26,
+        "right": 335,
+        "bottom": 268.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 1 August 2026",
+        "x": 295,
+        "y": 307.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 347.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 2 August 2026",
+        "x": 55,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 3 August 2026",
+        "x": 95,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 4 August 2026",
+        "x": 135,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 5 August 2026",
+        "x": 175,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 6 August 2026",
+        "x": 215,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 7 August 2026",
+        "x": 255,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 8 August 2026",
+        "x": 295,
+        "y": 347.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 387.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 9 August 2026",
+        "x": 55,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 10 August 2026",
+        "x": 95,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 11 August 2026",
+        "x": 135,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 12 August 2026",
+        "x": 175,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 13 August 2026",
+        "x": 215,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 14 August 2026",
+        "x": 255,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 15 August 2026",
+        "x": 295,
+        "y": 387.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 427.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 16 August 2026",
+        "x": 55,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 17 August 2026",
+        "x": 95,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 18 August 2026",
+        "x": 135,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 19 August 2026",
+        "x": 175,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 20 August 2026",
+        "x": 215,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 21 August 2026",
+        "x": 255,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 22 August 2026",
+        "x": 295,
+        "y": 427.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 467.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 23 August 2026",
+        "x": 55,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 24 August 2026",
+        "x": 95,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 25 August 2026",
+        "x": 135,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 175,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 26 August 2026",
+        "x": 175,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 215,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 27 August 2026",
+        "x": 215,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 255,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 28 August 2026",
+        "x": 255,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 295,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 29 August 2026",
+        "x": 295,
+        "y": 467.4375,
+        "w": 40,
+        "h": 40,
+        "right": 335,
+        "bottom": 507.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 30 August 2026",
+        "x": 55,
+        "y": 507.4375,
+        "w": 40,
+        "h": 40,
+        "right": 95,
+        "bottom": 547.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 31 August 2026",
+        "x": 95,
+        "y": 507.4375,
+        "w": 40,
+        "h": 40,
+        "right": 135,
+        "bottom": 547.4375
+      }
+    ]
+  },
+  {
+    "kind": "calendar",
+    "theme": "dark",
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "device": "Pixel 7"
+    },
+    "rect": {
+      "x": 262,
+      "y": -6.4375,
+      "width": 320,
+      "height": 402.875
+    },
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Previous month",
+        "x": 282,
+        "y": 13.5625,
+        "w": 30,
+        "h": 30,
+        "right": 312,
+        "bottom": 43.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-nav",
+        "name": "Next month",
+        "x": 498,
+        "y": 13.5625,
+        "w": 30,
+        "h": 30,
+        "right": 528,
+        "bottom": 43.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-close",
+        "name": "Close",
+        "x": 536,
+        "y": 15.5625,
+        "w": 26,
+        "h": 26,
+        "right": 562,
+        "bottom": 41.5625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 1 August 2026",
+        "x": 522,
+        "y": 80.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 120.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 2 August 2026",
+        "x": 282,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 3 August 2026",
+        "x": 322,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 4 August 2026",
+        "x": 362,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 5 August 2026",
+        "x": 402,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 6 August 2026",
+        "x": 442,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 7 August 2026",
+        "x": 482,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 8 August 2026",
+        "x": 522,
+        "y": 120.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 160.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 9 August 2026",
+        "x": 282,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 10 August 2026",
+        "x": 322,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 11 August 2026",
+        "x": 362,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 12 August 2026",
+        "x": 402,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 13 August 2026",
+        "x": 442,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 14 August 2026",
+        "x": 482,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 15 August 2026",
+        "x": 522,
+        "y": 160.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 200.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 16 August 2026",
+        "x": 282,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 17 August 2026",
+        "x": 322,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 18 August 2026",
+        "x": 362,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 19 August 2026",
+        "x": 402,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 20 August 2026",
+        "x": 442,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 21 August 2026",
+        "x": 482,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 22 August 2026",
+        "x": 522,
+        "y": 200.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 240.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 23 August 2026",
+        "x": 282,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 24 August 2026",
+        "x": 322,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Tuesday, 25 August 2026",
+        "x": 362,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 402,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Wednesday, 26 August 2026",
+        "x": 402,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 442,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Thursday, 27 August 2026",
+        "x": 442,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 482,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Friday, 28 August 2026",
+        "x": 482,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 522,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Saturday, 29 August 2026",
+        "x": 522,
+        "y": 240.4375,
+        "w": 40,
+        "h": 40,
+        "right": 562,
+        "bottom": 280.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Sunday, 30 August 2026",
+        "x": 282,
+        "y": 280.4375,
+        "w": 40,
+        "h": 40,
+        "right": 322,
+        "bottom": 320.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "date-modal-cell",
+        "name": "Monday, 31 August 2026",
+        "x": 322,
+        "y": 280.4375,
+        "w": 40,
+        "h": 40,
+        "right": 362,
+        "bottom": 320.4375
+      }
+    ]
+  },
+  {
+    "kind": "stress",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1986
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 169.59375,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 245.59375
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Big food day. Tomorrow’s a fresh plate.",
+        "x": 92,
+        "y": 249.59375,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 269.1875
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget is-over",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget is-over → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "today-empty",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1452
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 169.59375,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 245.59375
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Dinner plans? I’m all ears.",
+        "x": 92,
+        "y": 249.59375,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 269.1875
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "today-guest",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1915
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 468.78125,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 544.78125
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Big food day. Tomorrow’s a fresh plate.",
+        "x": 92,
+        "y": 548.78125,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 568.375
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-surface is-outlined k-notice → k-momo",
+        "px": 24
+      },
+      {
+        "between": "k-momo → k-surface is-hero k-budget is-over",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget is-over → k-macros",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "log-sheet",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2079
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/log",
+    "overflow": [
+      {
+        "tag": "P",
+        "cls": "k-momo-hello",
+        "name": "EVENING, ALEXANDRIATHEOPHANIAMAXIMILIANAALEXANDRIATHEOPHANIA!",
+        "x": 92,
+        "y": 216.375,
+        "w": 948.640625,
+        "h": 76,
+        "right": 1040.640625,
+        "bottom": 292.375
+      },
+      {
+        "tag": "P",
+        "cls": "k-momo-line",
+        "name": "Big food day. Tomorrow’s a fresh plate.",
+        "x": 92,
+        "y": 296.375,
+        "w": 948.640625,
+        "h": 19.59375,
+        "right": 1040.640625,
+        "bottom": 315.96875
+      }
+    ],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 195.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 135.375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 195.375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Search your foods, or type calories",
+        "x": 22,
+        "y": 331.59375,
+        "w": 268,
+        "h": 52,
+        "right": 290,
+        "bottom": 383.59375,
+        "font": "32px",
+        "type": "text",
+        "inputmode": "text",
+        "autocomplete": "off",
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget is-over",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget is-over → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "describe",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1324
+    },
+    "bodyOverflow": "visible",
+    "heading": "WHAT’S ON THE MENU?",
+    "url": "/log/text",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "TEXTAREA",
+        "cls": "text-log-input",
+        "name": "YOUR MEAL, YOUR WORDS",
+        "x": 31,
+        "y": 678.390625,
+        "w": 258,
+        "h": 150,
+        "right": 289,
+        "bottom": 828.390625,
+        "font": "16px",
+        "type": "textarea",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "photo",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 844
+    },
+    "bodyOverflow": "visible",
+    "heading": "GIVE YOUR MEAL A CLOSE-UP.",
+    "url": "/log/photo",
+    "overflow": [],
+    "small": [
+      {
+        "tag": "A",
+        "cls": "",
+        "name": "Use manual entry without uploading",
+        "x": 86.84375,
+        "y": 645.328125,
+        "w": 208.484375,
+        "h": 15,
+        "right": 295.328125,
+        "bottom": 660.328125
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "manual",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1548
+    },
+    "bodyOverflow": "visible",
+    "heading": "JOT IT DOWN.",
+    "url": "/log/manual",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Food name Required",
+        "x": 33,
+        "y": 405.1875,
+        "w": 254,
+        "h": 48,
+        "right": 287,
+        "bottom": 453.1875,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Calories per serving Required",
+        "x": 33,
+        "y": 533.5625,
+        "w": 254,
+        "h": 48,
+        "right": 287,
+        "bottom": 581.5625,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Protein (g)",
+        "x": 46,
+        "y": 764.53125,
+        "w": 228,
+        "h": 48,
+        "right": 274,
+        "bottom": 812.53125,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Carbs (g)",
+        "x": 46,
+        "y": 852.71875,
+        "w": 228,
+        "h": 48,
+        "right": 274,
+        "bottom": 900.71875,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Fat (g)",
+        "x": 46,
+        "y": 940.90625,
+        "w": 228,
+        "h": 48,
+        "right": 274,
+        "bottom": 988.90625,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "serving-input",
+        "name": "Servings",
+        "x": 78,
+        "y": 1058.296875,
+        "w": 72,
+        "h": 44,
+        "right": 150,
+        "bottom": 1102.296875,
+        "font": "18px",
+        "type": "number",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "review",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1697
+    },
+    "bodyOverflow": "visible",
+    "heading": "MAKE IT YOUR MEAL.",
+    "url": "/review",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FOOD NAME",
+        "x": 101,
+        "y": 435.890625,
+        "w": 186,
+        "h": 48,
+        "right": 287,
+        "bottom": 483.890625,
+        "font": "18px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Servings",
+        "x": 118,
+        "y": 596.890625,
+        "w": 84,
+        "h": 44,
+        "right": 202,
+        "bottom": 640.890625,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Calories\nkcal",
+        "x": 49,
+        "y": 813.484375,
+        "w": 135.1875,
+        "h": 58,
+        "right": 184.1875,
+        "bottom": 871.484375,
+        "font": "40px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Protein\ng",
+        "x": 167,
+        "y": 891.484375,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 935.484375,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Carbs\ng",
+        "x": 167,
+        "y": 943.484375,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 987.484375,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Fat\ng",
+        "x": 167,
+        "y": 995.484375,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 1039.484375,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "review-empty",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 844
+    },
+    "bodyOverflow": "visible",
+    "heading": "LET’S START WITH A MEAL.",
+    "url": "/review",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "edit",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1452
+    },
+    "bodyOverflow": "visible",
+    "heading": "A LITTLE FINE-TUNING.",
+    "url": "/edit/seed-bowl",
+    "overflow": [],
+    "small": [],
+    "unnamed": [
+      {
+        "tag": "BUTTON",
+        "cls": "flow-text-action",
+        "name": "",
+        "x": 32,
+        "y": 1521.171875,
+        "w": 74.359375,
+        "h": 44,
+        "right": 106.359375,
+        "bottom": 1565.171875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "pressable pressable-destructive is-full",
+        "name": "",
+        "x": 32,
+        "y": 1571.171875,
+        "w": 256,
+        "h": 54,
+        "right": 288,
+        "bottom": 1625.171875
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FOOD NAME",
+        "x": 101,
+        "y": 309,
+        "w": 186,
+        "h": 48,
+        "right": 287,
+        "bottom": 357,
+        "font": "18px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Calories\nkcal",
+        "x": 49,
+        "y": 485,
+        "w": 135.1875,
+        "h": 58,
+        "right": 184.1875,
+        "bottom": 543,
+        "font": "40px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Protein\ng",
+        "x": 167,
+        "y": 563,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 607,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Carbs\ng",
+        "x": 167,
+        "y": 615,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 659,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Fat\ng",
+        "x": 167,
+        "y": 667,
+        "w": 106.796875,
+        "h": 44,
+        "right": 273.796875,
+        "bottom": 711,
+        "font": "28px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "saved",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1210
+    },
+    "bodyOverflow": "visible",
+    "heading": "SAVED",
+    "url": "/log/saved",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FIND A SAVED OR RECENT MEAL",
+        "x": 55,
+        "y": 246.984375,
+        "w": 236,
+        "h": 44,
+        "right": 291,
+        "bottom": 290.984375,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "insights",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2861
+    },
+    "bodyOverflow": "visible",
+    "heading": "INSIGHTS",
+    "url": "/progress",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "you-overview",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1644
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Overview",
+      "x": 16,
+      "y": 267.578125,
+      "w": 92.265625,
+      "h": 44,
+      "right": 108.265625,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-profile",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1779
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=profile",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "",
+        "x": 33,
+        "y": 868.125,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 912.125,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "given-name",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Male\nFemale\nOther",
+        "x": 33,
+        "y": 965.125,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1009.125,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "",
+        "x": 33,
+        "y": 1080.3125,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1124.3125,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "",
+        "x": 33,
+        "y": 1195.5,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1239.5,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Sedentary\nLight\nModerate\nActive\nVery Active\nExtra Active",
+        "x": 33,
+        "y": 1292.5,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1336.5,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Light · one log\nRegular · main meals\nDetailed · meals + detail",
+        "x": 33,
+        "y": 1407.6875,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1451.6875,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Lose Weight\nMaintain\nGain Weight",
+        "x": 33,
+        "y": 1504.6875,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 1548.6875,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Profile & goals",
+      "x": 114.265625,
+      "y": 267.578125,
+      "w": 123.28125,
+      "h": 44,
+      "right": 237.546875,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-preferences",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1269
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=preferences",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Preferences",
+      "x": 243.546875,
+      "y": 267.578125,
+      "w": 109.3125,
+      "h": 44,
+      "right": 352.859375,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-momo",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1344
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=momo",
+    "overflow": [],
+    "small": [],
+    "unnamed": [
+      {
+        "tag": "BUTTON",
+        "cls": "k-button is-primary",
+        "name": "",
+        "x": 93.609375,
+        "y": 1463.46875,
+        "w": 132.765625,
+        "h": 48,
+        "right": 226.375,
+        "bottom": 1511.46875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-text-button",
+        "name": "",
+        "x": 116.234375,
+        "y": 1519.46875,
+        "w": 87.53125,
+        "h": 44,
+        "right": 203.765625,
+        "bottom": 1563.46875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 33,
+        "y": 1601.46875,
+        "w": 68.328125,
+        "h": 44,
+        "right": 101.328125,
+        "bottom": 1645.46875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 109.328125,
+        "y": 1601.46875,
+        "w": 65.09375,
+        "h": 44,
+        "right": 174.421875,
+        "bottom": 1645.46875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 182.421875,
+        "y": 1601.46875,
+        "w": 67.546875,
+        "h": 44,
+        "right": 249.96875,
+        "bottom": 1645.46875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 33,
+        "y": 1653.46875,
+        "w": 68.421875,
+        "h": 44,
+        "right": 101.421875,
+        "bottom": 1697.46875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-chip",
+        "name": "",
+        "x": 109.421875,
+        "y": 1653.46875,
+        "w": 68.09375,
+        "h": 44,
+        "right": 177.515625,
+        "bottom": 1697.46875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 1713.46875,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 1830.453125
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 1842.453125,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 1959.4375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 1971.4375,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 2088.421875
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 2100.421875,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 2217.40625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 2229.40625,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 2346.390625
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 2358.390625,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 2475.375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "k-wardrobe-piece",
+        "name": "",
+        "x": 33,
+        "y": 2487.375,
+        "w": 254,
+        "h": 116.984375,
+        "right": 287,
+        "bottom": 2604.359375
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Momo",
+      "x": 358.859375,
+      "y": 267.578125,
+      "w": 69.703125,
+      "h": 44,
+      "right": 428.5625,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-ai",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1007
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=ai",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Momo's personality",
+        "x": 33,
+        "y": 933.953125,
+        "w": 254,
+        "h": 44,
+        "right": 287,
+        "bottom": 977.953125,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "AI setup",
+      "x": 434.5625,
+      "y": 267.578125,
+      "w": 81.625,
+      "h": 44,
+      "right": 516.1875,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-account",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 954
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=account",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Account",
+      "x": 522.1875,
+      "y": 267.578125,
+      "w": 84.234375,
+      "h": 44,
+      "right": 606.421875,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "you-data",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1056
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=data",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 187.578125,
+        "w": 190,
+        "h": 48,
+        "right": 251,
+        "bottom": 235.578125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "Your data",
+      "x": 612.421875,
+      "y": 267.578125,
+      "w": 90.359375,
+      "h": 44,
+      "right": 702.78125,
+      "bottom": 311.578125
+    }
+  },
+  {
+    "kind": "stress",
+    "surface": "coach",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2294
+    },
+    "bodyOverflow": "visible",
+    "heading": "AI COACH",
+    "url": "/coach",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "k-coach-input",
+        "name": "Message Coach",
+        "x": 33,
+        "y": 2036.375,
+        "w": 194,
+        "h": 52,
+        "right": 227,
+        "bottom": 2088.375,
+        "font": "32px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "coach-chat",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1653
+    },
+    "bodyOverflow": "visible",
+    "heading": "AI COACH",
+    "url": "/coach",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "k-coach-input",
+        "name": "Message Coach",
+        "x": 16,
+        "y": 696,
+        "w": 228,
+        "h": 52,
+        "right": 244,
+        "bottom": 748,
+        "font": "32px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "about",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2302
+    },
+    "bodyOverflow": "visible",
+    "heading": "ABOUT",
+    "url": "/about",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "support",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2131
+    },
+    "bodyOverflow": "visible",
+    "heading": "SUPPORT",
+    "url": "/support",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "journey",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 4867
+    },
+    "bodyOverflow": "visible",
+    "heading": "INSIGHTS",
+    "url": "/progress",
+    "overflow": [
+      {
+        "tag": "DT",
+        "cls": "",
+        "name": "FREEZES",
+        "x": 217.65625,
+        "y": 387.9375,
+        "w": 107.53125,
+        "h": 43.1875,
+        "right": 325.1875,
+        "bottom": 431.125
+      },
+      {
+        "tag": "DD",
+        "cls": "tabular",
+        "name": "1",
+        "x": 217.65625,
+        "y": 433.125,
+        "w": 107.53125,
+        "h": 42.40625,
+        "right": 325.1875,
+        "bottom": 475.53125
+      }
+    ],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-1",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 846
+    },
+    "bodyOverflow": "visible",
+    "heading": "WHAT IS YOUR DATE OF BIRTH?",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "DATE OF BIRTH",
+        "x": 38,
+        "y": 584.546875,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 632.546875,
+        "font": "16px",
+        "type": "date",
+        "inputmode": null,
+        "autocomplete": "bday",
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-2",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1167
+    },
+    "bodyOverflow": "visible",
+    "heading": "ABOUT YOU",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "YOUR NAME (optional)",
+        "x": 38,
+        "y": 548.75,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 596.75,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": "name",
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-3",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 869
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOUR BODY",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "HEIGHT (CM)",
+        "x": 38,
+        "y": 595.75,
+        "w": 116,
+        "h": 48,
+        "right": 154,
+        "bottom": 643.75,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "WEIGHT (KG)",
+        "x": 166,
+        "y": 595.75,
+        "w": 116,
+        "h": 48,
+        "right": 282,
+        "bottom": 643.75,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "e.g. 18",
+        "x": 52,
+        "y": 770.734375,
+        "w": 216,
+        "h": 48,
+        "right": 268,
+        "bottom": 818.734375,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-4",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2414
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOUR GOAL",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-5",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1392
+    },
+    "bodyOverflow": "visible",
+    "heading": "ACTIVITY LEVEL",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-6",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 2470
+    },
+    "bodyOverflow": "visible",
+    "heading": "CHOOSE YOUR PACE",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-7",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 3648
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOUR DAILY TARGETS",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "stress",
+    "surface": "onboarding-8",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1684
+    },
+    "bodyOverflow": "visible",
+    "heading": "LOG YOUR FIRST MEAL",
+    "url": "/onboarding",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "MEAL NAME",
+        "x": 38,
+        "y": 975.421875,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 1023.421875,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "CALORIES",
+        "x": 38,
+        "y": 1057.609375,
+        "w": 244,
+        "h": 48,
+        "right": 282,
+        "bottom": 1105.609375,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "numeric",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "PROTEIN (G)",
+        "x": 48,
+        "y": 1200.375,
+        "w": 60.09375,
+        "h": 44,
+        "right": 108.09375,
+        "bottom": 1244.375,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "CARBS (G)",
+        "x": 132,
+        "y": 1200.375,
+        "w": 56,
+        "h": 44,
+        "right": 188,
+        "bottom": 1244.375,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "FAT (G)",
+        "x": 216,
+        "y": 1191.28125,
+        "w": 56,
+        "h": 53.09375,
+        "right": 272,
+        "bottom": 1244.375,
+        "font": "16px",
+        "type": "number",
+        "inputmode": "decimal",
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": null
+  },
+  {
+    "kind": "byok",
+    "theme": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 390,
+      "clientWidth": 390,
+      "height": 1377
+    },
+    "bodyOverflow": "visible",
+    "heading": "YOU",
+    "url": "/settings?panel=ai",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [
+      {
+        "tag": "INPUT",
+        "cls": "",
+        "name": "Find a setting",
+        "x": 61,
+        "y": 166.78125,
+        "w": 260,
+        "h": 48,
+        "right": 321,
+        "bottom": 214.78125,
+        "font": "16px",
+        "type": "search",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "OpenRouter\nGoogle Gemini",
+        "x": 185.875,
+        "y": 700.921875,
+        "w": 171.125,
+        "h": 44,
+        "right": 357,
+        "bottom": 744.921875,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "API key",
+        "x": 33,
+        "y": 797.921875,
+        "w": 262,
+        "h": 44,
+        "right": 295,
+        "bottom": 841.921875,
+        "font": "16px",
+        "type": "password",
+        "inputmode": null,
+        "autocomplete": "off",
+        "enterkeyhint": null
+      },
+      {
+        "tag": "INPUT",
+        "cls": "settings-input",
+        "name": "Model",
+        "x": 33,
+        "y": 894.921875,
+        "w": 324,
+        "h": 44,
+        "right": 357,
+        "bottom": 938.921875,
+        "font": "16px",
+        "type": "text",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "TEXTAREA",
+        "cls": "settings-textarea",
+        "name": "Custom instructions",
+        "x": 33,
+        "y": 991.921875,
+        "w": 324,
+        "h": 85,
+        "right": 357,
+        "bottom": 1076.921875,
+        "font": "14px",
+        "type": "textarea",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      },
+      {
+        "tag": "SELECT",
+        "cls": "settings-select",
+        "name": "Momo's personality",
+        "x": 185.875,
+        "y": 1273.484375,
+        "w": 171.125,
+        "h": 44,
+        "right": 357,
+        "bottom": 1317.484375,
+        "font": "16px",
+        "type": "select-one",
+        "inputmode": null,
+        "autocomplete": null,
+        "enterkeyhint": null
+      }
+    ],
+    "gaps": [],
+    "summaryDisplay": null,
+    "activeTab": {
+      "tag": "A",
+      "cls": "",
+      "name": "AI setup",
+      "x": 434.5625,
+      "y": 246.78125,
+      "w": 81.625,
+      "h": 44,
+      "right": 516.1875,
+      "bottom": 290.78125
+    }
+  },
+  {
+    "kind": "swipe",
+    "at80": "matrix(1, 0, 0, 1, 0, 0)",
+    "at81": "matrix(1, 0, 0, 1, 0, 0)",
+    "actionInfo": {
+      "text": "Edit",
+      "hit": false,
+      "hitClass": "",
+      "outline": "rgb(255, 248, 235) solid 3px"
+    }
+  }
+]
