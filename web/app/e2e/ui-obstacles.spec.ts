@@ -1,17 +1,22 @@
 import { expect, test } from '@playwright/test'
-import { nav, settlePageLayout, signUpAndOnboard } from './helpers'
+import { clearAppStorage, completeOnboarding, nav, settlePageLayout, signUp } from './helpers'
 
 test('daily summary, settings navigation and editor stay clear on a phone', async ({ page }, testInfo) => {
   test.setTimeout(120_000)
   const errors: string[] = []
   page.on('pageerror', error => errors.push(error.message))
   await page.setViewportSize({ width: 390, height: 844 })
-  await signUpAndOnboard(page)
+  await clearAppStorage(page)
+  await signUp(page)
+  await completeOnboarding(page, { dismissCelebration: false })
   await settlePageLayout(page)
-  // Notifications take priority over the roaming mascot and its speech bubble.
-  await expect(page.locator('.toast')).toBeVisible()
+  // The first accepted meal has one non-modal receipt and leaves phone controls clear.
+  const receipt = page.getByRole('complementary', { name: 'Log confirmation for Onboarding yogurt bowl', exact: true })
+  await expect(receipt).toBeVisible()
+  await expect(receipt.getByRole('status')).toContainText('Momo’s first piece: Blossom clip')
+  await expect(page.locator('.toast')).toHaveCount(0)
   await expect(page.locator('.mascot-host')).toHaveCount(0)
-  await page.locator('.toast').getByRole('button', { name: 'Dismiss', exact: true }).click()
+  await receipt.getByRole('button', { name: 'Dismiss', exact: true }).click()
   await expect(page.locator('.mascot-host')).toHaveCount(0)
   await page.screenshot({ path: testInfo.outputPath('today.png'), animations: 'disabled' })
   // The editorial summary is taller than one phone screen. Check that its
