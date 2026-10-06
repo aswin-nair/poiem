@@ -33,7 +33,7 @@ async function prepare(first = false, second = false) {
   const page = await context.newPage()
   page.on('pageerror', error => errors.push(error.message))
   await page.route('https://openrouter.ai/api/v1/chat/completions', request => request.fulfill({ json: { choices: [{ message: { content: 'A grain, protein and vegetables can make a balanced meal.' } }] } }))
-  await page.route('**/api/**', request => request.abort('blockedbyclient'))
+  await page.route('**/api/**', request => request.request().url() === 'https://openrouter.ai/api/v1/chat/completions' ? request.fallback() : request.abort('blockedbyclient'))
   await page.addInitScript(({ state, user, day }) => {
     const NativeDate = Date
     const offset = new NativeDate(day).getTime() - NativeDate.now()
@@ -111,7 +111,10 @@ try {
         } else if (scenario === 'saved-relog') {
           await page.goto(route('discover'))
           const saved = page.getByRole('article', { name: 'Overnight oats', exact: true })
-          await measure(page, scenario, saved.getByRole('button', { name: 'Log Overnight oats, 1 times portion', exact: true }), baseline ? '.toast, [role="dialog"]' : '.k-log-moment, .toast')
+          const savedLog = baseline
+            ? saved.getByRole('button', { name: 'Log Overnight oats, 1 times portion', exact: true })
+            : saved.getByRole('button', { name: /Log Overnight oats, 1 times your saved meal to/ })
+          await measure(page, scenario, savedLog, baseline ? '.toast, [role="dialog"]' : '.k-log-moment, .toast')
         } else if (scenario === 'coach-send') {
           await page.goto(route('coach'))
           await page.getByRole('textbox', { name: 'Message Coach' }).fill('Help me plan lunch.')

@@ -1,0 +1,172 @@
+{
+  "assets": [
+    {
+      "file": "AboutPage-CY5VfPNU.js",
+      "type": "js",
+      "raw": 2219,
+      "gzip": 959
+    },
+    {
+      "file": "AdminPage-BN9oWPPg.js",
+      "type": "js",
+      "raw": 30602,
+      "gzip": 8998
+    },
+    {
+      "file": "AuthContext-BWKnjsBP.js",
+      "type": "js",
+      "raw": 18611,
+      "gzip": 6448
+    },
+    {
+      "file": "CoachPage-DXM0lSnO.js",
+      "type": "js",
+      "raw": 12118,
+      "gzip": 5075
+    },
+    {
+      "file": "ComponentSheetPage-CfcDtnNp.js",
+      "type": "js",
+      "raw": 3556,
+      "gzip": 1370
+    },
+    {
+      "file": "ForgotPasswordPage-BDqI12Mj.js",
+      "type": "js",
+      "raw": 1680,
+      "gzip": 849
+    },
+    {
+      "file": "JourneyPage-BgzIfscx.js",
+      "type": "js",
+      "raw": 203,
+      "gzip": 184
+    },
+    {
+      "file": "LoginPage-FOX9f3rB.js",
+      "type": "js",
+      "raw": 15108,
+      "gzip": 5727
+    },
+    {
+      "file": "OnboardingPage-s-csLCQk.js",
+      "type": "js",
+      "raw": 31876,
+      "gzip": 9085
+    },
+    {
+      "file": "ResetPasswordPage-DCW4URQG.js",
+      "type": "js",
+      "raw": 2049,
+      "gzip": 931
+    },
+    {
+      "file": "SupportPage-DD_l-Qpa.js",
+      "type": "js",
+      "raw": 3413,
+      "gzip": 1478
+    },
+    {
+      "file": "WelcomePage-CdeV_qr_.css",
+      "type": "css",
+      "raw": 41736,
+      "gzip": 9130
+    },
+    {
+      "file": "WelcomePage-D8NKr2_I.js",
+      "type": "js",
+      "raw": 53299,
+      "gzip": 16567
+    },
+    {
+      "file": "apiClient-BV4h4Vkl.js",
+      "type": "js",
+      "raw": 47293,
+      "gzip": 15541
+    },
+    {
+      "file": "arrow-right-CxUcUzFi.js",
+      "type": "js",
+      "raw": 1492,
+      "gzip": 849
+    },
+    {
+      "file": "chunk-BV7QT456-B5cNqVLe.js",
+      "type": "js",
+      "raw": 98513,
+      "gzip": 32316
+    },
+    {
+      "file": "index-CzpVMUSi.js",
+      "type": "js",
+      "raw": 512856,
+      "gzip": 162577
+    },
+    {
+      "file": "index-UAL3a-P3.css",
+      "type": "css",
+      "raw": 311877,
+      "gzip": 51883
+    },
+    {
+      "file": "is-html-element-DvgHo_1h.js",
+      "type": "js",
+      "raw": 122,
+      "gzip": 127
+    },
+    {
+      "file": "jsx-runtime-bzQ4Vb5N.js",
+      "type": "js",
+      "raw": 8408,
+      "gzip": 3206
+    },
+    {
+      "file": "motionFeatures-D7pTwZ20.js",
+      "type": "js",
+      "raw": 79904,
+      "gzip": 25738
+    },
+    {
+      "file": "resize-rlsBLWGD.js",
+      "type": "js",
+      "raw": 4567,
+      "gzip": 2200
+    },
+    {
+      "file": "use-presence-CbhEUzlt.js",
+      "type": "js",
+      "raw": 373,
+      "gzip": 283
+    },
+    {
+      "file": "use-reduced-motion-C7bek3d5.js",
+      "type": "js",
+      "raw": 208,
+      "gzip": 179
+    },
+    {
+      "file": "useHaptic-CXbVpRKk.js",
+      "type": "js",
+      "raw": 3144,
+      "gzip": 1220
+    }
+  ],
+  "totals": {
+    "js": {
+      "raw": 931614,
+      "gzip": 301907
+    },
+    "css": {
+      "raw": 353613,
+      "gzip": 61013
+    }
+  },
+  "entries": [
+    {
+      "file": "index-CzpVMUSi.js",
+      "type": "js",
+      "raw": 512856,
+      "gzip": 162577
+    }
+  ]
+}

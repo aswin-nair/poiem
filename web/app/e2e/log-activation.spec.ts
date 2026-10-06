@@ -38,7 +38,7 @@ test('a double click on Manual Save creates one entry', async ({ page }) => {
 test('a double activation of a Saved relog creates one entry', async ({ page }) => {
   await page.goto('/discover')
   const saved = page.getByRole('article', { name: 'Overnight oats', exact: true })
-  await doubleActivate(saved.getByRole('button', { name: 'Log Overnight oats, 1 times portion', exact: true }))
+  await doubleActivate(saved.getByRole('button', { name: /Log Overnight oats, 1 times your saved meal to/ }))
   await expect(page).toHaveURL('/')
   await expect(page.getByRole('button', { name: /^Overnight oats/ })).toHaveCount(2)
   await expectOneConfirmation(page, 'Overnight oats')

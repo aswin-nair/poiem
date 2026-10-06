@@ -60,10 +60,16 @@ test.describe('Navigation', () => {
     await page.getByRole('link', { name: /Snap a photo/i }).click()
 
     await expect(page).toHaveURL('/log/photo')
-    await expect(page.getByRole('heading', { name: 'Temporarily unavailable' })).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Set up AI' })).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Log manually' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Managed AI isn’t enabled' })).toBeVisible()
+    await expect(page.locator('.flow-setup')).toHaveAttribute('data-ai-reason', 'disabled')
+    await expect(page.getByRole('link', { name: 'AI setup', exact: true })).toHaveAttribute('href', '/settings?panel=ai')
+    const manual = page.getByRole('link', { name: 'Log manually', exact: true })
+    await expect(manual).toBeVisible()
+    await expect(manual).toHaveClass(/flow-recovery-primary/)
     await expect(page.getByRole('button', { name: 'Tap to choose a photo' })).toHaveCount(0)
+    await manual.click()
+    await expect(page).toHaveURL('/log/manual')
+    await expect(page.getByLabel('Food name')).toBeVisible()
   })
 
   /* This asserted a return to onboarding until the sign-out trap was fixed: a

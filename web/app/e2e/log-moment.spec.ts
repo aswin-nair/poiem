@@ -76,6 +76,30 @@ async function layout(page: Page) {
   }))
 }
 
+async function actionReach(action: Locator) {
+  return action.evaluate(element => {
+    const box = element.getBoundingClientRect()
+    const covering = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)
+    const nav = document.querySelector('.bottom-nav-wrap')!.getBoundingClientRect()
+    const card = document.querySelector('.k-log-moment')!.getBoundingClientRect()
+    const intersectsCard = box.left < card.right && box.right > card.left && box.top < card.bottom && box.bottom > card.top
+    return { top: box.top, bottom: box.bottom, navTop: nav.top, intersectsCard,
+      hittable: covering === element || element.contains(covering), cardTop: card.top,
+      cardBottom: card.bottom, cardLeft: card.left, cardRight: card.right }
+  })
+}
+
+function expectReach(reach: Awaited<ReturnType<typeof actionReach>>, action: string, label: string, width: number) {
+  expect.soft(reach.top, `${action} starts within the viewport at ${label}`).toBeGreaterThanOrEqual(0)
+  expect.soft(reach.bottom, `${action} clears the nav at ${label}`).toBeLessThanOrEqual(reach.navTop)
+  expect.soft(reach.intersectsCard, `The moment must not cover ${action} at ${label}`).toBe(false)
+  expect.soft(reach.hittable, `${action} must accept a pointer while the moment is present at ${label}`).toBe(true)
+  expect.soft(reach.cardTop, `The whole card starts inside the viewport at ${label}`).toBeGreaterThanOrEqual(0)
+  expect.soft(reach.cardBottom, `The card clears the nav at ${label}`).toBeLessThanOrEqual(reach.navTop)
+  expect.soft(reach.cardLeft, `The card clears the left edge at ${label}`).toBeGreaterThanOrEqual(0)
+  expect.soft(reach.cardRight, `The card clears the right edge at ${label}`).toBeLessThanOrEqual(width)
+}
+
 async function scenarioPage(browser: Browser, baseURL: string, state: AppState) {
   const context = await browser.newContext({ baseURL, timezoneId: 'UTC', viewport: { width: 390, height: 844 } })
   const page = await context.newPage()
@@ -243,8 +267,13 @@ test('deleting the only entry and logging again does not restart the first-meal 
   await expect(card).not.toContainText('Momo’s first piece')
   expect((await readState(page)).gamification.ownedCosmeticIds.filter(id => id === 'blossom')).toHaveLength(1)
 
-  // Keep the receipt present while measuring the last action at the natural scroll end.
+  // Water follows Meals on phones, with the kitchen-note action last. Check that
+  // final action at the natural scroll end, then reach the preceding controls by
+  // ordinary scrolling into the clear area above the receipt.
   await card.getByRole('button', { name: 'Undo', exact: true }).focus()
+  const addSnack = page.getByRole('button', { name: 'Add snack', exact: true })
+  const addWater = page.getByRole('button', { name: 'Add a glass of water', exact: true })
+  const addNote = page.getByRole('button', { name: 'Add a kitchen note', exact: true })
   for (const view of [
     { width: 320, height: 844, text: 100 },
     { width: 390, height: 844, text: 100 },
@@ -274,36 +303,37 @@ test('deleting the only entry and logging again does not restart the first-meal 
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
     await settlePageLayout(page)
     await expect(card).toBeVisible()
-    const reach = await page.getByRole('button', { name: 'Add snack', exact: true }).evaluate(element => {
-      const box = element.getBoundingClientRect()
-      const covering = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)
-      const nav = document.querySelector('.bottom-nav-wrap')!.getBoundingClientRect()
-      const card = document.querySelector('.k-log-moment')!.getBoundingClientRect()
-      const intersectsCard = box.left < card.right && box.right > card.left && box.top < card.bottom && box.bottom > card.top
-      return { top: box.top, bottom: box.bottom, navTop: nav.top, intersectsCard,
-        hittable: covering === element || element.contains(covering), cardTop: card.top,
-        cardBottom: card.bottom, cardLeft: card.left, cardRight: card.right }
-    })
     const label = `${width}×${height}, ${text}% text`
-    expect.soft(reach.top, `Add snack starts within the viewport at ${label}`).toBeGreaterThanOrEqual(0)
-    expect.soft(reach.bottom, `Add snack clears the nav at ${label}`).toBeLessThanOrEqual(reach.navTop)
-    expect.soft(reach.intersectsCard, `The moment must not cover Add snack at ${label}`).toBe(false)
-    expect.soft(reach.hittable, `Add snack must accept a pointer while the moment is present at ${label}`).toBe(true)
-    expect.soft(reach.cardTop, `The whole card starts inside the viewport at ${label}`).toBeGreaterThanOrEqual(0)
-    expect.soft(reach.cardBottom, `The card clears the nav at ${label}`).toBeLessThanOrEqual(reach.navTop)
-    expect.soft(reach.cardLeft, `The card clears the left edge at ${label}`).toBeGreaterThanOrEqual(0)
-    expect.soft(reach.cardRight, `The card clears the right edge at ${label}`).toBeLessThanOrEqual(width)
-    await page.screenshot({ path: testInfo.outputPath(`moment-reach-${width}-${height}-${text}.png`), animations: 'disabled' })
+    expectReach(await actionReach(addNote), 'Add a kitchen note', label, width)
+    await page.screenshot({ path: testInfo.outputPath(`moment-end-${width}-${height}-${text}.png`), animations: 'disabled' })
+
+    for (const { action, name, shot } of [
+      { action: addWater, name: 'Add a glass of water', shot: 'water' },
+      { action: addSnack, name: 'Add snack', shot: 'meal' },
+    ]) {
+      await action.evaluate(element => {
+        const box = element.getBoundingClientRect()
+        const card = document.querySelector('.k-log-moment')!.getBoundingClientRect()
+        const targetTop = Math.max(0, (card.top - box.height) / 2)
+        window.scrollBy(0, box.top - targetTop)
+      })
+      await settlePageLayout(page)
+      expectReach(await actionReach(action), name, label, width)
+      await page.screenshot({ path: testInfo.outputPath(`moment-${shot}-reach-${width}-${height}-${text}.png`), animations: 'disabled' })
+    }
   }
-  const beforeDismiss = await page.getByRole('button', { name: 'Add snack', exact: true }).evaluate(element => ({
-    top: element.getBoundingClientRect().top, scrollY, height: document.documentElement.scrollHeight,
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
+  await settlePageLayout(page)
+  const finalRows = page.getByRole('region', { name: 'Water and notes', exact: true }).or(addSnack)
+  const beforeDismiss = await finalRows.evaluateAll(elements => ({
+    tops: elements.map(element => element.getBoundingClientRect().top), scrollY, height: document.documentElement.scrollHeight,
   }))
   await card.getByRole('button', { name: 'Dismiss', exact: true }).click()
   await expect(card).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Meals', exact: true })).toBeFocused()
-  expect(await page.getByRole('button', { name: 'Add snack', exact: true }).evaluate(element => ({
-    top: element.getBoundingClientRect().top, scrollY, height: document.documentElement.scrollHeight,
-  })), 'Dismissing at the scroll end must preserve the final row and scroll position').toEqual(beforeDismiss)
+  expect(await finalRows.evaluateAll(elements => ({
+    tops: elements.map(element => element.getBoundingClientRect().top), scrollY, height: document.documentElement.scrollHeight,
+  })), 'Dismissing at the scroll end must preserve the meal row, Water and scroll position').toEqual(beforeDismiss)
 })
 
 test('reduced motion shows the same text with no decorative motion', async ({ browser, baseURL }) => {

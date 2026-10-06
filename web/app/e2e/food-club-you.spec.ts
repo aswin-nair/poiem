@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
 import { openYouDestination, settlePageLayout, signUpAndOnboard, youNav } from './helpers'
 
 for (const width of [320, 390, 768, 1280]) {
@@ -15,13 +15,14 @@ for (const width of [320, 390, 768, 1280]) {
       await page.emulateMedia({ colorScheme })
       await page.reload()
       await expect(page.locator('html')).toHaveAttribute('data-theme', colorScheme)
-      await expect(youNav(page).getByRole('link', { name: 'Momo' })).toBeVisible()
+      if (width < 768) await expect(page.getByRole('combobox', { name: 'Category', exact: true })).toBeVisible()
+      else await expect(youNav(page).getByRole('link', { name: 'Momo' })).toBeVisible()
       await openYouDestination(page, 'Momo')
       await expect(page.getByRole('heading', { name: 'Your kitchen companion' })).toBeVisible()
       await page.getByRole('switch', { name: 'Mute Momo' }).setChecked(colorScheme === 'light')
       await page.getByRole('switch', { name: 'Reduce Momo motion' }).setChecked(colorScheme === 'light')
-      await page.getByRole('button', { name: 'Save settings' }).click()
-      await expect(page.getByRole('status').filter({ hasText: 'Settings saved' })).toBeVisible()
+      await expect(page.locator('.settings-preference-status')).toHaveText(`Momo motion ${colorScheme === 'light' ? 'reduced' : 'restored'} · saved.`)
+      await expect(page.getByRole('button', { name: 'Save settings' })).toHaveCount(0)
       await settlePageLayout(page)
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
       await page.screenshot({ path: testInfo.outputPath(`you-${colorScheme}.png`), fullPage: true, animations: 'disabled' })
@@ -30,7 +31,7 @@ for (const width of [320, 390, 768, 1280]) {
   })
 }
 
-test('settings search supports keyboard jumps, recovery and unsaved preferences', async ({ page }) => {
+test('settings search supports keyboard jumps and immediately saved preferences', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.route('**/api/**', route => route.abort('blockedbyclient'))
@@ -54,8 +55,8 @@ test('settings search supports keyboard jumps, recovery and unsaved preferences'
   await search.fill('password')
   await finder.getByRole('link', { name: /Account/ }).click()
   await expect(page.locator('#you-account')).toBeFocused()
-  await expect(page.getByRole('status').filter({ hasText: 'Unsaved changes' })).toBeVisible()
-  await page.getByRole('link', { name: 'Momo', exact: true }).first().click()
+  await expect(page.getByRole('button', { name: 'Save settings' })).toHaveCount(0)
+  await openYouDestination(page, 'Momo')
   await expect(page.getByRole('switch', { name: 'Mute Momo' })).toBeChecked()
 
   await search.fill('xyz-no-match')
@@ -70,4 +71,95 @@ test('settings search supports keyboard jumps, recovery and unsaved preferences'
   await expect(finder.getByRole('link')).toHaveCount(0)
   await search.fill('AI key')
   await expect(finder.getByRole('link', { name: /AI setup/ })).toBeVisible()
+})
+
+async function persistedSettings(page: Page) {
+  return page.evaluate(async () => {
+    const user = JSON.parse(localStorage.getItem('fud-ai-auth-session') ?? 'null') as { sub: string } | null
+    if (!user) throw new Error('Expected a signed-in account')
+    const moduleUrl = '/src/lib/durableState.ts'
+    const { loadDurableState } = await import(moduleUrl)
+    const durable = await loadDurableState(user.sub)
+    if (!durable) throw new Error('Expected saved device state')
+    return {
+      state: durable.state,
+      privateKey: localStorage.getItem(`fud-ai-private-ai-key-${user.sub}`),
+    }
+  })
+}
+
+test('immediate preferences preserve invalid profile and AI drafts until explicit Save', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.route('**/api/**', route => route.abort('blockedbyclient'))
+  await page.route('https://openrouter.ai/**', route => route.abort('blockedbyclient'))
+  const account = await signUpAndOnboard(page)
+  await page.goto('/settings?panel=profile')
+  const height = page.getByRole('spinbutton', { name: 'Height', exact: true })
+  const appliedHeight = await height.inputValue()
+  await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Pending profile name')
+  await height.fill('0')
+
+  await openYouDestination(page, 'AI setup')
+  await page.getByRole('switch', { name: 'Use my own API key', exact: true }).check()
+  await page.getByRole('textbox', { name: 'API key', exact: true }).fill('pending-test-key-not-a-credential')
+  await openYouDestination(page, 'Preferences')
+  await page.getByRole('switch', { name: 'Pause tracking', exact: true }).check()
+  await expect(page.locator('.you-status')).toHaveText('Tracking paused · your streak is held')
+  await page.getByRole('switch', { name: 'Sound', exact: true }).uncheck()
+  await expect(page.getByRole('switch', { name: 'Haptics', exact: true })).toBeChecked()
+  await expect(page.locator('.you-save-bar')).toContainText('Unsaved profile and AI changes')
+  await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toBeDisabled()
+  await expect.poll(async () => (await persistedSettings(page)).state.profile).toMatchObject({
+    name: account.name,
+    heightCm: Number(appliedHeight),
+    trackingPaused: true,
+    soundEnabled: false,
+  })
+  expect((await persistedSettings(page)).state.aiSettings.accessMode).toBe('managed')
+  expect((await persistedSettings(page)).privateKey).toBeNull()
+
+  await openYouDestination(page, 'AI setup')
+  await expect(page.getByRole('textbox', { name: 'API key', exact: true })).toHaveValue('pending-test-key-not-a-credential')
+  await openYouDestination(page, 'Profile & goals')
+  await expect(page.getByRole('textbox', { name: 'Name', exact: true })).toHaveValue('Pending profile name')
+  await expect(height).toHaveValue('0')
+  await height.fill(appliedHeight)
+  await page.getByRole('button', { name: 'Save settings', exact: true }).click()
+  await expect(page.locator('.you-save-bar')).toContainText('Profile and AI settings saved')
+  await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toHaveCount(0)
+  await page.reload()
+  await expect(page.getByRole('textbox', { name: 'Name', exact: true })).toHaveValue('Pending profile name')
+  await openYouDestination(page, 'Preferences')
+  await expect(page.getByRole('switch', { name: 'Pause tracking', exact: true })).toBeChecked()
+  await expect(page.getByRole('switch', { name: 'Sound', exact: true })).not.toBeChecked()
+  await page.getByLabel('Main').getByRole('link', { name: 'Today', exact: true }).click()
+  await expect(page.getByRole('progressbar', { name: 'Calories', exact: true })).toHaveCount(0)
+})
+
+test('Momo visibility and mute keep independently saved sound and haptics choices', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.route('**/api/**', route => route.abort('blockedbyclient'))
+  await signUpAndOnboard(page)
+  await page.goto('/settings?panel=preferences')
+  await page.getByRole('switch', { name: 'Sound', exact: true }).uncheck()
+  await expect(page.getByRole('switch', { name: 'Haptics', exact: true })).toBeChecked()
+  await page.getByRole('switch', { name: 'Haptics', exact: true }).uncheck()
+  await page.getByRole('switch', { name: 'Sound', exact: true }).check()
+  await expect(page.getByRole('switch', { name: 'Haptics', exact: true })).not.toBeChecked()
+  await openYouDestination(page, 'Momo')
+  await page.getByRole('switch', { name: 'Mute Momo', exact: true }).check()
+  await expect(page.getByRole('switch', { name: 'Show Momo', exact: true })).toBeChecked()
+  await page.getByRole('switch', { name: 'Show Momo', exact: true }).uncheck()
+  await expect(page.getByRole('switch', { name: 'Mute Momo', exact: true })).toBeChecked()
+  await page.getByRole('switch', { name: 'Show Momo', exact: true }).check()
+  await expect(page.getByRole('switch', { name: 'Mute Momo', exact: true })).toBeChecked()
+  await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toHaveCount(0)
+  await page.reload()
+  await expect(page.getByRole('switch', { name: 'Show Momo', exact: true })).toBeChecked()
+  await expect(page.getByRole('switch', { name: 'Mute Momo', exact: true })).toBeChecked()
+  await openYouDestination(page, 'Preferences')
+  await expect(page.getByRole('switch', { name: 'Sound', exact: true })).toBeChecked()
+  await expect(page.getByRole('switch', { name: 'Haptics', exact: true })).not.toBeChecked()
 })

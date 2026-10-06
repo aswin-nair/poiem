@@ -19,8 +19,9 @@ type Surface = {
 const SURFACES: readonly Surface[] = [
   { name: 'today', path: '/', ready: page => page.getByRole('progressbar', { name: 'Calories' }) },
   { name: 'reference', path: '/dev/components', ready: page => page.getByRole('heading', { name: 'Components' }) },
-  { name: 'log-sheet', path: '/log', ready: page => page.getByRole('dialog', { name: 'Log a meal' }), widths: PHONE_AND_DESKTOP },
+  { name: 'log-sheet', path: '/log', ready: page => page.getByRole('dialog', { name: 'Log a meal' }), widths: [320, ...PHONE_AND_DESKTOP] },
   { name: 'describe', path: '/log/text', ready: page => page.getByLabel('Your meal, your words'), widths: PHONE_AND_DESKTOP },
+  { name: 'photo', path: '/log/photo', ready: page => page.getByRole('heading', { name: 'Give your meal a close-up.' }), widths: PHONE_AND_DESKTOP },
   { name: 'manual', path: '/log/manual', ready: page => page.getByLabel('Food name'), widths: PHONE_AND_DESKTOP },
   { name: 'saved', path: '/discover', ready: page => page.getByRole('heading', { name: 'Saved', exact: true }), widths: PHONE_AND_DESKTOP },
   { name: 'insights', path: '/progress', ready: page => page.getByRole('region', { name: 'Journey' }), widths: PHONE_AND_DESKTOP },
@@ -28,8 +29,8 @@ const SURFACES: readonly Surface[] = [
   { name: 'coach', path: '/coach', ready: page => page.getByRole('heading', { name: 'AI Coach' }), widths: PHONE_AND_DESKTOP },
 ]
 
-async function prepare(page: Page, width: number, theme: 'light' | 'dark') {
-  await page.setViewportSize({ width, height: 900 })
+async function prepare(page: Page, width: number, theme: 'light' | 'dark', height = 900) {
+  await page.setViewportSize({ width, height })
   await page.emulateMedia({ colorScheme: theme, reducedMotion: 'reduce' })
   await applyVisualSeed(page)
 }
@@ -55,6 +56,23 @@ test.describe('approved screenshots', () => {
           })
         })
       }
+    }
+  }
+  for (const name of ['today', 'log-sheet'] as const) {
+    const surface = SURFACES.find(candidate => candidate.name === name)!
+    for (const theme of THEMES) {
+      test(`${name} landscape 844 ${theme}`, async ({ page }) => {
+        await prepare(page, 844, theme, 390)
+        await page.goto(surface.path)
+        await expect(surface.ready(page)).toBeVisible()
+        await expect(page.locator('html')).toHaveAttribute('data-theme', theme)
+        await settlePageLayout(page)
+        await page.addStyleTag({ content: '@media (max-width: 1119px) { .k-app .bottom-nav-wrap { position: absolute; top: auto; } }' })
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true)
+        await expect(page).toHaveScreenshot(`${name}-844-landscape-${theme}.png`, {
+          fullPage: name !== 'log-sheet', animations: 'disabled',
+        })
+      })
     }
   }
 })
