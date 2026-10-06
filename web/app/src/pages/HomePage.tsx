@@ -43,6 +43,12 @@ import { clearFirstMealJourney, isFirstMealJourney } from '../lib/firstMeal'
 
 interface MomentState { receipt: LogReceipt; plan: LogFeedbackPlan }
 
+/** Only the number rerenders on count-up frames; the rest of Today stays available. */
+function BudgetReadout({ value, active }: { value: number; active: boolean }) {
+  const display = useCountUp(active ? value : 0, 700)
+  return <strong className="tabular">{display.toLocaleString()}</strong>
+}
+
 const WATER_GLASSES = 8
 const NOTE_LIMIT = 3
 /** How long a just-logged meal keeps its highlight. */
@@ -95,8 +101,6 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const totals = macroTotals(dayEntries)
   const groups = groupEntriesByMeal(dayEntries)
   const budget = calorieBudget(totals.calories, effectiveCalories(profile))
-  // The big number counts up when Today opens and whenever a meal changes it.
-  const shownBudget = useCountUp(mounted ? (budget.over > 0 ? budget.over : budget.remaining) : 0, 700)
   const selectedDayKey = localDayKey(selectedDate)
   const dayLabel = formatDayLabel(selectedDate)
   const isToday = sameDay(selectedDate, new Date())
@@ -359,7 +363,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                 >
                   <h2 id="budget-title" className="k-eyebrow">{snapshotLabel}</h2>
                   <p className="k-budget-number">
-                    <strong className="tabular">{shownBudget.toLocaleString()}</strong>
+                    <BudgetReadout value={budget.over > 0 ? budget.over : budget.remaining} active={mounted} />
                     {dayEntries.length > 0 && (
                       <svg className="k-budget-burst" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 14l7 8M4 30l11 1M26 4l-1 12" /></svg>
                     )}
