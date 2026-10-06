@@ -37,4 +37,13 @@ describe('scaleMeal', () => {
     expect(scaled.name).toBe(base.name)
     expect(scaled.emoji).toBe(base.emoji)
   })
+
+  it('scales known portion mass and ingredient details without changing the original saved meal', () => {
+    const detailed = { ...base, servingSizeGrams: 180, ingredients: [{ item: 'Yogurt', grams: 180, calories: 240, protein: 18, carbs: 30, fat: 6 }] }
+    expect(scaleMeal(detailed, 1.5)).toMatchObject({ servingSizeGrams: 270, ingredients: [{ item: 'Yogurt', grams: 270, calories: 360, protein: 27, carbs: 45, fat: 9 }] })
+    expect(detailed.servingSizeGrams).toBe(180)
+    expect(detailed.ingredients[0]).toEqual({ item: 'Yogurt', grams: 180, calories: 240, protein: 18, carbs: 30, fat: 6 })
+    expect(scaleMeal(base, 2)).not.toHaveProperty('servingSizeGrams')
+    expect(scaleMeal(base, 2)).not.toHaveProperty('ingredients')
+  })
 })

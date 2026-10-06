@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { feel, type SoundCue } from '../lib/feel'
 import { useDialogFocus } from '../hooks/useDialogFocus'
 import { IconClose } from './icons'
+import { MEAL_LABELS, type MealType } from '../types'
 
 export const PORTIONS = [0.5, 1, 1.5, 2] as const
 export type Portion = (typeof PORTIONS)[number]
@@ -17,12 +18,18 @@ export type Portion = (typeof PORTIONS)[number]
 export function PortionSheet({
   name,
   calories,
+  basis = 'previous',
+  grams,
+  mealType,
   onPick,
   onClose,
   cue = 'select',
 }: {
   name: string
   calories: number
+  basis?: 'saved' | 'previous'
+  grams?: number
+  mealType?: MealType
   onPick: (multiplier: Portion) => void
   onClose: () => void
   cue?: SoundCue | null
@@ -51,13 +58,15 @@ export function PortionSheet({
             <IconClose size={16} strokeWidth={2.4} />
           </button>
         </div>
-        <p className="portion-sub">How much of it?</p>
+        <p className="portion-sub">1× = your {basis} meal{grams != null && grams > 0 ? ` · ${grams} g` : ''}. Choose a portion to log.</p>
+        {mealType && <p className="k-repeat-context">Logging to {MEAL_LABELS[mealType]} · Today</p>}
         <div className="portion-options">
           {PORTIONS.map(p => (
             <button
               key={p}
               type="button"
               className={`portion-option${p === 1 ? ' is-default' : ''}`}
+              aria-label={`Log ${name}, ${p} times your ${basis} meal${mealType ? ` to ${MEAL_LABELS[mealType]}` : ''}`}
               onClick={() => { if (cue) feel(cue); onPick(p) }}
             >
               <span className="portion-mult">{p}×</span>

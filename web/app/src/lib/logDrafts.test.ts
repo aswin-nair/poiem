@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { FoodAnalysis } from '../types'
+import { createPendingDraftWriter } from './pendingDraftWriter'
 import {
   clearLogDraft,
   clearPhotoLogDraft,
@@ -9,6 +10,7 @@ import {
   hydratePhotoLogDraft,
   isSafeFoodAnalysis,
   loadLogDrafts,
+  logDraftClearGeneration,
   logDraftStorageKeys,
   peekPhotoLogDraft,
   resetLogDraftRuntime,
@@ -30,17 +32,20 @@ function memoryStorage(): Storage {
   }
 }
 
-function memoryIndexedDb() {
+function memoryIndexedDb(readDelay?: () => Promise<void> | undefined) {
   const tables = new Map<string, Map<string, { userId: string }>>()
 
-  function succeed<T>(result: T) {
+  function succeed<T>(result: T, delay?: Promise<void>) {
     const request: {
       result: T
       error: null
       onsuccess: (() => void) | null
       onerror: (() => void) | null
     } = { result, error: null, onsuccess: null, onerror: null }
-    queueMicrotask(() => request.onsuccess?.())
+    queueMicrotask(() => {
+      if (delay) void delay.then(() => request.onsuccess?.())
+      else request.onsuccess?.()
+    })
     return request
   }
 
@@ -62,7 +67,7 @@ function memoryIndexedDb() {
         objectStore() {
           return {
             get(key: string) {
-              return succeed(store.get(key))
+              return succeed(store.get(key), readDelay?.())
             },
             put(value: { userId: string }) {
               store.set(value.userId, value)
@@ -174,6 +179,29 @@ describe('food logging drafts', () => {
     expect(logDraftStorageKeys('person-a').map(key => localStorage.getItem(key))).toEqual([null, null])
   })
 
+  it('starts a fresh manual meal without clearing another logging method’s draft', () => {
+    saveTextLogDraft('person-a', 'Rice and lentils')
+    saveManualLogDraft('person-a', {
+      name: 'Soup', calories: '250', protein: '', carbs: '', fat: '', mealType: 'lunch', servings: 1,
+    })
+    clearLogDraft('person-a', 'manual')
+    saveManualLogDraft('person-a', {
+      name: '', calories: '', protein: '', carbs: '', fat: '', mealType: 'snack', servings: 1,
+    })
+    expect(loadLogDrafts('person-a').manual).toBeUndefined()
+    expect(loadLogDrafts('person-a').text?.text).toBe('Rice and lentils')
+  })
+
+  it('keeps recoverable drafts while a review field is temporarily invalid', () => {
+    saveTextLogDraft('person-a', 'Rice and lentils')
+    const draft = { analysis, baseAnalysis: analysis, mealType: 'snack' as const, servings: 1,
+      source: 'textInput' as const, emptyNumericFields: [] }
+    saveReviewLogDraft('person-a', draft)
+    expect(saveReviewLogDraft('person-a', { ...draft, analysis: { ...analysis, calories: -1 } })).toBe(false)
+    expect(loadLogDrafts('person-a').review?.analysis.calories).toBe(520)
+    expect(loadLogDrafts('person-a').text?.text).toBe('Rice and lentils')
+  })
+
   it('expires a section seven days after its last edit', () => {
     saveTextLogDraft('person-a', 'old oats')
     vi.setSystemTime(new Date('2026-08-21T12:00:00.000Z'))
@@ -280,5 +308,173 @@ describe('food logging drafts in IndexedDB', () => {
     await flushLogDraftWrites()
     await resetLogDraftRuntime()
     expect(await hydratePhotoLogDraft('person-a')).toBeNull()
+  })
+
+  it('shares a pending envelope read for the same account', async () => {
+    const first = hydrateLogDrafts('person-a')
+    const second = hydrateLogDrafts('person-a')
+    expect(second).toBe(first)
+    await first
+  })
+
+  it('persists early edits after delayed hydration while retaining another method’s draft', async () => {
+    let pauseReads = false
+    let releaseRead!: () => void
+    let notifyRead!: () => void
+    const delayedRead = new Promise<void>(resolve => { releaseRead = resolve })
+    const reading = new Promise<void>(resolve => { notifyRead = resolve })
+    vi.stubGlobal('indexedDB', memoryIndexedDb(() => {
+      if (!pauseReads) return undefined
+      notifyRead()
+      return delayedRead
+    }))
+    saveTextLogDraft('person-a', 'Rice and lentils')
+    saveManualLogDraft('person-a', {
+      name: 'Soup', calories: '250', protein: '', carbs: '', fat: '', mealType: 'lunch', servings: 1,
+    })
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    pauseReads = true
+    const hydrating = hydrateLogDrafts('person-a')
+    await reading
+    const writer = createPendingDraftWriter<string>(
+      draft => saveTextLogDraft('person-a', draft),
+      () => logDraftClearGeneration('person-a', 'text'),
+    )
+    writer.edit('Eggs and toast')
+    // No mounted form or React state is needed when the durable read settles.
+    const completing = hydrating.finally(() => writer.hydrated())
+    releaseRead()
+    await completing
+    expect(loadLogDrafts('person-a').text?.text).toBe('Eggs and toast')
+    expect(loadLogDrafts('person-a').manual?.name).toBe('Soup')
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    const durable = await hydrateLogDrafts('person-a')
+    expect(durable.text?.text).toBe('Eggs and toast')
+    expect(durable.manual?.name).toBe('Soup')
+  })
+
+  it.each(['text', 'all'] as const)('does not restore drafts after a pending durable read is cleared: %s', async section => {
+    let pauseReads = false
+    let releaseRead!: () => void
+    let notifyRead!: () => void
+    const delayedRead = new Promise<void>(resolve => { releaseRead = resolve })
+    const reading = new Promise<void>(resolve => { notifyRead = resolve })
+    vi.stubGlobal('indexedDB', memoryIndexedDb(() => {
+      if (!pauseReads) return undefined
+      notifyRead()
+      return delayedRead
+    }))
+    saveTextLogDraft('person-a', 'Older description')
+    saveManualLogDraft('person-a', {
+      name: 'Soup', calories: '250', protein: '', carbs: '', fat: '', mealType: 'lunch', servings: 1,
+    })
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    pauseReads = true
+    const hydrating = hydrateLogDrafts('person-a')
+    await reading
+    clearLogDraft('person-a', section === 'all' ? undefined : section)
+    releaseRead()
+    const hydrated = await hydrating
+    expect(hydrated.text).toBeUndefined()
+    expect(loadLogDrafts('person-a').text).toBeUndefined()
+    if (section === 'text') expect(hydrated.manual?.name).toBe('Soup')
+    else expect(hydrated).toEqual({ version: 1 })
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    const durable = await hydrateLogDrafts('person-a')
+    expect(durable.text).toBeUndefined()
+    if (section === 'text') expect(durable.manual?.name).toBe('Soup')
+    else expect(durable).toEqual({ version: 1 })
+  })
+
+  it.each(['text', 'manual', 'all'] as const)('invalidates an old pending writer when another route clears during hydration: %s', async section => {
+    let pauseReads = false
+    let releaseRead!: () => void
+    let notifyRead!: () => void
+    const delayedRead = new Promise<void>(resolve => { releaseRead = resolve })
+    const reading = new Promise<void>(resolve => { notifyRead = resolve })
+    vi.stubGlobal('indexedDB', memoryIndexedDb(() => {
+      if (!pauseReads) return undefined
+      notifyRead()
+      return delayedRead
+    }))
+    saveTextLogDraft('person-a', 'Durable older meal')
+    const manual = { name: 'Older soup', calories: '250', protein: '', carbs: '', fat: '', mealType: 'lunch' as const, servings: 1 }
+    saveManualLogDraft('person-a', manual)
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    pauseReads = true
+    const hydrating = hydrateLogDrafts('person-a')
+    await reading
+    const oldWriter = createPendingDraftWriter<string>(
+      draft => saveTextLogDraft('person-a', draft),
+      () => logDraftClearGeneration('person-a', 'text'),
+    )
+    const oldManualWriter = createPendingDraftWriter<string>(
+      name => saveManualLogDraft('person-a', { ...manual, name }),
+      () => logDraftClearGeneration('person-a', 'manual'),
+    )
+    oldWriter.edit('Typed before leaving')
+    oldManualWriter.edit('Edited soup before leaving')
+    // A different route clears the account or starts a fresh description.
+    clearLogDraft('person-a', section === 'all' ? undefined : section)
+    releaseRead()
+    await hydrating
+    oldWriter.hydrated()
+    oldManualWriter.hydrated()
+    const current = loadLogDrafts('person-a')
+    if (section === 'text' || section === 'all') expect(current.text).toBeUndefined()
+    else expect(current.text?.text).toBe('Typed before leaving')
+    if (section === 'manual' || section === 'all') expect(current.manual).toBeUndefined()
+    else expect(current.manual?.name).toBe('Edited soup before leaving')
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    const durable = await hydrateLogDrafts('person-a')
+    if (section === 'text' || section === 'all') expect(durable.text).toBeUndefined()
+    else expect(durable.text?.text).toBe('Typed before leaving')
+    if (section === 'manual' || section === 'all') expect(durable.manual).toBeUndefined()
+    else expect(durable.manual?.name).toBe('Edited soup before leaving')
+  })
+
+  it('restores an earlier form’s buffered edit when returning before shared hydration finishes', async () => {
+    saveTextLogDraft('person-a', 'Older description')
+    await flushLogDraftWrites()
+    await resetLogDraftRuntime()
+    const hydrating = hydrateLogDrafts('person-a')
+    const oldWriter = createPendingDraftWriter<string>(
+      draft => saveTextLogDraft('person-a', draft),
+      () => logDraftClearGeneration('person-a', 'text'),
+    )
+    oldWriter.edit('Latest description before Back')
+    const oldForm = hydrating.then(() => { oldWriter.hydrated() })
+    const returnedWriter = createPendingDraftWriter<string>(
+      draft => saveTextLogDraft('person-a', draft),
+      () => logDraftClearGeneration('person-a', 'text'),
+    )
+    let restoredText: string | undefined
+    const returnedForm = hydrating.then(() => {
+      returnedWriter.hydrated()
+      restoredText = loadLogDrafts('person-a').text?.text
+    })
+    await Promise.all([oldForm, returnedForm])
+    expect(restoredText).toBe('Latest description before Back')
+    expect(loadLogDrafts('person-a').text?.text).toBe(restoredText)
+  })
+
+  it('keeps clear generations isolated by account and method without changing them for saves', () => {
+    const textBefore = logDraftClearGeneration('person-a', 'text')
+    const manualBefore = logDraftClearGeneration('person-a', 'manual')
+    const otherBefore = logDraftClearGeneration('person-b', 'text')
+    saveTextLogDraft('person-a', 'Description')
+    expect(logDraftClearGeneration('person-a', 'text')).toBe(textBefore)
+    clearLogDraft('person-a', 'text')
+    expect(logDraftClearGeneration('person-a', 'text')).not.toBe(textBefore)
+    expect(logDraftClearGeneration('person-a', 'manual')).toBe(manualBefore)
+    expect(logDraftClearGeneration('person-b', 'text')).toBe(otherBefore)
+    clearLogDraft('person-a')
+    expect(logDraftClearGeneration('person-a', 'manual')).not.toBe(manualBefore)
   })
 })

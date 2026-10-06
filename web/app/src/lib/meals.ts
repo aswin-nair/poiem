@@ -122,5 +122,14 @@ export function scaleMeal(meal: SavedMeal, multiplier: number): SavedMeal {
     protein: Math.round(meal.protein * multiplier),
     carbs: Math.round(meal.carbs * multiplier),
     fat: Math.round(meal.fat * multiplier),
+    ...(meal.servingSizeGrams != null ? { servingSizeGrams: Math.round(meal.servingSizeGrams * multiplier * 10) / 10 } : {}),
+    ...(meal.ingredients ? { ingredients: meal.ingredients.map(line => ({
+      ...line,
+      grams: Math.round(line.grams * multiplier * 10) / 10,
+      calories: Math.round(line.calories * multiplier),
+      protein: Math.round(line.protein * multiplier * 10) / 10,
+      carbs: Math.round(line.carbs * multiplier * 10) / 10,
+      fat: Math.round(line.fat * multiplier * 10) / 10,
+    })) } : {}),
   }
 }

@@ -66,10 +66,49 @@ interface StoredDrafts {
 }
 
 const memory = new Map<string, LogDraftEnvelope>()
+type EnvelopeSection = 'text' | 'manual' | 'review'
+type EnvelopeRevision = Record<EnvelopeSection | 'all', number>
+const envelopeRevisions = new Map<string, EnvelopeRevision>()
+const clearRevisions = new Map<string, EnvelopeRevision>()
+const hydrationByUser = new Map<string, Promise<LogDraftEnvelope>>()
 const photoMemory = new Map<string, File>()
 const photoRevision = new Map<string, number>()
 let databasePromise: Promise<IDBDatabase | null> | null = null
 let writeQueue: Promise<void> = Promise.resolve()
+
+function envelopeRevision(userId: string): EnvelopeRevision {
+  return envelopeRevisions.get(userId) ?? { all: 0, text: 0, manual: 0, review: 0 }
+}
+
+function markEnvelopeEdit(userId: string, section: EnvelopeSection | 'all'): void {
+  const revision = envelopeRevision(userId)
+  envelopeRevisions.set(userId, { ...revision, [section]: revision[section] + 1 })
+}
+
+function markDraftCleared(userId: string, section: EnvelopeSection | 'all'): void {
+  const revision = clearRevisions.get(userId) ?? { all: 0, text: 0, manual: 0, review: 0 }
+  clearRevisions.set(userId, { ...revision, [section]: revision[section] + 1 })
+}
+
+/** Only explicit clears invalidate another form's pending edits; ordinary saves do not. */
+export function logDraftClearGeneration(userId: string, section: EnvelopeSection): string {
+  const revision = clearRevisions.get(userId)
+  return `${revision?.all ?? 0}:${revision?.[section] ?? 0}`
+}
+
+/** A late durable read must respect edits and explicit clears made while it was pending. */
+function mergeHydratedEnvelope(userId: string, envelope: LogDraftEnvelope, before: EnvelopeRevision): LogDraftEnvelope {
+  const after = envelopeRevision(userId)
+  const latest = memory.get(userId) ?? emptyEnvelope()
+  if (after.all !== before.all) return expireEnvelope(latest)
+  const merged = { ...envelope }
+  for (const section of ['text', 'manual', 'review'] as const) {
+    if (after[section] === before[section]) continue
+    delete merged[section]
+    if (latest[section]) Object.assign(merged, { [section]: latest[section] })
+  }
+  return merged
+}
 
 function storageKey(userId: string): string {
   return `${KEY_PREFIX}${encodeURIComponent(userId)}`
@@ -377,16 +416,17 @@ function persist(userId: string, next: LogDraftEnvelope): boolean {
   }
 
   enqueueWrite(async () => {
-    const latest = memory.get(userId) ?? envelope
     const db = await openDraftDatabase()
     if (db) {
       const current = await idbGet(db, userId)
+      const latest = memory.get(userId) ?? envelope
       const photo = current?.photo
       if (isEmptyEnvelope(latest) && !photo && !photoMemory.has(userId)) await idbDelete(db, userId)
       else await idbPut(db, { userId, envelope: latest, recovery: current?.recovery, photo })
       try { removeFallback(userId) } catch { /* keep the fallback if it cannot be removed */ }
       return
     }
+    const latest = memory.get(userId) ?? envelope
     try {
       if (isEmptyEnvelope(latest)) removeFallback(userId)
       else localStorage.setItem(storageKey(userId), JSON.stringify(latest))
@@ -412,8 +452,19 @@ export function loadLogDrafts(userId: string, now = new Date()): LogDraftEnvelop
   return envelope
 }
 
-export async function hydrateLogDrafts(userId: string, now = new Date()): Promise<LogDraftEnvelope> {
-  if (!userId) return emptyEnvelope()
+export function hydrateLogDrafts(userId: string, now = new Date()): Promise<LogDraftEnvelope> {
+  if (!userId) return Promise.resolve(emptyEnvelope())
+  const pending = hydrationByUser.get(userId)
+  if (pending) return pending
+  const hydration = hydrateEnvelope(userId, now).finally(() => {
+    if (hydrationByUser.get(userId) === hydration) hydrationByUser.delete(userId)
+  })
+  hydrationByUser.set(userId, hydration)
+  return hydration
+}
+
+async function hydrateEnvelope(userId: string, now: Date): Promise<LogDraftEnvelope> {
+  const revision = envelopeRevision(userId)
   await writeQueue
   expireRecoveryStore(userId, now)
   const db = await openDraftDatabase()
@@ -439,15 +490,18 @@ export async function hydrateLogDrafts(userId: string, now = new Date()): Promis
     envelope = readFallbackEnvelope(userId, now)
   }
 
-  let recovery = record?.recovery
+  envelope = mergeHydratedEnvelope(userId, envelope, revision)
+  const fullyCleared = envelopeRevision(userId).all !== revision.all
+  let recovery = fullyCleared ? undefined : record?.recovery
   if (recovery && isTimestampExpired(recovery.quarantinedAt, now.getTime(), RECOVERY_TTL_MS)) {
     recovery = undefined
   }
 
   memory.set(userId, envelope)
+  const photo = fullyCleared ? undefined : record?.photo
   try {
-    if (isEmptyEnvelope(envelope) && !recovery && !record?.photo && !photoMemory.has(userId)) await idbDelete(db, userId)
-    else await idbPut(db, { userId, envelope, recovery, photo: record?.photo })
+    if (isEmptyEnvelope(envelope) && !recovery && !photo && !photoMemory.has(userId)) await idbDelete(db, userId)
+    else await idbPut(db, { userId, envelope, recovery, photo })
     removeFallback(userId)
   } catch {
     // Keep the in-memory draft when the durable write cannot complete.
@@ -456,6 +510,7 @@ export async function hydrateLogDrafts(userId: string, now = new Date()): Promis
 }
 
 export function saveTextLogDraft(userId: string, text: string): boolean {
+  markEnvelopeEdit(userId, 'text')
   const current = loadLogDrafts(userId)
   const next = { ...current }
   if (text.length === 0) delete next.text
@@ -464,11 +519,20 @@ export function saveTextLogDraft(userId: string, text: string): boolean {
 }
 
 export function saveManualLogDraft(userId: string, draft: Omit<ManualLogDraft, 'updatedAt'>): boolean {
+  markEnvelopeEdit(userId, 'manual')
   const current = loadLogDrafts(userId)
-  return persist(userId, { ...current, manual: { ...draft, updatedAt: new Date().toISOString() } })
+  const next = { ...current }
+  const hasDetails = [draft.name, draft.calories, draft.protein, draft.carbs, draft.fat].some(value => value.length > 0)
+    || draft.servings !== 1
+  if (hasDetails) next.manual = { ...draft, updatedAt: new Date().toISOString() }
+  else delete next.manual
+  return persist(userId, next)
 }
 
 export function saveReviewLogDraft(userId: string, draft: Omit<ReviewLogDraft, 'updatedAt'>): boolean {
+  // Keep the last recoverable review while a field is temporarily invalid.
+  if (!isReviewDraft({ ...draft, updatedAt: new Date().toISOString() })) return false
+  markEnvelopeEdit(userId, 'review')
   const current = loadLogDrafts(userId)
   return persist(userId, { ...current, review: { ...draft, updatedAt: new Date().toISOString() } })
 }
@@ -476,6 +540,8 @@ export function saveReviewLogDraft(userId: string, draft: Omit<ReviewLogDraft, '
 export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'review' | 'photo'): void {
   if (!userId) return
   if (!section) {
+    markDraftCleared(userId, 'all')
+    markEnvelopeEdit(userId, 'all')
     memory.delete(userId)
     bumpPhotoRevision(userId)
     photoMemory.delete(userId)
@@ -495,7 +561,9 @@ export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'rev
     clearPhotoLogDraft(userId)
     return
   }
-  const current = loadLogDrafts(userId)
+  markDraftCleared(userId, section)
+  markEnvelopeEdit(userId, section)
+  const current = { ...loadLogDrafts(userId) }
   delete current[section]
   persist(userId, current)
 }
@@ -582,6 +650,9 @@ export async function flushLogDraftWrites(): Promise<void> {
 
 export async function resetLogDraftRuntime(): Promise<void> {
   memory.clear()
+  envelopeRevisions.clear()
+  clearRevisions.clear()
+  hydrationByUser.clear()
   photoMemory.clear()
   photoRevision.clear()
   writeQueue = Promise.resolve()

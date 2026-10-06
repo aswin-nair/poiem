@@ -68,8 +68,8 @@ export function EditFoodPage() {
         <div className="flow-edit-topbar">
           <BackLink onClick={leave} label="Today" />
           <button type="button" className="flow-favourite" onClick={() => toggleFavorite(entry)}
-            aria-pressed={fav} aria-label={fav ? 'Remove saved entry from favourites' : 'Add saved entry to favourites'}>
-            <IconStar active={fav} size={20} /> {fav ? 'Favourited' : 'Favourite'}
+            aria-pressed={fav} aria-label={fav ? `Remove ${entry.name} from Saved` : `Save ${entry.name}`}>
+            <IconStar active={fav} size={20} /> {fav ? 'Saved' : 'Save'}
           </button>
         </div>
         <LogFlowHeader title="A little fine-tuning." description="Change the details below. Your original entry stays as it is until you save." />

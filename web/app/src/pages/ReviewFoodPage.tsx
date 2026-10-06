@@ -2,19 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { BackLink } from '../components/BackLink'
-import { IconCheck, IconChevronDown, IconPlus, IconTrash } from '../components/icons'
-import { EstimateNote, FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
+import { IconChevronDown, IconPlus, IconTrash } from '../components/icons'
+import { EstimateNote, FlowFeedback, LogFlowHeader, LoggingContextLine, RestoredDraftNotice } from '../components/LogFlowUI'
 import { MealNameField, MealTotals, MealTypePicker, NutritionFields, PortionControl } from '../components/MealEntryFields'
 import { normalizeServings, scaleFoodAnalysis } from '../lib/mealReview'
 import type { FoodAnalysis, FoodSource, MealType } from '../types'
-import { MEAL_LABELS } from '../types'
 import { clearLogDraft, hydrateLogDrafts, loadLogDrafts, saveReviewLogDraft, type ReviewNumericField } from '../lib/logDrafts'
-import { reviewFoodIssue } from '../lib/foodEntryValidation'
+import { reviewFoodFieldErrors, reviewFoodIssue, type FoodField, type FoodFieldErrors } from '../lib/foodEntryValidation'
 import { useAuth } from '../store/AuthContext'
 import { sourceToMethod, track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
 import { defaultMealType } from '../lib/meals'
-import { firstMealFromNavState } from '../lib/firstMeal'
+import { logContextFromNavState } from '../lib/logContext'
 import { makeLogReceipt } from '../lib/logReceipt'
 import { createOnceGuard } from '../lib/onceGuard'
 
@@ -31,18 +30,23 @@ export function ReviewFoodPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const firstMeal = firstMealFromNavState(location.state)
+  const logContext = logContextFromNavState(location.state)
+  const { firstMeal } = logContext
+  const requestedSlot = logContext.mealType
   const userId = user?.sub ?? ''
   const saved = loadLogDrafts(userId).review
   const initialAnalysis = pendingAnalysis ?? saved?.analysis ?? null
   const [analysis, setAnalysis] = useState<FoodAnalysis | null>(initialAnalysis)
-  const [mealType, setMealType] = useState<MealType>(pendingAnalysis ? defaultMealType() : (saved?.mealType ?? defaultMealType()))
+  const [mealType, setMealType] = useState<MealType>(requestedSlot ?? (pendingAnalysis ? defaultMealType() : (saved?.mealType ?? defaultMealType())))
   const [servings, setServings] = useState(pendingAnalysis ? 1 : (saved?.servings ?? 1))
   const [source, setSource] = useState<FoodSource>(pendingAnalysis ? pendingSource : (saved?.source ?? pendingSource))
   const [emptyNumericFields, setEmptyNumericFields] = useState<Set<ReviewNumericField>>(
     () => new Set(pendingAnalysis ? [] : (saved?.emptyNumericFields ?? [])),
   )
   const [error, setError] = useState<string | null>(null)
+  const [attempted, setAttempted] = useState(false)
+  const [restored, setRestored] = useState(!pendingAnalysis && Boolean(saved))
+  const formRef = useRef<HTMLFormElement>(null)
   const baseRef = useRef<FoodAnalysis | null>(pendingAnalysis ?? saved?.baseAnalysis ?? null)
   const [loadingDraft, setLoadingDraft] = useState(!initialAnalysis)
   const [saveGuard] = useState(createOnceGuard)
@@ -56,16 +60,17 @@ export function ReviewFoodPage() {
       const review = drafts.review
       if (cancelled || !review) return
       setSource(review.source)
-      setMealType(review.mealType)
+      setMealType(requestedSlot ?? review.mealType)
       setServings(review.servings)
       setEmptyNumericFields(new Set(review.emptyNumericFields))
       baseRef.current = review.baseAnalysis
       setAnalysis(review.analysis)
+      setRestored(true)
     }).finally(() => { if (!cancelled) setLoadingDraft(false) })
     return () => {
       cancelled = true
     }
-  }, [analysis, pendingAnalysis, userId])
+  }, [analysis, pendingAnalysis, requestedSlot, userId])
 
   useEffect(() => {
     if (!analysis || !baseRef.current) return
@@ -86,10 +91,10 @@ export function ReviewFoodPage() {
   }, [analysis, source])
 
   if (!analysis) return <div className="app-shell k-screen k-flow"><main className="app-main">
-    <BackLink to="/log" />
+    <BackLink onClick={() => navigate('/log', { state: logContext })} />
     {loadingDraft ? <p role="status">Restoring your review…</p> : <>
       <LogFlowHeader title="Let’s start with a meal." description="There isn’t an estimate to review yet. Choose how you’d like to add one." />
-      <PressableButton to="/log" label="Choose a logging method" />
+      <PressableButton label="Choose a logging method" onClick={() => navigate('/log', { state: logContext })} />
     </>}
   </main></div>
 
@@ -138,9 +143,14 @@ export function ReviewFoodPage() {
   function save() {
     if (!analysis) return
     saveGuard.run(() => {
+      setAttempted(true)
       const issue = reviewFoodIssue(analysis, emptyNumericFields)
       if (issue) {
         setError(issue)
+        const errors = reviewFoodFieldErrors(analysis, emptyNumericFields)
+        const fields: FoodField[] = ['name', 'calories', 'protein', 'carbs', 'fat', 'servings']
+        const firstError = fields.find(field => errors[field])
+        if (firstError) formRef.current?.querySelector<HTMLInputElement>(`[data-food-field="${firstError}"]`)?.focus()
         saveGuard.reset()
         return
       }
@@ -169,15 +179,16 @@ export function ReviewFoodPage() {
     })
   }
 
-  function discard() {
-    if (!window.confirm('Discard this estimate and start a new meal?')) return
+  function discard(confirm = true) {
+    if (confirm && !window.confirm('Discard this estimate and start a new meal?')) return
     setPendingAnalysis(null)
     setPendingImagePreview(null)
     clearLogDraft(userId, 'review')
-    navigate('/log')
+    navigate('/log', { state: { ...logContext, mealType } })
   }
 
   const issue = reviewFoodIssue(analysis, emptyNumericFields)
+  const fieldErrors: FoodFieldErrors = attempted ? reviewFoodFieldErrors(analysis, emptyNumericFields) : {}
   const nutrition = {
     calories: emptyNumericFields.has('calories') ? '' : analysis.calories,
     protein: emptyNumericFields.has('protein') ? '' : analysis.protein,
@@ -188,7 +199,7 @@ export function ReviewFoodPage() {
   return (
     <div className="app-shell k-screen k-flow k-flow-wide">
       <main className="app-main">
-        <BackLink onClick={discard} label="Start over" />
+        <BackLink onClick={() => discard()} label="Start over" />
         <LogFlowHeader
           step={2}
           title={firstMeal ? 'Check your first meal.' : 'Make it your meal.'}
@@ -196,14 +207,20 @@ export function ReviewFoodPage() {
             ? 'Poiem guessed from your photo or description. Change anything that doesn’t match, then save. Momo will celebrate with you.'
             : 'The estimate is a starting point. You’re in charge of the final details.'}
         />
+        {restored && <RestoredDraftNotice onContinue={() => { setRestored(false); formRef.current?.querySelector<HTMLInputElement>('[data-food-field="name"]')?.focus() }} onStartFresh={() => discard(false)} />}
         <EstimateNote firstMeal={firstMeal} />
-        {error && <FlowFeedback message={error} error />}
-        <form className="flow-review-layout" noValidate onSubmit={event => { event.preventDefault(); save() }}>
+        {error && <FlowFeedback message={error} error focus={false} />}
+        <form ref={formRef} className="flow-review-layout" noValidate onSubmit={event => { event.preventDefault(); save() }}>
           <div className="flow-review-editor">
-            <MealNameField name={analysis.name} emoji={analysis.emoji} onChange={value => update('name', value)} />
-            <PortionControl value={servings} grams={analysis.servingSizeGrams} onChange={changeServings} />
-            <NutritionFields values={nutrition} onChange={updateNumeric} />
-            <MealTypePicker value={mealType} onChange={value => { markCorrected(); setMealType(value) }} />
+            <MealNameField name={analysis.name} emoji={analysis.emoji} onChange={value => update('name', value)} error={fieldErrors.name} />
+            <PortionControl value={servings} grams={analysis.servingSizeGrams} onChange={changeServings} error={fieldErrors.servings}
+              calories={!emptyNumericFields.has('calories') && analysis.calories <= 100_000 ? analysis.calories : undefined} />
+            <NutritionFields values={nutrition} onChange={updateNumeric} errors={fieldErrors} />
+            <MealTypePicker value={mealType} onChange={value => {
+              markCorrected()
+              setMealType(value)
+              navigate(location.pathname, { replace: true, state: { ...logContext, mealType: value } })
+            }} />
           </div>
           <div className="flow-review-side">
             {source === 'snapFood' && pendingImagePreview && <figure className="flow-photo-evidence">
@@ -213,8 +230,9 @@ export function ReviewFoodPage() {
             <div className="flow-review-summary">
               {!issue ? <MealTotals name={analysis.name} calories={analysis.calories} mealType={mealType} servings={servings} />
                 : <p className="flow-summary-hint">Fill in the meal details to see your final total here.</p>}
+              <LoggingContextLine mealType={mealType} />
               <PressableButton fullWidth type="submit" cue={null}><IconPlus size={20} /> Log meal</PressableButton>
-              <p className="flow-save-hint"><IconCheck size={18} /> Logs to {MEAL_LABELS[mealType].toLowerCase()} today. You can edit it later.</p>
+              <p className="flow-save-hint">You can edit it later from Today.</p>
             </div>
             {analysis.ingredients && analysis.ingredients.length > 0 && <details className="flow-breakdown">
               <summary>Inside the estimate <span>{analysis.ingredients.length} items</span><IconChevronDown size={18} /></summary>
@@ -224,7 +242,7 @@ export function ReviewFoodPage() {
               </li>)}</ul>
               <p>Editing nutrition totals removes this breakdown so the original estimate isn’t mistaken for your changes.</p>
             </details>}
-            <button type="button" className="flow-text-action" onClick={discard}><IconTrash size={18} /> Discard estimate</button>
+            <button type="button" className="flow-text-action" onClick={() => discard()}><IconTrash size={18} /> Discard estimate</button>
           </div>
         </form>
       </main>

@@ -293,6 +293,12 @@
   .k-coach-send:disabled { border-color: var(--k-hair-strong); background: var(--k-sunken); color: var(--k-muted); box-shadow: none; cursor: default; }
   .k-coach-send:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
   .k-page-main { max-width: 880px; margin-inline: auto; }
+  .k-coach-provider { color: var(--k-role-text-muted); font: 500 var(--k-type-meta)/1.5 var(--k-font-body); }
+  .k-coach-provider > summary { display: flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; cursor: pointer; }
+  .k-coach-provider > summary:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+  .k-coach-provider p { margin: 0; }
+  .k-coach-recovery { display: grid; justify-items: start; gap: var(--k-space-sm); margin-top: var(--k-space-md); padding-top: var(--k-space-md); border-top: 1px solid var(--k-role-border-subtle); font: 500 var(--k-type-label)/1.5 var(--k-font-body); }
+  .k-coach-recovery p { margin: 0; }
   .k-coach .k-workspace-col { display: flex; flex-direction: column; min-height: 100dvh; padding-bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px)); }
   .k-coach .k-workspace-col > :is(.k-coach-main, .k-coach-compose) { width: 100%; max-width: 880px; margin-inline: auto; }
   @media (min-width: 1120px) {

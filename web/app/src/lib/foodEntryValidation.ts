@@ -19,6 +19,52 @@ export type ValidatedManualFood = {
   fat: number
 }
 
+export type FoodField = 'name' | 'calories' | 'protein' | 'carbs' | 'fat' | 'servings'
+export type FoodFieldErrors = Partial<Record<FoodField, string>>
+
+const NUTRITION_LIMITS = [
+  ['calories', 'Calories', 100_000],
+  ['protein', 'Protein', 10_000],
+  ['carbs', 'Carbs', 10_000],
+  ['fat', 'Fat', 10_000],
+] as const
+
+export function manualFoodFieldErrors(input: ManualFoodInput): FoodFieldErrors {
+  const errors: FoodFieldErrors = {}
+  if (!input.name.trim() || input.name.trim().length > 500) errors.name = 'Enter a food name of 500 characters or fewer.'
+  if (!Number.isFinite(input.servings) || input.servings < 0.25 || input.servings > 1_000) {
+    errors.servings = 'Servings must be between 0.25 and 1,000.'
+  }
+  for (const [field, label, max] of NUTRITION_LIMITS) {
+    const parsed = parseNumber(input[field], label, field === 'calories', max)
+    if (!parsed.ok) errors[field] = parsed.error
+    else if (!errors.servings && (field === 'calories'
+      ? Math.round(parsed.value * input.servings)
+      : Math.round(parsed.value * input.servings * 10) / 10) > max) {
+      errors[field] = `Total ${label.toLowerCase()} must be ${max.toLocaleString()}${field === 'calories' ? ' kcal' : ' g'} or fewer. Reduce the value or servings.`
+    }
+  }
+  return errors
+}
+
+export function reviewFoodFieldErrors(
+  analysis: FoodAnalysis,
+  emptyNumericFields: ReadonlySet<ReviewNumericField>,
+): FoodFieldErrors {
+  const errors: FoodFieldErrors = {}
+  if (!analysis.name.trim() || analysis.name.length > 500) errors.name = 'Enter a food name of 500 characters or fewer.'
+  for (const [field, label, max] of NUTRITION_LIMITS) {
+    if (emptyNumericFields.has(field)) errors[field] = `Enter a numeric value for ${label.toLowerCase()}.`
+    else if (!Number.isFinite(analysis[field]) || analysis[field] < 0 || analysis[field] > max) {
+      errors[field] = `${label} must be between 0 and ${max.toLocaleString()}.`
+    }
+  }
+  if (!Object.keys(errors).length && !isSafeFoodAnalysis(analysis)) {
+    errors.servings = 'This portion exceeds the estimate limits. Reduce the portion or enter the meal manually.'
+  }
+  return errors
+}
+
 function parseNumber(raw: string, label: string, required: boolean, max: number):
   | { ok: true; value: number }
   | { ok: false; error: string } {

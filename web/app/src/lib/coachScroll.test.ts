@@ -64,7 +64,7 @@ describe('coach conversation following', () => {
     const arm = send.indexOf('followConversation.current = true')
     expect(arm, 'send re-arms following').toBeGreaterThan(-1)
     expect(send.indexOf('followConversation.current = true', arm + 1), 'send re-arms following once').toBe(-1)
-    for (const gate of ['if (!trimmed || loading) return', 'if (!safety && !canChat) {']) {
+    for (const gate of ['if (!trimmed || loading || requestRef.current) return', 'if (retry && !state.chatMessages.some(message => message.id === retry.userMessage.id)) return', 'if (!safety && !canChat) {']) {
       expect(send.indexOf(gate), gate).toBeGreaterThan(-1)
       expect(arm, `re-arming follows ${gate}`).toBeGreaterThan(send.indexOf(gate))
     }

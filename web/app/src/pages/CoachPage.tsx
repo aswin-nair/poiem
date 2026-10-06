@@ -16,6 +16,10 @@ import { MomoSticker } from '../components/MomoSticker'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
 import { prefersReducedMotion } from '../lib/tokens'
 import { distanceFromBottom, followScrollBehavior, nextFollowState } from '../lib/coachScroll'
+import type { ChatMessage } from '../types'
+
+type CoachRetryRequest = { userMessage: ChatMessage; history: ChatMessage[] }
+type FailedCoachResponse = CoachRetryRequest & { reason: string; cancelled: boolean }
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
 function CoachMessage({ text }: { text: string }) {
@@ -88,14 +92,16 @@ export function CoachPage() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [failedResponses, setFailedResponses] = useState<Record<string, FailedCoachResponse>>({})
   const [showSafetySupport, setShowSafetySupport] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const followConversation = useRef(true)
   const inputRef = useRef<HTMLInputElement>(null)
   const requestRef = useRef<AbortController | null>(null)
+  const requestMessageRef = useRef<string | null>(null)
   const { availability, refresh } = useAiAccess()
 
-  useEffect(() => () => requestRef.current?.abort(), [])
+  useEffect(() => () => { requestRef.current?.abort(); requestRef.current = null }, [])
 
   useEffect(() => {
     let lastTop = document.scrollingElement?.scrollTop ?? 0
@@ -122,32 +128,46 @@ export function CoachPage() {
 
   const ai = availability(state.aiSettings, 'coach')
   const foodAi = availability(state.aiSettings, 'food_text')
-  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
+  const byok = usesByok(state.aiSettings)
+  const provider = byok ? providerLabel(state.aiSettings.provider) : 'OpenRouter through Poiem'
   const canChat = ai.kind === 'ready'
 
-  async function send(text: string) {
+  async function send(text: string, retry?: CoachRetryRequest) {
     const trimmed = text.trim()
-    if (!trimmed || loading) return
+    if (!trimmed || loading || requestRef.current) return
+    if (retry && !state.chatMessages.some(message => message.id === retry.userMessage.id)) return
     const safety = coachSafetyResponse(trimmed)
     if (!safety && !canChat) {
-      if (ai.kind === 'premium_required' && foodAi.kind === 'ready') setError('Coach is a Premium feature. You can still log meals with managed AI.')
-      else if (ai.kind === 'unavailable' && ai.reason === 'missing_key') setError(`Add your ${providerLabel(state.aiSettings.provider)} API key in Settings.`)
-      else if (ai.kind === 'limit_reached') setError('You’ve used today’s Coach messages. Try again after the reset.')
-      else setError('Managed AI is not available right now. You can add your own key in Advanced settings.')
+      const reason = ai.kind === 'premium_required'
+        ? foodAi.kind === 'ready' ? 'Coach is a Premium feature. You can still log meals with managed AI.' : 'Managed Coach requires Premium. View your AI access in You.'
+        : ai.kind === 'limit_reached' ? 'You’ve used today’s Coach messages. Try again after the reset.'
+        : ai.kind === 'checking' ? 'Coach availability is still being checked. Try again when the check finishes.'
+        : ai.kind === 'unavailable' && ai.reason === 'missing_key' ? `Add your ${providerLabel(state.aiSettings.provider)} API key in You → AI setup.`
+        : ai.kind === 'unavailable' && ai.reason === 'unsigned' ? 'Sign in to use Coach.'
+        : ai.kind === 'unavailable' && ai.reason === 'disabled' ? 'Managed Coach isn’t enabled for this app. Choose your own key in You → AI setup.'
+        : 'Couldn’t check Coach availability. Check your connection and try again.'
+      if (retry) setFailedResponses(current => ({ ...current, [retry.userMessage.id]: { ...retry, reason, cancelled: false } }))
+      else setError(reason)
       return
     }
     /* Sending is a request to see the answer: follow again, even from far up the thread.
        Only a send that goes through re-arms it; an ignored or refused one leaves it alone. */
     followConversation.current = true
     setError(null)
-    setInput('')
-    const userMsg = {
+    if (!retry) setInput('')
+    const userMsg = retry?.userMessage ?? {
       id: crypto.randomUUID(),
       role: 'user' as const,
       content: trimmed,
       timestamp: new Date().toISOString(),
     }
-    addChatMessage(userMsg)
+    const originalMessageIndex = retry ? state.chatMessages.findIndex(message => message.id === userMsg.id) : -1
+    const earlierMessageIds = retry ? new Set(state.chatMessages.slice(0, originalMessageIndex).map(message => message.id)) : null
+    // A retry keeps its original context, while respecting any messages the
+    // reader has deleted since that request failed.
+    const history = retry ? retry.history.filter(message => earlierMessageIds?.has(message.id)) : state.chatMessages
+    if (!retry) addChatMessage(userMsg)
+    setFailedResponses(current => { const next = { ...current }; delete next[userMsg.id]; return next })
     if (safety) {
       addChatMessage({
         id: crypto.randomUUID(),
@@ -159,17 +179,19 @@ export function CoachPage() {
       inputRef.current?.focus()
       return
     }
-    requestRef.current?.abort()
     const controller = new AbortController()
     requestRef.current = controller
+    requestMessageRef.current = userMsg.id
     setLoading(true)
     try {
       const reply = await sendCoachMessage(
-        { ...state, chatMessages: [...state.chatMessages, userMsg] },
-        state.chatMessages,
+        { ...state, chatMessages: [...history, userMsg] },
+        history,
         trimmed,
         controller.signal,
       )
+      if (requestRef.current !== controller) return
+      if (controller.signal.aborted) throw new Error('Response stopped. Your message is still here.')
       addChatMessage({
         id: crypto.randomUUID(),
         role: 'assistant',
@@ -177,11 +199,19 @@ export function CoachPage() {
         timestamp: new Date().toISOString(),
       })
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Coach request failed')
+      if (requestRef.current !== controller) return
+      const cancelled = controller.signal.aborted
+      const reason = cancelled ? 'Response stopped. Your message is still here.'
+        : e instanceof TypeError ? 'Couldn’t reach Coach. Check your connection and try again.'
+        : e instanceof Error ? e.message : 'Coach couldn’t complete this response. Try again.'
+      setFailedResponses(current => ({ ...current, [userMsg.id]: { userMessage: userMsg, history, reason, cancelled } }))
     } finally {
-      if (requestRef.current === controller) requestRef.current = null
-      setLoading(false)
-      inputRef.current?.focus()
+      if (requestRef.current === controller) {
+        requestRef.current = null
+        requestMessageRef.current = null
+        setLoading(false)
+        inputRef.current?.focus()
+      }
     }
   }
 
@@ -202,7 +232,7 @@ export function CoachPage() {
             aria-label="Message Coach"
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder={canChat ? 'Ask Coach…' : 'Ask for support, or add an API key for coaching'}
+            placeholder={canChat ? 'Ask Coach…' : 'Ask for support…'}
             disabled={loading}
           />
           <button
@@ -224,7 +254,7 @@ export function CoachPage() {
         <div className="k-coach-title">
           <p className="k-eyebrow">A fresh perspective</p>
           <h1>AI Coach</h1>
-          <p className="k-coach-sub">Powered by {providerLabel(state.aiSettings.provider)}</p>
+          <p className="k-coach-sub">Meal ideas and logging reflections</p>
         </div>
         {state.chatMessages.length > 0 && (
           <button
@@ -232,6 +262,12 @@ export function CoachPage() {
             className="k-text-button k-coach-clear"
             onClick={() => {
               if (confirm('Clear chat history?')) {
+                requestRef.current?.abort()
+                requestRef.current = null
+                requestMessageRef.current = null
+                setLoading(false)
+                setFailedResponses({})
+                setError(null)
                 clearChat()
                 setShowSafetySupport(false)
               }
@@ -255,6 +291,12 @@ export function CoachPage() {
           />
         )}
 
+        <details className="k-coach-provider">
+          <summary>Provider &amp; privacy</summary>
+          <p>Powered by {provider}. Your chat is stored with your Poiem data. When you send a message, limited recent log context is sent
+            {byok ? ` directly to ${providerLabel(state.aiSettings.provider)}` : ' through Poiem’s managed provider'}; that provider controls its own retention.</p>
+        </details>
+
         {state.chatMessages.length === 0 && (
           <section className="k-card k-coach-empty" aria-labelledby="coach-empty-title">
             <h2 id="coach-empty-title">Ask me anything</h2>
@@ -272,10 +314,6 @@ export function CoachPage() {
                 </button>
               ))}
             </div>
-            <p className="k-coach-privacy">
-              Your chat is stored with your Poiem data. When you send a message, limited recent log context is sent
-              {hasKey ? ` directly to ${providerLabel(state.aiSettings.provider)}` : ' through Poiem’s managed provider'}; that provider controls its own retention.
-            </p>
             {compose}
           </section>
         )}
@@ -291,15 +329,26 @@ export function CoachPage() {
                   ? <CoachMessage text={msg.content} />
                   : <p className="k-coach-text">{msg.content}</p>
                 }
+                {failedResponses[msg.id] && <div className="k-coach-recovery" role="status" aria-live="polite">
+                  <strong>{failedResponses[msg.id].cancelled ? 'Response stopped' : 'Response failed'}</strong>
+                  <p>{failedResponses[msg.id].reason}</p>
+                  <button type="button" className="k-button is-primary" disabled={loading} aria-label={`Retry Coach response to ${msg.content}`} onClick={() => { void send(failedResponses[msg.id].userMessage.content, failedResponses[msg.id]) }}>Retry</button>
+                </div>}
               </div>
               <button
                 type="button"
                 className="k-coach-delete"
                 aria-label={`Delete ${msg.role === 'assistant' ? 'Coach response' : 'your message'}`}
-                onClick={() => replaceState({
-                  ...state,
-                  chatMessages: state.chatMessages.filter(candidate => candidate.id !== msg.id),
-                })}
+                onClick={() => {
+                  if (requestMessageRef.current === msg.id) {
+                    requestRef.current?.abort()
+                    requestRef.current = null
+                    requestMessageRef.current = null
+                    setLoading(false)
+                  }
+                  setFailedResponses(current => { const next = { ...current }; delete next[msg.id]; return next })
+                  replaceState({ ...state, chatMessages: state.chatMessages.filter(candidate => candidate.id !== msg.id) })
+                }}
               >
                 Delete
               </button>

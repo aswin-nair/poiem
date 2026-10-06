@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import { MomoSticker } from './MomoSticker'
 import { PressableButton } from './PressableButton'
 import { IconCheck, IconEdit, IconShield, IconSparkles } from './icons'
-import type { AiAvailability, AiAvailabilityKind } from '../lib/aiAvailability'
+import type { AiAvailability } from '../lib/aiAvailability'
 import { allowanceCopy } from '../lib/aiAvailability'
 import type { ManagedTask } from '../../../shared/aiPlans'
+import type { MealType } from '../types'
+import { MEAL_LABELS } from '../types'
 
 export function LogFlowHeader({ title, description, step }: {
   title: string; description: string; step?: 1 | 2
@@ -27,10 +29,10 @@ export function LogFlowHeader({ title, description, step }: {
   )
 }
 
-const STATE_COPY: Record<Exclude<AiAvailabilityKind, 'ready'>, { title: string; body: (provider: string, task: ManagedTask) => string }> = {
+const STATE_COPY: Record<'checking' | 'limit_reached' | 'premium_required', { title: string; body: (provider: string, task: ManagedTask) => string }> = {
   checking: {
     title: 'Checking availability',
-    body: () => 'Checking whether Poiem AI can run this estimate.',
+    body: (_provider, task) => task === 'coach' ? 'Checking whether Coach is available for your account.' : 'Checking whether Poiem AI can run this estimate.',
   },
   limit_reached: {
     title: 'Daily limit reached',
@@ -40,14 +42,7 @@ const STATE_COPY: Record<Exclude<AiAvailabilityKind, 'ready'>, { title: string; 
   },
   premium_required: {
     title: 'Premium required',
-    body: () => 'Coach on Poiem’s key is a Premium feature. You can still log meals, or add your own key in You.',
-  },
-  unavailable: {
-    title: 'Temporarily unavailable',
-    body: (provider, task) => {
-      void task
-      return `Poiem AI is not available right now. Add your ${provider} key in You, retry in a moment, or log manually.`
-    },
+    body: () => 'Coach with Poiem’s managed AI requires Premium. View your AI access in You, or choose your own API key.',
   },
 }
 
@@ -56,44 +51,44 @@ export function AiAvailabilityCard({
   provider,
   task,
   onRetry,
+  manualFallbackState,
 }: {
   availability: AiAvailability
   provider: string
   task: ManagedTask
   onRetry?: () => void
+  manualFallbackState?: { firstMeal?: boolean; mealType?: import('../types').MealType }
 }) {
   if (availability.kind === 'ready') return null
 
-  const unsigned = availability.kind === 'unavailable' && availability.reason === 'unsigned'
-  const missingKey = availability.kind === 'unavailable' && availability.reason === 'missing_key'
-  const copy = unsigned
-    ? { title: 'Sign in to use AI', body: 'Photo and description need an account. Manual logging is ready now.' }
-    : missingKey
-      ? { title: 'Add your API key', body: `Add your ${provider} API key in You → AI setup. Manual logging is ready now, with no key needed.` }
-      : STATE_COPY[availability.kind]
-  const body = typeof copy.body === 'function' ? copy.body(provider, task) : copy.body
-  const retryable = availability.kind === 'checking'
-    ? false
-    : availability.kind === 'unavailable'
-      ? availability.retryable
-      : availability.kind === 'limit_reached' || availability.kind === 'premium_required'
-        ? false
-        : true
   const manual = task !== 'coach'
+  const reason = availability.kind === 'unavailable' ? availability.reason : null
+  const copy = availability.kind === 'unavailable'
+    ? {
+      unsigned: { title: 'Sign in to use AI', body: manual ? 'Photo and description need an account. Manual logging is ready now.' : 'Sign in to check your Coach access. Your meal journal is available without AI.' },
+      missing_key: { title: 'Add your API key', body: `Your own-key mode needs a ${provider} API key. Add it in You → AI setup to continue.` },
+      disabled: { title: 'Managed AI isn’t enabled', body: manual ? 'Managed AI hasn’t been enabled for this app. Log this meal manually, or choose your own API key in AI setup.' : 'Managed Coach hasn’t been enabled for this app. You can choose your own API key in AI setup.' },
+      error: { title: 'Couldn’t check AI availability', body: 'The availability check failed. Check your connection and try again.' },
+    }[availability.reason]
+    : STATE_COPY[availability.kind]
+  const body = typeof copy.body === 'function' ? copy.body(provider, task) : copy.body
+  const retryable = reason === 'error' && availability.kind === 'unavailable' && availability.retryable && onRetry
+  const manualPrimary = manual && (reason === 'disabled' || availability.kind === 'limit_reached')
   const allowance = allowanceCopy(availability, task)
 
-  return <section className={`flow-setup is-${availability.kind}`} aria-labelledby="flow-ai-state-title" data-ai-state={availability.kind}>
+  return <section className={`flow-setup is-${availability.kind}`} aria-labelledby="flow-ai-state-title" data-ai-state={availability.kind} data-ai-reason={reason ?? undefined}>
     <IconSparkles size={24} />
     <div>
       <h2 id="flow-ai-state-title">{copy.title}</h2>
       <p>{body}</p>
       {allowance && <p className="flow-allowance">{allowance}</p>}
       <div className="flow-link-row">
-        {retryable && onRetry && <button type="button" className="flow-text-action" onClick={onRetry}>Retry</button>}
-        {unsigned && <Link to="/login?mode=signup">Create an account</Link>}
-        {availability.kind === 'unavailable' && availability.reason !== 'unsigned' && <Link to="/settings">Set up AI</Link>}
-        {availability.kind === 'premium_required' && <Link to="/settings">Open You</Link>}
-        {manual && <Link to="/log/manual">Log manually</Link>}
+        {retryable && <button type="button" className="k-button is-primary flow-recovery-primary" onClick={onRetry}>Check again</button>}
+        {reason === 'unsigned' && <Link className="k-button is-primary flow-recovery-primary" to="/login">Sign in</Link>}
+        {(reason === 'missing_key' || (!manual && reason === 'disabled') || availability.kind === 'premium_required') && <Link className="k-button is-primary flow-recovery-primary" to="/settings?panel=ai">{availability.kind === 'premium_required' ? 'View AI access' : 'Set up AI'}</Link>}
+        {manual && <Link className={manualPrimary ? 'k-button is-primary flow-recovery-primary' : undefined} to="/log/manual" state={manualFallbackState}>Log manually</Link>}
+        {!manual && availability.kind === 'limit_reached' && <Link className="k-button is-primary flow-recovery-primary" to="/log/manual">Log a meal manually</Link>}
+        {reason === 'disabled' && manual && <Link to="/settings?panel=ai">AI setup</Link>}
       </div>
     </div>
   </section>
@@ -118,20 +113,37 @@ export function AnalysisStatus({ method, onCancel }: { method: 'text' | 'photo';
   </section>
 }
 
-export function FlowFeedback({ message, error = false, children }: { message: string; error?: boolean; children?: ReactNode }) {
+export function RestoredDraftNotice({ onContinue, onStartFresh, disabled = false }: {
+  onContinue: () => void; onStartFresh: () => void; disabled?: boolean
+}) {
+  return <section className="flow-draft-notice k-surface is-outlined" aria-label="Restored meal">
+    <div role="status"><strong>Unfinished meal restored</strong><p>Your draft is here. Continue editing or start a fresh meal.</p></div>
+    <div className="flow-link-row">
+      <button type="button" className="k-text-button" disabled={disabled} onClick={onContinue}>Continue</button>
+      <button type="button" className="k-text-button" disabled={disabled} onClick={onStartFresh}>Start fresh</button>
+    </div>
+  </section>
+}
+
+export function LoggingContextLine({ mealType }: { mealType: MealType }) {
+  return <p className="flow-log-context">Logging to {MEAL_LABELS[mealType]} · Today</p>
+}
+
+export function FlowFeedback({ message, error = false, children, focus = true }: { message: string; error?: boolean; children?: ReactNode; focus?: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => { ref.current?.focus() }, [message])
+  useEffect(() => { if (focus) ref.current?.focus() }, [focus, message])
   return <div ref={ref} className={`flow-feedback${error ? ' is-error' : ''}`} tabIndex={-1} role={error ? 'alert' : 'status'}>
     <p>{message}</p>{children}
   </div>
 }
 
-export function PhotoPrivacyNote({ provider, managed = false }: { provider: string; managed?: boolean }) {
-  return <div className="flow-privacy" role="note"><IconShield size={20} />
+export function PhotoPrivacyNote({ provider, managed = false, manualFallbackState }: { provider: string; managed?: boolean; manualFallbackState?: unknown }) {
+  return <details className="flow-privacy">
+    <summary><IconShield size={20} /> Photo privacy</summary>
     <p>Nothing is sent until you choose Analyze photo. Then your image is sent {managed ? 'through Poiem to its managed provider' : `directly to ${provider}`} to estimate nutrition.
       Poiem does not store the image; the provider controls retention under its policy.
-      {' '}<Link to="/log/manual">Use manual entry without uploading</Link>.</p>
-  </div>
+      {' '}<Link to="/log/manual" state={manualFallbackState}>Use manual entry without uploading</Link>.</p>
+  </details>
 }
 
 export function EstimateNote({ firstMeal = false }: { firstMeal?: boolean }) {
