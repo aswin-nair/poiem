@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useReducedMotion } from 'motion/react'
@@ -67,9 +67,14 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)
   // Retain clearance until Today unmounts: dismissing a card at the scroll end must not jump the page.
-  const [momentClearance, setMomentClearance] = useState(0)
+  const momentClearance = useRef(0)
+  const main = useRef<HTMLElement>(null)
   const reserveMomentSpace = useCallback((height: number) => {
-    setMomentClearance(previous => Math.max(previous, height))
+    const clearance = Math.max(momentClearance.current, height)
+    if (clearance === momentClearance.current) return
+    momentClearance.current = clearance
+    // Geometry bookkeeping does not need another render of Today and its two Momo drawings.
+    main.current?.style.setProperty('--k-moment-clearance', `${clearance}px`)
   }, [])
   /** The Day ring's check acknowledgement in ms while it plays, else null. */
   const [ringCheck, setRingCheck] = useState<number | null>(null)
@@ -303,7 +308,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
 
       <PullToRefresh onRefresh={refresh}>
         {/* The walking Momo never stands on the day's numbers or meals: he waits beside the column on wide screens and stays off Today on a phone. */}
-        <main className="app-main k-today-main" data-mascot-avoid style={{ '--k-moment-clearance': `${momentClearance}px` } as CSSProperties}>
+        <main ref={main} className="app-main k-today-main" data-mascot-avoid>
           {paused ? (
             <Surface variant="outlined" as="section" className="k-notice" aria-labelledby="paused-title">
               <h2 id="paused-title">Tracking is paused</h2>

@@ -118,6 +118,20 @@ test('the first meal shows a moment card, not a dialog, and focus stays where it
   expect(await layout(page), 'Removing feedback must not move or resize Today content').toEqual(withCard)
 })
 
+test('card scroll clearance survives another Today state update', async ({ page }) => {
+  await seed(page, emptyState(true))
+  await saveMeal(page, 'Clearance oats')
+  const card = moment(page, 'Clearance oats')
+  await expect(card).toBeVisible()
+  const main = page.locator('.k-today-main')
+  const clearance = await main.evaluate(element => (element as HTMLElement).style.getPropertyValue('--k-moment-clearance'))
+  expect(parseFloat(clearance)).toBeGreaterThan(0)
+  await page.getByRole('button', { name: 'Add a glass of water', exact: true }).click()
+  await expect(page.getByRole('group', { name: 'Water glasses', exact: true })).toContainText('1/8')
+  await expect(card).toBeVisible()
+  expect(await main.evaluate(element => (element as HTMLElement).style.getPropertyValue('--k-moment-clearance'))).toBe(clearance)
+})
+
 test('Undo on the moment card removes the entry', async ({ page }) => {
   await seed(page, emptyState(true))
   await saveMeal(page, 'Undo oats')
