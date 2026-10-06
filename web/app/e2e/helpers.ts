@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test'
+import { expect, type Page } from '@playwright/test'
 
 export function uniqueEmail(): string {
   return `e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@fud-ai.test`
@@ -61,19 +61,26 @@ export async function signUp(page: Page, opts?: { name?: string; email?: string;
 }
 
 /**
- * Wait for a logged meal's confirmation and, when it is the full-screen
- * "Logged." moment, see it closed. That moment closes itself after a few
- * seconds, so Continue is a shortcut rather than a requirement: under load the
- * click can lose the race, and what matters is that the moment ends. Later
- * meals of the day confirm with a "Logged …" toast instead.
+ * Verify the receipt for this meal, then optionally dismiss its non-modal card.
+ * Ordinary logs use a status toast. A card can expire while the dismissal is
+ * being actioned; only that completed expiry may replace a successful click.
  */
-async function finishLogConfirmation(page: Page, mealName: string, dismissCelebration: boolean): Promise<void> {
-  const celebration = page.getByRole('dialog', { name: 'Meal logged' })
-  const toast = page.locator('.toast').filter({ hasText: `Logged ${mealName}` })
-  await celebration.or(toast).first().waitFor()
-  if (!dismissCelebration || !await celebration.isVisible()) return
-  await celebration.getByRole('button', { name: 'Continue' }).click({ timeout: 5_000 }).catch(() => undefined)
-  await celebration.waitFor({ state: 'hidden' })
+export async function finishLogConfirmation(page: Page, mealName: string, dismissCelebration: boolean): Promise<void> {
+  const moment = page.getByRole('complementary', { name: `Log confirmation for ${mealName}`, exact: true })
+  const toast = page.getByRole('status').and(page.locator('.toast')).filter({ hasText: `Logged ${mealName}` })
+  const confirmation = moment.or(toast)
+  await expect(confirmation).toHaveCount(1)
+  await expect(confirmation).toBeVisible()
+  if (!await moment.isVisible()) return
+  await expect(moment.locator('.k-log-moment-food')).toHaveText(mealName)
+  await expect(moment.getByRole('status')).toContainText(`Logged ${mealName}`)
+  if (!dismissCelebration) return
+  try {
+    await moment.getByRole('button', { name: 'Dismiss', exact: true }).click({ timeout: 5_000 })
+  } catch (error) {
+    if (await moment.isVisible()) throw error
+  }
+  await expect(moment).toBeHidden()
 }
 
 export async function completeOnboarding(
@@ -154,7 +161,7 @@ export async function logManualMeal(
   await page.waitForURL(/\/log\/manual/)
 
   await page.getByLabel('Food name').fill(meal.name)
-  await page.getByLabel('Calories').fill(meal.calories)
+  await page.getByLabel('Calories per serving Required', { exact: true }).fill(meal.calories)
   if (meal.protein) await page.getByLabel('Protein (g)').fill(meal.protein)
   if (meal.carbs) await page.getByLabel('Carbs (g)').fill(meal.carbs)
   if (meal.fat) await page.getByLabel('Fat (g)').fill(meal.fat)

@@ -1,6 +1,8 @@
 import { expect, test, type Locator, type Page } from '@playwright/test'
 import { applyVisualSeed, visualSeedState } from './seed'
 
+test.use({ timezoneId: 'UTC' })
+
 async function doubleActivate(button: Locator): Promise<void> {
   // One browser task: the second activation must be rejected before a route
   // render can remove the control or a disabled state can reach the DOM.
@@ -12,8 +14,11 @@ async function doubleActivate(button: Locator): Promise<void> {
 }
 
 async function expectOneConfirmation(page: Page, mealName: string): Promise<void> {
-  const confirmation = page.locator('.k-log-moment, .toast').filter({ hasText: `Logged ${mealName}` })
+  const moment = page.getByRole('complementary', { name: `Log confirmation for ${mealName}`, exact: true })
+  const toast = page.getByRole('status').and(page.locator('.toast')).filter({ hasText: `Logged ${mealName}` })
+  const confirmation = moment.or(toast)
   await expect(confirmation).toHaveCount(1)
+  await expect(confirmation).toBeVisible()
 }
 
 test.beforeEach(async ({ page }) => {
@@ -23,7 +28,7 @@ test.beforeEach(async ({ page }) => {
 test('a double click on Manual Save creates one entry', async ({ page }) => {
   await page.goto('/log/manual')
   await page.getByLabel('Food name').fill('Activation toast')
-  await page.getByLabel('Calories', { exact: true }).fill('250')
+  await page.getByLabel('Calories per serving Required', { exact: true }).fill('250')
   await doubleActivate(page.getByRole('button', { name: 'Log meal', exact: true }))
   await expect(page).toHaveURL('/')
   await expect(page.getByRole('button', { name: /^Activation toast/ })).toHaveCount(1)

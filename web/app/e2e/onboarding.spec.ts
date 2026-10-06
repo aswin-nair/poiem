@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-import { birthdayYearsAgo, clearAppStorage, completeOnboarding, signUp } from './helpers'
+import { birthdayYearsAgo, clearAppStorage, completeOnboarding, finishLogConfirmation, signUp } from './helpers'
 
 test.describe('Onboarding activation', () => {
   test.beforeEach(async ({ page }) => {
@@ -77,13 +77,12 @@ test.describe('Onboarding activation', () => {
     await page.getByRole('button', { name: 'Log first meal' }).click()
 
     await page.waitForURL('/')
-    const celebration = page.getByRole('dialog', { name: 'Meal logged' })
-    await expect(celebration).toContainText('Banana oat bowl')
+    const moment = page.getByRole('complementary', { name: 'Log confirmation for Banana oat bowl', exact: true })
+    await expect(moment).toContainText('Banana oat bowl')
     // The first meal hands Momo his first wardrobe piece.
-    await expect(celebration.locator('.celebrate-piece')).toContainText('Momo’s first piece')
-    await expect(celebration.locator('.celebrate-piece')).toContainText('Blossom clip')
-    await celebration.getByRole('button', { name: 'Continue' }).click()
-    await celebration.waitFor({ state: 'hidden' })
+    await expect(moment).toContainText('Momo’s first piece: Blossom clip')
+    await expect(page.getByRole('dialog', { name: 'Meal logged' })).toHaveCount(0)
+    await finishLogConfirmation(page, 'Banana oat bowl', true)
     await expect(page.locator('.k-meal-row').filter({ hasText: 'Banana oat bowl' })).toBeVisible()
 
     const draftKeys = await page.evaluate(() => (

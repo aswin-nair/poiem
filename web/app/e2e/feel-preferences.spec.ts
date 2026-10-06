@@ -77,3 +77,27 @@ test('direct visit with both on is audible', async ({ page }) => {
   expect(spy.vibrate).toBeGreaterThan(0)
   expect(spy.oscillators).toBeGreaterThan(0)
 })
+
+for (const enabled of [false, true]) {
+  for (const activation of ['pointer', 'keyboard'] as const) {
+    test(`direct Edit visit with feel ${enabled ? 'on' : 'off'} honours a PressableButton ${activation} press`, async ({ page }) => {
+      await seedFeel(page, enabled)
+      await page.goto('/edit/seed-oats')
+      await page.getByLabel('Food name').fill('Edited oats')
+      const save = page.getByRole('button', { name: 'Save changes', exact: true })
+      await expect(save).toBeEnabled()
+      await save.focus()
+      // Neither the mount, typing nor focus may ask for a cue.
+      expect(await readSpy(page)).toEqual({ vibrate: 0, contexts: 0, oscillators: 0 })
+      if (activation === 'pointer') await save.click()
+      else await page.keyboard.press('Enter')
+      await expect(page).toHaveURL('/')
+      await expect(page.getByRole('status').filter({ hasText: 'Changes saved' })).toBeVisible()
+      expect(await readSpy(page)).toEqual({
+        vibrate: enabled ? 1 : 0,
+        contexts: enabled ? 1 : 0,
+        oscillators: enabled ? 1 : 0,
+      })
+    })
+  }
+}
