@@ -19,7 +19,7 @@ import { useToast } from '../components/Toast'
 import { useApp } from '../store/AppContext'
 import { entriesForDay, macroTotals } from '../lib/storage'
 import { effectiveCalories, effectiveCarbs, effectiveFat, effectiveProtein } from '../lib/profile'
-import { formatDayLabel, localDayKey, sameDay, startOfDay } from '../lib/dates'
+import { formatDayLabel, journalDayFromNavState, localDayKey, sameDay, startOfDay } from '../lib/dates'
 import { applyNote, applyWaterChange } from '../lib/enamelEconomy'
 import { useFeel } from '../hooks/useHaptic'
 import { useCountUp } from '../hooks/useCountUp'
@@ -69,7 +69,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const navigate = useNavigate()
   const feel = useFeel()
   const budgetAnchor = useAnchor('calorie_ring')
-  const [selectedDate, setSelectedDate] = useState(() => startOfDay())
+  const [selectedDate, setSelectedDate] = useState(() => journalDayFromNavState(location.state) ?? startOfDay())
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)
   // Retain clearance until Today unmounts: dismissing a card at the scroll end must not jump the page.
@@ -393,33 +393,6 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   ))}
                 </section>
 
-                {isToday && !guest && (
-                  <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
-                    <div className="k-water-block">
-                    <div className="k-water">
-                      <span className="k-extras-label"><IconWater size={18} /> Water</span>
-                      <span className="k-glasses" aria-hidden="true">
-                        {Array.from({ length: WATER_GLASSES }, (_, glass) => (
-                          <span key={glass} className={`k-glass${glass < water ? ' is-full' : ''}`} />
-                        ))}
-                      </span>
-                    </div>
-                    <div className="k-stepper" role="group" aria-label="Water glasses">
-                      <button type="button" aria-label="Remove a glass of water" disabled={water <= 0} onClick={() => changeWater(water - 1)}>−</button>
-                      <span className="tabular" aria-live="polite">{water}/{WATER_GLASSES}</span>
-                      <button type="button" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
-                    </div>
-                    </div>
-                    <button
-                      type="button"
-                      className="k-text-button k-note-row"
-                      disabled={notes >= NOTE_LIMIT}
-                      onClick={addNote}
-                    >
-                      {notes >= NOTE_LIMIT ? 'Notes logged' : 'Add a kitchen note'}
-                    </button>
-                  </Surface>
-                )}
               </div>
 
               <Section
@@ -486,6 +459,33 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   </button>
                 )}
               </Section>
+                {isToday && !guest && (
+                  <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
+                    <div className="k-water-block">
+                    <div className="k-water">
+                      <span className="k-extras-label"><IconWater size={18} /> Water</span>
+                      <span className="k-glasses" aria-hidden="true">
+                        {Array.from({ length: WATER_GLASSES }, (_, glass) => (
+                          <span key={glass} className={`k-glass${glass < water ? ' is-full' : ''}`} />
+                        ))}
+                      </span>
+                    </div>
+                    <div className="k-stepper" role="group" aria-label="Water glasses">
+                      <button type="button" aria-label="Remove a glass of water" disabled={water <= 0} onClick={() => changeWater(water - 1)}>−</button>
+                      <span className="tabular" aria-live="polite">{water}/{WATER_GLASSES}</span>
+                      <button type="button" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
+                    </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="k-text-button k-note-row"
+                      disabled={notes >= NOTE_LIMIT}
+                      onClick={addNote}
+                    >
+                      {notes >= NOTE_LIMIT ? 'Notes logged' : 'Add a kitchen note'}
+                    </button>
+                  </Surface>
+                )}
             </div>
           )}
         </main>

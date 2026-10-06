@@ -52,14 +52,21 @@ describe('You page UI', () => {
     }
   })
 
-  it('offers one save action with a persistent live status before the settings', () => {
+  it('offers a labeled category picker near the header without a redundant save action', () => {
     const html = renderPage()
-    expect(html.match(/>Save settings</g)).toHaveLength(1)
-    expect(html).toMatch(/role="status" aria-live="polite">[\s\S]*?All saved<\/div>/)
+    expect(html).toContain('<label class="you-category-picker"><span>Category</span><select')
+    expect(html).toContain('<option value="overview" selected="">Overview</option>')
+    for (const id of ['profile', 'preferences', 'momo', 'ai', 'account', 'data']) {
+      expect(html).toContain(`<option value="${id}">`)
+    }
+    expect(html).toContain('Preferences save immediately.')
+    expect(html).not.toContain('>Save settings<')
+    expect(html).not.toContain('All saved')
+    expect(html).not.toContain('you-destinations')
     expect(html).toContain('>Overview</a>')
     expect(html).toContain('aria-current="page"')
-    expect(html.indexOf('>Save settings<')).toBeLessThan(html.indexOf('id="you-appearance"'))
-    expect(html).toMatch(/<button type="button" disabled="" class="pressable/)
+    expect(html.indexOf('you-category-picker')).toBeLessThan(html.indexOf('poiem-settings-finder'))
+    expect(renderPage('/settings?panel=ai')).toContain('<option value="ai" selected="">AI setup</option>')
   })
 
   it('keeps wardrobe and Momo live AI in native, initially closed disclosures', () => {
@@ -84,7 +91,7 @@ describe('You page UI', () => {
     const html = renderPage('/settings?panel=momo')
     expect(html).toContain('Streaks and badges now live in Insights.')
     expect(html).toContain('Keep your companion around the app · saves immediately')
-    expect(html).toContain('Silence speech bubbles · apply with Save settings')
+    expect(html).toContain('Silence speech bubbles · saves immediately')
     expect(html).toContain('Changes save right away.')
     expect(html).toContain('role="group" aria-label="Wardrobe slot"')
     const preferences = renderPage('/settings?panel=preferences')
@@ -107,7 +114,7 @@ describe('You page UI', () => {
     state.profile.heightCm = 0
     html = renderPage()
     expect(html).toContain('Check your profile details to preview daily targets.')
-    expect(html).toContain('Check your profile to save')
+    expect(html).not.toContain('>Save settings<')
     expect(html).not.toContain('class="settings-goals-grid"')
   })
 })

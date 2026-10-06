@@ -4,28 +4,28 @@ import { progressNote } from './progressNote'
 describe('progress note', () => {
   it('points at the nearest outfit or milestone, never both', () => {
     expect(progressNote({ loggedDays: 0, ownedPieceIds: [] })).toEqual({
-      kind: 'milestone', text: '0 logged days · next milestone 1',
+      kind: 'milestone', text: '0 logged days · next milestone at 1 logged day',
     })
     expect(progressNote({ loggedDays: 3, ownedPieceIds: [] })).toEqual({
-      kind: 'outfit', text: '3 logged days · Bow at 5',
+      kind: 'outfit', text: '3 logged days · Momo’s Bow unlocks at 5 logged days',
     })
   })
 
   it('a tie prefers the named outfit', () => {
     expect(progressNote({ loggedDays: 2, ownedPieceIds: [] })).toEqual({
-      kind: 'outfit', text: '2 logged days · Pencil at 3',
+      kind: 'outfit', text: '2 logged days · Momo’s Pencil unlocks at 3 logged days',
     })
   })
 
   it('starts from the real count, never from zero when days are logged', () => {
     expect(progressNote({ loggedDays: 6, ownedPieceIds: [] })).toEqual({
-      kind: 'outfit', text: '6 logged days · Scarf at 7',
+      kind: 'outfit', text: '6 logged days · Momo’s Scarf unlocks at 7 logged days',
     })
   })
 
   it('says a single day in the singular', () => {
-    expect(progressNote({ loggedDays: 1, ownedPieceIds: [] }).text).toBe('1 logged day · Pencil at 3')
-    expect(progressNote({ loggedDays: 1, ownedPieceIds: ['pencil'] }).text).toBe('1 logged day · next milestone 3')
+    expect(progressNote({ loggedDays: 1, ownedPieceIds: [] }).text).toBe('1 logged day · Momo’s Pencil unlocks at 3 logged days')
+    expect(progressNote({ loggedDays: 1, ownedPieceIds: ['pencil'] }).text).toBe('1 logged day · next milestone at 3 logged days')
   })
 
   it('reaches the complete line when everything is passed', () => {
@@ -36,10 +36,10 @@ describe('progress note', () => {
 
   it('ignores pieces that are already owned', () => {
     expect(progressNote({ loggedDays: 2, ownedPieceIds: ['pencil'] })).toEqual({
-      kind: 'milestone', text: '2 logged days · next milestone 3',
+      kind: 'milestone', text: '2 logged days · next milestone at 3 logged days',
     })
     expect(progressNote({ loggedDays: 3, ownedPieceIds: ['bow', 'scarf'] })).toEqual({
-      kind: 'milestone', text: '3 logged days · next milestone 7',
+      kind: 'milestone', text: '3 logged days · next milestone at 7 logged days',
     })
   })
 

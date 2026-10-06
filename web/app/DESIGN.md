@@ -203,14 +203,14 @@ The four tabs, Coach, Support, About and the component reference render inside `
 
 ### Today (`/`)
 
-[`pages/HomePage.tsx`](src/pages/HomePage.tsx), styled in [`styles/screens/today.css`](src/styles/screens/today.css). Everything needed for the day is on the first screen, top to bottom:
+[`pages/HomePage.tsx`](src/pages/HomePage.tsx), styled in [`styles/screens/today.css`](src/styles/screens/today.css). The day follows this order on a phone; desktop keeps the summary and Water beside Meals:
 
 1. **Date bar.** Weekday and date eyebrow, the day as a display title ("Today", "Yesterday"), and a calendar button. Below it, a seven-day week strip with an acid dot on logged days. It has no arrows; the calendar reaches other weeks.
 2. **Momo says hello.** A pink Momo card with a greeting by first name and time of day, and one warm line that fits the day ([`lib/todayGreeting.ts`](src/lib/todayGreeting.ts)). It never grades the numbers. A tap gets a playful line and a bop. "Roast me" appears only after consent.
 3. **Budget.** The one bright acid card: kcal left (or "kcal over the guide") counts up, a striped persimmon meter fills, and "eaten / guide" sits underneath in mono.
 4. **Macros.** Three small cards, each in its own colour: protein persimmon, carbs acid, fat sky blue.
 5. **Meals.** Grouped as Breakfast, Lunch, Dinner, Snack (plus Other when used), each with a coloured icon and its kcal. Rows show a food tile tinted by kind of food, the name, time and P · C · F, and swipe to edit or delete. A meal you just logged flashes acid. Each group ends with an "Add breakfast" row that opens the log sheet for that meal.
-6. **Water and notes.** Eight little glasses that fill, a stepper, and "Add a kitchen note".
+6. **Water and notes.** A glass-count stepper and "Add a kitchen note", after Meals on phone. The decorative glasses appear on wider screens.
 
 Today shows no poster masthead, stickers, streak chip or level chip. The ongoing streak, level, XP and freezes dashboard lives in the **Journey** card on Insights. A transient log confirmation may acknowledge its actual XP and level once. Tracking pause replaces the numbers with a notice. Guests see a claim-your-progress card and no log shortcuts.
 
@@ -218,7 +218,7 @@ Today shows no poster masthead, stickers, streak chip or level chip. The ongoing
 
 `logReceipt.ts` associates an accepted save with award keys; `logFeedbackPlan.ts` coalesces first meal, piece, milestone, ring, first daily and ordinary feedback, in that order. `logPresentation.ts` chooses one card or toast. `LogMoment.tsx` is a flat non-modal aside with immediate Undo/Dismiss and one polite atomic announcement. It does not take focus or move existing content; measured bottom clearance stays until Today unmounts so dismissal at the scroll end does not jump. Short-screen overflow keeps the card operable.
 
-`DayRing.tsx` sits below Momo and above the sole calorie hero. Its static arcs describe chosen logging steps; nutrition targets do not affect completion. `progressNote.ts` shows one next existing cumulative step. Paused tracking hides both. Reduced motion settles the same facts immediately.
+`DayRing.tsx` sits below Momo and above the sole calorie hero. Its static arcs describe chosen logging steps; nutrition targets do not affect completion. Completed steps open in a native Details disclosure. `progressNote.ts` names one next existing cumulative step and explains its logged-day threshold. Phone greeting artwork and type are compact. Paused tracking hides both. Reduced motion settles the same facts immediately.
 
 Daily flat controls use one 2 px translation on `--k-press` (FAB 3 px), with no hover scale or stacked transform. Selections emit one `select` cue only when changed; saving has one outcome cue. Meters translate a full-width fill, preserving stripe period. Route arrival is at most 12 px/240 ms; the sheet opens immediately, with no child delays, at most 28 px travel and a 120 ms fade on quick reopening. Coach follows its own send and downward follow scroll; reading history suspends follow. This is fixed Standard behavior; whole-app intensity and new return hooks remain paused.
 
@@ -228,10 +228,10 @@ Daily flat controls use one 2 px translation on `--k-press` (FAB 3 px), with no 
 
 In order:
 
-0. **Header.** The sheet springs up and its parts rise in turn. Momo hops in with his question steam beside "Log a meal" and a kind prompt for the meal ("What’s on the lunch plate?").
+0. **Header.** The sheet appears immediately, without delayed children. Momo sits beside "Log a meal" and a kind prompt for the meal ("What’s on the lunch plate?").
 1. **"Logging to" chip** in the meal's colour, beside its icon. It defaults from the time of day, or uses the meal an "Add …" row asked for.
 2. **Search** across recent and saved meals. A bare number becomes "Quick add N kcal".
-3. **Recent / Favourites.** One tap logs again; "Portion" (or press-and-hold) picks ½–2×.
+3. **Recent / Saved.** Explicit Log and Portion controls use the same row component as Saved. A normal Portion tap reveals quarter steps; the optional hold or context menu opens preset portions. Every row defines 1× as the saved or previous meal, including known grams, and shows its destination. Displayed and stored nutrition use the same precision.
 4. **More ways to log:** Photo, Describe, Manual and Saved as tinted tiles with a one-line hint. Each carries the chosen meal.
 
 The sheet never focuses the search field on open, so the phone keyboard stays down.
@@ -244,8 +244,8 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 2. **Journey.** Day streak, total XP and freezes on peach, butter and sky tiles, the level name, and an acid meter to the next level.
 3. **Milestones.** A dashed path of five stops (first log, 3, 7, 14 and 30 days) that turn acid when reached. Breaks never reset them.
 4. **Consistency.** Days logged this month in display type, an acid heat grid with its legend, and a butter note comparing breakfasts with your own best week.
-5. **Weight and calories.** Week or Month as ink-when-chosen chips. Stat tiles (the latest weight on sky), a persimmon line and bar chart with an ink dashed goal line, and the weight history behind a row that opens in place. "+ Log weight" opens a sheet shaped like the log sheet.
-6. **Most logged, ticket archive, achievements.** Foods with tinted tiles and a count (the top count on acid), recent logged days as coloured ticket stubs, and unlocked badges on butter with the next one dashed.
+5. **Weight and calories.** Week or Month as ink-when-chosen chips. Zero or one weigh-in gets a compact observation and an explanation; change, average and the trend chart appear after two observations. Unset weight goals do not become empty tiles. Weight history opens in place; "+ Log weight" opens a sheet shaped like the log sheet.
+6. **Most logged, ticket archive, achievements.** Foods with tinted tiles and a count (the top count on acid), recent logged days as flat coloured ticket links opening that local calendar day in Today, and unlocked badges on butter with the next one dashed. Journey explains XP and freezes in a disclosure.
 
 From 768px these cards pair into two columns, so a wide screen reads as a dashboard instead of one tall strip.
 
@@ -256,7 +256,7 @@ From 768px these cards pair into two columns, so a wide screen reads as a dashbo
 1. **Header.** "Your space" eyebrow, a display title, your name, and a muted mono status line ("Your routine · your pace", or the pause notice). No stamp and no mascot mark.
 2. **Finder.** A bordered search field. Results turn acid under the pointer or keyboard focus.
 3. **Appearance.** A butter card with Light, Dark and System as square tiles; the chosen one is solid ink. It saves instantly.
-4. **Section rail.** Sticky at the top: section links as chips, with the current one in solid ink, and the save bar. A persimmon diamond shows while changes are unsaved.
+4. **Category and Save.** Sticky at the top: a labelled native Category picker on phone, full section links from 768px, and a Save button only for pending profile or AI form edits. Everyday preferences apply immediately, with status based on applied values. Changing a preference preserves unrelated form drafts.
 5. **Sections.** Each title is 18px sentence-case body type on the ground — no tinted tag behind it — over a muted line of help text; the smaller labels inside a section stay mono uppercase. Daily goals put calories on an acid tile and give protein, carbs and fat sunken tiles under Today's colour caps. Rows, square fields and edge-to-edge row buttons sit in hairline cards. Delete actions use danger ink.
 6. **Disclosures.** AI setup and Momo's wardrobe open with an acid + that turns into ×, like the log button.
 
@@ -268,16 +268,18 @@ The column is capped at 880px from 768px, because settings are read as rows and 
 
 1. **Header.** Step chips ("1 Add meal", "2 Review & log") with the current step on acid, and a display title. The header carries no mascot; Momo appears while the AI reads the meal, and Hide Momo removes him there.
 2. **Describe.** One bordered card holds the words. Example chips come in butter, mint, sky and pink; a tap fills the field.
-3. **Photo.** A dashed drop zone that turns butter on hover, Camera and Gallery buttons, and the privacy note in plain text.
+3. **Photo.** A dashed drop zone that turns butter on hover, Camera and Gallery buttons, and a Photo privacy disclosure.
 4. **Thinking.** While AI reads the meal, an acid card shows Momo bopping and a Cancel button, which takes focus.
 5. **Review and Edit.** The food name sits beside a tile tinted by kind of food, and its glyph follows the name as you type. Calories are the acid row; protein, carbs and fat have the same colour caps as Today's macros. Meal choices carry their meal colour, and the chosen one turns solid ink. The total is an acid card with the Log button, sticky beside the editor from 1000px.
 6. **Manual.** The same header, macro colour caps and an acid "Ready to log" total.
 
 "AI estimates can be off" sits on butter. Errors use danger ink on soft danger.
 
+The chosen meal slot survives every logging method, Review, Back, reload after an explicit selection, and manual fallback. Describe and Photo show the destination even while AI is unavailable. Restored drafts offer Continue and Start fresh. Draft writes wait for hydration, preserve edits made before leaving, and cannot revive a draft cleared by another form or account action. Validation marks and focuses the specific field; optional Manual macros may stay blank.
+
 ### Saved (`/discover`, `/log/saved`)
 
-[`pages/SavedMealsPage.tsx`](src/pages/SavedMealsPage.tsx). A "Your usuals" eyebrow and display title, search, meal filters as ink-when-chosen chips in an even grid (three across, six from 768px), then **Your saved meals** as square cards and **Recents** as rows in one card. Both are labelled regions, so the two collections can be reached directly, and from 768px they sit side by side. Each meal has a tinted food tile, kcal in display type, a macro bar in Today's macro colours, a portion stepper and a persimmon Log button.
+[`pages/SavedMealsPage.tsx`](src/pages/SavedMealsPage.tsx). A "Your usuals" eyebrow and display title, a Logging to picker, search, meal filters as ink-when-chosen chips in an even grid (three across, six from 768px), then **Your saved meals** and **Recents** using shared repeat-meal rows. Both are labelled regions, and from 768px they sit side by side. A row has a tinted food tile, kcal, macro colours, an explicit Log button, Portion controls and Save. The destination comes from the logging flow or current time, and can be changed independently of the original meal's slot.
 
 ### First run (`/onboarding`)
 
@@ -291,7 +293,11 @@ The column is capped at 880px from 768px, because settings are read as rows and 
 
 ### Coach (`/coach`)
 
-[`pages/CoachPage.tsx`](src/pages/CoachPage.tsx), styled in [`styles/screens/pages.css`](src/styles/screens/pages.css). A pink Momo card and an "AI Coach" display title. With no messages, an "Ask me anything" card offers three starters as plain hairline cards and says where the chat is stored. Coach's replies are square cards beside a small pink Momo; your messages sit on the right in butter. Each message has a 44px Delete. A safety reply adds a mint "Talk to someone" list of support links. The message field and a persimmon Send button sit in a bar that sticks to the bottom of the column. Coach, Support and About cap their reading measure at 880px inside the workspace, so prose never stretches the full width.
+[`pages/CoachPage.tsx`](src/pages/CoachPage.tsx), styled in [`styles/screens/pages.css`](src/styles/screens/pages.css). Momo sits beside the "AI Coach" display title. With no messages, an "Ask me anything" card offers three starters and an inline message field. Once the conversation starts, the field and persimmon Send button stick to the bottom of the column. Coach's replies are square cards beside a small pink Momo; your messages sit on the right in butter. Each message has a 44px Delete. A safety reply adds a mint "Talk to someone" list of support links. Coach, Support and About cap their reading measure at 880px inside the workspace, so prose never stretches the full width.
+
+Failed or cancelled responses show their reason and a Retry button beside the original user message. Retry sends that prompt with its original preceding context, excluding messages since deleted, without adding another user message. Cancel response stops the request and keeps the user's message available to retry. Deleting the message whose response is pending aborts that request; Clear asks for confirmation, aborts any pending response and removes the conversation and recovery notices. Late responses from discarded requests cannot reappear.
+
+A native "Provider & privacy" disclosure names the selected provider or Poiem's managed OpenRouter service. It explains that chat is stored with Poiem data, sending a message shares limited recent log context with the provider, and that provider controls its own retention. Availability notices offer the relevant setup, sign-in or retry action.
 
 ### Support and About (`/support`, `/about`)
 

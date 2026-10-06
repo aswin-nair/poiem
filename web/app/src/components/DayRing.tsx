@@ -21,6 +21,17 @@ export function DayRing({ progress, justClosed = false, closeMs = RING_CHECK_MS,
   note?: ReactNode
 }) {
   const titleId = `ring-title-${useId()}`
+  const legend = (
+    <ul className="k-ring-legend">
+      {progress.arcs.map(arc => (
+        <li key={arc.id} className={arc.value >= 1 ? 'is-done' : undefined}>
+          <span className="k-ring-dot" style={{ background: arcColor(arc) }} aria-hidden="true" />
+          <span>{arc.label}</span>
+          <small>{arc.current}/{arc.total}{!arc.required ? ' · optional' : ''}</small>
+        </li>
+      ))}
+    </ul>
+  )
   return (
     <section
       className={`k-ring${justClosed ? ' is-just-closed' : ''}`}
@@ -60,15 +71,12 @@ export function DayRing({ progress, justClosed = false, closeMs = RING_CHECK_MS,
       </div>
       <div className="k-ring-copy">
         <h2 id={titleId}>Your day</h2>
-        <ul className="k-ring-legend">
-          {progress.arcs.map(arc => (
-            <li key={arc.id} className={arc.value >= 1 ? 'is-done' : undefined}>
-              <span className="k-ring-dot" style={{ background: arcColor(arc) }} aria-hidden="true" />
-              <span>{arc.label}</span>
-              <small>{arc.current}/{arc.total}{!arc.required ? ' · optional' : ''}</small>
-            </li>
-          ))}
-        </ul>
+        {progress.complete ? (
+          <details className="k-ring-details">
+            <summary>Chosen steps complete <span>Details</span></summary>
+            {legend}
+          </details>
+        ) : legend}
       </div>
       {note}
     </section>

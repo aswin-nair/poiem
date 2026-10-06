@@ -23,10 +23,10 @@ export function progressNote(input: { loggedDays: number; ownedPieceIds: readonl
   }
   const count = `${loggedDays} logged ${loggedDays === 1 ? 'day' : 'days'}`
   if (nextPiece && pieceTarget <= (milestone ?? Infinity)) return {
-    kind: 'outfit', text: `${count} · ${nextPiece.name} at ${pieceTarget}`,
+    kind: 'outfit', text: `${count} · Momo’s ${nextPiece.name} unlocks at ${pieceTarget} logged days`,
   }
   if (milestone !== undefined) return {
-    kind: 'milestone', text: `${count} · next milestone ${milestone}`,
+    kind: 'milestone', text: `${count} · next milestone at ${milestone} logged ${milestone === 1 ? 'day' : 'days'}`,
   }
   return { kind: 'complete', text: `${loggedDays} logged days. Look how far you’ve come.` }
 }

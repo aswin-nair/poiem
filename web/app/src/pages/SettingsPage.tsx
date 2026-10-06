@@ -55,6 +55,31 @@ function SettingsCard({ children }: { children: React.ReactNode }) {
   return <div className="settings-card">{children}</div>
 }
 
+type ImmediatePreference = 'soundEnabled' | 'hapticsEnabled' | 'trackingPaused'
+  | 'mascotMuted' | 'mascotRoasts' | 'mascotReducedMotion'
+
+// Explicit saves contain the profile form only. Everyday preferences may have
+// changed while this draft was open and must keep their applied values.
+function profileFormValues(profile: UserProfile) {
+  return {
+    name: profile.name,
+    gender: profile.gender,
+    birthday: profile.birthday,
+    heightCm: profile.heightCm,
+    weightKg: profile.weightKg,
+    activityLevel: profile.activityLevel,
+    goal: profile.goal,
+    bodyFatPercentage: profile.bodyFatPercentage,
+    weeklyChangeKg: profile.weeklyChangeKg,
+    goalWeightKg: profile.goalWeightKg,
+    customCalories: profile.customCalories,
+    customProtein: profile.customProtein,
+    customCarbs: profile.customCarbs,
+    customFat: profile.customFat,
+    loggingCommitment: profile.loggingCommitment,
+  }
+}
+
 export function SettingsPage() {
   const { state, updateProfile, updateAISettings, replaceState, clearAllData, patchGamification } = useApp()
   const { user, signOut } = useAuth()
@@ -68,7 +93,8 @@ export function SettingsPage() {
   const [instructions, setInstructions] = useState(state.aiSettings.customInstructions ?? '')
   const [mascotEnabled, setMascotEnabled] = useState(state.aiSettings.mascotEnabled !== false)
   const [mascotPersonality, setMascotPersonality] = useState<MascotPersonality>(state.aiSettings.mascotPersonality ?? 'sassy')
-  const [saved, setSaved] = useState(false)
+  const [saved, setSaved] = useState<string | null>(null)
+  const [preferenceConfirmation, setPreferenceConfirmation] = useState('Changes save right away.')
   const [profileError, setProfileError] = useState<string | null>(null)
   const [accountAction, setAccountAction] = useState<'logout-all' | 'delete' | null>(null)
   const [accountError, setAccountError] = useState<string | null>(null)
@@ -86,35 +112,57 @@ export function SettingsPage() {
   const isHub = panel == null
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     if (!panel) return
     document.getElementById(`you-${panel}`)?.focus({ preventScroll: true })
   }, [panel])
 
   const goalTargets = computeTargets(profile)
   const currentProfileIssue = profileInputIssue(profile) ?? goalWeightIssue(profile)
+  const appliedProfileIssue = profileInputIssue(state.profile) ?? goalWeightIssue(state.profile)
+  const appliedGoalTargets = computeTargets(state.profile)
   const modelPresets = provider === 'openrouter' ? OPENROUTER_MODELS : GEMINI_MODELS
   const mascotVisible = state.gamification.mascotActivity !== 'off'
-  const hasChanges = JSON.stringify(profile) !== JSON.stringify(state.profile)
-    || provider !== state.aiSettings.provider
+  const hasProfileChanges = JSON.stringify(profileFormValues(profile)) !== JSON.stringify(profileFormValues(state.profile))
+  const hasAIChanges = provider !== state.aiSettings.provider
     || accessMode !== (state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
     || apiKey !== state.aiSettings.apiKey
     || model !== state.aiSettings.model
     || instructions !== (state.aiSettings.customInstructions ?? '')
     || mascotEnabled !== (state.aiSettings.mascotEnabled !== false)
     || mascotPersonality !== (state.aiSettings.mascotPersonality ?? 'sassy')
+  const hasChanges = hasProfileChanges || hasAIChanges
+  const pendingLabel = hasProfileChanges && hasAIChanges ? 'Unsaved profile and AI changes'
+    : hasProfileChanges ? 'Unsaved profile changes' : 'Unsaved AI changes'
+
+  useEffect(() => {
+    if (preferenceConfirmation === 'Changes save right away.') return
+    const timer = window.setTimeout(() => setPreferenceConfirmation('Changes save right away.'), 4000)
+    return () => window.clearTimeout(timer)
+  }, [preferenceConfirmation])
+
+  function applyPreference(key: ImmediatePreference, next: boolean, confirmation: string) {
+    // Use the applied profile here so an unrelated form draft is never saved
+    // by a switch. Mirror just this field into the draft for a later form save.
+    updateProfile({ ...state.profile, [key]: next })
+    setProfile(draft => ({ ...draft, [key]: next }))
+    if (key === 'trackingPaused' && next && !state.profile.trackingPaused) {
+      track({ name: 'pause_tracking_enabled' })
+    }
+    setPreferenceConfirmation(confirmation)
+  }
   function handleProviderChange(next: AIProvider) {
     setProvider(next)
     setModel(defaultModelFor(next))
   }
 
   function saveProfile() {
-    if (currentProfileIssue) {
+    if (hasProfileChanges && currentProfileIssue) {
       setProfileError(currentProfileIssue)
       return
     }
-    const enablingPause = !state.profile.trackingPaused && Boolean(profile.trackingPaused)
-    updateProfile(profile)
-    updateAISettings({
+    if (hasProfileChanges) updateProfile({ ...state.profile, ...profileFormValues(profile) })
+    if (hasAIChanges) updateAISettings({
       accessMode,
       provider,
       apiKey,
@@ -123,10 +171,10 @@ export function SettingsPage() {
       mascotEnabled,
       mascotPersonality,
     })
-    if (enablingPause) track({ name: 'pause_tracking_enabled' })
     setProfileError(null)
-    setSaved(true)
-    void refreshAiStatus()
+    setSaved(hasProfileChanges && hasAIChanges ? 'Profile and AI settings saved'
+      : hasProfileChanges ? 'Profile saved' : 'AI settings saved')
+    if (hasAIChanges) void refreshAiStatus()
   }
 
   function handleExport() {
@@ -250,12 +298,12 @@ export function SettingsPage() {
           <div>
             <p className="k-eyebrow">Your space</p>
             <h1 className="page-title">You</h1>
-            <p className="page-sub">{profile.name || user?.name || 'Your food journal'}</p>
+            <p className="page-sub">{state.profile.name || user?.name || 'Your food journal'}</p>
           </div>
         </header>
-        <p className="you-status">{profile.trackingPaused ? 'Tracking paused · your streak is held' : 'Your routine · your pace'}</p>
+        <p className="you-status">{state.profile.trackingPaused ? 'Tracking paused · your streak is held' : 'Your routine · your pace'}</p>
+        <SettingsNavigation panel={panel} hasChanges={hasChanges} pendingLabel={pendingLabel} saved={saved} invalid={hasProfileChanges && Boolean(currentProfileIssue)} onSave={saveProfile} />
         <SettingsFinder />
-        <SettingsNavigation panel={panel} hasChanges={hasChanges} saved={saved} invalid={Boolean(currentProfileIssue)} onSave={saveProfile} />
 
         {isHub && <>
         <section className="appearance-settings" id="you-appearance" tabIndex={-1} aria-labelledby="appearance-settings-title">
@@ -265,48 +313,41 @@ export function SettingsPage() {
           </div>
           <AppearanceControl />
         </section>
-        {profile.trackingPaused ? <p className="you-pause-note">Tracking is paused. Your daily target numbers are hidden.</p> : currentProfileIssue ? <p className="you-pause-note">Check your profile details to preview daily targets.</p> : <>
+        {state.profile.trackingPaused ? <p className="you-pause-note">Tracking is paused. Your daily target numbers are hidden.</p> : appliedProfileIssue ? <p className="you-pause-note">Check your profile details to preview daily targets.</p> : <>
         <SectionLabel>Daily goals</SectionLabel>
-        {goalTargets.clamped && <p className="settings-clamp-note">{goalTargets.clamped}</p>}
+        {appliedGoalTargets.clamped && <p className="settings-clamp-note">{appliedGoalTargets.clamped}</p>}
         <div className="settings-goals-grid">
           <div className="settings-goal-card">
             <span className="settings-goal-label">Calories</span>
-            <strong className="settings-goal-value">{goalTargets.calories}</strong>
+            <strong className="settings-goal-value">{appliedGoalTargets.calories}</strong>
           </div>
           <div className="settings-goal-card">
             <span className="settings-goal-label">Protein</span>
-            <strong className="settings-goal-value">{effectiveProtein(profile)}g</strong>
+            <strong className="settings-goal-value">{effectiveProtein(state.profile)}g</strong>
           </div>
           <div className="settings-goal-card">
             <span className="settings-goal-label">Carbs</span>
-            <strong className="settings-goal-value">{effectiveCarbs(profile)}g</strong>
+            <strong className="settings-goal-value">{effectiveCarbs(state.profile)}g</strong>
           </div>
           <div className="settings-goal-card">
             <span className="settings-goal-label">Fat</span>
-            <strong className="settings-goal-value">{effectiveFat(profile)}g</strong>
+            <strong className="settings-goal-value">{effectiveFat(state.profile)}g</strong>
           </div>
         </div>
         </>}
         <SectionLabel>Quick preferences</SectionLabel>
         <SettingsCard>
           <SettingsRow label="Sound" hint="Short cues when you log a meal">
-            <Toggle checked={profile.soundEnabled !== false} onChange={next => setProfile(p => ({ ...p, soundEnabled: next }))} />
+            <Toggle checked={state.profile.soundEnabled !== false} onChange={next => applyPreference('soundEnabled', next, `Sound ${next ? 'on' : 'off'} · saved.`)} />
           </SettingsRow>
-          <SettingsRow label="Pause tracking" hint={profile.trackingPaused ? 'Numbers are hidden and your streak is held.' : 'Hide numbers and hold your streak.'}>
-            <Toggle checked={Boolean(profile.trackingPaused)} onChange={next => setProfile(p => ({ ...p, trackingPaused: next }))} />
+          <SettingsRow label="Pause tracking" hint={state.profile.trackingPaused ? 'Numbers are hidden and your streak is held.' : 'Hide numbers and hold your streak.'}>
+            <Toggle checked={Boolean(state.profile.trackingPaused)} onChange={next => applyPreference('trackingPaused', next, next ? 'Tracking paused · saved.' : 'Tracking resumed · saved.')} />
           </SettingsRow>
           <SettingsRow label="Notifications" hint="At most two per day. Never about calories.">
             <button type="button" className="settings-data-btn" onClick={() => void requestNotifyPermission()}>Allow</button>
           </SettingsRow>
         </SettingsCard>
-        <nav className="you-destinations" aria-label="More in You">
-          {YOU_PANELS.map(([id, label]) => (
-            <Link key={id} className="settings-data-btn settings-link-row" to={`/settings?panel=${id}`}>
-              <span>{label}</span>
-              <IconChevronRight size={16} className="settings-link-chevron" />
-            </Link>
-          ))}
-        </nav>
+        <p className="settings-preference-status" role="status" aria-live="polite">{preferenceConfirmation}</p>
         </>}
 
         {panel === 'profile' && <section className="you-section" id="you-profile" aria-labelledby="you-profile-title" tabIndex={-1}>
@@ -315,8 +356,8 @@ export function SettingsPage() {
             <p>Your daily guide updates as you edit. Save when it feels right.</p>
           </header>
         {/* Daily goals summary */}
-        {profile.trackingPaused ? <p className="you-pause-note">Tracking is paused. Your daily target numbers are hidden.</p> : currentProfileIssue ? <p className="you-pause-note">Check your profile details to preview daily targets.</p> : <>
-        <SectionLabel>Daily goals</SectionLabel>
+        {state.profile.trackingPaused ? <p className="you-pause-note">Tracking is paused. Your daily target numbers are hidden.</p> : currentProfileIssue ? <p className="you-pause-note">Check your profile details to preview daily targets.</p> : <>
+        <SectionLabel>Daily goals preview</SectionLabel>
         {/* §2.1: never clamp silently — say which floor is holding the number. */}
         {goalTargets.clamped && (
           <p className="settings-clamp-note">{goalTargets.clamped}</p>
@@ -438,20 +479,21 @@ export function SettingsPage() {
         {panel === 'preferences' && <section className="you-section" id="you-preferences" aria-labelledby="you-preferences-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-preferences-title">Everyday preferences</h2>
-            <p>Choose how the app feels. Use Save settings to apply your changes.</p>
+            <p>Choose how the app feels. Preferences apply and save immediately.</p>
           </header>
+        <p className="settings-preference-status" role="status" aria-live="polite">{preferenceConfirmation}</p>
         <SectionLabel>Feel</SectionLabel>
         <SettingsCard>
           <SettingsRow label="Sound" hint="Short cues when you log a meal">
             <Toggle
-              checked={profile.soundEnabled !== false}
-              onChange={next => setProfile(p => ({ ...p, soundEnabled: next }))}
+              checked={state.profile.soundEnabled !== false}
+              onChange={next => applyPreference('soundEnabled', next, `Sound ${next ? 'on' : 'off'} · saved.`)}
             />
           </SettingsRow>
           <SettingsRow label="Haptics" hint="A light tap on press">
             <Toggle
-              checked={profile.hapticsEnabled !== false}
-              onChange={next => setProfile(p => ({ ...p, hapticsEnabled: next }))}
+              checked={state.profile.hapticsEnabled !== false}
+              onChange={next => applyPreference('hapticsEnabled', next, `Haptics ${next ? 'on' : 'off'} · saved.`)}
             />
           </SettingsRow>
           <SettingsRow label="Notifications" hint="At most two per day. Never about calories.">
@@ -465,15 +507,13 @@ export function SettingsPage() {
         <SettingsCard>
           <SettingsRow
             label="Pause tracking"
-            hint={profile.trackingPaused
+            hint={state.profile.trackingPaused
               ? 'Calorie, macro, and weight numbers are hidden and your streak is held.'
               : 'Hide calorie, macro, and weight numbers and hold your streak where it is.'}
           >
             <Toggle
-              checked={Boolean(profile.trackingPaused)}
-              onChange={next => {
-                setProfile(p => ({ ...p, trackingPaused: next }))
-              }}
+              checked={Boolean(state.profile.trackingPaused)}
+              onChange={next => applyPreference('trackingPaused', next, next ? 'Tracking paused · saved.' : 'Tracking resumed · saved.')}
             />
           </SettingsRow>
           <div className="settings-divider" />
@@ -496,16 +536,17 @@ export function SettingsPage() {
             <h2 id="you-momo-title">Your kitchen companion</h2>
             <p>A little company, on your terms. Streaks and badges now live in Insights.</p>
           </header>
+        <p className="settings-preference-status" role="status" aria-live="polite">{preferenceConfirmation}</p>
         <SectionLabel>Mascot</SectionLabel>
         <SettingsCard>
           <p className="page-sub">A small kitchen companion. Never sad, never scoring your food.</p>
           <SettingsRow label="Show Momo" hint="Keep your companion around the app · saves immediately">
             <Toggle
               checked={mascotVisible}
-              onChange={next => patchGamification(g => ({
-                ...g,
-                mascotActivity: next ? 'lively' : 'off',
-              }))}
+              onChange={next => {
+                patchGamification(g => ({ ...g, mascotActivity: next ? 'lively' : 'off' }))
+                setPreferenceConfirmation(`Momo ${next ? 'shown' : 'hidden'} · saved.`)
+              }}
             />
           </SettingsRow>
           {mascotVisible && (
@@ -514,36 +555,42 @@ export function SettingsPage() {
                 <RadioDot
                   name="mascot-activity"
                   checked={state.gamification.mascotActivity === 'lively'}
-                  onChange={() => patchGamification(g => ({ ...g, mascotActivity: 'lively' }))}
+                  onChange={() => {
+                    patchGamification(g => ({ ...g, mascotActivity: 'lively' }))
+                    setPreferenceConfirmation('Momo is lively · saved.')
+                  }}
                 />
               </SettingsRow>
               <SettingsRow label="Calm" hint="Quieter, slower visits · saves immediately">
                 <RadioDot
                   name="mascot-activity"
                   checked={state.gamification.mascotActivity === 'calm'}
-                  onChange={() => patchGamification(g => ({ ...g, mascotActivity: 'calm' }))}
+                  onChange={() => {
+                    patchGamification(g => ({ ...g, mascotActivity: 'calm' }))
+                    setPreferenceConfirmation('Momo is calm · saved.')
+                  }}
                 />
               </SettingsRow>
             </>
           )}
-          <SettingsRow label="Mute Momo" hint="Silence speech bubbles · apply with Save settings">
+          <SettingsRow label="Mute Momo" hint="Silence speech bubbles · saves immediately">
             <Toggle
-              checked={profile.mascotMuted === true}
-              onChange={next => setProfile(p => ({ ...p, mascotMuted: next }))}
+              checked={state.profile.mascotMuted === true}
+              onChange={next => applyPreference('mascotMuted', next, `Momo ${next ? 'muted' : 'unmuted'} · saved.`)}
             />
           </SettingsRow>
-          <SettingsRow label="Roast mode" hint="Opt in to playful teasing about app habits. Never your body or food · apply with Save settings">
+          <SettingsRow label="Roast mode" hint="Opt in to playful teasing about app habits. Never your body or food · saves immediately">
             <Toggle
-              checked={profile.mascotRoasts === true}
-              onChange={next => setProfile(p => ({ ...p, mascotRoasts: next }))}
+              checked={state.profile.mascotRoasts === true}
+              onChange={next => applyPreference('mascotRoasts', next, `Roast mode ${next ? 'on' : 'off'} · saved.`)}
             />
           </SettingsRow>
-          {profile.mascotRoasts && mascotVisible && !profile.mascotMuted && !profile.trackingPaused
-            && <RoastPreview reducedMotion={profile.mascotReducedMotion === true} />}
-          <SettingsRow label="Reduce Momo motion" hint="Stop roaming and gestures · apply with Save settings">
+          {state.profile.mascotRoasts && mascotVisible && !state.profile.mascotMuted && !state.profile.trackingPaused
+            && <RoastPreview reducedMotion={state.profile.mascotReducedMotion === true} />}
+          <SettingsRow label="Reduce Momo motion" hint="Stop roaming and gestures · saves immediately">
             <Toggle
-              checked={profile.mascotReducedMotion === true}
-              onChange={next => setProfile(p => ({ ...p, mascotReducedMotion: next }))}
+              checked={state.profile.mascotReducedMotion === true}
+              onChange={next => applyPreference('mascotReducedMotion', next, `Momo motion ${next ? 'reduced' : 'restored'} · saved.`)}
             />
           </SettingsRow>
         </SettingsCard>
@@ -559,7 +606,7 @@ export function SettingsPage() {
         {panel === 'ai' && <section className="you-section" id="you-ai" aria-labelledby="you-ai-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-ai-title">AI setup</h2>
-            <p>After you sign up, photo and text logging use Poiem’s OpenRouter key and {MANAGED_OPENROUTER_MODEL}. Add your own key only if you want a different provider or model.</p>
+            <p>After you sign up, photo and text logging use Poiem’s OpenRouter key and {MANAGED_OPENROUTER_MODEL}. Add your own key only if you want a different provider or model. Choose Save settings to apply this setup.</p>
           </header>
         <SettingsCard>
           <SettingsRow

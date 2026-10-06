@@ -190,11 +190,20 @@
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
-    box-shadow: 2px 2px 0 var(--k-shadow-color);
+    box-shadow: none;
     font: 600 var(--k-text-xs)/1 var(--k-font-mono);
     rotate: none;
     transform: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
   }
+  .k-insights .torn-stub:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 3px; }
+  .k-insights .k-journey-help { margin-top: var(--k-space-sm); color: var(--k-role-text-muted); font: 500 var(--k-type-meta)/1.5 var(--k-font-body); }
+  .k-insights .k-journey-help > summary { display: flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .k-insights .k-journey-help > summary:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+  .k-insights .k-journey-help p { margin: 0; }
   .k-insights .torn-stub::before { content: ''; position: absolute; top: 4px; bottom: 4px; left: 7px; border-left: 2px dotted var(--k-hair-strong); }
   .k-insights .torn-stub::after { content: none; }
   .k-insights .torn-stub:nth-child(4n + 1) { background: var(--k-butter); color: var(--k-on-tone); }

@@ -24,6 +24,16 @@ it('shows the check only when complete', () => {
   expect(renderToStaticMarkup(<DayRing progress={empty} />)).not.toContain('k-ring-check')
   expect(renderToStaticMarkup(<DayRing progress={complete} />)).toContain('k-ring-check')
 })
+it('keeps incomplete steps visible and puts completed steps in a closed native disclosure', () => {
+  const incompleteHtml = renderToStaticMarkup(<DayRing progress={empty} />)
+  const completeHtml = renderToStaticMarkup(<DayRing progress={complete} />)
+  expect(incompleteHtml).toContain('class="k-ring-legend"')
+  expect(incompleteHtml).not.toContain('<details')
+  expect(completeHtml).toContain('<details class="k-ring-details"><summary>Chosen steps complete <span>Details</span></summary>')
+  expect(completeHtml).not.toMatch(/<details[^>]*\bopen(?:=|\s|>)/)
+  expect(completeHtml).toContain('class="k-ring-legend"')
+  expect(completeHtml.match(/class="k-ring-fill/g)).toHaveLength(3)
+})
 it('uses system classes and no legacy day-ring classes', () => {
   const html = renderToStaticMarkup(<DayRing progress={empty} note={<p>One note.</p>} />)
   expect(html).toContain('class="k-ring')

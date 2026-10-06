@@ -32,6 +32,16 @@ export function startOfDay(date = new Date()): Date {
   return d
 }
 
+/** Read a journal date as a local calendar day, rejecting rollovers and future days. */
+export function journalDayFromNavState(state: unknown): Date | undefined {
+  if (!state || typeof state !== 'object' || !('journalDay' in state)) return undefined
+  const key = state.journalDay
+  if (typeof key !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(key)) return undefined
+  const date = startOfDay(new Date(`${key}T12:00:00`))
+  if (!Number.isFinite(date.getTime()) || localDayKey(date) !== key || date > startOfDay()) return undefined
+  return date
+}
+
 export function addDays(date: Date, n: number): Date {
   const d = new Date(date)
   d.setDate(d.getDate() + n)

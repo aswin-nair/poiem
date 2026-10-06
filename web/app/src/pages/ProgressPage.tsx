@@ -1,5 +1,6 @@
 import { AppShell } from '../components/system/AppShell'
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { ProgressLineChart, ProgressBarChart } from '../components/Charts'
 import { useApp } from '../store/AppContext'
@@ -177,6 +178,10 @@ export function ProgressPage() {
           <p className="k-journey-note">
             {LEVEL_NAMES[level] || 'Your journey'}{atTopLevel ? ' · Top level reached' : ` · ${xpToNext.toLocaleString()} XP to level ${level + 1}`}
           </p>
+          <details className="k-journey-help">
+            <summary>About XP and freezes</summary>
+            <p>XP records your logging activity and moves Momo through levels. A freeze protects your streak on a missed day; it doesn’t count as a logged day.</p>
+          </details>
         </section>
 
         <HabitMilestones loggedDays={getTotalLoggedDays(state.foodEntries)} />
@@ -248,20 +253,19 @@ export function ProgressPage() {
           </div>
 
           <div className="progress-stat-grid">
-            <StatCard label={filteredWeights.length ? 'Latest in range' : 'Profile weight'} value={`${currentWeight.toFixed(1)} kg`} sub={filteredWeights.length ? undefined : 'No weigh-ins in this range'} accent />
-            <StatCard
-              label="Goal"
-              value={goalWeight != null ? `${goalWeight.toFixed(1)} kg` : '—'}
-            />
+            <StatCard label={filteredWeights.length === 1 ? 'First weigh-in in range' : filteredWeights.length ? 'Latest in range' : 'Profile weight'} value={`${currentWeight.toFixed(1)} kg`} sub={filteredWeights.length === 1 ? weightPoints[0]?.label : filteredWeights.length ? undefined : 'No weigh-ins in this range'} accent />
+            {goalWeight != null && <StatCard label="Goal" value={`${goalWeight.toFixed(1)} kg`} />}
+            {filteredWeights.length > 1 && <>
             <StatCard
               label="Net change"
-              value={filteredWeights.length > 1 ? `${netChange >= 0 ? '+' : ''}${netChange.toFixed(1)} kg` : '—'}
-              sub={filteredWeights.length > 1 ? 'First to latest in range' : 'Needs two weigh-ins'}
+              value={`${netChange >= 0 ? '+' : ''}${netChange.toFixed(1)} kg`}
+              sub="First to latest in range"
             />
             <StatCard label="Average" value={filteredWeights.length ? `${avgWeight.toFixed(1)} kg` : '—'} sub={`${filteredWeights.length} ${filteredWeights.length === 1 ? 'weigh-in' : 'weigh-ins'} in range`} />
+            </>}
           </div>
 
-          {weightPoints.length ? <ProgressLineChart points={weightPoints} goal={goalWeight ?? undefined} unit=" kg" /> : <p className="insights-empty">No weight entries in this range. Use Log weight if you’d like to track this.</p>}
+          {weightPoints.length > 1 ? <ProgressLineChart points={weightPoints} goal={goalWeight ?? undefined} unit=" kg" /> : <p className="insights-empty">{weightPoints.length === 1 ? 'A trend appears after two weigh-ins in this range.' : 'No weight entries in this range. Use Log weight if you’d like to track this.'}</p>}
         </div>
 
         {sortedWeights.length > 0 && (
@@ -335,9 +339,9 @@ export function ProgressPage() {
             {archiveDays.length === 0 && <p className="insights-empty">Your logged days will appear here.</p>}
             <div className="torn-archive">
               {archiveDays.map(day => (
-                <div key={day} className="torn-stub">
+                <Link key={day} className="torn-stub" to="/" state={{ journalDay: day }} aria-label={`Open journal for ${new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`}>
                   {new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })}
-                </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -43,7 +43,9 @@ describe('Saved UI', () => {
     expect(html).toContain('href="/log"')
     expect(html).toContain('role="group" aria-label="Filter saved meals by type"')
     expect(html).toContain('Your logged meals will appear here')
-    expect(html).toContain('Pinned')
+    expect(html).toContain('Your saved meals')
+    expect(html).not.toContain('Pinned')
+    expect(html).not.toContain('favourites')
     expect(html).toContain('class="app-shell k-app k-screen has-nav k-saved"')
     expect(html).not.toContain('poster-')
     expect(html).toContain('0 saved · 0 recent in your collection')
@@ -51,20 +53,28 @@ describe('Saved UI', () => {
     expect(html).not.toContain('🕐')
   })
   it('names every meal action and shows nutrition before logging', () => {
-    state.favoriteMeals = [{ id: 'rice', name: 'Rice bowl', calories: 320, protein: 8, carbs: 60, fat: 5, mealType: 'lunch' }]
+    state.favoriteMeals = [{ id: 'rice', name: 'Rice bowl', calories: 320, protein: 8, carbs: 60, fat: 5, mealType: 'lunch', servingSizeGrams: 180 }]
     state.foodEntries = [{ ...state.favoriteMeals[0], id: 'recent', name: 'Oats', timestamp: new Date().toISOString(), source: 'manual' }]
     const html = savedHtml()
-    expect(html).toContain('<article class="discover-card" aria-label="Rice bowl"')
-    expect(html).toContain('Total for 1× portion')
+    expect(html).toContain('<article class="k-repeat-meal" aria-label="Rice bowl"')
+    expect(html).toContain('1× = your saved meal · 180 g')
+    expect(html).toContain('1× = your previous meal · 180 g')
     expect(html).toContain('Protein 8g · Carbs 60g · Fat 5g')
-    expect(html).toContain('aria-label="Log Rice bowl, 1 times portion"')
-    expect(html).toContain('aria-label="Decrease servings for Rice bowl"')
-    expect(html).toContain('aria-label="Increase servings for Rice bowl"')
-    expect(html).toContain('aria-label="Log Oats, 1 times portion"')
-    expect(html).toContain('>Portion</button>')
-    expect(html).not.toContain('aria-label="Decrease servings for Oats"')
-    expect(html).toContain('aria-label="Unfavorite Rice bowl" aria-pressed="true"')
-    expect(html).toContain('aria-label="Favorite Oats" aria-pressed="false"')
+    expect(html).toContain('aria-label="Log Rice bowl, 1 times your saved meal to')
+    expect(html).toContain('aria-label="Adjust portion for Rice bowl, currently 1 times your saved meal" aria-expanded="false"')
+    expect(html).toContain('aria-label="Log Oats, 1 times your previous meal to')
+    expect(html).toContain('aria-label="Adjust portion for Oats, currently 1 times your previous meal" aria-expanded="false"')
+    expect(html.match(/>1× · Portion<\/button>/g)).toHaveLength(2)
+    expect(html).toContain('aria-label="Remove Rice bowl from Saved" aria-pressed="true"')
+    expect(html).toContain('aria-label="Save Oats" aria-pressed="false"')
+  })
+  it('shows the explicit logging slot independently of the saved meal’s original type', () => {
+    state.favoriteMeals = [{ id: 'oats', name: 'Oats', calories: 250, protein: 8, carbs: 40, fat: 5, mealType: 'breakfast' }]
+    const html = renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: [{ pathname: '/log/saved', state: { mealType: 'snack' } }] }, createElement(SavedMealsPage)))
+    expect(html).toContain('<option value="snack" selected="">Snack</option>')
+    expect(html).toContain('Logging to Snack · Today')
+    expect(html).toContain('aria-label="Log Oats, 1 times your saved meal to Snack"')
+    expect(state.favoriteMeals[0].mealType).toBe('breakfast')
   })
 })
 
@@ -86,7 +96,11 @@ describe('Insights UI', () => {
     const html = insightsHtml()
     expect(html).toContain('Profile weight')
     expect(html).toContain('No weigh-ins in this range')
-    expect(html).toContain('Needs two weigh-ins')
+    expect(html).toContain('No weight entries in this range. Use Log weight if you’d like to track this.')
+    expect(html).not.toContain('Net change')
+    expect(html).not.toContain('>Average</span>')
+    expect(html).not.toContain('Not set')
+    expect(html).not.toContain('Needs two weigh-ins')
     expect(html).not.toContain('+0.0 kg')
     expect(html).toContain('No logged days')
     expect(html).not.toContain('Avg 0 kcal')
@@ -95,12 +109,41 @@ describe('Insights UI', () => {
     state.weightEntries = [{ id: 'w1', date: new Date().toISOString(), weightKg: 72.5 }]
     state.foodEntries = [{ id: 'f1', name: 'Oats', calories: 320, protein: 8, carbs: 60, fat: 5, mealType: 'breakfast', timestamp: new Date().toISOString(), source: 'manual' }]
     const html = insightsHtml()
-    expect(html).toContain('Latest in range')
+    expect(html).toContain('First weigh-in in range')
     expect(html).toContain('72.5 kg')
+    expect(html).toContain('A trend appears after two weigh-ins in this range.')
+    expect(html).not.toContain('Latest in range')
+    expect(html).not.toContain('Net change')
+    expect(html).not.toContain('>Average</span>')
     expect(html).toContain('aria-expanded="false" aria-controls="weight-history"')
     expect(html).toContain('id="weight-history" hidden=""')
     expect(html).toContain('Average uses logged days only')
     expect(html).toContain('Avg 320 kcal')
+  })
+  it('shows change and average only after two observations and keeps a chosen goal', () => {
+    const first = new Date()
+    first.setDate(first.getDate() - 1)
+    state.weightEntries = [
+      { id: 'w1', date: first.toISOString(), weightKg: 73 },
+      { id: 'w2', date: new Date().toISOString(), weightKg: 72.5 },
+    ]
+    state.profile.goalWeightKg = 70
+    const html = insightsHtml()
+    expect(html).toContain('Latest in range')
+    expect(html).toContain('Net change')
+    expect(html).toContain('-0.5 kg')
+    expect(html).toContain('>Average</span>')
+    expect(html).toContain('72.8 kg')
+    expect(html).toContain('2 weigh-ins in range')
+    expect(html).toContain('70.0 kg')
+    expect(html).not.toContain('A trend appears after two weigh-ins')
+  })
+  it('makes every archived day a named journal link and explains XP and freezes', () => {
+    state.foodEntries = [{ id: 'f1', name: 'Archived oats', calories: 320, protein: 8, carbs: 60, fat: 5, mealType: 'breakfast', timestamp: '2026-09-18T12:00:00.000Z', source: 'manual' }]
+    const html = insightsHtml()
+    expect(html).toMatch(/<a class="torn-stub" aria-label="Open journal for [^"]+" href="\/"/)
+    expect(html).toContain('About XP and freezes')
+    expect(html).toContain('A freeze protects your streak on a missed day; it doesn’t count as a logged day.')
   })
   it('keeps progress data hidden during a tracking pause', () => {
     state.profile.trackingPaused = true

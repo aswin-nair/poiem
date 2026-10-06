@@ -41,6 +41,7 @@ describe('Today', () => {
     expect(html).toContain('aria-label="Choose date"')
     expect(html.indexOf('kcal left')).toBeLessThan(html.indexOf('aria-label="Macros"'))
     expect(html.indexOf('aria-label="Macros"')).toBeLessThan(html.indexOf('id="meals-title"'))
+    expect(html.indexOf('id="meals-title"')).toBeLessThan(html.indexOf('aria-label="Water and notes"'))
     expect(html).toContain('Your table is ready')
     for (const slot of ['breakfast', 'lunch', 'dinner', 'snack']) {
       expect(html).toContain(`Add ${slot}</button>`)
@@ -143,6 +144,22 @@ describe('Today', () => {
     expect(html).toContain('Manage pause')
     expect(html).not.toContain('kcal left')
     expect(html).not.toContain('aria-label="Macros"')
+  })
+
+  it('opens an archived local day with its meals and a way back to today', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 9, 6, 10, 30))
+    state.foodEntries = [
+      meal({ id: 'past', name: 'Archived oats', timestamp: new Date(2026, 9, 5, 8, 15).toISOString() }),
+      meal({ id: 'current', name: 'Today soup', timestamp: new Date(2026, 9, 6, 8, 15).toISOString() }),
+    ]
+    const html = renderToStaticMarkup(<MemoryRouter initialEntries={[{ pathname: '/', state: { journalDay: '2026-10-05' } }]}><HomePage /></MemoryRouter>)
+    expect(html).toContain('Yesterday’s snapshot')
+    expect(html).toContain('Archived oats')
+    expect(html).not.toContain('Today soup')
+    expect(html).toContain('Back to today')
+    expect(html).not.toContain('Add breakfast')
+    expect(html).not.toContain('aria-label="Water and notes"')
   })
 
   it('respects mute and hide-Momo preferences', () => {
