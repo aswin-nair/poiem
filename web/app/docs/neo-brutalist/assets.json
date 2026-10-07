@@ -1,0 +1,291 @@
+{
+  "recordedAt": "2026-10-07T03:33:30.976Z",
+  "browser": "149.0.7827.55",
+  "method": "Local production build; cold signed-in Today at 390×844 UTC; successful JS through visible Calories, fonts and one second of settling. Deferred cameos enabled. gzipSync per emitted asset. Historic budget baseline 96ef630a; previous c9705494. This does not remeasure interaction latency.",
+  "checks": [
+    {
+      "name": "All JS gzip",
+      "baseline": 301907,
+      "previous": 308397,
+      "current": 312126,
+      "limit": 10240,
+      "delta": 10219,
+      "passed": true
+    },
+    {
+      "name": "All CSS gzip",
+      "baseline": 61013,
+      "previous": 61010,
+      "current": 62623,
+      "limit": 2048,
+      "delta": 1610,
+      "passed": true
+    },
+    {
+      "name": "Cold Today JS gzip",
+      "baseline": 250932,
+      "previous": 253336,
+      "current": 253557,
+      "limit": 5120,
+      "delta": 2625,
+      "passed": true
+    }
+  ],
+  "initialAssets": [
+    {
+      "file": "appearance-init.js",
+      "raw": 756,
+      "gzip": 427
+    },
+    {
+      "file": "assets/AuthContext-CveA4lP9.js",
+      "raw": 18610,
+      "gzip": 6448
+    },
+    {
+      "file": "assets/apiClient-CHj3jZnP.js",
+      "raw": 48665,
+      "gzip": 16020
+    },
+    {
+      "file": "assets/arrow-right-CxUcUzFi.js",
+      "raw": 1492,
+      "gzip": 849
+    },
+    {
+      "file": "assets/chunk-BV7QT456-B5cNqVLe.js",
+      "raw": 98513,
+      "gzip": 32316
+    },
+    {
+      "file": "assets/index-BdjSa8Ce.js",
+      "raw": 516328,
+      "gzip": 162632
+    },
+    {
+      "file": "assets/is-html-element-DvgHo_1h.js",
+      "raw": 122,
+      "gzip": 127
+    },
+    {
+      "file": "assets/is-svg-component-CMt1kiif.js",
+      "raw": 4303,
+      "gzip": 2077
+    },
+    {
+      "file": "assets/jsx-runtime-bzQ4Vb5N.js",
+      "raw": 8408,
+      "gzip": 3206
+    },
+    {
+      "file": "assets/motionFeatures-BMu6FjFK.js",
+      "raw": 79944,
+      "gzip": 25755
+    },
+    {
+      "file": "assets/resize-Dg2Ejvzk.js",
+      "raw": 4604,
+      "gzip": 2235
+    },
+    {
+      "file": "assets/use-presence-ByRIWoOc.js",
+      "raw": 384,
+      "gzip": 289
+    },
+    {
+      "file": "assets/useHaptic-BT3rM8on.js",
+      "raw": 3035,
+      "gzip": 1176
+    }
+  ],
+  "chunks": {
+    "assets": [
+      {
+        "file": "AboutPage-BAksbxpA.js",
+        "type": "js",
+        "raw": 2215,
+        "gzip": 957
+      },
+      {
+        "file": "AdminPage-JzNNoRTT.js",
+        "type": "js",
+        "raw": 30679,
+        "gzip": 9032
+      },
+      {
+        "file": "AuthContext-CveA4lP9.js",
+        "type": "js",
+        "raw": 18610,
+        "gzip": 6448
+      },
+      {
+        "file": "CoachPage-DW8yE_m0.js",
+        "type": "js",
+        "raw": 14575,
+        "gzip": 5871
+      },
+      {
+        "file": "ComponentSheetPage-BFyK2W-y.js",
+        "type": "js",
+        "raw": 3546,
+        "gzip": 1368
+      },
+      {
+        "file": "ForgotPasswordPage-CamjUeQx.js",
+        "type": "js",
+        "raw": 1680,
+        "gzip": 848
+      },
+      {
+        "file": "JourneyPage-BgzIfscx.js",
+        "type": "js",
+        "raw": 203,
+        "gzip": 184
+      },
+      {
+        "file": "LoginPage-B9BkqrUv.js",
+        "type": "js",
+        "raw": 15181,
+        "gzip": 5753
+      },
+      {
+        "file": "MomoInterlude-8kRi0wWw.js",
+        "type": "js",
+        "raw": 8598,
+        "gzip": 3518
+      },
+      {
+        "file": "OnboardingPage-P49O7c8d.js",
+        "type": "js",
+        "raw": 32227,
+        "gzip": 9198
+      },
+      {
+        "file": "ResetPasswordPage-BdjCQrIt.js",
+        "type": "js",
+        "raw": 2049,
+        "gzip": 931
+      },
+      {
+        "file": "SupportPage-BwIBn7lZ.js",
+        "type": "js",
+        "raw": 3410,
+        "gzip": 1474
+      },
+      {
+        "file": "WelcomePage-CdeV_qr_.css",
+        "type": "css",
+        "raw": 41736,
+        "gzip": 9130
+      },
+      {
+        "file": "WelcomePage-XmAcOFS8.js",
+        "type": "js",
+        "raw": 53284,
+        "gzip": 16552
+      },
+      {
+        "file": "apiClient-CHj3jZnP.js",
+        "type": "js",
+        "raw": 48665,
+        "gzip": 16020
+      },
+      {
+        "file": "arrow-right-CxUcUzFi.js",
+        "type": "js",
+        "raw": 1492,
+        "gzip": 849
+      },
+      {
+        "file": "chunk-BV7QT456-B5cNqVLe.js",
+        "type": "js",
+        "raw": 98513,
+        "gzip": 32316
+      },
+      {
+        "file": "elements-CDn3s8tP.js",
+        "type": "js",
+        "raw": 6746,
+        "gzip": 2911
+      },
+      {
+        "file": "index-BdjSa8Ce.js",
+        "type": "js",
+        "raw": 516328,
+        "gzip": 162632
+      },
+      {
+        "file": "index-DR1esT2g.css",
+        "type": "css",
+        "raw": 323456,
+        "gzip": 53493
+      },
+      {
+        "file": "is-html-element-DvgHo_1h.js",
+        "type": "js",
+        "raw": 122,
+        "gzip": 127
+      },
+      {
+        "file": "is-svg-component-CMt1kiif.js",
+        "type": "js",
+        "raw": 4303,
+        "gzip": 2077
+      },
+      {
+        "file": "jsx-runtime-bzQ4Vb5N.js",
+        "type": "js",
+        "raw": 8408,
+        "gzip": 3206
+      },
+      {
+        "file": "motionFeatures-BMu6FjFK.js",
+        "type": "js",
+        "raw": 79944,
+        "gzip": 25755
+      },
+      {
+        "file": "motionPresets-CPyIirhZ.js",
+        "type": "js",
+        "raw": 1008,
+        "gzip": 399
+      },
+      {
+        "file": "resize-Dg2Ejvzk.js",
+        "type": "js",
+        "raw": 4604,
+        "gzip": 2235
+      },
+      {
+        "file": "use-presence-ByRIWoOc.js",
+        "type": "js",
+        "raw": 384,
+        "gzip": 289
+      },
+      {
+        "file": "useHaptic-BT3rM8on.js",
+        "type": "js",
+        "raw": 3035,
+        "gzip": 1176
+      }
+    ],
+    "totals": {
+      "js": {
+        "raw": 959809,
+        "gzip": 312126
+      },
+      "css": {
+        "raw": 365192,
+        "gzip": 62623
+      }
+    },
+    "entries": [
+      {
+        "file": "index-BdjSa8Ce.js",
+        "type": "js",
+        "raw": 516328,
+        "gzip": 162632
+      }
+    ]
+  }
+}
