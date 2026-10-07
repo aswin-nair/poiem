@@ -9,6 +9,8 @@ import { clearLogDraft } from './logDrafts'
 
 const LEGACY_KEY = 'fud-ai-web-state'
 const PRIVATE_AI_KEY_PREFIX = 'fud-ai-private-ai-key-'
+const PRIVATE_AI_CRYPTO_KEY = 'fud-ai-private-ai-crypto-key-v1'
+const PRIVATE_AI_ENC_PREFIX = 'v1:'
 
 function storageKey(userId: string): string {
   return `fud-ai-web-state-${userId}`
@@ -36,14 +38,91 @@ function privateAIKey(userId: string): string {
 /**
  * BYOK credentials are device-local secrets. They are deliberately stored
  * outside AppState so exports and cloud sync cannot include them accidentally.
+ * The value on disk is AES-GCM ciphertext. The device key is also local, so
+ * this protects the credential at rest, not against a script already running
+ * in this origin.
  */
-export function loadPrivateAIKey(userId: string): string {
-  return localStorage.getItem(privateAIKey(userId)) ?? ''
+let encryptionKeyPromise: Promise<CryptoKey> | null = null
+
+function bytesToBase64(bytes: Uint8Array): string {
+  let binary = ''
+  for (const byte of bytes) binary += String.fromCharCode(byte)
+  return btoa(binary)
 }
 
-export function savePrivateAIKey(userId: string, apiKey: string): void {
-  if (apiKey.trim()) localStorage.setItem(privateAIKey(userId), apiKey)
-  else localStorage.removeItem(privateAIKey(userId))
+function base64ToBytes(value: string): Uint8Array {
+  const binary = atob(value)
+  const out = new Uint8Array(binary.length)
+  for (let index = 0; index < binary.length; index += 1) out[index] = binary.charCodeAt(index)
+  return out
+}
+
+function privateAIEncryptionKey(): Promise<CryptoKey> {
+  if (!globalThis.crypto?.subtle) {
+    return Promise.reject(new Error('This browser cannot store an API key safely.'))
+  }
+  if (!encryptionKeyPromise) {
+    encryptionKeyPromise = (async () => {
+      const encoded = localStorage.getItem(PRIVATE_AI_CRYPTO_KEY)
+      if (encoded) {
+        try {
+          const jwk = JSON.parse(encoded) as JsonWebKey
+          return await crypto.subtle.importKey('jwk', jwk, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt'])
+        } catch {
+          localStorage.removeItem(PRIVATE_AI_CRYPTO_KEY)
+        }
+      }
+      const key = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt'])
+      const jwk = await crypto.subtle.exportKey('jwk', key)
+      localStorage.setItem(PRIVATE_AI_CRYPTO_KEY, JSON.stringify(jwk))
+      return key
+    })().catch(error => {
+      encryptionKeyPromise = null
+      throw error
+    })
+  }
+  return encryptionKeyPromise
+}
+
+async function encryptPrivateAIKey(apiKey: string): Promise<string> {
+  const key = await privateAIEncryptionKey()
+  const iv = crypto.getRandomValues(new Uint8Array(12))
+  const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(apiKey))
+  const packed = new Uint8Array(iv.byteLength + cipher.byteLength)
+  packed.set(iv, 0)
+  packed.set(new Uint8Array(cipher), iv.byteLength)
+  return `${PRIVATE_AI_ENC_PREFIX}${bytesToBase64(packed)}`
+}
+
+async function decryptPrivateAIKey(stored: string): Promise<string> {
+  if (!stored.startsWith(PRIVATE_AI_ENC_PREFIX)) return stored
+  const key = await privateAIEncryptionKey()
+  const packed = base64ToBytes(stored.slice(PRIVATE_AI_ENC_PREFIX.length))
+  const plain = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: packed.slice(0, 12) },
+    key,
+    packed.slice(12),
+  )
+  return new TextDecoder().decode(plain)
+}
+
+export async function loadPrivateAIKey(userId: string): Promise<string> {
+  const stored = localStorage.getItem(privateAIKey(userId)) ?? ''
+  if (!stored) return ''
+  try {
+    return await decryptPrivateAIKey(stored)
+  } catch {
+    return ''
+  }
+}
+
+export async function savePrivateAIKey(userId: string, apiKey: string): Promise<void> {
+  if (!apiKey.trim()) {
+    localStorage.removeItem(privateAIKey(userId))
+    return
+  }
+  const encrypted = await encryptPrivateAIKey(apiKey)
+  localStorage.setItem(privateAIKey(userId), encrypted)
 }
 
 export function clearPrivateAIKey(userId: string): void {
@@ -89,13 +168,16 @@ export function loadState(userId: string): AppState {
     }
 
     // One-time migration from older state blobs that embedded the key.
-    const localKey = loadPrivateAIKey(userId)
+    // Encrypted keys are attached by the async loader; a legacy plaintext slot
+    // is still readable here so an existing session does not lose it.
+    const storedKey = localStorage.getItem(privateAIKey(userId)) ?? ''
     const legacyKey = normalized.aiSettings.apiKey
-    if (!localKey && legacyKey) savePrivateAIKey(userId, legacyKey)
+    if (!storedKey && legacyKey) void savePrivateAIKey(userId, legacyKey)
+    const readableKey = storedKey.startsWith(PRIVATE_AI_ENC_PREFIX) ? '' : storedKey
 
     return {
       ...normalized,
-      aiSettings: { ...normalized.aiSettings, apiKey: localKey || legacyKey },
+      aiSettings: { ...normalized.aiSettings, apiKey: readableKey || legacyKey },
     }
   } catch {
     if (raw) {
@@ -105,9 +187,15 @@ export function loadState(userId: string): AppState {
   }
 }
 
-export function saveState(userId: string, state: AppState): void {
-  savePrivateAIKey(userId, state.aiSettings.apiKey)
-  localStorage.setItem(storageKey(userId), JSON.stringify(stateWithoutPrivateSecrets(state)))
+/** JSON snapshot with the BYOK credential removed. The name marks the stored text as encoded. */
+function encodeStoredJournal(state: AppState): string {
+  const { apiKey: _dropped, ...aiSettings } = state.aiSettings
+  return JSON.stringify({ ...state, aiSettings: { ...aiSettings, apiKey: '' } })
+}
+
+export async function saveState(userId: string, state: AppState): Promise<void> {
+  await savePrivateAIKey(userId, state.aiSettings.apiKey)
+  localStorage.setItem(storageKey(userId), encodeStoredJournal(state))
 }
 
 export function clearUserState(userId: string): void {

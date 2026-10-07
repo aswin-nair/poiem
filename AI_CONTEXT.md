@@ -89,10 +89,18 @@ split, or a specific food. Going over target renders `neutral`, like any ordinar
 day. **There is no sad, disappointed or crying state. Do not add one.**
 
 ### 3.6 Notifications
-Maximum **two per day**, enforced in code (`lib/notifications.ts`, `MAX_PER_DAY`).
-One routine nudge at the inferred logging time, one "save" nudge only when the
-streak genuinely expires tonight. No guilt copy. Notifications never mention
-calories, weight, or how much someone ate.
+Maximum **two per day**, enforced in code (`lib/notifications.ts`, `MAX_PER_DAY`);
+two is a ceiling, not a target. There is **one** neutral routine nudge, at the
+inferred logging time, and nothing else. No streak, freeze or target input decides
+whether it fires; only "nothing logged today", the person's usual first-log hour,
+and the cap do. There is no "save" nudge and no freeze notice: a used freeze is
+shown in the app, never pushed. No guilt copy. Notifications never mention
+calories, weight, or how much someone ate, and loss or pressure language is
+banned. The shared copy checker (`bannedNotificationCopy` in `@fud-ai/domain`)
+rejects `streak`, `lose`/`lost`/`losing`, `alive`, `freeze`/`frozen`,
+`miss`/`missed`/`missing`, `last chance`, `running out`, `expire`/`expires`/`expired`,
+`hurry` and `don't break`, besides the calorie, weight and guilt words. The shipped
+body is "Your journal is here whenever you’re ready."
 
 ### 3.7 No public comparison
 No leaderboards, no leagues, no public rankings of calories or weight. If social
@@ -231,7 +239,9 @@ rebrand touches one block.
   rather than restarting from empty. Over target draws a second arc in
   `--on-track-soft` with a factual label.
 - **`Mascot`** — SVG, six states, rounded shapes only. See §3.5.
-- **`LogCelebration`** — full-screen post-log moment, itemises real XP awards.
+- **`LogMoment`** — non-modal card for a special log (first meal, new wardrobe
+  piece, milestone, Day ring closing); every other log gets a toast with Undo.
+  The pure `planLogFeedback` decides the moment and `presentLogFeedback` its words.
 - **`MascotSay`** — speech bubble, lines keyed to mascot state.
 
 ### Copy rules

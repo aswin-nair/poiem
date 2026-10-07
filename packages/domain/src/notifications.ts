@@ -1,22 +1,57 @@
 export const MAX_NOTIFICATIONS_PER_DAY = 2
 
-export const NOTIFICATION_KINDS = ['routine', 'save', 'freeze'] as const
+export const NOTIFICATION_KINDS = ['routine'] as const
 export type NotificationKind = (typeof NOTIFICATION_KINDS)[number]
 
 export interface NotificationEligibilityInput {
   loggedToday: boolean
-  streak: number
-  freezeAvailable: number
   firstLogHours: readonly number[]
   localHour: number
   trackingPaused?: boolean
-  freezeJustApplied?: boolean
   sentKinds: readonly NotificationKind[]
 }
 
-/** Copy must never mention calories, weight, or moral food language. */
+/**
+ * Copy must never mention calories, weight, or moral food language, and must
+ * never frame a reminder as a loss or apply pressure (streaks, losing, missing,
+ * deadlines, urgency). The words are matched as whole words or phrases.
+ */
+const BANNED_NOTIFICATION_COPY = new RegExp(
+  `\\b(?:${[
+    // Nutrition and moral food language.
+    'calorie',
+    'kcal',
+    'weight',
+    'over',
+    'under',
+    'deficit',
+    'disappointed',
+    'broken your promise',
+    // Loss and pressure framing.
+    'streak',
+    'lose',
+    'lost',
+    'losing',
+    'alive',
+    'freeze',
+    'frozen',
+    'miss',
+    'missed',
+    'missing',
+    'last chance',
+    'running out',
+    'expire',
+    'expires',
+    'expired',
+    'hurry',
+    "don't break",
+    'don’t break',
+  ].join('|')})\\b`,
+  'i',
+)
+
 export function bannedNotificationCopy(text: string): boolean {
-  return /\b(calorie|kcal|weight|over|under|deficit|disappointed|broken your promise)\b/i.test(text)
+  return BANNED_NOTIFICATION_COPY.test(text)
 }
 
 export function routineHour(firstLogHours: readonly number[]): number {
@@ -38,38 +73,16 @@ export function canSendNotification(
 }
 
 /**
- * Decide which of the two allowed nudges may fire. Delivery stays in the
- * platform adapter.
+ * Decide whether the single routine nudge may fire. It never reads a streak or
+ * a freeze: only whether today has a log, the person's usual first-log hour,
+ * and the two-a-day ceiling. Delivery stays in the platform adapter.
  */
 export function eligibleNotificationKinds(
   input: NotificationEligibilityInput,
 ): NotificationKind[] {
   if (input.trackingPaused) return []
-
-  const eligible: NotificationKind[] = []
-  const sent = [...input.sentKinds]
-
-  const consider = (kind: NotificationKind) => {
-    if (!canSendNotification(kind, sent)) return
-    eligible.push(kind)
-    sent.push(kind)
-  }
-
-  if (input.freezeJustApplied) consider('freeze')
-
-  if (!input.loggedToday && input.localHour >= routineHour(input.firstLogHours)) {
-    consider('routine')
-  }
-
-  if (
-    !input.loggedToday
-    && input.streak > 0
-    && input.freezeAvailable < 1
-    && input.localHour >= 20
-    && input.localHour < 21
-  ) {
-    consider('save')
-  }
-
-  return eligible
+  if (input.loggedToday) return []
+  if (input.localHour < routineHour(input.firstLogHours)) return []
+  if (!canSendNotification('routine', input.sentKinds)) return []
+  return ['routine']
 }

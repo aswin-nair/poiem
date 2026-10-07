@@ -1,3 +1,5 @@
+import { feel } from '../../lib/feel'
+
 export function FilterGroup({
   label,
   options,
@@ -20,7 +22,11 @@ export function FilterGroup({
           className="k-filter"
           aria-pressed={option.id === value}
           disabled={disabled}
-          onClick={() => onChange(option.id)}
+          onClick={() => {
+            if (option.id === value) return
+            feel('select')
+            onChange(option.id)
+          }}
         >
           {option.label}
         </button>

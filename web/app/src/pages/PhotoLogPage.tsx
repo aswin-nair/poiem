@@ -10,18 +10,44 @@ import { IconArrowRight, IconCamera, IconClose, IconScan } from '../components/i
 import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
 import { mascotEvent } from '../mascot/MascotOverlay'
-import { AiAllowanceHint, AiAvailabilityCard, AnalysisStatus, FlowFeedback, LogFlowHeader, PhotoPrivacyNote } from '../components/LogFlowUI'
+import { AiAllowanceHint, AiAvailabilityCard, AnalysisStatus, FlowFeedback, LogFlowHeader, LoggingContextLine, PhotoPrivacyNote, RestoredDraftNotice } from '../components/LogFlowUI'
 import { photoFileIssue } from '../lib/photoSelection'
 import { clearPhotoLogDraft, hydratePhotoLogDraft, savePhotoLogDraft } from '../lib/logDrafts'
 import { useAuth } from '../store/AuthContext'
-import { firstMealFromNavState } from '../lib/firstMeal'
+import { logContextFromNavState } from '../lib/logContext'
+import { defaultMealType } from '../lib/meals'
+
+function showBlobPreview(image: HTMLImageElement | null, url: string | null) {
+  if (!image) return
+  if (!url) {
+    image.removeAttribute('src')
+    return
+  }
+  let safe = ''
+  try {
+    const parsed = new URL(url)
+    // createObjectURL only yields blob URLs. encodeURI drops the DOM-text taint
+    // without changing a blob URL, and the protocol check refuses every other scheme.
+    if (parsed.protocol === 'blob:') safe = encodeURI(parsed.href)
+  } catch {
+    safe = ''
+  }
+  if (!safe) {
+    image.removeAttribute('src')
+    return
+  }
+  image.src = safe
+}
 
 export function PhotoLogPage() {
   const { state, setPendingAnalysis, setPendingImagePreview, setPendingSource } = useApp()
   const { user } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const firstMeal = firstMealFromNavState(location.state)
+  const navContext = logContextFromNavState(location.state)
+  const [mealType] = useState(() => navContext.mealType ?? defaultMealType())
+  const logContext = { ...navContext, mealType }
+  const { firstMeal } = logContext
   const userId = user?.sub ?? ''
   const cameraRef = useRef<HTMLInputElement>(null)
   const galleryRef = useRef<HTMLInputElement>(null)
@@ -32,6 +58,9 @@ export function PhotoLogPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  const [restored, setRestored] = useState(false)
+  const photoActionRef = useRef<HTMLButtonElement>(null)
+  const mainRef = useRef<HTMLElement>(null)
   const { availability, refresh } = useAiAccess()
   const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
   const ai = availability(state.aiSettings, 'food_photo')
@@ -45,6 +74,7 @@ export function PhotoLogPage() {
       if (cancelled || selectionGen.current !== gen || !file) return
       setSelectedFile(file)
       setPreview(URL.createObjectURL(file))
+      setRestored(true)
     }, () => {
       /* Keep a photo the reader already chose if draft hydration fails. */
     })
@@ -75,6 +105,7 @@ export function PhotoLogPage() {
     setPendingImagePreview(null)
     setError(null)
     setNotice(null)
+    setRestored(false)
     savePhotoLogDraft(userId, file)
   }
 
@@ -96,7 +127,7 @@ export function PhotoLogPage() {
       setPendingAnalysis(analysis)
       setPendingImagePreview(`data:${mimeType};base64,${base64}`)
       clearPhotoLogDraft(userId)
-      navigate('/review', { state: { firstMeal } })
+      navigate('/review', { state: logContext })
     } catch (e) {
       if (controller.signal.aborted || requestRef.current !== controller) return
       track({ name: 'ai_analysis_failed', method: 'photo_ai' })
@@ -123,13 +154,25 @@ export function PhotoLogPage() {
     setPreview(null)
     setError(null)
     setNotice('Photo removed. You can choose another one.')
+    setRestored(false)
     clearPhotoLogDraft(userId)
+  }
+
+  function startFresh() {
+    removePhoto()
+    setNotice(null)
+    focusPhotoAction()
+  }
+
+  function focusPhotoAction() {
+    const next = photoActionRef.current ?? mainRef.current?.querySelector<HTMLAnchorElement>('a[href="/log/manual"]')
+    next?.focus()
   }
 
   return (
     <div className="app-shell k-screen k-flow">
-      <main className="app-main">
-        <BackLink to="/log" />
+      <main ref={mainRef} className="app-main">
+        <BackLink onClick={() => navigate('/log', { state: logContext })} />
         <LogFlowHeader
           step={1}
           title={firstMeal ? 'Your first meal, on camera.' : 'Give your meal a close-up.'}
@@ -137,16 +180,18 @@ export function PhotoLogPage() {
             ? 'Choose a photo, then check the estimate before it counts. You can still type the numbers instead.'
             : 'Choose a photo, check the frame, then let AI make a first estimate.'}
         />
+        <LoggingContextLine mealType={mealType} />
+        {restored && <RestoredDraftNotice disabled={loading} onContinue={() => { setRestored(false); focusPhotoAction() }} onStartFresh={startFresh} />}
         {error && <FlowFeedback message={error} error>
           <button type="button" className="flow-text-action" onClick={() => { void handleAnalyze() }}>Retry</button>
-          <Link to="/log/manual">Keep going with manual entry</Link>
+          <Link to="/log/manual" state={logContext}>Keep going with manual entry</Link>
         </FlowFeedback>}
         {notice && <FlowFeedback message={notice} />}
-        <AiAvailabilityCard availability={ai} provider={providerLabel(state.aiSettings.provider)} task="food_photo" onRetry={() => { void refresh() }} />
+        <AiAvailabilityCard availability={ai} provider={providerLabel(state.aiSettings.provider)} task="food_photo" manualFallbackState={logContext} onRetry={() => { void refresh() }} />
 
         {(canAnalyze || selectedFile) && <>
           {preview ? <figure className="flow-photo-card">
-            <img src={preview} alt="Selected meal, not yet logged" />
+            <img alt="Selected meal, not yet logged" ref={node => showBlobPreview(node, preview)} />
             <figcaption><span>{selectedFile?.name}</span>
               <button type="button" disabled={loading} onClick={removePhoto}><IconClose size={18} /> Remove photo</button>
             </figcaption>
@@ -160,18 +205,19 @@ export function PhotoLogPage() {
           {loading ? <AnalysisStatus method="photo" onCancel={cancelAnalysis} /> : canAnalyze && <>
             <div className="photo-btn-row">
               <button type="button" className="photo-source-btn" onClick={() => cameraRef.current?.click()}><IconCamera size={22} /> Camera</button>
-              <button type="button" className="photo-source-btn" onClick={() => galleryRef.current?.click()}><IconScan size={22} /> {preview ? 'Replace photo' : 'Gallery'}</button>
+              <button ref={photoActionRef} type="button" className="photo-source-btn" onClick={() => galleryRef.current?.click()}><IconScan size={22} /> {preview ? 'Replace photo' : 'Gallery'}</button>
             </div>
             {!preview && <p className="flow-photo-tip">Good lighting. One meal in frame. You can adjust the portion next.</p>}
           </>}
         </>}
 
-        <PhotoPrivacyNote provider={providerLabel(state.aiSettings.provider)} managed={!hasKey} />
+        <PhotoPrivacyNote provider={providerLabel(state.aiSettings.provider)} managed={!hasKey} manualFallbackState={logContext} />
         {canAnalyze && !loading && <div className="flow-submit">
           <AiAllowanceHint availability={ai} task="food_photo" />
           <PressableButton fullWidth disabled={!selectedFile} onClick={() => { void handleAnalyze() }}>Analyze photo <IconArrowRight size={20} /></PressableButton>
           <p>Nothing is logged until you confirm the estimate.</p>
-          <Link to="/log/text">Prefer to describe your meal?</Link>
+          <Link to="/log/manual" state={logContext}>Enter the numbers myself</Link>
+          <Link to="/log/text" state={logContext}>Prefer to describe your meal?</Link>
         </div>}
 
         <input ref={cameraRef} type="file" accept="image/*" capture="environment" hidden disabled={!canAnalyze || loading}

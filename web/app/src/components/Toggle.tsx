@@ -1,3 +1,5 @@
+import { feel } from '../lib/feel'
+
 /* A switch and a radio that are actually thumb-sized.
    The visible track is a decorative span; the real <input> sits transparent on
    top of it at the full 44px target. That way the thing you can hit, the thing
@@ -20,7 +22,10 @@ export function Toggle({
         role="switch"
         className="toggle-input"
         checked={checked}
-        onChange={e => onChange(e.target.checked)}
+        onChange={e => {
+          feel('select')
+          onChange(e.target.checked)
+        }}
         {...aria}
       />
       <span className="toggle-track" aria-hidden>
@@ -43,7 +48,11 @@ export function RadioDot({
         className="toggle-input"
         name={name}
         checked={checked}
-        onChange={onChange}
+        onChange={() => {
+          if (checked) return
+          feel('select')
+          onChange()
+        }}
         {...aria}
       />
       <span className="radio-dot-ring" aria-hidden>

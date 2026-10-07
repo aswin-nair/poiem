@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { logManualMeal, nav, signUpAndOnboard } from './helpers'
+import { logManualMeal, nav, openYouDestination, signUpAndOnboard } from './helpers'
 
 async function openMealEditor(page: Page, name: string): Promise<void> {
   await expect(page).toHaveURL('/')
@@ -28,8 +28,8 @@ async function completeReleaseFlow(page: Page, mealName: string): Promise<void> 
   await expect(page).toHaveURL('/')
 
   await openMealEditor(page, editedName)
-  await page.getByRole('button', { name: 'Add saved entry to favourites' }).click()
-  await expect(page.getByRole('button', { name: 'Remove saved entry from favourites' })).toHaveAttribute('aria-pressed', 'true')
+  await page.getByRole('button', { name: `Save ${editedName}`, exact: true }).click()
+  await expect(page.getByRole('button', { name: `Remove ${editedName} from Saved`, exact: true })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('button', { name: 'Save changes' })).toBeDisabled()
   await page.getByRole('button', { name: 'Today', exact: true }).click()
 
@@ -73,7 +73,7 @@ test.describe('Release journey', () => {
   test('Momo visibility, dialogue, and motion controls persist', async ({ page }) => {
     await signUpAndOnboard(page)
     await nav(page).getByRole('link', { name: 'You' }).click()
-    await page.getByRole('link', { name: 'Momo', exact: true }).first().click()
+    await openYouDestination(page, 'Momo')
 
     const showMomo = page.getByRole('switch', { name: 'Show Momo' })
     await expect(showMomo).toBeChecked()
@@ -84,7 +84,7 @@ test.describe('Release journey', () => {
 
     await page.getByRole('switch', { name: 'Mute Momo' }).click()
     await page.getByRole('switch', { name: 'Reduce Momo motion' }).click()
-    await page.getByRole('button', { name: 'Save settings' }).click()
+    await expect(page.getByRole('button', { name: 'Save settings' })).toHaveCount(0)
     await page.reload()
 
     await expect(page.getByRole('switch', { name: 'Show Momo' })).toBeChecked()

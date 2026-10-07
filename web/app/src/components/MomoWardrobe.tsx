@@ -53,7 +53,11 @@ export function MomoWardrobe() {
       </div>
       <div className="k-wardrobe-slots" role="group" aria-label="Wardrobe slot">
         {WARDROBE_SLOTS.map(part => (
-          <button key={part} type="button" className="k-chip" aria-pressed={slot === part} onClick={() => setSlot(part)}>
+          <button key={part} type="button" className="k-chip" aria-pressed={slot === part} onClick={() => {
+            if (slot === part) return
+            feel('select')
+            setSlot(part)
+          }}>
             {SLOT_LABELS[part]}
           </button>
         ))}

@@ -2,19 +2,23 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, type Location } from 'react-router-dom'
 import { Sheet } from '../components/Sheet'
 import { PortionSheet } from '../components/PortionSheet'
-import { useLongPress } from '../hooks/useLongPress'
+import { RepeatMealRow } from '../components/RepeatMealRow'
 import { useFeel } from '../hooks/useHaptic'
 import {
-  FoodIcon, IconBreakfast, IconCamera, IconCarbs, IconChevronDown, IconClipboard, IconClose, IconDinner, IconEdit,
+  IconBreakfast, IconCamera, IconCarbs, IconChevronDown, IconClipboard, IconClose, IconDinner, IconEdit,
   IconHistory, IconLunch, IconMeal, IconPlus, IconSearch, IconStar,
 } from '../components/icons'
 import { MomoSticker } from '../components/MomoSticker'
-import { foodToneFor } from '../lib/foodGlyph'
 import { useApp } from '../store/AppContext'
 import { recordFoodSearch, selectLogMethod, startLogFlow, type LogMethod } from '../lib/analytics'
 import { defaultMealType, mealKey, parseQuickAdd, quickAddEntry, recentMeals, savedToEntry, scaleMeal } from '../lib/meals'
 import { MEAL_LABELS, type FoodEntry, type MealType, type SavedMeal } from '../types'
 import { mascotEvent } from '../mascot/MascotOverlay'
+import { makeLogReceipt } from '../lib/logReceipt'
+import { createOnceGuard } from '../lib/onceGuard'
+import { mealTypeFromNavState } from '../lib/logContext'
+
+let lastSheetCloseAt: number | null = null
 
 const METHODS = [
   { to: '/log/photo', short: 'Photo', hint: 'Point, shoot, check', name: 'Snap a photo', method: 'photo_ai', Icon: IconCamera, tone: 'butter' },
@@ -55,13 +59,17 @@ export function LogSheet() {
   const location = useLocation()
   const feel = useFeel()
   const routeState = (location.state as LogRouteState | null) ?? {}
-  const [mealType, setMealType] = useState<MealType>(() => routeState.mealType ?? defaultMealType())
+  const [mealType, setMealType] = useState<MealType>(() => mealTypeFromNavState(location.state) ?? defaultMealType())
   const [choosingMeal, setChoosingMeal] = useState(false)
   const [query, setQuery] = useState('')
   const [shelf, setShelf] = useState<'recent' | 'favourite'>('recent')
   const [showAllRecents, setShowAllRecents] = useState(false)
   const [portionFor, setPortionFor] = useState<{ item: FoodEntry | SavedMeal; source: LogMethod } | null>(null)
   const lastEmptyTease = useRef('')
+  const [commitGuard] = useState(createOnceGuard)
+  const [quick] = useState(() => lastSheetCloseAt !== null && Date.now() - lastSheetCloseAt < 60_000)
+
+  useEffect(() => () => { lastSheetCloseAt = Date.now() }, [])
 
   useEffect(() => {
     startLogFlow('search', state.foodEntries.length === 0)
@@ -104,15 +112,24 @@ export function LogSheet() {
   }
 
   function commit(entry: FoodEntry, source: LogMethod) {
-    selectLogMethod(source)
-    const logged: FoodEntry = { ...entry, mealType }
-    addEntry(logged)
-    navigate('/', { replace: true, state: { justLogged: { id: logged.id, calories: logged.calories, name: logged.name } } })
+    commitGuard.run(() => {
+      selectLogMethod(source)
+      const logged: FoodEntry = { ...entry, mealType }
+      const receipt = makeLogReceipt(logged, state.gamification.awardedKeys.length)
+      addEntry(logged)
+      navigate('/', { replace: true, state: { justLogged: receipt } })
+    })
   }
 
   function logAgain(item: FoodEntry | SavedMeal, source: LogMethod, multiplier = 1) {
     const saved: SavedMeal = 'timestamp' in item ? { ...item, id: crypto.randomUUID() } : item
-    commit(savedToEntry(scaleMeal(saved, multiplier), 'recent'), source)
+    const scaled = scaleMeal(saved, multiplier)
+    commit(savedToEntry({
+      ...scaled,
+      protein: Math.round(item.protein * multiplier * 10) / 10,
+      carbs: Math.round(item.carbs * multiplier * 10) / 10,
+      fat: Math.round(item.fat * multiplier * 10) / 10,
+    }, 'recent'), source)
   }
 
   const hasShortcuts = recents.length > 0 || favourites.length > 0
@@ -125,7 +142,7 @@ export function LogSheet() {
 
   return (
     <>
-      <Sheet labelledBy="log-sheet-title" onClose={() => { if (!portionFor) close() }} className="k-log-sheet">
+      <Sheet labelledBy="log-sheet-title" onClose={() => { if (!portionFor) close() }} className={`k-log-sheet${quick ? ' is-quick' : ''}`}>
         <header className="k-sheet-head k-log-head">
           <span className="k-log-momo"><MomoSticker mood="curious" pose="still" expression="curious" /></span>
           <div className="k-log-title">
@@ -158,7 +175,7 @@ export function LogSheet() {
                 type="button"
                 className={`k-chip is-${choice}`}
                 aria-pressed={choice === mealType}
-                onClick={() => { feel('select'); setMealType(choice); setChoosingMeal(false) }}
+                onClick={() => { if (choice !== mealType) feel('select'); setMealType(choice); setChoosingMeal(false) }}
               >
                 {MEAL_LABELS[choice]}
               </button>
@@ -196,21 +213,22 @@ export function LogSheet() {
             <>
               {recents.length > 0 && favourites.length > 0 && (
                 <div className="k-shelf" role="group" aria-label="Your meal shortcuts">
-                  <button type="button" aria-pressed={activeShelf === 'recent'} onClick={() => setShelf('recent')}>
+                  <button type="button" aria-pressed={activeShelf === 'recent'} onClick={() => { if (activeShelf === 'recent') return; feel('select'); setShelf('recent') }}>
                     <IconHistory size={16} /> Recent
                   </button>
-                  <button type="button" aria-pressed={activeShelf === 'favourite'} onClick={() => setShelf('favourite')}>
-                    <IconStar size={16} /> Favourites
+                  <button type="button" aria-pressed={activeShelf === 'favourite'} onClick={() => { if (activeShelf === 'favourite') return; feel('select'); setShelf('favourite') }}>
+                    <IconStar size={16} /> Saved
                   </button>
                 </div>
               )}
-              <p className="k-list-label">{activeShelf === 'recent' ? 'Recent · tap to log again' : 'Favourites · tap to log'}</p>
+              <p className="k-list-label">{activeShelf === 'recent' ? 'Recent · tap Log to repeat' : 'Saved · tap Log to repeat'}</p>
               <ul className="k-picks">
                 {shelfItems.map(item => (
                   <PickRow
                     key={item.id}
                     item={item}
-                    onPick={() => logAgain(item, shelfSource)}
+                    mealType={mealType}
+                    onPick={multiplier => logAgain(item, shelfSource, multiplier)}
                     onPortion={() => setPortionFor({ item, source: shelfSource })}
                   />
                 ))}
@@ -233,7 +251,8 @@ export function LogSheet() {
                   <PickRow
                     key={item.id}
                     item={item}
-                    onPick={() => logAgain(item, 'search')}
+                    mealType={mealType}
+                    onPick={multiplier => logAgain(item, 'search', multiplier)}
                     onPortion={() => setPortionFor({ item, source: 'search' })}
                   />
                 ))}
@@ -258,8 +277,12 @@ export function LogSheet() {
 
       {portionFor && (
         <PortionSheet
+          cue={null}
           name={portionFor.item.name}
           calories={portionFor.item.calories}
+          basis={'timestamp' in portionFor.item ? 'previous' : 'saved'}
+          grams={portionFor.item.servingSizeGrams}
+          mealType={mealType}
           onPick={multiplier => {
             const { item, source } = portionFor
             setPortionFor(null)
@@ -274,30 +297,18 @@ export function LogSheet() {
 
 function PickRow({
   item,
+  mealType,
   onPick,
   onPortion,
 }: {
   item: FoodEntry | SavedMeal
-  onPick: () => void
+  mealType: MealType
+  onPick: (multiplier: number) => void
   onPortion: () => void
 }) {
-  const hold = useLongPress(onPortion)
   return (
     <li className="k-pick">
-      <button
-        type="button"
-        className="k-pick-log"
-        onClick={() => { if (!hold.consumed()) onPick() }}
-        {...hold.handlers}
-      >
-        <span className={`k-food-tile is-tone-${foodToneFor(item.name)}`}><FoodIcon emoji={item.emoji} name={item.name} size={20} /></span>
-        <span className="k-pick-name">{item.name}</span>
-        <span className="k-pick-kcal tabular">{Math.round(item.calories)} kcal</span>
-        <span className="k-pick-plus" aria-hidden="true"><IconPlus size={16} /></span>
-      </button>
-      <button type="button" className="k-pick-portion" onClick={onPortion} aria-label={`Adjust portion for ${item.name}`}>
-        Portion
-      </button>
+      <RepeatMealRow item={item} basis={'timestamp' in item ? 'previous' : 'saved'} mealType={mealType} onLog={onPick} onPortion={onPortion} showNutrition={false} />
     </li>
   )
 }

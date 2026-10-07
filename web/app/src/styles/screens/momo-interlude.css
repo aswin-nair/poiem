@@ -1,0 +1,41 @@
+@layer screens {
+  .k-momo-interlude {
+    position: fixed;
+    inset-inline: var(--k-space-md);
+    bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + var(--k-space-md));
+    z-index: calc(var(--k-z-toast) - 2);
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: var(--k-space-sm) var(--k-space-md);
+    max-width: var(--k-shell);
+    max-height: calc(100dvh - var(--k-tabbar-h) - var(--safe-bottom, 0px) - var(--k-space-4xl));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin-inline: auto;
+    padding: var(--k-space-md) var(--k-space-lg) var(--k-space-xs);
+    border: 3px solid var(--k-sticker-ink);
+    background: var(--k-sticker-pink);
+    color: var(--k-sticker-ink);
+    box-shadow: var(--k-shadow);
+    font-family: var(--k-font-body);
+    animation: k-momo-interlude-in 160ms var(--k-ease) both;
+  }
+  .k-momo-interlude.is-static { animation: none; }
+  .k-momo-interlude-art { width: 64px; height: 72px; align-self: center; }
+  .k-momo-interlude-copy { min-width: 0; align-self: center; }
+  .k-momo-interlude-tag { display: inline-block; margin-block-end: var(--k-space-xs); font: 700 var(--k-type-meta)/1.2 var(--k-font-mono); text-transform: uppercase; }
+  .k-momo-interlude p { margin: 0; font: 800 var(--k-type-body)/1.4 var(--k-font-body); overflow-wrap: anywhere; }
+  .k-momo-interlude-actions { grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: var(--k-space-md); }
+  .k-momo-interlude-actions button { min-height: 44px; min-width: 44px; padding: var(--k-space-sm); border: 0; background: transparent; color: var(--k-sticker-ink); font: 700 var(--k-type-label)/1.2 var(--k-font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .k-momo-interlude-actions button:focus-visible { outline: 3px solid var(--k-sticker-ink); outline-offset: -3px; }
+  /* Reserve scroll room without moving existing content or collapsing the scroll
+     range when Momo leaves. The route lifecycle clears this measured space. */
+  :root[data-momo-interlude-reserved] .k-workspace-col > .app-main::after { content: ''; display: block; height: var(--k-momo-interlude-clearance, 0px); pointer-events: none; }
+  :root[data-momo-interlude="visible"] .mascot-overlay { visibility: hidden; }
+  @keyframes k-momo-interlude-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @media (min-width: 1120px) {
+    .k-momo-interlude { inset-inline-start: auto; inset-inline-end: var(--k-space-xl); bottom: var(--k-space-xl); width: 360px; margin-inline: 0; }
+  }
+  @media (max-height: 440px) { .k-momo-interlude-art { display: none; } .k-momo-interlude { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .k-momo-interlude { animation: none; } }
+}

@@ -5,7 +5,7 @@ import { eligibleNotificationKinds, type NotificationEligibilityInput } from '@f
 import { describe, expect, it } from 'vitest'
 
 const fixture = JSON.parse(readFileSync(
-  resolve(process.cwd(), '../../packages/domain/fixtures/notifications.v1.json'),
+  resolve(process.cwd(), '../../packages/domain/fixtures/notifications.v2.json'),
   'utf8',
 )) as {
   schemaVersion: number
@@ -16,9 +16,9 @@ const fixture = JSON.parse(readFileSync(
   }>
 }
 
-describe('shared notifications.v1 web adapter', () => {
+describe('shared notifications.v2 web adapter', () => {
   it('uses the supported fixture schema', () => {
-    expect(fixture.schemaVersion).toBe(1)
+    expect(fixture.schemaVersion).toBe(2)
   })
 
   it.each(fixture.cases)('$id', testCase => {

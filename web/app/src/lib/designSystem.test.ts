@@ -22,9 +22,10 @@ const LAYERED = {
   'styles/screens/first-run.css': 'screens',
   'styles/screens/pages.css': 'screens',
   'styles/screens/account.css': 'screens',
+  'styles/screens/momo-interlude.css': 'screens',
 } as const
 
-/** Held to the whole contract: type on the approved steps, nothing raised, nothing tilted. */
+/** Held to the whole contract: approved type, curated offset blocks, upright text. */
 const MIGRATED = [
   'styles/system/fonts.css',
   'styles/system/components.css',
@@ -36,6 +37,7 @@ const MIGRATED = [
   'styles/screens/insights.css',
   'styles/screens/you.css',
   'styles/screens/pages.css',
+  'styles/screens/momo-interlude.css',
 ] as const
 
 const APPROVED_TYPE = new Set([12, 14, 16, 18, 28, 40, 64])
@@ -44,11 +46,21 @@ const MASCOT_ART = /momo|sticker|plate|burst|nav-fab-face svg|empty-plate/
 const GEOMETRIC_ROTATION = /(?:^|[^\d.])(?:-)?(?:45|90|135|180|225|270|315)(?:\.\d+)?deg/
 
 /* An offset block says "this floats above the page", so overlays and the tab bar keep theirs. */
-const FLOATS = /toast|k-sheet|portion-sheet|modal-sheet|date-modal(?!-)|bottom-nav|nav-fab|settings-results|celebrate-inner/
+const FLOATS = /toast|k-sheet|portion-sheet|modal-sheet|date-modal(?!-)|bottom-nav|nav-fab|settings-results/
 /* One hero per route stays the loudest surface on it. */
 const HERO = /is-hero|about-hero|flow-analysis|flow-review-summary|manual-summary/
 /* Drawn rather than built: the mascot, his wardrobe, a torn ticket stub. */
-const DRAWN = /momo|wardrobe|celebrate-piece|torn-stub/
+const DRAWN = /momo|wardrobe|torn-stub|flow-camera-sticker/
+/* The playful Neo Brutalist direction adds deliberate depth to feature panels
+   and primary or selected controls. Reading rows and form fields stay flat. */
+const PLAYFUL = [
+  /\.pressable-primary\b|\.k-button\.is-primary\b|\.k-repeat-actions \.k-repeat-log\b/,
+  /\.k-method\b|\.flow-heading\b|\.flow-steps li\[aria-current|\.flow-description-card\b|\.photo-upload-zone\b/,
+  /\.k-saved \.page-heading\b|\.k-saved \.k-repeat-meal\b/,
+  /\.k-coach-head\b|\.k-coach-empty\b|\.k-coach-send\b/,
+  /\.you-header\b|\.appearance-settings\b|\.appearance-option > input:checked|\.you-shortcuts a\[aria-current/,
+  /\.progress-page-header\b|\.k-insights \.k-journey\b|\.consistency-card\b|\.range-chip\[aria-pressed|\.progress-log-btn\b/,
+]
 
 /** Innermost blocks are declarations; removing them leaves selectors and at-rules. */
 const selectorsOf = (css: string) => withoutComments(css).replace(/\{[^{}]*\}/g, ';')
@@ -143,7 +155,7 @@ describe('Poiem design system', () => {
     }
   })
 
-  it('keeps every resting surface flat, so only overlays, heroes and drawings cast a shadow', () => {
+  it('limits offset shadows to overlays, heroes, art and the approved playful panels and controls', () => {
     for (const path of MIGRATED) {
       const css = withoutComments(read(path))
       for (const { selector, body } of rulesOf(css)) {
@@ -152,7 +164,7 @@ describe('Poiem design system', () => {
           if (/^none/.test(value) || /inset/.test(value)) continue
           // A focus ring or a hairline is not an offset block.
           if (!/var\(--k-shadow|\d+px\s+\d+px\s+0/.test(value)) continue
-          if (FLOATS.test(selector) || HERO.test(selector) || DRAWN.test(selector)) continue
+          if (FLOATS.test(selector) || HERO.test(selector) || DRAWN.test(selector) || PLAYFUL.some(pattern => pattern.test(selector))) continue
           throw new Error(`${path} ${selector} rests on ${value}`)
         }
       }

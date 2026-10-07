@@ -7,6 +7,7 @@ import {
   localDayKey,
 } from '../lib/dates'
 import { IconChevronLeft, IconChevronRight } from './icons'
+import { feel } from '../lib/feel'
 
 interface WeekStripProps {
   selectedDate: Date
@@ -83,7 +84,12 @@ export function WeekStrip({
               type="button"
               className="week-day"
               disabled={isFuture}
-              onClick={() => onSelect(d)}
+              onClick={() => {
+                /* The same cue as the calendar's day picker. Choosing the day already
+                   shown is still a request (callers may refresh), just a silent one. */
+                if (!isSelected) feel('select')
+                onSelect(d)
+              }}
               aria-label={`${d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}${stateLabel}`}
               aria-pressed={isSelected}
               aria-current={isToday ? 'date' : undefined}

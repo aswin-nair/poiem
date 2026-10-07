@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { MOMO_POKES, todayGreeting } from './todayGreeting'
 
-const base = { hour: 9, mealsToday: 0, over: false, isToday: true }
+const base = { hour: 9, mealsToday: 0, isToday: true }
+
+// Whole words (with their plurals), so "cover" or "wonder" do not trip it; the two phrases stay as phrases.
+const NUTRITION_WORDS = /\b(?:big food day|fresh plate|over|under|goals?|targets?|macros?|protein|budget|deficit|calories?|kcal)\b/i
 
 describe('Momo’s greeting on Today', () => {
   it('says hello by first name and time of day', () => {
@@ -17,11 +20,28 @@ describe('Momo’s greeting on Today', () => {
     expect(todayGreeting({ ...base, hour: 19 }).line).toMatch(/Dinner/)
   })
 
-  it('celebrates showing up and never judges a big day', () => {
+  it('celebrates showing up', () => {
     expect(todayGreeting({ ...base, mealsToday: 2 }).line).toBe('You showed up. That’s the part worth celebrating.')
-    const big = todayGreeting({ ...base, hour: 20, mealsToday: 4, over: true }).line
-    expect(big).toMatch(/fresh plate/)
-    expect(big).not.toMatch(/too much|bad|over|exceed/i)
+  })
+
+  it('gives the same response whatever the day’s numbers were', () => {
+    const ctx = { hour: 20, name: 'Sam', mealsToday: 4, isToday: true }
+    const plain = todayGreeting(ctx)
+    // A caller that still passes the retired field must not change Momo.
+    expect(todayGreeting({ ...ctx, over: true } as typeof ctx)).toEqual(plain)
+    expect(todayGreeting({ ...ctx, over: false } as typeof ctx)).toEqual(plain)
+  })
+
+  it('never says anything about the numbers, in any state', () => {
+    for (const hour of [3, 8, 14, 19, 23]) {
+      for (const mealsToday of [0, 1, 4, 9]) {
+        for (const isToday of [true, false]) {
+          const { line } = todayGreeting({ hour, mealsToday, isToday })
+          expect(line).not.toMatch(NUTRITION_WORDS)
+        }
+      }
+    }
+    for (const poke of MOMO_POKES) expect(poke.line).not.toMatch(NUTRITION_WORDS)
   })
 
   it('keeps past days as a gentle look back', () => {

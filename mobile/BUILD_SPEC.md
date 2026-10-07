@@ -71,7 +71,7 @@ The mascot has six states, driven only by logging behaviour and streak status. I
 
 ### 2.6 Notifications
 
-Maximum two per day. One routine nudge at the user's inferred logging window. One "save" nudge, sent only when the streak genuinely expires tonight. No guilt copy, no shame imagery, no third notification under any circumstance.
+Maximum two per day, as a ceiling rather than a target. There is one neutral routine nudge, at the user's inferred logging window, and nothing else: no streak, freeze or target input decides whether it fires. There is no "save" nudge and no freeze notice. No guilt copy, no loss or pressure language (streak, lose, lost, alive, freeze, missed, last chance, running out, expires, hurry), no shame imagery, no second kind of notification under any circumstance.
 
 ### 2.7 No public comparison
 
@@ -575,7 +575,7 @@ Every quest is about **logging behaviour**. Do not generate quests about eating 
 
 - Grant one freeze on the first app open of each calendar month.
 - Auto-apply on a missed day if one is available. Do not ask, do not sell.
-- Notify gently the next morning: `Your freeze covered yesterday. Streak safe at 23.`
+- Say so in the app only, next time it is opened: `Your freeze covered yesterday. Streak safe at 23.` A used freeze is never announced by a push or local notification: that would be a loss-framed message, and §12 allows exactly one neutral routine nudge.
 
 This exists as a pressure valve. Losing a long streak is the most common reason people abandon a habit app permanently, and a free monthly freeze costs nothing and prevents most of that churn.
 
@@ -642,25 +642,26 @@ Every animation checks `AccessibilityInfo.isReduceMotionEnabled()` and degrades 
 
 **Files:** `src/notifications/*`
 
-Two scheduled notifications, hard-capped. Per §2.6.
+One scheduled routine nudge, hard-capped at two notifications a day (a ceiling, not a target). Per §2.6.
 
-**Routine nudge.** Compute the user's median first-log time over the last 14 days. Schedule 30 minutes after it. If there are fewer than 5 days of data, default to 19:00. Skip entirely if the user has already logged today.
+**Routine nudge.** Compute the user's median first-log time over the last 14 days. Schedule 30 minutes after it. If there are fewer than 5 days of data, default to 19:00. Skip entirely if the user has already logged today or tracking is paused. No streak, freeze or target input decides whether it fires.
 
-**Save nudge.** Fires only if all are true: streak > 0, nothing logged today, local time is 20:30, no freeze available. One per day maximum.
+There is no save nudge and no freeze notice. A used freeze is communicated in the app only (§10.2).
 
-Copy rules — the tone is a friendly nudge from something that likes you, not a guilt trip:
+Copy rules — the tone is a quiet note from something that is glad to see you, never a guilt trip and never a loss warning:
 
 ```
-GOOD  "Two minutes to keep your 14-day streak going."
-GOOD  "Your streak's still alive — log anything to keep it."
-GOOD  "Freeze used. Streak safe at 23."
+GOOD  "Your journal is here whenever you’re ready."
 
 BAD   "You've broken your promise to yourself."
 BAD   "Duo is disappointed in you."          // no guilt, no sad mascot
 BAD   "You're 400 calories over today."      // never mention the number
+BAD   "Two minutes to keep your 14-day streak going."     // loss framing
+BAD   "Your streak's still alive — log anything to keep it."  // loss framing
+BAD   "Freeze used. Streak safe at 23."      // loss framing
 ```
 
-Notifications never reference calories, weight, or how much someone ate.
+Notifications never reference calories, weight, how much someone ate, or anything that could be lost by not logging.
 
 ### Acceptance
 

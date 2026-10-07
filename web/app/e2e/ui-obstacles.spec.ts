@@ -1,17 +1,22 @@
 import { expect, test } from '@playwright/test'
-import { nav, settlePageLayout, signUpAndOnboard } from './helpers'
+import { clearAppStorage, completeOnboarding, nav, openYouDestination, settlePageLayout, signUp } from './helpers'
 
 test('daily summary, settings navigation and editor stay clear on a phone', async ({ page }, testInfo) => {
   test.setTimeout(120_000)
   const errors: string[] = []
   page.on('pageerror', error => errors.push(error.message))
   await page.setViewportSize({ width: 390, height: 844 })
-  await signUpAndOnboard(page)
+  await clearAppStorage(page)
+  await signUp(page)
+  await completeOnboarding(page, { dismissCelebration: false })
   await settlePageLayout(page)
-  // Notifications take priority over the roaming mascot and its speech bubble.
-  await expect(page.locator('.toast')).toBeVisible()
+  // The first accepted meal has one non-modal receipt and leaves phone controls clear.
+  const receipt = page.getByRole('complementary', { name: 'Log confirmation for Onboarding yogurt bowl', exact: true })
+  await expect(receipt).toBeVisible()
+  await expect(receipt.getByRole('status')).toContainText('Momo’s first piece: Blossom clip')
+  await expect(page.locator('.toast')).toHaveCount(0)
   await expect(page.locator('.mascot-host')).toHaveCount(0)
-  await page.locator('.toast').getByRole('button', { name: 'Dismiss', exact: true }).click()
+  await receipt.getByRole('button', { name: 'Dismiss', exact: true }).click()
   await expect(page.locator('.mascot-host')).toHaveCount(0)
   await page.screenshot({ path: testInfo.outputPath('today.png'), animations: 'disabled' })
   // The editorial summary is taller than one phone screen. Check that its
@@ -46,22 +51,22 @@ test('daily summary, settings navigation and editor stay clear on a phone', asyn
   await expect(page.getByRole('heading', { name: 'You', exact: true })).toBeVisible()
   await settlePageLayout(page)
   await page.screenshot({ path: testInfo.outputPath('you.png'), animations: 'disabled' })
-  console.log('You layout', { sectionLinks: await page.getByRole('navigation', { name: 'You page sections' }).boundingBox(), goals: await page.locator('.settings-goals-grid').boundingBox() })
-  const sections = page.getByRole('navigation', { name: 'You page sections' })
-  expect((await sections.boundingBox())!.height).toBeLessThanOrEqual(72)
-  await expect(sections.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page')
-  await sections.getByRole('link', { name: 'Your data' }).focus()
-  await page.keyboard.press('Enter')
-  await expect(sections.getByRole('link', { name: 'Your data' })).toHaveAttribute('aria-current', 'page')
+  const categories = page.getByRole('combobox', { name: 'Category', exact: true })
+  console.log('You layout', { categoryPicker: await categories.boundingBox(), goals: await page.locator('.settings-goals-grid').boundingBox() })
+  expect((await categories.boundingBox())!.height).toBeLessThanOrEqual(72)
+  await expect(categories).toHaveValue('overview')
+  await categories.focus()
+  await openYouDestination(page, 'Your data')
+  await expect(categories).toHaveValue('data')
   const toolbar = await page.locator('.you-toolbar').boundingBox()
   const dataHeading = await page.getByRole('heading', { name: 'Your data', exact: true }).boundingBox()
   expect(toolbar!.y).toBeGreaterThanOrEqual(-1)
   expect(dataHeading!.y).toBeGreaterThanOrEqual(toolbar!.y + toolbar!.height)
-  await sections.getByRole('link', { name: 'Profile & goals' }).click()
+  await openYouDestination(page, 'Profile & goals')
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill('UI audit user')
-  await expect(page.locator('.you-save-bar')).toContainText('Unsaved changes')
+  await expect(page.locator('.you-save-bar')).toContainText('Unsaved profile changes')
   await page.getByRole('button', { name: 'Save settings', exact: true }).click()
-  await expect(page.locator('.you-save-bar')).toContainText('Settings saved')
+  await expect(page.locator('.you-save-bar')).toContainText('Profile saved')
   await page.reload()
   await expect(page.getByRole('textbox', { name: 'Name', exact: true })).toHaveValue('UI audit user')
 

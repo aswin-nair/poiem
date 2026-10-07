@@ -31,8 +31,22 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testIgnore: /production\.spec\.ts|visual\.spec\.ts/,
+      testIgnore: /production\.spec\.ts|visual\.spec\.ts|mobile-ux\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'mobile',
+      testMatch: /mobile-ux\.spec\.ts/,
+      timeout: 120_000,
+      // Touch/device emulation on the installed Chromium runtime. Physical
+      // iOS Safari remains a separate device check.
+      use: { ...devices['iPhone 13'], browserName: 'chromium', timezoneId: 'UTC' },
+    },
+    {
+      name: 'mobile-pixel',
+      testMatch: /mobile-ux\.spec\.ts/,
+      timeout: 120_000,
+      use: { ...devices['Pixel 7'], browserName: 'chromium', timezoneId: 'UTC' },
     },
     {
       name: 'visual',

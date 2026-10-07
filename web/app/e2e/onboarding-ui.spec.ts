@@ -58,7 +58,10 @@ for (const viewport of [{ width: 320, height: 844 }, { width: 390, height: 844 }
         await page.getByRole('button', { name: step === 6 ? 'Continue to first meal' : 'Continue', exact: true }).click()
       }
     }
-    await expect(page.getByRole('dialog', { name: 'Meal logged' })).toBeVisible()
+    const moment = page.getByRole('complementary', { name: 'Log confirmation for Yogurt and berries', exact: true })
+    await expect(moment).toBeVisible()
+    await expect(moment.getByRole('status')).toContainText('Logged Yogurt and berries')
+    await expect(page.getByRole('dialog', { name: 'Meal logged' })).toHaveCount(0)
     expect(errors).toEqual([])
   })
 }

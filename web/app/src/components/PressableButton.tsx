@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useFeel } from '../hooks/useHaptic'
+import type { SoundCue } from '../lib/feel'
 
 /**
  * The signature component, §6.1. The button looks physically raised and
@@ -21,6 +22,8 @@ export interface PressableButtonProps {
   className?: string
   type?: 'button' | 'submit'
   to?: string
+  /** A save-specific confirmation can own the cue while the button still presses. */
+  cue?: SoundCue | null
   'aria-label'?: string
 }
 
@@ -34,6 +37,7 @@ export function PressableButton({
   className = '',
   type = 'button',
   to,
+  cue = 'press',
   ...rest
 }: PressableButtonProps) {
   const feel = useFeel()
@@ -42,7 +46,7 @@ export function PressableButton({
   function press() {
     if (disabled) return
     setPressed(true)
-    feel('press')
+    if (cue) feel(cue)
   }
 
   const release = () => setPressed(false)

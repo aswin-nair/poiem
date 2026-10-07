@@ -1,0 +1,1717 @@
+{
+  "recordedAt": "2026-10-06T05:03:16.976Z",
+  "commit": "96ef630a5f37e04a24ceba826510342a3f4b280b",
+  "harnessCommit": "4f52bd75872ae0c45025164ad5c945b2d74540de",
+  "dirty": true,
+  "browser": "149.0.7827.55",
+  "device": {
+    "os": "win32",
+    "release": "10.0.26200",
+    "cpu": "Snapdragon(R) X 10-core X1P64100 @ 3.40 GHz",
+    "viewport": "390×844",
+    "cpuThrottle": 4
+  },
+  "baseURL": "http://localhost:4398/app/",
+  "repetitions": 10,
+  "baseline": true,
+  "method": "Trusted click capture → first present/absent feedback DOM with nonzero opacity → following real rAF (conservative paint proxy). Long tasks overlap that window; excludes initial loading. Cold navigation per sample; no fake performance clock. Coach response is mocked; send metric is local message feedback, not model latency. Baseline mode accepts retired dialogs/toasts as its save acknowledgement.",
+  "budgets": {
+    "p95Ms": 100,
+    "attributableLongTasks": 0
+  },
+  "summary": [
+    {
+      "interaction": "sheet-open",
+      "samples": 10,
+      "p95Ms": 715,
+      "longTasks": 20
+    },
+    {
+      "interaction": "sheet-close",
+      "samples": 10,
+      "p95Ms": 207.40000000596046,
+      "longTasks": 10
+    },
+    {
+      "interaction": "manual-save",
+      "samples": 10,
+      "p95Ms": 1503,
+      "longTasks": 44
+    },
+    {
+      "interaction": "saved-relog",
+      "samples": 10,
+      "p95Ms": 1760.7000000029802,
+      "longTasks": 54
+    },
+    {
+      "interaction": "first-meal-moment",
+      "samples": 10,
+      "p95Ms": 1476.0999999940395,
+      "longTasks": 59
+    },
+    {
+      "interaction": "second-log-toast",
+      "samples": 10,
+      "p95Ms": 1537.4000000059605,
+      "longTasks": 41
+    },
+    {
+      "interaction": "coach-send",
+      "samples": 10,
+      "p95Ms": 309.40000000596046,
+      "longTasks": 10
+    }
+  ],
+  "results": [
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 2140.5,
+      "end": 2603.6000000089407,
+      "feedbackMs": 463.1000000089407,
+      "longTasks": [
+        {
+          "start": 2067,
+          "duration": 116
+        },
+        {
+          "start": 2516.9000000059605,
+          "duration": 66
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 3269.9000000059605,
+      "end": 3477.300000011921,
+      "feedbackMs": 207.40000000596046,
+      "longTasks": [
+        {
+          "start": 3169.9000000059605,
+          "duration": 111
+        },
+        {
+          "start": 3317.7000000029802,
+          "duration": 108
+        }
+      ]
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1382.1000000089407,
+      "end": 2269.7000000029802,
+      "feedbackMs": 887.5999999940395,
+      "longTasks": [
+        {
+          "start": 1370.9000000059605,
+          "duration": 101
+        },
+        {
+          "start": 1506.9000000059605,
+          "duration": 90
+        },
+        {
+          "start": 1784.9000000059605,
+          "duration": 88
+        },
+        {
+          "start": 2108.2000000029802,
+          "duration": 67
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1191.4000000059605,
+      "end": 2025,
+      "feedbackMs": 833.5999999940395,
+      "longTasks": [
+        {
+          "start": 1154.4000000059605,
+          "duration": 138
+        },
+        {
+          "start": 1332.4000000059605,
+          "duration": 60
+        },
+        {
+          "start": 1472.6000000089407,
+          "duration": 72
+        },
+        {
+          "start": 1637.800000011921,
+          "duration": 54
+        },
+        {
+          "start": 1705.5,
+          "duration": 78
+        },
+        {
+          "start": 1885.4000000059605,
+          "duration": 52
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1494.7000000029802,
+      "end": 2526.2000000029802,
+      "feedbackMs": 1031.5,
+      "longTasks": [
+        {
+          "start": 1482.7999999970198,
+          "duration": 121
+        },
+        {
+          "start": 1706,
+          "duration": 115
+        },
+        {
+          "start": 2016,
+          "duration": 123
+        },
+        {
+          "start": 2322.2999999970198,
+          "duration": 50
+        },
+        {
+          "start": 2415.5999999940395,
+          "duration": 52
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1320.199999988079,
+      "end": 1874.699999988079,
+      "feedbackMs": 554.5,
+      "longTasks": [
+        {
+          "start": 1282.199999988079,
+          "duration": 101
+        },
+        {
+          "start": 1423,
+          "duration": 98
+        },
+        {
+          "start": 1668.199999988079,
+          "duration": 59
+        },
+        {
+          "start": 1749.5999999940395,
+          "duration": 67
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 2158.2000000029802,
+      "end": 2303.9000000059605,
+      "feedbackMs": 145.70000000298023,
+      "longTasks": [
+        {
+          "start": 2145.4000000059605,
+          "duration": 152
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 1397.5999999940395,
+      "end": 1812.3999999910593,
+      "feedbackMs": 414.79999999701977,
+      "longTasks": [
+        {
+          "start": 1701.5999999940395,
+          "duration": 64
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 2365.2999999970198,
+      "end": 2435,
+      "feedbackMs": 69.70000000298023,
+      "longTasks": []
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1437.300000011921,
+      "end": 2431.5,
+      "feedbackMs": 994.1999999880791,
+      "longTasks": [
+        {
+          "start": 1401.6000000089407,
+          "duration": 126
+        },
+        {
+          "start": 1609.4000000059605,
+          "duration": 113
+        },
+        {
+          "start": 1898.4000000059605,
+          "duration": 79
+        },
+        {
+          "start": 2031.6000000089407,
+          "duration": 83
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1296.5999999940395,
+      "end": 2010.8999999910593,
+      "feedbackMs": 714.2999999970198,
+      "longTasks": [
+        {
+          "start": 1296,
+          "duration": 122
+        },
+        {
+          "start": 1442.2000000029802,
+          "duration": 97
+        },
+        {
+          "start": 1709.8999999910593,
+          "duration": 57
+        },
+        {
+          "start": 1847,
+          "duration": 57
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1573.5,
+      "end": 2653.8999999910593,
+      "feedbackMs": 1080.3999999910593,
+      "longTasks": [
+        {
+          "start": 1523.199999988079,
+          "duration": 141
+        },
+        {
+          "start": 1694.5,
+          "duration": 135
+        },
+        {
+          "start": 1969.8999999910593,
+          "duration": 122
+        },
+        {
+          "start": 2127,
+          "duration": 63
+        },
+        {
+          "start": 2264.3999999910593,
+          "duration": 104
+        },
+        {
+          "start": 2537.2999999970198,
+          "duration": 61
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1316.7000000029802,
+      "end": 1934,
+      "feedbackMs": 617.2999999970198,
+      "longTasks": [
+        {
+          "start": 1276,
+          "duration": 108
+        },
+        {
+          "start": 1388.2000000029802,
+          "duration": 139
+        },
+        {
+          "start": 1731.5999999940395,
+          "duration": 108
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1705.5999999940395,
+      "end": 1868.0999999940395,
+      "feedbackMs": 162.5,
+      "longTasks": [
+        {
+          "start": 1650.8999999910593,
+          "duration": 210
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 1481.199999988079,
+      "end": 1897.0999999940395,
+      "feedbackMs": 415.90000000596046,
+      "longTasks": [
+        {
+          "start": 1447.5,
+          "duration": 65
+        },
+        {
+          "start": 1790.7999999970198,
+          "duration": 83
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 2368.199999988079,
+      "end": 2464.3999999910593,
+      "feedbackMs": 96.20000000298023,
+      "longTasks": [
+        {
+          "start": 2374.5999999940395,
+          "duration": 68
+        }
+      ]
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1316.2000000029802,
+      "end": 2092.7999999970198,
+      "feedbackMs": 776.5999999940395,
+      "longTasks": [
+        {
+          "start": 1275.8999999910593,
+          "duration": 71
+        },
+        {
+          "start": 1452.8999999910593,
+          "duration": 109
+        },
+        {
+          "start": 1922.7000000029802,
+          "duration": 58
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1377.300000011921,
+      "end": 2397.1000000089407,
+      "feedbackMs": 1019.7999999970198,
+      "longTasks": [
+        {
+          "start": 1330.300000011921,
+          "duration": 190
+        },
+        {
+          "start": 1523.6000000089407,
+          "duration": 119
+        },
+        {
+          "start": 1780.800000011921,
+          "duration": 100
+        },
+        {
+          "start": 1891.2000000029802,
+          "duration": 74
+        },
+        {
+          "start": 2087.9000000059605,
+          "duration": 73
+        },
+        {
+          "start": 2203.9000000059605,
+          "duration": 92
+        },
+        {
+          "start": 2329,
+          "duration": 56
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1424.5999999940395,
+      "end": 2239.4000000059605,
+      "feedbackMs": 814.8000000119209,
+      "longTasks": [
+        {
+          "start": 1407.0999999940395,
+          "duration": 97
+        },
+        {
+          "start": 1520.2999999970198,
+          "duration": 123
+        },
+        {
+          "start": 1762.5999999940395,
+          "duration": 52
+        },
+        {
+          "start": 1824.7000000029802,
+          "duration": 58
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 2516.2999999970198,
+      "end": 3600.8999999910593,
+      "feedbackMs": 1084.5999999940395,
+      "longTasks": [
+        {
+          "start": 2462.2000000029802,
+          "duration": 126
+        },
+        {
+          "start": 2756.7000000029802,
+          "duration": 163
+        },
+        {
+          "start": 3188.0999999940395,
+          "duration": 151
+        },
+        {
+          "start": 3426.7999999970198,
+          "duration": 87
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1356.2000000029802,
+      "end": 1498.1000000089407,
+      "feedbackMs": 141.90000000596046,
+      "longTasks": [
+        {
+          "start": 1351.6000000089407,
+          "duration": 139
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 1612.800000011921,
+      "end": 2000.9000000059605,
+      "feedbackMs": 388.09999999403954,
+      "longTasks": [
+        {
+          "start": 1607.300000011921,
+          "duration": 59
+        },
+        {
+          "start": 1886.9000000059605,
+          "duration": 88
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 2562.6000000089407,
+      "end": 2632.5,
+      "feedbackMs": 69.8999999910593,
+      "longTasks": []
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1481.7999999970198,
+      "end": 2334.5,
+      "feedbackMs": 852.7000000029802,
+      "longTasks": [
+        {
+          "start": 1446.7000000029802,
+          "duration": 102
+        },
+        {
+          "start": 1626.2999999970198,
+          "duration": 100
+        },
+        {
+          "start": 1867.0999999940395,
+          "duration": 83
+        },
+        {
+          "start": 2011.5999999940395,
+          "duration": 50
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1253.0999999940395,
+      "end": 2159,
+      "feedbackMs": 905.9000000059605,
+      "longTasks": [
+        {
+          "start": 1211.5999999940395,
+          "duration": 161
+        },
+        {
+          "start": 1379.0999999940395,
+          "duration": 130
+        },
+        {
+          "start": 1726.0999999940395,
+          "duration": 108
+        },
+        {
+          "start": 2006.5,
+          "duration": 65
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1473.3999999910593,
+      "end": 2599,
+      "feedbackMs": 1125.6000000089407,
+      "longTasks": [
+        {
+          "start": 1453.5,
+          "duration": 125
+        },
+        {
+          "start": 1616.8999999910593,
+          "duration": 80
+        },
+        {
+          "start": 1897.3999999910593,
+          "duration": 63
+        },
+        {
+          "start": 2026.2999999970198,
+          "duration": 80
+        },
+        {
+          "start": 2107.0999999940395,
+          "duration": 63
+        },
+        {
+          "start": 2206,
+          "duration": 57
+        },
+        {
+          "start": 2267.0999999940395,
+          "duration": 82
+        },
+        {
+          "start": 2389.5,
+          "duration": 71
+        },
+        {
+          "start": 2482.2000000029802,
+          "duration": 59
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1545.4000000059605,
+      "end": 2003.2000000029802,
+      "feedbackMs": 457.79999999701977,
+      "longTasks": [
+        {
+          "start": 1523.6000000089407,
+          "duration": 96
+        },
+        {
+          "start": 1632.1000000089407,
+          "duration": 51
+        },
+        {
+          "start": 1720.7999999970198,
+          "duration": 61
+        },
+        {
+          "start": 1881.5,
+          "duration": 70
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1619,
+      "end": 1928.4000000059605,
+      "feedbackMs": 309.40000000596046,
+      "longTasks": [
+        {
+          "start": 1554.4000000059605,
+          "duration": 324
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 1708.5,
+      "end": 2100,
+      "feedbackMs": 391.5,
+      "longTasks": [
+        {
+          "start": 1648.4000000059605,
+          "duration": 74
+        },
+        {
+          "start": 2004.5999999940395,
+          "duration": 86
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 2652.2999999970198,
+      "end": 2708.4000000059605,
+      "feedbackMs": 56.1000000089407,
+      "longTasks": [
+        {
+          "start": 2614.2000000029802,
+          "duration": 51
+        }
+      ]
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1439.7999999970198,
+      "end": 2260.199999988079,
+      "feedbackMs": 820.3999999910593,
+      "longTasks": [
+        {
+          "start": 1402.199999988079,
+          "duration": 113
+        },
+        {
+          "start": 1620.5,
+          "duration": 88
+        },
+        {
+          "start": 1828.0999999940395,
+          "duration": 60
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1107.5,
+      "end": 1776.7999999970198,
+      "feedbackMs": 669.2999999970198,
+      "longTasks": [
+        {
+          "start": 1035.5,
+          "duration": 142
+        },
+        {
+          "start": 1201.9000000059605,
+          "duration": 83
+        },
+        {
+          "start": 1410.1000000089407,
+          "duration": 75
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1843.2000000029802,
+      "end": 3319.2999999970198,
+      "feedbackMs": 1476.0999999940395,
+      "longTasks": [
+        {
+          "start": 1791.3999999910593,
+          "duration": 163
+        },
+        {
+          "start": 2134.0999999940395,
+          "duration": 158
+        },
+        {
+          "start": 2603.5999999940395,
+          "duration": 122
+        },
+        {
+          "start": 2798.2000000029802,
+          "duration": 59
+        },
+        {
+          "start": 2996,
+          "duration": 54
+        },
+        {
+          "start": 3091,
+          "duration": 55
+        },
+        {
+          "start": 3171.8999999910593,
+          "duration": 61
+        },
+        {
+          "start": 3259.2000000029802,
+          "duration": 51
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1430.2999999970198,
+      "end": 2020.0999999940395,
+      "feedbackMs": 589.7999999970198,
+      "longTasks": [
+        {
+          "start": 1396.9000000059605,
+          "duration": 105
+        },
+        {
+          "start": 1530.0999999940395,
+          "duration": 105
+        },
+        {
+          "start": 1771.2999999970198,
+          "duration": 95
+        },
+        {
+          "start": 1894.7999999970198,
+          "duration": 56
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1399,
+      "end": 1539.5999999940395,
+      "feedbackMs": 140.59999999403954,
+      "longTasks": [
+        {
+          "start": 1372.9000000059605,
+          "duration": 132
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 1619.6000000089407,
+      "end": 2015,
+      "feedbackMs": 395.3999999910593,
+      "longTasks": [
+        {
+          "start": 1555.9000000059605,
+          "duration": 68
+        },
+        {
+          "start": 1932.9000000059605,
+          "duration": 61
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 2510.800000011921,
+      "end": 2561,
+      "feedbackMs": 50.19999998807907,
+      "longTasks": []
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1771.0999999940395,
+      "end": 2930.2000000029802,
+      "feedbackMs": 1159.1000000089407,
+      "longTasks": [
+        {
+          "start": 1765.0999999940395,
+          "duration": 83
+        },
+        {
+          "start": 1878.4000000059605,
+          "duration": 162
+        },
+        {
+          "start": 2255.7000000029802,
+          "duration": 105
+        },
+        {
+          "start": 2431.5999999940395,
+          "duration": 66
+        },
+        {
+          "start": 2860.7000000029802,
+          "duration": 56
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1374.6000000089407,
+      "end": 2160.7000000029802,
+      "feedbackMs": 786.0999999940395,
+      "longTasks": [
+        {
+          "start": 1329.7000000029802,
+          "duration": 142
+        },
+        {
+          "start": 1475.300000011921,
+          "duration": 94
+        },
+        {
+          "start": 1675.800000011921,
+          "duration": 130
+        },
+        {
+          "start": 1816.7000000029802,
+          "duration": 58
+        },
+        {
+          "start": 1927.5,
+          "duration": 55
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1341.2000000029802,
+      "end": 2259.7999999970198,
+      "feedbackMs": 918.5999999940395,
+      "longTasks": [
+        {
+          "start": 1517.8999999910593,
+          "duration": 125
+        },
+        {
+          "start": 1804.2000000029802,
+          "duration": 96
+        },
+        {
+          "start": 1910.8999999910593,
+          "duration": 87
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1421.6000000089407,
+      "end": 2208.7999999970198,
+      "feedbackMs": 787.1999999880791,
+      "longTasks": [
+        {
+          "start": 1376.1000000089407,
+          "duration": 113
+        },
+        {
+          "start": 1507.2999999970198,
+          "duration": 171
+        },
+        {
+          "start": 1885.7000000029802,
+          "duration": 101
+        },
+        {
+          "start": 1997.6000000089407,
+          "duration": 67
+        },
+        {
+          "start": 2099.2000000029802,
+          "duration": 61
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1260.1000000089407,
+      "end": 1380.1000000089407,
+      "feedbackMs": 120,
+      "longTasks": [
+        {
+          "start": 1221,
+          "duration": 148
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 2137.2999999970198,
+      "end": 2778.4000000059605,
+      "feedbackMs": 641.1000000089407,
+      "longTasks": [
+        {
+          "start": 2042.5,
+          "duration": 132
+        },
+        {
+          "start": 2593.9000000059605,
+          "duration": 142
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 3281.0999999940395,
+      "end": 3411,
+      "feedbackMs": 129.90000000596046,
+      "longTasks": [
+        {
+          "start": 3212.7000000029802,
+          "duration": 71
+        },
+        {
+          "start": 3300.7999999970198,
+          "duration": 78
+        }
+      ]
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1243.4000000059605,
+      "end": 2016,
+      "feedbackMs": 772.5999999940395,
+      "longTasks": [
+        {
+          "start": 1194.5999999940395,
+          "duration": 122
+        },
+        {
+          "start": 1321,
+          "duration": 92
+        },
+        {
+          "start": 1553.5999999940395,
+          "duration": 102
+        },
+        {
+          "start": 1863.9000000059605,
+          "duration": 54
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1596.8999999910593,
+      "end": 3357.5999999940395,
+      "feedbackMs": 1760.7000000029802,
+      "longTasks": [
+        {
+          "start": 1509.2999999970198,
+          "duration": 332
+        },
+        {
+          "start": 2025.5999999940395,
+          "duration": 148
+        },
+        {
+          "start": 2564.699999988079,
+          "duration": 198
+        },
+        {
+          "start": 2765.0999999940395,
+          "duration": 72
+        },
+        {
+          "start": 2857.0999999940395,
+          "duration": 119
+        },
+        {
+          "start": 2993.5,
+          "duration": 77
+        },
+        {
+          "start": 3084.5999999940395,
+          "duration": 57
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 3142.5,
+      "end": 4519.699999988079,
+      "feedbackMs": 1377.199999988079,
+      "longTasks": [
+        {
+          "start": 3110.2999999970198,
+          "duration": 159
+        },
+        {
+          "start": 3400.8999999910593,
+          "duration": 141
+        },
+        {
+          "start": 3754.8999999910593,
+          "duration": 134
+        },
+        {
+          "start": 3958.3999999910593,
+          "duration": 112
+        },
+        {
+          "start": 4070.7999999970198,
+          "duration": 56
+        },
+        {
+          "start": 4232.199999988079,
+          "duration": 77
+        },
+        {
+          "start": 4405.199999988079,
+          "duration": 55
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 2940.2000000029802,
+      "end": 4477.600000008941,
+      "feedbackMs": 1537.4000000059605,
+      "longTasks": [
+        {
+          "start": 2885.1000000089407,
+          "duration": 218
+        },
+        {
+          "start": 3297.7000000029802,
+          "duration": 270
+        },
+        {
+          "start": 3969.800000011921,
+          "duration": 237
+        },
+        {
+          "start": 4207,
+          "duration": 65
+        },
+        {
+          "start": 4305.20000000298,
+          "duration": 92
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1327,
+      "end": 1469.3999999910593,
+      "feedbackMs": 142.3999999910593,
+      "longTasks": [
+        {
+          "start": 1306.5999999940395,
+          "duration": 156
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 1691.1000000089407,
+      "end": 2406.1000000089407,
+      "feedbackMs": 715,
+      "longTasks": [
+        {
+          "start": 1573.4000000059605,
+          "duration": 154
+        },
+        {
+          "start": 1880.9000000059605,
+          "duration": 60
+        },
+        {
+          "start": 2213.6000000089407,
+          "duration": 152
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 2869.800000011921,
+      "end": 3050.1000000089407,
+      "feedbackMs": 180.29999999701977,
+      "longTasks": [
+        {
+          "start": 2820.7000000029802,
+          "duration": 56
+        },
+        {
+          "start": 2891.4000000059605,
+          "duration": 136
+        }
+      ]
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 3234,
+      "end": 4737,
+      "feedbackMs": 1503,
+      "longTasks": [
+        {
+          "start": 3195.7000000029802,
+          "duration": 188
+        },
+        {
+          "start": 3501,
+          "duration": 155
+        },
+        {
+          "start": 3927.2000000029802,
+          "duration": 124
+        },
+        {
+          "start": 4101.20000000298,
+          "duration": 93
+        },
+        {
+          "start": 4196.20000000298,
+          "duration": 60
+        },
+        {
+          "start": 4271.79999999702,
+          "duration": 67
+        },
+        {
+          "start": 4426.5,
+          "duration": 61
+        },
+        {
+          "start": 4519,
+          "duration": 51
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1273.5,
+      "end": 2134.5,
+      "feedbackMs": 861,
+      "longTasks": [
+        {
+          "start": 1241.4000000059605,
+          "duration": 102
+        },
+        {
+          "start": 1376,
+          "duration": 96
+        },
+        {
+          "start": 1661.9000000059605,
+          "duration": 102
+        },
+        {
+          "start": 1765.300000011921,
+          "duration": 53
+        },
+        {
+          "start": 1836,
+          "duration": 57
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1456.2999999970198,
+      "end": 2305.2999999970198,
+      "feedbackMs": 849,
+      "longTasks": [
+        {
+          "start": 1422.5999999940395,
+          "duration": 93
+        },
+        {
+          "start": 1626.699999988079,
+          "duration": 84
+        },
+        {
+          "start": 1885.5,
+          "duration": 61
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1347,
+      "end": 1894.7999999970198,
+      "feedbackMs": 547.7999999970198,
+      "longTasks": [
+        {
+          "start": 1329.3999999910593,
+          "duration": 93
+        },
+        {
+          "start": 1435.5999999940395,
+          "duration": 73
+        },
+        {
+          "start": 1675.7999999970198,
+          "duration": 68
+        },
+        {
+          "start": 1759.0999999940395,
+          "duration": 56
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1313.9000000059605,
+      "end": 1466.2999999970198,
+      "feedbackMs": 152.3999999910593,
+      "longTasks": [
+        {
+          "start": 1298.2000000029802,
+          "duration": 162
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 2436.3999999910593,
+      "end": 2816.5,
+      "feedbackMs": 380.1000000089407,
+      "longTasks": [
+        {
+          "start": 2354.3999999910593,
+          "duration": 132
+        },
+        {
+          "start": 2716.8999999910593,
+          "duration": 91
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 3443.8999999910593,
+      "end": 3610.0999999940395,
+      "feedbackMs": 166.20000000298023,
+      "longTasks": [
+        {
+          "start": 3357.7999999970198,
+          "duration": 95
+        },
+        {
+          "start": 3470.7999999970198,
+          "duration": 108
+        }
+      ]
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1321,
+      "end": 2141.699999988079,
+      "feedbackMs": 820.6999999880791,
+      "longTasks": [
+        {
+          "start": 1295.5999999940395,
+          "duration": 106
+        },
+        {
+          "start": 1437.3999999910593,
+          "duration": 90
+        },
+        {
+          "start": 1743.8999999910593,
+          "duration": 58
+        },
+        {
+          "start": 1954.5999999940395,
+          "duration": 65
+        },
+        {
+          "start": 2024.5,
+          "duration": 56
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 2636.2999999970198,
+      "end": 4040.2999999970198,
+      "feedbackMs": 1404,
+      "longTasks": [
+        {
+          "start": 2591.2999999970198,
+          "duration": 188
+        },
+        {
+          "start": 2811.2999999970198,
+          "duration": 72
+        },
+        {
+          "start": 3170.2000000029802,
+          "duration": 149
+        },
+        {
+          "start": 3378.2000000029802,
+          "duration": 61
+        },
+        {
+          "start": 3493.5,
+          "duration": 64
+        },
+        {
+          "start": 3576.3999999910593,
+          "duration": 68
+        },
+        {
+          "start": 3672.2000000029802,
+          "duration": 70
+        },
+        {
+          "start": 3744.5999999940395,
+          "duration": 54
+        },
+        {
+          "start": 3800,
+          "duration": 75
+        },
+        {
+          "start": 3899.7000000029802,
+          "duration": 58
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1180.0999999940395,
+      "end": 1997.199999988079,
+      "feedbackMs": 817.0999999940395,
+      "longTasks": [
+        {
+          "start": 1173.5999999940395,
+          "duration": 103
+        },
+        {
+          "start": 1279.7999999970198,
+          "duration": 116
+        },
+        {
+          "start": 1574.8999999910593,
+          "duration": 78
+        },
+        {
+          "start": 1680.8999999910593,
+          "duration": 57
+        },
+        {
+          "start": 1791,
+          "duration": 60
+        },
+        {
+          "start": 1932.2999999970198,
+          "duration": 55
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1543.2000000029802,
+      "end": 2429,
+      "feedbackMs": 885.7999999970198,
+      "longTasks": [
+        {
+          "start": 1505.5,
+          "duration": 158
+        },
+        {
+          "start": 1785.8999999910593,
+          "duration": 137
+        },
+        {
+          "start": 2044.5,
+          "duration": 114
+        },
+        {
+          "start": 2236.7000000029802,
+          "duration": 121
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 1661.2000000029802,
+      "end": 1818.2000000029802,
+      "feedbackMs": 157,
+      "longTasks": [
+        {
+          "start": 1611.2000000029802,
+          "duration": 200
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 1628,
+      "end": 2089.800000011921,
+      "feedbackMs": 461.80000001192093,
+      "longTasks": [
+        {
+          "start": 1571.5,
+          "duration": 66
+        },
+        {
+          "start": 1989,
+          "duration": 65
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 2611.6000000089407,
+      "end": 2666.5,
+      "feedbackMs": 54.8999999910593,
+      "longTasks": []
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1240.7000000029802,
+      "end": 2102.800000011921,
+      "feedbackMs": 862.1000000089407,
+      "longTasks": [
+        {
+          "start": 1226.2000000029802,
+          "duration": 108
+        },
+        {
+          "start": 1360.300000011921,
+          "duration": 89
+        },
+        {
+          "start": 1652.2000000029802,
+          "duration": 50
+        },
+        {
+          "start": 1942.300000011921,
+          "duration": 70
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1513.3999999910593,
+      "end": 2292.199999988079,
+      "feedbackMs": 778.7999999970198,
+      "longTasks": [
+        {
+          "start": 1467.199999988079,
+          "duration": 172
+        },
+        {
+          "start": 1651.0999999940395,
+          "duration": 76
+        },
+        {
+          "start": 1877.199999988079,
+          "duration": 74
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1687.3999999910593,
+      "end": 2839.699999988079,
+      "feedbackMs": 1152.2999999970198,
+      "longTasks": [
+        {
+          "start": 1678.3999999910593,
+          "duration": 101
+        },
+        {
+          "start": 1783.5,
+          "duration": 79
+        },
+        {
+          "start": 2095.3999999910593,
+          "duration": 93
+        },
+        {
+          "start": 2283.199999988079,
+          "duration": 82
+        },
+        {
+          "start": 2422.2999999970198,
+          "duration": 84
+        },
+        {
+          "start": 2524.5999999940395,
+          "duration": 63
+        },
+        {
+          "start": 2629.5999999940395,
+          "duration": 58
+        },
+        {
+          "start": 2706.8999999910593,
+          "duration": 60
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast, [role=\"dialog\"]",
+      "absent": false,
+      "start": 1229.2999999970198,
+      "end": 1900.0999999940395,
+      "feedbackMs": 670.7999999970198,
+      "longTasks": [
+        {
+          "start": 1220.5,
+          "duration": 76
+        },
+        {
+          "start": 1313,
+          "duration": 151
+        },
+        {
+          "start": 1641.3999999910593,
+          "duration": 54
+        },
+        {
+          "start": 1760.5,
+          "duration": 79
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 2054.300000011921,
+      "end": 2178.5,
+      "feedbackMs": 124.19999998807907,
+      "longTasks": [
+        {
+          "start": 2011.300000011921,
+          "duration": 161
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -104,13 +104,13 @@ function safeState(state: AppState): AppState {
   return safe
 }
 
-function hydratedState(value: unknown, userId: string): AppState {
+function hydratedState(value: unknown, apiKey = ''): AppState {
   const validation = validateAppState(value, new Date(), {
     allowLegacyGamification: true,
     allowApiKey: false,
   })
   if (!validation.ok) throw new DurableRecoveryError(validation.error)
-  return importData(JSON.stringify(value), loadPrivateAIKey(userId))
+  return importData(JSON.stringify(value), apiKey)
 }
 
 function validVersion(value: unknown): value is number {
@@ -191,8 +191,8 @@ function parseAccount(value: unknown, userId: string): DurableAccount {
     throw new DurableRecoveryError()
   }
 
-  const state = hydratedState(account.state, userId)
-  for (const mutation of account.outbox) hydratedState(mutation.state, userId)
+  const state = hydratedState(account.state)
+  for (const mutation of account.outbox) hydratedState(mutation.state)
   return {
     ...(account as DurableAccount),
     state: stateWithoutPrivateSecrets(state),
@@ -321,7 +321,7 @@ export async function loadDurableState(userId: string): Promise<DurableHydration
     return {
       state: {
         ...account.state,
-        aiSettings: { ...account.state.aiSettings, apiKey: loadPrivateAIKey(userId) },
+        aiSettings: { ...account.state.aiSettings, apiKey: await loadPrivateAIKey(userId) },
       },
       serverVersion: account.serverVersion,
       pendingCount: account.outbox.length,

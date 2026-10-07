@@ -195,23 +195,6 @@
   padding: 10px;
 }
 
-.levelup-card {
-  border: var(--edge-width) solid var(--edge-neutral);
-  border-bottom-width: var(--edge-depth);
-}
-
-.celebrate-overlay {
-  background: var(--paper);
-}
-
-.celebrate-inner {
-  background: var(--paper-card);
-  border: var(--edge-width) solid var(--edge-neutral);
-  border-bottom-width: var(--edge-depth);
-  border-radius: 26px;
-  padding: 28px 20px;
-}
-
 .home-skeleton-path { margin-bottom: 16px; }
 
 .home-skeleton-macros {

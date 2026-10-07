@@ -7,7 +7,7 @@ import {
 import { describe, expect, it } from 'vitest';
 
 const fixtureUrl = new URL(
-  '../../../packages/domain/fixtures/notifications.v1.json',
+  '../../../packages/domain/fixtures/notifications.v2.json',
   import.meta.url,
 );
 const fixture = JSON.parse(readFileSync(fixtureUrl, 'utf8')) as {
@@ -19,9 +19,9 @@ const fixture = JSON.parse(readFileSync(fixtureUrl, 'utf8')) as {
   }[];
 };
 
-describe('shared notifications.v1 mobile characterization', () => {
+describe('shared notifications.v2 mobile characterization', () => {
   it('uses the supported fixture schema', () => {
-    expect(fixture.schemaVersion).toBe(1);
+    expect(fixture.schemaVersion).toBe(2);
   });
 
   it.each(fixture.cases)('$id', (testCase) => {

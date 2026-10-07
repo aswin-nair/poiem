@@ -4,10 +4,15 @@
  * Sound is synthesised, so the repo carries no opaque audio blob and every cue
  * is a few numbers you can read and tune. Haptics go through the Vibration API.
  *
- * Two rules this module exists to enforce:
+ * Three rules this module exists to enforce:
  *
  *  - Both channels honour the profile toggles. Every haptic in the app routes
  *    through here, so Settings > Haptics actually turns them off.
+ *  - Nothing plays before those toggles are known. The module stays silent
+ *    until the app provider first applies the saved toggles with
+ *    `setFeelEnabled`, which it does before any screen can fire a cue. The
+ *    last applied toggles persist after the provider unmounts, and no cue
+ *    site lives outside a provider.
  *  - No cue is ever punitive. §2.4 rules out shaming the user for what they
  *    ate, and that applies to audio: every cue is consonant, nothing buzzes,
  *    nothing resolves downward to say "wrong".
@@ -30,12 +35,40 @@ export type SoundCue =
   /* character */
   | 'poke'
 
+/* Silent until the saved preferences have been applied. Defaulting on meant a
+   user with both settings Off still heard and felt cues on any screen that
+   rendered before the preferences reached this module. */
+let configured = false
 let soundOn = true
 let hapticsOn = true
 
 export function setFeelEnabled(opts: { sound?: boolean; haptics?: boolean }): void {
+  configured = true
   if (opts.sound != null) soundOn = opts.sound
   if (opts.haptics != null) hapticsOn = opts.haptics
+}
+
+/** The profile's toggles as feel settings. Only an explicit `false` turns a channel off. */
+export function feelPreferencesFromProfile(
+  profile: { soundEnabled?: boolean; hapticsEnabled?: boolean },
+): { sound: boolean; haptics: boolean } {
+  return {
+    sound: profile.soundEnabled !== false,
+    haptics: profile.hapticsEnabled !== false,
+  }
+}
+
+/**
+ * What to apply right now. `known` is whether the profile in hand holds the
+ * saved toggles. Before the account has loaded it is the default profile,
+ * which says On, so both channels stay silent until the saved toggles are
+ * actually known.
+ */
+export function feelPreferencesFor(
+  known: boolean,
+  profile: { soundEnabled?: boolean; hapticsEnabled?: boolean },
+): { sound: boolean; haptics: boolean } {
+  return known ? feelPreferencesFromProfile(profile) : { sound: false, haptics: false }
 }
 
 export function prefersReducedMotion(): boolean {
@@ -57,7 +90,7 @@ const HAPTICS: Record<HapticShape, number | number[]> = {
 }
 
 export function haptic(shape: HapticShape): void {
-  if (!hapticsOn) return
+  if (!configured || !hapticsOn) return
   if (typeof navigator === 'undefined' || !('vibrate' in navigator)) return
   try {
     navigator.vibrate(HAPTICS[shape])
@@ -179,7 +212,7 @@ export function playCue(cue: SoundCue): void {
   /* Deliberately not gated on prefers-reduced-motion. That setting is about
      vestibular safety, not audio — and when animation is suppressed, sound is
      the feedback the user has left. */
-  if (!soundOn) return
+  if (!configured || !soundOn) return
 
   const a = audio()
   if (!a) return

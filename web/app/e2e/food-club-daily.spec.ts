@@ -25,7 +25,7 @@ for (const width of [320, 390, 1280]) {
       const sheet = page.getByRole('dialog', { name: 'Log a meal' })
       await expect(sheet.getByRole('heading', { name: 'Log a meal', exact: true })).toBeVisible()
       await expect(sheet.getByRole('link', { name: /Snap a photo/ })).toBeVisible()
-      await expect(sheet.getByRole('button', { name: 'Adjust portion for Onboarding yogurt bowl' })).toBeVisible()
+      await expect(sheet.getByRole('button', { name: /Adjust portion for Onboarding yogurt bowl/ })).toBeVisible()
       await settlePageLayout(page)
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
       await page.screenshot({ path: testInfo.outputPath(`log-${colorScheme}.png`), animations: 'disabled' })
@@ -34,8 +34,20 @@ for (const width of [320, 390, 1280]) {
       await expect(sheet.getByRole('button', { name: /Quick add 350 kcal/ })).toBeVisible()
       await sheet.getByRole('button', { name: 'Clear search' }).click()
 
-      // Escape closes only the topmost dialog: the portion picker, then the sheet.
-      await sheet.getByRole('button', { name: 'Adjust portion for Onboarding yogurt bowl' }).click()
+      // A normal Portion tap shows the same quarter steps as the Saved screen.
+      const repeat = sheet.getByRole('article', { name: 'Onboarding yogurt bowl', exact: true })
+      const adjust = repeat.getByRole('button', { name: /Adjust portion for Onboarding yogurt bowl/ })
+      await expect(adjust).toHaveAttribute('aria-expanded', 'false')
+      await expect(adjust).toHaveAccessibleName('Adjust portion for Onboarding yogurt bowl, currently 1 times your previous meal')
+      await adjust.click()
+      await expect(adjust).toHaveAttribute('aria-expanded', 'true')
+      await repeat.getByRole('button', { name: 'Increase portion for Onboarding yogurt bowl', exact: true }).click()
+      await expect(adjust).toHaveAccessibleName('Adjust portion for Onboarding yogurt bowl, currently 1.25 times your previous meal')
+      await expect(repeat.getByRole('button', { name: /Log Onboarding yogurt bowl, 1.25 times your previous meal to/ })).toBeVisible()
+
+      // The optional context-menu shortcut retains the preset picker. Escape
+      // closes only the topmost dialog: the portion picker, then the sheet.
+      await repeat.getByRole('button', { name: /Log Onboarding yogurt bowl, 1.25 times your previous meal to/ }).click({ button: 'right' })
       const portion = page.getByRole('dialog', { name: 'Portion for Onboarding yogurt bowl' })
       await expect(portion).toBeVisible()
       await page.keyboard.press('Escape')

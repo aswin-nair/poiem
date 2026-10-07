@@ -1,0 +1,151 @@
+{
+  "recordedAt": "2026-10-06T05:21:26.411Z",
+  "baselineCommit": "96ef630a5f37e04a24ceba826510342a3f4b280b",
+  "candidateCommit": "e3cd04a976297f62a787bc40be3fd821e2655402",
+  "node": "v24.14.1",
+  "browser": "149.0.7827.55",
+  "method": "Cold signed-in Today at 390×844 UTC; successful JavaScript requests through visible Calories and a one-second font-ready settling window; Node gzipSync of each requested JS asset, including appearance-init.js. Identical local backend/auth fixture builds; cloud API/auth transfers excluded. No CPU throttling for asset capture.",
+  "report": [
+    {
+      "name": "baseline",
+      "url": "http://localhost:4398/app/",
+      "assets": [
+        {
+          "file": "appearance-init.js",
+          "raw": 756,
+          "gzip": 427
+        },
+        {
+          "file": "assets/AuthContext-BWKnjsBP.js",
+          "raw": 18611,
+          "gzip": 6448
+        },
+        {
+          "file": "assets/apiClient-BV4h4Vkl.js",
+          "raw": 47293,
+          "gzip": 15541
+        },
+        {
+          "file": "assets/arrow-right-CxUcUzFi.js",
+          "raw": 1492,
+          "gzip": 849
+        },
+        {
+          "file": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "raw": 98513,
+          "gzip": 32316
+        },
+        {
+          "file": "assets/index-CzpVMUSi.js",
+          "raw": 512856,
+          "gzip": 162577
+        },
+        {
+          "file": "assets/is-html-element-DvgHo_1h.js",
+          "raw": 122,
+          "gzip": 127
+        },
+        {
+          "file": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "raw": 8408,
+          "gzip": 3206
+        },
+        {
+          "file": "assets/motionFeatures-D7pTwZ20.js",
+          "raw": 79904,
+          "gzip": 25738
+        },
+        {
+          "file": "assets/resize-rlsBLWGD.js",
+          "raw": 4567,
+          "gzip": 2200
+        },
+        {
+          "file": "assets/use-presence-CbhEUzlt.js",
+          "raw": 373,
+          "gzip": 283
+        },
+        {
+          "file": "assets/useHaptic-CXbVpRKk.js",
+          "raw": 3144,
+          "gzip": 1220
+        }
+      ],
+      "gzip": 250932
+    },
+    {
+      "name": "candidate",
+      "url": "http://localhost:4298/app/",
+      "assets": [
+        {
+          "file": "appearance-init.js",
+          "raw": 756,
+          "gzip": 427
+        },
+        {
+          "file": "assets/AuthContext-Y3Sc_Iov.js",
+          "raw": 18611,
+          "gzip": 6446
+        },
+        {
+          "file": "assets/apiClient-B9vGVJBC.js",
+          "raw": 47302,
+          "gzip": 15544
+        },
+        {
+          "file": "assets/arrow-right-CxUcUzFi.js",
+          "raw": 1492,
+          "gzip": 849
+        },
+        {
+          "file": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "raw": 98513,
+          "gzip": 32316
+        },
+        {
+          "file": "assets/index-DyzUuzIY.js",
+          "raw": 505912,
+          "gzip": 159522
+        },
+        {
+          "file": "assets/is-html-element-DvgHo_1h.js",
+          "raw": 122,
+          "gzip": 127
+        },
+        {
+          "file": "assets/is-svg-component-D35uq9qz.js",
+          "raw": 4302,
+          "gzip": 2080
+        },
+        {
+          "file": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "raw": 8408,
+          "gzip": 3206
+        },
+        {
+          "file": "assets/motionFeatures-DG77Wp_F.js",
+          "raw": 79942,
+          "gzip": 25751
+        },
+        {
+          "file": "assets/resize-DbtdAb-P.js",
+          "raw": 4604,
+          "gzip": 2230
+        },
+        {
+          "file": "assets/use-presence-CwIaFWsP.js",
+          "raw": 384,
+          "gzip": 291
+        },
+        {
+          "file": "assets/useHaptic-BT3rM8on.js",
+          "raw": 3035,
+          "gzip": 1176
+        }
+      ],
+      "gzip": 249965
+    }
+  ],
+  "delta": -967,
+  "allowedGrowth": 5120
+}

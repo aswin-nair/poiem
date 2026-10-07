@@ -1,9 +1,10 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode, Ref } from 'react'
 
 export function Section({
   title,
   meta,
   titleId,
+  titleRef,
   children,
   className = '',
   ...rest
@@ -11,6 +12,8 @@ export function Section({
   title?: ReactNode
   meta?: ReactNode
   titleId?: string
+  /** A page that moves focus to this section's title gets it here; the title then takes programmatic focus only. */
+  titleRef?: Ref<HTMLHeadingElement>
   children: ReactNode
   className?: string
 } & HTMLAttributes<HTMLElement>) {
@@ -18,7 +21,7 @@ export function Section({
     <section className={`k-section${className ? ` ${className}` : ''}`} aria-labelledby={titleId} {...rest}>
       {title != null && (
         <header className="k-section-heading">
-          <h2 id={titleId} className="k-section-title">{title}</h2>
+          <h2 id={titleId} ref={titleRef} tabIndex={titleRef ? -1 : undefined} className="k-section-title">{title}</h2>
           {meta != null && <span className="k-section-meta">{meta}</span>}
         </header>
       )}

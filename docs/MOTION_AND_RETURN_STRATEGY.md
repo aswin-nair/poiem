@@ -1,8 +1,26 @@
 # Poiem: motion and a reason to return
 
-**Phase A — strategy for graded review. No implementation approved yet.**
+**Approved fixed Standard slice — implemented on `poiem-motion-return`, stacked on Track 0.**
 
-Prepared 5 October 2026 against `0a106d84` on `poiem-ui-audit`. This is a source-code audit, not a claim that browser, accessibility, device-performance or retention checks have passed. Phase A changes only this document. The existing UI-audit artifacts are untouched.
+Initial audit prepared 5 October 2026 against `0a106d84` on `poiem-ui-audit`. Revised 6 October after the approved implementation. The inventory below records the original audit; it is historical, not a list of current defects. The [approved slice plan](superpowers/plans/2026-10-05-motion-return-slice.md) governs differences from the broader proposals below. Measured results and remaining human checks are in [the evidence](motion/evidence.md).
+
+## Revision log: seven approved decisions
+
+| Decision | Where it landed |
+| --- | --- |
+| 1. Keep safety/correctness Track 0 separate and stack this work on it. | `poiem-motion-safety` at `26ae69a8`; this branch inherits it. Merge/rebase remains a later repository operation. |
+| 2. Ship B1–B4 and one B6 progress note at fixed Standard; pause the larger roadmap. | `logFeedbackPlan.ts`, `LogMoment.tsx`, `DayRing.tsx`, `progressNote.ts`, shared press controls and motion CSS. Simple coalesced piece/milestone facts are included; B5 staged sequences are paused. |
+| 3. Accept through dogfood, without a population retention claim. | [Dogfood protocol](motion/dogfood-protocol.md): one baseline week, two slice weeks, participant diary and existing diagnostics only. |
+| 4. Later Lively must have more visual character than Standard. | Section 6 specifies one additional artwork gesture and more frequent safe voluntary character movement, with identical input/repeat caps and no extra sound. The intensity control and migration are paused. |
+| 5. Persist only the minimal approved acknowledgement. | Device-local `poiem-ring-ack-v1` is a local day key; cleared on account deletion/reset. Receipt award-key count is transient router state. First meal reuses durable Blossom ownership. No new synced fields, visit store or telemetry. |
+| 6. Continue locally on `poiem-motion-return`; rebase after Track 0 merges. | Claude’s existing worktree and commits retained; draft Tasks 1–7 adopted then repaired. No push, PR or deployment is part of this slice. |
+| 7. Use canonical Linux visual evidence and explicit budgets. | Docker Playwright screenshots, Node gzip chunk reports and throttled Chromium interaction traces; [evidence](motion/evidence.md) distinguishes measured browser checks from pending Android/screen-reader checks. |
+
+### Current delivery rules
+
+The ring is a flat section directly below Momo and above the calorie hero, hidden when paused. A special log gets one non-modal floating card at every tier; a plain second/third log gets a toast. First/day animation caps are 480 ms, first meal/piece 720 ms, second 240 ms, later 120 ms. Undo is available immediately for ten seconds and pauses on hover/focus. The card never takes focus; explicit exit restores a stable landmark. Its measured height adds bottom scroll clearance retained until Today unmounts, and its bounded overflow leaves controls reachable on short screens. A level is one fact inside that confirmation, or one standalone toast, then acknowledged.
+
+First meal requires unowned Blossom plus the only entry or the onboarding first-meal flag. Deleting entries cannot revoke ownership or restart the handover. Ring closure uses the device-local day acknowledgement, so another device may acknowledge once more. The ring, progress note and rewards never depend on calorie/macro targets. Momo/channel/reduced-motion preferences apply independently; paused logging remains factual confirmation only.
 
 Poiem is a food journal for adults: **“A little tracking. A lot of living.”** It is not medical advice; retain the existing estimate/uncertainty and safety explanations. Scope is the signed-in daily product: Today, the log sheet, Photo, Describe, Manual, Review, Edit, Saved, Insights/Journey, You, Coach and Momo. Public welcome motion is outside this work. Onboarding and sign-in retain their compositions; only shared preference handling and the first-meal handover need integration.
 
@@ -76,7 +94,7 @@ Use fixed-size artwork/status space and one polite, atomic success announcement.
 - **Route:** take `pageWipe`/`motionStep`'s direction but omit rotation and limit travel to 12px; use `motionFade` for the 240ms daily transition. Animate the arriving content, never the fixed nav or entire shell. Same-day reopening uses only a 120ms fade and never restages the whole screen.
 - **Idle:** existing `motionIdle` for one visible Momo artwork only, y travel ≤2px. No dashboard/card/icon loops.
 
-Only **transform and opacity** animate. Static color selection and final geometry may update immediately. Meters must stop transitioning `width`; use a full-width fill with `scaleX` and a fixed origin. Day-ring values update immediately without tweening SVG stroke, mask, path or dash geometry; an opacity/scale acknowledgement on the existing ring/check artwork supplies closure. No animated height, border width, blur, shadow, chart path or full-screen canvas.
+Only **transform and opacity** animate. Static color selection and final geometry may update immediately. Meters must stop transitioning `width`; use a full-width fill moved with `translateX` inside an `overflow: hidden` track (not `scaleX`: scaling would squash a striped fill in proportion to its value). Day-ring values update immediately without tweening SVG stroke, mask, path or dash geometry; an opacity/scale acknowledgement on the existing ring/check artwork supplies closure. No animated height, border width, blur, shadow, chart path or full-screen canvas.
 
 ### The eight moments
 
@@ -130,7 +148,7 @@ Proposed replacement:
 - Suggested copy: “A little journal time, if it fits your evening.” Alternative: “Your journal is here whenever you're ready.” Settings explanation: “Optional. Never about calories. Turn it off whenever you like.” No counts, missing-day labels, urgency, guilt or promised rewards.
 - This pass can make **foreground eligibility and controls** correct. Do not promise delivery while the browser is closed, queue catch-up notifications after an absence, or introduce a push/backend service here. Reliable background delivery is a separately specified capability. Warm copy remains available without notifications.
 
-## 6. Calm, Standard and Lively
+## 6. Calm, Standard and Lively (controls paused; slice fixed at Standard)
 
 **Standard is the default for new users.** Put a single “App feel” choice in You → Everyday preferences, using existing radio/filter primitives and immediate, explicit save feedback. This controls the daily interface, not food goals or logging commitment. Keep Show Momo, Mute Momo, Reduce Momo motion, Sound and Haptics as distinct controls; choosing an intensity must never turn an independently disabled channel back on.
 
@@ -199,26 +217,43 @@ Profile ten repetitions of sheet open/close, Manual save, Saved relog/filter, fi
 
 ## 8. Phased roadmap and explicit exclusions
 
+### Paused return hooks
+
+These are specification sketches, with no implementation or new persisted fields in this slice.
+
+| Hook | Trigger and copy | Quiet fallback and repeat version | Effort / risk |
+| --- | --- | --- | --- |
+| Same-day reopen | A confirmed second product visit on the same local day: “I’ve kept your place.” | Static current totals/outfit; no new sound/reward. Repeat visits keep the same note and do not replay count-up. | M; requires explicit visit acknowledgement, not meal timestamps. |
+| Return after a break | Product use after at least two local calendar days without a product visit: “Good to see you. Your place is right here.” | Static welcome, preserved progress; paused tracking remains paused. Once per return, then same-day behavior. | M; visit metadata/privacy and accidental pressure from absence labels. |
+| Evening tomorrow seed | First evening visit after a real logged day: “2 logged days · Pencil at 3.” | Existing factual progress slot, no evening sound/notification. Repeat views stay stable; no deadline or unfinished-ring prompt. | S/M; acknowledgement and avoiding urgency around midnight. |
+| Weekly recap | Deliberate opening of a weekly view: “Here’s your journal this week.” | Static summary of chosen records, no target/body grading. Reopening shows the same facts, without another celebration. | M; local-week boundaries and misleading incomplete data. |
+| Outfit of the day | Person deliberately chooses an already-owned outfit: “Today’s Momo.” | Static try-on, chosen outfit preserved; repeat views are still. No visit reward, random unlock or new asset. | S/M; respecting existing hide/mute/outfit settings. |
+| Yesterday’s plate | Deliberate access to an existing previous-day entry: “Yesterday’s journal, if useful.” | Static existing entry/relog controls; repeat access has normal selection feedback only. | M; avoid food judgement, misleading dates or pressure to repeat a meal. |
+
+Staged milestone/wardrobe choreography, dialogue cooldowns, intensity/reminder controls, visit-day metadata, local summary diagnostics and remote telemetry are also paused. Their later plans must specify consent, storage/deletion and reduced-motion behavior before building.
+
 Complexity is relative: S = isolated shared primitive/copy change; M = several surfaces plus policy/tests; L = coordinated state/presentation integration. Priorities are implementation order, not a promise of delivery dates.
+
+The “Why” column retains the original motivation. The `slice`/`paused` prefixes describe the approved scope; current implementation and measured limitations are recorded in the Revision log and evidence.
 
 | Phase / item | Why | Expected impact | Complexity | Risk | Priority |
 | --- | --- | --- | --- | --- | --- |
-| **A: this strategy and graded review** | Agree on purpose, limits and concrete moments before changing behavior. | A reviewable scope and a clear approval boundary. | S | Low; documentation only. | Now |
-| **B1: quiet and safety prerequisites** | Current direct-route feel, nutrition-reactive Momo, reminder framing and canvas violate the brief. | Predictable preferences and a pressure-free baseline. | M | Medium: hydration/account changes and shared notification fixtures. | P0 |
-| **B2: immediate action feedback and stable receipts** | FAB delay, duplicate activation gaps and proximity-based awards undermine reliable confirmation. | Faster sheet access, one save per deliberate action, stable confirmation/Undo. | M | High: must not couple saving to art or break persistence. | P0 |
-| **B3: shared press/route/sheet vocabulary** | Buttons, chips, filters and route layouts currently have different or missed feedback. | Daily taps feel coherent across Today, logging, Saved, You and Coach. | M | Medium: gesture axes, focus and deferred imports. | P1 |
-| **B4: visible Day ring and lighter log delivery** | The designated completion mechanic is missing while reward modals stack. | Clear logging progress; first/day/third feedback with no input interruption. | L | Medium/high: deliberate Today composition change, commitment transitions and dedupe. | P1 |
-| **B5: milestone and staged wardrobe moments** | Existing deterministic pieces and milestones aren't acknowledged at the action that unlocks them. | Known anticipation and competence feedback from existing rules. | M | Medium: multiple unlocks, acknowledgement and outfit preservation. | P1 |
-| **B6: Momo integration and return note** | Inline Momo bypasses some controls; comeback and repeat dialogue aren't visit-aware. | Present, adult-friendly character; one truthful next-step note and warm return. | M | Medium: local visit metadata, visibility/cooldown lifecycle and no repeats. | P1 |
-| **B7: intensity and optional reminder controls** | Current mascot Calm is not a whole-app quiet path; browser permission is not app consent. | Clear Calm/Standard/Lively and an opt-in nudge with real Off/permission status. | M | Medium: preference migration and honest foreground delivery limits. | P1 |
-| **B8: local measurement and performance gates** | Current events cannot establish retention or enforce size/frame limits. Baseline capture starts at B1. | Evidence for useful returns, quiet preferences and responsive input. | M | Medium: data/contract review; remote collection excluded. | P2 |
-| **B9: review and release handoff** | Runtime motion, accessible status and deliberate layout changes need evidence beyond still snapshots. | A complete before/after pack, passing gates and documented limitations. | M | Medium: Android device and screen-reader evidence may require human execution. | Required |
+| **slice — completed approval — A: this strategy and graded review** | Agree on purpose, limits and concrete moments before changing behavior. | A reviewable scope and a clear approval boundary. | S | Low; documentation only. | Now |
+| **slice — inherited Track 0 — B1: quiet and safety prerequisites** | Current direct-route feel, nutrition-reactive Momo, reminder framing and canvas violate the brief. | Predictable preferences and a pressure-free baseline. | M | Medium: hydration/account changes and shared notification fixtures. | P0 |
+| **slice — B2: immediate action feedback and stable receipts** | FAB delay, duplicate activation gaps and proximity-based awards undermine reliable confirmation. | Faster sheet access, one save per deliberate action, stable confirmation/Undo. | M | High: must not couple saving to art or break persistence. | P0 |
+| **slice — B3: shared press/route/sheet vocabulary** | Buttons, chips, filters and route layouts currently have different or missed feedback. | Daily taps feel coherent across Today, logging, Saved, You and Coach. | M | Medium: gesture axes, focus and deferred imports. | P1 |
+| **slice — B4: visible Day ring and lighter log delivery** | The designated completion mechanic is missing while reward modals stack. | Clear logging progress; first/day/third feedback with no input interruption. | L | Medium/high: deliberate Today composition change, commitment transitions and dedupe. | P1 |
+| **paused — staged presentation — B5: milestone and staged wardrobe moments** | Existing deterministic pieces and milestones aren't acknowledged at the action that unlocks them. | Known anticipation and competence feedback from existing rules. | M | Medium: multiple unlocks, acknowledgement and outfit preservation. | P1 |
+| **slice — note only; return behavior paused — B6: Momo integration and return note** | Inline Momo bypasses some controls; comeback and repeat dialogue aren't visit-aware. | Present, adult-friendly character; one truthful next-step note and warm return. | M | Medium: local visit metadata, visibility/cooldown lifecycle and no repeats. | P1 |
+| **paused — B7: intensity and optional reminder controls** | Current mascot Calm is not a whole-app quiet path; browser permission is not app consent. | Clear Calm/Standard/Lively and an opt-in nudge with real Off/permission status. | M | Medium: preference migration and honest foreground delivery limits. | P1 |
+| **slice — performance gates; diagnostics/telemetry paused — B8: local measurement and performance gates** | Current events cannot establish retention or enforce size/frame limits. Baseline capture starts at B1. | Evidence for useful returns, quiet preferences and responsive input. | M | Medium: data/contract review; remote collection excluded. | P2 |
+| **slice — local handoff; release pending — B9: review and release handoff** | Runtime motion, accessible status and deliberate layout changes need evidence beyond still snapshots. | A complete before/after pack, passing gates and documented limitations. | M | Medium: Android device and screen-reader evidence may require human execution. | Required |
 
 ### How approved Phase B will run
 
-1. After explicit strategy approval, fetch `origin/main` and create a new `codex/motion-and-return` branch from that base. Reconcile the evidence above with that revision before coding. Do not move or discard the current branch's work or the existing audit artifacts.
+1. Continue the approved `poiem-motion-return` branch stacked on `poiem-motion-safety`. After Track 0 merges, rebase onto `origin/main` and re-verify anchors and gates. Preserve the existing worktree and audit artifacts.
 2. Implement one reviewable step at a time. Each note says what changed, why, which before/after states were checked, test results and remaining limitations. New logic gets unit tests; each affected step exercises reduced-motion and quiet paths and retains tap-target/design-system checks.
-3. Ship preference/policy foundations before new call sites. Intensity support may land incrementally in B1/B3; B7 finishes the user-facing choice and migration. Local measurement definitions and build/runtime baselines start at B1, even though B8 assembles their final gates. New rewards/return copy never depend on telemetry being enabled.
+3. Track 0 supplies the preference/policy foundations. This slice uses fixed Standard; new whole-app intensity, reminder controls, visit metadata and diagnostics remain paused. Build/runtime gates use development scripts, without new product telemetry.
 4. The Day ring/progress-note insertion and new preferences are deliberate resting-layout changes. Record affected Today/You images, reasons and before/after captures separately; a baseline update is explicit and reviewed. Ordinary motion polish should leave settled layouts and all unrelated baselines unchanged.
 5. Run relevant unit/product/fixture tests and e2e per step; complete lint, types/build, the named accessibility/gesture suites and the full approved visual matrix for the final candidate. Record gzip deltas and actual device traces. Missing Android or assistive-tech evidence is marked pending, not passed.
 6. Hand over the new branch's reviewable changes and evidence. **Do not push or deploy; the user handles GitHub.** Passing motion checks is not production certification or permission to bypass the repository's release gates.
@@ -233,4 +268,4 @@ Complexity is relative: S = isolated shared primitive/copy change; M = several s
 - No hidden permanent journal-history ledger, measurement of eating-to-save capture latency, remote analytics rollout, reminder backend/service worker or claims of closed-app notification reliability.
 - No unexplained visual-baseline refresh, fabricated browser/device results, commit/push/deployment in Phase A, or implementation before the user's graded approval.
 
-**Phase A ends here. Await the user's grade/revisions; revise this strategy first. Phase B remains unstarted.**
+**The approved slice is implemented. Broader paused proposals require a later product decision after dogfood; measured checks and pending human checks are recorded in the evidence.**

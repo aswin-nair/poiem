@@ -1,5 +1,6 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { restoreDeletedEntry } from '../lib/entryUndo'
+import { feelPreferencesFor, setFeelEnabled } from '../lib/feel'
 import { IconCloud, IconOffline, IconShield } from '../components/icons'
 
 import type {
@@ -57,6 +58,7 @@ import { advanceAfterLog, openSession, transitionTrackingPause } from '../lib/ga
 import { clearAnalytics, finishLogFlow } from '../lib/analytics'
 import { clearOnboardingDraft } from '../lib/onboarding'
 import { clearNotificationHistory } from '../lib/notifications'
+import { clearRingAck } from '../lib/ringAck'
 import { clearLogDraft, hydrateLogDrafts } from '../lib/logDrafts'
 import { finalizeGuestClaim, guestUserId, hasPendingGuestClaim } from '../lib/guestMode'
 
@@ -193,6 +195,23 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
   const [cloudLoadError, setCloudLoadError] = useState(false)
 
+  // Saved Sound and Haptics apply here, at the product boundary, so every
+  // screen honours them, not only Today. A layout effect, not useEffect: a
+  // screen's mount-time cue runs in a child passive effect, and those run
+  // before a parent's passive effects but after every layout effect. The
+  // provider remounts per account, so a switch re-applies the right settings.
+  // Local and guest state is read synchronously above, so it is known at once.
+  // A cloud account holds default settings (On) until hydration lands. The
+  // invariant that makes this safe: children never render while `loading` (or
+  // on the load-error screen), and the stored snapshot replaces the local one
+  // during the splash, so by the time any child can fire a cue the saved
+  // toggles are in `state.profile`.
+  const feelKnown = !cloud || (!loading && !cloudLoadError)
+  const { soundEnabled, hapticsEnabled } = state.profile
+  useLayoutEffect(() => {
+    setFeelEnabled(feelPreferencesFor(feelKnown, { soundEnabled, hapticsEnabled }))
+  }, [feelKnown, soundEnabled, hapticsEnabled])
+
   const [cloudSyncError, setCloudSyncError] = useState<string | null>(null)
 
   const [cloudSyncConflict, setCloudSyncConflict] = useState(false)
@@ -316,6 +335,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
               clearOnboardingDraft(userId)
               clearLogDraft(userId)
               clearNotificationHistory()
+              clearRingAck()
               clearAnalytics()
             } catch {
               setStorageRecovery('Server deletion was confirmed, but some browser recovery storage still needs cleanup.')
@@ -527,7 +547,11 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
         }
 
         if (!cloud) {
-          const next = cached?.state ?? loadState(userId)
+          const loaded = cached?.state ?? loadState(userId)
+          const next = {
+            ...loaded,
+            aiSettings: { ...loaded.aiSettings, apiKey: loaded.aiSettings.apiKey || await loadPrivateAIKey(userId) },
+          }
           try {
             if (!cached) await saveDurableLocalSnapshot(userId, next)
             if (!cancelled) setState(next)
@@ -552,7 +576,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           }
           const remoteState = remote.state === null
             ? null
-            : importData(JSON.stringify(remote.state), loadPrivateAIKey(userId))
+            : importData(JSON.stringify(remote.state), await loadPrivateAIKey(userId))
 
           if (cached?.pendingCount) {
             // Replay the stable device mutations before considering the server
@@ -618,7 +642,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           }
 
           const next = freshState()
-          next.aiSettings.apiKey = loadPrivateAIKey(userId)
+          next.aiSettings.apiKey = await loadPrivateAIKey(userId)
           await replaceDurableFromServer(userId, next, remote.version)
           cloudVersion.current = remote.version
           cloudWritable.current = true
@@ -779,7 +803,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     }
 
-    savePrivateAIKey(userId, state.aiSettings.apiKey)
+    void savePrivateAIKey(userId, state.aiSettings.apiKey)
     void saveDurableLocalSnapshot(userId, state).catch(error => {
       setStorageRecovery(error instanceof Error ? error.message : 'Device recovery storage is unavailable.')
     })
@@ -860,8 +884,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       if (choice === 'server') {
         const serverState = remote.state === null
           ? freshState()
-          : importData(JSON.stringify(remote.state), loadPrivateAIKey(userId))
-        if (remote.state === null) serverState.aiSettings.apiKey = loadPrivateAIKey(userId)
+          : importData(JSON.stringify(remote.state), await loadPrivateAIKey(userId))
+        if (remote.state === null) serverState.aiSettings.apiKey = await loadPrivateAIKey(userId)
         await resolveDurableConflictWithServer(userId, serverState, remote.version)
         suppressNextPersist.current = JSON.stringify(stateWithoutPrivateSecrets(serverState))
         cloudVersion.current = remote.version
@@ -940,7 +964,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     })),
 
     updateAISettings: (aiSettings) => {
-      savePrivateAIKey(userId, aiSettings.apiKey)
+      void savePrivateAIKey(userId, aiSettings.apiKey)
       setState(s => ({ ...s, aiSettings }))
     },
 
@@ -1140,6 +1164,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       clearOnboardingDraft(userId)
       clearLogDraft(userId)
       clearNotificationHistory()
+      clearRingAck()
       clearAnalytics()
       return true
     },

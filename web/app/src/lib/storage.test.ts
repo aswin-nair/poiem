@@ -43,11 +43,12 @@ describe('private BYOK storage', () => {
     vi.useRealTimers()
   })
 
-  it('keeps API keys out of the persisted application-state blob', () => {
-    saveState('user-1', stateWithKey())
+  it('keeps API keys out of the persisted application-state blob', async () => {
+    await saveState('user-1', stateWithKey())
 
-    expect(loadPrivateAIKey('user-1')).toBe('sk-private-test-value')
+    expect(await loadPrivateAIKey('user-1')).toBe('sk-private-test-value')
     expect(localStorage.getItem('fud-ai-web-state-user-1')).not.toContain('sk-private-test-value')
+    expect(localStorage.getItem('fud-ai-private-ai-key-user-1')).not.toContain('sk-private-test-value')
   })
 
   it('keeps API keys out of exports', () => {

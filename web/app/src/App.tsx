@@ -21,6 +21,7 @@ import { ProgressPage } from './pages/ProgressPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
+import { MomoInterludeGate } from './components/MomoInterludeGate'
 import { useNavDirection } from './hooks/useNavDirection'
 import { LazyMotion, MotionConfig } from 'motion/react'
 
@@ -169,6 +170,7 @@ function AuthenticatedRoutes() {
     <LogSheetOpenContext.Provider value={logSheetOpen}>
     <AnchorProvider>
     <MascotOverlay />
+    <MomoInterludeGate />
     <DirectionalRoutes hold={route.hold}>
     <Routes location={logSheetOpen && background ? background : location}>
       <Route path="/" element={<HomePage />} />

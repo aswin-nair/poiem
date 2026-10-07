@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "paused",
+      "input": {
+        "loggedToday": false,
+        "firstLogHours": [],
+        "localHour": 20,
+        "trackingPaused": true,
+        "sentKinds": []
+      },
+      "kinds": []
+    },
+    {
+      "id": "logged-today",
+      "input": {
+        "loggedToday": true,
+        "firstLogHours": [],
+        "localHour": 20,
+        "sentKinds": []
+      },
+      "kinds": []
+    },
+    {
+      "id": "routine-evening",
+      "input": {
+        "loggedToday": false,
+        "firstLogHours": [],
+        "localHour": 20,
+        "sentKinds": []
+      },
+      "kinds": ["routine"]
+    },
+    {
+      "id": "before-routine-hour",
+      "input": {
+        "loggedToday": false,
+        "firstLogHours": [],
+        "localHour": 10,
+        "sentKinds": []
+      },
+      "kinds": []
+    },
+    {
+      "id": "personal-hour",
+      "input": {
+        "loggedToday": false,
+        "firstLogHours": [8, 8, 9, 9, 9, 10, 10],
+        "localHour": 10,
+        "sentKinds": []
+      },
+      "kinds": ["routine"]
+    },
+    {
+      "id": "already-sent",
+      "input": {
+        "loggedToday": false,
+        "firstLogHours": [],
+        "localHour": 20,
+        "sentKinds": ["routine"]
+      },
+      "kinds": []
+    }
+  ]
+}

@@ -17,7 +17,7 @@ approved as a platform exception.
 | XP / points and levels | Web award eligibility and `WEB_LEVEL_XP` in `@fud-ai/domain/xp` | Mobile `points.ts` quadratic curve and ledger amounts stay an exception | `xp.v1.json` |
 | Daily quests | Seed, progress, and titles in `@fud-ai/domain/quests` | Mobile keeps a fourth candidate slot for legacy `hit_protein` dates; web hour progress still uses the device clock | `quests.v1.json` |
 | Meal-slot default | `@fud-ai/domain/meals` | Web may still store `other` as an explicit override; the default never returns it | `meals.v1.json` |
-| Notification eligibility | `@fud-ai/domain/notifications` | Delivery, permission, and storage stay web-only. Mobile has no scheduler | `notifications.v1.json` |
+| Notification eligibility | `@fud-ai/domain/notifications` | Delivery, permission, and storage stay web-only. Mobile has no scheduler | `notifications.v2.json` |
 | State and sync contracts | `@fud-ai/contracts` v1 | Snapshot `PUT /api/state` remains authoritative; entity projection stays fail-closed | Phase 4 / 5 release notes |
 
 ## Extraction order

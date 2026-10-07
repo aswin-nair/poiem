@@ -11,8 +11,9 @@ hide known product-model differences.
 - Freeze planning covers only yesterday, and only when that freeze can extend
   an existing run.
 - Meal-slot defaults use the 11 / 16 / 21 local-hour cutoffs.
-- Notification eligibility is a two-per-day, logging-only policy. Delivery
-  stays in the platform adapter.
+- Notification eligibility is a two-per-day, logging-only, loss-free routine
+  nudge. It never reads a streak or a freeze, and the copy checker rejects
+  loss and pressure language. Delivery stays in the platform adapter.
 - Nutrition safety constants, Mifflin-St Jeor math, BMI math, and calorie-ring
   presentation are shared.
 - Web XP award eligibility and level thresholds live here. Mobile points stay

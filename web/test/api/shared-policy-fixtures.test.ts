@@ -51,8 +51,10 @@ describe('shared policy fixtures on the API process', () => {
 
   it('keeps notification eligibility identical', () => {
     const fixture = loadFixture<{
+      schemaVersion: number
       cases: Array<{ input: Parameters<typeof eligibleNotificationKinds>[0]; kinds: string[] }>
-    }>('notifications.v1.json')
+    }>('notifications.v2.json')
+    expect(fixture.schemaVersion).toBe(2)
     for (const testCase of fixture.cases) {
       expect(eligibleNotificationKinds(testCase.input)).toEqual(testCase.kinds)
     }

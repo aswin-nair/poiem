@@ -63,15 +63,17 @@ describe('meal logging UI contracts', () => {
     expect(html).toContain('>Rice and lentils</textarea>')
     expect(html).not.toContain('Try an example')
     expect(html).not.toContain('<button type="submit" disabled=""')
+    expect(html).toContain('Unfinished meal restored')
+    expect(html).toContain('Start fresh</button>')
   })
 
-  it('offers AI setup and manual entry without exposing enabled upload controls', () => {
+  it('offers a manual recovery action when managed AI is disabled, keeping upload controls disabled', () => {
     state.aiSettings = { ...state.aiSettings, accessMode: 'managed', apiKey: '' }
     for (const page of [<LogTextPage key="text" />, <PhotoLogPage key="photo" />]) {
       const html = renderToStaticMarkup(<MemoryRouter>{page}</MemoryRouter>)
-      expect(html).toContain('Temporarily unavailable')
+      expect(html).toContain('Managed AI isn’t enabled')
       expect(html).toContain('href="/log/manual"')
-      expect(html).toContain('href="/settings"')
+      expect(html).toContain('href="/settings?panel=ai"')
       expect(html).not.toContain('class="photo-upload-zone"')
     }
     const photo = renderToStaticMarkup(<MemoryRouter><PhotoLogPage /></MemoryRouter>)
@@ -144,6 +146,7 @@ describe('meal logging UI contracts', () => {
     expect(html).not.toContain('aria-label="Meal total"')
     expect(html).toContain('Fill in the meal details')
     expect(html).toContain('required="" aria-describedby=')
+    expect(html).toContain('Unfinished meal restored')
   })
 
   it('waits for a recoverable draft before showing an empty review', () => {
@@ -165,6 +168,8 @@ describe('meal logging UI contracts', () => {
     expect(html).toContain('<details class="flow-delete">')
     expect(html).toContain('Yes, delete entry')
     expect(html).toContain('Keep entry')
+    expect(html).toContain('aria-pressed="false" aria-label="Save Toast"')
+    expect(html).not.toMatch(/Favourite|Favourited|favourites/)
     const source = readFileSync(new URL('./EditFoodPage.tsx', import.meta.url), 'utf8')
     expect(source).toContain('validateManualFood({ name, ...nutrition, servings: 1 })')
     expect(source).toContain("label: 'Undo', fn: () => restoreEntry(entry)")
@@ -187,13 +192,28 @@ describe('meal logging UI contracts', () => {
     expect(html).not.toContain('role="progressbar"')
   })
 
-  it('calls useLocation before reading first-meal state', () => {
+  it('reads and forwards validated logging context when changing methods', () => {
     for (const file of ['LogTextPage.tsx', 'PhotoLogPage.tsx', 'ReviewFoodPage.tsx']) {
       const source = readFileSync(new URL(`./${file}`, import.meta.url), 'utf8')
       expect(source).toContain('const location = useLocation()')
-      expect(source).toContain('firstMealFromNavState(location.state)')
+      expect(source).toContain('logContextFromNavState(location.state)')
       expect(source).not.toContain('isFirstMealJourney() || Boolean((useLocation()')
     }
+  })
+
+  it('keeps Today’s chosen meal slot visible through either estimate method and review', () => {
+    pendingAnalysis = analysis
+    for (const page of [<LogTextPage key="text" />, <PhotoLogPage key="photo" />, <ReviewFoodPage key="review" />]) {
+      const html = renderToStaticMarkup(<MemoryRouter initialEntries={[{ pathname: '/log', state: { mealType: 'snack' } }]}>{page}</MemoryRouter>)
+      expect(html).toContain('Logging to Snack · Today')
+    }
+  })
+
+  it('describes a failed nutrition field beside the input for assistive technology', () => {
+    const html = renderToStaticMarkup(<NutritionFields values={{ ...analysis, calories: -1 }} onChange={vi.fn()}
+      errors={{ calories: 'Calories must be between 0 and 100,000.' }} />)
+    expect(html).toMatch(/data-food-field="calories"[^>]*aria-invalid="true"[^>]*aria-describedby="[^"]*-calories-error"/)
+    expect(html).toContain('class="field-error">Calories must be between 0 and 100,000.')
   })
 
   it('does not apply a restored photo after the reader changes the selection', () => {

@@ -27,7 +27,9 @@ export function Meter({
       aria-valuenow={Math.round(Math.min(Math.max(0, value), max))}
       aria-valuetext={valueText}
     >
-      <span className="k-meter-fill" style={{ width: `${progress * 100}%` }} />
+      {/* A full-width fill slid left inside the track: scaling it would squash the Today
+          calorie bar's stripes in proportion to progress, translating keeps their period. */}
+      <span className="k-meter-fill" style={{ transform: `translateX(calc((${progress} - 1) * 100%))` }} />
     </span>
   )
 }

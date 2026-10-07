@@ -58,13 +58,16 @@ test.describe('Today & food logging', () => {
 
     const pauseRow = page.locator('.settings-row').filter({ hasText: 'Pause tracking' })
     await pauseRow.locator('input[type="checkbox"]').check()
-    await page.getByRole('button', { name: 'Save settings' }).click()
+    await expect(page.locator('.you-status')).toHaveText('Tracking paused · your streak is held')
+    await expect(page.getByRole('button', { name: 'Save settings' })).toHaveCount(0)
 
     await mainNav.getByRole('link', { name: 'Today' }).click()
     await expect(page.getByText('Tracking is paused')).toBeVisible()
     await expect(page.getByRole('progressbar', { name: 'Calories' })).toHaveCount(0)
     await expect(page.getByRole('progressbar', { name: 'Protein' })).toHaveCount(0)
     await expect(page.getByRole('button', { name: /^Onboarding yogurt bowl/ })).toHaveCount(0)
+    await page.reload()
+    await expect(page.getByRole('progressbar', { name: 'Calories' })).toHaveCount(0)
 
     await mainNav.getByRole('link', { name: 'Insights' }).click()
     await expect(page.getByRole('heading', { name: 'Tracking is paused' })).toBeVisible()
@@ -101,7 +104,8 @@ test.describe('Today & food logging', () => {
     const before = await dinner.locator('.k-meal-row').count()
     await dinner.getByRole('button', { name: 'Add dinner' }).click()
     await expect(sheet.getByRole('button', { name: 'Dinner', exact: true })).toHaveAttribute('aria-expanded', 'false')
-    await sheet.getByRole('button', { name: /^Onboarding yogurt bowl/ }).click()
+    await sheet.getByRole('article', { name: 'Onboarding yogurt bowl', exact: true })
+      .getByRole('button', { name: 'Log Onboarding yogurt bowl, 1 times your previous meal to Dinner', exact: true }).click()
     await expect(page).toHaveURL('/')
     await expect(dinner.locator('.k-meal-row')).toHaveCount(before + 1)
     // The onboarding meal's own toast may still be up, so check the newest one.

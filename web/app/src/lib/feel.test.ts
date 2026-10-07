@@ -5,6 +5,8 @@ import {
   CUE_NOTES,
   HAPTIC_PATTERNS,
   PAIRED_HAPTICS,
+  feelPreferencesFor,
+  feelPreferencesFromProfile,
   type SoundCue,
 } from './feel'
 
@@ -15,9 +17,13 @@ import {
  * The module keeps one AudioContext for the life of the app — right for the
  * app, but it would leak across tests, so each case imports a fresh copy of
  * the module rather than reaching into it to reset state.
+ *
+ * `configure: false` leaves the fresh module exactly as the app first loads it:
+ * before the saved preferences have been applied.
  */
-async function withAudio(opts?: { reducedMotion?: boolean }) {
+async function withAudio(opts?: { reducedMotion?: boolean; configure?: boolean }) {
   const started: { freq: number; type: string }[] = []
+  const created = { contexts: 0 }
 
   class FakeParam {
     value = 0
@@ -27,6 +33,7 @@ async function withAudio(opts?: { reducedMotion?: boolean }) {
   }
 
   class FakeCtx {
+    constructor() { created.contexts++ }
     state = 'running'
     currentTime = 0
     destination = {}
@@ -57,8 +64,8 @@ async function withAudio(opts?: { reducedMotion?: boolean }) {
 
   vi.resetModules()
   const mod = await import('./feel')
-  mod.setFeelEnabled({ sound: true, haptics: true })
-  return { ...mod, started, vibrate }
+  if (opts?.configure !== false) mod.setFeelEnabled({ sound: true, haptics: true })
+  return { ...mod, started, vibrate, created }
 }
 
 afterEach(() => {
@@ -141,6 +148,60 @@ describe('feel: settings toggles', () => {
     f.feel('tap')
     expect(f.started.length).toBe(0)
     expect(f.vibrate).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('feel: before the saved preferences are applied', () => {
+  /* Regression guard. Both channels used to default on, and only Today applied
+     the saved Off settings, so a direct visit to a log or settings route
+     buzzed and played sound for a user who had turned both off. */
+  it('stays silent until the preferences have been applied', async () => {
+    const f = await withAudio({ configure: false })
+    f.haptic('light')
+    f.playCue('log-confirm')
+    f.feel('press')
+    f.playLogConfirm()
+    expect(f.vibrate).not.toHaveBeenCalled()
+    expect(f.created.contexts).toBe(0)
+    expect(f.started.length).toBe(0)
+  })
+
+  it('plays both channels once the preferences turn them on', async () => {
+    const f = await withAudio({ configure: false })
+    f.setFeelEnabled({ sound: true, haptics: true })
+    f.haptic('light')
+    f.playCue('log-confirm')
+    expect(f.vibrate).toHaveBeenCalledTimes(1)
+    expect(f.created.contexts).toBe(1)
+    expect(f.started.length).toBeGreaterThan(0)
+  })
+})
+
+describe('feel: preferences from the profile', () => {
+  it('treats a missing setting as on and only an explicit false as off', () => {
+    expect(feelPreferencesFromProfile({})).toEqual({ sound: true, haptics: true })
+    expect(feelPreferencesFromProfile({ soundEnabled: false })).toEqual({ sound: false, haptics: true })
+    expect(feelPreferencesFromProfile({ hapticsEnabled: false })).toEqual({ sound: true, haptics: false })
+  })
+
+  /* Until the account has loaded, the profile in hand is the default one, which
+     says On. A cloud account whose load fails would otherwise cue on the error
+     screen even though the user saved Off. */
+  it('stays silent before the account has loaded, even when the profile says on', () => {
+    const silent = { sound: false, haptics: false }
+    expect(feelPreferencesFor(false, {})).toEqual(silent)
+    expect(feelPreferencesFor(false, { soundEnabled: true, hapticsEnabled: true })).toEqual(silent)
+  })
+
+  it('follows the profile once the account has loaded', () => {
+    expect(feelPreferencesFor(true, {})).toEqual({ sound: true, haptics: true })
+    expect(feelPreferencesFor(true, { soundEnabled: true, hapticsEnabled: true })).toEqual({ sound: true, haptics: true })
+    expect(feelPreferencesFor(true, { soundEnabled: false })).toEqual({ sound: false, haptics: true })
+  })
+
+  it('keeps a loaded account that saved both off silent', () => {
+    expect(feelPreferencesFor(true, { soundEnabled: false, hapticsEnabled: false }))
+      .toEqual({ sound: false, haptics: false })
   })
 })
 

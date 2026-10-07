@@ -70,19 +70,4 @@
   .k-wardrobe-rule { font: 500 var(--k-text-xs)/1.35 var(--k-font-mono); color: var(--k-muted); }
   .k-wardrobe-piece[aria-pressed="true"] .k-wardrobe-rule { color: var(--k-on-acid); }
 
-  /* The try-on reveal in the "Logged." moment. */
-  .celebrate-piece {
-    display: grid;
-    justify-items: center;
-    gap: 2px;
-    margin: var(--k-space-2) 0 0;
-    padding: var(--k-space-2) var(--k-space-4);
-    border: 2px solid var(--k-on-acid);
-    background: var(--k-acid);
-    color: var(--k-on-acid);
-    box-shadow: var(--k-shadow-sm);
-    font: 800 var(--k-text-md)/1.25 var(--k-font-body);
-    text-align: center;
-  }
-  .celebrate-piece .k-eyebrow { color: var(--k-on-acid); }
 }

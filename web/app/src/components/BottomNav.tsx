@@ -1,15 +1,12 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useFeel } from '../hooks/useHaptic'
 import { LogSheetOpenContext } from '../lib/logSheetOpen'
-import { prefersReducedMotion } from '../lib/tokens'
+import { createOnceGuard } from '../lib/onceGuard'
 import { useAnchor } from '../mascot/anchors'
 import { useAuth } from '../store/AuthContext'
 import { BrandLogo } from './BrandLogo'
 import { IconHome, IconJourney, IconPlus, IconProgress, IconSettings } from './icons'
-
-/** Long enough to see the + pop before the sheet covers it; short enough to feel instant. */
-const POP_MS = 120
 
 const TABS = [
   { to: '/', end: true, label: 'Today', Icon: IconHome },
@@ -17,6 +14,9 @@ const TABS = [
   { to: '/discover', label: 'Saved', Icon: IconJourney },
   { to: '/settings', label: 'You', Icon: IconSettings },
 ] as const
+
+/** Long enough to swallow a double tap, short enough that a stranded claim is never noticed. */
+const FAB_RELEASE_MS = 400
 
 export function BottomNav() {
   const feel = useFeel()
@@ -32,16 +32,24 @@ export function BottomNav() {
   }
   const logOpen = useContext(LogSheetOpenContext) || location.pathname === '/log'
   const [pops, setPops] = useState(0)
-  const opening = useRef(false)
+  // A double tap opens one sheet. The claim is released when the sheet closes, or after
+  // FAB_RELEASE_MS if the sheet never opened (a fast back before /log commits).
+  const [openGuard] = useState(() => createOnceGuard({ releaseAfterMs: FAB_RELEASE_MS }))
+
+  useEffect(() => {
+    if (!logOpen) openGuard.reset()
+  }, [logOpen, openGuard])
+
+  // Clears a pending timed release when the tab bar unmounts.
+  useEffect(() => () => openGuard.reset(), [openGuard])
 
   function openLog() {
-    if (logOpen || opening.current) return
-    opening.current = true
-    setPops(count => count + 1)
-    window.setTimeout(() => {
-      opening.current = false
+    if (logOpen) return
+    openGuard.run(() => {
+      setPops(count => count + 1)
+      feel('open')
       navigate('/log', { state: { background: location } })
-    }, prefersReducedMotion() ? 0 : POP_MS)
+    })
   }
 
   const tab = (item: (typeof TABS)[number]) => (
@@ -82,7 +90,6 @@ export function BottomNav() {
           aria-label="Log a meal"
           aria-haspopup="dialog"
           aria-expanded={logOpen}
-          onPointerDown={() => feel('press')}
           onClick={openLog}
         >
           <span className="nav-fab-face" aria-hidden="true"><IconPlus size={28} /></span>

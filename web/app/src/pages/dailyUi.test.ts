@@ -16,6 +16,7 @@ vi.mock('../mascot/MascotOverlay', () => ({ mascotEvent: vi.fn() }))
 vi.mock('../lib/logDrafts', () => ({
   loadLogDrafts: () => drafts,
   hydrateLogDrafts: async () => drafts,
+  logDraftClearGeneration: () => '0:0',
   saveManualLogDraft: vi.fn(),
   clearLogDraft: vi.fn(),
 }))
@@ -65,13 +66,17 @@ describe('log sheet', () => {
     state.foodEntries = [oats()]
     state.favoriteMeals = [{ id: 'saved', name: 'Rice', calories: 200, protein: 4, carbs: 44, fat: 1, mealType: 'lunch' }]
     const html = renderSheet()
-    expect(html).toContain('aria-label="Adjust portion for Oats">Portion</button>')
+    expect(html).toContain('aria-label="Adjust portion for Oats, currently 1 times your previous meal"')
+    expect(html).toContain('>1× · Portion</button>')
+    expect(html).toContain('aria-label="Log Oats, 1 times your previous meal to')
+    expect(html).toContain('1× = your previous meal')
     expect(html).toContain('aria-label="Your meal shortcuts"')
-    expect(html).toContain('Favourites</button>')
+    expect(html).toContain('Saved</button>')
+    expect(html).not.toContain('Favourites')
     expect(html).not.toMatch(/<button\b[^>]*>(?:(?!<\/button>)[\s\S])*<button\b/)
-    expect(html.indexOf('Recent · tap to log again')).toBeLessThan(html.indexOf('aria-label="Other ways to log"'))
+    expect(html.indexOf('Recent · tap Log to repeat')).toBeLessThan(html.indexOf('aria-label="Other ways to log"'))
     state.foodEntries = []
-    expect(renderSheet()).toContain('aria-label="Adjust portion for Rice">Portion</button>')
+    expect(renderSheet()).toContain('aria-label="Adjust portion for Rice, currently 1 times your saved meal"')
   })
 })
 
@@ -90,6 +95,9 @@ describe('manual entry', () => {
     expect(html).toContain('aria-labelledby="manual-meal-type"')
     expect(html).toContain('class="field-req">Required</span>')
     expect(html).toContain('class="manual-macros"')
+    expect(html).toContain('Unfinished meal restored')
+    expect(html).toContain('Continue</button>')
+    expect(html).toContain('Start fresh</button>')
   })
 
   it('does not show a misleading zero-calorie total for an empty form', () => {
@@ -105,5 +113,15 @@ describe('manual entry', () => {
     expect(html).not.toContain('value="Oats"')
     expect(html).not.toContain('aria-label="Meal total"')
     expect(html).toContain('<button type="submit"')
+  })
+
+  it('uses the meal requested by Today when restoring an unfinished manual meal', () => {
+    drafts.manual = { name: 'Oats', calories: '250', protein: '', carbs: '', fat: '',
+      servings: 1, mealType: 'breakfast', updatedAt: new Date().toISOString() }
+    const html = renderToStaticMarkup(createElement(MemoryRouter,
+      { initialEntries: [{ pathname: '/log/manual', state: { mealType: 'snack' } }] }, createElement(ManualEntryPage)))
+    expect(html).toContain('Logging to Snack · Today')
+    expect(html).toContain('value="Oats"')
+    expect(html).toContain('Total for 1 serving: <strong>250 kcal</strong>')
   })
 })

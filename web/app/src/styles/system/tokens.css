@@ -1,4 +1,4 @@
-/* Poiem system tokens ("Quiet Kitchen").
+/* Poiem system tokens ("Playful Kitchen").
    Everything the app draws from lives here. The legacy stylesheets sit in the
    `legacy` cascade layer below, so these values and the system components win
    without ID selectors or !important. Colourful fills always take dark ink. */
@@ -13,9 +13,9 @@
     --k-hair: rgb(32 34 29 / 14%);
     --k-hair-strong: rgb(32 34 29 / 34%);
 
-    --k-acid: #E7F258;
+    --k-acid: #E9FF54;
     --k-on-acid: #20221D;
-    --k-action: #FF8055;
+    --k-action: #FF784E;
     --k-on-action: #20221D;
     /* Over a target is information, not a warning: a warm fill, never red text. */
     --k-over-fill: #FF8055;
@@ -32,20 +32,23 @@
     --k-sky-strong: #4FB0E8;
     --k-momo: #EFB6CC;
     --k-on-tone: #20221D;
-    --k-sticker-butter: #FFE58A;
-    --k-sticker-peach: #FFD2B8;
-    --k-sticker-pink: #F7C6D9;
-    --k-sticker-sky: #BFE6FF;
-    --k-sticker-mint: #C4EED8;
+    --k-sticker-butter: #FFD45C;
+    --k-sticker-peach: #FFB08A;
+    --k-sticker-pink: #FFA9CE;
+    --k-sticker-sky: #9CD9FF;
+    --k-sticker-mint: #8AE7BC;
     --k-sticker-ink: #20221D;
+    --k-sticker-muted: #4A574D;
 
     --k-switch-on-track: #20221D;
-    --k-switch-on-knob: #E7F258;
+    --k-switch-on-knob: #E9FF54;
 
     --k-focus: #20221D;
     --k-shadow-color: #20221D;
     --k-shadow-sm: 3px 3px 0 var(--k-shadow-color);
     --k-shadow: 4px 4px 0 var(--k-shadow-color);
+    --k-shadow-bold: 6px 6px 0 var(--k-shadow-color);
+    --k-border-bold: 3px;
     --k-scrim: rgb(20 20 18 / 48%);
 
     --k-font-display: 'Barlow Condensed', Impact, 'Arial Narrow', system-ui, sans-serif;
@@ -126,7 +129,7 @@
   }
 
   :root[data-theme="dark"] {
-    --k-switch-on-track: #E7F258;
+    --k-switch-on-track: #E9FF54;
     --k-switch-on-knob: #20221D;
     --k-ground: #191B1A;
     --k-card: #242723;
@@ -148,14 +151,14 @@
     --k-sky: #223B4D;
     --k-mint: #243F31;
     --k-sky-strong: #6CC3F2;
-    --k-sticker-butter: #FFE58A;
-    --k-sticker-peach: #FFD2B8;
-    --k-sticker-pink: #F7C6D9;
-    --k-sticker-sky: #7EC8F5;
-    --k-sticker-mint: #8FDFB6;
+    --k-sticker-butter: #FFD45C;
+    --k-sticker-peach: #FFB08A;
+    --k-sticker-pink: #FFA9CE;
+    --k-sticker-sky: #9CD9FF;
+    --k-sticker-mint: #8AE7BC;
     --k-sticker-ink: #20221D;
     --k-on-tone: #F8F1E4;
-    --k-focus: #E7F258;
+    --k-focus: #E9FF54;
     --k-shadow-color: #080A08;
     --k-scrim: rgb(0 0 0 / 62%);
 
