@@ -169,7 +169,8 @@ export function PhotoLogPage() {
 
         {(canAnalyze || selectedFile) && <>
           {preview ? <figure className="flow-photo-card">
-            <img src={preview} alt="Selected meal, not yet logged" />
+            {/* createObjectURL only returns a blob URL, which cannot carry a script scheme. */}
+            <img src={preview} alt="Selected meal, not yet logged" /> {/* codeql[js/xss-through-dom] */}
             <figcaption><span>{selectedFile?.name}</span>
               <button type="button" disabled={loading} onClick={removePhoto}><IconClose size={18} /> Remove photo</button>
             </figcaption>

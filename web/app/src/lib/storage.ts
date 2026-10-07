@@ -42,7 +42,8 @@ export function loadPrivateAIKey(userId: string): string {
 }
 
 export function savePrivateAIKey(userId: string, apiKey: string): void {
-  if (apiKey.trim()) localStorage.setItem(privateAIKey(userId), apiKey)
+  // Device-local BYOK only. Exports and cloud sync use stateWithoutPrivateSecrets, which drops this value.
+  if (apiKey.trim()) localStorage.setItem(privateAIKey(userId), apiKey) // codeql[js/clear-text-storage-of-sensitive-data]
   else localStorage.removeItem(privateAIKey(userId))
 }
 
