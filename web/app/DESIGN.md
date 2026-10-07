@@ -324,17 +324,24 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 
 ## Behaviour that is part of the design
 
-### Momo's surprise cameos
+### Momo's screen play
 
-An authenticated visitor occasionally sees a compact pink speech card using their existing Momo outfit and one of 20 local jokes. No provider request, sound, haptic or focus grab is involved. Lines are drawn without replacement during the browser session. The cameo module loads after eight seconds of eligibility, during the initial waiting period, so it is outside Today's first download.
+An authenticated visitor occasionally sees a freestanding Momo with a separate comic speech bubble. He waves, borrows an approved interface word, dances with it, or plays with water drops. The real heading gets one small wiggle and keeps its text and accessible name. The 42 local lines include screen comments and action reactions; private text and nutrition values never become joke material. No provider request, sound, haptic or focus grab is involved. Lines are drawn without replacement during the browser session. The scene module loads after eight seconds of eligibility, during the initial waiting period, so it is outside Today's first download.
 
 - **Lively:** first visit after 18–35 seconds, then 75–150 seconds between visits; up to four per session.
 - **Calm:** first visit after 45–90 seconds, then 180–300 seconds between visits; up to two per session and a static entrance.
 - **Reduced motion:** the same text with static art and entrance. Show Momo off, Mute Momo and paused tracking disable cameos.
 - **Clear workflows:** no cameos in logging, settings, Coach, Support, account, onboarding or admin screens. Typing, keyboards, dialogs, log receipts, Undo toasts and existing Momo speech defer them. A newly opened form or dialog dismisses an active cameo.
-- **Dismissal:** Got it closes immediately; Mute Momo saves the existing mute preference. The nine-second timeout pauses while hovered or keyboard-focused. Dismissal preserves focus and keeps measured scroll clearance until the route changes.
+- **Placement:** the comic bubble, art and controls use available space near a visible heading or Water label. Interactive targets, calorie and macro readouts, Journey values and the bottom navigation keep their space. A compact scene keeps Momo visible on desktop, in landscape or when portrait space is crowded. Scrolling repositions the scene or ends it if there is no clear spot. Only a successful measured placement consumes a session visit.
+- **Dismissal:** the named Close icon ends the scene immediately; Mute Momo saves the existing mute preference. The nine-second timeout pauses while hovered or keyboard-focused. Dismissal preserves focus and keeps measured scroll clearance until the route changes.
 
 Implementation: [`MomoInterlude.tsx`](src/components/MomoInterlude.tsx), [`momoInterludes.ts`](src/lib/momoInterludes.ts) and [`momo-interlude.css`](src/styles/screens/momo-interlude.css).
+
+### Action feedback
+
+Every enabled button, link and selection has a small local reaction through [`ActionPlay.tsx`](src/components/ActionPlay.tsx). Inner icons hop, button faces squash and release, choices snap, and save and water actions use stars or drops. Navigation animates the arriving active icon. The action handler runs immediately; decoration does not move hit areas or focus targets.
+
+Successful save changes pop the star, wardrobe changes give Momo a short happy hop, switches rebound after their state changes, and a newly filled decorative water glass hops once. Existing sound and haptic preferences remain in charge of those channels. Calm and OS/profile reduced motion suppress spatial feedback. Effects are finite, coalesced on rapid taps and cleaned up on navigation, preference changes, hidden tabs and unmount.
 
 | Rule | Where |
 |------|-------|

@@ -1,0 +1,218 @@
+{
+  "recordedAt": "2026-10-07T15:38:46.105Z",
+  "method": "gzipSync per emitted asset from the latest-source canonical Linux local build used for the passing full visual comparison. Previous UI snapshot 8e7e968a; historical budget baseline 96ef630a. Cold Today and interaction latency were not remeasured in this pass.",
+  "checks": [
+    {
+      "name": "All JS gzip",
+      "baseline": 301907,
+      "previous": 312126,
+      "current": 318997,
+      "delta": 17090,
+      "growthFromPrevious": 6871,
+      "limit": 10240,
+      "passed": false
+    },
+    {
+      "name": "All CSS gzip",
+      "baseline": 61013,
+      "previous": 62623,
+      "current": 64161,
+      "delta": 3148,
+      "growthFromPrevious": 1538,
+      "limit": 2048,
+      "passed": false
+    }
+  ],
+  "currentBuildContainsActionAccentOutline": true,
+  "currentBuildContainsMeasuredClearance": true,
+  "chunks": {
+    "assets": [
+      {
+        "file": "AboutPage-H1AwMGL-.js",
+        "type": "js",
+        "raw": 2240,
+        "gzip": 969
+      },
+      {
+        "file": "AdminPage-BNILj1k4.js",
+        "type": "js",
+        "raw": 30679,
+        "gzip": 9035
+      },
+      {
+        "file": "AuthContext-BvTd2t58.js",
+        "type": "js",
+        "raw": 18618,
+        "gzip": 6449
+      },
+      {
+        "file": "CoachPage-COTkA_R4.js",
+        "type": "js",
+        "raw": 14575,
+        "gzip": 5871
+      },
+      {
+        "file": "ComponentSheetPage-BC-ZUnMU.js",
+        "type": "js",
+        "raw": 3546,
+        "gzip": 1369
+      },
+      {
+        "file": "ForgotPasswordPage-ChYvlZx-.js",
+        "type": "js",
+        "raw": 1680,
+        "gzip": 849
+      },
+      {
+        "file": "JourneyPage-BgzIfscx.js",
+        "type": "js",
+        "raw": 203,
+        "gzip": 184
+      },
+      {
+        "file": "LoginPage-VvAgVDZU.js",
+        "type": "js",
+        "raw": 15181,
+        "gzip": 5754
+      },
+      {
+        "file": "MomoInterlude-iIDuFWNL.js",
+        "type": "js",
+        "raw": 18431,
+        "gzip": 6767
+      },
+      {
+        "file": "OnboardingPage-CMO_9CQl.js",
+        "type": "js",
+        "raw": 32227,
+        "gzip": 9199
+      },
+      {
+        "file": "ResetPasswordPage-LsE4GrQn.js",
+        "type": "js",
+        "raw": 2049,
+        "gzip": 932
+      },
+      {
+        "file": "SupportPage-BXwcjhlx.js",
+        "type": "js",
+        "raw": 3410,
+        "gzip": 1476
+      },
+      {
+        "file": "WelcomePage-BBbS2CQf.js",
+        "type": "js",
+        "raw": 53284,
+        "gzip": 16549
+      },
+      {
+        "file": "WelcomePage-CdeV_qr_.css",
+        "type": "css",
+        "raw": 41736,
+        "gzip": 9130
+      },
+      {
+        "file": "apiClient-DfwV3Fv-.js",
+        "type": "js",
+        "raw": 49971,
+        "gzip": 16439
+      },
+      {
+        "file": "arrow-right-CxUcUzFi.js",
+        "type": "js",
+        "raw": 1492,
+        "gzip": 849
+      },
+      {
+        "file": "chunk-BV7QT456-B5cNqVLe.js",
+        "type": "js",
+        "raw": 98513,
+        "gzip": 32316
+      },
+      {
+        "file": "elements-C8niVjGk.js",
+        "type": "js",
+        "raw": 6746,
+        "gzip": 2913
+      },
+      {
+        "file": "index-BokQcJZh.js",
+        "type": "js",
+        "raw": 525949,
+        "gzip": 165816
+      },
+      {
+        "file": "index-QHWtXCzj.css",
+        "type": "css",
+        "raw": 330143,
+        "gzip": 55031
+      },
+      {
+        "file": "is-html-element-DvgHo_1h.js",
+        "type": "js",
+        "raw": 122,
+        "gzip": 127
+      },
+      {
+        "file": "is-svg-component-CsCkiPBn.js",
+        "type": "js",
+        "raw": 4303,
+        "gzip": 2075
+      },
+      {
+        "file": "jsx-runtime-bzQ4Vb5N.js",
+        "type": "js",
+        "raw": 8408,
+        "gzip": 3206
+      },
+      {
+        "file": "motionFeatures-CqmNbak8.js",
+        "type": "js",
+        "raw": 79944,
+        "gzip": 25756
+      },
+      {
+        "file": "motionPresets-CPyIirhZ.js",
+        "type": "js",
+        "raw": 1008,
+        "gzip": 399
+      },
+      {
+        "file": "resize-Ck_LNiOn.js",
+        "type": "js",
+        "raw": 4604,
+        "gzip": 2234
+      },
+      {
+        "file": "use-presence-BctFtyXV.js",
+        "type": "js",
+        "raw": 384,
+        "gzip": 288
+      },
+      {
+        "file": "useHaptic-BT3rM8on.js",
+        "type": "js",
+        "raw": 3035,
+        "gzip": 1176
+      }
+    ],
+    "totals": {
+      "js": {
+        "raw": 980602,
+        "gzip": 318997
+      },
+      "css": {
+        "raw": 371879,
+        "gzip": 64161
+      }
+    },
+    "entries": [
+      {
+        "file": "index-BokQcJZh.js",
+        "type": "js",
+        "raw": 525949,
+        "gzip": 165816
+      }
+    ]
+  }
+}

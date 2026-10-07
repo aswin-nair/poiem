@@ -2,6 +2,8 @@
 
 October 7, 2026 · `poiem-motion-return`
 
+This document and its gallery preserve the `8e7e968a` Neo Brutalist snapshot and that snapshot's validation results. See the [latest animation update](../screen-play/gallery.html) for the new freestanding Momo scenes and action feedback, with current results in its update notes.
+
 ## What changed
 
 - Brighter yellow, peach, pink, sky and mint panels in both themes, thicker ink outlines and hard offset shadows on primary actions and feature panels.
