@@ -85,18 +85,18 @@ describe('durable state and outbox', () => {
   })
 
   it('migrates a legacy localStorage snapshot only after the durable write', async () => {
-    saveState('user-1', namedState('Legacy', 'sk-private-legacy'))
+    await saveState('user-1', namedState('Legacy', 'sk-private-legacy'))
 
     const migrated = await migrateLegacyState('user-1')
 
     expect(migrated).toMatchObject({ origin: 'legacy', state: { profile: { name: 'Legacy' } } })
     expect(localStorage.getItem('fud-ai-web-state-user-1')).toBeNull()
-    expect(loadPrivateAIKey('user-1')).toBe('sk-private-legacy')
+    expect(await loadPrivateAIKey('user-1')).toBe('sk-private-legacy')
     expect(localStorage.getItem('fud-ai-durable-account-user-1')).not.toContain('sk-private-legacy')
   })
 
   it('retains the legacy snapshot when the durable migration write fails', async () => {
-    saveState('user-1', namedState('Still recoverable'))
+    await saveState('user-1', namedState('Still recoverable'))
     const originalSetItem = localStorage.setItem.bind(localStorage)
     vi.spyOn(localStorage, 'setItem').mockImplementation((key, value) => {
       if (key === 'fud-ai-durable-account-user-1') throw new Error('quota exceeded')

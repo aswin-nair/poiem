@@ -547,7 +547,11 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
         }
 
         if (!cloud) {
-          const next = cached?.state ?? loadState(userId)
+          const loaded = cached?.state ?? loadState(userId)
+          const next = {
+            ...loaded,
+            aiSettings: { ...loaded.aiSettings, apiKey: loaded.aiSettings.apiKey || await loadPrivateAIKey(userId) },
+          }
           try {
             if (!cached) await saveDurableLocalSnapshot(userId, next)
             if (!cancelled) setState(next)
@@ -572,7 +576,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           }
           const remoteState = remote.state === null
             ? null
-            : importData(JSON.stringify(remote.state), loadPrivateAIKey(userId))
+            : importData(JSON.stringify(remote.state), await loadPrivateAIKey(userId))
 
           if (cached?.pendingCount) {
             // Replay the stable device mutations before considering the server
@@ -638,7 +642,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           }
 
           const next = freshState()
-          next.aiSettings.apiKey = loadPrivateAIKey(userId)
+          next.aiSettings.apiKey = await loadPrivateAIKey(userId)
           await replaceDurableFromServer(userId, next, remote.version)
           cloudVersion.current = remote.version
           cloudWritable.current = true
@@ -799,7 +803,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     }
 
-    savePrivateAIKey(userId, state.aiSettings.apiKey)
+    void savePrivateAIKey(userId, state.aiSettings.apiKey)
     void saveDurableLocalSnapshot(userId, state).catch(error => {
       setStorageRecovery(error instanceof Error ? error.message : 'Device recovery storage is unavailable.')
     })
@@ -880,8 +884,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       if (choice === 'server') {
         const serverState = remote.state === null
           ? freshState()
-          : importData(JSON.stringify(remote.state), loadPrivateAIKey(userId))
-        if (remote.state === null) serverState.aiSettings.apiKey = loadPrivateAIKey(userId)
+          : importData(JSON.stringify(remote.state), await loadPrivateAIKey(userId))
+        if (remote.state === null) serverState.aiSettings.apiKey = await loadPrivateAIKey(userId)
         await resolveDurableConflictWithServer(userId, serverState, remote.version)
         suppressNextPersist.current = JSON.stringify(stateWithoutPrivateSecrets(serverState))
         cloudVersion.current = remote.version
@@ -960,7 +964,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     })),
 
     updateAISettings: (aiSettings) => {
-      savePrivateAIKey(userId, aiSettings.apiKey)
+      void savePrivateAIKey(userId, aiSettings.apiKey)
       setState(s => ({ ...s, aiSettings }))
     },
 

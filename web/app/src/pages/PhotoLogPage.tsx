@@ -23,9 +23,20 @@ function showBlobPreview(image: HTMLImageElement | null, url: string | null) {
     image.removeAttribute('src')
     return
   }
-  // URL.createObjectURL only yields a blob URL, which cannot carry a script scheme.
-  // codeql[js/xss-through-dom]
-  image.src = url
+  let safe = ''
+  try {
+    const parsed = new URL(url)
+    // createObjectURL only yields blob URLs. encodeURI drops the DOM-text taint
+    // without changing a blob URL, and the protocol check refuses every other scheme.
+    if (parsed.protocol === 'blob:') safe = encodeURI(parsed.href)
+  } catch {
+    safe = ''
+  }
+  if (!safe) {
+    image.removeAttribute('src')
+    return
+  }
+  image.src = safe
 }
 
 export function PhotoLogPage() {
