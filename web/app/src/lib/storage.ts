@@ -42,9 +42,13 @@ export function loadPrivateAIKey(userId: string): string {
 }
 
 export function savePrivateAIKey(userId: string, apiKey: string): void {
-  // Device-local BYOK only. Exports and cloud sync use stateWithoutPrivateSecrets, which drops this value.
-  if (apiKey.trim()) localStorage.setItem(privateAIKey(userId), apiKey) // codeql[js/clear-text-storage-of-sensitive-data]
-  else localStorage.removeItem(privateAIKey(userId))
+  if (!apiKey.trim()) {
+    localStorage.removeItem(privateAIKey(userId))
+    return
+  }
+  // Device-local BYOK. Exports and cloud sync drop this value.
+  // codeql[js/clear-text-storage-of-sensitive-data]
+  localStorage.setItem(privateAIKey(userId), apiKey)
 }
 
 export function clearPrivateAIKey(userId: string): void {
@@ -108,6 +112,8 @@ export function loadState(userId: string): AppState {
 
 export function saveState(userId: string, state: AppState): void {
   savePrivateAIKey(userId, state.aiSettings.apiKey)
+  // The journal copy stores an empty apiKey. The credential is saved separately above.
+  // codeql[js/clear-text-storage-of-sensitive-data]
   localStorage.setItem(storageKey(userId), JSON.stringify(stateWithoutPrivateSecrets(state)))
 }
 

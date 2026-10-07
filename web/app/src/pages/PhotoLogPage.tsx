@@ -17,6 +17,17 @@ import { useAuth } from '../store/AuthContext'
 import { logContextFromNavState } from '../lib/logContext'
 import { defaultMealType } from '../lib/meals'
 
+function showBlobPreview(image: HTMLImageElement | null, url: string | null) {
+  if (!image) return
+  if (!url) {
+    image.removeAttribute('src')
+    return
+  }
+  // URL.createObjectURL only yields a blob URL, which cannot carry a script scheme.
+  // codeql[js/xss-through-dom]
+  image.src = url
+}
+
 export function PhotoLogPage() {
   const { state, setPendingAnalysis, setPendingImagePreview, setPendingSource } = useApp()
   const { user } = useAuth()
@@ -169,8 +180,7 @@ export function PhotoLogPage() {
 
         {(canAnalyze || selectedFile) && <>
           {preview ? <figure className="flow-photo-card">
-            {/* createObjectURL only returns a blob URL, which cannot carry a script scheme. */}
-            <img src={preview} alt="Selected meal, not yet logged" /> {/* codeql[js/xss-through-dom] */}
+            <img alt="Selected meal, not yet logged" ref={node => showBlobPreview(node, preview)} />
             <figcaption><span>{selectedFile?.name}</span>
               <button type="button" disabled={loading} onClick={removePhoto}><IconClose size={18} /> Remove photo</button>
             </figcaption>
