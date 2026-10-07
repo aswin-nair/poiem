@@ -43,7 +43,7 @@ for (const width of [320, 390, 1440]) {
     const focused = await page.evaluate(() => document.activeElement?.tagName)
     await page.clock.runFor(18_500)
     await expect(cameo(page)).toBeVisible()
-    await expect(cameo(page)).toContainText('This imaginary clipboard')
+    await expect(cameo(page)).toContainText('Borrowing this word')
     expect(await page.evaluate(() => document.activeElement?.tagName)).toBe(focused)
     await expect(cameo(page)).toHaveClass(/is-static/)
     const bounds = await page.evaluate(() => {
@@ -59,7 +59,7 @@ for (const width of [320, 390, 1440]) {
     await expect(cameo(page)).toBeHidden()
     await page.clock.runFor(85_000)
     await expect(cameo(page)).toBeVisible()
-    await expect(cameo(page)).toContainText('This is my business face')
+    await expect(cameo(page)).toContainText('Big letters. Tiny stagehand')
   })
 }
 

@@ -13,7 +13,7 @@ export function AboutPage() {
         <BackLink to="/settings" />
         <header className="k-page-head">
           <p className="k-eyebrow">The small print, with feeling</p>
-          <h1>About</h1>
+          <h1 data-momo-play="title">About</h1>
         </header>
 
         <section className="k-about-hero" aria-label="Meet Poiem">
