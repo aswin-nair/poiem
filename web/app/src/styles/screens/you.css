@@ -1,7 +1,5 @@
-/* You on the Poiem system: a warm settings page, not a control panel.
-   Pink Momo in the header, an acid stamp, a butter appearance card, a sticky
-   ink section rail, section titles as tinted tags, square fields, and goal
-   tiles with Today's macro colour caps. Markup and class names are the page's own. */
+/* You: colourful poster headings, an appearance palette, square goal blocks
+   and a clear category rail. Forms keep their familiar reading order. */
 @layer screens {
   .k-you { min-height: 100dvh; }
   .k-you-main {
@@ -13,23 +11,27 @@
 
   /* ── Header ────────────────────────────────────────────────── */
   .k-you .you-header {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: center;
     gap: 14px;
     margin: 6px 0 0;
-    padding: 0;
-    border: 0;
+    padding: var(--k-space-lg);
+    border: 2px solid var(--k-sticker-ink);
     border-radius: 0;
-    background: none;
-    box-shadow: none;
+    background: var(--k-sticker-pink);
+    color: var(--k-sticker-ink);
+    box-shadow: var(--k-shadow);
   }
+  .k-you .you-header::after { content: ''; position: absolute; top: var(--k-space-lg); right: var(--k-space-lg); width: var(--k-space-2xl); height: var(--k-space-2xl); border: 2px solid var(--k-sticker-ink); background: repeating-conic-gradient(var(--k-sticker-ink) 0% 25%, var(--k-sticker-butter) 0% 50%) 50% / var(--k-space-lg) var(--k-space-lg); }
   .k-you .you-header > div:first-child { display: grid; justify-items: start; gap: 6px; min-width: 0; }
-  .k-you .page-title { margin: 0; font: 900 var(--k-type-title)/1 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
-  .k-you .you-header .page-sub { margin: 0; font: 700 var(--k-text-md)/1.3 var(--k-font-body); color: var(--k-muted); overflow-wrap: anywhere; }
+  .k-you .page-title { max-width: calc(100% - var(--k-space-3xl)); margin: 0; font: 900 var(--k-type-title)/1 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-sticker-ink); }
+  .k-you .you-header .k-eyebrow { padding-right: var(--k-space-3xl); color: var(--k-sticker-ink); }
+  .k-you .you-header .page-sub { margin: 0; font: 700 var(--k-text-md)/1.3 var(--k-font-body); color: var(--k-sticker-ink); overflow-wrap: anywhere; }
   .k-you .you-status {
     justify-self: start;
-    margin: -4px 0 0; padding: 0; border: 0; background: none; color: var(--k-muted);
+    margin: calc(var(--k-space-sm) * -1) 0 0; padding: var(--k-space-sm) var(--k-space-md); border: 2px solid var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid);
     font: 600 var(--k-text-xs)/1.2 var(--k-font-mono);
   }
 
@@ -41,7 +43,7 @@
     gap: 10px;
     min-height: 52px;
     padding: 0 52px 0 14px;
-    border: 1px solid var(--k-hair-strong);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
@@ -80,19 +82,20 @@
     display: grid;
     gap: 12px;
     margin: 0; padding: var(--k-pad-panel);
-    border: 1px solid var(--k-hair-strong);
-    border-radius: 0; background: var(--k-card); color: var(--k-ink);
+    border: 2px solid var(--k-sticker-ink);
+    border-radius: 0; background: var(--k-sticker-butter); color: var(--k-sticker-ink);
+    box-shadow: var(--k-shadow-sm);
     scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px);
   }
-  .k-you .appearance-settings-copy h2 { margin: 0 0 4px; font: 700 var(--k-type-section)/1.3 var(--k-font-body); text-transform: none; color: var(--k-ink); }
-  .k-you .appearance-settings-copy p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
-  .k-you .appearance-control { color: var(--k-ink); }
+  .k-you .appearance-settings-copy h2 { margin: 0 0 4px; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; color: var(--k-sticker-ink); }
+  .k-you .appearance-settings-copy p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-sticker-ink); }
+  .k-you .appearance-control { color: var(--k-sticker-ink); }
   .k-you .appearance-legend { margin: 0 0 6px; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; }
   .k-you .appearance-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
   .k-you .appearance-option-face {
     min-height: 48px;
     padding: 0 8px;
-    border: 1px solid var(--k-hair-strong);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
@@ -100,9 +103,9 @@
     transform: none;
   }
   .k-you .appearance-option:hover input:not(:checked) + .appearance-option-face { background: var(--k-sunken); color: var(--k-ink); transform: none; }
-  .k-you .appearance-option > input:checked + .appearance-option-face { background: var(--k-ink); color: var(--k-ground); box-shadow: none; }
+  .k-you .appearance-option > input:checked + .appearance-option-face { border-color: var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid); box-shadow: var(--k-shadow-sm); }
   .k-you .appearance-option > input:active + .appearance-option-face { transform: none; translate: 1px 1px; }
-  .k-you .appearance-option > input:focus-visible + .appearance-option-face { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+  .k-you .appearance-option > input:focus-visible + .appearance-option-face { outline: 3px solid var(--k-sticker-ink); outline-offset: 3px; }
 
   /* ── Category picker and form save bar ─────────────────────── */
   .k-you .you-toolbar {
@@ -149,7 +152,7 @@
     text-decoration: none;
   }
   .k-you .you-shortcuts a:hover { background: var(--k-sunken); color: var(--k-ink); }
-  .k-you .you-shortcuts a[aria-current="page"] { background: var(--k-ink); color: var(--k-ground); border-color: var(--k-ink); }
+  .k-you .you-shortcuts a[aria-current="page"] { background: var(--k-acid); color: var(--k-on-acid); border-color: var(--k-on-acid); box-shadow: var(--k-shadow-sm); }
   .k-you .you-shortcuts a:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
   .k-you .you-save-bar {
     --button-padding-inline: .875rem;
@@ -186,35 +189,36 @@
   .k-you .you-section { display: grid; gap: var(--k-space-lg); padding: var(--k-space-lg) 0 0; scroll-margin-top: calc(var(--you-toolbar-height, 132px) + 12px); }
   .k-you .you-section:focus { outline: none; }
   .k-you .you-section:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 6px; }
-  .k-you .you-section-heading { display: grid; justify-items: start; gap: 8px; margin: 0 0 4px; padding: 0; border: 0; background: none; }
+  .k-you .you-section-heading { display: grid; justify-items: start; gap: var(--k-space-md); margin: 0 0 var(--k-space-xs); padding: 0 0 var(--k-space-lg); border: 0; border-bottom: 2px solid var(--k-role-border); background: none; }
   .k-you .you-section-heading h2 {
     max-width: 100%;
-    margin: 0; padding: 0; border: 0;
-    border-radius: 0; background: none; color: var(--k-ink);
+    margin: 0; padding: var(--k-space-sm) var(--k-space-md); border: 2px solid var(--k-sticker-ink);
+    border-radius: 0; background: var(--tone, var(--k-sticker-butter)); color: var(--k-sticker-ink);
     box-shadow: none;
-    rotate: none; font: 700 var(--k-type-section)/1.3 var(--k-font-body); letter-spacing: 0; text-transform: none;
+    rotate: none; font: 900 var(--k-type-panel)/1 var(--k-font-display); letter-spacing: 0; text-transform: uppercase;
   }
   .k-you .you-section-heading p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); }
-  .k-you .you-section[id="you-profile"] { --tone: var(--k-peach); }
-  .k-you .you-section[id="you-preferences"] { --tone: var(--k-sky); }
-  .k-you .you-section[id="you-momo"] { --tone: var(--k-pink); }
-  .k-you .you-section[id="you-ai"] { --tone: var(--k-mint); }
-  .k-you .you-section[id="you-account"] { --tone: var(--k-butter); }
-  .k-you .you-section[id="you-data"] { --tone: var(--k-peach); }
-  .k-you .settings-section-label { margin: 8px 0 0; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--k-muted); }
+  .k-you .you-section[id="you-profile"] { --tone: var(--k-sticker-peach); }
+  .k-you .you-section[id="you-preferences"] { --tone: var(--k-sticker-sky); }
+  .k-you .you-section[id="you-momo"] { --tone: var(--k-sticker-pink); }
+  .k-you .you-section[id="you-ai"] { --tone: var(--k-sticker-mint); }
+  .k-you .you-section[id="you-account"] { --tone: var(--k-sticker-butter); }
+  .k-you .you-section[id="you-data"] { --tone: var(--k-sticker-peach); }
+  .k-you .settings-section-label { display: flex; align-items: center; gap: var(--k-space-sm); margin: var(--k-space-sm) 0 0; font: 700 var(--k-type-meta)/1.2 var(--k-font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--k-role-text); }
+  .k-you .settings-section-label::before { content: ''; flex: none; width: var(--k-space-sm); height: var(--k-space-sm); border: 2px solid var(--k-sticker-ink); background: var(--k-action); }
   .k-you :is(.you-pause-note, .settings-clamp-note) { margin: 0; padding: 10px 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-butter); color: var(--k-on-tone); font: 500 var(--k-text-sm)/1.45 var(--k-font-body); }
   .k-you .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
 
-  /* Goals: calories on acid, macros with Today's colour caps. */
+  /* Goals are a compact colour palette, using the same macro colours as Today. */
   .k-you .settings-goals-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; }
-  .k-you .settings-goal-card { display: grid; gap: 4px; min-width: 0; padding: var(--k-space-lg); border: 0; border-radius: 0; background: var(--k-sunken); box-shadow: inset 0 6px 0 var(--tone); }
+  .k-you .settings-goal-card { display: grid; gap: var(--k-space-xs); min-width: 0; padding: var(--k-space-lg); border: 2px solid var(--k-sticker-ink); border-radius: 0; background: var(--tone, var(--k-sticker-butter)); box-shadow: none; }
   /* Calories are the whole tile, so they need no cap on top of it. */
   .k-you .settings-goal-card:nth-child(1) { background: var(--k-acid); box-shadow: none; }
-  .k-you .settings-goal-card:nth-child(2) { --tone: var(--k-action); }
+  .k-you .settings-goal-card:nth-child(2) { --tone: var(--k-sticker-peach); }
   .k-you .settings-goal-card:nth-child(3) { --tone: var(--k-acid); }
-  .k-you .settings-goal-card:nth-child(4) { --tone: var(--k-sky-strong); }
-  .k-you .settings-goal-label { font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
-  .k-you .settings-goal-value { font: 900 var(--k-type-figure)/1 var(--k-font-display); font-variant-numeric: tabular-nums; color: var(--k-ink); }
+  .k-you .settings-goal-card:nth-child(4) { --tone: var(--k-sticker-sky); }
+  .k-you .settings-goal-label { font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-sticker-ink); }
+  .k-you .settings-goal-value { font: 900 var(--k-type-figure)/1 var(--k-font-display); font-variant-numeric: tabular-nums; color: var(--k-sticker-ink); }
   .k-you .settings-goal-card:nth-child(1) :is(.settings-goal-label, .settings-goal-value) { color: var(--k-on-acid); }
   @media (min-width: 400px) {
     .k-you .settings-goals-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -226,7 +230,7 @@
     margin: 0;
     padding: 0 16px;
     overflow: visible;
-    border: 1px solid var(--k-hair-strong);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
@@ -246,7 +250,7 @@
   .k-you .settings-row-control > input[list] { max-width: none; }
   .k-you :is(.settings-input, .settings-select, .settings-textarea) {
     width: 100%;
-    border: 1px solid var(--k-hair-strong);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
     background: var(--k-ground);
     color: var(--k-ink);

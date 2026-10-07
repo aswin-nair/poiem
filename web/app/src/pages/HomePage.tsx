@@ -387,7 +387,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   {macros.map(macro => (
                     <div key={macro.key} className={`k-macro is-${macro.key}`}>
                       <span className="k-macro-label"><i aria-hidden="true" />{macro.label}</span>
-                      <span className="k-macro-value tabular"><strong>{macro.current}</strong> / {macro.goal} g</span>
+                      <span className="k-macro-value tabular"><strong>{macro.current}</strong> / {macro.goal}{'\u00a0'}g</span>
                       <Meter label={macro.label} value={macro.current} max={macro.goal} over={macro.over} />
                     </div>
                   ))}

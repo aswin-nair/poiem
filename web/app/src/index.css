@@ -1,4 +1,4 @@
-/* Cascade layers: every legacy sheet sits in `legacy`; the Quiet Kitchen system
+/* Cascade layers: every legacy sheet sits in `legacy`; the Playful Kitchen system
    and its screens sit above it, so they win without ID selectors or !important.
    Accessibility overrides stay unlayered and last. */
 @layer legacy, system, screens;
@@ -44,4 +44,5 @@
 @import './styles/screens/first-run.css';
 @import './styles/screens/pages.css';
 @import './styles/screens/account.css';
+@import './styles/screens/momo-interlude.css';
 @import './styles/a11y.css';

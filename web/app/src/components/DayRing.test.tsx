@@ -74,8 +74,8 @@ describe('ring geometry', () => {
     const html = renderToStaticMarkup(<DayRing progress={partial} />)
     expect(html.match(/<li class="is-done">/g)).toHaveLength(1)
     expect(html.match(/<li>/g)).toHaveLength(2)
-    expect(ruleBody('.k-ring-legend li')).toMatch(/color:\s*var\(--k-role-text-muted\)/)
-    expect(ruleBody('.k-ring-legend li.is-done')).toMatch(/color:\s*var\(--k-role-text\)/)
+    expect(ruleBody('.k-ring-legend li')).toMatch(/color:\s*var\(--k-sticker-muted\)/)
+    expect(ruleBody('.k-ring-legend li.is-done')).toMatch(/color:\s*var\(--k-sticker-ink\)/)
   })
 
   it('states the step count once for assistive tech', () => {

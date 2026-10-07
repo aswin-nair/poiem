@@ -10,7 +10,8 @@
   @keyframes k-log-sheet-up { from { transform: translateY(28px); opacity: 0; } }
   @keyframes k-log-sheet-fade { from { opacity: 0; } }
 
-  .k-log-head { justify-content: flex-start; }
+  .k-log-head { justify-content: flex-start; padding: var(--k-space-md); border: var(--k-border-bold) solid var(--k-sticker-ink); background: var(--k-sticker-pink); color: var(--k-sticker-ink); }
+  .k-log-head :is(h2, .k-log-prompt) { color: inherit; }
   .k-log-momo:empty { display: none; }
   .k-log-momo .momo-sticker {
     display: block;
@@ -44,7 +45,7 @@
     width: 100%;
     min-height: 52px;
     padding: 0 14px 0 42px;
-    border: 1px solid var(--k-hair-strong);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
     background: var(--k-ground);
     color: var(--k-ink); box-shadow: none;
@@ -61,7 +62,7 @@
     min-height: 56px;
     margin-top: var(--k-space-3);
     padding: 8px 14px;
-    border: 1px solid var(--k-hair-strong);
+    border: 2px solid var(--k-on-acid);
     background: var(--k-acid);
     color: var(--k-on-acid);
     box-shadow: none;
@@ -73,7 +74,7 @@
   .k-quick-add strong { font: 800 var(--k-text-md)/1.2 var(--k-font-body); }
   .k-quick-add small { font: 500 var(--k-text-xs)/1.3 var(--k-font-body); }
   .k-quick-add:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
-  .k-shelf { display: grid; grid-template-columns: 1fr 1fr; margin: 14px 0 0; border: 1px solid var(--k-hair-strong); }
+  .k-shelf { display: grid; grid-template-columns: 1fr 1fr; margin: var(--k-space-lg) 0 0; border: 2px solid var(--k-role-border); }
   .k-shelf button {
     display: flex;
     align-items: center;
@@ -89,7 +90,7 @@
   }
   .k-shelf button:active { transform: translate(2px, 2px); box-shadow: none; }
   .k-shelf button + button { border-left: 2px solid var(--k-line); }
-  .k-shelf button[aria-pressed="true"] { background: var(--k-ink); color: var(--k-ground); }
+  .k-shelf button[aria-pressed="true"] { background: var(--k-acid); color: var(--k-on-acid); }
   .k-shelf button:focus-visible { outline: 3px solid var(--k-focus); outline-offset: -3px; }
   .k-list-label { margin: 16px 0 4px; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--k-muted); }
   .k-picks { display: grid; margin: 0; padding: 0; list-style: none; }
@@ -143,10 +144,10 @@
     gap: 10px;
     min-height: 66px;
     padding: 10px 12px;
-    border: 1px solid var(--k-hair-strong);
-    background: var(--k-card);
-    color: var(--k-ink);
-    box-shadow: none;
+    border: 2px solid var(--k-sticker-ink);
+    background: var(--tone);
+    color: var(--k-sticker-ink);
+    box-shadow: var(--k-shadow-sm);
     text-decoration: none;
     transition: transform var(--k-press) var(--k-ease);
   }
@@ -158,20 +159,20 @@
     display: grid;
     place-items: center;
     width: 44px;
-    height: 44px; border: 0;
-    background: var(--tone);
-    color: var(--k-sticker-ink, #20221D);
+    height: 44px; border: 2px solid var(--k-sticker-ink);
+    background: transparent;
+    color: var(--k-sticker-ink);
     rotate: none;
     transition: transform var(--k-press) var(--k-ease);
    box-shadow: none; }
   .k-method:nth-child(even) .k-method-icon { rotate: none; }
   .k-method-text { display: grid; gap: 2px; min-width: 0; }
   .k-method-text strong { font: 800 var(--k-text-md)/1.1 var(--k-font-body); }
-  .k-method-text small { font: 500 var(--k-text-xs)/1.25 var(--k-font-body); color: var(--k-muted); }
-  .k-method:hover { color: var(--k-ink); text-decoration: none; translate: none; box-shadow: none;  background: var(--k-sunken); }
+  .k-method-text small { font: 500 var(--k-text-xs)/1.25 var(--k-font-body); color: inherit; }
+  .k-method:hover { color: var(--k-sticker-ink); text-decoration: none; translate: none; background: var(--tone); }
   .k-method:hover .k-method-icon { transform: scale(1.04); }
   .k-method:active { transform: translate(2px, 2px); box-shadow: none; }
-  .k-method:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-method:focus-visible { outline: 3px solid var(--k-sticker-ink); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) {
     .k-method, .k-method-icon { transition: none; }
     .k-method:hover { translate: none; }

@@ -1,6 +1,6 @@
-/* Coach, Support and About on the Poiem system. The same language as Today:
-   square cards on paper, tinted tiles, Momo in his pink card, and one acid
-   moment per screen. Support stays quiet on purpose: the phone numbers are its
+/* Coach, Support and About on the Poiem system. Coach gets a colourful masthead,
+   framed prompts and bright speech cards; About carries the same sticker voice.
+   Support stays quiet on purpose: the phone numbers are its
    only emphatic element. */
 @layer screens {
   /* ── Shared page frame (Support, About) ─────────────────────── */
@@ -87,7 +87,7 @@
   .k-about-hero h2 { margin: 0; font: 900 clamp(var(--k-type-panel), 9vw, var(--k-type-title))/.9 var(--k-font-display); text-transform: uppercase; color: var(--k-on-acid); }
   .k-about-hero p { max-width: 42ch; margin: 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); color: var(--k-on-acid); }
   .k-about-stamp { padding: 4px 8px; border: 2px solid var(--k-on-acid); background: var(--k-card); color: var(--k-ink); rotate: none; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); letter-spacing: .04em; }
-  .k-about-momo { grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: 14px; }
+  .k-about-momo { grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: var(--k-space-lg); border: 2px solid var(--k-role-border); background: var(--k-pink); }
   .k-about-momo-art {
     width: 72px;
     height: 78px;
@@ -95,7 +95,7 @@
     border: 2px solid var(--k-on-acid);
     border-radius: 48% 48% 10% 10%;
     background: var(--k-momo);
-    box-shadow: none;
+    box-shadow: var(--k-shadow-sm);
     rotate: none;
   }
   .k-about-momo > div { display: grid; gap: 8px; }
@@ -123,8 +123,13 @@
     display: grid;
     grid-template-columns: 64px minmax(0, 1fr) auto;
     align-items: center;
-    gap: 14px;
-    padding: 18px var(--k-pad-panel) 6px;
+    gap: var(--k-space-md);
+    margin: var(--k-space-lg) var(--k-pad-panel) var(--k-space-sm);
+    padding: var(--k-pad-panel);
+    border: 2px solid var(--k-sticker-ink);
+    background: var(--k-sticker-mint);
+    color: var(--k-sticker-ink);
+    box-shadow: var(--k-shadow-sm);
   }
   .k-coach-momo {
     width: 64px;
@@ -133,13 +138,15 @@
     border: 2px solid var(--k-on-acid);
     border-radius: 48% 48% 10% 10%;
     background: var(--k-momo);
-    box-shadow: none;
+    box-shadow: var(--k-shadow-sm);
     rotate: none;
   }
   .k-coach-title { display: grid; gap: 4px; min-width: 0; }
-  .k-coach-title h1 { margin: 0; font: 900 clamp(var(--k-type-panel), 10vw, var(--k-type-title))/.86 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-ink); }
-  .k-coach-sub { margin: 0; font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); color: var(--k-muted); }
+  .k-coach-title .k-eyebrow { color: var(--k-sticker-ink); }
+  .k-coach-title h1 { margin: 0; font: 900 clamp(var(--k-type-panel), 10vw, var(--k-type-title))/.94 var(--k-font-display); letter-spacing: -.01em; text-transform: uppercase; color: var(--k-sticker-ink); }
+  .k-coach-sub { margin: 0; font: 600 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-sticker-ink); }
   .k-coach-clear { align-self: start; min-width: 44px; }
+  .k-coach-head .k-coach-clear { color: var(--k-sticker-ink); }
 
   .k-coach-main {
     display: grid;
@@ -151,8 +158,8 @@
    padding-bottom: var(--k-space-xl); }
   .k-coach-main .error-banner { margin: 0; padding: 10px 14px; border: 2px solid var(--k-danger-ink); border-radius: 0; background: var(--k-danger-soft); color: var(--k-danger-ink); box-shadow: none; font: 600 var(--k-text-sm)/1.5 var(--k-font-body); }
 
-  .k-coach-empty { display: grid; gap: 10px; box-shadow: none; }
-  .k-coach-empty h2 { margin: 0; font: 700 var(--k-type-section)/1.3 var(--k-font-body); text-transform: none; color: var(--k-ink); }
+  .k-coach-empty { display: grid; gap: var(--k-space-md); border: 2px solid var(--k-role-border); box-shadow: var(--k-shadow-sm); }
+  .k-coach-empty h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; color: var(--k-ink); }
   .k-coach-empty > p { margin: 0; font: 500 var(--k-text-md)/1.45 var(--k-font-body); color: var(--k-muted); }
   .k-coach-starters { display: grid; gap: 8px; margin-top: 2px; }
   .k-coach-starter {
@@ -161,18 +168,18 @@
     gap: 10px;
     min-height: 52px;
     padding: 8px 12px;
-    border: 1px solid var(--k-hair-strong); background: var(--k-card); color: var(--k-ink);
-    font: 700 var(--k-text-sm)/1.3 var(--k-font-body);
+    border: 2px solid var(--k-sticker-ink); background: var(--tone); color: var(--k-sticker-ink);
+    font: 800 var(--k-text-sm)/1.4 var(--k-font-body);
     text-align: left;
     cursor: pointer;
     transition: translate 140ms ease, box-shadow 140ms ease;
   }
-  .k-coach-starter.is-tone-butter { --tone: var(--k-butter); }
-  .k-coach-starter.is-tone-peach { --tone: var(--k-peach); }
-  .k-coach-starter.is-tone-mint { --tone: var(--k-mint); }
-  .k-coach-starter svg { flex: none; }
+  .k-coach-starter.is-tone-butter { --tone: var(--k-sticker-butter); }
+  .k-coach-starter.is-tone-peach { --tone: var(--k-sticker-peach); }
+  .k-coach-starter.is-tone-mint { --tone: var(--k-sticker-sky); }
+  .k-coach-starter svg { flex: none; box-sizing: content-box; padding: var(--k-space-xs); border: 2px solid var(--k-sticker-ink); background: var(--k-card); color: var(--k-ink); }
   .k-coach-starter:disabled { border-style: dashed; border-color: var(--k-hair-strong); background: transparent; color: var(--k-muted); cursor: default; }
-  .k-coach-starter:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+  .k-coach-starter:focus-visible { outline: 3px solid var(--k-sticker-ink); outline-offset: 2px; }
   @media (hover: hover) and (pointer: fine) {
     .k-coach-starter:not(:disabled):hover { translate: -1px -1px; box-shadow: none; }
   }
@@ -192,9 +199,9 @@
     border-radius: 48% 48% 10% 10%;
     background: var(--k-momo);
   }
-  .k-coach-bubble { min-width: 0; padding: 12px 14px; border: 1px solid var(--k-hair-strong); background: var(--k-card); color: var(--k-ink); }
-  .k-coach-msg.is-assistant .k-coach-bubble { box-shadow: none; }
-  .k-coach-msg.is-user .k-coach-bubble { background: var(--k-butter); color: var(--k-on-tone); }
+  .k-coach-bubble { min-width: 0; padding: var(--k-space-md) var(--k-space-lg); border: 2px solid var(--k-role-border); background: var(--k-card); color: var(--k-ink); }
+  .k-coach-msg.is-assistant .k-coach-bubble { border-bottom: var(--k-space-xs) solid var(--k-sticker-mint); box-shadow: none; }
+  .k-coach-msg.is-user .k-coach-bubble { border-color: var(--k-sticker-ink); background: var(--k-sticker-butter); color: var(--k-sticker-ink); }
   .k-coach-text { display: grid; gap: 8px; margin: 0; font: 500 var(--k-text-md)/1.5 var(--k-font-body); overflow-wrap: anywhere; }
   .k-coach-text p, .k-coach-text ul { margin: 0; }
   .k-coach-text ul { display: grid; gap: 4px; padding-left: 1.2em; }
@@ -247,7 +254,7 @@
     z-index: calc(var(--k-z-nav) - 1);
     display: grid;
     gap: 6px; width: 100%; max-width: none; margin: auto 0 0;
-    padding: 10px var(--k-pad-panel) 8px; border-top: 1px solid var(--k-hair-strong);
+    padding: var(--k-space-md) var(--k-pad-panel) var(--k-space-md); border-top: 2px solid var(--k-role-border);
     background: var(--k-ground);
   }
   .k-coach.is-empty .k-coach-main { padding-bottom: var(--k-space-xl); }
@@ -267,7 +274,7 @@
     min-width: 0;
     min-height: 52px;
     padding: 0 14px;
-    border: 1px solid var(--k-hair-strong);
+    border: 2px solid var(--k-role-border);
     border-radius: 0;
     background: var(--k-card);
     color: var(--k-ink);
@@ -286,7 +293,7 @@
     border-radius: 0;
     background: var(--k-action);
     color: var(--k-on-action);
-    box-shadow: none;
+    box-shadow: var(--k-shadow-sm);
     cursor: pointer;
   }
   .k-coach-send:active:not(:disabled) { translate: 2px 2px; box-shadow: none; }
@@ -301,6 +308,17 @@
   .k-coach-recovery p { margin: 0; }
   .k-coach .k-workspace-col { display: flex; flex-direction: column; min-height: 100dvh; padding-bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px)); }
   .k-coach .k-workspace-col > :is(.k-coach-main, .k-coach-compose) { width: 100%; max-width: 880px; margin-inline: auto; }
+  @media (max-width: 380px) {
+    .k-coach-head { grid-template-columns: 48px minmax(0, 1fr) auto; gap: var(--k-space-sm); padding: var(--k-space-md); }
+    .k-coach-momo { width: 48px; height: 52px; }
+    .k-coach-title h1 { font-size: var(--k-type-panel); }
+    .k-coach-msg.is-assistant { grid-template-columns: 32px minmax(0, 1fr); gap: var(--k-space-sm); }
+    .k-coach-avatar { width: 32px; height: 36px; }
+    .k-coach-msg.is-user { max-width: 94%; }
+  }
+  @media (min-width: 1120px) {
+    .k-coach-head { width: calc(100% - var(--k-pad-panel) * 2); max-width: calc(880px - var(--k-pad-panel) * 2); margin-inline: auto; }
+  }
   @media (min-width: 1120px) {
     .k-coach .k-workspace-col { padding-bottom: 0; }
     .k-coach-compose { bottom: 0; }

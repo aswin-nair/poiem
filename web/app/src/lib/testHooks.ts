@@ -1,6 +1,10 @@
 export interface PoiemTestHooks {
   rng?: () => number
   hideOverlay?: boolean
+  /** Independently exercise local cameos while the walking overlay stays hidden. */
+  momoInterludes?: boolean
+  momoInterludeReady?: boolean
+  momoInterludeImmediate?: boolean
 }
 
 declare global {

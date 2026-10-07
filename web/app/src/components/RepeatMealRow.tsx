@@ -59,7 +59,7 @@ export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = fa
           <span className="ssc-val" aria-live="polite">{multiplier}×</span>
           <button type="button" className="ssc-btn" onClick={() => changePortion(multiplier + 0.25)} aria-label={`Increase portion for ${item.name}`}><IconPlus size={13} strokeWidth={2.6} /></button>
         </div>}
-        <button type="button" className="log-pill-btn" aria-label={`Log ${item.name}, ${multiplier} times your ${basis} meal to ${MEAL_LABELS[mealType]}`} onClick={() => { if (!hold.consumed()) onLog(multiplier) }} {...hold.handlers}>Log</button>
+        <button type="button" className="k-repeat-log" aria-label={`Log ${item.name}, ${multiplier} times your ${basis} meal to ${MEAL_LABELS[mealType]}`} onClick={() => { if (!hold.consumed()) onLog(multiplier) }} {...hold.handlers}>Log</button>
         {onSave && <button type="button" className={`star-btn${saved ? ' active' : ''}`} aria-label={saved ? `Remove ${item.name} from Saved` : `Save ${item.name}`} aria-pressed={saved} onClick={() => { feel('select'); onSave() }}><IconStar active={saved} size={17} /></button>}
       </div>
     </div>

@@ -44,7 +44,7 @@
     overflow-wrap: anywhere;
     transition: transform var(--k-press) var(--k-ease);
   }
-  .pressable-primary .pressable-face { background: var(--k-action); color: var(--k-on-action); }
+  .pressable-primary .pressable-face { border: var(--k-border-bold) solid var(--k-sticker-ink); background: var(--k-action); color: var(--k-on-action); box-shadow: var(--k-shadow); }
   .pressable-secondary .pressable-face { background: var(--k-card); color: var(--k-ink); }
   .pressable-ghost .pressable-face { background: transparent; color: var(--k-ink); box-shadow: none; }
   .pressable-destructive .pressable-face { background: var(--k-danger-soft); color: var(--k-danger-ink); border-color: var(--k-danger-ink); box-shadow: none; }
@@ -167,11 +167,11 @@
     font: 700 var(--k-type-meta)/1.1 var(--k-font-body);
   }
   .bottom-nav .nav-item span { font-family: var(--k-font-body); font-weight: 700; }
-  .bottom-nav .nav-item.active { color: var(--k-ground); background: transparent; box-shadow: none; }
-  .bottom-nav .nav-item.active .nav-item-inner { border-color: var(--k-ink); background: var(--k-ink); color: var(--k-ground); box-shadow: none; }
+  .bottom-nav .nav-item.active { color: var(--k-sticker-ink); background: transparent; box-shadow: none; }
+  .bottom-nav .nav-item.active .nav-item-inner { border-color: var(--k-sticker-ink); background: var(--k-sticker-butter); color: var(--k-sticker-ink); box-shadow: none; }
   .bottom-nav .nav-item:focus-visible { outline: none; }
   .bottom-nav .nav-item:focus-visible .nav-item-inner { outline: 3px solid var(--k-focus); outline-offset: 2px; }
-  /* The + is a tilted persimmon sticker that rises out of the bar. It squashes
+  /* The + is a persimmon block that rises out of the bar. It squashes
      when pressed, pops a small acid burst, and turns into an acid × while the
      log sheet is open. */
   .bottom-nav .nav-fab {
@@ -362,7 +362,8 @@
     transition: transform var(--k-press) var(--k-ease);
   }
   .k-button:active { transform: translate(2px, 2px); box-shadow: none; }
-  .k-button.is-primary { background: var(--k-action); color: var(--k-on-action); }
+  .k-button.is-primary { border: var(--k-border-bold) solid var(--k-sticker-ink); background: var(--k-action); color: var(--k-on-action); box-shadow: var(--k-shadow); }
+  .k-button.is-primary:active { box-shadow: none; }
   .k-icon-button {
     display: inline-grid;
     place-items: center;

@@ -2,7 +2,9 @@
 
 Design reference for the Poiem web app (`web/app`).
 
-**Poster outside, kitchen inside.** The public welcome page, onboarding and sign-in keep the loud poster voice: acid yellow, condensed type, stickers. The daily app is a friendly kitchen: a warm paper ground and ink lines, one bright acid card for the number that matters, soft colours that tell meals and foods apart, and Momo saying hello. Someone logging their fourth meal of the day needs the number first. Joy comes from colour, illustration and small motion, never from slogans or stickers.
+**A playful Neo Brutalist kitchen.** Warm paper, punchy yellow, pink, sky and mint panels, strong ink outlines, condensed headings and hard offset shadows give the daily app the same energy as its welcome poster. Colour distinguishes meals and macros; selected controls and primary actions have clear weight. Reading rows and form fields stay simple. Momo brings small, funny interruptions alongside the useful daily routine.
+
+The October 2026 visual direction explicitly replaces the earlier flat-surface restriction. Controls and reading text remain upright and readable on desktop and phone.
 
 This file describes the **Poiem system**: the tokens, components and screen rules the app is being rebuilt on. Screens that have not moved yet still run on the older stylesheets, which are contained in a lower cascade layer (see [Architecture](#architecture)).
 
@@ -38,8 +40,8 @@ A later layer always beats an earlier one, whatever the selector specificity. Th
 - **New screens use `k-*` primitives.** Don't add rules to legacy sheets. When a screen moves to the system, delete the legacy rules it no longer uses.
 - **Colourful fills always take dark ink.** Acid and persimmon backgrounds use `--k-on-acid` / `--k-on-action` in both themes.
 - **No resting rotation** on text, controls, cards or navigation. Mascot artwork and 45/90-degree shape construction are allow-listed.
-- **Nothing raised at rest.** A hard offset block says "this floats above the page", so it belongs to sheets, modals, toasts and the tab bar, to the one hero per route, and to drawn artwork. Cards, buttons, chips, rows and tiles are flat.
-- These rules are enforced by [`src/lib/designSystem.test.ts`](src/lib/designSystem.test.ts), which checks the layer order, legacy containment, no IDs and no `!important` everywhere, then holds the `MIGRATED` sheets to the whole visual contract: contract type steps, role-named spacing, the three surface variants, no resting tilt, nothing raised. Sizes are read in both px and rem, so `1.375rem` is caught as 22px. A sheet joins `MIGRATED` when its screen has been through the reset; `styles/system/tokens.css`, `styles/screens/admin.css`, `styles/screens/first-run.css` and `styles/screens/account.css` are the four still outside.
+- **Curated hard shadows.** Overlays, navigation, heroes and Momo art keep offset blocks. Primary actions, selected controls, poster headings and the named feature panels may also use the shared hard-shadow tokens. Reading rows, charts and form fields stay flat; new shadow-bearing selectors must join the explicit design guard list.
+- These rules are enforced by [`src/lib/designSystem.test.ts`](src/lib/designSystem.test.ts): cascade order, no IDs or `!important`, approved type and spacing steps, three surface variants, upright controls and an explicit shadow allow-list. Sizes are read in both px and rem.
 
 ---
 
@@ -58,17 +60,19 @@ All tokens live in [`tokens.css`](src/styles/system/tokens.css). The light palet
 | `--k-muted` | `#5A564C` | `#C9C2B4` | Secondary text, labels |
 | `--k-line` | `#20221D` | `#A5A795` | 2px structural borders |
 | `--k-hair` / `--k-hair-strong` | ink at 14% / 34% | paper at 12% / 30% | Row dividers, meter tracks, dashed add rows |
-| `--k-acid` | `#E7F258` | `#E7F258` | Progress (calorie meter), quick add, default portion |
-| `--k-action` | `#FF8055` | `#FF996F` | The primary action: the + button, primary buttons |
+| `--k-acid` | `#E9FF54` | `#E9FF54` | Hero, progress, quick add and selected controls |
+| `--k-action` | `#FF784E` | `#FF996F` | The primary action: the + button, primary buttons |
 | `--k-over-fill` | `#FF8055` | `#FF996F` | Meter fill past a goal. Over is information, never red |
 | `--k-danger-ink` / `--k-danger-soft` | `#A8283A` / `#FFE4E9` | `#FFA5B0` / `#3E2930` | Delete only |
-| `--k-focus` | `#20221D` | `#E7F258` | 3px focus outlines |
+| `--k-focus` | `#20221D` | `#E9FF54` | 3px focus outlines |
 | `--k-scrim` | ink at 48% | black at 62% | Sheet and dialog backdrops |
 | `--k-butter` / `--k-peach` / `--k-pink` / `--k-sky` / `--k-mint` | `#FFE58A` / `#FFD2B8` / `#F7C6D9` / `#BFE6FF` / `#C4EED8` | darker tints (`#4A4122`…) | Meal icons (breakfast, lunch, snack, dinner, other) and food tiles by kind of food |
 | `--k-on-tone` | `#20221D` | `#F8F1E4` | Icons on those tints |
 | `--k-sky-strong` | `#4FB0E8` | `#6CC3F2` | Fat meter and water glasses |
 | `--k-momo` | `#EFB6CC` | `#EFB6CC` | Momo's card |
 | `--k-action-deep` | `#F0663A` | — | Stripes in the calorie meter |
+| `--k-sticker-butter` / `--k-sticker-peach` / `--k-sticker-pink` / `--k-sticker-sky` / `--k-sticker-mint` | `#FFD45C` / `#FFB08A` / `#FFA9CE` / `#9CD9FF` / `#8AE7BC` | Same bright palette | Poster headers, macro tiles, meal headings and Momo cameos |
+| `--k-sticker-ink` / `--k-sticker-muted` | `#20221D` / `#4A574D` | Same dark ink | Readable text and ring arcs on bright panels |
 
 Muted text on the ground is about 6.9:1 in light and 9.8:1 in dark. Ink on persimmon is about 6.5:1.
 
@@ -112,7 +116,8 @@ Surfaces are exactly three classes: `.k-surface`, `.k-surface.is-outlined`, `.k-
 | `--k-space-1 … 8` | 4, 8, 12, 16, 20, 24, 32, 40px |
 | `--k-radius-tile` | 8px (food tiles; almost everything else is square) |
 | `--k-radius-sheet` | 18px (top corners of the phone sheet only) |
-| `--k-shadow-sm` / `--k-shadow` | 3px / 4px hard offset in `--k-shadow-color` |
+| `--k-shadow-sm` / `--k-shadow` / `--k-shadow-bold` | 3px / 4px / 6px hard offset in `--k-shadow-color` |
+| `--k-border-bold` | 3px structural line on heroes and primary actions |
 | `--k-press` / `--k-ease` | 90ms press, `cubic-bezier(.2, .8, .2, 1)` |
 | `--k-shell` / `--k-gutter` | 480px column, 20px side padding (unmigrated screens) |
 | `--k-tabbar-h` | 88px bottom clearance for the tab bar |
@@ -128,10 +133,10 @@ These React components render the same markup as before. `components.css` gives 
 
 | Component | Look |
 |-----------|------|
-| `PressableButton` | Square face, 2px line, no shadow; primary is persimmon. Press nudges the face 2px. Focus ring on the face |
+| `PressableButton` | Square face and 2px line; primary has a 3px ink outline, persimmon fill and hard shadow. Press nudges the face 2px and removes the shadow. Focus ring on the face |
 | `Toggle` / `RadioDot` | Square 52×30 switch; on is an ink track with an acid knob (reversed in dark) |
 | `Toast` | Ink chip with ground text, 44px Undo and dismiss targets, stacked above the tab bar |
-| `BottomNav` | Card-coloured bar with a 2px line; active tab is solid ink. The + is a 58px persimmon sticker rising out of the bar: it squashes when pressed, pops a small acid burst, and turns into an acid × while the log sheet is open. From 1120px the same component is a sticky rail in the left column instead: no bar, no border, each icon beside its label, and the + still in its place in the middle of the list |
+| `BottomNav` | Outlined paper bar with a hard shadow; active tab is butter yellow with dark ink. The + rises out of the bar in persimmon and turns acid while logging is open. From 1120px it becomes a sticky side rail, with a shadow on the selected destination |
 | `SwipeRow` | Ink Edit action, danger-ink Delete action |
 | `PortionSheet`, `DatePickerModal` | Square cards on the scrim, display-type titles, acid default choice |
 | `LogMoment` | A small non-modal card for a special log (the first meal, a new wardrobe piece, a logged-day milestone, the Day ring closing): flat and outlined, fixed above the tab bar out of the page flow, Undo and Dismiss for ten seconds. It never takes focus and is announced once. A new piece arrives worn on its small Momo. Every other log gets the toast. The pure planner `lib/logFeedbackPlan.ts` decides the moment and `lib/logPresentation.ts` what it says |
@@ -240,7 +245,7 @@ The sheet never focuses the search field on open, so the phone keyboard stays do
 
 [`pages/ProgressPage.tsx`](src/pages/ProgressPage.tsx), styled in [`styles/screens/insights.css`](src/styles/screens/insights.css). Your routine over time, never a report card:
 
-1. **Header.** "The bigger picture" eyebrow, a display title, and one line of intent: "See your routine over time, one logged day at a time." No stamp and no mascot in the header — on a wide screen Momo waits in his own lane beside the column.
+1. **Header.** A sky poster panel with "The bigger picture", condensed display title, intent line and a small checker graphic. Journey and Consistency have hard shadows; reading charts remain flat.
 2. **Journey.** Day streak, total XP and freezes on peach, butter and sky tiles, the level name, and an acid meter to the next level.
 3. **Milestones.** A dashed path of five stops (first log, 3, 7, 14 and 30 days) that turn acid when reached. Breaks never reset them.
 4. **Consistency.** Days logged this month in display type, an acid heat grid with its legend, and a butter note comparing breakfasts with your own best week.
@@ -253,11 +258,11 @@ From 768px these cards pair into two columns, so a wide screen reads as a dashbo
 
 [`pages/SettingsPage.tsx`](src/pages/SettingsPage.tsx), styled in [`styles/screens/you.css`](src/styles/screens/you.css):
 
-1. **Header.** "Your space" eyebrow, a display title, your name, and a muted mono status line ("Your routine · your pace", or the pause notice). No stamp and no mascot mark.
+1. **Header.** A pink poster panel with "Your space", display title, name and a checker graphic. An acid status stamp reads "Your routine · your pace", or the pause notice.
 2. **Finder.** A bordered search field. Results turn acid under the pointer or keyboard focus.
-3. **Appearance.** A butter card with Light, Dark and System as square tiles; the chosen one is solid ink. It saves instantly.
+3. **Appearance.** A bright butter card with Light, Dark and System as square tiles; the chosen one is acid with a compact shadow. It saves instantly.
 4. **Category and Save.** Sticky at the top: a labelled native Category picker on phone, full section links from 768px, and a Save button only for pending profile or AI form edits. Everyday preferences apply immediately, with status based on applied values. Changing a preference preserves unrelated form drafts.
-5. **Sections.** Each title is 18px sentence-case body type on the ground — no tinted tag behind it — over a muted line of help text; the smaller labels inside a section stay mono uppercase. Daily goals put calories on an acid tile and give protein, carbs and fat sunken tiles under Today's colour caps. Rows, square fields and edge-to-edge row buttons sit in hairline cards. Delete actions use danger ink.
+5. **Sections.** Condensed uppercase titles sit on outlined coloured tabs above a help line. Smaller labels stay mono uppercase. Daily goals are acid, peach and sky blocks with dark ink. Rows and square fields use stronger borders; delete actions use danger ink.
 6. **Disclosures.** AI setup and Momo's wardrobe open with an acid + that turns into ×, like the log button.
 
 The column is capped at 880px from 768px, because settings are read as rows and a 1200px row is hard to follow. Each row with a field puts the control beside its label, stacking again below 360px.
@@ -266,9 +271,9 @@ The column is capped at 880px from 768px, because settings are read as rows and 
 
 [`components/LogFlowUI.tsx`](src/components/LogFlowUI.tsx) and [`components/MealEntryFields.tsx`](src/components/MealEntryFields.tsx), styled in [`styles/screens/flows.css`](src/styles/screens/flows.css). Logging speaks the same language as Today:
 
-1. **Header.** Step chips ("1 Add meal", "2 Review & log") with the current step on acid, and a display title. The header carries no mascot; Momo appears while the AI reads the meal, and Hide Momo removes him there.
+1. **Header.** An outlined sky poster with numbered step stickers ("1 Add meal", "2 Review & log"), the current step on acid and a condensed title. Momo appears while the AI reads the meal; Hide Momo removes him there.
 2. **Describe.** One bordered card holds the words. Example chips come in butter, mint, sky and pink; a tap fills the field.
-3. **Photo.** A dashed drop zone that turns butter on hover, Camera and Gallery buttons, and a Photo privacy disclosure.
+3. **Photo.** A mint dashed drop zone with a raised acid camera sticker, Camera and Gallery buttons, and a Photo privacy disclosure.
 4. **Thinking.** While AI reads the meal, an acid card shows Momo bopping and a Cancel button, which takes focus.
 5. **Review and Edit.** The food name sits beside a tile tinted by kind of food, and its glyph follows the name as you type. Calories are the acid row; protein, carbs and fat have the same colour caps as Today's macros. Meal choices carry their meal colour, and the chosen one turns solid ink. The total is an acid card with the Log button, sticky beside the editor from 1000px.
 6. **Manual.** The same header, macro colour caps and an acid "Ready to log" total.
@@ -319,6 +324,18 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 
 ## Behaviour that is part of the design
 
+### Momo's surprise cameos
+
+An authenticated visitor occasionally sees a compact pink speech card using their existing Momo outfit and one of 20 local jokes. No provider request, sound, haptic or focus grab is involved. Lines are drawn without replacement during the browser session. The cameo module loads after eight seconds of eligibility, during the initial waiting period, so it is outside Today's first download.
+
+- **Lively:** first visit after 18–35 seconds, then 75–150 seconds between visits; up to four per session.
+- **Calm:** first visit after 45–90 seconds, then 180–300 seconds between visits; up to two per session and a static entrance.
+- **Reduced motion:** the same text with static art and entrance. Show Momo off, Mute Momo and paused tracking disable cameos.
+- **Clear workflows:** no cameos in logging, settings, Coach, Support, account, onboarding or admin screens. Typing, keyboards, dialogs, log receipts, Undo toasts and existing Momo speech defer them. A newly opened form or dialog dismisses an active cameo.
+- **Dismissal:** Got it closes immediately; Mute Momo saves the existing mute preference. The nine-second timeout pauses while hovered or keyboard-focused. Dismissal preserves focus and keeps measured scroll clearance until the route changes.
+
+Implementation: [`MomoInterlude.tsx`](src/components/MomoInterlude.tsx), [`momoInterludes.ts`](src/lib/momoInterludes.ts) and [`momo-interlude.css`](src/styles/screens/momo-interlude.css).
+
 | Rule | Where |
 |------|-------|
 | **Celebrate rarely.** The full-screen "Logged." moment is for the day's first meal, streak milestones, and a log that brings Momo a new wardrobe piece. Every other log confirms with a toast, "Logged {meal}", with Undo | [`lib/logFeedback.ts`](src/lib/logFeedback.ts) |
@@ -343,7 +360,7 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 
 ## Screenshot matrix
 
-Forty-four pixel baselines, generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set. **Today** and **/dev/components** are locked at **320, 390, 768 and 1440px**; the screens the visual reset has already been through — the log sheet, Describe, Manual, Saved, Insights, You and Coach — are locked at **390 and 1440px**, the phone column and the desktop rail. Every surface is locked in **light and dark**. `npm run test:e2e` runs the project, so CI fails on an unexplained pixel.
+Fifty-eight pixel baselines plus one layout check, generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set. **Today** and **/dev/components** are locked at **320, 390, 768 and 1440px**. Log sheet adds **320px**; Today and log sheet add **844×390 landscape**. Describe, Photo, Manual, Saved, Insights, You and Coach are locked at **390 and 1440px**. Four additional screenshots cover Momo's cameo at 390 and 1440px in both themes.
 
 Comparison is an absolute budget of **200 differing pixels per image**, not a ratio. A ratio scales with the page, so a tall screen collects thousands of free pixels and a real change slips through — which is how restoring You's macro caps once passed at ratio 0.01 against a 0.012 limit. Measured in the container, an unchanged screen differs by zero pixels, so the budget is slack for stray antialiasing rather than a tolerance for design drift.
 

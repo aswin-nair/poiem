@@ -11,7 +11,7 @@ const SIZES = [52, 72, 92]
  * hold 3:1 against the section in light and dark (DayRing.test.tsx measures
  * them from tokens.css), which the persimmon and sky fills did not.
  */
-const arcColor = (arc: DayRingArc) => arc.required ? 'var(--k-role-text)' : 'var(--k-role-text-muted)'
+const arcColor = (arc: DayRingArc) => arc.required ? 'var(--k-sticker-ink)' : 'var(--k-sticker-muted)'
 
 export function DayRing({ progress, justClosed = false, closeMs = RING_CHECK_MS, note }: {
   progress: DayRingProgress
