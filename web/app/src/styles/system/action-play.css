@@ -1,0 +1,59 @@
+@layer system {
+  /* Decorative only: the control and its focus target keep their full resting size. */
+  .k-action-play-layer {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--k-z-sheet) + 2);
+    overflow: clip;
+    pointer-events: none;
+    contain: strict;
+  }
+  .k-action-play-marks {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    color: var(--k-sticker-ink);
+  }
+  .k-action-play-mark {
+    --k-action-play-fill: var(--k-sticker-butter);
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: var(--k-sticker-ink);
+    clip-path: polygon(50% 0, 61% 34%, 98% 35%, 69% 57%, 79% 92%, 50% 71%, 21% 92%, 31% 57%, 2% 35%, 39% 34%);
+    opacity: 0;
+  }
+  .k-action-play-mark::after {
+    content: '';
+    position: absolute;
+    inset: calc(var(--k-space-xs) / 4);
+    background: var(--k-action-play-fill);
+    clip-path: inherit;
+  }
+  .k-action-play-mark:nth-child(2) { top: -12px; --k-action-play-fill: var(--k-sticker-pink); }
+  .k-action-play-mark:nth-child(3) { --k-action-play-fill: var(--k-sticker-mint); }
+  .k-action-play-marks[data-kind="water"] .k-action-play-mark {
+    width: var(--k-space-lg);
+    height: calc(var(--k-space-lg) + var(--k-space-xs));
+    --k-action-play-fill: var(--k-sky-strong);
+    clip-path: polygon(50% 0, 92% 57%, 100% 76%, 92% 92%, 76% 100%, 24% 100%, 8% 92%, 0 76%, 8% 57%);
+  }
+  .k-action-play-marks[data-kind="select"] .k-action-play-mark {
+    --k-action-play-fill: var(--k-sticker-mint);
+    clip-path: polygon(0 46%, 17% 30%, 41% 58%, 84% 0, 100% 14%, 42% 100%);
+  }
+  .k-action-play-marks[data-kind="remove"] .k-action-play-mark {
+    height: 4px;
+    background: var(--k-sticker-peach);
+    clip-path: none;
+  }
+  .k-action-play-marks[data-kind="remove"] .k-action-play-mark::after { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .k-action-play-layer { display: none; }
+  }
+  :root[data-action-motion="still"] .k-action-play-layer { display: none; }
+}

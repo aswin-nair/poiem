@@ -61,7 +61,7 @@ export function MealTypePicker({ value, onChange }: { value: MealType; onChange:
     <div className="flow-meal-options">
       {(Object.keys(MEAL_LABELS) as MealType[]).map(meal => {
         const Icon = MEAL_ICONS[meal]
-        return <button type="button" key={meal} className={`is-${meal}`} aria-pressed={meal === value} onClick={() => {
+        return <button type="button" data-action-play="select" key={meal} className={`is-${meal}`} aria-pressed={meal === value} onClick={() => {
           if (meal === value) return
           feel('select')
           onChange(meal)
@@ -85,12 +85,12 @@ export function PortionControl({ value, grams, onChange, error, calories }: { va
   return <fieldset className="flow-portion"><legend>Adjust the portion</legend>
     <p id={`${id}-hint`} className="flow-field-hint">1× is the meal you described or photographed. Changing this scales all the numbers.</p>
     <div className="flow-portion-controls">
-      <button type="button" onClick={() => { feel('select'); onChange(normalizeServings(value - 0.25)) }} disabled={value <= 0.25} aria-label="Decrease servings"><IconMinus /></button>
+      <button type="button" data-action-play="select" onClick={() => { feel('select'); onChange(normalizeServings(value - 0.25)) }} disabled={value <= 0.25} aria-label="Decrease servings"><IconMinus /></button>
       <label htmlFor={id}><input id={id} data-food-field="servings" type="number" min="0.25" max="1000" step="0.25" inputMode="decimal" value={draft}
         onChange={event => setDraft(event.target.value)} onBlur={commit} aria-label="Servings" aria-invalid={error ? true : undefined}
         aria-describedby={`${id}-hint${error ? ` ${id}-error` : ''}`}
         onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} />× portion</label>
-      <button type="button" onClick={() => { feel('select'); onChange(normalizeServings(value + 0.25)) }} disabled={value >= 1000} aria-label="Increase servings"><IconPlus /></button>
+      <button type="button" data-action-play="select" onClick={() => { feel('select'); onChange(normalizeServings(value + 0.25)) }} disabled={value >= 1000} aria-label="Increase servings"><IconPlus /></button>
     </div>
     {error && <p id={`${id}-error`} className="field-error">{error}</p>}
     {calories !== undefined && Number.isFinite(calories) && calories >= 0 && <p className="flow-portion-total">Total for this portion: <strong>{Math.round(calories).toLocaleString()} kcal</strong></p>}

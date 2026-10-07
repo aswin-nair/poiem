@@ -13,6 +13,8 @@ const LAYERED = {
   'styles/system/components.css': 'system',
   'styles/system/foundations.css': 'system',
   'styles/system/momo.css': 'system',
+  'styles/system/action-play.css': 'system',
+  'styles/system/semantic-play.css': 'system',
   'styles/screens/kitchen.css': 'screens',
   'styles/screens/today.css': 'screens',
   'styles/screens/flows.css': 'screens',
@@ -23,6 +25,7 @@ const LAYERED = {
   'styles/screens/pages.css': 'screens',
   'styles/screens/account.css': 'screens',
   'styles/screens/momo-interlude.css': 'screens',
+  'styles/screens/today-play.css': 'screens',
 } as const
 
 /** Held to the whole contract: approved type, curated offset blocks, upright text. */
@@ -31,6 +34,8 @@ const MIGRATED = [
   'styles/system/components.css',
   'styles/system/foundations.css',
   'styles/system/momo.css',
+  'styles/system/action-play.css',
+  'styles/system/semantic-play.css',
   'styles/screens/today.css',
   'styles/screens/kitchen.css',
   'styles/screens/flows.css',
@@ -38,6 +43,7 @@ const MIGRATED = [
   'styles/screens/you.css',
   'styles/screens/pages.css',
   'styles/screens/momo-interlude.css',
+  'styles/screens/today-play.css',
 ] as const
 
 const APPROVED_TYPE = new Set([12, 14, 16, 18, 28, 40, 64])

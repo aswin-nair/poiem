@@ -35,6 +35,8 @@
 @import './styles/system/components.css';
 @import './styles/system/foundations.css';
 @import './styles/system/momo.css';
+@import './styles/system/action-play.css';
+@import './styles/system/semantic-play.css';
 @import './styles/screens/kitchen.css';
 @import './styles/screens/today.css';
 @import './styles/screens/flows.css';
@@ -45,4 +47,5 @@
 @import './styles/screens/pages.css';
 @import './styles/screens/account.css';
 @import './styles/screens/momo-interlude.css';
+@import './styles/screens/today-play.css';
 @import './styles/a11y.css';

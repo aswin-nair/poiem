@@ -57,6 +57,7 @@ export function BottomNav() {
       key={item.to}
       to={item.to}
       end={'end' in item ? item.end : undefined}
+      data-action-play="navigate"
       onPointerDown={() => feel('tap')}
       className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
     >
@@ -85,6 +86,7 @@ export function BottomNav() {
         <button
           type="button"
           data-testid="fab"
+          data-action-play="off"
           ref={fabAnchor}
           className={`nav-fab${logOpen ? ' active' : ''}`}
           aria-label="Log a meal"

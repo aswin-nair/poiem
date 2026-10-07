@@ -1,0 +1,28 @@
+/* State feedback stays on decorative children. Controls keep their target,
+   position and focus ring while the knob, star or Momo takes one short beat. */
+@layer system {
+  .k-save-star { display: grid; place-items: center; }
+  .k-wardrobe-happy { display: block; width: 100%; height: 100%; transform-origin: 50% 80%; }
+
+  .k-save-star.has-played { animation: k-save-star-pop calc(var(--k-press) * 4) var(--k-ease); }
+  .k-wardrobe-happy.has-played { animation: k-wardrobe-happy-pop calc(var(--k-press) * 4) var(--k-ease); }
+
+  @keyframes k-save-star-pop {
+    0%, 100% { scale: 1; rotate: 0deg; }
+    30% { scale: 1.2; rotate: -12deg; }
+    65% { scale: .96; rotate: 6deg; }
+  }
+
+  @keyframes k-wardrobe-happy-pop {
+    0%, 100% { scale: 1; translate: 0 0; }
+    20% { scale: 1.04 .94; }
+    50% { scale: .97 1.03; translate: 0 calc(var(--k-space-sm) * -1); }
+    80% { scale: 1.02 .98; }
+  }
+
+  [data-action-motion="still"] :is(.k-save-star, .k-wardrobe-happy).has-played { animation: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    :is(.k-save-star, .k-wardrobe-happy).has-played { animation: none; }
+  }
+}

@@ -86,6 +86,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const [ringCheck, setRingCheck] = useState<number | null>(null)
   const [freshId, setFreshId] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [waterBeat, setWaterBeat] = useState<{ glass: number; run: number } | null>(null)
   const loggedNavKey = useRef('')
   const mascotTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   /** False only after a real unmount; StrictMode's rehearsal unmount sets it straight back. */
@@ -94,6 +95,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const mealsTitle = useRef<HTMLHeadingElement>(null)
   const sheetOpen = useContext(LogSheetOpenContext)
   const reduced = useReducedMotion()
+  const actionMotionStill = Boolean(reduced || state.profile.mascotReducedMotion || state.gamification.mascotActivity === 'calm')
 
   const profile = state.profile
   const paused = Boolean(profile.trackingPaused)
@@ -129,6 +131,12 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   ]
 
   useEffect(() => { setMounted(true) }, [])
+
+  useEffect(() => {
+    if (!waterBeat) return
+    const timer = window.setTimeout(() => setWaterBeat(null), 500)
+    return () => window.clearTimeout(timer)
+  }, [waterBeat])
 
   useEffect(() => {
     onPage.current = true
@@ -259,6 +267,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
 
   function changeWater(next: number) {
     feel('water')
+    setWaterBeat(previous => next > water ? { glass: next - 1, run: (previous?.run ?? 0) + 1 } : null)
     patchGamification(g => applyWaterChange(g, selectedDayKey, Math.max(0, Math.min(WATER_GLASSES, next))))
   }
 
@@ -267,7 +276,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     const nextRing = dayRingProgress(dayRingEntries(dayEntries), notes + 1, profile.loggingCommitment)
     if (!ring.complete && nextRing.complete && readRingAck() !== selectedDayKey) {
       writeRingAck(selectedDayKey)
-      setRingCheck(reduced ? 0 : RING_CHECK_MS)
+      setRingCheck(actionMotionStill ? 0 : RING_CHECK_MS)
     }
     patchGamification(g => applyNote(g, selectedDayKey))
   }
@@ -463,22 +472,23 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
                     <div className="k-water-block">
                     <div className="k-water">
-                      <span className="k-extras-label"><IconWater size={18} /> Water</span>
+                      <span className="k-extras-label"><IconWater size={18} /> <span data-momo-play="water">Water</span></span>
                       <span className="k-glasses" aria-hidden="true">
                         {Array.from({ length: WATER_GLASSES }, (_, glass) => (
-                          <span key={glass} className={`k-glass${glass < water ? ' is-full' : ''}`} />
+                          <span key={`${glass}-${waterBeat?.glass === glass ? waterBeat.run : 0}`} className={`k-glass${glass < water ? ' is-full' : ''}${glass < water && waterBeat?.glass === glass ? ' is-water-new' : ''}`} />
                         ))}
                       </span>
                     </div>
                     <div className="k-stepper" role="group" aria-label="Water glasses">
-                      <button type="button" aria-label="Remove a glass of water" disabled={water <= 0} onClick={() => changeWater(water - 1)}>−</button>
+                      <button type="button" data-action-play="water" aria-label="Remove a glass of water" disabled={water <= 0} onClick={() => changeWater(water - 1)}>−</button>
                       <span className="tabular" aria-live="polite">{water}/{WATER_GLASSES}</span>
-                      <button type="button" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
+                      <button type="button" data-action-play="water" aria-label="Add a glass of water" disabled={water >= WATER_GLASSES} onClick={() => changeWater(water + 1)}>+</button>
                     </div>
                     </div>
                     <button
                       type="button"
                       className="k-text-button k-note-row"
+                      data-action-play="submit"
                       disabled={notes >= NOTE_LIMIT}
                       onClick={addNote}
                     >

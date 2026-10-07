@@ -1,7 +1,34 @@
-import { Children, isValidElement, type ReactElement, type ReactNode } from 'react'
+import { Children, createElement, isValidElement, type ReactElement, type ReactNode } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../lib/feel', () => ({ feel: vi.fn() }))
+
+const renderedSwitch = vi.hoisted(() => ({ props: null as Record<string, unknown> | null }))
+// SSR runs Toggle's hooks normally but does not serialize its event handlers.
+// Capture the real input props while leaving React's JSX factory unchanged.
+vi.mock('react/jsx-runtime', async importOriginal => {
+  const actual = await importOriginal<typeof import('react/jsx-runtime')>()
+  return {
+    ...actual,
+    jsx(...args: Parameters<typeof actual.jsx>) {
+      const [type, props] = args
+      if (type === 'input' && (props as Props).role === 'switch') renderedSwitch.props = props as Props
+      return actual.jsx(...args)
+    },
+  }
+})
+vi.mock('react/jsx-dev-runtime', async importOriginal => {
+  const actual = await importOriginal<typeof import('react/jsx-dev-runtime')>()
+  return {
+    ...actual,
+    jsxDEV(...args: Parameters<typeof actual.jsxDEV>) {
+      const [type, props] = args
+      if (type === 'input' && (props as Props).role === 'switch') renderedSwitch.props = props as Props
+      return actual.jsxDEV(...args)
+    },
+  }
+})
 
 import { feel } from '../lib/feel'
 import { RadioDot, Toggle } from './Toggle'
@@ -10,8 +37,8 @@ import { FilterGroup } from './system/FilterGroup'
 
 type Props = Record<string, unknown>
 
-/* There is no DOM here, so these controls are called as plain functions (none of
-   them uses a hook) and their handlers are read from the element tree they return. */
+/* Hook-free controls can return their element tree directly. Toggle renders
+   through React, with its input handler captured by the transparent JSX wrapper. */
 function collect(node: ReactNode, match: (props: Props) => boolean, found: Props[] = []): Props[] {
   Children.forEach(node, child => {
     if (!isValidElement(child)) return
@@ -24,7 +51,10 @@ function collect(node: ReactNode, match: (props: Props) => boolean, found: Props
 
 const click = (props: Props) => (props.onClick as () => void)()
 
-beforeEach(() => vi.mocked(feel).mockClear())
+beforeEach(() => {
+  vi.mocked(feel).mockClear()
+  renderedSwitch.props = null
+})
 
 describe('WeekStrip day selection', () => {
   const selected = new Date(Date.now() - 60 * 86_400_000)
@@ -54,8 +84,11 @@ describe('WeekStrip day selection', () => {
 describe('Toggle and RadioDot', () => {
   it('a switch emits one select cue and reports the new value', () => {
     const onChange = vi.fn()
-    const [input] = collect(Toggle({ checked: false, onChange }), props => props.role === 'switch')
-    ;(input.onChange as (event: unknown) => void)({ target: { checked: true } })
+    const html = renderToStaticMarkup(createElement(Toggle, { checked: false, onChange }))
+    expect(html).toContain('type="checkbox"')
+    expect(html).toContain('role="switch"')
+    expect(renderedSwitch.props).not.toBeNull()
+    ;(renderedSwitch.props!.onChange as (event: unknown) => void)({ target: { checked: true } })
     expect(feel).toHaveBeenCalledTimes(1)
     expect(feel).toHaveBeenCalledWith('select')
     expect(onChange).toHaveBeenCalledWith(true)

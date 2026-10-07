@@ -1,0 +1,18 @@
+@layer screens {
+  /* Only the decorative glass moves: the stepper and its hit areas stay put. */
+  .k-glass.is-water-new {
+    transform-origin: center bottom;
+    animation: k-water-fill-hop 440ms var(--k-ease) both;
+  }
+  @keyframes k-water-fill-hop {
+    0% { transform: scaleY(.55) scaleX(1.12); }
+    35% { transform: translateY(-5px) scaleY(1.12) scaleX(.94); }
+    65% { transform: translateY(0) scaleY(.94) scaleX(1.04); }
+    100% { transform: none; }
+  }
+  :root[data-action-motion='still'] .k-glass.is-water-new { animation: none; }
+  :root[data-action-motion='still'] .k-ring-check { animation: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .k-glass.is-water-new { animation: none; }
+  }
+}
