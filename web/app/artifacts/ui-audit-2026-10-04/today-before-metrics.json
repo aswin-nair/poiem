@@ -1,0 +1,882 @@
+[
+  {
+    "key": "today-320x844-dark",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1466
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 622,
+      "maxScroll": 622,
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-360x844-light",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 360,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 360,
+      "clientWidth": 360,
+      "height": 1428
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 584,
+      "maxScroll": 584,
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-320x844-light",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 320,
+      "height": 844,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 320,
+      "clientWidth": 320,
+      "height": 1466
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Sunday 13 September",
+        "x": 16,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 57.140625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Monday 14 September",
+        "x": 57.140625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 98.28125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Tuesday 15 September",
+        "x": 98.28125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 139.421875,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Wednesday 16 September",
+        "x": 139.421875,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 180.5625,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Thursday 17 September",
+        "x": 180.5625,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 221.703125,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Friday 18 September",
+        "x": 221.703125,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 262.84375,
+        "bottom": 148.59375
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "week-day",
+        "name": "Saturday 19 September, logged",
+        "x": 262.84375,
+        "y": 88.59375,
+        "w": 41.140625,
+        "h": 60,
+        "right": 303.984375,
+        "bottom": 148.59375
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 622,
+      "maxScroll": 622,
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-360x844-dark",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 360,
+      "height": 844,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 360,
+      "clientWidth": 360,
+      "height": 1428
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 584,
+      "maxScroll": 584,
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-390x844-light",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 390,
+      "clientWidth": 390,
+      "height": 1428
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 584,
+      "maxScroll": 584,
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-390x844-dark",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 390,
+      "clientWidth": 390,
+      "height": 1428
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 584,
+      "maxScroll": 584,
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-430x932-light",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 430,
+      "height": 932,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 430,
+      "clientWidth": 430,
+      "height": 1428
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 496,
+      "maxScroll": 496,
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 795.53125,
+        "top": 747.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-768x1024-light",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 768,
+      "height": 1024,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 768,
+      "clientWidth": 768,
+      "height": 1386
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 362,
+      "maxScroll": 362,
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-430x932-dark",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 430,
+      "height": 932,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 430,
+      "clientWidth": 430,
+      "height": 1428
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 496,
+      "maxScroll": 496,
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 795.53125,
+        "top": 747.53125
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-768x1024-dark",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 768,
+      "height": 1024,
+      "mobile": true,
+      "dpr": 3
+    },
+    "document": {
+      "width": 768,
+      "clientWidth": 768,
+      "height": 1386
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 362,
+      "maxScroll": 362,
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-1440x1000-light",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000,
+      "mobile": false,
+      "dpr": 1
+    },
+    "document": {
+      "width": 1440,
+      "clientWidth": 1440,
+      "height": 1000
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [
+      {
+        "tag": "A",
+        "cls": "nav-brand-account",
+        "name": "Ada",
+        "x": 95,
+        "y": 37.59375,
+        "w": 134,
+        "h": 16.796875,
+        "right": 229,
+        "bottom": 54.390625
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 0,
+      "maxScroll": 0,
+      "navTop": 0,
+      "last": {
+        "text": "Add snack",
+        "bottom": 815.1875,
+        "top": 767.1875
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-1440x1000-dark",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000,
+      "mobile": false,
+      "dpr": 1
+    },
+    "document": {
+      "width": 1440,
+      "clientWidth": 1440,
+      "height": 1000
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [
+      {
+        "tag": "A",
+        "cls": "nav-brand-account",
+        "name": "Ada",
+        "x": 95,
+        "y": 37.59375,
+        "w": 134,
+        "h": 16.796875,
+        "right": 229,
+        "bottom": 54.390625
+      }
+    ],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 24
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 24
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 24
+      }
+    ],
+    "summaryDisplay": "grid",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 0,
+      "maxScroll": 0,
+      "navTop": 0,
+      "last": {
+        "text": "Add snack",
+        "bottom": 815.1875,
+        "top": 767.1875
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-844x390-light",
+    "surface": "today",
+    "theme": "light",
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 844,
+      "clientWidth": 844,
+      "height": 1386
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 996,
+      "maxScroll": 996,
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      }
+    },
+    "errors": []
+  },
+  {
+    "key": "today-844x390-dark",
+    "surface": "today",
+    "theme": "dark",
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "mobile": true,
+      "dpr": 2.625
+    },
+    "document": {
+      "width": 844,
+      "clientWidth": 844,
+      "height": 1386
+    },
+    "bodyOverflow": "visible",
+    "heading": "TODAY",
+    "url": "/",
+    "overflow": [],
+    "small": [],
+    "unnamed": [],
+    "inputs": [],
+    "gaps": [
+      {
+        "between": "k-momo → k-surface is-hero k-budget",
+        "px": 0
+      },
+      {
+        "between": "k-surface is-hero k-budget → k-macros",
+        "px": 0
+      },
+      {
+        "between": "k-macros → k-surface is-outlined k-extras",
+        "px": 0
+      }
+    ],
+    "summaryDisplay": "block",
+    "activeTab": null,
+    "bottom": {
+      "scrollY": 996,
+      "maxScroll": 996,
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      }
+    },
+    "errors": []
+  }
+]

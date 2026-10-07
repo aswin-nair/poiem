@@ -1,0 +1,3009 @@
+{
+  "date": "2026-10-04",
+  "host": "http://localhost:5174",
+  "routes": 40,
+  "viewports": [
+    320,
+    360,
+    390,
+    430,
+    768,
+    1440,
+    "844x390"
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "captures": 560,
+  "unresolvedFailures": [],
+  "documentOverflow": [],
+  "elementOverflow": [
+    {
+      "key": "welcome-320x844-light",
+      "offenders": [
+        {
+          "tag": "OL",
+          "cls": "wp-p2n-phases",
+          "name": "Sequence",
+          "x": 20,
+          "y": 2050.828125,
+          "w": 311.125,
+          "h": 38,
+          "right": 331.125,
+          "bottom": 2088.828125
+        },
+        {
+          "tag": "LI",
+          "cls": "",
+          "name": "03 JOURNAL",
+          "x": 220.296875,
+          "y": 2053.828125,
+          "w": 107.828125,
+          "h": 32,
+          "right": 328.125,
+          "bottom": 2085.828125
+        }
+      ]
+    },
+    {
+      "key": "welcome-320x844-dark",
+      "offenders": [
+        {
+          "tag": "OL",
+          "cls": "wp-p2n-phases",
+          "name": "Sequence",
+          "x": 20,
+          "y": 2050.828125,
+          "w": 311.125,
+          "h": 38,
+          "right": 331.125,
+          "bottom": 2088.828125
+        },
+        {
+          "tag": "LI",
+          "cls": "",
+          "name": "03 JOURNAL",
+          "x": 220.296875,
+          "y": 2053.828125,
+          "w": 107.828125,
+          "h": 32,
+          "right": 328.125,
+          "bottom": 2085.828125
+        }
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "key": "today-320x844-light",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-320x844-dark",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-360x844-light",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-360x844-dark",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-390x844-light",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-390x844-dark",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-430x932-light",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-430x932-dark",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-768x1024-light",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-768x1024-dark",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-1440x1000-light",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-1440x1000-dark",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-844x390-light",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    },
+    {
+      "key": "today-844x390-dark",
+      "before": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 0
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 0
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 0
+        }
+      ],
+      "after": [
+        {
+          "between": "k-momo → k-surface is-hero k-budget",
+          "px": 24
+        },
+        {
+          "between": "k-surface is-hero k-budget → k-macros",
+          "px": 24
+        },
+        {
+          "between": "k-macros → k-surface is-outlined k-extras",
+          "px": 24
+        }
+      ]
+    }
+  ],
+  "bottomNav": [
+    {
+      "key": "today-empty-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.6875,
+        "top": 659.6875
+      },
+      "clears": true
+    },
+    {
+      "key": "today-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 719.3125,
+        "top": 675.3125
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.8125,
+        "top": 677.8125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.0625,
+        "top": 658.46875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.484375,
+        "top": 658.890625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.078125,
+        "top": 658.484375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.78125,
+        "top": 658.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.78125,
+        "top": 658.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716,
+        "top": 658.40625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.75,
+        "top": 658.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 653.28125,
+        "top": 609.28125
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 700.59375,
+        "top": 648.59375
+      },
+      "clears": true
+    },
+    {
+      "key": "about-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 715.921875,
+        "top": 699.125
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.8125,
+        "top": 677.8125
+      },
+      "clears": true
+    },
+    {
+      "key": "support-320x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 716.28125,
+        "top": 682.6875
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.6875,
+        "top": 659.6875
+      },
+      "clears": true
+    },
+    {
+      "key": "today-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 719.3125,
+        "top": 675.3125
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.8125,
+        "top": 677.8125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.0625,
+        "top": 658.46875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.484375,
+        "top": 658.890625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.078125,
+        "top": 658.484375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.78125,
+        "top": 658.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716,
+        "top": 658.40625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.78125,
+        "top": 658.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 700.59375,
+        "top": 648.59375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.75,
+        "top": 658.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 653.28125,
+        "top": 609.28125
+      },
+      "clears": true
+    },
+    {
+      "key": "support-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 716.28125,
+        "top": 682.6875
+      },
+      "clears": true
+    },
+    {
+      "key": "about-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 715.921875,
+        "top": 699.125
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-320x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.8125,
+        "top": 677.8125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.90625,
+        "top": 659.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 719.09375,
+        "top": 675.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 696.453125,
+        "top": 678.453125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.6875,
+        "top": 658.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.078125,
+        "top": 658.484375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.296875,
+        "top": 658.703125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.515625,
+        "top": 657.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.03125,
+        "top": 658.4375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.78125,
+        "top": 658.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.75,
+        "top": 658.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 701.171875,
+        "top": 649.171875
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 580.53125,
+        "top": 536.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "about-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 716.421875,
+        "top": 699.625
+      },
+      "clears": true
+    },
+    {
+      "key": "support-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 716.09375,
+        "top": 699.296875
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-360x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 696.453125,
+        "top": 678.453125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.90625,
+        "top": 659.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 719.09375,
+        "top": 675.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 696.453125,
+        "top": 678.453125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.6875,
+        "top": 658.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.078125,
+        "top": 658.484375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.296875,
+        "top": 658.703125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.03125,
+        "top": 658.4375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.78125,
+        "top": 658.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.515625,
+        "top": 657.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.75,
+        "top": 658.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 580.53125,
+        "top": 536.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 701.171875,
+        "top": 649.171875
+      },
+      "clears": true
+    },
+    {
+      "key": "about-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 716.421875,
+        "top": 699.625
+      },
+      "clears": true
+    },
+    {
+      "key": "support-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 716.09375,
+        "top": 699.296875
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-360x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 696.453125,
+        "top": 678.453125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.90625,
+        "top": 659.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 719.09375,
+        "top": 675.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.515625,
+        "top": 674.71875
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.984375,
+        "top": 677.984375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.5,
+        "top": 674.703125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.71875,
+        "top": 674.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.234375,
+        "top": 675.4375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.71875,
+        "top": 674.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.984375,
+        "top": 675.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.953125,
+        "top": 675.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 700.8125,
+        "top": 648.8125
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 559.109375,
+        "top": 515.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "about-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 716.265625,
+        "top": 699.46875
+      },
+      "clears": true
+    },
+    {
+      "key": "support-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 715.703125,
+        "top": 698.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-390x844-light",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.984375,
+        "top": 677.984375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.90625,
+        "top": 659.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 707.53125,
+        "top": 659.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 719.09375,
+        "top": 675.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.515625,
+        "top": 674.71875
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.984375,
+        "top": 677.984375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.5,
+        "top": 674.703125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.71875,
+        "top": 674.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 716.234375,
+        "top": 675.4375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.71875,
+        "top": 674.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.984375,
+        "top": 675.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 715.953125,
+        "top": 675.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 700.8125,
+        "top": 648.8125
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 559.109375,
+        "top": 515.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "about-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 716.265625,
+        "top": 699.46875
+      },
+      "clears": true
+    },
+    {
+      "key": "support-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 715.703125,
+        "top": 698.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-390x844-dark",
+      "navTop": 769.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 695.984375,
+        "top": 677.984375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 795.53125,
+        "top": 747.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 796.34375,
+        "top": 748.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 795.53125,
+        "top": 747.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 807.09375,
+        "top": 763.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 783.59375,
+        "top": 765.59375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.71875,
+        "top": 762.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 804.109375,
+        "top": 763.3125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 804.125,
+        "top": 763.328125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.671875,
+        "top": 762.875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 721.984375,
+        "top": 681.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 784.421875,
+        "top": 743.625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 743.484375,
+        "top": 691.484375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.65625,
+        "top": 762.859375
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 559.96875,
+        "top": 515.96875
+      },
+      "clears": true
+    },
+    {
+      "key": "about-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 804.375,
+        "top": 787.578125
+      },
+      "clears": true
+    },
+    {
+      "key": "support-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 803.703125,
+        "top": 786.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-430x932-light",
+      "navTop": 857.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 783.59375,
+        "top": 765.59375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 795.53125,
+        "top": 747.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 796.34375,
+        "top": 748.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 795.53125,
+        "top": 747.53125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 807.09375,
+        "top": 763.09375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 804.125,
+        "top": 763.328125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 804.109375,
+        "top": 763.3125
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 783.59375,
+        "top": 765.59375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.671875,
+        "top": 762.875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 784.421875,
+        "top": 743.625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.71875,
+        "top": 762.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.65625,
+        "top": 762.859375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 721.984375,
+        "top": 681.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 743.484375,
+        "top": 691.484375
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 559.96875,
+        "top": 515.96875
+      },
+      "clears": true
+    },
+    {
+      "key": "about-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 804.375,
+        "top": 787.578125
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 783.59375,
+        "top": 765.59375
+      },
+      "clears": true
+    },
+    {
+      "key": "support-430x932-dark",
+      "navTop": 857.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 803.703125,
+        "top": 786.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "today-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 895.828125,
+        "top": 855.03125
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 795.109375,
+        "top": 751.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 875.828125,
+        "top": 857.828125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 896.4375,
+        "top": 855.640625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 896.046875,
+        "top": 855.25
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 895.953125,
+        "top": 855.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 747.9375,
+        "top": 707.140625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.65625,
+        "top": 762.859375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 721.984375,
+        "top": 681.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 684.109375,
+        "top": 632.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 514.96875,
+        "top": 470.96875
+      },
+      "clears": true
+    },
+    {
+      "key": "support-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 895.703125,
+        "top": 878.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "about-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 773.71875,
+        "top": 756.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-768x1024-light",
+      "navTop": 949.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 875.828125,
+        "top": 857.828125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 888.34375,
+        "top": 840.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 795.109375,
+        "top": 751.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 896.4375,
+        "top": 855.640625
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 875.828125,
+        "top": 857.828125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 895.828125,
+        "top": 855.03125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 896.046875,
+        "top": 855.25
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 895.953125,
+        "top": 855.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 747.9375,
+        "top": 707.140625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 721.984375,
+        "top": 681.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 803.65625,
+        "top": 762.859375
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 684.109375,
+        "top": 632.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "about-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 773.71875,
+        "top": 756.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 514.96875,
+        "top": 470.96875
+      },
+      "clears": true
+    },
+    {
+      "key": "support-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 895.703125,
+        "top": 878.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-768x1024-dark",
+      "navTop": 949.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 875.828125,
+        "top": 857.828125
+      },
+      "clears": true
+    },
+    {
+      "key": "today-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 265.109375,
+        "top": 221.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 242.4375,
+        "top": 224.4375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.828125,
+        "top": 221.03125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 262.4375,
+        "top": 221.640625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 262.046875,
+        "top": 221.25
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.953125,
+        "top": 221.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.5625,
+        "top": 220.765625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.984375,
+        "top": 221.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 238.921875,
+        "top": 186.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.65625,
+        "top": 220.859375
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 204.96875,
+        "top": 160.96875
+      },
+      "clears": true
+    },
+    {
+      "key": "about-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 261.71875,
+        "top": 244.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "support-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 261.703125,
+        "top": 244.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-844x390-light",
+      "navTop": 315.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 242.4375,
+        "top": 224.4375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-empty-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "today-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "log-sheet-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Add snack",
+        "bottom": 254.34375,
+        "top": 206.34375
+      },
+      "clears": true
+    },
+    {
+      "key": "saved-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Log meal",
+        "bottom": 265.109375,
+        "top": 221.109375
+      },
+      "clears": true
+    },
+    {
+      "key": "insights-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 242.4375,
+        "top": 224.4375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-overview-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.828125,
+        "top": 221.03125
+      },
+      "clears": true
+    },
+    {
+      "key": "you-profile-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 262.4375,
+        "top": 221.640625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-momo-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.953125,
+        "top": 221.15625
+      },
+      "clears": true
+    },
+    {
+      "key": "you-preferences-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 262.046875,
+        "top": 221.25
+      },
+      "clears": true
+    },
+    {
+      "key": "you-ai-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.5625,
+        "top": 220.765625
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Send",
+        "bottom": 238.921875,
+        "top": 186.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "you-data-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.65625,
+        "top": 220.859375
+      },
+      "clears": true
+    },
+    {
+      "key": "you-account-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Poiem AI or your own key · Privacy-first",
+        "bottom": 261.984375,
+        "top": 221.1875
+      },
+      "clears": true
+    },
+    {
+      "key": "about-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem · Your plate. Your pace.",
+        "bottom": 261.71875,
+        "top": 244.921875
+      },
+      "clears": true
+    },
+    {
+      "key": "coach-chat-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Delete",
+        "bottom": 204.96875,
+        "top": 160.96875
+      },
+      "clears": true
+    },
+    {
+      "key": "support-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "Poiem is a habit tracker, not a medical tool.",
+        "bottom": 261.703125,
+        "top": 244.90625
+      },
+      "clears": true
+    },
+    {
+      "key": "journey-844x390-dark",
+      "navTop": 315.8125,
+      "last": {
+        "text": "ACHIEVEMENTS",
+        "bottom": 242.4375,
+        "top": 224.4375
+      },
+      "clears": true
+    }
+  ],
+  "errors": [
+    {
+      "key": "login-320x844-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-320x844-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-320x844-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-320x844-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-360x844-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-360x844-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-360x844-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-360x844-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-390x844-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-390x844-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "today-390x844-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "login-390x844-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-390x844-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-430x932-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-430x932-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-430x932-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-430x932-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "intro-3-430x932-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "today-empty-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "saved-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "insights-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-profile-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-preferences-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-ai-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-account-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "journey-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "onboarding-1-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "onboarding-5-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "onboarding-6-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "onboarding-7-768x1024-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "review-empty-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-preferences-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-momo-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-ai-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-data-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "coach-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "coach-chat-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "support-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "login-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "journey-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "forgot-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "signup-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "intro-2-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "intro-3-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "onboarding-1-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "onboarding-5-768x1024-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "today-1440x1000-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "review-empty-1440x1000-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "manual-1440x1000-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "coach-1440x1000-light",
+      "errors": [
+        "Failed to load resource: net::ERR_SOCKET_NOT_CONNECTED"
+      ]
+    },
+    {
+      "key": "you-data-1440x1000-light",
+      "errors": [
+        "Failed to load resource: net::ERR_SOCKET_NOT_CONNECTED"
+      ]
+    },
+    {
+      "key": "journey-1440x1000-light",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_TIMED_OUT"
+      ]
+    },
+    {
+      "key": "login-1440x1000-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-1440x1000-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "you-data-1440x1000-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_SOCKET_NOT_CONNECTED"
+      ]
+    },
+    {
+      "key": "login-1440x1000-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-1440x1000-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "signup-844x390-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-844x390-light",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "today-844x390-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-preferences-844x390-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "you-ai-844x390-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ]
+    },
+    {
+      "key": "coach-844x390-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      ]
+    },
+    {
+      "key": "you-data-844x390-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      ]
+    },
+    {
+      "key": "you-account-844x390-dark",
+      "errors": [
+        "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      ]
+    },
+    {
+      "key": "signup-844x390-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    },
+    {
+      "key": "login-844x390-dark",
+      "errors": [
+        "Failed to load resource: the server responded with a status of 403 ()",
+        "[GSI_LOGGER]: The given origin is not allowed for the given client ID."
+      ]
+    }
+  ],
+  "desktopPixelComparisons": [
+    {
+      "theme": "light",
+      "before": {
+        "width": 1440,
+        "height": 1000
+      },
+      "after": {
+        "width": 1440,
+        "height": 1000
+      },
+      "changedPixels": 0
+    },
+    {
+      "theme": "dark",
+      "before": {
+        "width": 1440,
+        "height": 1000
+      },
+      "after": {
+        "width": 1440,
+        "height": 1000
+      },
+      "changedPixels": 0
+    }
+  ]
+}
