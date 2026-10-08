@@ -25,9 +25,9 @@ ON CONFLICT (plan) DO NOTHING;
 -- Environments seeded before these defaults changed still hold the superseded values. Each
 -- update is guarded on the value it replaces, so a deliberate operator choice is never lost.
 UPDATE ai_plan_config SET model = 'google/gemma-4-31b-it', updated_at = NOW()
-WHERE plan = 'free' AND model = 'google/gemini-2.5-flash-lite';
+WHERE plan = 'free' AND model = 'google/gemini-2.5-flash-lite' AND updated_by IS NULL;
 UPDATE ai_plan_config SET daily_food = 20, updated_at = NOW()
-WHERE plan = 'free' AND daily_food = 5;
+WHERE plan = 'free' AND daily_food = 5 AND updated_by IS NULL;
 
 CREATE TABLE IF NOT EXISTS ai_usage_daily (
   user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,

@@ -1,6 +1,7 @@
+import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { effectivePlan, managedAiEnabled } from '../../api/_lib/plan.js'
-import { AiInputError, validateManagedPayload, validatePlanConfig } from '../../api/_lib/aiProvider.js'
+import { AiInputError, AiProviderError, callManagedProvider, validateManagedPayload, validatePlanConfig } from '../../api/_lib/aiProvider.js'
 import type { AiModel, AiPlanConfig } from '../../shared/aiPlans.js'
 
 describe('managed AI entitlement rules', () => {
@@ -65,10 +66,16 @@ const previous: AiPlanConfig = {
 const catalogue: AiModel[] = [
   { id: 'google/gemma-4-31b-it', name: 'Gemma', image: true, promptPrice: '', completionPrice: '' },
   { id: 'google/gemini-2.5-flash', name: 'Flash', image: true, promptPrice: '', completionPrice: '' },
+  { id: 'google/gemini-3.5-flash-lite', name: 'Flash-Lite', image: true, promptPrice: '0.0000003', completionPrice: '0.0000025' },
   { id: 'openai/gpt-4o-mini', name: 'Text', image: false, promptPrice: '', completionPrice: '' },
 ]
 
 describe('plan configuration validation', () => {
+  it('accepts the stronger image-capable default with the previous model as fallback', async () => {
+    const config = { ...previous, model: 'google/gemini-3.5-flash-lite', fallback_models: ['google/gemma-4-31b-it'] }
+    await expect(validatePlanConfig(config, { catalogue, previous })).resolves.toEqual(config)
+  })
+
   it('rejects empty, text-only, or unknown model IDs when the catalogue is live', async () => {
     await expect(validatePlanConfig({ ...previous, model: '' }, { catalogue, previous })).rejects.toBeInstanceOf(AiInputError)
     await expect(validatePlanConfig({ ...previous, model: 'openai/gpt-4o-mini' }, { catalogue, previous })).rejects.toBeInstanceOf(AiInputError)
@@ -82,5 +89,52 @@ describe('plan configuration validation', () => {
       .rejects.toThrow(/catalogue is unavailable/)
     await expect(validatePlanConfig({ ...previous, daily_food: 25 }, { catalogue: null, previous: null }))
       .rejects.toThrow(/catalogue is unavailable/)
+  })
+})
+
+describe('managed default rollout', () => {
+  it('upgrades only untouched legacy Free configurations and retains their allowances', () => {
+    const migration = readFileSync(new URL('../../db/migrations/20261007_free_ai_model.sql', import.meta.url), 'utf8')
+    expect(migration).toContain("SET model = 'google/gemini-3.5-flash-lite'")
+    expect(migration).toContain("fallback_models = ARRAY['google/gemma-4-31b-it']::text[]")
+    expect(migration).toContain("WHERE plan = 'free'")
+    expect(migration).toContain("AND provider = 'openrouter'")
+    expect(migration).toContain("AND model IN ('google/gemma-4-31b-it', 'google/gemini-2.5-flash-lite')")
+    expect(migration).toContain('AND updated_by IS NULL')
+    expect(migration).toContain('AND cardinality(fallback_models) = 0')
+    expect(migration).not.toMatch(/daily_(food|coach)\s*=/)
+    const runner = readFileSync(new URL('../../scripts/migrate.mjs', import.meta.url), 'utf8')
+    expect(runner).toContain("[target, '../db/migrations/20261007_free_ai_model.sql']")
+    const seed = readFileSync(new URL('../../db/schema.sql', import.meta.url), 'utf8')
+    expect(seed).toContain("('free', 'google/gemini-3.5-flash-lite', ARRAY['google/gemma-4-31b-it']::text[], 20, 0)")
+  })
+})
+
+describe('managed credential boundary', () => {
+  afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals() })
+
+  it('uses the protected credential only upstream and returns nutrition text', async () => {
+    vi.stubEnv('OPENROUTER_API_KEY', 'operator-test-secret')
+    const text = '{"name":"Oats","calories":250,"protein":10,"carbs":40,"fat":5}'
+    const upstream = vi.fn(async (_url: string | URL | Request, _options?: RequestInit) =>
+      Response.json({ choices: [{ message: { content: text } }] }))
+    vi.stubGlobal('fetch', upstream)
+    const config = { ...previous, model: 'google/gemini-3.5-flash-lite', fallback_models: [] }
+    const result = await callManagedProvider(config, 'food_text', { messages: [{ role: 'user', content: 'oats' }] }, 'unused')
+    expect(result).toBe(text)
+    expect(result).not.toContain('operator-test-secret')
+    const options = upstream.mock.calls[0][1] as RequestInit
+    expect(options.headers).toMatchObject({ Authorization: 'Bearer operator-test-secret' })
+    expect(options.body).not.toContain('operator-test-secret')
+    expect(JSON.parse(String(options.body))).toMatchObject({ model: config.model, max_tokens: 1600, stream: false })
+  })
+
+  it('refuses a provider reply that echoes the operator credential', async () => {
+    vi.stubEnv('OPENROUTER_API_KEY', 'operator-test-secret')
+    vi.stubGlobal('fetch', vi.fn(async () => Response.json({ choices: [{ message: { content:
+      '{"name":"operator-test-secret","calories":250,"protein":10,"carbs":40,"fat":5}',
+    } }] })))
+    await expect(callManagedProvider({ ...previous, fallback_models: [] }, 'food_text',
+      { messages: [{ role: 'user', content: 'oats' }] }, 'unused')).rejects.toBeInstanceOf(AiProviderError)
   })
 })
