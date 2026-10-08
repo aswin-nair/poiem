@@ -145,8 +145,8 @@
     const viewport = document.getElementById('viewport');
     const theme = document.getElementById('theme');
     function updateComparison() {
-      const size = viewport.value;
-      const mode = theme.value;
+      const size = viewport.value === '1440' ? '1440' : '390';
+      const mode = theme.value === 'dark' ? 'dark' : 'light';
       const label = `${size === '390' ? 'Phone' : 'Desktop'} · ${size}px wide · ${mode === 'light' ? 'Light' : 'Dark'} theme`;
       for (const version of ['before', 'after']) {
         const path = `${version}/momo-cameo-${size}-${mode}.png`;

@@ -25,7 +25,7 @@ describe('AI model settings', () => {
     const custom = normalizeAISettings({ provider: 'custom', accessMode: 'byok', apiFormat: 'anthropic', endpointUrl: 'https://gateway.example/v1/messages', model: 'my-model', authType: 'api-key', authHeader: 'X-Workspace-Key', apiKey: 'local-key' })
     expect(custom).toMatchObject({ provider: 'custom', apiFormat: 'anthropic', endpointUrl: 'https://gateway.example/v1/messages', model: 'my-model', authType: 'api-key', authHeader: 'X-Workspace-Key' })
     expect(connectionIssue(custom)).toBeNull()
-    expect(connectionIssue({ ...custom, authHeader: 'sk-or-v1-header-secret-example' })).toBeTruthy()
+    expect(connectionIssue({ ...custom, authHeader: 'sk-or-v1-example' })).toBeTruthy()
     expect(normalizeAISettings({ provider: 'custom', model: 'gemini-2.0-flash', endpointUrl: 'https://gateway.example/v1/chat/completions' }).model).toBe('gemini-2.0-flash')
   })
 

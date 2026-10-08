@@ -97,13 +97,13 @@ describe('private BYOK storage', () => {
   })
 
   it('migrates legacy keys only on their original default service connection', async () => {
-    for (const [provider, apiKey] of [['openrouter', 'sk-or-legacy-fixture'], ['gemini', 'AIzaLegacyFixtureValue']] as const) {
-      const settings = { ...freshState().aiSettings, provider, apiKey }
-      localStorage.setItem('fud-ai-private-ai-key-user-1', apiKey)
+    for (const [provider, legacyFixture] of [['openrouter', 'sk-or-legacy-fixture'], ['gemini', 'AIzaLegacyFixtureValue']] as const) {
+      const settings = { ...freshState().aiSettings, provider, apiKey: legacyFixture }
+      localStorage.setItem('fud-ai-private-ai-key-user-1', legacyFixture)
       expect(await loadPrivateAIKey('user-1', { ...settings, provider: 'custom', endpointUrl: 'https://other.example/v1/chat/completions' })).toBe('')
       expect(await loadPrivateAIKey('user-1', { ...settings, endpointUrl: 'https://other.example/v1/chat/completions' })).toBe('')
       expect(await loadPrivateAIKey('user-1', { ...settings, provider: provider === 'gemini' ? 'openrouter' : 'gemini' })).toBe('')
-      expect(await loadPrivateAIKey('user-1', settings)).toBe(apiKey)
+      expect(await loadPrivateAIKey('user-1', settings)).toBe(legacyFixture)
       expect(localStorage.getItem('fud-ai-private-ai-key-user-1')).toMatch(/^v2:/)
     }
   })
@@ -120,7 +120,7 @@ describe('private BYOK storage', () => {
     const key = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt'])
     localStorage.setItem('fud-ai-private-ai-crypto-key-v1', JSON.stringify(await crypto.subtle.exportKey('jwk', key)))
     const iv = crypto.getRandomValues(new Uint8Array(12))
-    const legacyKey = 'sk-or-encrypted-legacy-fixture'
+    const legacyKey = 'legacy-encrypted-fixture'
     const cipher = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(legacyKey)))
     const packed = new Uint8Array(iv.length + cipher.length)
     packed.set(iv)
