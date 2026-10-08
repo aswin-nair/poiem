@@ -1,4 +1,7 @@
-export type AIProvider = 'openrouter' | 'gemini'
+import { authHeaderIssue, endpointIssue, type AIAPIFormat, type AIAuthType } from '../../../shared/aiConnection'
+
+export type { AIAPIFormat, AIAuthType } from '../../../shared/aiConnection'
+export type AIProvider = 'openrouter' | 'gemini' | 'custom'
 export type AIAccessMode = 'managed' | 'byok'
 export type MascotPersonality = 'warm' | 'witty' | 'sassy'
 
@@ -8,22 +11,20 @@ export interface AISettings {
   provider: AIProvider
   apiKey: string
   model: string
+  /** BYOK endpoints are public configuration; credentials are stored separately. */
+  apiFormat?: AIAPIFormat
+  endpointUrl?: string
+  authType?: AIAuthType
+  authHeader?: string
   customInstructions?: string
   /** Live model-authored mascot dialogue. Falls back locally when unavailable. */
   mascotEnabled?: boolean
   mascotPersonality?: MascotPersonality
 }
 
-// Ordered best-accuracy-first. Every entry must accept image input, because photo logging
-// sends the meal as an image; a text-only model fails on that flow alone. `openrouter/free`
-// is last: it randomly routes to whichever free model is available (often a small ~3B model)
-// and is not suitable for accuracy-sensitive nutrition estimation — see the warning surfaced
-// in Settings when it's selected.
-/** Server-selected model for signed-in accounts on the operator OpenRouter key. */
-export const MANAGED_OPENROUTER_MODEL = 'google/gemma-4-31b-it'
-
+// Legacy BYOK presets stay separate from the database-selected managed model.
 export const OPENROUTER_MODELS = [
-  MANAGED_OPENROUTER_MODEL,
+  'google/gemma-4-31b-it',
   'google/gemini-2.5-flash',
   'openai/gpt-4o-mini',
   'anthropic/claude-sonnet-4',
@@ -31,13 +32,14 @@ export const OPENROUTER_MODELS = [
 ] as const
 
 export const GEMINI_MODELS = [
-  'gemini-2.0-flash',
+  'gemini-3.5-flash-lite',
+  'gemini-3.8-flash',
   'gemini-2.5-flash',
   'gemini-2.5-pro',
 ] as const
 
 export const DEFAULT_OPENROUTER_MODEL = 'google/gemini-2.5-flash'
-export const DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash'
+export const DEFAULT_GEMINI_MODEL = 'gemini-3.5-flash-lite'
 
 /**
  * OpenRouter retires model slugs. A stored one answers 404 on every request, which reads
@@ -53,8 +55,62 @@ export function retiredModelReplacement(model: unknown): string | undefined {
   return typeof model === 'string' ? RETIRED_OPENROUTER_MODELS[model] : undefined
 }
 
+/** Google's retired native models are replaced only on their original default endpoint. */
+export function retiredGeminiModelReplacement(model: unknown, endpointUrl?: unknown): string | undefined {
+  if (typeof model !== 'string' || (endpointUrl !== undefined && endpointUrl !== defaultEndpointFor('gemini'))) return undefined
+  return /^gemini-2\.0-flash(?:-lite)?(?:-001)?$/.test(model.replace(/^models\//, ''))
+    ? DEFAULT_GEMINI_MODEL : undefined
+}
+
 export function defaultModelFor(provider: AIProvider): string {
-  return provider === 'openrouter' ? DEFAULT_OPENROUTER_MODEL : DEFAULT_GEMINI_MODEL
+  if (provider === 'openrouter') return DEFAULT_OPENROUTER_MODEL
+  return provider === 'gemini' ? DEFAULT_GEMINI_MODEL : ''
+}
+
+export function apiFormatFor(settings: AISettings): AIAPIFormat {
+  return settings.apiFormat ?? (settings.provider === 'gemini' ? 'gemini' : 'openai')
+}
+
+export function defaultEndpointFor(provider: AIProvider, format?: AIAPIFormat): string {
+  const selected = format ?? (provider === 'gemini' ? 'gemini' : 'openai')
+  if (selected === 'gemini') return 'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent'
+  if (selected === 'anthropic') return 'https://api.anthropic.com/v1/messages'
+  return provider === 'openrouter' ? 'https://openrouter.ai/api/v1/chat/completions' : 'https://api.openai.com/v1/chat/completions'
+}
+
+export function authTypeFor(settings: AISettings): AIAuthType {
+  return settings.authType ?? (apiFormatFor(settings) === 'openai' ? 'bearer' : 'api-key')
+}
+
+export function authHeaderFor(settings: AISettings): string {
+  return settings.authHeader?.trim() || (apiFormatFor(settings) === 'gemini' ? 'X-goog-api-key' : 'X-API-Key')
+}
+
+export function requiresApiKey(settings: AISettings): boolean {
+  return authTypeFor(settings) !== 'none'
+}
+
+export function connectionIssue(settings: AISettings): string | null {
+  const endpoint = settings.endpointUrl?.trim() || (settings.provider === 'custom' ? '' : defaultEndpointFor(settings.provider, apiFormatFor(settings)))
+  const issue = endpointIssue(endpoint, settings.apiKey)
+  if (issue) return issue
+  if (!settings.model.trim()) return 'Add the model ID from your API provider.'
+  if (settings.model.length > 500 || /[\r\n]/.test(settings.model)) return 'Enter a valid model ID.'
+  if (settings.apiKey.trim() && settings.model.includes(settings.apiKey.trim())) return 'Keep your API key in the key field, outside the model ID.'
+  if (authTypeFor(settings) === 'api-key') {
+    const headerIssue = authHeaderIssue(authHeaderFor(settings))
+    if (headerIssue) return headerIssue
+    if (settings.apiKey.trim() && authHeaderFor(settings).includes(settings.apiKey.trim())) return 'Enter the header name only. Keep its value in the API key field.'
+  }
+  if (requiresApiKey(settings) && !settings.apiKey.trim()) return 'Add your API key in You → AI settings.'
+  if (/[\r\n]/.test(settings.apiKey)) return 'Enter a valid API key.'
+  return null
+}
+
+/** Expand only the public model placeholder; keys are never placed in URLs. */
+export function endpointFor(settings: AISettings): string {
+  return (settings.endpointUrl?.trim() || defaultEndpointFor(settings.provider, apiFormatFor(settings)))
+    .replaceAll('{model}', encodeURIComponent(settings.model.trim().replace(/^models\//, '')))
 }
 
 /** Free-tier / randomly-routed models are much less reliable for numeric nutrition estimates. */
@@ -73,8 +129,9 @@ export function defaultAISettings(): AISettings {
   }
 }
 
-function resolveModel(provider: AIProvider, model?: string): string {
+function resolveModel(provider: AIProvider, model?: string, endpointUrl?: string): string {
   if (!model) return defaultModelFor(provider)
+  if (provider === 'gemini') return retiredGeminiModelReplacement(model, endpointUrl) ?? model
   if (provider !== 'openrouter') return model
   return RETIRED_OPENROUTER_MODELS[model] ?? model
 }
@@ -93,7 +150,11 @@ export function normalizeAISettings(raw?: Partial<AISettings>): AISettings {
     accessMode: raw.accessMode === 'byok' || (raw.accessMode === undefined && Boolean(raw.apiKey?.trim())) ? 'byok' : 'managed',
     provider,
     apiKey: raw.apiKey ?? '',
-    model: resolveModel(provider, raw.model),
+    model: resolveModel(provider, raw.model, raw.endpointUrl),
+    ...(raw.apiFormat !== undefined ? { apiFormat: raw.apiFormat } : {}),
+    ...(raw.endpointUrl !== undefined ? { endpointUrl: raw.endpointUrl } : {}),
+    ...(raw.authType !== undefined ? { authType: raw.authType } : {}),
+    ...(raw.authHeader !== undefined ? { authHeader: raw.authHeader } : {}),
     customInstructions: raw.customInstructions,
     mascotEnabled: raw.mascotEnabled !== false,
     mascotPersonality: raw.mascotPersonality === 'warm' || raw.mascotPersonality === 'witty'
@@ -103,15 +164,15 @@ export function normalizeAISettings(raw?: Partial<AISettings>): AISettings {
 }
 
 export function apiKeyPlaceholder(provider: AIProvider): string {
-  return provider === 'openrouter' ? 'sk-or-...' : 'AIza...'
+  return provider === 'openrouter' ? 'sk-or-...' : provider === 'gemini' ? 'AIza...' : 'Your API key'
 }
 
 export function apiKeyHelpUrl(provider: AIProvider): string {
   return provider === 'openrouter'
     ? 'https://openrouter.ai/keys'
-    : 'https://aistudio.google.com/apikey'
+    : provider === 'gemini' ? 'https://aistudio.google.com/apikey' : ''
 }
 
 export function providerLabel(provider: AIProvider): string {
-  return provider === 'openrouter' ? 'OpenRouter' : 'Google Gemini'
+  return provider === 'openrouter' ? 'OpenRouter' : provider === 'gemini' ? 'Google Gemini' : 'Your AI service'
 }

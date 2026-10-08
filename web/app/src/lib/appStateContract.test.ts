@@ -158,6 +158,10 @@ describe('shared AppState runtime contract', () => {
     const storedState: Record<string, unknown> = structuredClone(state)
     delete (storedState.aiSettings as Record<string, unknown>).apiKey
     expect(validateAppState(storedState, NOW, { allowApiKey: false })).toEqual({ ok: true })
+    state.aiSettings = { ...state.aiSettings, provider: 'custom', accessMode: 'byok', apiFormat: 'anthropic', endpointUrl: 'https://my-api.example/v1/messages', authType: 'api-key', authHeader: 'X-Workspace-Key', model: 'chosen-model' }
+    expect(validateAppState(state, NOW, { allowApiKey: false })).toEqual({ ok: true })
+    state.aiSettings.endpointUrl += '?key=private'
+    expect(validateAppState(state, NOW, { allowApiKey: false }).ok).toBe(false)
   })
 
   it('requires exact, real calendar days for pause protection', () => {

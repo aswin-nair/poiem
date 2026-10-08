@@ -1,9 +1,10 @@
-import type { AppState, FoodEntry, GamificationState } from '../types'
+import type { AISettings, AppState, FoodEntry, GamificationState } from '../types'
 import { entryDayKey } from '@fud-ai/product/localDate'
 import { normalizeOutfit } from '@fud-ai/product/wardrobe'
 import { localDayKey } from './dates'
 import { defaultProfile, profileInputIssue } from './profile'
-import { defaultAISettings, normalizeAISettings, retiredModelReplacement } from './aiConfig'
+import { apiFormatFor, authHeaderFor, authTypeFor, defaultAISettings, defaultEndpointFor, normalizeAISettings, retiredGeminiModelReplacement, retiredModelReplacement } from './aiConfig'
+import { authHeaderIssue, endpointIssue } from '../../../shared/aiConnection'
 import { validateAppState } from '../../../shared/appStateContract'
 import { clearLogDraft } from './logDrafts'
 
@@ -11,6 +12,7 @@ const LEGACY_KEY = 'fud-ai-web-state'
 const PRIVATE_AI_KEY_PREFIX = 'fud-ai-private-ai-key-'
 const PRIVATE_AI_CRYPTO_KEY = 'fud-ai-private-ai-crypto-key-v1'
 const PRIVATE_AI_ENC_PREFIX = 'v1:'
+const PRIVATE_AI_BOUND_ENC_PREFIX = 'v2:'
 
 function storageKey(userId: string): string {
   return `fud-ai-web-state-${userId}`
@@ -43,6 +45,8 @@ function privateAIKey(userId: string): string {
  * in this origin.
  */
 let encryptionKeyPromise: Promise<CryptoKey> | null = null
+const privateAIWrites = new Map<string, Promise<void>>()
+const privateAIWriteRevisions = new Map<string, number>()
 
 function bytesToBase64(bytes: Uint8Array): string {
   let binary = ''
@@ -84,18 +88,18 @@ function privateAIEncryptionKey(): Promise<CryptoKey> {
   return encryptionKeyPromise
 }
 
-async function encryptPrivateAIKey(apiKey: string): Promise<string> {
+async function encryptPrivateAIKey(value: string): Promise<string> {
   const key = await privateAIEncryptionKey()
   const iv = crypto.getRandomValues(new Uint8Array(12))
-  const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(apiKey))
+  const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(value))
   const packed = new Uint8Array(iv.byteLength + cipher.byteLength)
   packed.set(iv, 0)
   packed.set(new Uint8Array(cipher), iv.byteLength)
-  return `${PRIVATE_AI_ENC_PREFIX}${bytesToBase64(packed)}`
+  return `${PRIVATE_AI_BOUND_ENC_PREFIX}${bytesToBase64(packed)}`
 }
 
 async function decryptPrivateAIKey(stored: string): Promise<string> {
-  if (!stored.startsWith(PRIVATE_AI_ENC_PREFIX)) return stored
+  if (!stored.startsWith(PRIVATE_AI_ENC_PREFIX) && !stored.startsWith(PRIVATE_AI_BOUND_ENC_PREFIX)) return stored
   const key = await privateAIEncryptionKey()
   const packed = base64ToBytes(stored.slice(PRIVATE_AI_ENC_PREFIX.length))
   const plain = await crypto.subtle.decrypt(
@@ -106,34 +110,98 @@ async function decryptPrivateAIKey(stored: string): Promise<string> {
   return new TextDecoder().decode(plain)
 }
 
-export async function loadPrivateAIKey(userId: string): Promise<string> {
-  const stored = localStorage.getItem(privateAIKey(userId)) ?? ''
-  if (!stored) return ''
+/** The public connection identity a credential was explicitly saved for. */
+function aiConnectionIdentity(settings: AISettings): string | null {
+  const format = apiFormatFor(settings)
+  const authType = authTypeFor(settings)
+  if (authType === 'none') return null
+  const endpoint = settings.endpointUrl?.trim() || (settings.provider === 'custom' ? '' : defaultEndpointFor(settings.provider, format))
+  if (endpointIssue(endpoint, settings.apiKey)) return null
+  const header = authType === 'api-key' ? authHeaderFor(settings).toLowerCase() : ''
+  if (header && authHeaderIssue(header)) return null
+  // URL canonicalization treats host casing and default ports consistently.
+  // Models may change without moving a key to another API or header.
+  const url = new URL(endpoint)
+  return JSON.stringify([url.href, endpoint.includes('{model}'), format, authType, header])
+}
+
+function legacyKeyMatches(settings: AISettings, apiKey: string): boolean {
+  if (settings.provider === 'custom') return false
+  const original = {
+    ...defaultAISettings(),
+    provider: settings.provider,
+    apiKey: '',
+  }
+  if (aiConnectionIdentity(settings) !== aiConnectionIdentity(original)) return false
+  // The two legacy services have distinctive key prefixes. Never migrate one
+  // of those keys onto the other service while adopting synced settings.
+  if (apiKey.startsWith('sk-or-')) return settings.provider === 'openrouter'
+  if (apiKey.startsWith('AIza')) return settings.provider === 'gemini'
+  return settings.provider === 'openrouter'
+}
+
+export function aiConnectionsMatch(first: AISettings, second: AISettings): boolean {
+  const identity = aiConnectionIdentity(first)
+  return identity !== null && identity === aiConnectionIdentity(second)
+}
+
+export async function loadPrivateAIKey(userId: string, settings: AISettings = defaultAISettings()): Promise<string> {
   try {
-    return await decryptPrivateAIKey(stored)
+    await privateAIWrites.get(userId)
+    const stored = localStorage.getItem(privateAIKey(userId)) ?? ''
+    if (!stored) return ''
+    const decrypted = await decryptPrivateAIKey(stored)
+    if (stored.startsWith(PRIVATE_AI_BOUND_ENC_PREFIX)) {
+      const credential = JSON.parse(decrypted) as { apiKey?: unknown; connection?: unknown }
+      return typeof credential.apiKey === 'string'
+        && credential.connection === aiConnectionIdentity(settings)
+        && credential.connection !== null ? credential.apiKey : ''
+    }
+    if (!legacyKeyMatches(settings, decrypted)) return ''
+    await savePrivateAIKey(userId, decrypted, settings)
+    return decrypted
   } catch {
     return ''
   }
 }
 
-export async function savePrivateAIKey(userId: string, apiKey: string): Promise<void> {
-  if (!apiKey.trim()) {
-    localStorage.removeItem(privateAIKey(userId))
-    return
-  }
-  const encrypted = await encryptPrivateAIKey(apiKey)
-  localStorage.setItem(privateAIKey(userId), encrypted)
+export function savePrivateAIKey(userId: string, apiKey: string, settings: AISettings = defaultAISettings()): Promise<void> {
+  const revision = (privateAIWriteRevisions.get(userId) ?? 0) + 1
+  privateAIWriteRevisions.set(userId, revision)
+  const connection = aiConnectionIdentity(settings)
+  const task = (async () => {
+    if (!apiKey.trim() || connection === null) {
+      localStorage.removeItem(privateAIKey(userId))
+      return
+    }
+    const encrypted = await encryptPrivateAIKey(JSON.stringify({ apiKey, connection }))
+    if (privateAIWriteRevisions.get(userId) === revision) {
+      localStorage.setItem(privateAIKey(userId), encrypted)
+    }
+  })()
+  privateAIWrites.set(userId, task)
+  void task.finally(() => {
+    if (privateAIWrites.get(userId) === task) privateAIWrites.delete(userId)
+  }).catch(() => undefined)
+  return task
 }
 
 export function clearPrivateAIKey(userId: string): void {
+  privateAIWriteRevisions.set(userId, (privateAIWriteRevisions.get(userId) ?? 0) + 1)
   localStorage.removeItem(privateAIKey(userId))
 }
 
 /** A copy suitable for export or transport across the network. */
 export function stateWithoutPrivateSecrets(state: AppState): AppState {
+  const { apiKey, endpointUrl, authHeader, ...settings } = state.aiSettings
   return {
     ...state,
-    aiSettings: { ...state.aiSettings, apiKey: '' },
+    aiSettings: {
+      ...settings,
+      apiKey: '',
+      ...(endpointUrl !== undefined && !endpointIssue(endpointUrl, apiKey) ? { endpointUrl } : {}),
+      ...(authHeader !== undefined && !authHeaderIssue(authHeader) && !authHeader.includes(apiKey.trim() || '\u0000') ? { authHeader } : {}),
+    },
   }
 }
 
@@ -172,12 +240,14 @@ export function loadState(userId: string): AppState {
     // is still readable here so an existing session does not lose it.
     const storedKey = localStorage.getItem(privateAIKey(userId)) ?? ''
     const legacyKey = normalized.aiSettings.apiKey
-    if (!storedKey && legacyKey) void savePrivateAIKey(userId, legacyKey)
-    const readableKey = storedKey.startsWith(PRIVATE_AI_ENC_PREFIX) ? '' : storedKey
+    const migratedKey = !storedKey && legacyKeyMatches(normalized.aiSettings, legacyKey) ? legacyKey : ''
+    if (migratedKey) void savePrivateAIKey(userId, migratedKey, normalized.aiSettings)
+    const encrypted = storedKey.startsWith(PRIVATE_AI_ENC_PREFIX) || storedKey.startsWith(PRIVATE_AI_BOUND_ENC_PREFIX)
+    const readableKey = !encrypted && legacyKeyMatches(normalized.aiSettings, storedKey) ? storedKey : ''
 
     return {
       ...normalized,
-      aiSettings: { ...normalized.aiSettings, apiKey: readableKey || legacyKey },
+      aiSettings: { ...normalized.aiSettings, apiKey: readableKey || migratedKey },
     }
   } catch {
     if (raw) {
@@ -189,12 +259,11 @@ export function loadState(userId: string): AppState {
 
 /** JSON snapshot with the BYOK credential removed. The name marks the stored text as encoded. */
 function encodeStoredJournal(state: AppState): string {
-  const { apiKey: _dropped, ...aiSettings } = state.aiSettings
-  return JSON.stringify({ ...state, aiSettings: { ...aiSettings, apiKey: '' } })
+  return JSON.stringify(stateWithoutPrivateSecrets(state))
 }
 
 export async function saveState(userId: string, state: AppState): Promise<void> {
-  await savePrivateAIKey(userId, state.aiSettings.apiKey)
+  await savePrivateAIKey(userId, state.aiSettings.apiKey, state.aiSettings)
   localStorage.setItem(storageKey(userId), encodeStoredJournal(state))
 }
 
@@ -301,7 +370,10 @@ function normalizeAIForValidation(value: unknown): AppState['aiSettings'] {
   const migrated = normalizeAISettings(value as Partial<AppState['aiSettings']>)
   // Stored values win, so validation judges what was really saved rather than a repaired copy.
   // A retired model slug is the exception: a BYOK reader who kept one 404s on every request.
-  const storedModel = retiredModelReplacement(value.model) ?? value.model
+  const storedProvider = value.provider ?? migrated.provider
+  const storedModel = storedProvider === 'openrouter'
+    ? retiredModelReplacement(value.model) ?? value.model
+    : storedProvider === 'gemini' ? retiredGeminiModelReplacement(value.model, value.endpointUrl) ?? value.model : value.model
   return {
     ...migrated,
     ...value,
@@ -421,7 +493,7 @@ export function exportData(state: AppState): string {
   return JSON.stringify(stateWithoutPrivateSecrets(state), null, 2)
 }
 
-export function importData(json: string, localApiKey = ''): AppState {
+export function importData(json: string, localApiKey = '', localSettings?: AISettings): AppState {
   const raw = JSON.parse(json) as unknown
   const validation = validateAppState(raw, new Date(), { allowLegacyGamification: true })
   if (!validation.ok) throw new Error(validation.error)
@@ -431,7 +503,10 @@ export function importData(json: string, localApiKey = ''): AppState {
   if (profileIssue) throw new Error(profileIssue)
   return {
     ...normalized,
-    aiSettings: { ...normalized.aiSettings, apiKey: localApiKey },
+    aiSettings: {
+      ...normalized.aiSettings,
+      apiKey: localSettings && aiConnectionsMatch(localSettings, normalized.aiSettings) ? localApiKey : '',
+    },
   }
 }
 

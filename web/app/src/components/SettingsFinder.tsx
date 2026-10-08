@@ -7,7 +7,7 @@ const DESTINATIONS = [
   { href: '/settings?panel=profile', label: 'Profile & goals', detail: 'Your details and daily targets', words: 'name age birthday date birth gender height weight activity calorie protein carbs fat pace routine' },
   { href: '/settings?panel=preferences', label: 'Everyday preferences', detail: 'Sound, reminders and taking a break', words: 'notifications haptics vibration pause tracking support coach' },
   { href: '/settings?panel=momo', label: 'Momo', detail: 'Personality, movement and outfits', words: 'mascot hide mute quiet sound reduced motion wardrobe roast jokes companion' },
-  { href: '/settings?panel=ai', label: 'AI setup', detail: 'Meal estimates and your own API key', words: 'key provider gemini openrouter model photo text api gemma' },
+  { href: '/settings?panel=ai', label: 'AI setup', detail: 'Poiem AI and your own API connection', words: 'key provider endpoint compatible anthropic gemini openai model photo text api auth' },
   { href: '/settings?panel=account', label: 'Account', detail: 'Sign-in and account access', words: 'email password google sign out logout delete' },
   { href: '/settings?panel=data', label: 'Your data', detail: 'Export, import and a fresh start', words: 'backup restore download reset clear journal privacy' },
 ]

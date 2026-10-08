@@ -550,7 +550,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           const loaded = cached?.state ?? loadState(userId)
           const next = {
             ...loaded,
-            aiSettings: { ...loaded.aiSettings, apiKey: loaded.aiSettings.apiKey || await loadPrivateAIKey(userId) },
+            aiSettings: { ...loaded.aiSettings, apiKey: loaded.aiSettings.apiKey || await loadPrivateAIKey(userId, loaded.aiSettings) },
           }
           try {
             if (!cached) await saveDurableLocalSnapshot(userId, next)
@@ -574,9 +574,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           if (!Number.isSafeInteger(remote.version) || remote.version < 0) {
             throw new Error('The account state version is invalid.')
           }
-          const remoteState = remote.state === null
-            ? null
-            : importData(JSON.stringify(remote.state), await loadPrivateAIKey(userId))
+          const remoteState = remote.state === null ? null : importData(JSON.stringify(remote.state))
+          if (remoteState) remoteState.aiSettings.apiKey = await loadPrivateAIKey(userId, remoteState.aiSettings)
 
           if (cached?.pendingCount) {
             // Replay the stable device mutations before considering the server
@@ -642,7 +641,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           }
 
           const next = freshState()
-          next.aiSettings.apiKey = await loadPrivateAIKey(userId)
+          next.aiSettings.apiKey = await loadPrivateAIKey(userId, next.aiSettings)
           await replaceDurableFromServer(userId, next, remote.version)
           cloudVersion.current = remote.version
           cloudWritable.current = true
@@ -787,6 +786,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       return
     }
 
+    void savePrivateAIKey(userId, state.aiSettings.apiKey, state.aiSettings)
+
 
 
     if (cloud) {
@@ -803,7 +804,6 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     }
 
-    void savePrivateAIKey(userId, state.aiSettings.apiKey)
     void saveDurableLocalSnapshot(userId, state).catch(error => {
       setStorageRecovery(error instanceof Error ? error.message : 'Device recovery storage is unavailable.')
     })
@@ -884,8 +884,9 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       if (choice === 'server') {
         const serverState = remote.state === null
           ? freshState()
-          : importData(JSON.stringify(remote.state), await loadPrivateAIKey(userId))
-        if (remote.state === null) serverState.aiSettings.apiKey = await loadPrivateAIKey(userId)
+          : importData(JSON.stringify(remote.state))
+        serverState.aiSettings.apiKey = await loadPrivateAIKey(userId, serverState.aiSettings)
+        await savePrivateAIKey(userId, serverState.aiSettings.apiKey, serverState.aiSettings)
         await resolveDurableConflictWithServer(userId, serverState, remote.version)
         suppressNextPersist.current = JSON.stringify(stateWithoutPrivateSecrets(serverState))
         cloudVersion.current = remote.version
@@ -964,7 +965,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     })),
 
     updateAISettings: (aiSettings) => {
-      void savePrivateAIKey(userId, aiSettings.apiKey)
+      void savePrivateAIKey(userId, aiSettings.apiKey, aiSettings)
       setState(s => ({ ...s, aiSettings }))
     },
 
@@ -1088,7 +1089,10 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     clearChat: () => setState(s => ({ ...s, chatMessages: [] })),
 
-    replaceState: (next) => setState(next),
+    replaceState: (next) => {
+      void savePrivateAIKey(userId, next.aiSettings.apiKey, next.aiSettings)
+      setState(next)
+    },
 
     /* Re-runs the same hydration the app does on open, and pushes anything
        still queued, so the gesture does real work rather than spinning. */

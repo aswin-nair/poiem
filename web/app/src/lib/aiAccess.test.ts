@@ -35,6 +35,10 @@ describe('AI availability', () => {
   it('keeps a signed-in reader on their own key when they chose BYOK', () => {
     expect(canUseAi(true, null, byokSettings, 'food_photo')).toBe(true)
     expect(canUseAi(true, null, { ...byokSettings, apiKey: '  ' }, 'food_photo')).toBe(false)
+    const local: AISettings = { ...byokSettings, provider: 'custom', endpointUrl: 'http://localhost:11434/v1/chat/completions', apiKey: '', authType: 'none' }
+    expect(canUseAi(true, null, local, 'food_text')).toBe(true)
+    expect(canUseAi(false, null, local, 'food_text')).toBe(false)
+    expect(canUseAi(true, null, { ...local, model: '' }, 'food_text')).toBe(false)
   })
 
   it('stops managed use when the operator disabled it or the allowance is spent', () => {

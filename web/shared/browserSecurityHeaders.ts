@@ -6,7 +6,9 @@ export const APP_CONTENT_SECURITY_POLICY = [
   "style-src 'self' 'unsafe-inline' https://accounts.google.com https://www.gstatic.com",
   "img-src 'self' data: blob: https://*.googleusercontent.com https://lh3.googleusercontent.com https://www.gstatic.com",
   "font-src 'self'",
-  "connect-src 'self' https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com https://openrouter.ai https://generativelanguage.googleapis.com",
+  // BYOK destinations are chosen by the reader. Only network connections expand;
+  // scripts, frames and other resource policies keep their existing restrictions.
+  "connect-src 'self' https:",
   "frame-src https://accounts.google.com",
   "frame-ancestors 'none'",
   "object-src 'none'",

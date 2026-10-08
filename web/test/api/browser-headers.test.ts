@@ -23,15 +23,17 @@ describe('browser security headers for /app', () => {
     }
   })
 
-  it('keeps Google sign-in and BYOK hosts inside a deny-by-default policy', () => {
+  it('allows chosen HTTPS BYOK destinations while keeping resource restrictions', () => {
     const csp = APP_SECURITY_HEADERS.find(header => header.key === 'Content-Security-Policy')?.value ?? ''
     expect(csp).toContain("default-src 'self'")
     expect(csp).toContain("frame-ancestors 'none'")
     expect(csp).toContain("object-src 'none'")
     expect(csp).toContain('https://accounts.google.com')
-    expect(csp).toContain('https://oauth2.googleapis.com')
-    expect(csp).toContain('https://openrouter.ai')
-    expect(csp).toContain('https://generativelanguage.googleapis.com')
+    expect(csp.split('; ').find(directive => directive.startsWith('connect-src '))).toBe("connect-src 'self' https:")
+    expect(csp).toContain("script-src 'self' https://accounts.google.com https://www.gstatic.com")
+    expect(csp).toContain('frame-src https://accounts.google.com')
+    expect(csp).toContain("form-action 'self'")
+    expect(csp).toContain('upgrade-insecure-requests')
     expect(APP_SECURITY_HEADERS).toContainEqual({
       key: 'Cross-Origin-Opener-Policy',
       value: 'same-origin-allow-popups',

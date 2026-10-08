@@ -67,6 +67,7 @@ export function AiAvailabilityCard({
     ? {
       unsigned: { title: 'Sign in to use AI', body: manual ? 'Photo and description need an account. Manual logging is ready now.' : 'Sign in to check your Coach access. Your meal journal is available without AI.' },
       missing_key: { title: 'Add your API key', body: `Your own-key mode needs a ${provider} API key. Add it in You → AI setup to continue.` },
+      invalid_connection: { title: 'Check your API connection', body: 'Check your endpoint, model and authentication in You → AI setup to continue.' },
       disabled: { title: 'Managed AI isn’t enabled', body: manual ? 'Managed AI hasn’t been enabled for this app. Log this meal manually, or choose your own API key in AI setup.' : 'Managed Coach hasn’t been enabled for this app. You can choose your own API key in AI setup.' },
       error: { title: 'Couldn’t check AI availability', body: 'The availability check failed. Check your connection and try again.' },
     }[availability.reason]
@@ -85,7 +86,7 @@ export function AiAvailabilityCard({
       <div className="flow-link-row">
         {retryable && <button type="button" className="k-button is-primary flow-recovery-primary" onClick={onRetry}>Check again</button>}
         {reason === 'unsigned' && <Link className="k-button is-primary flow-recovery-primary" to="/login">Sign in</Link>}
-        {(reason === 'missing_key' || (!manual && reason === 'disabled') || availability.kind === 'premium_required') && <Link className="k-button is-primary flow-recovery-primary" to="/settings?panel=ai">{availability.kind === 'premium_required' ? 'View AI access' : 'Set up AI'}</Link>}
+        {(reason === 'missing_key' || reason === 'invalid_connection' || (!manual && reason === 'disabled') || availability.kind === 'premium_required') && <Link className="k-button is-primary flow-recovery-primary" to="/settings?panel=ai">{availability.kind === 'premium_required' ? 'View AI access' : 'Set up AI'}</Link>}
         {manual && <Link className={manualPrimary ? 'k-button is-primary flow-recovery-primary' : undefined} to="/log/manual" state={manualFallbackState}>Log manually</Link>}
         {!manual && availability.kind === 'limit_reached' && <Link className="k-button is-primary flow-recovery-primary" to="/log/manual">Log a meal manually</Link>}
         {reason === 'disabled' && manual && <Link to="/settings?panel=ai">AI setup</Link>}

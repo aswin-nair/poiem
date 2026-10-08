@@ -47,6 +47,7 @@ import {
   type MascotAIEvent,
 } from '../lib/mascotAI'
 import { usesByok } from '../lib/aiClient'
+import { connectionIssue } from '../lib/aiConfig'
 import { poiemTestHooks, rollTestRng, testRng } from '../lib/testHooks'
 
 const SIZE = 88
@@ -216,7 +217,7 @@ export function MascotOverlay() {
     !muted
     && !roastEnabled
     && usesByok(state.aiSettings)
-    && state.aiSettings.apiKey.trim()
+    && connectionIssue(state.aiSettings) === null
     && state.aiSettings.mascotEnabled !== false,
   )
 

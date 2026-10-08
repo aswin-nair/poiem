@@ -57,7 +57,7 @@ export async function stageGuestStateForAccount(accountId: string): Promise<bool
   // cannot carry it. Copy it across before finalizing clears the guest slot,
   // otherwise signing in silently destroys the only copy and AI logging stops.
   const guestApiKey = guest.state.aiSettings.apiKey.trim()
-  if (guestApiKey) await savePrivateAIKey(accountId, guestApiKey)
+  if (guestApiKey) await savePrivateAIKey(accountId, guestApiKey, guest.state.aiSettings)
   localStorage.setItem(`${CLAIM_PREFIX}${accountId}`, sourceId)
   return true
 }
