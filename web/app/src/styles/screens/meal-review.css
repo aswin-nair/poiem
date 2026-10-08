@@ -1,0 +1,84 @@
+/* Final nutrition and the phone's reachable confirmation share one submit. */
+@layer screens {
+  .k-review-calorie-field { margin-bottom: var(--k-space-md); }
+  .k-review-calorie-field .flow-calories { margin-bottom: 0; }
+  .k-review-macro-field { display: grid; align-content: start; min-width: 0; }
+  .k-review-macro-field .flow-macro { margin: 0; }
+  .k-review-correction {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--k-space-xs);
+    color: var(--k-role-text-muted);
+    font: 600 var(--k-type-meta)/1.3 var(--k-font-body);
+  }
+  .k-review-correction button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--k-space-xs);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--k-role-text);
+    font: 700 var(--k-type-meta)/1.3 var(--k-font-body);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .k-review-correction button:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+  .k-review-legacy-note { margin: 0; }
+  .k-review-final-macros {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--k-space-sm);
+    margin: var(--k-space-xs) 0;
+    padding-block: var(--k-space-md);
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+  }
+  .k-review-final-macros dt { font: 600 var(--k-type-meta)/1.3 var(--k-font-body); }
+  .k-review-final-macros dd {
+    margin: var(--k-space-xs) 0 0;
+    overflow-wrap: anywhere;
+    font: 700 var(--k-type-label)/1.3 var(--k-font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .k-review-confirm {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: var(--k-z-nav);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 1fr);
+    align-items: center;
+    gap: var(--k-space-md);
+    padding: var(--k-space-md) var(--k-pad-panel) calc(var(--k-space-md) + var(--safe-bottom, 0px));
+    border: 0;
+    border-top: var(--k-border-bold) solid var(--k-role-border);
+    background: var(--k-role-surface-raised);
+    color: var(--k-role-text);
+  }
+  .k-review-confirm-total { display: grid; gap: var(--k-space-xs); min-width: 0; }
+  .k-review-confirm-total strong { font: 900 var(--k-type-figure)/1 var(--k-font-display); }
+  .k-review-confirm-total small { font: 700 var(--k-type-label)/1 var(--k-font-body); }
+  .k-review-confirm-total > span {
+    overflow-wrap: anywhere;
+    font: 600 var(--k-type-meta)/1.3 var(--k-font-body);
+  }
+  .k-meal-review [data-food-field] { scroll-margin-block: var(--k-space-xl) 160px; }
+  .k-meal-review > .app-main { padding-bottom: calc(160px + var(--safe-bottom, 0px)); }
+  .has-review-keyboard .k-review-confirm { position: static; border: 2px solid var(--k-role-border); }
+  .has-review-keyboard > .app-main { padding-bottom: var(--k-space-2xl); }
+  .has-review-keyboard [data-food-field] { scroll-margin-bottom: var(--k-space-xl); }
+  @media (min-width: 768px) {
+    .k-review-confirm {
+      position: static;
+      grid-template-columns: minmax(0, 1fr);
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    .k-review-confirm-total { display: none; }
+    .k-meal-review > .app-main { padding-bottom: var(--k-space-2xl); }
+  }
+}

@@ -6,7 +6,7 @@ import { useLongPress } from '../hooks/useLongPress'
 import { MEAL_LABELS, type FoodEntry, type MealType, type SavedMeal } from '../types'
 
 /** The same portion and Log controls wherever a meal can be repeated. */
-export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = false, saveCue, onPortion, showNutrition = true }: {
+export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = false, saveCue, onPortion, showNutrition = true, compact = false }: {
   item: FoodEntry | SavedMeal
   basis: 'saved' | 'previous'
   mealType: MealType
@@ -17,6 +17,8 @@ export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = fa
   saveCue?: number
   onPortion?: () => void
   showNutrition?: boolean
+  /** A repeat shortcut whose shared sheet header already shows its destination. */
+  compact?: boolean
 }) {
   const [multiplier, setMultiplier] = useState(1)
   const [adjusting, setAdjusting] = useState(false)
@@ -57,7 +59,7 @@ export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = fa
     setMultiplier(value)
   }
 
-  return <article className="k-repeat-meal" aria-label={item.name}>
+  return <article className={`k-repeat-meal${compact ? ` is-compact${adjusting ? ' is-adjusting' : ''}` : ''}`} aria-label={item.name} aria-describedby={compact ? `${controlId}-context` : undefined}>
     <div className="k-repeat-main">
       <span className={`k-food-tile is-tone-${foodToneFor(item.name)}`} aria-hidden="true"><FoodIcon emoji={item.emoji} name={item.name} size={24} /></span>
       <div className="k-repeat-info">
@@ -75,7 +77,7 @@ export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = fa
       </div>
     </div>
     <div className="k-repeat-footer">
-      <p className="k-repeat-context">Logging to {MEAL_LABELS[mealType]} · Today</p>
+      <p id={`${controlId}-context`} className={`k-repeat-context${compact ? ' sr-only' : ''}`}>Logging to {MEAL_LABELS[mealType]} · Today</p>
       <div className="k-repeat-actions">
         <button type="button" data-action-play="select" className="k-repeat-portion k-text-button" aria-label={`Adjust portion for ${item.name}, currently ${multiplier} times your ${basis} meal`} aria-expanded={adjusting} aria-controls={controlId} onClick={() => setAdjusting(value => !value)}>
           {multiplier}× · Portion

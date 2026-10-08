@@ -31,6 +31,8 @@ export interface ManualLogDraft {
 export interface ReviewLogDraft {
   analysis: FoodAnalysis
   baseAnalysis: FoodAnalysis
+  /** Immutable model estimate. Older drafts may only have their corrected base. */
+  originalAnalysis?: FoodAnalysis
   mealType: MealType
   servings: number
   source: FoodSource
@@ -190,10 +192,11 @@ function isManualDraft(value: unknown): value is ManualLogDraft {
 function isReviewDraft(value: unknown): value is ReviewLogDraft {
   return isRecord(value)
     && hasOnly(value, [
-      'analysis', 'baseAnalysis', 'mealType', 'servings', 'source', 'emptyNumericFields', 'updatedAt',
+      'analysis', 'baseAnalysis', 'originalAnalysis', 'mealType', 'servings', 'source', 'emptyNumericFields', 'updatedAt',
     ])
     && isSafeFoodAnalysis(value.analysis)
     && isSafeFoodAnalysis(value.baseAnalysis)
+    && (value.originalAnalysis === undefined || isSafeFoodAnalysis(value.originalAnalysis))
     && typeof value.mealType === 'string'
     && MEAL_TYPES.has(value.mealType as MealType)
     && isFiniteNumber(value.servings, 0.25, 1_000)
