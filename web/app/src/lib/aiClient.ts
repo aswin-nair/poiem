@@ -1,4 +1,4 @@
-import { DEFAULT_GEMINI_MODEL, DEFAULT_OPENROUTER_MODEL, type AISettings } from './aiConfig'
+import { apiFormatFor, authHeaderFor, authTypeFor, connectionIssue, defaultModelFor, endpointFor, providerLabel, type AIAPIFormat, type AISettings } from './aiConfig'
 import { apiFetch } from './apiClient'
 
 type ChatMsg = { role: 'system' | 'user' | 'assistant'; content: string | unknown[] }
@@ -70,12 +70,128 @@ async function geminiFailure(res: Response): Promise<Error> {
 
 function aiHeaders(settings: AISettings): Record<string, string> {
   const h: Record<string, string> = { 'Content-Type': 'application/json' }
-  if (settings.provider === 'openrouter') {
+  const auth = authTypeFor(settings)
+  if (auth === 'bearer') {
     h.Authorization = `Bearer ${settings.apiKey.trim()}`
+  } else if (auth === 'api-key') {
+    h[authHeaderFor(settings)] = settings.apiKey.trim()
+  }
+  // OpenRouter's optional app attribution belongs only on that service.
+  if (new URL(endpointFor(settings)).hostname === 'openrouter.ai') {
     h['HTTP-Referer'] = typeof window !== 'undefined' ? window.location.origin : 'https://poiem.app'
     h['X-Title'] = 'Poiem'
   }
+  if (apiFormatFor(settings) === 'anthropic') {
+    h['anthropic-version'] = '2023-06-01'
+    h['anthropic-dangerous-direct-browser-access'] = 'true'
+  }
   return h
+}
+
+function row(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+}
+
+/** All multimodal input starts in Chat Completions shape and is adapted locally. */
+function contentParts(content: ChatMsg['content'], format: 'gemini' | 'anthropic'): unknown[] {
+  const source = typeof content === 'string' ? [{ type: 'text', text: content }] : content
+  return source.map(part => {
+    if (row(part) && part.type === 'text' && typeof part.text === 'string') {
+      return format === 'gemini' ? { text: part.text } : { type: 'text', text: part.text }
+    }
+    if (row(part) && part.type === 'image_url' && row(part.image_url) && typeof part.image_url.url === 'string') {
+      const image = /^data:(image\/[\w.+-]+);base64,([A-Za-z0-9+/=\s]+)$/.exec(part.image_url.url)
+      if (image) {
+        return format === 'gemini'
+          ? { inlineData: { mimeType: image[1], data: image[2] } }
+          : { type: 'image', source: { type: 'base64', media_type: image[1], data: image[2] } }
+      }
+    }
+    throw new Error('This API format cannot use that message attachment. Try logging by text instead.')
+  })
+}
+
+function requestBody(settings: AISettings, messages: ChatMsg[], maxTokens: number, temperature?: number): Record<string, unknown> {
+  const format = apiFormatFor(settings)
+  const model = settings.model.trim() || defaultModelFor(settings.provider)
+  if (format === 'openai') {
+    return { model, messages, max_tokens: maxTokens, ...(temperature != null ? { temperature } : {}) }
+  }
+  const system = messages.filter(message => message.role === 'system')
+    .map(message => typeof message.content === 'string' ? message.content : '')
+    .filter(Boolean).join('\n\n')
+  const conversation = messages.filter(message => message.role !== 'system')
+  if (format === 'anthropic') {
+    return {
+      model,
+      messages: conversation.map(message => ({ role: message.role, content: contentParts(message.content, format) })),
+      max_tokens: maxTokens,
+      ...(temperature != null ? { temperature } : {}),
+      ...(system ? { system } : {}),
+    }
+  }
+  return {
+    contents: conversation.map(message => ({
+      role: message.role === 'assistant' ? 'model' : 'user',
+      parts: contentParts(message.content, format),
+    })),
+    generationConfig: { maxOutputTokens: maxTokens, ...(temperature != null ? { temperature } : {}) },
+    ...(system ? { systemInstruction: { parts: [{ text: system }] } } : {}),
+  }
+}
+
+function responseText(value: unknown, format: AIAPIFormat): string | null {
+  if (!row(value) || value.error) return null
+  if (format === 'openai') {
+    const choice = Array.isArray(value.choices) ? value.choices[0] : undefined
+    const content = row(choice) && row(choice.message) ? choice.message.content : undefined
+    if (typeof content === 'string') return content.trim() || null
+    if (Array.isArray(content)) return content.filter(row).filter(part => part.type === 'text')
+      .map(part => typeof part.text === 'string' ? part.text : '').join('\n').trim() || null
+    return null
+  }
+  if (format === 'anthropic') {
+    return Array.isArray(value.content) ? value.content.filter(row).filter(part => part.type === 'text')
+      .map(part => typeof part.text === 'string' ? part.text : '').join('\n').trim() || null : null
+  }
+  const candidate = Array.isArray(value.candidates) ? value.candidates[0] : undefined
+  const parts = row(candidate) && row(candidate.content) ? candidate.content.parts : undefined
+  return Array.isArray(parts) ? parts.filter(row).filter(part => !part.thought)
+    .map(part => typeof part.text === 'string' ? part.text : '').join('\n').trim() || null : null
+}
+
+async function completeByok(settings: AISettings, messages: ChatMsg[], maxTokens: number, temperature: number | undefined, options: RequestOptions): Promise<string> {
+  const issue = connectionIssue(settings)
+  if (issue) throw new Error(issue)
+  const format = apiFormatFor(settings)
+  const provider = settings.provider === 'gemini' ? 'Gemini' : providerLabel(settings.provider)
+  const endpoint = endpointFor(settings)
+  const body = requestBody(settings, messages, maxTokens, temperature)
+  return timedRequest(async signal => {
+    let response: Response
+    try {
+      response = await fetch(endpoint, {
+        method: 'POST',
+        headers: aiHeaders(settings),
+        body: JSON.stringify(body),
+        signal,
+        credentials: 'omit',
+        redirect: 'error',
+        referrerPolicy: 'no-referrer',
+      })
+    } catch {
+      // Network exceptions can contain URLs, headers or gateway diagnostics.
+      throw new Error('Could not reach your AI API. Check the endpoint and that it allows browser requests, then try again or log manually.')
+    }
+    if (!response.ok) throw format === 'gemini' ? await geminiFailure(response) : providerFailure(provider, response.status)
+    const json: unknown = await response.json().catch(() => null)
+    const text = responseText(json, format)
+    if (!text) throw new Error(`${provider} returned no usable text. Check the API format and model, or log manually.`)
+    if (settings.apiKey.trim() && text.includes(settings.apiKey.trim())) {
+      throw new Error('Your AI API returned an unsafe response. Try again or log manually.')
+    }
+    return text
+  }, options)
 }
 
 export function usesByok(settings: AISettings): boolean {
@@ -113,71 +229,10 @@ export async function completeChat(
   options: RequestOptions = {},
 ): Promise<string> {
   if (!usesByok(settings)) {
-    if (options.task === 'mascot') throw new Error('Momo AI uses your own API key. Add one in You → Advanced settings.')
+    if (options.task === 'mascot') throw new Error('Momo AI uses your own API connection. Set it up in You → AI setup.')
     return completeManaged(managedTask(options), messages, options)
   }
-  if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
-
-  if (settings.provider === 'openrouter') {
-    return timedRequest(async signal => {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: aiHeaders(settings),
-        body: JSON.stringify({
-          model: settings.model || DEFAULT_OPENROUTER_MODEL,
-          messages,
-          max_tokens: maxTokens,
-          ...(temperature != null ? { temperature } : {}),
-        }),
-        signal,
-      })
-      if (!res.ok) throw providerFailure('OpenRouter', res.status)
-      const json = await res.json() as { choices?: Array<{ message?: { content?: string } }>; error?: { message?: string } }
-      if (json.error?.message) throw new Error('OpenRouter could not complete the request.')
-      const text = json.choices?.[0]?.message?.content
-      if (!text) throw new Error('OpenRouter returned an empty response. Try again or log manually.')
-      return text
-    }, {
-      ...options,
-      timeoutMs: options.timeoutMs ?? CHAT_TIMEOUT_MS,
-    })
-  }
-
-  const model = settings.model || DEFAULT_GEMINI_MODEL
-  const system = messages.find(m => m.role === 'system')
-  const conv = messages.filter(m => m.role !== 'system')
-  const contents = conv.map(m => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: typeof m.content === 'string' ? m.content : JSON.stringify(m.content) }],
-  }))
-
-  const body: Record<string, unknown> = {
-    contents,
-    generationConfig: {
-      maxOutputTokens: maxTokens,
-      ...(temperature != null ? { temperature } : {}),
-    },
-  }
-  if (system && typeof system.content === 'string') {
-    body.systemInstruction = { parts: [{ text: system.content }] }
-  }
-
-  return timedRequest(async signal => {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-      {
-        method: 'POST',
-        headers: { ...aiHeaders(settings), 'X-goog-api-key': settings.apiKey.trim() },
-        body: JSON.stringify(body),
-        signal,
-      },
-    )
-    if (!res.ok) throw await geminiFailure(res)
-    const json = await res.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> }
-    const text = json.candidates?.[0]?.content?.parts?.[0]?.text
-    if (!text) throw new Error('Gemini returned an empty response. Try again or log manually.')
-    return text
-  }, {
+  return completeByok(settings, messages, maxTokens, temperature, {
     ...options,
     timeoutMs: options.timeoutMs ?? CHAT_TIMEOUT_MS,
   })
@@ -194,7 +249,7 @@ export async function completeVision(
   options: RequestOptions = {},
 ): Promise<string> {
   if (!usesByok(settings)) {
-    if (options.task === 'mascot') throw new Error('Momo AI uses your own API key. Add one in You → Advanced settings.')
+    if (options.task === 'mascot') throw new Error('Momo AI uses your own API connection. Set it up in You → AI setup.')
     const content = [
       { type: 'image_url', image_url: { url: `data:${mimeType};base64,${imageBase64}` } },
       { type: 'text', text: prompt },
@@ -205,59 +260,15 @@ export async function completeVision(
     messages.push({ role: 'user', content })
     return completeManaged('food_photo', messages, options)
   }
-  if (!settings.apiKey.trim()) throw new Error('Add your API key in You → AI settings.')
-
-  if (settings.provider === 'openrouter') {
-    const content = [
-      { type: 'image_url', image_url: { url: `data:${mimeType};base64,${imageBase64}` } },
-      { type: 'text', text: prompt },
-    ]
-    const messages: ChatMsg[] = []
-    const sys = systemPrompt?.trim() ?? settings.customInstructions?.trim()
-    if (sys) {
-      messages.push({ role: 'system', content: sys })
-    }
-    messages.push({ role: 'user', content })
-    return completeChat(settings, messages, maxTokens, temperature, {
-      ...options,
-      task: 'food_photo',
-      timeoutMs: options.timeoutMs ?? VISION_TIMEOUT_MS,
-    })
-  }
-
-  const model = settings.model || DEFAULT_GEMINI_MODEL
-  const parts: unknown[] = [
-    { inlineData: { mimeType, data: imageBase64 } },
-    { text: prompt },
+  const content = [
+    { type: 'image_url', image_url: { url: `data:${mimeType};base64,${imageBase64}` } },
+    { type: 'text', text: prompt },
   ]
-  const body: Record<string, unknown> = {
-    contents: [{ parts }],
-    generationConfig: {
-      maxOutputTokens: maxTokens,
-      ...(temperature != null ? { temperature } : {}),
-    },
-  }
+  const messages: ChatMsg[] = []
   const sys = systemPrompt?.trim() ?? settings.customInstructions?.trim()
-  if (sys) {
-    body.systemInstruction = { parts: [{ text: sys }] }
-  }
-
-  return timedRequest(async signal => {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-goog-api-key': settings.apiKey.trim() },
-        body: JSON.stringify(body),
-        signal,
-      },
-    )
-    if (!res.ok) throw await geminiFailure(res)
-    const json = await res.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> }
-    const text = json.candidates?.[0]?.content?.parts?.[0]?.text
-    if (!text) throw new Error('Gemini returned an empty response. Try again or log manually.')
-    return text
-  }, {
+  if (sys) messages.push({ role: 'system', content: sys })
+  messages.push({ role: 'user', content })
+  return completeByok(settings, messages, maxTokens, temperature, {
     ...options,
     timeoutMs: options.timeoutMs ?? VISION_TIMEOUT_MS,
   })

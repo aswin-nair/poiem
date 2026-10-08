@@ -1,5 +1,5 @@
 import { AppShell } from '../components/system/AppShell'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { BackLink } from '../components/BackLink'
@@ -27,6 +27,8 @@ export function SavedMealsPage() {
   const [filter, setFilter] = useState<Filter>('all')
   const [mealType, setMealType] = useState<MealType>(() => mealTypeFromNavState(location.state) ?? defaultMealType())
   const [logGuard] = useState(createOnceGuard)
+  const [saveCue, setSaveCue] = useState<{ key: string; run: number } | null>(null)
+  const saveRun = useRef(0)
   const feel = useFeel()
   const recents = recentMeals(state.foodEntries).filter(entry => !isFavorite(state, entry))
   const isSubRoute = location.pathname === '/log/saved'
@@ -34,7 +36,24 @@ export function SavedMealsPage() {
   const filteredRecents = filterMealLibrary(recents, query, filter)
   const hasFilters = Boolean(query.trim()) || filter !== 'all'
 
+  useEffect(() => {
+    if (!saveCue) return
+    const timeout = window.setTimeout(() => setSaveCue(null), 450)
+    return () => window.clearTimeout(timeout)
+  }, [saveCue])
+
   function resetFilters() { setQuery(''); setFilter('all') }
+
+  function toggleSaved(meal: SavedMeal | FoodEntry) {
+    const key = mealKey(meal)
+    if (!state.favoriteMeals.some(saved => mealKey(saved) === key)) {
+      // Carry a deliberate save across the move from Recents to Saved.
+      setSaveCue({ key, run: ++saveRun.current })
+    } else {
+      setSaveCue(previous => previous?.key === key ? null : previous)
+    }
+    toggleFavorite(meal)
+  }
 
   function logMeal(meal: SavedMeal | FoodEntry, multiplier: number) {
     logGuard.run(() => {
@@ -58,7 +77,7 @@ export function SavedMealsPage() {
         {isSubRoute && <BackLink onClick={() => navigate('/log', { state: { mealType } })} />}
         <header className="page-heading">
           <p className="k-eyebrow">Your usuals</p>
-          <h1 className="page-title">Saved</h1>
+          <h1 className="page-title" data-momo-play="saved">Saved</h1>
           <p className="page-sub">Your saved meals come first, followed by other recent meals.</p>
         </header>
 
@@ -106,7 +125,7 @@ export function SavedMealsPage() {
               <div className="saved-empty">No saved meals match these filters. Try another name or clear the filters above.</div>
             ) : (
               <div className="k-repeat-list">
-                {filteredSaved.map(meal => <RepeatMealRow key={meal.id} item={meal} basis="saved" mealType={mealType} onLog={multiplier => logMeal(meal, multiplier)} onSave={() => toggleFavorite(meal)} saved />)}
+                {filteredSaved.map(meal => <RepeatMealRow key={meal.id} item={meal} basis="saved" mealType={mealType} onLog={multiplier => logMeal(meal, multiplier)} onSave={() => toggleSaved(meal)} saved saveCue={saveCue?.key === mealKey(meal) ? saveCue.run : undefined} />)}
               </div>
             )}
           </section>
@@ -120,7 +139,7 @@ export function SavedMealsPage() {
               <div className="saved-empty">{recents.length ? 'No recent meals match these filters.' : 'Your logged meals will appear here for easy reuse.'}</div>
             ) : (
               <div className="k-repeat-list">
-                {filteredRecents.map(entry => <RepeatMealRow key={entry.id} item={entry} basis="previous" mealType={mealType} onLog={multiplier => logMeal(entry, multiplier)} onSave={() => toggleFavorite(entry)} saved={isFavorite(state, entry)} />)}
+                {filteredRecents.map(entry => <RepeatMealRow key={entry.id} item={entry} basis="previous" mealType={mealType} onLog={multiplier => logMeal(entry, multiplier)} onSave={() => toggleSaved(entry)} saved={isFavorite(state, entry)} />)}
               </div>
             )}
           </section>

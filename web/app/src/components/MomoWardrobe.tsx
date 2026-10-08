@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useReducedMotion } from 'motion/react'
 import {
   SLOT_LABELS,
   WARDROBE,
@@ -29,7 +30,24 @@ export function MomoWardrobe() {
   const available = useMemo(() => availablePieceIds(owned, progress), [owned, progress])
   const fresh = useMemo(() => new Set(newPieces(owned, progress).map(piece => piece.id)), [owned, progress])
   const outfit = state.gamification.outfit
+  const outfitKey = WARDROBE_SLOTS.map(part => outfit[part] ?? '').join('|')
+  const previousOutfit = useRef(outfitKey)
+  const [outfitPlay, setOutfitPlay] = useState(0)
+  const osReduced = useReducedMotion()
+  const still = osReduced || state.profile.mascotReducedMotion === true || state.gamification.mascotActivity !== 'lively'
   const worn = WARDROBE_SLOTS.flatMap(part => WARDROBE.filter(piece => piece.id === outfit[part]).map(piece => piece.name))
+
+  useEffect(() => {
+    if (previousOutfit.current === outfitKey) return
+    previousOutfit.current = outfitKey
+    if (!still) setOutfitPlay(value => value + 1)
+  }, [outfitKey, still])
+
+  useEffect(() => {
+    if (!outfitPlay) return
+    const timeout = window.setTimeout(() => setOutfitPlay(0), 450)
+    return () => window.clearTimeout(timeout)
+  }, [outfitPlay])
 
   function wear(id: string) {
     feel('select')
@@ -40,20 +58,20 @@ export function MomoWardrobe() {
     <div className="k-wardrobe">
       <p className="page-sub">Pieces unlock as you log on more days, and when you try something new. Changes save right away.</p>
       <div className="k-wardrobe-stage">
-        <div className="k-wardrobe-momo" aria-hidden="true"><Momo expression="happy" pose="still" outfit={outfit} /></div>
+        <div className="k-wardrobe-momo" data-action-motion={still ? 'still' : undefined} aria-hidden="true"><span key={outfitPlay} className={`k-wardrobe-happy${outfitPlay && !still ? ' has-played' : ''}`}><Momo expression="happy" pose="still" outfit={outfit} /></span></div>
         <p className="k-wardrobe-worn" aria-live="polite">{worn.length ? `Wearing ${worn.join(', ')}` : 'Wearing nothing. Just dumpling.'}</p>
         <div className="k-wardrobe-actions">
-          <button type="button" className="k-button is-primary" onClick={() => { feel('press'); patchGamification(g => ({ ...g, outfit: surpriseOutfit(available) })) }}>
+          <button type="button" data-action-play="save" className="k-button is-primary" onClick={() => { feel('press'); patchGamification(g => ({ ...g, outfit: surpriseOutfit(available) })) }}>
             Surprise me
           </button>
-          <button type="button" className="k-text-button" disabled={worn.length === 0} onClick={() => { feel('press'); patchGamification(g => ({ ...g, outfit: {} })) }}>
+          <button type="button" data-action-play="save" className="k-text-button" disabled={worn.length === 0} onClick={() => { feel('press'); patchGamification(g => ({ ...g, outfit: {} })) }}>
             Take it all off
           </button>
         </div>
       </div>
       <div className="k-wardrobe-slots" role="group" aria-label="Wardrobe slot">
         {WARDROBE_SLOTS.map(part => (
-          <button key={part} type="button" className="k-chip" aria-pressed={slot === part} onClick={() => {
+          <button key={part} type="button" data-action-play="select" className="k-chip" aria-pressed={slot === part} onClick={() => {
             if (slot === part) return
             feel('select')
             setSlot(part)
@@ -71,6 +89,7 @@ export function MomoWardrobe() {
               {/* Locked pieces stay focusable so their unlock rule can be read. */}
               <button
                 type="button"
+                data-action-play="save"
                 className="k-wardrobe-piece"
                 aria-pressed={wearing}
                 aria-disabled={unlocked ? undefined : true}

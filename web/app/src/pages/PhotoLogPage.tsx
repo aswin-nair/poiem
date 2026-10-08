@@ -62,7 +62,7 @@ export function PhotoLogPage() {
   const photoActionRef = useRef<HTMLButtonElement>(null)
   const mainRef = useRef<HTMLElement>(null)
   const { availability, refresh } = useAiAccess()
-  const hasKey = usesByok(state.aiSettings) && !!state.aiSettings.apiKey
+  const byok = usesByok(state.aiSettings)
   const ai = availability(state.aiSettings, 'food_photo')
   const canAnalyze = ai.kind === 'ready'
 
@@ -211,7 +211,7 @@ export function PhotoLogPage() {
           </>}
         </>}
 
-        <PhotoPrivacyNote provider={providerLabel(state.aiSettings.provider)} managed={!hasKey} manualFallbackState={logContext} />
+        <PhotoPrivacyNote provider={providerLabel(state.aiSettings.provider)} managed={!byok} manualFallbackState={logContext} />
         {canAnalyze && !loading && <div className="flow-submit">
           <AiAllowanceHint availability={ai} task="food_photo" />
           <PressableButton fullWidth disabled={!selectedFile} onClick={() => { void handleAnalyze() }}>Analyze photo <IconArrowRight size={20} /></PressableButton>

@@ -1,0 +1,1103 @@
+[
+  {
+    "name": "momo-390-light",
+    "visible": true,
+    "geometry": {
+      "left": 92,
+      "right": 378,
+      "top": 204,
+      "bottom": 504,
+      "width": 390,
+      "height": 844,
+      "overflow": 0,
+      "target": "title",
+      "text": "Borrowing this word. Back in one tiny dance.Today✦✦Momo says: Borrowing this word. Back in one tiny dance.",
+      "intersecting": []
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"title-borrow\"]}",
+      "controls": [
+        {
+          "name": "Today",
+          "x": 20,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Insights",
+          "x": 90.796875,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Log a meal",
+          "x": 165.984375,
+          "y": 762.90625,
+          "width": 58,
+          "height": 58
+        },
+        {
+          "name": "Saved",
+          "x": 232.390625,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "You",
+          "x": 303.1875,
+          "y": 777.8125,
+          "width": 66.8125,
+          "height": 48.1875
+        },
+        {
+          "name": "Choose date",
+          "x": 330,
+          "y": 27.59375,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sunday 13 September",
+          "x": 18,
+          "y": 89.59375,
+          "width": 50.5625,
+          "height": 60
+        },
+        {
+          "name": "Monday 14 September",
+          "x": 68.5625,
+          "y": 89.59375,
+          "width": 50.578125,
+          "height": 60
+        },
+        {
+          "name": "Tuesday 15 September",
+          "x": 119.140625,
+          "y": 89.59375,
+          "width": 50.5625,
+          "height": 60
+        },
+        {
+          "name": "Wednesday 16 September",
+          "x": 169.703125,
+          "y": 89.59375,
+          "width": 50.578125,
+          "height": 60
+        },
+        {
+          "name": "Thursday 17 September",
+          "x": 220.28125,
+          "y": 89.59375,
+          "width": 50.5625,
+          "height": 60
+        },
+        {
+          "name": "Friday 18 September",
+          "x": 270.84375,
+          "y": 89.59375,
+          "width": 50.578125,
+          "height": 60
+        },
+        {
+          "name": "Saturday 19 September, logged",
+          "x": 321.421875,
+          "y": 89.59375,
+          "width": 50.578125,
+          "height": 60
+        },
+        {
+          "name": "Say something, Momo",
+          "x": 31,
+          "y": 195.484375,
+          "width": 48,
+          "height": 52
+        },
+        {
+          "name": "Chosen steps complete Details",
+          "x": 95,
+          "y": 331.96875,
+          "width": 260,
+          "height": 44
+        },
+        {
+          "name": "860kcal left",
+          "x": 35,
+          "y": 503.5625,
+          "width": 320,
+          "height": 54.1875
+        },
+        {
+          "name": "58 / 110 g",
+          "x": 26,
+          "y": 672.734375,
+          "width": 91.328125,
+          "height": 20.796875
+        },
+        {
+          "name": "132 / 220 g",
+          "x": 149.328125,
+          "y": 672.734375,
+          "width": 91.328125,
+          "height": 20.796875
+        },
+        {
+          "name": "34 / 65 g",
+          "x": 272.65625,
+          "y": 672.734375,
+          "width": 91.34375,
+          "height": 20.796875
+        },
+        {
+          "name": "Edit",
+          "x": 220,
+          "y": 831.125,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Delete",
+          "x": 296,
+          "y": 831.125,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Overnight oats8:15 · P 12 · C 52 · F 8320 kca",
+          "x": 18,
+          "y": 831.125,
+          "width": 354,
+          "height": 60
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "water-context",
+    "visible": true,
+    "target": "water",
+    "text": "Splash. Please admire the choreography.\n\nWater\n✦\n✦\nMomo says: Splash. Please admire the choreography."
+  },
+  {
+    "name": "momo-320-dark",
+    "visible": true,
+    "geometry": {
+      "left": 22,
+      "right": 308,
+      "top": 204,
+      "bottom": 504,
+      "width": 320,
+      "height": 844,
+      "overflow": 0,
+      "target": "title",
+      "text": "Borrowing this word. Back in one tiny dance.Today✦✦Momo says: Borrowing this word. Back in one tiny dance.",
+      "intersecting": [
+        "Say something, Momo"
+      ]
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"title-borrow\"]}",
+      "controls": [
+        {
+          "name": "Today",
+          "x": 20,
+          "y": 777.8125,
+          "width": 52.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Insights",
+          "x": 76.796875,
+          "y": 777.8125,
+          "width": 52.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Log a meal",
+          "x": 131,
+          "y": 762.90625,
+          "width": 58,
+          "height": 58
+        },
+        {
+          "name": "Saved",
+          "x": 190.390625,
+          "y": 777.8125,
+          "width": 52.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "You",
+          "x": 247.1875,
+          "y": 777.8125,
+          "width": 52.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Choose date",
+          "x": 260,
+          "y": 27.59375,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sunday 13 September",
+          "x": 18,
+          "y": 89.59375,
+          "width": 40.5625,
+          "height": 60
+        },
+        {
+          "name": "Monday 14 September",
+          "x": 58.5625,
+          "y": 89.59375,
+          "width": 40.578125,
+          "height": 60
+        },
+        {
+          "name": "Tuesday 15 September",
+          "x": 99.140625,
+          "y": 89.59375,
+          "width": 40.5625,
+          "height": 60
+        },
+        {
+          "name": "Wednesday 16 September",
+          "x": 139.703125,
+          "y": 89.59375,
+          "width": 40.578125,
+          "height": 60
+        },
+        {
+          "name": "Thursday 17 September",
+          "x": 180.28125,
+          "y": 89.59375,
+          "width": 40.5625,
+          "height": 60
+        },
+        {
+          "name": "Friday 18 September",
+          "x": 220.84375,
+          "y": 89.59375,
+          "width": 40.578125,
+          "height": 60
+        },
+        {
+          "name": "Saturday 19 September, logged",
+          "x": 261.421875,
+          "y": 89.59375,
+          "width": 40.578125,
+          "height": 60
+        },
+        {
+          "name": "Say something, Momo",
+          "x": 31,
+          "y": 195.484375,
+          "width": 48,
+          "height": 52
+        },
+        {
+          "name": "Chosen steps complete Details",
+          "x": 95,
+          "y": 331.96875,
+          "width": 190,
+          "height": 44
+        },
+        {
+          "name": "860kcal left",
+          "x": 35,
+          "y": 503.5625,
+          "width": 250,
+          "height": 54.1875
+        },
+        {
+          "name": "58 / 110 g",
+          "x": 26,
+          "y": 678.328125,
+          "width": 68,
+          "height": 26.390625
+        },
+        {
+          "name": "132 / 220 g",
+          "x": 126,
+          "y": 672.734375,
+          "width": 68,
+          "height": 37.59375
+        },
+        {
+          "name": "34 / 65 g",
+          "x": 226,
+          "y": 678.328125,
+          "width": 68,
+          "height": 26.390625
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "momo-1440-light",
+    "visible": true,
+    "geometry": {
+      "left": 1088,
+      "right": 1428,
+      "top": 848,
+      "bottom": 988,
+      "width": 1440,
+      "height": 1000,
+      "overflow": 0,
+      "target": "title",
+      "text": "Borrowing this word. Back in one tiny dance.Today✦✦Momo says: Borrowing this word. Back in one tiny dance.",
+      "intersecting": []
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"title-borrow\"]}",
+      "controls": [
+        {
+          "name": "Poiem home",
+          "x": 41,
+          "y": 24,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Ada",
+          "x": 95,
+          "y": 37.59375,
+          "width": 134,
+          "height": 16.796875
+        },
+        {
+          "name": "Today",
+          "x": 41,
+          "y": 84,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Insights",
+          "x": 41,
+          "y": 144,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Log a meal",
+          "x": 41,
+          "y": 212,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Saved",
+          "x": 41,
+          "y": 280,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "You",
+          "x": 41,
+          "y": 340,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Choose date",
+          "x": 1235,
+          "y": 27.59375,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sunday 13 September",
+          "x": 271,
+          "y": 89.59375,
+          "width": 143.703125,
+          "height": 60
+        },
+        {
+          "name": "Monday 14 September",
+          "x": 414.703125,
+          "y": 89.59375,
+          "width": 143.71875,
+          "height": 60
+        },
+        {
+          "name": "Tuesday 15 September",
+          "x": 558.421875,
+          "y": 89.59375,
+          "width": 143.71875,
+          "height": 60
+        },
+        {
+          "name": "Wednesday 16 September",
+          "x": 702.140625,
+          "y": 89.59375,
+          "width": 143.703125,
+          "height": 60
+        },
+        {
+          "name": "Thursday 17 September",
+          "x": 845.84375,
+          "y": 89.59375,
+          "width": 143.71875,
+          "height": 60
+        },
+        {
+          "name": "Friday 18 September",
+          "x": 989.5625,
+          "y": 89.59375,
+          "width": 143.71875,
+          "height": 60
+        },
+        {
+          "name": "Saturday 19 September, logged",
+          "x": 1133.28125,
+          "y": 89.59375,
+          "width": 143.703125,
+          "height": 60
+        },
+        {
+          "name": "Say something, Momo",
+          "x": 284,
+          "y": 212.1875,
+          "width": 64,
+          "height": 68
+        },
+        {
+          "name": "Chosen steps complete Details",
+          "x": 372,
+          "y": 401.375,
+          "width": 190,
+          "height": 44
+        },
+        {
+          "name": "860kcal left",
+          "x": 288,
+          "y": 592.96875,
+          "width": 282,
+          "height": 54.1875
+        },
+        {
+          "name": "58 / 110 g",
+          "x": 279,
+          "y": 770.140625,
+          "width": 78.65625,
+          "height": 20.796875
+        },
+        {
+          "name": "132 / 220 g",
+          "x": 389.65625,
+          "y": 770.140625,
+          "width": 78.671875,
+          "height": 20.796875
+        },
+        {
+          "name": "34 / 65 g",
+          "x": 500.328125,
+          "y": 770.140625,
+          "width": 78.65625,
+          "height": 20.796875
+        },
+        {
+          "name": "Edit",
+          "x": 1125,
+          "y": 267.1875,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Delete",
+          "x": 1201,
+          "y": 267.1875,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Overnight oats8:15 · P 12 · C 52 · F 8320 kca",
+          "x": 615,
+          "y": 267.1875,
+          "width": 662,
+          "height": 60
+        },
+        {
+          "name": "Add breakfast",
+          "x": 615,
+          "y": 327.1875,
+          "width": 662,
+          "height": 48
+        },
+        {
+          "name": "Edit",
+          "x": 1125,
+          "y": 442.1875,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Delete",
+          "x": 1201,
+          "y": 442.1875,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Chicken rice bowl12:40 · P 38 · C 48 · F 1654",
+          "x": 615,
+          "y": 442.1875,
+          "width": 662,
+          "height": 60
+        },
+        {
+          "name": "Add lunch",
+          "x": 615,
+          "y": 502.1875,
+          "width": 662,
+          "height": 48
+        },
+        {
+          "name": "Edit",
+          "x": 1125,
+          "y": 617.1875,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Delete",
+          "x": 1201,
+          "y": 617.1875,
+          "width": 76,
+          "height": 60
+        },
+        {
+          "name": "Tomato soup18:20 · P 8 · C 32 · F 10280 kcal",
+          "x": 615,
+          "y": 617.1875,
+          "width": 662,
+          "height": 60
+        },
+        {
+          "name": "Add dinner",
+          "x": 615,
+          "y": 677.1875,
+          "width": 662,
+          "height": 48
+        },
+        {
+          "name": "Add snack",
+          "x": 615,
+          "y": 791.1875,
+          "width": 662,
+          "height": 48
+        },
+        {
+          "name": "Remove a glass of water",
+          "x": 286,
+          "y": 885.9375,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Add a glass of water",
+          "x": 378,
+          "y": 885.9375,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Add a kitchen note",
+          "x": 284,
+          "y": 939.9375,
+          "width": 129.3125,
+          "height": 44
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "momo-844-dark",
+    "visible": true,
+    "geometry": {
+      "left": 252,
+      "right": 592,
+      "top": 163.8125,
+      "bottom": 303.8125,
+      "width": 844,
+      "height": 390,
+      "overflow": 0,
+      "target": "title",
+      "text": "Borrowing this word. Back in one tiny dance.Today✦✦Momo says: Borrowing this word. Back in one tiny dance.",
+      "intersecting": []
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"title-borrow\"]}",
+      "controls": [
+        {
+          "name": "Today",
+          "x": 202,
+          "y": 323.8125,
+          "width": 84.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Insights",
+          "x": 290.796875,
+          "y": 323.8125,
+          "width": 84.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Log a meal",
+          "x": 392.984375,
+          "y": 308.90625,
+          "width": 58,
+          "height": 58
+        },
+        {
+          "name": "Saved",
+          "x": 468.390625,
+          "y": 323.8125,
+          "width": 84.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "You",
+          "x": 557.1875,
+          "y": 323.8125,
+          "width": 84.8125,
+          "height": 48.1875
+        },
+        {
+          "name": "Choose date",
+          "x": 775,
+          "y": 27.59375,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sunday 13 September",
+          "x": 27,
+          "y": 89.59375,
+          "width": 112.84375,
+          "height": 60
+        },
+        {
+          "name": "Monday 14 September",
+          "x": 139.84375,
+          "y": 89.59375,
+          "width": 112.859375,
+          "height": 60
+        },
+        {
+          "name": "Tuesday 15 September",
+          "x": 252.703125,
+          "y": 89.59375,
+          "width": 112.859375,
+          "height": 60
+        },
+        {
+          "name": "Wednesday 16 September",
+          "x": 365.5625,
+          "y": 89.59375,
+          "width": 112.859375,
+          "height": 60
+        },
+        {
+          "name": "Thursday 17 September",
+          "x": 478.421875,
+          "y": 89.59375,
+          "width": 112.859375,
+          "height": 60
+        },
+        {
+          "name": "Friday 18 September",
+          "x": 591.28125,
+          "y": 89.59375,
+          "width": 112.859375,
+          "height": 60
+        },
+        {
+          "name": "Saturday 19 September, logged",
+          "x": 704.140625,
+          "y": 89.59375,
+          "width": 112.84375,
+          "height": 60
+        },
+        {
+          "name": "Say something, Momo",
+          "x": 40,
+          "y": 186.59375,
+          "width": 64,
+          "height": 68
+        },
+        {
+          "name": "Chosen steps complete Details",
+          "x": 128,
+          "y": 350.1875,
+          "width": 664,
+          "height": 44
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "momo-390-dark-discover",
+    "visible": true,
+    "geometry": {
+      "left": 38,
+      "right": 378,
+      "top": 45.59375,
+      "bottom": 185.59375,
+      "width": 390,
+      "height": 844,
+      "overflow": 0,
+      "target": "saved",
+      "text": "Saved a seat for this sticker. It has no legs.Saved✦✦Momo says: Saved a seat for this sticker. It has no legs.",
+      "intersecting": []
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"saved-sticker\"]}",
+      "controls": [
+        {
+          "name": "Today",
+          "x": 20,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Insights",
+          "x": 90.796875,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Log a meal",
+          "x": 165.984375,
+          "y": 762.90625,
+          "width": 58,
+          "height": 58
+        },
+        {
+          "name": "Saved",
+          "x": 232.390625,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "You",
+          "x": 303.1875,
+          "y": 777.8125,
+          "width": 66.8125,
+          "height": 48.1875
+        },
+        {
+          "name": "BreakfastLunchDinnerSnackOther",
+          "x": 96.96875,
+          "y": 185.59375,
+          "width": 114,
+          "height": 44
+        },
+        {
+          "name": "",
+          "x": 58,
+          "y": 277.984375,
+          "width": 302,
+          "height": 44
+        },
+        {
+          "name": "All",
+          "x": 16,
+          "y": 339.984375,
+          "width": 114,
+          "height": 44
+        },
+        {
+          "name": "Breakfast",
+          "x": 138,
+          "y": 339.984375,
+          "width": 114,
+          "height": 44
+        },
+        {
+          "name": "Lunch",
+          "x": 260,
+          "y": 339.984375,
+          "width": 114,
+          "height": 44
+        },
+        {
+          "name": "Dinner",
+          "x": 16,
+          "y": 391.984375,
+          "width": 114,
+          "height": 44
+        },
+        {
+          "name": "Snack",
+          "x": 138,
+          "y": 391.984375,
+          "width": 114,
+          "height": 44
+        },
+        {
+          "name": "Other",
+          "x": 260,
+          "y": 391.984375,
+          "width": 114,
+          "height": 44
+        },
+        {
+          "name": "Adjust portion for Overnight oats, currently 1 times your saved meal",
+          "x": 34,
+          "y": 755.375,
+          "width": 79.28125,
+          "height": 44
+        },
+        {
+          "name": "Log Overnight oats, 1 times your saved meal to Dinner",
+          "x": 121.28125,
+          "y": 755.375,
+          "width": 72,
+          "height": 44
+        },
+        {
+          "name": "Remove Overnight oats from Saved",
+          "x": 201.28125,
+          "y": 755.375,
+          "width": 44,
+          "height": 44
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "momo-390-light-progress",
+    "visible": true,
+    "geometry": {
+      "left": 38,
+      "right": 378,
+      "top": 45.59375,
+      "bottom": 185.59375,
+      "width": 390,
+      "height": 844,
+      "overflow": 0,
+      "target": "insights",
+      "text": "Inspecting the letters. Excellent letter quality.Insights✦✦Momo says: Inspecting the letters. Excellent letter quality.",
+      "intersecting": []
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"insights-letters\"]}",
+      "controls": [
+        {
+          "name": "Today",
+          "x": 20,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Insights",
+          "x": 90.796875,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Log a meal",
+          "x": 165.984375,
+          "y": 762.90625,
+          "width": 58,
+          "height": 58
+        },
+        {
+          "name": "Saved",
+          "x": 232.390625,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "You",
+          "x": 303.1875,
+          "y": 777.8125,
+          "width": 66.8125,
+          "height": 48.1875
+        },
+        {
+          "name": "About XP and freezes",
+          "x": 34,
+          "y": 411.953125,
+          "width": 322,
+          "height": 44
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "momo-1440-light-about",
+    "visible": true,
+    "geometry": {
+      "left": 1088,
+      "right": 1428,
+      "top": 83.59375,
+      "bottom": 223.59375,
+      "width": 1440,
+      "height": 1000,
+      "overflow": 0,
+      "target": "title",
+      "text": "Borrowing this word. Back in one tiny dance.About✦✦Momo says: Borrowing this word. Back in one tiny dance.",
+      "intersecting": []
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"title-borrow\"]}",
+      "controls": [
+        {
+          "name": "Poiem home",
+          "x": 41,
+          "y": 24,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Ada",
+          "x": 95,
+          "y": 37.59375,
+          "width": 134,
+          "height": 16.796875
+        },
+        {
+          "name": "Today",
+          "x": 41,
+          "y": 84,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Insights",
+          "x": 41,
+          "y": 144,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Log a meal",
+          "x": 41,
+          "y": 212,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Saved",
+          "x": 41,
+          "y": 280,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "You",
+          "x": 41,
+          "y": 340,
+          "width": 188,
+          "height": 52
+        },
+        {
+          "name": "Back",
+          "x": 354,
+          "y": 12,
+          "width": 66.390625,
+          "height": 44
+        },
+        {
+          "name": "Original open-source project",
+          "x": 383,
+          "y": 621.921875,
+          "width": 782,
+          "height": 48
+        },
+        {
+          "name": "Poiem brand kit",
+          "x": 383,
+          "y": 677.921875,
+          "width": 782,
+          "height": 48
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "momo-390-light-journey",
+    "visible": true,
+    "geometry": {
+      "left": 38,
+      "right": 378,
+      "top": 45.59375,
+      "bottom": 185.59375,
+      "width": 390,
+      "height": 844,
+      "overflow": 0,
+      "target": "insights",
+      "text": "Inspecting the letters. Excellent letter quality.Insights✦✦Momo says: Inspecting the letters. Excellent letter quality.",
+      "intersecting": []
+    },
+    "placement": {
+      "ledger": "{\"visits\":1,\"seen\":[\"insights-letters\"]}",
+      "controls": [
+        {
+          "name": "Today",
+          "x": 20,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Insights",
+          "x": 90.796875,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "Log a meal",
+          "x": 165.984375,
+          "y": 762.90625,
+          "width": 58,
+          "height": 58
+        },
+        {
+          "name": "Saved",
+          "x": 232.390625,
+          "y": 777.8125,
+          "width": 66.796875,
+          "height": 48.1875
+        },
+        {
+          "name": "You",
+          "x": 303.1875,
+          "y": 777.8125,
+          "width": 66.8125,
+          "height": 48.1875
+        },
+        {
+          "name": "About XP and freezes",
+          "x": 34,
+          "y": 411.953125,
+          "width": 322,
+          "height": 44
+        }
+      ]
+    },
+    "errors": []
+  }
+]

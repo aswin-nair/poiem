@@ -1,3 +1,5 @@
+import { authHeaderIssue, endpointIssue } from './aiConnection'
+
 export type StateValidationResult =
   | { ok: true }
   | { ok: false; error: string }
@@ -109,6 +111,10 @@ const AI_SETTINGS_FIELDS = new Set([
   'provider',
   'apiKey',
   'model',
+  'apiFormat',
+  'endpointUrl',
+  'authType',
+  'authHeader',
   'customInstructions',
   'mascotEnabled',
   'mascotPersonality',
@@ -434,12 +440,25 @@ function validAISettings(value: unknown, allowApiKey: boolean): string | null {
   if (!row(value)) return 'aiSettings must be an object'
   if (!hasOnlyFields(value, AI_SETTINGS_FIELDS)) return 'aiSettings contains unknown fields'
   if (value.accessMode !== undefined && !oneOf(value.accessMode, ['managed', 'byok'])) return 'aiSettings.accessMode is invalid'
-  if (!oneOf(value.provider, ['openrouter', 'gemini'])) return 'aiSettings.provider is invalid'
+  if (!oneOf(value.provider, ['openrouter', 'gemini', 'custom'])) return 'aiSettings.provider is invalid'
   if (value.apiKey !== undefined && !text(value.apiKey, 10_000)) return 'aiSettings.apiKey is invalid'
   if (!allowApiKey && typeof value.apiKey === 'string' && value.apiKey.length > 0) {
     return 'private API keys cannot be synced'
   }
   if (!text(value.model, 500, false)) return 'aiSettings.model is invalid'
+  if (value.apiFormat !== undefined && !oneOf(value.apiFormat, ['openai', 'gemini', 'anthropic'])) {
+    return 'aiSettings.apiFormat is invalid'
+  }
+  if (value.endpointUrl !== undefined && (!text(value.endpointUrl, 2_000, false) || endpointIssue(value.endpointUrl, typeof value.apiKey === 'string' ? value.apiKey : ''))) {
+    return 'aiSettings.endpointUrl is invalid or contains credentials'
+  }
+  if (value.authType !== undefined && !oneOf(value.authType, ['bearer', 'api-key', 'none'])) {
+    return 'aiSettings.authType is invalid'
+  }
+  if (value.authHeader !== undefined && (!text(value.authHeader, 100, false) || authHeaderIssue(value.authHeader))) {
+    return 'aiSettings.authHeader is invalid'
+  }
+  if (value.provider === 'custom' && value.endpointUrl === undefined) return 'aiSettings.endpointUrl is required for a custom API'
   if (value.customInstructions !== undefined && !text(value.customInstructions, 20_000)) {
     return 'aiSettings.customInstructions is invalid'
   }

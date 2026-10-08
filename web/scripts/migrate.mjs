@@ -21,7 +21,10 @@ const target = process.argv[2] === 'security'
         : process.argv[2] === 'ops'
           ? '../db/migrations/20260917_admin_ops.sql'
           : '../db/schema.sql'
-const schema = readFileSync(join(root, target), 'utf8')
+const targets = process.argv[2] === 'plans'
+  ? [target, '../db/migrations/20261007_free_ai_model.sql']
+  : [target]
+const schema = targets.map(path => readFileSync(join(root, path), 'utf8')).join('\n')
 const pool = new Pool({ connectionString: url })
 
 console.log('Applying schema to Neon…')

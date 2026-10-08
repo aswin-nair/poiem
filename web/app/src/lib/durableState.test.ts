@@ -17,7 +17,7 @@ import {
   resolveDurableConflictWithServer,
   saveDurableLocalSnapshot,
 } from './durableState'
-import { freshState, loadPrivateAIKey, saveState } from './storage'
+import { freshState, loadPrivateAIKey, savePrivateAIKey, saveState } from './storage'
 
 function memoryStorage(): Storage {
   const values = new Map<string, string>()
@@ -91,8 +91,19 @@ describe('durable state and outbox', () => {
 
     expect(migrated).toMatchObject({ origin: 'legacy', state: { profile: { name: 'Legacy' } } })
     expect(localStorage.getItem('fud-ai-web-state-user-1')).toBeNull()
-    expect(await loadPrivateAIKey('user-1')).toBe('sk-private-legacy')
+    expect(await loadPrivateAIKey('user-1', namedState('Legacy').aiSettings)).toBe('sk-private-legacy')
     expect(localStorage.getItem('fud-ai-durable-account-user-1')).not.toContain('sk-private-legacy')
+  })
+
+  it('restores a cached BYOK credential only for its saved public connection', async () => {
+    const state = namedState('Custom', 'device-fixture-key')
+    state.aiSettings = { ...state.aiSettings, provider: 'custom', endpointUrl: 'https://my-api.example/v1/chat/completions' }
+    await savePrivateAIKey('user-1', state.aiSettings.apiKey, state.aiSettings)
+    await saveDurableLocalSnapshot('user-1', state)
+    expect((await loadDurableState('user-1'))?.state.aiSettings.apiKey).toBe(state.aiSettings.apiKey)
+
+    await saveDurableLocalSnapshot('user-1', { ...state, aiSettings: { ...state.aiSettings, endpointUrl: 'https://other.example/v1/chat/completions' } })
+    expect((await loadDurableState('user-1'))?.state.aiSettings.apiKey).toBe('')
   })
 
   it('retains the legacy snapshot when the durable migration write fails', async () => {

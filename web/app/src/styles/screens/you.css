@@ -271,6 +271,8 @@
   .k-you .settings-accuracy-warning p { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-on-tone); }
   .k-you .settings-accuracy-fix { justify-self: start; min-height: 44px; padding: 8px 12px; border: 1px solid var(--k-hair-strong); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 800 var(--k-text-xs)/1.3 var(--k-font-body); }
   .k-you .settings-field-block { display: grid; gap: 8px; padding: 12px 0; border-top: 1px solid var(--k-hair); }
+  .k-you .you-disclosure.you-api-auth { margin: 0; border: 0; border-top: 1px solid var(--k-hair); }
+  .k-you .you-disclosure.you-api-auth[open] > summary { border-bottom: 0; }
   .k-you .settings-divider { height: 1px; margin: 0 -16px; background: var(--k-hair); }
 
   /* Row buttons run edge to edge; the Allow button inside a row is a small bordered button. */

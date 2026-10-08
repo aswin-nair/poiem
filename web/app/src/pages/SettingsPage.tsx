@@ -7,18 +7,18 @@ import { useApp } from '../store/AppContext'
 import { useAuth } from '../store/AuthContext'
 import { BottomNav } from '../components/BottomNav'
 import { SettingsFinder } from '../components/SettingsFinder'
-import type { ActivityLevel, AIProvider, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
-import type { AIAccessMode, MascotPersonality } from '../lib/aiConfig'
+import type { ActivityLevel, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
+import type { AIAPIFormat, AIAccessMode, AIAuthType, MascotPersonality } from '../lib/aiConfig'
 import { useAiAccess } from '../lib/aiAccess'
 import { allowanceCopy } from '../lib/aiAvailability'
 import { ACTIVITY_LABELS, GOAL_LABELS } from '../types'
 import {
-  OPENROUTER_MODELS,
   GEMINI_MODELS,
-  MANAGED_OPENROUTER_MODEL,
-  apiKeyHelpUrl,
-  apiKeyPlaceholder,
-  defaultModelFor,
+  apiFormatFor,
+  authHeaderFor,
+  authTypeFor,
+  connectionIssue,
+  defaultEndpointFor,
   isLowAccuracyModel,
 } from '../lib/aiConfig'
 import {
@@ -35,7 +35,7 @@ import { clearAnalytics, track } from '../lib/analytics'
 import { clearNotificationHistory, requestNotifyPermission } from '../lib/notifications'
 import { clearRingAck } from '../lib/ringAck'
 import { userInitials } from '../lib/auth'
-import { IconArrowUpRight, IconChevronRight, IconCoach } from '../components/icons'
+import { IconChevronRight, IconCoach } from '../components/icons'
 import { apiChangePassword, apiDeleteAccount, apiLogoutAll, loadAuthToken, saveAuthToken } from '../lib/apiClient'
 import { isCloudBackend } from '../lib/dataBackend'
 import { deleteLocalAccount } from '../lib/localAuth'
@@ -85,17 +85,22 @@ export function SettingsPage() {
   const { user, signOut } = useAuth()
   const { status: aiStatus, refresh: refreshAiStatus, availability: aiAvailability } = useAiAccess()
   const [profile, setProfile] = useState<UserProfile>(state.profile)
-  const [provider, setProvider] = useState<AIProvider>(state.aiSettings.provider)
   const [accessMode, setAccessMode] = useState<AIAccessMode>(state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
+  const hasSavedConnection = Boolean(state.aiSettings.endpointUrl || state.aiSettings.apiKey || state.aiSettings.accessMode === 'byok')
+  const [apiFormat, setAPIFormat] = useState<AIAPIFormat>(apiFormatFor(state.aiSettings))
+  const [endpointUrl, setEndpointUrl] = useState(state.aiSettings.endpointUrl ?? (hasSavedConnection ? defaultEndpointFor(state.aiSettings.provider, apiFormatFor(state.aiSettings)) : ''))
+  const [authType, setAuthType] = useState<AIAuthType>(authTypeFor(state.aiSettings))
+  const [authHeader, setAuthHeader] = useState(authHeaderFor(state.aiSettings))
   const [apiKey, setApiKey] = useState(state.aiSettings.apiKey)
   const [showKey, setShowKey] = useState(false)
-  const [model, setModel] = useState(state.aiSettings.model)
+  const [model, setModel] = useState(hasSavedConnection ? state.aiSettings.model : '')
   const [instructions, setInstructions] = useState(state.aiSettings.customInstructions ?? '')
   const [mascotEnabled, setMascotEnabled] = useState(state.aiSettings.mascotEnabled !== false)
   const [mascotPersonality, setMascotPersonality] = useState<MascotPersonality>(state.aiSettings.mascotPersonality ?? 'sassy')
   const [saved, setSaved] = useState<string | null>(null)
   const [preferenceConfirmation, setPreferenceConfirmation] = useState('Changes save right away.')
   const [profileError, setProfileError] = useState<string | null>(null)
+  const [aiError, setAIError] = useState(false)
   const [accountAction, setAccountAction] = useState<'logout-all' | 'delete' | null>(null)
   const [accountError, setAccountError] = useState<string | null>(null)
   const [showDeleteAccount, setShowDeleteAccount] = useState(false)
@@ -106,7 +111,7 @@ export function SettingsPage() {
   const [passwordSaved, setPasswordSaved] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   const cloud = isCloudBackend()
-  const [params] = useSearchParams()
+  const [params, setParams] = useSearchParams()
   const panelParam = params.get('panel')
   const panel = YOU_PANELS.some(([id]) => id === panelParam) ? panelParam as YouPanel : null
   const isHub = panel == null
@@ -114,20 +119,37 @@ export function SettingsPage() {
   useEffect(() => {
     window.scrollTo(0, 0)
     if (!panel) return
-    document.getElementById(`you-${panel}`)?.focus({ preventScroll: true })
-  }, [panel])
+    const target = panel === 'ai' && aiError
+      ? document.getElementById('ai-setup-error')
+      : document.getElementById(`you-${panel}`)
+    target?.focus({ preventScroll: target?.id !== 'ai-setup-error' })
+  }, [panel, aiError])
 
   const goalTargets = computeTargets(profile)
   const currentProfileIssue = profileInputIssue(profile) ?? goalWeightIssue(profile)
   const appliedProfileIssue = profileInputIssue(state.profile) ?? goalWeightIssue(state.profile)
   const appliedGoalTargets = computeTargets(state.profile)
-  const modelPresets = provider === 'openrouter' ? OPENROUTER_MODELS : GEMINI_MODELS
+  const connectionDraft = { ...state.aiSettings, accessMode, provider: 'custom' as const, apiFormat, endpointUrl, authType, authHeader, apiKey, model }
+  const currentAIIssue = accessMode === 'byok' ? connectionIssue(connectionDraft) : null
+  const hasOwnConnection = accessMode === 'byok' && !currentAIIssue
+  const managedAvailability = aiAvailability({ ...state.aiSettings, accessMode: 'managed' }, 'food_photo')
+  const managedAICopy = allowanceCopy(managedAvailability, 'food_photo')
+    ?? (managedAvailability.kind === 'unavailable'
+      ? managedAvailability.reason === 'unsigned' ? 'Sign in to use Poiem AI.'
+        : managedAvailability.reason === 'disabled' ? 'Poiem AI isn’t enabled for this app. Connect your own API, or log meals manually.'
+          : 'Couldn’t check Poiem AI availability. Check your connection and try again.'
+      : 'Checking Poiem AI availability…')
   const mascotVisible = state.gamification.mascotActivity !== 'off'
   const hasProfileChanges = JSON.stringify(profileFormValues(profile)) !== JSON.stringify(profileFormValues(state.profile))
-  const hasAIChanges = provider !== state.aiSettings.provider
-    || accessMode !== (state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
-    || apiKey !== state.aiSettings.apiKey
-    || model !== state.aiSettings.model
+  const hasAIChanges = accessMode !== (state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
+    || (accessMode === 'byok' && (
+      apiFormat !== apiFormatFor(state.aiSettings)
+      || endpointUrl !== (state.aiSettings.endpointUrl ?? (hasSavedConnection ? defaultEndpointFor(state.aiSettings.provider, apiFormatFor(state.aiSettings)) : ''))
+      || authType !== authTypeFor(state.aiSettings)
+      || (authType === 'api-key' && authHeader !== authHeaderFor(state.aiSettings))
+      || apiKey !== state.aiSettings.apiKey
+      || model !== state.aiSettings.model
+    ))
     || instructions !== (state.aiSettings.customInstructions ?? '')
     || mascotEnabled !== (state.aiSettings.mascotEnabled !== false)
     || mascotPersonality !== (state.aiSettings.mascotPersonality ?? 'sassy')
@@ -151,9 +173,15 @@ export function SettingsPage() {
     }
     setPreferenceConfirmation(confirmation)
   }
-  function handleProviderChange(next: AIProvider) {
-    setProvider(next)
-    setModel(defaultModelFor(next))
+  function handleAPIFormatChange(next: AIAPIFormat) {
+    setAPIFormat(next)
+    setEndpointUrl(defaultEndpointFor('custom', next))
+    setAuthType(next === 'openai' ? 'bearer' : 'api-key')
+    setAuthHeader(next === 'anthropic' ? 'x-api-key' : next === 'gemini' ? 'x-goog-api-key' : 'Authorization')
+    setModel('')
+    setApiKey('')
+    setShowKey(false)
+    setAIError(false)
   }
 
   function saveProfile() {
@@ -161,17 +189,23 @@ export function SettingsPage() {
       setProfileError(currentProfileIssue)
       return
     }
+    if (hasAIChanges && currentAIIssue) {
+      setAIError(true)
+      if (panel !== 'ai') setParams({ panel: 'ai' })
+      else window.requestAnimationFrame(() => document.getElementById('ai-setup-error')?.focus())
+      return
+    }
     if (hasProfileChanges) updateProfile({ ...state.profile, ...profileFormValues(profile) })
     if (hasAIChanges) updateAISettings({
+      ...(accessMode === 'byok' ? connectionDraft : state.aiSettings),
       accessMode,
-      provider,
-      apiKey,
-      model,
       customInstructions: instructions || undefined,
       mascotEnabled,
       mascotPersonality,
     })
     setProfileError(null)
+    setAIError(false)
+    setShowKey(false)
     setSaved(hasProfileChanges && hasAIChanges ? 'Profile and AI settings saved'
       : hasProfileChanges ? 'Profile saved' : 'AI settings saved')
     if (hasAIChanges) void refreshAiStatus()
@@ -194,13 +228,17 @@ export function SettingsPage() {
     const reader = new FileReader()
     reader.onload = () => {
       try {
-        const next = importData(String(reader.result), state.aiSettings.apiKey)
+        const next = importData(String(reader.result), state.aiSettings.apiKey, state.aiSettings)
         replaceState(next)
         setProfile(next.profile)
-        setProvider(next.aiSettings.provider)
         setAccessMode(next.aiSettings.accessMode ?? (next.aiSettings.apiKey ? 'byok' : 'managed'))
+        setAPIFormat(apiFormatFor(next.aiSettings))
+        const importedConnection = Boolean(next.aiSettings.endpointUrl || next.aiSettings.apiKey || next.aiSettings.accessMode === 'byok')
+        setEndpointUrl(next.aiSettings.endpointUrl ?? (importedConnection ? defaultEndpointFor(next.aiSettings.provider, apiFormatFor(next.aiSettings)) : ''))
+        setAuthType(authTypeFor(next.aiSettings))
+        setAuthHeader(authHeaderFor(next.aiSettings))
         setApiKey(next.aiSettings.apiKey)
-        setModel(next.aiSettings.model)
+        setModel(importedConnection ? next.aiSettings.model : '')
         setInstructions(next.aiSettings.customInstructions ?? '')
         setMascotEnabled(next.aiSettings.mascotEnabled !== false)
         setMascotPersonality(next.aiSettings.mascotPersonality ?? 'sassy')
@@ -606,22 +644,21 @@ export function SettingsPage() {
         {panel === 'ai' && <section className="you-section" id="you-ai" aria-labelledby="you-ai-title" tabIndex={-1}>
           <header className="you-section-heading">
             <h2 id="you-ai-title">AI setup</h2>
-            <p>After you sign up, photo and text logging use Poiem’s OpenRouter key and {MANAGED_OPENROUTER_MODEL}. Add your own key only if you want a different provider or model. Choose Save settings to apply this setup.</p>
+            <p>Poiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.</p>
           </header>
         <SettingsCard>
           <SettingsRow
-            label="Use my own API key"
-            hint="Off: Poiem’s key and model. On: the key below stays in this browser and is sent only to the provider you pick."
+            label="Use my own API"
+            hint="Off: use Poiem AI. On: connect your service using one of the API formats below."
           >
             <Toggle
               checked={accessMode === 'byok'}
-              onChange={next => setAccessMode(next ? 'byok' : 'managed')}
+              onChange={next => { setAccessMode(next ? 'byok' : 'managed'); setShowKey(false); setAIError(false) }}
             />
           </SettingsRow>
           {accessMode === 'managed' && (
             <p className="settings-byok-note">
-              {allowanceCopy(aiAvailability({ ...state.aiSettings, accessMode }, 'food_photo'), 'food_photo')
-                ?? (aiStatus ? `${aiStatus.food.remaining} of ${aiStatus.food.limit} food scans left today.` : 'Checking Poiem AI availability…')}
+              {managedAICopy}
             </p>
           )}
           {aiStatus?.isAdmin && <p className="settings-byok-note"><Link to="/admin">Open managed AI admin</Link></p>}
@@ -629,18 +666,45 @@ export function SettingsPage() {
         {accessMode === 'byok' && (
         <SettingsCard>
           <p className="settings-byok-note">
-            Your key stays in this browser only.{' '}
-            <a href={apiKeyHelpUrl(provider)} target="_blank" rel="noreferrer" className="settings-key-help">
-              Get a key <IconArrowUpRight size={12} strokeWidth={2.2} />
-            </a>
+            Connect any service that supports OpenAI-compatible, Gemini or Anthropic requests.
+            Your key stays in this browser and is sent only to your chosen endpoint.
           </p>
-          <SettingsRow label="Provider">
-            <select className="settings-select" value={provider} onChange={e => handleProviderChange(e.target.value as AIProvider)}>
-              <option value="openrouter">OpenRouter</option>
+          <label className="settings-field-block" htmlFor="ai-api-format">
+            <span className="settings-row-label">API format</span>
+            <select id="ai-api-format" className="settings-select" value={apiFormat} onChange={e => handleAPIFormatChange(e.target.value as AIAPIFormat)}>
+              <option value="openai">OpenAI-compatible</option>
               <option value="gemini">Google Gemini</option>
+              <option value="anthropic">Anthropic</option>
             </select>
-          </SettingsRow>
-          <SettingsRow label="API key">
+          </label>
+          <label className="settings-field-block" htmlFor="ai-endpoint">
+            <span className="settings-row-label">API endpoint</span>
+            <input id="ai-endpoint" className="settings-input" aria-label="API endpoint" type="url" value={endpointUrl} onChange={e => setEndpointUrl(e.target.value)} placeholder={defaultEndpointFor('custom', apiFormat) || 'https://your-service.com/v1/chat/completions'} autoComplete="off" autoCapitalize="none" spellCheck={false} aria-describedby="ai-endpoint-help" />
+            <span className="settings-row-hint" id="ai-endpoint-help">Paste the full request URL from your service. Gemini URLs can use {'{model}'}. Azure URLs can include an api-version date. Hosted use needs HTTPS and permission for browser requests.</span>
+          </label>
+          <label className="settings-field-block" htmlFor="ai-model">
+            <span className="settings-row-label">Model</span>
+            <input id="ai-model" className="settings-input" aria-label="Model" list={apiFormat === 'gemini' ? 'model-presets' : undefined} value={model} onChange={e => setModel(e.target.value)} placeholder="Model ID from your service" autoComplete="off" autoCapitalize="none" spellCheck={false} aria-describedby="ai-model-help" />
+            {apiFormat === 'gemini' && <datalist id="model-presets">{GEMINI_MODELS.map(m => <option key={m} value={m} />)}</datalist>}
+            <span className="settings-row-hint" id="ai-model-help">Choose a model with image support to use photo logging.</span>
+          </label>
+          <details className="you-disclosure you-api-auth">
+            <summary>Authentication <span>{authType === 'none' ? 'No key' : authType === 'bearer' ? 'Bearer token' : 'API key header'}</span></summary>
+            <label className="settings-field-block" htmlFor="ai-auth-type">
+              <span className="settings-row-label">Authentication method</span>
+              <select id="ai-auth-type" className="settings-select" value={authType} onChange={e => { setAuthType(e.target.value as AIAuthType); setShowKey(false); if (e.target.value === 'api-key' && authHeader === 'Authorization') setAuthHeader('x-api-key') }}>
+                <option value="bearer">Bearer token</option>
+                <option value="api-key">API key header</option>
+                <option value="none">No authentication</option>
+              </select>
+            </label>
+            {authType === 'api-key' && <label className="settings-field-block" htmlFor="ai-auth-header">
+              <span className="settings-row-label">Key header name</span>
+              <input id="ai-auth-header" className="settings-input" aria-label="Key header name" value={authHeader} onChange={e => setAuthHeader(e.target.value)} placeholder="x-api-key" autoComplete="off" autoCapitalize="none" spellCheck={false} aria-describedby="ai-auth-header-help" />
+              <span className="settings-row-hint" id="ai-auth-header-help">Use the header name your service specifies, such as api-key or x-api-key.</span>
+            </label>}
+          </details>
+          {authType !== 'none' && <SettingsRow label="API key">
             <div className="settings-key-wrap">
               <input
                 className="settings-input"
@@ -648,42 +712,25 @@ export function SettingsPage() {
                 type={showKey ? 'text' : 'password'}
                 value={apiKey}
                 onChange={e => setApiKey(e.target.value)}
-                placeholder={apiKeyPlaceholder(provider)}
+                placeholder="Your API key"
                 autoComplete="off"
+                autoCapitalize="none"
+                spellCheck={false}
               />
               <button type="button" className="settings-key-toggle" aria-label={showKey ? 'Hide API key' : 'Show API key'} aria-pressed={showKey} onClick={() => setShowKey(v => !v)}>
                 {showKey ? 'Hide' : 'Show'}
               </button>
             </div>
-          </SettingsRow>
-          <SettingsRow label="Model">
-            <input
-              className="settings-input"
-              aria-label="Model"
-              list="model-presets"
-              value={model}
-              onChange={e => setModel(e.target.value)}
-              placeholder={defaultModelFor(provider)}
-            />
-            <datalist id="model-presets">
-              {modelPresets.map(m => <option key={m} value={m} />)}
-            </datalist>
-          </SettingsRow>
+          </SettingsRow>}
           {isLowAccuracyModel(model) && (
             <div className="settings-accuracy-warning">
               <p>
-                This model routes randomly to whatever free model is available (often a small,
-                less capable one) and gives noticeably less accurate nutrition estimates.
+                Free model availability and capabilities vary. Check that your chosen model
+                supports images, and review its nutrition estimates before logging.
               </p>
-              <button
-                type="button"
-                className="settings-accuracy-fix"
-                onClick={() => setModel(defaultModelFor(provider))}
-              >
-                Switch to {defaultModelFor(provider)} (cheap &amp; far more accurate)
-              </button>
             </div>
           )}
+          {aiError && currentAIIssue && <div className="error-banner" id="ai-setup-error" role="alert" tabIndex={-1}>{currentAIIssue}</div>}
           <label className="settings-field-block" htmlFor="custom-instructions">
             <span className="settings-row-label">Custom instructions</span>
             <textarea
@@ -698,13 +745,13 @@ export function SettingsPage() {
         </SettingsCard>
         )}
         <details className="you-disclosure">
-          <summary>Momo live AI <span>{apiKey.trim() ? 'Uses your key when added' : 'Needs your own API key'}</span></summary>
+          <summary>Momo live AI <span>{hasOwnConnection ? 'Uses your connection when saved' : 'Needs your own API connection'}</span></summary>
         <SettingsCard>
           <SettingsRow
             label="Momo live AI"
-            hint={apiKey.trim()
+            hint={hasOwnConnection
               ? 'He writes fresh reactions in the background.'
-              : 'Add a key to unlock live dialogue; animation still works without one.'}
+              : 'Connect your API to unlock live dialogue; animation still works without one.'}
           >
             <Toggle checked={mascotEnabled} onChange={setMascotEnabled} />
           </SettingsRow>

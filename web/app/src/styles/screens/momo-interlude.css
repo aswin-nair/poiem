@@ -1,41 +1,115 @@
 @layer screens {
   .k-momo-interlude {
     position: fixed;
-    inset-inline: var(--k-space-md);
-    bottom: calc(var(--k-tabbar-h) + var(--safe-bottom, 0px) + var(--k-space-md));
     z-index: calc(var(--k-z-toast) - 2);
-    display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
-    gap: var(--k-space-sm) var(--k-space-md);
-    max-width: var(--k-shell);
-    max-height: calc(100dvh - var(--k-tabbar-h) - var(--safe-bottom, 0px) - var(--k-space-4xl));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    margin-inline: auto;
-    padding: var(--k-space-md) var(--k-space-lg) var(--k-space-xs);
-    border: 3px solid var(--k-sticker-ink);
-    background: var(--k-sticker-pink);
+    height: 300px;
+    max-width: calc(100vw - var(--k-space-lg));
+    border: 0;
+    background: transparent;
     color: var(--k-sticker-ink);
-    box-shadow: var(--k-shadow);
     font-family: var(--k-font-body);
-    animation: k-momo-interlude-in 160ms var(--k-ease) both;
+    pointer-events: none;
   }
-  .k-momo-interlude.is-static { animation: none; }
-  .k-momo-interlude-art { width: 64px; height: 72px; align-self: center; }
-  .k-momo-interlude-copy { min-width: 0; align-self: center; }
-  .k-momo-interlude-tag { display: inline-block; margin-block-end: var(--k-space-xs); font: 700 var(--k-type-meta)/1.2 var(--k-font-mono); text-transform: uppercase; }
-  .k-momo-interlude p { margin: 0; font: 800 var(--k-type-body)/1.4 var(--k-font-body); overflow-wrap: anywhere; }
-  .k-momo-interlude-actions { grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: var(--k-space-md); }
-  .k-momo-interlude-actions button { min-height: 44px; min-width: 44px; padding: var(--k-space-sm); border: 0; background: transparent; color: var(--k-sticker-ink); font: 700 var(--k-type-label)/1.2 var(--k-font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-  .k-momo-interlude-actions button:focus-visible { outline: 3px solid var(--k-sticker-ink); outline-offset: -3px; }
-  /* Reserve scroll room without moving existing content or collapsing the scroll
-     range when Momo leaves. The route lifecycle clears this measured space. */
-  :root[data-momo-interlude-reserved] .k-workspace-col > .app-main::after { content: ''; display: block; height: var(--k-momo-interlude-clearance, 0px); pointer-events: none; }
+  .k-momo-interlude-bubble {
+    position: absolute;
+    inset: 0 0 auto;
+    padding: var(--k-space-md);
+    border: 3px solid var(--k-sticker-ink);
+    border-radius: var(--k-space-lg) var(--k-space-lg) var(--k-space-xs) var(--k-space-lg);
+    background: var(--k-sticker-pink);
+    pointer-events: auto;
+    animation: k-momo-bubble-in 220ms var(--k-ease) both;
+  }
+  .k-momo-interlude-bubble::after {
+    content: '';
+    position: absolute;
+    left: var(--k-space-lg);
+    bottom: -14px;
+    width: 18px;
+    height: 18px;
+    border-right: 3px solid var(--k-sticker-ink);
+    border-bottom: 3px solid var(--k-sticker-ink);
+    background: var(--k-sticker-pink);
+    transform: skewY(35deg);
+  }
+  .k-momo-interlude p { position: relative; z-index: 1; margin: 0; font: 800 var(--k-type-label)/1.4 var(--k-font-body); overflow-wrap: anywhere; }
+  .k-momo-interlude-art {
+    position: absolute;
+    left: var(--k-space-xs);
+    bottom: var(--k-space-md);
+    width: 120px;
+    height: 132px;
+    transform-origin: 50% 92%;
+    animation: k-momo-screen-play 4.8s ease-in-out both;
+  }
+  .k-momo-interlude-prop {
+    position: absolute;
+    left: var(--k-space-sm);
+    bottom: 74px;
+    padding: var(--k-space-xs) var(--k-space-sm);
+    max-width: 156px;
+    border: 2px solid var(--k-sticker-ink);
+    background: var(--k-sticker-butter);
+    font: 900 var(--k-type-body)/1.15 var(--k-font-body);
+    animation: k-momo-word-play 3.6s 700ms ease-in-out both;
+  }
+  .k-momo-interlude-spark { position: absolute; font: 900 var(--k-type-panel)/1 var(--k-font-body); color: var(--k-sticker-ink); animation: k-momo-spark 2.6s 900ms ease-in-out both; }
+  .k-momo-interlude-spark-one { right: 132px; bottom: 136px; }
+  .k-momo-interlude-spark-two { right: 0; bottom: 108px; }
+  .k-momo-interlude-actions { position: absolute; right: var(--k-space-sm); bottom: var(--k-space-md); display: flex; gap: var(--k-space-sm); pointer-events: auto; }
+  .k-momo-interlude-actions button { display: grid; place-items: center; width: 44px; height: 44px; padding: var(--k-space-sm); border: 2px solid var(--k-sticker-ink); border-radius: 50%; background: var(--k-sticker-mint); color: var(--k-sticker-ink); cursor: pointer; }
+  .k-momo-interlude-actions button:hover { background: var(--k-sticker-butter); }
+  .k-momo-interlude-actions button:active svg { transform: translateY(2px); }
+  .k-momo-interlude-actions button:focus-visible { outline: 3px solid var(--k-sticker-ink); outline-offset: 3px; }
+  .k-momo-interlude-actions svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .k-momo-interlude-splash { position: absolute; right: 96px; bottom: 78px; width: 84px; height: 66px; }
+  .k-momo-interlude-splash i { position: absolute; width: 9px; height: 16px; border: 2px solid var(--k-sticker-ink); border-radius: 60% 60% 60% 60%; background: var(--k-sticker-sky); animation: k-momo-splash 1.1s 1.5s ease-out both; }
+  .k-momo-interlude-splash i:nth-child(1) { left: 0; top: 18px; --k-momo-droplet-x: -14px; }
+  .k-momo-interlude-splash i:nth-child(2) { left: 30px; top: 0; --k-momo-droplet-x: 0px; }
+  .k-momo-interlude-splash i:nth-child(3) { right: 0; top: 18px; --k-momo-droplet-x: 14px; }
+  .k-momo-interlude-art .pose-wave_at_user .momo-arm-left { transform-origin: 24px 82px; animation: momo-arm-wave 450ms ease-in-out 3; }
+  .k-momo-interlude-art .pose-point_at_target .momo-arm-right { transform-origin: 96px 82px; animation: momo-arm-point 600ms ease-in-out 2; }
+  .k-momo-interlude.is-static .k-momo-interlude-bubble,
+  .k-momo-interlude.is-static .k-momo-interlude-art,
+  .k-momo-interlude.is-static .k-momo-interlude-prop,
+  .k-momo-interlude.is-static .k-momo-interlude-spark,
+  .k-momo-interlude.is-static .k-momo-interlude-splash i,
+  .k-momo-interlude.is-static .momo-art * { animation: none; }
+  .k-momo-interlude.is-static .k-momo-interlude-splash { display: none; }
+  :root[data-momo-interlude-reserved] .k-workspace-col > .app-main::after,
+  :root[data-momo-interlude-reserved] .k-today-main::after { content: ''; display: block; height: var(--k-momo-interlude-clearance, 0px); pointer-events: none; }
   :root[data-momo-interlude="visible"] .mascot-overlay { visibility: hidden; }
-  @keyframes k-momo-interlude-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  @media (min-width: 1120px) {
-    .k-momo-interlude { inset-inline-start: auto; inset-inline-end: var(--k-space-xl); bottom: var(--k-space-xl); width: 360px; margin-inline: 0; }
+  @keyframes k-momo-bubble-in { from { opacity: 0; transform: translateY(5px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes k-momo-screen-play {
+    0% { opacity: 0; transform: translateY(18px) scale(.9); }
+    10% { opacity: 1; transform: translateY(-4px) scale(1.04); }
+    18%, 36%, 76%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+    46% { transform: translateY(-10px) rotate(-5deg); }
+    55% { transform: translateY(0) rotate(5deg); }
+    65% { transform: translateY(-7px) rotate(-3deg); }
   }
-  @media (max-height: 440px) { .k-momo-interlude-art { display: none; } .k-momo-interlude { grid-template-columns: minmax(0, 1fr); } }
-  @media (prefers-reduced-motion: reduce) { .k-momo-interlude { animation: none; } }
+  @keyframes k-momo-word-play {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    24% { transform: translate(20px, -14px) rotate(-8deg); }
+    46% { transform: translate(34px, 4px) rotate(7deg); }
+    68% { transform: translate(16px, -9px) rotate(-4deg); }
+  }
+  @keyframes k-momo-spark { 0%, 100% { opacity: 0; transform: scale(.7); } 20%, 65% { opacity: 1; transform: scale(1); } }
+  @keyframes k-momo-splash { 0% { opacity: 0; transform: translate(0, 8px); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--k-momo-droplet-x), -26px); } }
+  @keyframes k-momo-landscape-word { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 35% { transform: translate(-8px, -2px) rotate(-6deg); } 65% { transform: translate(-4px, 4px) rotate(4deg); } }
+  @media (max-width: 360px) and (min-height: 441px) {
+    .k-momo-interlude-bubble { left: calc(var(--k-space-4xl) + var(--k-space-xs)); }
+  }
+  .k-momo-interlude.is-compact .k-momo-interlude-bubble { left: 0; right: 116px; padding: var(--k-space-sm) var(--k-space-md); }
+  .k-momo-interlude.is-compact .k-momo-interlude-bubble::after { left: auto; right: -10px; bottom: 12px; transform: skewX(35deg); }
+  .k-momo-interlude.is-compact .k-momo-interlude-art { left: auto; right: var(--k-space-xs); bottom: 0; width: 108px; height: 110px; }
+  .k-momo-interlude.is-compact .k-momo-interlude-actions { right: auto; left: var(--k-space-sm); }
+  .k-momo-interlude.is-compact .k-momo-interlude-prop { left: auto; right: var(--k-space-xs); bottom: 110px; max-width: 108px; font-size: var(--k-type-label); animation-name: k-momo-landscape-word; }
+  .k-momo-interlude.is-compact .k-momo-interlude-spark-one { right: 120px; bottom: 76px; }
+  .k-momo-interlude.is-compact .k-momo-interlude-spark-two { right: 0; bottom: 94px; }
+  .k-momo-interlude.is-compact .k-momo-interlude-splash { right: 62px; bottom: 62px; }
+  @media (prefers-reduced-motion: reduce) {
+    .k-momo-interlude *, .k-momo-interlude-bubble::after { animation: none; transition: none; }
+    .k-momo-interlude-splash { display: none; }
+  }
 }

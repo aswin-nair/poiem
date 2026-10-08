@@ -48,8 +48,9 @@ describe('guest progress claim', () => {
     vi.stubGlobal('localStorage', memoryStorage())
     vi.stubGlobal('indexedDB', undefined)
     const guestId = guestUserId()
-    await savePrivateAIKey(guestId, 'sk-or-guest-key')
     const state = freshState()
+    state.aiSettings = { ...state.aiSettings, provider: 'custom', endpointUrl: 'https://my-api.example/v1/chat/completions', apiKey: 'device-guest-fixture-key' }
+    await savePrivateAIKey(guestId, state.aiSettings.apiKey, state.aiSettings)
     state.onboarded = true
     state.foodEntries.push({
       id: 'first', name: 'Breakfast', calories: 320, protein: 12, carbs: 45, fat: 9,
@@ -58,12 +59,13 @@ describe('guest progress claim', () => {
     await saveDurableLocalSnapshot(guestId, state)
 
     expect(await stageGuestStateForAccount('account-1')).toBe(true)
-    expect(await loadPrivateAIKey('account-1')).toBe('sk-or-guest-key')
+    expect(await loadPrivateAIKey('account-1', state.aiSettings)).toBe(state.aiSettings.apiKey)
+    expect(await loadPrivateAIKey('account-1', freshState().aiSettings)).toBe('')
 
     // Finalizing wipes the guest slot, so the account copy is the only one left.
     await finalizeGuestClaim('account-1')
-    expect(await loadPrivateAIKey('account-1')).toBe('sk-or-guest-key')
-    expect(await loadPrivateAIKey(guestId)).toBe('')
+    expect(await loadPrivateAIKey('account-1', state.aiSettings)).toBe(state.aiSettings.apiKey)
+    expect(await loadPrivateAIKey(guestId, state.aiSettings)).toBe('')
     await clearDurableUser('account-1')
   })
 

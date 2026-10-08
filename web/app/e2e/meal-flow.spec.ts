@@ -1,7 +1,7 @@
 import { expect, test, type Page, type Route } from '@playwright/test'
 import { nav, openYouDestination, signUpAndOnboard } from './helpers'
 
-const AI_URL = 'https://openrouter.ai/api/v1/chat/completions'
+const AI_URL = 'https://custom-ai.example/v1/chat/completions'
 const FOOD = { name: 'Test rice bowl', calories: 400, protein: 20, carbs: 50, fat: 13.3, servingSizeGrams: 300 }
 const aiReply = (route: Route, food = FOOD) => route.fulfill({ json: { choices: [{ message: { content: JSON.stringify(food) } }] } })
 
@@ -10,9 +10,10 @@ async function configureTestAI(page: Page) {
   await page.goto('/settings?panel=momo')
   await page.getByRole('switch', { name: 'Show Momo', exact: true }).uncheck()
   await openYouDestination(page, 'AI setup')
-  await page.getByRole('switch', { name: 'Use my own API key' }).check()
-  await page.getByRole('combobox', { name: 'Provider', exact: true }).selectOption('openrouter')
-  await page.getByRole('textbox', { name: 'API key' }).fill('local-test-key-not-a-credential')
+  await page.getByRole('switch', { name: 'Use my own API', exact: true }).check()
+  await page.getByLabel('API endpoint', { exact: true }).fill(AI_URL)
+  await page.getByLabel('Model', { exact: true }).fill('test-vision-model')
+  await page.getByRole('textbox', { name: 'API key', exact: true }).fill('local-test-key-not-a-credential')
   await page.getByRole('button', { name: 'Save settings', exact: true }).click()
   await expect(page.getByRole('status').filter({ hasText: 'AI settings saved' })).toBeVisible()
   await nav(page).getByRole('link', { name: 'Today', exact: true }).click()

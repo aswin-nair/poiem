@@ -179,9 +179,10 @@ CREATE TABLE IF NOT EXISTS ai_plan_config (
   updated_at timestamptz NOT NULL DEFAULT NOW(),
   updated_by uuid REFERENCES users(id) ON DELETE SET NULL
 );
-INSERT INTO ai_plan_config (plan, model, daily_food, daily_coach)
-VALUES ('free', 'google/gemma-4-31b-it', 20, 0),
-       ('premium', 'google/gemini-2.5-flash', 100, 50)
+-- Image/text models verified in the public catalogue on 2026-10-07.
+INSERT INTO ai_plan_config (plan, model, fallback_models, daily_food, daily_coach)
+VALUES ('free', 'google/gemini-3.5-flash-lite', ARRAY['google/gemma-4-31b-it']::text[], 20, 0),
+       ('premium', 'google/gemini-2.5-flash', '{}'::text[], 100, 50)
 ON CONFLICT (plan) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS ai_usage_daily (

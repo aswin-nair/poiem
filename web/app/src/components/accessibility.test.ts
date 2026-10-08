@@ -124,7 +124,13 @@ describe('primary component accessibility contracts', () => {
     expect(html).toContain('Saved')
     expect(html).toContain('You')
     // The + opens the log sheet over the current page, so it is a button, not a link.
-    expect(html).toContain('<button type="button" data-testid="fab" class="nav-fab" aria-label="Log a meal" aria-haspopup="dialog"')
+    const fab = html.match(/<button\b[^>]*\bdata-testid="fab"[^>]*>/)?.[0]
+    expect(fab).toBeDefined()
+    expect(fab).toContain('type="button"')
+    expect(fab).toContain('class="nav-fab"')
+    expect(fab).toContain('data-action-play="off"')
+    expect(fab).toContain('aria-label="Log a meal"')
+    expect(fab).toContain('aria-haspopup="dialog"')
     expect(html).not.toContain('href="/log"')
   })
 

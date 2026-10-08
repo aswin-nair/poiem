@@ -1,0 +1,54 @@
+[
+  {
+    "name": "iphone-390-light",
+    "commit": "114028af58c6d0b839a0ea7d66ed2f5a22821c2a",
+    "width": 390,
+    "theme": "light",
+    "source": "read-only git archive; no working tree changes",
+    "managedScreenshot": "iphone-390-light-default.png",
+    "byokScreenshot": "iphone-390-light-custom-fields-viewport.png",
+    "noKeysEntered": true,
+    "overflow": 0,
+    "text": "AI SETUP\n\nAfter you sign up, photo and text logging use Poiem’s OpenRouter key and google/gemma-4-31b-it. Add your own key only if you want a different provider or model. Choose Save settings to apply this setup.\n\nUse my own API key\nOff: Poiem’s key and model. On: the key below stays in this browser and is sent only to the provider you pick.\n\nYour key stays in this browser only. Get a key\n\nProvider\nOpenRouter\nGoogle Gemini\nAPI key\nShow\nModel\nCustom instructions\nMomo live AI\nNeeds your own API key",
+    "errors": []
+  },
+  {
+    "name": "iphone-390-dark",
+    "commit": "114028af58c6d0b839a0ea7d66ed2f5a22821c2a",
+    "width": 390,
+    "theme": "dark",
+    "source": "read-only git archive; no working tree changes",
+    "managedScreenshot": "iphone-390-dark-default.png",
+    "byokScreenshot": "iphone-390-dark-custom-fields-viewport.png",
+    "noKeysEntered": true,
+    "overflow": 0,
+    "text": "AI SETUP\n\nAfter you sign up, photo and text logging use Poiem’s OpenRouter key and google/gemma-4-31b-it. Add your own key only if you want a different provider or model. Choose Save settings to apply this setup.\n\nUse my own API key\nOff: Poiem’s key and model. On: the key below stays in this browser and is sent only to the provider you pick.\n\nYour key stays in this browser only. Get a key\n\nProvider\nOpenRouter\nGoogle Gemini\nAPI key\nShow\nModel\nCustom instructions\nMomo live AI\nNeeds your own API key",
+    "errors": []
+  },
+  {
+    "name": "desktop-1440-light",
+    "commit": "114028af58c6d0b839a0ea7d66ed2f5a22821c2a",
+    "width": 1440,
+    "theme": "light",
+    "source": "read-only git archive; no working tree changes",
+    "managedScreenshot": "desktop-1440-light-default.png",
+    "byokScreenshot": "desktop-1440-light-custom-fields-viewport.png",
+    "noKeysEntered": true,
+    "overflow": 0,
+    "text": "AI SETUP\n\nAfter you sign up, photo and text logging use Poiem’s OpenRouter key and google/gemma-4-31b-it. Add your own key only if you want a different provider or model. Choose Save settings to apply this setup.\n\nUse my own API key\nOff: Poiem’s key and model. On: the key below stays in this browser and is sent only to the provider you pick.\n\nYour key stays in this browser only. Get a key\n\nProvider\nOpenRouter\nGoogle Gemini\nAPI key\nShow\nModel\nCustom instructions\nMomo live AI\nNeeds your own API key",
+    "errors": []
+  },
+  {
+    "name": "desktop-1440-dark",
+    "commit": "114028af58c6d0b839a0ea7d66ed2f5a22821c2a",
+    "width": 1440,
+    "theme": "dark",
+    "source": "read-only git archive; no working tree changes",
+    "managedScreenshot": "desktop-1440-dark-default.png",
+    "byokScreenshot": "desktop-1440-dark-custom-fields-viewport.png",
+    "noKeysEntered": true,
+    "overflow": 0,
+    "text": "AI SETUP\n\nAfter you sign up, photo and text logging use Poiem’s OpenRouter key and google/gemma-4-31b-it. Add your own key only if you want a different provider or model. Choose Save settings to apply this setup.\n\nUse my own API key\nOff: Poiem’s key and model. On: the key below stays in this browser and is sent only to the provider you pick.\n\nYour key stays in this browser only. Get a key\n\nProvider\nOpenRouter\nGoogle Gemini\nAPI key\nShow\nModel\nCustom instructions\nMomo live AI\nNeeds your own API key",
+    "errors": []
+  }
+]

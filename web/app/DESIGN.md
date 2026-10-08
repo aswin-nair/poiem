@@ -263,9 +263,11 @@ From 768px these cards pair into two columns, so a wide screen reads as a dashbo
 3. **Appearance.** A bright butter card with Light, Dark and System as square tiles; the chosen one is acid with a compact shadow. It saves instantly.
 4. **Category and Save.** Sticky at the top: a labelled native Category picker on phone, full section links from 768px, and a Save button only for pending profile or AI form edits. Everyday preferences apply immediately, with status based on applied values. Changing a preference preserves unrelated form drafts.
 5. **Sections.** Condensed uppercase titles sit on outlined coloured tabs above a help line. Smaller labels stay mono uppercase. Daily goals are acid, peach and sky blocks with dark ink. Rows and square fields use stronger borders; delete actions use danger ink.
-6. **Disclosures.** AI setup and Momo's wardrobe open with an acid + that turns into ×, like the log button.
+6. **Disclosures.** API authentication, Momo live AI and Momo's wardrobe open with an acid + that turns into ×, like the log button.
 
 The column is capped at 880px from 768px, because settings are read as rows and a 1200px row is hard to follow. Each row with a field puts the control beside its label, stacking again below 360px.
+
+AI setup starts with Poiem AI and its allowance. The server credential has no field or value in the product. “Use my own API” reveals a full endpoint URL, model and API format: OpenAI-compatible Chat Completions, Gemini generateContent or Anthropic Messages. Endpoint and model fields use the full width on phone. Authentication defaults with the format; its disclosure also allows a named key header or explicit no-auth service. The personal key is masked, remains local and is reused after sync or import only for its bound connection. Setup validates before Save, and invalid connections offer a route back to AI setup from logging or Coach. Custom services must allow browser requests; hosted connections use HTTPS. Photo logging needs a model with image support.
 
 ### Log flows (`/log/text`, `/log/photo`, `/log/manual`, `/review`, `/edit/:id`)
 
@@ -302,7 +304,7 @@ The chosen meal slot survives every logging method, Review, Back, reload after a
 
 Failed or cancelled responses show their reason and a Retry button beside the original user message. Retry sends that prompt with its original preceding context, excluding messages since deleted, without adding another user message. Cancel response stops the request and keeps the user's message available to retry. Deleting the message whose response is pending aborts that request; Clear asks for confirmation, aborts any pending response and removes the conversation and recovery notices. Late responses from discarded requests cannot reappear.
 
-A native "Provider & privacy" disclosure names the selected provider or Poiem's managed OpenRouter service. It explains that chat is stored with Poiem data, sending a message shares limited recent log context with the provider, and that provider controls its own retention. Availability notices offer the relevant setup, sign-in or retry action.
+A native "Provider & privacy" disclosure names the selected personal service or Poiem AI. It explains that chat is stored with Poiem data, sending a message shares limited recent log context with the provider, and that provider controls its own retention. Availability notices offer the relevant setup, sign-in or retry action.
 
 ### Support and About (`/support`, `/about`)
 
@@ -324,17 +326,24 @@ The marketing welcome page (`/welcome`) keeps its own poster sheets. A few share
 
 ## Behaviour that is part of the design
 
-### Momo's surprise cameos
+### Momo's screen play
 
-An authenticated visitor occasionally sees a compact pink speech card using their existing Momo outfit and one of 20 local jokes. No provider request, sound, haptic or focus grab is involved. Lines are drawn without replacement during the browser session. The cameo module loads after eight seconds of eligibility, during the initial waiting period, so it is outside Today's first download.
+An authenticated visitor occasionally sees a freestanding Momo with a separate comic speech bubble. He waves, borrows an approved interface word, dances with it, or plays with water drops. The real heading gets one small wiggle and keeps its text and accessible name. The 42 local lines include screen comments and action reactions; private text and nutrition values never become joke material. No provider request, sound, haptic or focus grab is involved. Lines are drawn without replacement during the browser session. The scene module loads after eight seconds of eligibility, during the initial waiting period, so it is outside Today's first download.
 
 - **Lively:** first visit after 18–35 seconds, then 75–150 seconds between visits; up to four per session.
 - **Calm:** first visit after 45–90 seconds, then 180–300 seconds between visits; up to two per session and a static entrance.
 - **Reduced motion:** the same text with static art and entrance. Show Momo off, Mute Momo and paused tracking disable cameos.
 - **Clear workflows:** no cameos in logging, settings, Coach, Support, account, onboarding or admin screens. Typing, keyboards, dialogs, log receipts, Undo toasts and existing Momo speech defer them. A newly opened form or dialog dismisses an active cameo.
-- **Dismissal:** Got it closes immediately; Mute Momo saves the existing mute preference. The nine-second timeout pauses while hovered or keyboard-focused. Dismissal preserves focus and keeps measured scroll clearance until the route changes.
+- **Placement:** the comic bubble, art and controls use available space near a visible heading or Water label. Interactive targets, calorie and macro readouts, Journey values and the bottom navigation keep their space. A compact scene keeps Momo visible on desktop, in landscape or when portrait space is crowded. Scrolling repositions the scene or ends it if there is no clear spot. Only a successful measured placement consumes a session visit.
+- **Dismissal:** the named Close icon ends the scene immediately; Mute Momo saves the existing mute preference. The nine-second timeout pauses while hovered or keyboard-focused. Dismissal preserves focus and keeps measured scroll clearance until the route changes.
 
 Implementation: [`MomoInterlude.tsx`](src/components/MomoInterlude.tsx), [`momoInterludes.ts`](src/lib/momoInterludes.ts) and [`momo-interlude.css`](src/styles/screens/momo-interlude.css).
+
+### Action feedback
+
+Every enabled button, link and selection has a small local reaction through [`ActionPlay.tsx`](src/components/ActionPlay.tsx). Inner icons hop, button faces squash and release, choices snap, and save and water actions use stars or drops. Navigation animates the arriving active icon. The action handler runs immediately; decoration does not move hit areas or focus targets.
+
+Successful save changes pop the star, wardrobe changes give Momo a short happy hop, switches rebound after their state changes, and a newly filled decorative water glass hops once. Existing sound and haptic preferences remain in charge of those channels. Calm and OS/profile reduced motion suppress spatial feedback. Effects are finite, coalesced on rapid taps and cleaned up on navigation, preference changes, hidden tabs and unmount.
 
 | Rule | Where |
 |------|-------|

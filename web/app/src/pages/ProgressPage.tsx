@@ -133,7 +133,7 @@ export function ProgressPage() {
           <header className="progress-page-header page-heading">
             <div className="k-insights-title">
               <p className="k-eyebrow">The bigger picture</p>
-              <h1 className="screen-title">Insights</h1>
+              <h1 className="screen-title" data-momo-play="insights">Insights</h1>
             </div>
           </header>
           <section className="k-card k-notice" aria-labelledby="insights-paused-title">
@@ -153,7 +153,7 @@ export function ProgressPage() {
         <header className="progress-page-header page-heading">
           <div className="k-insights-title">
             <p className="k-eyebrow">The bigger picture</p>
-            <h1 className="screen-title">Insights</h1>
+            <h1 className="screen-title" data-momo-play="insights">Insights</h1>
             <p className="insights-intro">See your routine over time, one logged day at a time.</p>
           </div>
         </header>

@@ -129,7 +129,7 @@ export function CoachPage() {
   const ai = availability(state.aiSettings, 'coach')
   const foodAi = availability(state.aiSettings, 'food_text')
   const byok = usesByok(state.aiSettings)
-  const provider = byok ? providerLabel(state.aiSettings.provider) : 'OpenRouter through Poiem'
+  const provider = byok ? providerLabel(state.aiSettings.provider) : 'Poiem AI'
   const canChat = ai.kind === 'ready'
 
   async function send(text: string, retry?: CoachRetryRequest) {
@@ -143,6 +143,7 @@ export function CoachPage() {
         : ai.kind === 'limit_reached' ? 'You’ve used today’s Coach messages. Try again after the reset.'
         : ai.kind === 'checking' ? 'Coach availability is still being checked. Try again when the check finishes.'
         : ai.kind === 'unavailable' && ai.reason === 'missing_key' ? `Add your ${providerLabel(state.aiSettings.provider)} API key in You → AI setup.`
+        : ai.kind === 'unavailable' && ai.reason === 'invalid_connection' ? 'Check your API endpoint, model and authentication in You → AI setup.'
         : ai.kind === 'unavailable' && ai.reason === 'unsigned' ? 'Sign in to use Coach.'
         : ai.kind === 'unavailable' && ai.reason === 'disabled' ? 'Managed Coach isn’t enabled for this app. Choose your own key in You → AI setup.'
         : 'Couldn’t check Coach availability. Check your connection and try again.'

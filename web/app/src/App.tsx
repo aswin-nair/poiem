@@ -22,6 +22,7 @@ import { SettingsPage } from './pages/SettingsPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
 import { MomoInterludeGate } from './components/MomoInterludeGate'
+import { ActionPlay } from './components/ActionPlay'
 import { useNavDirection } from './hooks/useNavDirection'
 import { LazyMotion, MotionConfig } from 'motion/react'
 
@@ -254,6 +255,7 @@ function AppGate() {
   if (!user) {
     return (
       <AppProvider guest>
+        <ActionPlay />
         <GuestRoutes />
       </AppProvider>
     )
@@ -261,6 +263,7 @@ function AppGate() {
 
   return (
     <AppProvider key={user.sub}>
+      <ActionPlay />
       <AuthenticatedRoutes />
     </AppProvider>
   )

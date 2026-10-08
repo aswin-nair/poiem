@@ -7,6 +7,7 @@ import {
   loadPrivateAIKey,
   loadState,
   removeStoredStateSnapshot,
+  savePrivateAIKey,
   stateWithoutPrivateSecrets,
 } from './storage'
 
@@ -104,13 +105,13 @@ function safeState(state: AppState): AppState {
   return safe
 }
 
-function hydratedState(value: unknown, apiKey = ''): AppState {
+function hydratedState(value: unknown): AppState {
   const validation = validateAppState(value, new Date(), {
     allowLegacyGamification: true,
     allowApiKey: false,
   })
   if (!validation.ok) throw new DurableRecoveryError(validation.error)
-  return importData(JSON.stringify(value), apiKey)
+  return importData(JSON.stringify(value))
 }
 
 function validVersion(value: unknown): value is number {
@@ -321,7 +322,7 @@ export async function loadDurableState(userId: string): Promise<DurableHydration
     return {
       state: {
         ...account.state,
-        aiSettings: { ...account.state.aiSettings, apiKey: await loadPrivateAIKey(userId) },
+        aiSettings: { ...account.state.aiSettings, apiKey: await loadPrivateAIKey(userId, account.state.aiSettings) },
       },
       serverVersion: account.serverVersion,
       pendingCount: account.outbox.length,
@@ -350,6 +351,7 @@ export async function migrateLegacyState(userId: string): Promise<DurableHydrati
   const state = loadState(userId)
   const quarantinedRaw = localStorage.getItem(`fud-ai-web-state-${userId}-quarantine`)
   if (primaryRaw && quarantinedRaw === primaryRaw) return null
+  if (state.aiSettings.apiKey) await savePrivateAIKey(userId, state.aiSettings.apiKey, state.aiSettings)
 
   const now = new Date()
   const account: DurableAccount = {

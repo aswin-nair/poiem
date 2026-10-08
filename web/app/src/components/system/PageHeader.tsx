@@ -21,7 +21,7 @@ export function PageHeader({
     <header className={`k-page-header${className ? ` ${className}` : ''}`} data-mascot-avoid={avoid ? true : undefined}>
       <div className="k-page-header-copy">
         {eyebrow ? <p className="k-eyebrow">{eyebrow}</p> : null}
-        <h1 className="k-page-title">{title}</h1>
+        <h1 className="k-page-title" data-momo-play="title">{title}</h1>
         {subtitle ? <p className="k-page-sub">{subtitle}</p> : null}
       </div>
       {action}

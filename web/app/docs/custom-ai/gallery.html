@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poiem · Connect your own AI</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff8eb; color: #20221d; font: 16px/1.5 system-ui, sans-serif; }
+    main { max-width: 1480px; margin: auto; padding: 24px; }
+    header { padding: 28px; border: 3px solid; background: #ffb4ce; box-shadow: 6px 6px 0; margin-bottom: 32px; }
+    h1 { max-width: 22ch; margin: 0 0 16px; font-size: clamp(30px, 4vw, 52px); line-height: 1.08; }
+    h2 { margin: 32px 0 12px; font-size: 25px; line-height: 1.2; }
+    p { margin: 8px 0; }
+    a { color: inherit; text-underline-offset: 3px; }
+    a:focus-visible, select:focus-visible { outline: 3px solid #20221d; outline-offset: 4px; }
+    .eyebrow { margin-bottom: 12px; font-size: 14px; font-weight: 800; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .links a, .original { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+    .note { max-width: 88ch; font-size: 14px; }
+    .controls { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; border: 2px solid; background: #b8ead2; }
+    label { display: grid; gap: 6px; font-weight: 800; }
+    select { min-height: 48px; min-width: 200px; max-width: 100%; padding: 8px 12px; border: 2px solid; background: #fffdf7; color: inherit; font: inherit; }
+    .selection { margin-top: 16px; font-size: 14px; }
+    .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 12px; }
+    figure { min-width: 0; margin: 0; }
+    figcaption { padding: 12px 16px; border: 2px solid; background: #9cd9ff; font-weight: 800; }
+    .after figcaption { background: #ffd45c; }
+    .image-frame { max-height: 76vh; overflow: auto; border: 2px solid; border-top: 0; background: #fffdf7; }
+    .image-frame a { display: block; }
+    .image-frame img { display: block; max-width: 100%; height: auto; margin: auto; }
+    .comparison.is-phone img { width: 390px; }
+    .original { font-size: 14px; }
+    .examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; margin-top: 20px; }
+    .examples .image-frame { max-height: 600px; }
+    .examples figcaption { background: #cbd0ff; }
+    .callout { margin-top: 28px; padding: 18px; border: 2px solid; background: #e6f56c; }
+    footer { margin-top: 32px; padding-top: 16px; border-top: 2px solid; }
+    .skip { position: absolute; top: -90px; left: 12px; z-index: 1; padding: 12px 16px; border: 2px solid; background: #fffdf7; }
+    .skip:focus { top: 12px; }
+    @media (max-width: 720px) {
+      main { padding: 16px; }
+      header { padding: 20px; }
+      .comparison { grid-template-columns: minmax(0, 1fr); }
+      .controls label { flex: 1 1 180px; }
+      select { min-width: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#comparisons">Skip to the comparisons</a>
+  <main>
+    <header>
+      <p class="eyebrow">Custom AI update · October 8, 2026</p>
+      <h1>Your API. Your choice.</h1>
+      <p>Poiem AI stays the default. Your own connection can use an endpoint and model from any service supporting a compatible request format.</p>
+      <p class="note">OpenAI-compatible, Gemini and Anthropic formats are supported. Other formats need a compatible gateway. The operator key stays on the server; a personal key stays encrypted in this browser and belongs to the connection it was saved for.</p>
+      <div class="links">
+        <a href="README.md">Update notes and verification</a>
+        <a href="../screen-play/gallery.html">Momo and action animations</a>
+      </div>
+    </header>
+
+    <section id="comparisons" aria-labelledby="comparison-title">
+      <h2 id="comparison-title">Before and after · AI setup</h2>
+      <p>Choose a viewport, screenshot theme and setup. The previous screens are preserved from commit 114028af. Open an original image to inspect it at full size.</p>
+      <div class="controls" role="group" aria-label="Comparison filters">
+        <label for="viewport">Viewport
+          <select id="viewport">
+            <option value="390">Phone · 390px wide</option>
+            <option value="1440">Desktop · 1440px wide</option>
+          </select>
+        </label>
+        <label for="theme">Screenshot theme
+          <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </label>
+        <label for="setup">Setup
+          <select id="setup">
+            <option value="default">Default · Poiem AI</option>
+            <option value="custom-fields-viewport">Own API · connection fields</option>
+          </select>
+        </label>
+      </div>
+      <p id="selection" class="selection" role="status" aria-live="polite">Phone · 390px wide · Light · Default · Poiem AI</p>
+      <div id="comparison" class="comparison is-phone">
+        <figure>
+          <figcaption>Before · 114028af</figcaption>
+          <div class="image-frame"><a id="before-image-link" href="before/iphone-390-light-default.png"><img id="before-image" src="before/iphone-390-light-default.png" alt="Previous default AI setup on a 390px phone in light theme, with provider-specific copy." width="390" loading="lazy"></a></div>
+          <a id="before-original" class="original" href="before/iphone-390-light-default.png">Open before original</a>
+        </figure>
+        <figure class="after">
+          <figcaption>After · October 8, 2026</figcaption>
+          <div class="image-frame"><a id="after-image-link" href="after/iphone-390-light-default.png"><img id="after-image" src="after/iphone-390-light-default.png" alt="Updated default AI setup on a 390px phone in light theme, with Poiem AI availability and no operator-key field." width="390" loading="lazy"></a></div>
+          <a id="after-original" class="original" href="after/iphone-390-light-default.png">Open after original</a>
+        </figure>
+      </div>
+      <p class="note">The local preview reports that Poiem AI is disabled. These screenshots show the setup and availability message; no live provider request or hosted entitlement check was made.</p>
+    </section>
+
+    <section aria-labelledby="examples-title">
+      <h2 id="examples-title">Small screens and authentication</h2>
+      <p>Final captures include narrow portrait, landscape, Pixel and custom authentication. Personal keys in fixture screens are masked. The imported-connection example shows the key cleared when its endpoint changes.</p>
+      <div class="examples">
+        <figure><figcaption>320px dark · Default</figcaption><div class="image-frame"><a href="after/phone-320-dark-default.png"><img src="after/phone-320-dark-default.png" alt="Poiem AI default setup on a 320px phone in dark theme." loading="lazy"></a></div><a class="original" href="after/phone-320-dark-default.png">Open original</a></figure>
+        <figure><figcaption>320px dark · Own API</figcaption><div class="image-frame"><a href="after/phone-320-dark-custom-fields-viewport.png"><img src="after/phone-320-dark-custom-fields-viewport.png" alt="Custom endpoint, model and API format fields on a 320px phone in dark theme." loading="lazy"></a></div><a class="original" href="after/phone-320-dark-custom-fields-viewport.png">Open original</a></figure>
+        <figure><figcaption>320px dark · Authentication</figcaption><div class="image-frame"><a href="after/phone-320-dark-custom-auth-viewport.png"><img src="after/phone-320-dark-custom-auth-viewport.png" alt="Named API-key header and masked personal key on a 320px phone in dark theme." loading="lazy"></a></div><a class="original" href="after/phone-320-dark-custom-auth-viewport.png">Open original</a></figure>
+        <figure><figcaption>844×390 landscape · Own API</figcaption><div class="image-frame"><a href="after/landscape-844-dark-custom-fields-viewport.png"><img src="after/landscape-844-dark-custom-fields-viewport.png" alt="Custom API connection fields on an 844 by 390 landscape screen in dark theme." loading="lazy"></a></div><a class="original" href="after/landscape-844-dark-custom-fields-viewport.png">Open original</a></figure>
+        <figure><figcaption>844×390 landscape · Authentication</figcaption><div class="image-frame"><a href="after/landscape-844-dark-custom-auth-viewport.png"><img src="after/landscape-844-dark-custom-auth-viewport.png" alt="Custom authentication fields in the short 844 by 390 landscape viewport." loading="lazy"></a></div><a class="original" href="after/landscape-844-dark-custom-auth-viewport.png">Open original</a></figure>
+        <figure><figcaption>Pixel 393px light · Own API</figcaption><div class="image-frame"><a href="after/pixel-393-light-custom-fields-viewport.png"><img src="after/pixel-393-light-custom-fields-viewport.png" alt="Custom API format, endpoint and model on a 393px Pixel profile in light theme." loading="lazy"></a></div><a class="original" href="after/pixel-393-light-custom-fields-viewport.png">Open original</a></figure>
+        <figure><figcaption>Pixel 393px light · Authentication</figcaption><div class="image-frame"><a href="after/pixel-393-light-custom-auth-viewport.png"><img src="after/pixel-393-light-custom-auth-viewport.png" alt="API-key header and masked personal credential on a 393px Pixel profile in light theme." loading="lazy"></a></div><a class="original" href="after/pixel-393-light-custom-auth-viewport.png">Open original</a></figure>
+        <figure><figcaption>390px light · Authentication</figcaption><div class="image-frame"><a href="after/iphone-390-light-custom-auth-viewport.png"><img src="after/iphone-390-light-custom-auth-viewport.png" alt="Expanded authentication options with a masked personal API key on a 390px phone." loading="lazy"></a></div><a class="original" href="after/iphone-390-light-custom-auth-viewport.png">Open original</a></figure>
+        <figure><figcaption>New endpoint · Key re-entry</figcaption><div class="image-frame"><a href="after/iphone-390-light-import-new-endpoint-key-cleared.png"><img src="after/iphone-390-light-import-new-endpoint-key-cleared.png" alt="An imported connection with a different endpoint has an empty API-key field, requiring key re-entry." loading="lazy"></a></div><a class="original" href="after/iphone-390-light-import-new-endpoint-key-cleared.png">Open original</a></figure>
+      </div>
+    </section>
+
+    <aside class="callout" aria-label="Free model rollout note">
+      <p><strong>Prepared Free model: Gemini 3.5 Flash-Lite.</strong> This is a stronger general multimodal selection, with the previous Gemma model as fallback. Free accounts still use operator-paid requests; provider input and output prices increase.</p>
+      <p>The hosted model migration is pending. No paid inference benchmark, live migration or deployment was performed. <a href="README.md#free-account-model">Read the model and cost notes.</a></p>
+    </aside>
+    <footer>
+      <p><a href="README.md#verification">Verification results and remaining checks</a> · <a href="final-layout-observations.json">Layout observations</a> · <a href="credential-binding-observations.json">Credential observations</a></p>
+      <p class="note">All screenshots and page assets are local. Phone profiles use browser emulation; real-device Safari and Android behavior still needs device review.</p>
+    </footer>
+  </main>
+  <script>
+    const viewport = document.getElementById('viewport');
+    const theme = document.getElementById('theme');
+    const setup = document.getElementById('setup');
+    function updateComparison() {
+      const device = viewport.value === '1440' ? 'desktop-1440' : 'iphone-390';
+      const selectedTheme = theme.value === 'dark' ? 'dark' : 'light';
+      const selectedSetup = setup.value === 'custom-fields-viewport' ? 'custom-fields-viewport' : 'default';
+      const file = `${device}-${selectedTheme}-${selectedSetup}.png`;
+      const size = viewport.value === '1440' ? '1440px desktop' : '390px phone';
+      const ownAPI = selectedSetup !== 'default';
+      for (const phase of ['before', 'after']) {
+        const path = `${phase}/${file}`;
+        const img = document.getElementById(`${phase}-image`);
+        img.src = path;
+        img.width = viewport.value === '1440' ? 1440 : 390;
+        img.alt = `${phase === 'before' ? 'Previous' : 'Updated'} ${ownAPI ? 'own API connection fields' : 'default AI setup'} on a ${size} in ${selectedTheme} theme.`;
+        document.getElementById(`${phase}-image-link`).href = path;
+        document.getElementById(`${phase}-original`).href = path;
+      }
+      document.getElementById('comparison').classList.toggle('is-phone', viewport.value !== '1440');
+      document.getElementById('selection').textContent = [viewport.selectedOptions[0].textContent, theme.selectedOptions[0].textContent, setup.selectedOptions[0].textContent].join(' · ');
+    }
+    for (const control of [viewport, theme, setup]) control.addEventListener('change', updateComparison);
+  </script>
+</body>
+</html>

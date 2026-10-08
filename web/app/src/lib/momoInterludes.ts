@@ -1,8 +1,19 @@
 import type { MascotActivity, UserProfile } from '../types'
 import type { MomoExpression } from '../mascot/expressions'
 
-/** Local, deliberately unrelated to meals, targets, bodies or the person's data. */
-export const MOMO_INTERLUDES: ReadonlyArray<{ id: string; line: string; expression: MomoExpression }> = [
+export type MomoPlayTarget = 'title' | 'water' | 'saved' | 'insights' | 'journey'
+export type MomoPlayAction = 'tap' | 'navigate' | 'select' | 'water' | 'save' | 'submit' | 'remove'
+export interface MomoInterludeContext { target?: MomoPlayTarget; action?: MomoPlayAction }
+export interface MomoInterludeEntry {
+  id: string
+  line: string
+  expression: MomoExpression
+  target?: MomoPlayTarget
+  action?: MomoPlayAction
+}
+
+/** Local lines react to the interface, never meals, targets, bodies or private data. */
+export const MOMO_INTERLUDES: ReadonlyArray<MomoInterludeEntry> = [
   { id: 'clipboard', line: 'This imaginary clipboard is not going to supervise itself.', expression: 'proud' },
   { id: 'business', line: 'This is my business face. Also my regular face.', expression: 'skeptical' },
   { id: 'pockets', line: 'No pockets. My keys remain a mystery.', expression: 'curious' },
@@ -23,6 +34,28 @@ export const MOMO_INTERLUDES: ReadonlyArray<{ id: string; line: string; expressi
   { id: 'wave', line: 'Tiny wave. No agenda. Excellent wrist technique.', expression: 'happy' },
   { id: 'password', line: 'Forgot my imaginary password. Probably Momo.', expression: 'curious' },
   { id: 'management', line: 'Management approves this brief nonsense.', expression: 'proud' },
+  { id: 'title-borrow', target: 'title', line: 'Borrowing this word. Back in one tiny dance.', expression: 'wink' },
+  { id: 'title-heavy', target: 'title', line: 'Big letters. Tiny stagehand. I can work with this.', expression: 'proud' },
+  { id: 'title-wiggle', target: 'title', line: 'The headline needed a wiggle. You’re welcome.', expression: 'happy' },
+  { id: 'water-splash', target: 'water', line: 'Tiny splash. Extremely official.', expression: 'surprised' },
+  { id: 'water-lifeguard', target: 'water', line: 'Lifeguard on duty. The pool is imaginary.', expression: 'proud' },
+  { id: 'water-wave', target: 'water', line: 'I made a wave. Very small ocean.', expression: 'wink' },
+  { id: 'saved-sticker', target: 'saved', line: 'Saved a seat for this sticker. It has no legs.', expression: 'curious' },
+  { id: 'saved-cabinet', target: 'saved', line: 'My filing system is mostly tiny jazz hands.', expression: 'happy' },
+  { id: 'saved-word', target: 'saved', line: 'Keeping this word safe. Mostly by sitting near it.', expression: 'proud' },
+  { id: 'insights-letters', target: 'insights', line: 'Inspecting the letters. Excellent letter quality.', expression: 'skeptical' },
+  { id: 'insights-lens', target: 'insights', line: 'Brought a magnifying glass. Found more Momo.', expression: 'curious' },
+  { id: 'insights-detective', target: 'insights', line: 'Detective Momo. Case of the wobbly headline.', expression: 'wink' },
+  { id: 'journey-step', target: 'journey', line: 'One tiny step. Then a completely optional dance.', expression: 'happy' },
+  { id: 'journey-sign', target: 'journey', line: 'Borrowed the sign. Returning it with extra flair.', expression: 'proud' },
+  { id: 'journey-map', target: 'journey', line: 'The map says: a little nonsense goes here.', expression: 'curious' },
+  { id: 'action-tap', action: 'tap', line: 'That tap had excellent comedic timing.', expression: 'wink' },
+  { id: 'action-navigate', action: 'navigate', line: 'Plot twist: another screen. I brought a prop.', expression: 'surprised' },
+  { id: 'action-select', action: 'select', line: 'A choice! I shall add tiny jazz hands.', expression: 'happy' },
+  { id: 'action-water', action: 'water', target: 'water', line: 'Splash. Please admire the choreography.', expression: 'happy' },
+  { id: 'action-save', action: 'save', target: 'saved', line: 'Filed under: pressed with flair.', expression: 'proud' },
+  { id: 'action-submit', action: 'submit', line: 'A send-button tap. Time for a tiny pose.', expression: 'wink' },
+  { id: 'action-remove', action: 'remove', line: 'That button has dramatic exit energy.', expression: 'surprised' },
 ]
 
 export const MOMO_INTERLUDE_VISIBLE_MS = 9_000
@@ -71,10 +104,13 @@ export function readMomoInterludeLedger(value: unknown): MomoInterludeLedger {
 }
 
 /** Draw without replacement. Only a completed pool starts a fresh cycle. */
-export function nextMomoInterlude(ledger: MomoInterludeLedger, rng: () => number) {
+export function nextMomoInterlude(ledger: MomoInterludeLedger, rng: () => number, context?: MomoInterludeContext) {
   const unseen = MOMO_INTERLUDES.filter(entry => !ledger.seen.includes(entry.id))
   const pool = unseen.length ? unseen : MOMO_INTERLUDES
-  const entry = pool[Math.min(pool.length - 1, Math.floor(roll(rng) * pool.length))]
+  const actionPool = context?.action ? pool.filter(entry => entry.action === context.action) : []
+  const targetPool = context?.target ? pool.filter(entry => entry.target === context.target && !entry.action) : []
+  const candidates = actionPool.length ? actionPool : targetPool.length ? targetPool : pool
+  const entry = candidates[Math.min(candidates.length - 1, Math.floor(roll(rng) * candidates.length))]
   return {
     entry,
     ledger: { visits: ledger.visits + 1, seen: [...(unseen.length ? ledger.seen : []), entry.id] },

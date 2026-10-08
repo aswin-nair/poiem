@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type { AISettings } from './aiConfig'
-import { completeChat } from './aiClient'
+import { completeChat, completeVision } from './aiClient'
 
 const settings: AISettings = {
   provider: 'openrouter',
@@ -131,5 +131,66 @@ describe('AI request boundaries', () => {
 
     await expect(completeChat(gemini, [{ role: 'user', content: 'meal' }]))
       .rejects.toThrow('Gemini rejected your API key. Check it in You → AI settings.')
+  })
+
+  it('sends a custom compatible request only to the configured service', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ choices: [{ message: { content: 'Oats' } }] })))
+    vi.stubGlobal('fetch', fetchMock)
+    const custom: AISettings = { ...settings, provider: 'custom', accessMode: 'byok', apiFormat: 'openai', endpointUrl: 'https://my-service.example/v1/chat/completions', authType: 'api-key', authHeader: 'X-Workspace-Key' }
+    expect(await completeChat(custom, [{ role: 'user', content: 'meal' }])).toBe('Oats')
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit]
+    expect(url).toBe(custom.endpointUrl)
+    expect(url).not.toContain(custom.apiKey)
+    expect(init.credentials).toBe('omit')
+    expect(init.redirect).toBe('error')
+    expect(init.referrerPolicy).toBe('no-referrer')
+    expect(init.headers).toEqual({ 'Content-Type': 'application/json', 'X-Workspace-Key': custom.apiKey })
+    expect(JSON.parse(String(init.body))).toMatchObject({ model: 'test-model', messages: [{ role: 'user', content: 'meal' }] })
+  })
+
+  it('omits every credential for an explicitly keyless service', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ choices: [{ message: { content: 'local answer' } }] })))
+    vi.stubGlobal('fetch', fetchMock)
+    const custom: AISettings = { ...settings, provider: 'custom', accessMode: 'byok', apiKey: '', endpointUrl: 'http://127.0.0.1:11434/v1/chat/completions', authType: 'none' }
+    expect(await completeChat(custom, [{ role: 'user', content: 'meal' }])).toBe('local answer')
+    expect(fetchMock.mock.calls[0][1].headers).toEqual({ 'Content-Type': 'application/json' })
+  })
+
+  it.each(['gemini', 'anthropic'] as const)('adapts a photo and system prompt for native %s APIs', async apiFormat => {
+    const response = apiFormat === 'gemini'
+      ? { candidates: [{ content: { parts: [{ thought: true, text: 'private reasoning' }, { text: 'Oats' }, { text: 'and milk' }] } }] }
+      : { content: [{ type: 'thinking', thinking: 'private reasoning' }, { type: 'text', text: 'Oats' }, { type: 'text', text: 'and milk' }] }
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify(response)))
+    vi.stubGlobal('fetch', fetchMock)
+    const custom: AISettings = { ...settings, provider: 'custom', accessMode: 'byok', apiFormat, endpointUrl: apiFormat === 'gemini' ? 'https://gateway.example/models/{model}:generateContent' : 'https://gateway.example/v1/messages' }
+    expect(await completeVision(custom, 'Read this meal', 'aGVsbG8=', 'image/png', 300, undefined, 'Nutrition helper')).toBe('Oats\nand milk')
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit]
+    const body = JSON.parse(String(init.body))
+    expect(url).not.toContain(custom.apiKey)
+    expect(init.credentials).toBe('omit')
+    expect(init.redirect).toBe('error')
+    if (apiFormat === 'gemini') {
+      expect(url).toBe('https://gateway.example/models/test-model:generateContent')
+      expect(init.headers).toMatchObject({ 'X-goog-api-key': custom.apiKey })
+      expect(body.contents[0].parts[0]).toEqual({ inlineData: { mimeType: 'image/png', data: 'aGVsbG8=' } })
+      expect(body.systemInstruction.parts[0].text).toBe('Nutrition helper')
+    } else {
+      expect(init.headers).toMatchObject({ 'X-API-Key': custom.apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' })
+      expect(body.messages[0].content[0]).toEqual({ type: 'image', source: { type: 'base64', media_type: 'image/png', data: 'aGVsbG8=' } })
+      expect(body.system).toBe('Nutrition helper')
+      expect(body.max_tokens).toBe(300)
+    }
+  })
+
+  it('hides network diagnostics and rejects a credential URL before fetching', async () => {
+    const fetchMock = vi.fn().mockRejectedValue(new Error('private key and endpoint diagnostics'))
+    vi.stubGlobal('fetch', fetchMock)
+    const custom: AISettings = { ...settings, provider: 'custom', accessMode: 'byok', endpointUrl: 'https://service.example/v1/chat/completions' }
+    await expect(completeChat(custom, [{ role: 'user', content: 'meal' }])).rejects.toThrow('Could not reach your AI API.')
+    fetchMock.mockClear()
+    await expect(completeChat({ ...custom, endpointUrl: 'https://service.example/v1/chat/completions?key=private-key' }, [{ role: 'user', content: 'meal' }])).rejects.toThrow('Only an Azure api-version date')
+    expect(fetchMock).not.toHaveBeenCalled()
+    fetchMock.mockResolvedValue(new Response(JSON.stringify({ choices: [{ message: { content: custom.apiKey } }] })))
+    await expect(completeChat(custom, [{ role: 'user', content: 'meal' }])).rejects.toThrow('unsafe response')
   })
 })

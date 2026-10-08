@@ -1,4 +1,4 @@
-import type { AISettings } from './aiConfig'
+import { connectionIssue, requiresApiKey, type AISettings } from './aiConfig'
 import type { AiStatus, ManagedTask } from '../../../shared/aiPlans'
 import { usesByok } from './aiClient'
 
@@ -9,7 +9,7 @@ export type AiAvailabilityKind =
   | 'premium_required'
   | 'unavailable'
 
-export type AiUnavailableReason = 'unsigned' | 'disabled' | 'error' | 'missing_key'
+export type AiUnavailableReason = 'unsigned' | 'disabled' | 'error' | 'missing_key' | 'invalid_connection'
 
 export type AiAvailability =
   | { kind: 'checking' }
@@ -36,9 +36,10 @@ export function resolveAiAvailability(input: {
   }
 
   if (usesByok(input.settings)) {
-    if (!input.settings.apiKey.trim()) {
+    if (requiresApiKey(input.settings) && !input.settings.apiKey.trim()) {
       return { kind: 'unavailable', reason: 'missing_key', retryable: false }
     }
+    if (connectionIssue(input.settings)) return { kind: 'unavailable', reason: 'invalid_connection', retryable: false }
     return { kind: 'ready', remaining: null, limit: null, resetAt: null, byok: true }
   }
 
@@ -82,7 +83,7 @@ export function allowanceCopy(
   task: ManagedTask,
   now = Date.now(),
 ): string | null {
-  if (availability.kind === 'ready' && availability.byok) return 'Using your own API key'
+  if (availability.kind === 'ready' && availability.byok) return 'Using your own AI API'
   if (availability.kind === 'ready' && availability.remaining != null && availability.limit != null) {
     const unit = task === 'coach' ? 'Coach messages' : 'food scans'
     return `${availability.remaining} of ${availability.limit} ${unit} left · ${resetCopy(availability.resetAt, now)}`

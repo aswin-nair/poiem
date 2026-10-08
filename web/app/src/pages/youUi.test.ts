@@ -76,15 +76,17 @@ describe('You page UI', () => {
     expect(momo).not.toContain('<details class="you-disclosure" open=')
     const ai = renderPage('/settings?panel=ai')
     expect(ai.match(/<details class="you-disclosure">/g)).toHaveLength(1)
-    expect(ai).toContain('Use my own API key')
-    expect(ai).toContain('google/gemma-4-31b-it')
+    expect(ai).toContain('Use my own API')
+    expect(ai).toContain('Poiem AI is the default')
+    expect(ai).not.toContain('OpenRouter')
+    expect(ai).not.toContain('google/gemma-4-31b-it')
     expect(ai).not.toContain('<details class="you-disclosure" open=')
   })
 
   it('does not imply that an untested key is connected', () => {
     state.aiSettings = { ...state.aiSettings, accessMode: 'byok', apiKey: 'test-placeholder' }
     expect(renderPage('/settings?panel=ai')).toContain('aria-label="API key"')
-    expect(renderPage('/settings?panel=ai')).toContain('Uses your key when added')
+    expect(renderPage('/settings?panel=ai')).toContain('Uses your connection when saved')
   })
 
   it('explains immediate mascot changes and points streaks to Insights', () => {
