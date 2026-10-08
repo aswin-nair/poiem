@@ -369,7 +369,9 @@ Successful save changes pop the star, wardrobe changes give Momo a short happy h
 
 ## Screenshot matrix
 
-Fifty-eight pixel baselines plus one layout check, generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set. **Today** and **/dev/components** are locked at **320, 390, 768 and 1440px**. Log sheet adds **320px**; Today and log sheet add **844×390 landscape**. Describe, Photo, Manual, Saved, Insights, You and Coach are locked at **390 and 1440px**. Four additional screenshots cover Momo's cameo at 390 and 1440px in both themes.
+Sixty-two pixel baselines plus one layout check, generated inside `mcr.microsoft.com/playwright:v1.61.1-noble` so local updates and CI share one font set. **Today** and **/dev/components** are locked at **320, 390, 768 and 1440px**. Log sheet adds **320px**; Today and log sheet add **844×390 landscape**. Describe, Photo, Manual, Saved, Insights, You and Coach are locked at **390 and 1440px**. The total includes four Momo cameo screenshots and four Review correction screenshots at 390 and 1440px in both themes. The phone cameo fixture uses an incomplete detailed ring with genuine quiet reading space; a separate interaction check preserves dense-screen deferral.
+
+The current core meal build brings Today totals and Log forward, places methods above compact recents, and adds independent estimate resets plus a phone confirmation strip. See [the comparison gallery](docs/ui-enhancements/core-meal/gallery.html) and [implementation evidence](docs/ui-enhancements/core-meal/README.md) for scope, measured layout/build cost and remaining device checks.
 
 Comparison is an absolute budget of **200 differing pixels per image**, not a ratio. A ratio scales with the page, so a tall screen collects thousands of free pixels and a real change slips through — which is how restoring You's macro caps once passed at ratio 0.01 against a 0.012 limit. Measured in the container, an unchanged screen differs by zero pixels, so the budget is slack for stray antialiasing rather than a tolerance for design drift.
 
