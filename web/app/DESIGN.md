@@ -263,9 +263,11 @@ From 768px these cards pair into two columns, so a wide screen reads as a dashbo
 3. **Appearance.** A bright butter card with Light, Dark and System as square tiles; the chosen one is acid with a compact shadow. It saves instantly.
 4. **Category and Save.** Sticky at the top: a labelled native Category picker on phone, full section links from 768px, and a Save button only for pending profile or AI form edits. Everyday preferences apply immediately, with status based on applied values. Changing a preference preserves unrelated form drafts.
 5. **Sections.** Condensed uppercase titles sit on outlined coloured tabs above a help line. Smaller labels stay mono uppercase. Daily goals are acid, peach and sky blocks with dark ink. Rows and square fields use stronger borders; delete actions use danger ink.
-6. **Disclosures.** AI setup and Momo's wardrobe open with an acid + that turns into ×, like the log button.
+6. **Disclosures.** API authentication, Momo live AI and Momo's wardrobe open with an acid + that turns into ×, like the log button.
 
 The column is capped at 880px from 768px, because settings are read as rows and a 1200px row is hard to follow. Each row with a field puts the control beside its label, stacking again below 360px.
+
+AI setup starts with Poiem AI and its allowance. The server credential has no field or value in the product. “Use my own API” reveals a full endpoint URL, model and API format: OpenAI-compatible Chat Completions, Gemini generateContent or Anthropic Messages. Endpoint and model fields use the full width on phone. Authentication defaults with the format; its disclosure also allows a named key header or explicit no-auth service. The personal key is masked, remains local and is reused after sync or import only for its bound connection. Setup validates before Save, and invalid connections offer a route back to AI setup from logging or Coach. Custom services must allow browser requests; hosted connections use HTTPS. Photo logging needs a model with image support.
 
 ### Log flows (`/log/text`, `/log/photo`, `/log/manual`, `/review`, `/edit/:id`)
 
@@ -302,7 +304,7 @@ The chosen meal slot survives every logging method, Review, Back, reload after a
 
 Failed or cancelled responses show their reason and a Retry button beside the original user message. Retry sends that prompt with its original preceding context, excluding messages since deleted, without adding another user message. Cancel response stops the request and keeps the user's message available to retry. Deleting the message whose response is pending aborts that request; Clear asks for confirmation, aborts any pending response and removes the conversation and recovery notices. Late responses from discarded requests cannot reappear.
 
-A native "Provider & privacy" disclosure names the selected provider or Poiem's managed OpenRouter service. It explains that chat is stored with Poiem data, sending a message shares limited recent log context with the provider, and that provider controls its own retention. Availability notices offer the relevant setup, sign-in or retry action.
+A native "Provider & privacy" disclosure names the selected personal service or Poiem AI. It explains that chat is stored with Poiem data, sending a message shares limited recent log context with the provider, and that provider controls its own retention. Availability notices offer the relevant setup, sign-in or retry action.
 
 ### Support and About (`/support`, `/about`)
 

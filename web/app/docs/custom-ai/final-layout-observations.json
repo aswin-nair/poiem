@@ -1,0 +1,870 @@
+[
+  {
+    "profile": "iphone-390-light",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "light",
+    "managedText": "YOUR SPACE\n\nYOU\n\nAda Chen\n\nYour routine · your pace\n\nCategory\nOverview\nProfile & goals\nPreferences\nMomo\nAI setup\nAccount\nYour data\nAI setup changes use Save.\nFind a setting\n\nAI SETUP\n\nPoiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.\n\nUse my own API\nOff: use Poiem AI. On: connect your service using one of the API formats below.\n\nPoiem AI isn’t enabled for this app. Connect your own API, or log meals manually.\n\nMomo live AI\nNeeds your own API connection\n\nPoiem · Poiem AI or your own key · Privacy-first",
+    "managedGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo live AI Needs your own API connection",
+          "width": 356,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 171.125,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "customGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "ai-api-format",
+          "width": 322,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-endpoint",
+          "width": 322,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Model",
+          "width": 322,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Authentication API key header",
+          "width": 322,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "ai-auth-type",
+          "width": 322,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-auth-header",
+          "width": 322,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "API key",
+          "width": 260,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Show API key",
+          "width": 56,
+          "height": 44,
+          "type": "BUTTON"
+        },
+        {
+          "label": "custom-instructions",
+          "width": 322,
+          "height": 87,
+          "type": "TEXTAREA"
+        },
+        {
+          "label": "Momo live AI Uses your connection when saved",
+          "width": 356,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 171.125,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "errors": [],
+    "externalRequests": [],
+    "capturedFinalSource": true
+  },
+  {
+    "profile": "iphone-390-dark",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "theme": "dark",
+    "managedText": "YOUR SPACE\n\nYOU\n\nAda Chen\n\nYour routine · your pace\n\nCategory\nOverview\nProfile & goals\nPreferences\nMomo\nAI setup\nAccount\nYour data\nAI setup changes use Save.\nFind a setting\n\nAI SETUP\n\nPoiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.\n\nUse my own API\nOff: use Poiem AI. On: connect your service using one of the API formats below.\n\nPoiem AI isn’t enabled for this app. Connect your own API, or log meals manually.\n\nMomo live AI\nNeeds your own API connection\n\nPoiem · Poiem AI or your own key · Privacy-first",
+    "managedGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo live AI Needs your own API connection",
+          "width": 356,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 171.125,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "customGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "ai-api-format",
+          "width": 322,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-endpoint",
+          "width": 322,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Model",
+          "width": 322,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Authentication API key header",
+          "width": 322,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "ai-auth-type",
+          "width": 322,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-auth-header",
+          "width": 322,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "API key",
+          "width": 260,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Show API key",
+          "width": 56,
+          "height": 44,
+          "type": "BUTTON"
+        },
+        {
+          "label": "custom-instructions",
+          "width": 322,
+          "height": 87,
+          "type": "TEXTAREA"
+        },
+        {
+          "label": "Momo live AI Uses your connection when saved",
+          "width": 356,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 171.125,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "errors": [],
+    "externalRequests": [],
+    "capturedFinalSource": true
+  },
+  {
+    "profile": "phone-320-dark",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "theme": "dark",
+    "managedText": "YOUR SPACE\n\nYOU\n\nAda Chen\n\nYour routine · your pace\n\nCategory\nOverview\nProfile & goals\nPreferences\nMomo\nAI setup\nAccount\nYour data\nAI setup changes use Save.\nFind a setting\n\nAI SETUP\n\nPoiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.\n\nUse my own API\nOff: use Poiem AI. On: connect your service using one of the API formats below.\n\nPoiem AI isn’t enabled for this app. Connect your own API, or log meals manually.\n\nMomo live AI\nNeeds your own API connection\n\nPoiem · Poiem AI or your own key · Privacy-first",
+    "managedGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo live AI Needs your own API connection",
+          "width": 286,
+          "height": 73.1875,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 254,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "customGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "ai-api-format",
+          "width": 252,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-endpoint",
+          "width": 252,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Model",
+          "width": 252,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Authentication API key header",
+          "width": 252,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "ai-auth-type",
+          "width": 252,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-auth-header",
+          "width": 252,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "API key",
+          "width": 190,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Show API key",
+          "width": 56,
+          "height": 44,
+          "type": "BUTTON"
+        },
+        {
+          "label": "custom-instructions",
+          "width": 252,
+          "height": 87,
+          "type": "TEXTAREA"
+        },
+        {
+          "label": "Momo live AI Uses your connection when saved",
+          "width": 286,
+          "height": 73.1875,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 254,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "errors": [],
+    "externalRequests": [],
+    "capturedFinalSource": true
+  },
+  {
+    "profile": "desktop-1440-light",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "theme": "light",
+    "managedText": "YOUR SPACE\n\nYOU\n\nAda Chen\n\nYour routine · your pace\n\nOverview\nProfile & goals\nPreferences\nMomo\nAI setup\nAccount\nYour data\nAI setup changes use Save.\nFind a setting\n\nAI SETUP\n\nPoiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.\n\nUse my own API\nOff: use Poiem AI. On: connect your service using one of the API formats below.\n\nPoiem AI isn’t enabled for this app. Connect your own API, or log meals manually.\n\nMomo live AI\nNeeds your own API connection\n\nPoiem · Poiem AI or your own key · Privacy-first",
+    "managedGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo live AI Needs your own API connection",
+          "width": 830,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 521.34375,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "customGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "ai-api-format",
+          "width": 796,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-endpoint",
+          "width": 796,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Model",
+          "width": 796,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Authentication API key header",
+          "width": 796,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "ai-auth-type",
+          "width": 796,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-auth-header",
+          "width": 796,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "API key",
+          "width": 734,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Show API key",
+          "width": 56,
+          "height": 44,
+          "type": "BUTTON"
+        },
+        {
+          "label": "custom-instructions",
+          "width": 796,
+          "height": 87,
+          "type": "TEXTAREA"
+        },
+        {
+          "label": "Momo live AI Uses your connection when saved",
+          "width": 830,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 521.34375,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "errors": [],
+    "externalRequests": [],
+    "capturedFinalSource": true
+  },
+  {
+    "profile": "desktop-1440-dark",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "theme": "dark",
+    "managedText": "YOUR SPACE\n\nYOU\n\nAda Chen\n\nYour routine · your pace\n\nOverview\nProfile & goals\nPreferences\nMomo\nAI setup\nAccount\nYour data\nAI setup changes use Save.\nFind a setting\n\nAI SETUP\n\nPoiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.\n\nUse my own API\nOff: use Poiem AI. On: connect your service using one of the API formats below.\n\nPoiem AI isn’t enabled for this app. Connect your own API, or log meals manually.\n\nMomo live AI\nNeeds your own API connection\n\nPoiem · Poiem AI or your own key · Privacy-first",
+    "managedGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo live AI Needs your own API connection",
+          "width": 830,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 521.34375,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "customGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "ai-api-format",
+          "width": 796,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-endpoint",
+          "width": 796,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Model",
+          "width": 796,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Authentication API key header",
+          "width": 796,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "ai-auth-type",
+          "width": 796,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-auth-header",
+          "width": 796,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "API key",
+          "width": 734,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Show API key",
+          "width": 56,
+          "height": 44,
+          "type": "BUTTON"
+        },
+        {
+          "label": "custom-instructions",
+          "width": 796,
+          "height": 87,
+          "type": "TEXTAREA"
+        },
+        {
+          "label": "Momo live AI Uses your connection when saved",
+          "width": 830,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 521.34375,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "errors": [],
+    "externalRequests": [],
+    "capturedFinalSource": true
+  },
+  {
+    "profile": "landscape-844-dark",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "theme": "dark",
+    "managedText": "YOUR SPACE\n\nYOU\n\nAda Chen\n\nYour routine · your pace\n\nOverview\nProfile & goals\nPreferences\nMomo\nAI setup\nAccount\nYour data\nAI setup changes use Save.\nFind a setting\n\nAI SETUP\n\nPoiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.\n\nUse my own API\nOff: use Poiem AI. On: connect your service using one of the API formats below.\n\nPoiem AI isn’t enabled for this app. Connect your own API, or log meals manually.\n\nMomo live AI\nNeeds your own API connection\n\nPoiem · Poiem AI or your own key · Privacy-first",
+    "managedGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo live AI Needs your own API connection",
+          "width": 792,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 496,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "customGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "ai-api-format",
+          "width": 758,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-endpoint",
+          "width": 758,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Model",
+          "width": 758,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Authentication API key header",
+          "width": 758,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "ai-auth-type",
+          "width": 758,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-auth-header",
+          "width": 758,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "API key",
+          "width": 696,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Show API key",
+          "width": 56,
+          "height": 44,
+          "type": "BUTTON"
+        },
+        {
+          "label": "custom-instructions",
+          "width": 758,
+          "height": 87,
+          "type": "TEXTAREA"
+        },
+        {
+          "label": "Momo live AI Uses your connection when saved",
+          "width": 792,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 496,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "errors": [],
+    "externalRequests": [],
+    "capturedFinalSource": true
+  },
+  {
+    "profile": "pixel-393-light",
+    "viewport": {
+      "width": 393,
+      "height": 851
+    },
+    "theme": "light",
+    "managedText": "YOUR SPACE\n\nYOU\n\nAda Chen\n\nYour routine · your pace\n\nCategory\nOverview\nProfile & goals\nPreferences\nMomo\nAI setup\nAccount\nYour data\nAI setup changes use Save.\nFind a setting\n\nAI SETUP\n\nPoiem AI is the default for photo and text logging. You can also connect your own AI service. Choose Save settings to apply your setup.\n\nUse my own API\nOff: use Poiem AI. On: connect your service using one of the API formats below.\n\nPoiem AI isn’t enabled for this app. Connect your own API, or log meals manually.\n\nMomo live AI\nNeeds your own API connection\n\nPoiem · Poiem AI or your own key · Privacy-first",
+    "managedGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo live AI Needs your own API connection",
+          "width": 359,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 172.78125,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "customGeometry": {
+      "overflow": 0,
+      "targets": [
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "ai-api-format",
+          "width": 325,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-endpoint",
+          "width": 325,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Model",
+          "width": 325,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Authentication API key header",
+          "width": 325,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "ai-auth-type",
+          "width": 325,
+          "height": 44,
+          "type": "SELECT"
+        },
+        {
+          "label": "ai-auth-header",
+          "width": 325,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "API key",
+          "width": 263,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Show API key",
+          "width": 56,
+          "height": 44,
+          "type": "BUTTON"
+        },
+        {
+          "label": "custom-instructions",
+          "width": 325,
+          "height": 87,
+          "type": "TEXTAREA"
+        },
+        {
+          "label": "Momo live AI Uses your connection when saved",
+          "width": 359,
+          "height": 64,
+          "type": "SUMMARY"
+        },
+        {
+          "label": "",
+          "width": 60,
+          "height": 44,
+          "type": "INPUT"
+        },
+        {
+          "label": "Momo's personality",
+          "width": 172.78125,
+          "height": 44,
+          "type": "SELECT"
+        }
+      ]
+    },
+    "errors": [],
+    "externalRequests": [],
+    "capturedFinalSource": true
+  }
+]

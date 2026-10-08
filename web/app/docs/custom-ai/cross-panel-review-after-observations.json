@@ -1,0 +1,28 @@
+[
+  {
+    "width": 390,
+    "invalidAIDraft": true,
+    "panel": "ai",
+    "alertExists": true,
+    "alertVisible": true,
+    "alertText": "Use HTTPS, or HTTP for a service on localhost.",
+    "alertFocused": true,
+    "activeText": "Use HTTPS, or HTTP for a service on localhost.",
+    "statusText": "Unsaved AI changes",
+    "errors": [],
+    "providerRequests": []
+  },
+  {
+    "width": 1440,
+    "invalidAIDraft": true,
+    "panel": "ai",
+    "alertExists": true,
+    "alertVisible": true,
+    "alertText": "Use HTTPS, or HTTP for a service on localhost.",
+    "alertFocused": true,
+    "activeText": "Use HTTPS, or HTTP for a service on localhost.",
+    "statusText": "Unsaved AI changes",
+    "errors": [],
+    "providerRequests": []
+  }
+]
