@@ -21,7 +21,7 @@ for (const width of [320, 390, 1280]) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
       await page.screenshot({ path: testInfo.outputPath(`today-${colorScheme}.png`), fullPage: true, animations: 'disabled' })
 
-      await page.getByRole('button', { name: 'Log a meal', exact: true }).click()
+      await page.getByTestId('fab').click()
       const sheet = page.getByRole('dialog', { name: 'Log a meal' })
       await expect(sheet.getByRole('heading', { name: 'Log a meal', exact: true })).toBeVisible()
       await expect(sheet.getByRole('link', { name: /Snap a photo/ })).toBeVisible()

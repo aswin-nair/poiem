@@ -347,22 +347,6 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   </Surface>
                 )}
 
-                {showMomo && (
-                  <TodayMomo
-                    greeting={greeting}
-                    outfit={state.gamification.outfit}
-                    roasts={Boolean(profile.mascotRoasts)}
-                    onRoast={() => mascotEvent('poke')}
-                  />
-                )}
-
-                <DayRing
-                  progress={ring}
-                  justClosed={isToday && ringCheck !== null}
-                  closeMs={ringCheck ?? RING_CHECK_MS}
-                  note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
-                />
-
                 <Surface
                   variant="hero"
                   as="section"
@@ -390,6 +374,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                     <span className="tabular">{budget.consumed.toLocaleString()} eaten</span>
                     <span className="tabular">{budget.target.toLocaleString()} guide</span>
                   </p>
+                  {isToday && !guest && (
+                    <button type="button" className="k-button is-primary k-budget-action" data-action-play="submit" onClick={() => openLog()}>
+                      <IconPlus size={20} aria-hidden="true" /> Log a meal
+                    </button>
+                  )}
                 </Surface>
 
                 <section className="k-macros" aria-label="Macros">
@@ -429,7 +418,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   if (!isToday && group.entries.length === 0) return null
                   const GroupIcon = MEAL_ICONS[group.type]
                   return (
-                    <section key={group.type} className={`k-meal-group is-${group.type}`} aria-labelledby={`meal-${group.type}`}>
+                    <section key={group.type} className={`k-meal-group is-${group.type}${group.entries.length === 0 ? ' is-empty' : ''}`} aria-labelledby={`meal-${group.type}`}>
                       <header className="k-meal-head">
                         <span className="k-meal-icon" aria-hidden="true"><GroupIcon size={16} /></span>
                         <h3 id={`meal-${group.type}`}>{group.label}</h3>
@@ -468,6 +457,22 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   </button>
                 )}
               </Section>
+              <div className="k-today-companion">
+                {showMomo && (
+                  <TodayMomo
+                    greeting={greeting}
+                    outfit={state.gamification.outfit}
+                    roasts={Boolean(profile.mascotRoasts)}
+                    onRoast={() => mascotEvent('poke')}
+                  />
+                )}
+                <DayRing
+                  progress={ring}
+                  justClosed={isToday && ringCheck !== null}
+                  closeMs={ringCheck ?? RING_CHECK_MS}
+                  note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
+                />
+              </div>
                 {isToday && !guest && (
                   <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
                     <div className="k-water-block">

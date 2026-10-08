@@ -33,15 +33,17 @@ describe('Today', () => {
     expect(render()).not.toContain('Roast me')
   })
 
-  it('opens with Momo, then what is left, then macros, then meals, without streaks, levels or poster decoration', () => {
+  it('opens with daily totals and logging, then meals, a compact greeting and chosen steps', () => {
     const html = render()
-    expect(html.indexOf('aria-label="A note from Momo"')).toBeLessThan(html.indexOf('kcal left'))
+    expect(html.indexOf('kcal left')).toBeLessThan(html.indexOf('aria-label="A note from Momo"'))
     expect(html).toContain('Today’s snapshot')
     expect(html).toContain('kcal left')
     expect(html).toContain('aria-label="Choose date"')
     expect(html.indexOf('kcal left')).toBeLessThan(html.indexOf('aria-label="Macros"'))
     expect(html.indexOf('aria-label="Macros"')).toBeLessThan(html.indexOf('id="meals-title"'))
     expect(html.indexOf('id="meals-title"')).toBeLessThan(html.indexOf('aria-label="Water and notes"'))
+    expect(html.indexOf('k-budget-action')).toBeLessThan(html.indexOf('id="meals-title"'))
+    expect(html.indexOf('id="meals-title"')).toBeLessThan(html.indexOf('class="k-ring"'))
     expect(html).toContain('Your table is ready')
     for (const slot of ['breakfast', 'lunch', 'dinner', 'snack']) {
       expect(html).toContain(`Add ${slot}</button>`)

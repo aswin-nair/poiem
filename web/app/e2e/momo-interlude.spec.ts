@@ -1,21 +1,44 @@
 import { expect, test, type Page } from '@playwright/test'
 import { applyVisualSeed, visualSeedState, VISUAL_USER } from './seed'
+import { settlePageLayout } from './helpers'
 
-async function prepare(page: Page, options: { muted?: boolean; paused?: boolean; activity?: 'lively' | 'calm' | 'off' } = {}) {
+test.use({ viewport: { width: 1440, height: 900 } })
+
+async function prepare(page: Page, options: { muted?: boolean; paused?: boolean; activity?: 'lively' | 'calm' | 'off'; quietArea?: boolean } = {}) {
   const state = visualSeedState()
   state.gamification.mascotActivity = options.activity ?? 'lively'
   state.profile.mascotMuted = options.muted ?? false
   state.profile.trackingPaused = options.paused ?? false
+  if ((page.viewportSize()?.width ?? 1280) < 1120 && options.quietArea !== false) {
+    state.profile.loggingCommitment = 'detailed'
+  }
   await applyVisualSeed(page, state)
   await page.addInitScript(() => { window.__POIEM_TEST__ = { rng: () => 0, hideOverlay: true, momoInterludes: true } })
   await page.goto('/')
   await expect(page.getByRole('heading', { name: 'Today', exact: true })).toBeVisible()
   if (!options.muted && !options.paused && options.activity !== 'off') {
     await page.waitForFunction(() => window.__POIEM_TEST__?.momoInterludeReady === true)
+    if ((page.viewportSize()?.width ?? 1280) < 1120 && options.quietArea !== false) {
+      await page.locator('.k-today-companion').evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }))
+    }
   }
 }
 
 const cameo = (page: Page) => page.getByRole('complementary', { name: 'A little Momo moment' })
+
+test('a dense phone Today defers Momo without spending a visit', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 664 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await prepare(page, { quietArea: false })
+  await settlePageLayout(page)
+  await page.clock.runFor(18_500)
+  await expect(cameo(page)).toBeHidden()
+  const visits = await page.evaluate(sub => {
+    const ledger = sessionStorage.getItem(`poiem-momo-interludes-${sub}`)
+    return ledger ? JSON.parse(ledger).visits : 0
+  }, VISUAL_USER.sub)
+  expect(visits).toBe(0)
+})
 
 test('Today opens before cameo code loads, and the original first-visit timing is kept', async ({ page }) => {
   const state = visualSeedState()
@@ -43,7 +66,7 @@ for (const width of [320, 390, 1440]) {
     const focused = await page.evaluate(() => document.activeElement?.tagName)
     await page.clock.runFor(18_500)
     await expect(cameo(page)).toBeVisible()
-    await expect(cameo(page)).toContainText('Borrowing this word')
+    await expect(cameo(page)).toContainText(width < 1120 ? 'Tiny splash. Extremely official.' : 'Borrowing this word')
     expect(await page.evaluate(() => document.activeElement?.tagName)).toBe(focused)
     await expect(cameo(page)).toHaveClass(/is-static/)
     const bounds = await page.evaluate(() => {
@@ -59,7 +82,7 @@ for (const width of [320, 390, 1440]) {
     await expect(cameo(page)).toBeHidden()
     await page.clock.runFor(85_000)
     await expect(cameo(page)).toBeVisible()
-    await expect(cameo(page)).toContainText('Big letters. Tiny stagehand')
+    await expect(cameo(page)).toContainText(width < 1120 ? 'Lifeguard on duty.' : 'Big letters. Tiny stagehand')
   })
 }
 

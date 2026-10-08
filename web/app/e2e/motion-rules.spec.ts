@@ -115,10 +115,10 @@ test('Today meters reflect the value without animating width', async ({ page }) 
 test('a quickly reopened sheet gets the quick class', async ({ page }) => {
   await applyVisualSeed(page)
   await page.goto('/')
-  await page.getByRole('button', { name: 'Log a meal', exact: true }).click()
+  await page.getByTestId('fab').click()
   await expect(page.getByRole('dialog', { name: 'Log a meal' })).toBeVisible()
   await page.getByRole('dialog', { name: 'Log a meal' }).getByRole('button', { name: 'Close', exact: true }).click()
-  await page.getByRole('button', { name: 'Log a meal', exact: true }).click()
+  await page.getByTestId('fab').click()
   await expect(page.getByRole('dialog', { name: 'Log a meal' })).toHaveClass(/is-quick/)
 })
 
