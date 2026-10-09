@@ -4,7 +4,7 @@ import identity from './brand/identity.json'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Navigate, Route, RouterProvider, Routes, createBrowserRouter, useLocation, type Location } from 'react-router-dom'
 import { googleClientId, isGoogleAuthConfigured } from './lib/auth'
-import { hasSeenAccount } from './lib/guestMode'
+import { guestUserId, hasSeenAccount } from './lib/guestMode'
 import { AuthProvider, useAuth } from './store/AuthContext'
 import { AppProvider, useApp } from './store/AppContext'
 import { ToastProvider } from './components/Toast'
@@ -25,6 +25,9 @@ import { MomoInterludeGate } from './components/MomoInterludeGate'
 import { ActionPlay } from './components/ActionPlay'
 import { useNavDirection } from './hooks/useNavDirection'
 import { LazyMotion, MotionConfig } from 'motion/react'
+import { getSessionReturnLabel, rememberSessionNavigation, safeSessionDestination, takeSessionReturn, type SessionDestination } from './lib/sessionNavigation'
+import { hydrateLogDrafts } from './lib/logDrafts'
+import { handoffGuestSetupDraft } from './lib/setupDraftHandoff'
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage'))
 const AdminPage = lazy(() => import('./pages/AdminPage'))
@@ -204,12 +207,12 @@ function AuthenticatedRoutes() {
 function GuestRoutes() {
   const { state } = useApp()
 
-  if (!state.onboarded) {
+  if (!state.onboarded || getSessionReturnLabel()) {
     // A device that has held an account belongs to someone coming back, not to a
     // first-time visitor. Sending them to onboarding would make them rebuild a
     // profile they already have, so the fallback becomes the login screen —
     // which also covers session expiry, not just an explicit sign-out.
-    const fallback = hasSeenAccount() ? '/login' : '/onboarding'
+    const fallback = getSessionReturnLabel() || hasSeenAccount() ? '/login' : '/onboarding'
     return (
       <AnchorProvider>
         <MascotOverlay />
@@ -238,6 +241,55 @@ function GuestRoutes() {
   )
 }
 
+/** Account hydration finishes before this mounts. Draft hydration must also finish before a review can return. */
+function AccountEntryRoutes() {
+  const { user } = useAuth()
+  const { state } = useApp()
+  const location = useLocation()
+  const [entry, setEntry] = useState<{ ready: boolean; destination: SessionDestination | null }>({ ready: false, destination: null })
+  useEffect(() => {
+    let cancelled = false
+    void hydrateLogDrafts(user!.sub).then(drafts => {
+      if (cancelled) return
+      const setupHandoff = location.pathname === '/login' && new URLSearchParams(location.search).get('setup') === '1'
+      if (setupHandoff && !state.onboarded) handoffGuestSetupDraft(guestUserId(), user!.sub, state.onboarded, state.profile)
+      let destination = takeSessionReturn(user!.sub)
+      if (destination?.pathname === '/review' && !drafts.review) destination = { ...destination, pathname: '/log', search: '' }
+      if (destination?.pathname.startsWith('/edit/') && !state.foodEntries.some(food => food.id === destination!.pathname.slice(6))) {
+        destination = { pathname: '/', search: '' }
+      }
+      setEntry({ ready: true, destination })
+    }).catch(() => {
+      if (!cancelled) {
+        takeSessionReturn(user!.sub)
+        setEntry({ ready: true, destination: null })
+      }
+    })
+    return () => { cancelled = true }
+    // This provider mounts once per account, after its account snapshot is known.
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (entry.destination && location.pathname === entry.destination.pathname && location.search === entry.destination.search) {
+      setEntry(current => ({ ...current, destination: null }))
+    }
+  }, [entry.destination, location.pathname, location.search])
+  if (!entry.ready) return <PageFallback />
+  if (entry.destination && (location.pathname !== entry.destination.pathname || location.search !== entry.destination.search)) {
+    return <Navigate to={entry.destination.pathname + entry.destination.search} state={entry.destination.state} replace />
+  }
+  return <AuthenticatedRoutes />
+}
+
+function SessionNavigationObserver() {
+  const { user } = useAuth()
+  const location = useLocation()
+  useEffect(() => {
+    const destination = safeSessionDestination(location.pathname, location.search, location.state)
+    if (user && destination) rememberSessionNavigation(user.sub, destination)
+  }, [user, location.pathname, location.search, location.state])
+  return null
+}
+
 function AppGate() {
   const { user, sessionReady } = useAuth()
 
@@ -264,7 +316,7 @@ function AppGate() {
   return (
     <AppProvider key={user.sub}>
       <ActionPlay />
-      <AuthenticatedRoutes />
+      <AccountEntryRoutes />
     </AppProvider>
   )
 }
@@ -275,6 +327,7 @@ function RoutedShell() {
   return (
     <>
       <ScrollToTop />
+      <SessionNavigationObserver />
       <ToastProvider>
         <RootSurface />
       </ToastProvider>

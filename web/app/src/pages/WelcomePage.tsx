@@ -29,7 +29,7 @@ const STEPS = [
 const FAQS = [
   ['Do I have to log every single bite?', 'No. Poiem is a journal, not a rulebook. Use it at a pace that helps you, and come back whenever you want.'],
   ['Are the AI numbers exact?', 'No. Photo and text analysis produce estimates, and portions matter. Review and adjust entries before saving, or log food manually.'],
-  ['Can I sign up with Google?', 'Yes. Choose Start your journal, then continue with Google. Email signup is available too. You set up your profile after signing in.'],
+  ['Can I sign up with Google?', 'Yes. Choose Sign in, then continue with Google when it is available. You can also create an email account. Start your journal lets you try setup and your first manual meal before creating an account.'],
   ['Is this medical advice?', 'No. Poiem is a food-tracking tool for adults, not a medical service. For personal nutrition or medical advice, speak with a qualified professional.'],
 ] as const
 
@@ -98,7 +98,7 @@ export default function WelcomePage() {
   const { cutting, onNavigate } = useCutNavigation()
   const [motionPaused, setMotionPaused] = useState(false)
   const home = import.meta.env.PROD ? '/' : '/welcome'
-  const destination = user ? productPath('/') : productPath('/login?mode=signup')
+  const destination = user ? productPath('/') : productPath('/onboarding')
   const signInDestination = user ? productPath('/') : productPath('/login?mode=signin')
   const cta = user ? 'Open my journal' : 'Start your journal'
 
@@ -137,6 +137,15 @@ export default function WelcomePage() {
                 <a className="wp-btn wp-btn-primary" href={destination} onClick={onNavigate}>{cta}<ArrowRight size={18} aria-hidden="true" /></a>
                 <a className="wp-btn wp-btn-ghost" href="#plate-to-numbers">See it work<ArrowDown size={18} aria-hidden="true" /></a>
               </div>
+              {!user && <>
+                <ol className="wp-first-route" aria-label="Your first visit">
+                  <li><span>01</span><strong>Set your starting guide</strong></li>
+                  <li><span>02</span><strong>Log one real meal</strong></li>
+                  <li><span>03</span><strong>Save your progress</strong></li>
+                </ol>
+                <p className="wp-first-note">Try a manual meal first. Photo and description need an account.</p>
+                <a className="wp-returning-link" href={signInDestination} onClick={onNavigate}>Already a member? Sign in <ArrowRight size={16} aria-hidden="true" /></a>
+              </>}
               <MomoAside />
             </div>
             <div className="wp-hero-scan"><ScanPanel /></div>

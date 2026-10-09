@@ -26,6 +26,7 @@ const LAYERED = {
   'styles/screens/first-run.css': 'screens',
   'styles/screens/pages.css': 'screens',
   'styles/screens/account.css': 'screens',
+  'styles/screens/entry.css': 'screens',
   'styles/screens/momo-interlude.css': 'screens',
   'styles/screens/today-play.css': 'screens',
 } as const
@@ -43,6 +44,7 @@ const MIGRATED = [
   'styles/screens/flows.css',
   'styles/screens/log-picker.css',
   'styles/screens/meal-review.css',
+  'styles/screens/entry.css',
   'styles/screens/insights.css',
   'styles/screens/you.css',
   'styles/screens/pages.css',

@@ -181,7 +181,7 @@ const AppContext = createContext<AppContextValue | null>(null)
 
 export function AppProvider({ children, guest = false }: { children: ReactNode; guest?: boolean }) {
 
-  const { user, signOut } = useAuth()
+  const { user, signOut, expireSession } = useAuth()
 
   const cloud = !guest && isCloudBackend()
 
@@ -358,7 +358,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
             message,
           )
           if (error instanceof ApiError && error.status === 401) {
-            signOut()
+            expireSession()
             break
           }
           if (error instanceof ApiError && error.status === 409) {
@@ -413,7 +413,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     drainPromise.current = task
     return task
-  }, [boundSessionToken, cloud, networkOnline, signOut, userId])
+  }, [boundSessionToken, cloud, networkOnline, expireSession, userId])
 
   drainOutboxRef.current = drainOutbox
 
@@ -564,7 +564,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
         const sessionToken = boundSessionToken()
         if (!sessionToken || authTokenSubject(sessionToken) !== userId) {
-          signOut()
+          expireSession()
           return
         }
         const activeSessionIssuedAt = tokenIssuedAt(sessionToken)
@@ -649,7 +649,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
         } catch (error) {
           if (cancelled) return
           if (error instanceof ApiError && error.status === 401) {
-            signOut()
+            expireSession()
             return
           }
           if (cached) {
@@ -772,7 +772,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     }
 
-  }, [boundSessionToken, userId, cloud, guest, hydrateAttempt, signOut])
+  }, [boundSessionToken, userId, cloud, guest, hydrateAttempt, expireSession])
 
 
 
@@ -873,7 +873,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     const sessionToken = boundSessionToken()
     const sessionSubject = sessionToken ? authTokenSubject(sessionToken) : null
     if (!sessionToken || sessionSubject !== userId) {
-      signOut()
+      expireSession()
       return
     }
 
@@ -930,7 +930,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       }
     } catch (error) {
       if (error instanceof ApiError && error.status === 401) {
-        signOut()
+        expireSession()
         return
       }
       cloudWritable.current = false

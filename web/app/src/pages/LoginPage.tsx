@@ -14,6 +14,8 @@ import { AppearanceControl } from '../components/AppearanceControl'
 import { AnimatePresence, useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 import { microShake, motionFade, snapSpring, tactilePress } from '../lib/motionPresets'
+import { authContextPath } from '../lib/authLinks'
+import { getSessionReturnLabel } from '../lib/sessionNavigation'
 
 type AuthMode = 'signin' | 'signup'
 
@@ -40,6 +42,9 @@ export function LoginPage() {
   const googleConfigured = isGoogleAuthConfigured()
   const [searchParams, setSearchParams] = useSearchParams()
   const claiming = searchParams.get('claim') === '1'
+  const fromSetup = searchParams.get('setup') === '1'
+  const passwordUpdated = searchParams.get('passwordUpdated') === '1'
+  const returnLabel = getSessionReturnLabel()
 
   const mode: AuthMode = searchParams.get('mode') === 'signup' ? 'signup' : 'signin'
   const [name, setName] = useState('')
@@ -121,7 +126,7 @@ export function LoginPage() {
   return (
     <main className={`k-screen k-account is-${mode}`}>
       <header className="k-account-bar">
-        <Link to="/onboarding" className="welcome-brand" aria-label="Poiem welcome"><BrandLogo decorative /></Link>
+        <a href={import.meta.env.PROD ? '/' : '/welcome'} className="welcome-brand" aria-label="Poiem welcome"><BrandLogo decorative /></a>
         <AppearanceControl compact />
       </header>
       <div className="k-account-layout">
@@ -132,11 +137,18 @@ export function LoginPage() {
             <h1 id="account-heading">{mode === 'signin' ? 'Welcome back!' : 'Join Poiem.'}</h1>
             <p>
               {mode === 'signin'
-                ? claiming ? 'Pick up where you left off.' : 'Your journal is right where you left it.'
-                : claiming ? 'Save your first little win. Your journal comes with you.' : 'A home for your meals, your routine, and the little wins.'}
+                ? claiming ? 'Sign in to your existing journal. Your first meal stays on this device while we connect your account.' : 'Your journal is right where you left it.'
+                : claiming ? 'Create an account to keep the first meal you logged on this device.' : 'A home for your meals, your routine, and the little wins.'}
             </p>
           </div>
-          {claiming && <p className="k-account-claim"><Check size={17} aria-hidden="true" /> Connect the progress on this device.</p>}
+          {claiming && <p className="k-account-claim"><Check size={17} aria-hidden="true" /> Your device progress is kept until the handoff finishes.</p>}
+          {fromSetup && <aside className="k-account-context" aria-label="Your unfinished setup">
+            <strong>Your setup is kept on this device.</strong>
+            <p>A new account can continue these answers. An existing journal and any account setup keep their own progress.</p>
+            <Link to="/onboarding">Back to setup</Link>
+          </aside>}
+          {returnLabel && <p className="k-account-recovery-status" role="status">Your session ended. Sign in to the same account to continue {returnLabel}.</p>}
+          {passwordUpdated && <p className="k-account-recovery-status" role="status">Password updated. Sign in with your new password.</p>}
 
           <div className="auth-tabs" role="group" aria-label="Account access">
             <m.button
@@ -270,14 +282,14 @@ export function LoginPage() {
               <div ref={dockSlotRef} className="auth-submit-slot">
                 <div className={`auth-submit-dock${docked ? ' is-docked' : ''}`}>
                   <PressableButton type="submit" fullWidth disabled={loading}>
-                    {loading ? 'Please wait…' : <>{mode === 'signin' ? 'Sign in' : claiming ? 'Continue' : 'Create account'} <ArrowUpRight size={21} aria-hidden="true" /></>}
+                    {loading ? 'Please wait…' : <>{mode === 'signin' ? 'Sign in' : 'Create account'} <ArrowUpRight size={21} aria-hidden="true" /></>}
                   </PressableButton>
                 </div>
               </div>
             </fieldset>
             {mode === 'signin' && isCloudBackend() && (
               <p className="login-hint">
-                <Link to="/forgot-password">Forgot password?</Link>
+                <Link to={authContextPath('/forgot-password', searchParams)}>Forgot password?</Link>
               </p>
             )}
           </form>

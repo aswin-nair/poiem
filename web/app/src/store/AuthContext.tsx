@@ -2,11 +2,12 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import type { CredentialResponse } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
 import type { AuthUser, GoogleJwtPayload } from '../lib/auth'
-import { AUTH_SESSION_STORAGE_KEY, loadAuthSession, saveAuthSession } from '../lib/auth'
+import { AUTH_SESSION_STORAGE_KEY, clearAuthSession, loadAuthSession, saveAuthSession } from '../lib/auth'
 import { googleAccount, loginAccount, logoutAccount, registerAccount } from '../lib/authService'
 import { apiRefreshSession, clearAuthToken, clearLegacyAuthToken } from '../lib/apiClient'
 import { isCloudBackend } from '../lib/dataBackend'
 import { markAccountSeen, stageGuestStateForAccount } from '../lib/guestMode'
+import { acceptSessionAccount, clearSessionNavigation, currentSessionDestination, markSessionNavigationExpired, rememberSessionNavigation } from '../lib/sessionNavigation'
 
 interface AuthContextValue {
   user: AuthUser | null
@@ -15,11 +16,13 @@ interface AuthContextValue {
   signInWithEmail: (email: string, password: string) => Promise<void>
   signUpWithEmail: (name: string, email: string, password: string) => Promise<void>
   signOut: () => void
+  expireSession: () => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 function persistUser(user: AuthUser, setUser: (u: AuthUser) => void) {
+  acceptSessionAccount(user.sub)
   saveAuthSession(user)
   markAccountSeen()
   setUser(user)
@@ -38,10 +41,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     let cancelled = false
+    const previous = loadAuthSession()
+    const destination = currentSessionDestination()
+    if (previous && destination) rememberSessionNavigation(previous.sub, destination)
     void apiRefreshSession().then(result => {
       if (cancelled) return
       if (result) persistUser(result.user, setUser)
       else {
+        if (previous) markSessionNavigationExpired(previous.sub)
+        clearAuthSession()
         clearAuthToken()
         setUser(null)
       }
@@ -59,7 +67,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (event.key !== null && event.key !== AUTH_SESSION_STORAGE_KEY) return
       setUser(current => {
         const next = loadAuthSession()
-        if (current?.sub !== next?.sub) clearAuthToken()
+        if (current?.sub !== next?.sub) {
+          clearAuthToken()
+          clearSessionNavigation()
+        }
         return next
       })
     }
@@ -99,9 +110,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [cloud])
 
   const signOut = useCallback(() => {
+    clearSessionNavigation()
     setUser(null)
     void logoutAccount(cloud)
   }, [cloud])
+
+  const expireSession = useCallback(() => {
+    if (user) {
+      const destination = currentSessionDestination()
+      if (destination) rememberSessionNavigation(user.sub, destination)
+      markSessionNavigationExpired(user.sub)
+    }
+    clearAuthSession()
+    clearAuthToken()
+    setUser(null)
+  }, [user])
 
   const value = useMemo(() => ({
     user,
@@ -110,7 +133,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signInWithEmail,
     signUpWithEmail,
     signOut,
-  }), [user, sessionReady, signInWithGoogle, signInWithEmail, signUpWithEmail, signOut])
+    expireSession,
+  }), [user, sessionReady, signInWithGoogle, signInWithEmail, signUpWithEmail, signOut, expireSession])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

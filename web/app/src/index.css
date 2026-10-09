@@ -48,6 +48,7 @@
 @import './styles/screens/first-run.css';
 @import './styles/screens/pages.css';
 @import './styles/screens/account.css';
+@import './styles/screens/entry.css';
 @import './styles/screens/momo-interlude.css';
 @import './styles/screens/today-play.css';
 @import './styles/a11y.css';

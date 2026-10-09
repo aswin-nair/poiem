@@ -156,7 +156,7 @@ export function OnboardingWelcome({ index, onSlideChange, onStart, signedIn }: {
             </PressableButton>
             <p className="k-intro-note">A few questions, your starting guide, then your first meal.</p>
             {!signedIn && (
-              <Link to="/login" className="k-intro-signin">
+              <Link to="/login?setup=1" className="k-intro-signin">
                 Already have an account? <strong>Sign in</strong>
               </Link>
             )}

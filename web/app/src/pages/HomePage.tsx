@@ -70,6 +70,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const feel = useFeel()
   const budgetAnchor = useAnchor('calorie_ring')
   const [selectedDate, setSelectedDate] = useState(() => journalDayFromNavState(location.state) ?? startOfDay())
+  function selectJournalDate(date: Date) {
+    setSelectedDate(date)
+    // Keep only the chosen day in navigation context so an expired session can resume it.
+    navigate('/', { replace: true, state: { journalDay: localDayKey(date) } })
+  }
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)
   // Retain clearance until Today unmounts: dismissing a card at the scroll end must not jump the page.
@@ -303,7 +308,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
         <div className="k-week" data-mascot-avoid>
           <WeekStrip
             selectedDate={selectedDate}
-            onSelect={setSelectedDate}
+            onSelect={selectJournalDate}
             loggedDays={loggedDays}
             frozenDays={frozenDays}
             showWeekNav={false}
@@ -314,7 +319,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       {showDatePicker && (
         <DatePickerModal
           selectedDate={selectedDate}
-          onSelect={setSelectedDate}
+          onSelect={selectJournalDate}
           onClose={() => setShowDatePicker(false)}
         />
       )}
@@ -335,13 +340,13 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   <Surface variant="outlined" as="section" className="k-notice" aria-labelledby="guest-title">
                     <p className="k-eyebrow">Your first log is here</p>
                     <h2 id="guest-title">Save your progress</h2>
-                    <p>Continue to create an account and keep this device copy available across sign-in.</p>
+                    <p>Your first meal is saved on this device. Create an account to keep this start, or sign in to your existing journal.</p>
                     <div className="k-notice-actions">
                       <button type="button" className="k-button is-primary" onClick={() => navigate('/login?mode=signup&claim=1')}>
-                        Continue
+                        Create account
                       </button>
                       <button type="button" className="k-text-button" onClick={() => navigate('/login?mode=signin&claim=1')}>
-                        I already have an account
+                        Sign in
                       </button>
                     </div>
                   </Surface>
@@ -452,7 +457,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   )
                 })}
                 {!isToday && (
-                  <button type="button" className="k-button k-back-today" onClick={() => setSelectedDate(startOfDay())}>
+                  <button type="button" className="k-button k-back-today" onClick={() => selectJournalDate(startOfDay())}>
                     Back to today
                   </button>
                 )}
