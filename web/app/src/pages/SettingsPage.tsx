@@ -2,7 +2,7 @@ import { AppShell } from '../components/system/AppShell'
 import { useEffect, useRef, useState } from 'react'
 import { Toggle, RadioDot } from '../components/Toggle'
 import { SettingsRow } from '../components/SettingsRow'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
 import { useAuth } from '../store/AuthContext'
 import { BottomNav } from '../components/BottomNav'
@@ -46,6 +46,7 @@ import { MomoWardrobe } from '../components/MomoWardrobe'
 import { RoastPreview } from '../components/RoastPreview'
 import { SettingsNavigation, YOU_PANELS, type YouPanel } from '../components/SettingsNavigation'
 import { AppearanceControl } from '../components/AppearanceControl'
+import { findSettingDestination, SETTING_DESTINATIONS } from '../lib/settingDestinations'
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <h3 className="settings-section-label">{children}</h3>
@@ -112,6 +113,8 @@ export function SettingsPage() {
   const fileRef = useRef<HTMLInputElement>(null)
   const cloud = isCloudBackend()
   const [params, setParams] = useSearchParams()
+  const location = useLocation()
+  const [searchNotice, setSearchNotice] = useState('')
   const panelParam = params.get('panel')
   const panel = YOU_PANELS.some(([id]) => id === panelParam) ? panelParam as YouPanel : null
   const isHub = panel == null
@@ -124,6 +127,39 @@ export function SettingsPage() {
       : document.getElementById(`you-${panel}`)
     target?.focus({ preventScroll: target?.id !== 'ai-setup-error' })
   }, [panel, aiError])
+
+  useEffect(() => {
+    setSearchNotice('')
+    let destination = findSettingDestination(location.hash)
+    if (!destination) return
+    let notice = ''
+    let target: HTMLElement | null = null
+    let control: HTMLElement | null = null
+    const visited = new Set<string>()
+    while (destination && !visited.has(destination.id)) {
+      visited.add(destination.id)
+      target = document.getElementById(destination.id)
+      control = destination.focusContainer ? target : target?.matches('input, select, textarea, button, a')
+        ? target : target?.querySelector<HTMLElement>('input:not(:disabled), select:not(:disabled), textarea:not(:disabled), button:not(:disabled), summary, a') ?? null
+      if (control && !control.matches(':disabled')) break
+      notice = destination.unavailable ?? notice
+      destination = SETTING_DESTINATIONS.find(item => item.id === destination?.fallback)
+    }
+    if (!target || !control || control.matches(':disabled')) return
+    for (let ancestor: HTMLElement | null = target; ancestor; ancestor = ancestor.parentElement) {
+      if (ancestor instanceof HTMLDetailsElement) ancestor.open = true
+    }
+    const highlight = target.closest<HTMLElement>('.settings-row, .settings-field-block') ?? target
+    highlight.dataset.settingHighlight = 'true'
+    setSearchNotice(notice)
+    control.focus({ preventScroll: true })
+    control.scrollIntoView({ behavior: 'instant', block: 'center' })
+    const timer = window.setTimeout(() => delete highlight.dataset.settingHighlight, 2400)
+    return () => {
+      window.clearTimeout(timer)
+      delete highlight.dataset.settingHighlight
+    }
+  }, [location.hash, location.key])
 
   const goalTargets = computeTargets(profile)
   const currentProfileIssue = profileInputIssue(profile) ?? goalWeightIssue(profile)
@@ -342,6 +378,7 @@ export function SettingsPage() {
         <p className="you-status">{state.profile.trackingPaused ? 'Tracking paused · your streak is held' : 'Your routine · your pace'}</p>
         <SettingsNavigation panel={panel} hasChanges={hasChanges} pendingLabel={pendingLabel} saved={saved} invalid={hasProfileChanges && Boolean(currentProfileIssue)} onSave={saveProfile} />
         <SettingsFinder />
+        {searchNotice && <p className="settings-search-notice" role="status">{searchNotice}</p>}
 
         {isHub && <>
         <section className="appearance-settings" id="you-appearance" tabIndex={-1} aria-labelledby="appearance-settings-title">
@@ -426,30 +463,30 @@ export function SettingsPage() {
           <div className="error-banner" role="alert">{profileError ?? currentProfileIssue}</div>
         )}
         <SettingsCard>
-          <SettingsRow label="Name">
+          <SettingsRow searchId="setting-name" label="Name">
             <input className="settings-input" autoComplete="given-name" value={profile.name ?? ''} onChange={e => setProfile(p => ({ ...p, name: e.target.value }))} />
           </SettingsRow>
-          <SettingsRow label="Gender">
+          <SettingsRow searchId="setting-gender" label="Gender">
             <select className="settings-select" value={profile.gender} onChange={e => setProfile(p => ({ ...p, gender: e.target.value as Gender }))}>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
           </SettingsRow>
-          <SettingsRow label="Height" hint="cm">
+          <SettingsRow searchId="setting-height" label="Height" hint="cm">
             <input className="settings-input" type="number" inputMode="decimal" step="0.1" value={profile.heightCm} onChange={e => setProfile(p => ({ ...p, heightCm: Number(e.target.value) }))} />
           </SettingsRow>
-          <SettingsRow label="Weight" hint="kg">
+          <SettingsRow searchId="setting-weight" label="Weight" hint="kg">
             <input className="settings-input" type="number" inputMode="decimal" step="0.1" value={profile.weightKg} onChange={e => setProfile(p => ({ ...p, weightKg: Number(e.target.value) }))} />
           </SettingsRow>
-          <SettingsRow label="Activity">
+          <SettingsRow searchId="setting-activity" label="Activity">
             <select className="settings-select" value={profile.activityLevel} onChange={e => setProfile(p => ({ ...p, activityLevel: e.target.value as ActivityLevel }))}>
               {(Object.keys(ACTIVITY_LABELS) as ActivityLevel[]).map(k => (
                 <option key={k} value={k}>{ACTIVITY_LABELS[k]}</option>
               ))}
             </select>
           </SettingsRow>
-          <SettingsRow label="Day-ring pace" hint="Controls logging steps only">
+          <SettingsRow searchId="setting-pace" label="Day-ring pace" hint="Controls logging steps only">
             <select
               className="settings-select"
               value={profile.loggingCommitment ?? 'light'}
@@ -460,7 +497,7 @@ export function SettingsPage() {
               <option value="detailed">Detailed · meals + detail</option>
             </select>
           </SettingsRow>
-          <SettingsRow label="Goal">
+          <SettingsRow searchId="setting-goal" label="Goal">
             <select
               className="settings-select"
               value={profile.goal}
@@ -479,7 +516,7 @@ export function SettingsPage() {
             </select>
           </SettingsRow>
           {profile.goal !== 'maintain' && (
-            <SettingsRow label="Weekly change" hint={`kg · max ${maxWeeklyChangeKg(profile)}`}>
+            <SettingsRow searchId="setting-weekly-change" label="Weekly change" hint={`kg · max ${maxWeeklyChangeKg(profile)}`}>
               <input
                 className="settings-input"
                 type="number"
@@ -493,7 +530,7 @@ export function SettingsPage() {
             </SettingsRow>
           )}
           {(profile.goal !== 'maintain' || profile.goalWeightKg != null) && (
-            <SettingsRow label="Goal weight" hint="kg · optional">
+            <SettingsRow searchId="setting-goal-weight" label="Goal weight" hint="kg · optional">
               <input
                 className="settings-input"
                 type="number"
@@ -522,19 +559,19 @@ export function SettingsPage() {
         <p className="settings-preference-status" role="status" aria-live="polite">{preferenceConfirmation}</p>
         <SectionLabel>Feel</SectionLabel>
         <SettingsCard>
-          <SettingsRow label="Sound" hint="Short cues when you log a meal">
+          <SettingsRow searchId="setting-sound" label="Sound" hint="Short cues when you log a meal">
             <Toggle
               checked={state.profile.soundEnabled !== false}
               onChange={next => applyPreference('soundEnabled', next, `Sound ${next ? 'on' : 'off'} · saved.`)}
             />
           </SettingsRow>
-          <SettingsRow label="Haptics" hint="A light tap on press">
+          <SettingsRow searchId="setting-haptics" label="Haptics" hint="A light tap on press">
             <Toggle
               checked={state.profile.hapticsEnabled !== false}
               onChange={next => applyPreference('hapticsEnabled', next, `Haptics ${next ? 'on' : 'off'} · saved.`)}
             />
           </SettingsRow>
-          <SettingsRow label="Notifications" hint="At most two per day. Never about calories.">
+          <SettingsRow searchId="setting-notifications" label="Notifications" hint="At most two per day. Never about calories.">
             <button type="button" className="settings-data-btn" onClick={() => void requestNotifyPermission()}>
               Allow
             </button>
@@ -544,6 +581,7 @@ export function SettingsPage() {
         <SectionLabel>Taking a break</SectionLabel>
         <SettingsCard>
           <SettingsRow
+            searchId="setting-pause"
             label="Pause tracking"
             hint={state.profile.trackingPaused
               ? 'Calorie, macro, and weight numbers are hidden and your streak is held.'
@@ -578,7 +616,7 @@ export function SettingsPage() {
         <SectionLabel>Mascot</SectionLabel>
         <SettingsCard>
           <p className="page-sub">A small kitchen companion. Never sad, never scoring your food.</p>
-          <SettingsRow label="Show Momo" hint="Keep your companion around the app · saves immediately">
+          <SettingsRow searchId="setting-momo-show" label="Show Momo" hint="Keep your companion around the app · saves immediately">
             <Toggle
               checked={mascotVisible}
               onChange={next => {
@@ -589,7 +627,7 @@ export function SettingsPage() {
           </SettingsRow>
           {mascotVisible && (
             <>
-              <SettingsRow label="Lively" hint="More frequent antics · saves immediately">
+              <SettingsRow searchId="setting-momo-lively" label="Lively" hint="More frequent antics · saves immediately">
                 <RadioDot
                   name="mascot-activity"
                   checked={state.gamification.mascotActivity === 'lively'}
@@ -599,7 +637,7 @@ export function SettingsPage() {
                   }}
                 />
               </SettingsRow>
-              <SettingsRow label="Calm" hint="Quieter, slower visits · saves immediately">
+              <SettingsRow searchId="setting-momo-calm" label="Calm" hint="Quieter, slower visits · saves immediately">
                 <RadioDot
                   name="mascot-activity"
                   checked={state.gamification.mascotActivity === 'calm'}
@@ -611,13 +649,13 @@ export function SettingsPage() {
               </SettingsRow>
             </>
           )}
-          <SettingsRow label="Mute Momo" hint="Silence speech bubbles · saves immediately">
+          <SettingsRow searchId="setting-momo-mute" label="Mute Momo" hint="Silence speech bubbles · saves immediately">
             <Toggle
               checked={state.profile.mascotMuted === true}
               onChange={next => applyPreference('mascotMuted', next, `Momo ${next ? 'muted' : 'unmuted'} · saved.`)}
             />
           </SettingsRow>
-          <SettingsRow label="Roast mode" hint="Opt in to playful teasing about app habits. Never your body or food · saves immediately">
+          <SettingsRow searchId="setting-momo-roast" label="Roast mode" hint="Opt in to playful teasing about app habits. Never your body or food · saves immediately">
             <Toggle
               checked={state.profile.mascotRoasts === true}
               onChange={next => applyPreference('mascotRoasts', next, `Roast mode ${next ? 'on' : 'off'} · saved.`)}
@@ -625,7 +663,7 @@ export function SettingsPage() {
           </SettingsRow>
           {state.profile.mascotRoasts && mascotVisible && !state.profile.mascotMuted && !state.profile.trackingPaused
             && <RoastPreview reducedMotion={state.profile.mascotReducedMotion === true} />}
-          <SettingsRow label="Reduce Momo motion" hint="Stop roaming and gestures · saves immediately">
+          <SettingsRow searchId="setting-momo-motion" label="Reduce Momo motion" hint="Stop roaming and gestures · saves immediately">
             <Toggle
               checked={state.profile.mascotReducedMotion === true}
               onChange={next => applyPreference('mascotReducedMotion', next, `Momo motion ${next ? 'reduced' : 'restored'} · saved.`)}
@@ -633,7 +671,7 @@ export function SettingsPage() {
           </SettingsRow>
         </SettingsCard>
 
-        <details className="you-disclosure">
+        <details className="you-disclosure" id="setting-momo-wardrobe">
           <summary>Momo’s wardrobe <span>Outfits &amp; unlocks</span></summary>
         <SettingsCard>
           <MomoWardrobe />
@@ -648,6 +686,7 @@ export function SettingsPage() {
           </header>
         <SettingsCard>
           <SettingsRow
+            searchId="setting-own-api"
             label="Use my own API"
             hint="Off: use Poiem AI. On: connect your service using one of the API formats below."
           >
@@ -704,7 +743,7 @@ export function SettingsPage() {
               <span className="settings-row-hint" id="ai-auth-header-help">Use the header name your service specifies, such as api-key or x-api-key.</span>
             </label>}
           </details>
-          {authType !== 'none' && <SettingsRow label="API key">
+          {authType !== 'none' && <SettingsRow searchId="setting-api-key" label="API key">
             <div className="settings-key-wrap">
               <input
                 className="settings-input"
@@ -748,6 +787,7 @@ export function SettingsPage() {
           <summary>Momo live AI <span>{hasOwnConnection ? 'Uses your connection when saved' : 'Needs your own API connection'}</span></summary>
         <SettingsCard>
           <SettingsRow
+            searchId="setting-momo-live"
             label="Momo live AI"
             hint={hasOwnConnection
               ? 'He writes fresh reactions in the background.'
@@ -755,7 +795,7 @@ export function SettingsPage() {
           >
             <Toggle checked={mascotEnabled} onChange={setMascotEnabled} />
           </SettingsRow>
-          <SettingsRow label="Momo's personality" hint="Roasts only harmless app fumbles.">
+          <SettingsRow searchId="setting-momo-personality" label="Momo's personality" hint="Roasts only harmless app fumbles.">
             <select
               className="settings-select"
               aria-label="Momo's personality"
@@ -786,7 +826,7 @@ export function SettingsPage() {
           {passwordSaved && <p className="settings-byok-note" role="status">Password updated.</p>}
           {accountError && <div className="error-banner" role="alert">{accountError}</div>}
           {user && (
-            <div className="settings-account-row">
+            <div className="settings-account-row" id="setting-account-identity" tabIndex={-1}>
               {user.picture ? (
                 <img src={user.picture} alt="" className="account-avatar" referrerPolicy="no-referrer" />
               ) : (
@@ -801,7 +841,7 @@ export function SettingsPage() {
               </div>
             </div>
           )}
-          <button type="button" className="settings-signout-btn" onClick={signOut} disabled={Boolean(accountAction)}>
+          <button type="button" id="setting-signout" className="settings-signout-btn" onClick={signOut} disabled={Boolean(accountAction)}>
             Sign out
           </button>
           {cloud && user?.provider === 'email' && (
@@ -844,6 +884,7 @@ export function SettingsPage() {
               <button
                 type="button"
                 className="settings-data-btn"
+                id="setting-signout-all"
                 onClick={() => void handleSignOutEverywhere()}
                 disabled={Boolean(accountAction)}
               >
@@ -855,6 +896,7 @@ export function SettingsPage() {
           <button
             type="button"
             className="settings-data-btn danger"
+            id="setting-delete-account"
             onClick={() => { setShowDeleteAccount(true); setAccountError(null) }}
             disabled={Boolean(accountAction)}
           >
@@ -908,17 +950,18 @@ export function SettingsPage() {
           </header>
         {/* Data */}
         <SettingsCard>
-          <button type="button" className="settings-data-btn" onClick={handleExport}>
+          <button type="button" id="setting-export" className="settings-data-btn" onClick={handleExport}>
             Export backup
           </button>
           <div className="settings-divider" />
-          <button type="button" className="settings-data-btn" onClick={() => fileRef.current?.click()}>
+          <button type="button" id="setting-import" className="settings-data-btn" onClick={() => fileRef.current?.click()}>
             Import backup
           </button>
           <div className="settings-divider" />
           <button
             type="button"
             className="settings-data-btn danger"
+            id="setting-delete-data"
             onClick={async () => {
               if (!confirm('Delete all saved data? This cannot be undone.')) return
               const cleared = await clearAllData()

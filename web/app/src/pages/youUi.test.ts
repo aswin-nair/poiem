@@ -71,9 +71,10 @@ describe('You page UI', () => {
 
   it('keeps wardrobe and Momo live AI in native, initially closed disclosures', () => {
     const momo = renderPage('/settings?panel=momo')
-    expect(momo.match(/<details class="you-disclosure">/g)).toHaveLength(1)
+    expect(momo.match(/<details class="you-disclosure"[^>]*>/g)).toHaveLength(1)
+    expect(momo).toContain('id="setting-momo-wardrobe"')
     expect(momo).toContain('role="switch"')
-    expect(momo).not.toContain('<details class="you-disclosure" open=')
+    expect(momo).not.toMatch(/<details class="you-disclosure"[^>]*\bopen=/)
     const ai = renderPage('/settings?panel=ai')
     expect(ai.match(/<details class="you-disclosure">/g)).toHaveLength(1)
     expect(ai).toContain('Use my own API')

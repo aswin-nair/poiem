@@ -385,6 +385,8 @@
   .k-you .you-disclosure > .settings-card:has(.k-wardrobe) { padding: 16px; }
 
   .k-you .settings-footer { margin: 8px 0 0; padding: 12px 0; font: 600 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); text-align: center; }
+  .k-you [data-setting-highlight] { outline: 3px solid var(--k-role-focus); outline-offset: 4px; scroll-margin-block: 120px; }
+  .k-you .settings-search-notice { margin: 0; padding: var(--k-space-md); border: 1px solid var(--k-role-border); background: var(--k-role-surface-raised); color: var(--k-role-text); font: 600 var(--k-type-label)/1.5 var(--k-font-body); }
   /* A shared label column gives every editable row the same field edges. */
   .k-you .settings-row:has(.settings-input, .settings-select) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--k-space-lg); padding-block: var(--k-space-md); }
   .k-you .settings-row:has(.settings-input, .settings-select) .settings-row-control { width: 100%; min-width: 0; max-width: none; }

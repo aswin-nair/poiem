@@ -49,12 +49,13 @@ test('settings search supports keyboard jumps and immediately saved preferences'
   await expect(search).toHaveValue('')
 
   await search.fill('momo')
-  await finder.getByRole('link', { name: /Momo/ }).click()
-  await expect(page.locator('#you-momo')).toBeFocused()
+  await finder.getByRole('link', { name: /^Show Momo/ }).click()
+  await expect(page.getByRole('switch', { name: 'Show Momo' })).toBeFocused()
   await page.getByRole('switch', { name: 'Mute Momo' }).setChecked(true)
   await search.fill('password')
   await finder.getByRole('link', { name: /Account/ }).click()
-  await expect(page.locator('#you-account')).toBeFocused()
+  await expect(page.locator('#setting-account-identity')).toBeFocused()
+  await expect(page.getByRole('status').filter({ hasText: 'Password fields are available' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Save settings' })).toHaveCount(0)
   await openYouDestination(page, 'Momo')
   await expect(page.getByRole('switch', { name: 'Mute Momo' })).toBeChecked()
@@ -70,7 +71,7 @@ test('settings search supports keyboard jumps and immediately saved preferences'
   await expect(search).toHaveValue('')
   await expect(finder.getByRole('link')).toHaveCount(0)
   await search.fill('AI key')
-  await expect(finder.getByRole('link', { name: /AI setup/ })).toBeVisible()
+  await expect(finder.getByRole('link', { name: /^API key/ })).toBeVisible()
 })
 
 async function persistedSettings(page: Page) {
