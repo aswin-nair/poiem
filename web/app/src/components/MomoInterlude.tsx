@@ -8,7 +8,7 @@ import {
   MOMO_INTERLUDE_IDLE_MS, MOMO_INTERLUDE_VISIBLE_MS, momoInterludeAllowed,
   momoInterludeBudget, momoInterludeDelay, momoInterludeRoute, nextMomoInterlude,
   readMomoInterludeLedger, type MomoInterludeLedger, type MOMO_INTERLUDES,
-  type MomoPlayAction, type MomoPlayTarget,
+  type MomoPlayAction, type MomoPlayTarget, type MomoInterludeStory,
 } from '../lib/momoInterludes'
 import { poiemTestHooks, testRng } from '../lib/testHooks'
 import type { BehaviorKey } from '../mascot/behaviors'
@@ -352,13 +352,15 @@ function InterludeScene({ entry, host, target, position: initial, outfit, static
           }
         }
         const prop = part.classList.contains('k-momo-interlude-prop')
+        // Story props clip all their travel to this fixed, measured box.
+        const story = prop && part.classList.contains('k-momo-story-prop')
         const bubble = part.classList.contains('k-momo-interlude-bubble')
         const compact = position.compact
         return {
-          left: part.offsetLeft - (prop && compact ? 10 : 0),
-          top: part.offsetTop - (prop ? compact ? 6 : 14 : 0),
-          width: part.offsetWidth + (prop ? compact ? 16 : 36 : bubble && compact ? 14 : 0),
-          height: part.offsetHeight + (prop ? compact ? 12 : 18 : bubble && !compact ? 16 : 0),
+          left: part.offsetLeft - (prop && compact && !story ? 10 : 0),
+          top: part.offsetTop - (prop && !story ? compact ? 6 : 14 : 0),
+          width: part.offsetWidth + (prop && !story ? compact ? 16 : 36 : bubble && compact ? 14 : 0),
+          height: part.offsetHeight + (prop && !story ? compact ? 12 : 18 : bubble && !compact ? 16 : 0),
         }
       })
       const next = scenePosition(target, { height: rect.height, parts }, position.compact)
@@ -398,11 +400,11 @@ function InterludeScene({ entry, host, target, position: initial, outfit, static
     let headingAnimation: Animation | undefined
     const timers = [
       setTimeout(() => {
-        setPose('point_at_target')
+        setPose(entry.story === 'ticket-plane' ? 'read_ticket' : 'point_at_target')
         // The real word stays in the document. Only an uneditable heading gets
         // a small temporary wiggle; the prop is a decorative duplicate.
         const heading = target?.element
-        if (heading?.matches('h1, h2, h3') && !heading.closest(CONTROLS) && visible(heading)) {
+        if (!entry.story && heading?.matches('h1, h2, h3') && !heading.closest(CONTROLS) && visible(heading)) {
           headingAnimation = heading.animate([
             { transform: 'translateY(0) rotate(0deg)' },
             { transform: 'translateY(-3px) rotate(-1.5deg)', offset: 0.25 },
@@ -411,24 +413,24 @@ function InterludeScene({ entry, host, target, position: initial, outfit, static
           ], { duration: 620, easing: 'ease-in-out' })
         }
       }, 700),
-      setTimeout(() => setPose(target?.kind === 'water' ? 'happy_hop' : 'tiny_dance'), 1_500),
-      setTimeout(() => setPose('wave_at_user'), 3_300),
+      setTimeout(() => setPose(entry.story ? 'point_at_target' : target?.kind === 'water' ? 'happy_hop' : 'tiny_dance'), 1_500),
+      setTimeout(() => setPose(entry.story === 'saved-waiter' || entry.story === 'heading-polish' ? 'bow' : 'wave_at_user'), 3_300),
       setTimeout(() => setPose('still'), 4_800),
     ]
     return () => { timers.forEach(clearTimeout); headingAnimation?.cancel() }
-  }, [staticMotion, target])
+  }, [staticMotion, target, entry.story])
 
   const style = { left: position.left, top: position.top, width: position.width, height: position.height } satisfies CSSProperties
-  const water = target?.kind === 'water' || entry.action === 'water'
+  const water = !entry.story && (target?.kind === 'water' || entry.action === 'water')
   return <aside ref={host} className={`k-momo-interlude${position.compact ? ' is-compact' : ''}${staticMotion ? ' is-static' : ''}${water ? ' is-water-play' : ''}`}
-    style={style} aria-label="A little Momo moment" data-mascot-avoid data-momo-scene="screen-play" data-momo-target={target?.kind ?? 'none'}
+    style={style} aria-label="A little Momo moment" data-mascot-avoid data-momo-scene={entry.story ?? 'screen-play'} data-momo-target={target?.kind ?? 'none'}
     onMouseEnter={() => { engaged.current.hover = true; pause() }}
     onMouseLeave={() => { engaged.current.hover = false; resume() }}
     onFocus={() => { engaged.current.focus = true; pause() }}
     onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) { engaged.current.focus = false; resume() } }}>
     <div className="k-momo-interlude-bubble"><p>{entry.line}</p></div>
     <span className="k-momo-interlude-art mascot-pose" aria-hidden="true"><Momo pose={pose} expression={entry.expression} outfit={outfit} steam={false} /></span>
-    <span className="k-momo-interlude-prop" aria-hidden="true">{target?.word ?? 'TA-DA!'}</span>
+    <MomoInterludeProp story={entry.story} word={target?.word ?? 'TA-DA!'} />
     <span className="k-momo-interlude-spark k-momo-interlude-spark-one" aria-hidden="true">✦</span>
     <span className="k-momo-interlude-spark k-momo-interlude-spark-two" aria-hidden="true">✦</span>
     {water && <span className="k-momo-interlude-splash" aria-hidden="true"><i /><i /><i /></span>}
@@ -438,4 +440,28 @@ function InterludeScene({ entry, host, target, position: initial, outfit, static
     </div>
     <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{announcement}</span>
   </aside>
+}
+
+/** The drawing is a local prop, not a copy of a meal, message or nutrition value. */
+export function MomoInterludeProp({ story, word }: { story?: MomoInterludeStory; word: string }) {
+  const publicWord = APPROVED_WORDS.includes(word) ? word : 'TA-DA!'
+  if (!story) return <span className="k-momo-interlude-prop" aria-hidden="true">{publicWord}</span>
+  return <span className={`k-momo-interlude-prop k-momo-story-prop is-${story}`} aria-hidden="true">
+    {story === 'ticket-plane' && <svg className="k-momo-story-drawing" viewBox="0 0 108 64">
+      <g className="k-momo-story-ticket"><path className="k-momo-story-paper" d="M24 7h60v46H24v-8c6 0 6-8 0-8V23c6 0 6-8 0-8Z" /><path d="M35 15v30M42 34h30M42 40h20" /><text x="42" y="27">Ticket</text></g>
+      <g className="k-momo-story-plane"><path className="k-momo-story-paper" d="m16 31 68-20-21 42-17-17-16 8 6-14Z" /><path d="m36 30 48-19-38 25 17 17" /></g>
+      <path className="k-momo-story-trail" d="M8 48c7 6 16 5 17 0 1-4-5-5-8-2s5 7 12 1" />
+    </svg>}
+    {story === 'heading-polish' && <>
+      <span className="k-momo-story-sign">{publicWord}</span>
+      <span className="k-momo-story-underline" />
+      <svg className="k-momo-story-brush" viewBox="0 0 28 28"><path className="k-momo-story-paper" d="m4 15 6-7 13 8-6 8Z" /><path d="m10 8 4-6 5 4-4 5M5 17l10 6M8 14l10 6" /></svg>
+      <span className="k-momo-story-shine">✦</span>
+    </>}
+    {story === 'saved-waiter' && <svg className="k-momo-story-drawing" viewBox="0 0 108 64">
+      <g className="k-momo-story-tray"><path d="M9 45h90l-7 7H16Z" /><path d="M32 55h44" /></g>
+      <path className="k-momo-story-star" d="m54 7 6 12 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2Z" />
+      <text className="k-momo-story-saved" x="54" y="63" textAnchor="middle">Saved</text>
+    </svg>}
+  </span>
 }
