@@ -2,7 +2,7 @@
 
 October 8, 2026 · Companion to [E2E-PLAN.md](E2E-PLAN.md)
 
-This is the acceptance checklist for the full proposed redesign. The first core meal slice is implemented; its actual local outcomes are recorded in [implementation evidence](core-meal/README.md). The remaining enhancements and external-device/staging checks are pending. A journey listed below is not automatically marked passed by a local suite count.
+This is the acceptance checklist for the full proposed redesign. The first core meal slice and local first-session/account slice are implemented; actual outcomes are recorded in [core meal evidence](core-meal/README.md) and [first-session evidence](first-session/README.md). Three new Momo stories are captured in the [scene gallery](first-session/momo/gallery.html). Remaining workflow enhancements and external-device/staging checks are pending. A journey listed below is not automatically marked passed by a local suite count.
 
 **Coverage levels**
 
