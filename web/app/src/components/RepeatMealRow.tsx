@@ -6,7 +6,7 @@ import { useLongPress } from '../hooks/useLongPress'
 import { MEAL_LABELS, type FoodEntry, type MealType, type SavedMeal } from '../types'
 
 /** The same portion and Log controls wherever a meal can be repeated. */
-export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = false, saveCue, onPortion, showNutrition = true, compact = false }: {
+export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = false, saveCue, onPortion, showNutrition = true, compact = false, portionMultiplier, onPortionChange }: {
   item: FoodEntry | SavedMeal
   basis: 'saved' | 'previous'
   mealType: MealType
@@ -19,8 +19,12 @@ export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = fa
   showNutrition?: boolean
   /** A repeat shortcut whose shared sheet header already shows its destination. */
   compact?: boolean
+  /** Keep a library selection when search or filtering temporarily removes its row. */
+  portionMultiplier?: number
+  onPortionChange?: (multiplier: number) => void
 }) {
-  const [multiplier, setMultiplier] = useState(1)
+  const [localMultiplier, setLocalMultiplier] = useState(1)
+  const multiplier = portionMultiplier ?? localMultiplier
   const [adjusting, setAdjusting] = useState(false)
   const [savePlay, setSavePlay] = useState(() => saved && saveCue ? saveCue : 0)
   const previousSaveCue = useRef(saveCue)
@@ -56,7 +60,8 @@ export function RepeatMealRow({ item, basis, mealType, onLog, onSave, saved = fa
     const value = Math.max(0.25, Math.round(next * 4) / 4)
     if (value === multiplier) return
     feel('select')
-    setMultiplier(value)
+    if (portionMultiplier === undefined) setLocalMultiplier(value)
+    onPortionChange?.(value)
   }
 
   return <article className={`k-repeat-meal${compact ? ` is-compact${adjusting ? ' is-adjusting' : ''}` : ''}`} aria-label={item.name} aria-describedby={compact ? `${controlId}-context` : undefined}>

@@ -7,7 +7,7 @@ import { IconSearch } from '../components/icons'
 import { RepeatMealRow } from '../components/RepeatMealRow'
 import { useApp, isFavorite } from '../store/AppContext'
 import { defaultMealType, recentMeals, mealKey, scaleMeal } from '../lib/meals'
-import { filterMealLibrary } from '../lib/mealLibrary'
+import { filterMealLibrary, getMealLibraryUsage, sortMealLibrary, type MealLibrarySort } from '../lib/mealLibrary'
 import { mealTypeFromNavState } from '../lib/logContext'
 import { MEAL_LABELS, type FoodEntry, type MealType, type SavedMeal } from '../types'
 import { History } from 'lucide-react'
@@ -25,14 +25,17 @@ export function SavedMealsPage() {
   const location = useLocation()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
+  const [sort, setSort] = useState<MealLibrarySort>('recent')
+  const [portions, setPortions] = useState(() => new Map<string, number>())
   const [mealType, setMealType] = useState<MealType>(() => mealTypeFromNavState(location.state) ?? defaultMealType())
   const [logGuard] = useState(createOnceGuard)
   const [saveCue, setSaveCue] = useState<{ key: string; run: number } | null>(null)
   const saveRun = useRef(0)
   const feel = useFeel()
-  const recents = recentMeals(state.foodEntries).filter(entry => !isFavorite(state, entry))
+  const recents = useMemo(() => recentMeals(state.foodEntries).filter(entry => !isFavorite(state, entry)), [state])
   const isSubRoute = location.pathname === '/log/saved'
-  const filteredSaved = useMemo(() => filterMealLibrary(state.favoriteMeals, query, filter), [state.favoriteMeals, query, filter])
+  const usage = useMemo(() => getMealLibraryUsage(state.foodEntries), [state.foodEntries])
+  const filteredSaved = useMemo(() => sortMealLibrary(filterMealLibrary(state.favoriteMeals, query, filter), sort, usage), [state.favoriteMeals, query, filter, sort, usage])
   const filteredRecents = filterMealLibrary(recents, query, filter)
   const hasFilters = Boolean(query.trim()) || filter !== 'all'
 
@@ -43,6 +46,10 @@ export function SavedMealsPage() {
   }, [saveCue])
 
   function resetFilters() { setQuery(''); setFilter('all') }
+
+  function choosePortion(meal: SavedMeal | FoodEntry, multiplier: number) {
+    setPortions(previous => new Map(previous).set(mealKey(meal), multiplier))
+  }
 
   function toggleSaved(meal: SavedMeal | FoodEntry) {
     const key = mealKey(meal)
@@ -78,7 +85,7 @@ export function SavedMealsPage() {
         <header className="page-heading">
           <p className="k-eyebrow">Your usuals</p>
           <h1 className="page-title" data-momo-play="saved">Saved</h1>
-          <p className="page-sub">Your saved meals come first, followed by other recent meals.</p>
+          <p className="page-sub">Choose a portion, then log one of your usuals to Today.</p>
         </header>
 
         <div className="k-saved-context">
@@ -94,10 +101,22 @@ export function SavedMealsPage() {
           <span>Today</span>
         </div>
 
-        <label className="saved-search-label" htmlFor="saved-meal-search">Find a saved or recent meal</label>
-        <div className="discover-search">
-          <IconSearch size={16} />
-          <input id="saved-meal-search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Try a meal name" type="search" />
+        <div className="saved-library-toolbar">
+          <div className="saved-library-search">
+            <label className="saved-search-label" htmlFor="saved-meal-search">Find a saved or recent meal</label>
+            <div className="discover-search">
+              <IconSearch size={16} />
+              <input id="saved-meal-search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Try a meal name" type="search" />
+            </div>
+          </div>
+          <div className="saved-library-sort">
+            <label htmlFor="saved-meal-sort">Sort saved meals</label>
+            <select id="saved-meal-sort" value={sort} onChange={event => { feel('select'); setSort(event.target.value as MealLibrarySort) }}>
+              <option value="recent">Recently used</option>
+              <option value="name">Name</option>
+              <option value="most-used">Most used</option>
+            </select>
+          </div>
         </div>
 
         <div className="discover-chip-row" role="group" aria-label="Filter saved meals by type">
@@ -125,7 +144,14 @@ export function SavedMealsPage() {
               <div className="saved-empty">No saved meals match these filters. Try another name or clear the filters above.</div>
             ) : (
               <div className="k-repeat-list">
-                {filteredSaved.map(meal => <RepeatMealRow key={meal.id} item={meal} basis="saved" mealType={mealType} onLog={multiplier => logMeal(meal, multiplier)} onSave={() => toggleSaved(meal)} saved saveCue={saveCue?.key === mealKey(meal) ? saveCue.run : undefined} />)}
+                {filteredSaved.map(meal => {
+                  const key = mealKey(meal)
+                  const count = usage.get(key)?.count ?? 0
+                  return <div className="saved-library-item" key={key}>
+                    <RepeatMealRow item={meal} basis="saved" mealType={mealType} onLog={multiplier => logMeal(meal, multiplier)} onSave={() => toggleSaved(meal)} saved saveCue={saveCue?.key === key ? saveCue.run : undefined} compact portionMultiplier={portions.get(key) ?? 1} onPortionChange={multiplier => choosePortion(meal, multiplier)} />
+                    <p className="saved-library-usage">{count ? `${count} matching journal ${count === 1 ? 'log' : 'logs'}` : 'No matching journal logs yet'}</p>
+                  </div>
+                })}
               </div>
             )}
           </section>
@@ -139,7 +165,7 @@ export function SavedMealsPage() {
               <div className="saved-empty">{recents.length ? 'No recent meals match these filters.' : 'Your logged meals will appear here for easy reuse.'}</div>
             ) : (
               <div className="k-repeat-list">
-                {filteredRecents.map(entry => <RepeatMealRow key={entry.id} item={entry} basis="previous" mealType={mealType} onLog={multiplier => logMeal(entry, multiplier)} onSave={() => toggleSaved(entry)} saved={isFavorite(state, entry)} />)}
+                {filteredRecents.map(entry => <RepeatMealRow key={mealKey(entry)} item={entry} basis="previous" mealType={mealType} onLog={multiplier => logMeal(entry, multiplier)} onSave={() => toggleSaved(entry)} saved={isFavorite(state, entry)} compact portionMultiplier={portions.get(mealKey(entry)) ?? 1} onPortionChange={multiplier => choosePortion(entry, multiplier)} />)}
               </div>
             )}
           </section>

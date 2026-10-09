@@ -19,12 +19,14 @@ const LAYERED = {
   'styles/screens/today.css': 'screens',
   'styles/screens/flows.css': 'screens',
   'styles/screens/log-picker.css': 'screens',
+  'styles/screens/saved-library.css': 'screens',
   'styles/screens/meal-review.css': 'screens',
   'styles/screens/insights.css': 'screens',
   'styles/screens/you.css': 'screens',
   'styles/screens/admin.css': 'screens',
   'styles/screens/first-run.css': 'screens',
   'styles/screens/pages.css': 'screens',
+  'styles/screens/coach-drafting.css': 'screens',
   'styles/screens/account.css': 'screens',
   'styles/screens/entry.css': 'screens',
   'styles/screens/momo-interlude.css': 'screens',
@@ -43,11 +45,13 @@ const MIGRATED = [
   'styles/screens/kitchen.css',
   'styles/screens/flows.css',
   'styles/screens/log-picker.css',
+  'styles/screens/saved-library.css',
   'styles/screens/meal-review.css',
   'styles/screens/entry.css',
   'styles/screens/insights.css',
   'styles/screens/you.css',
   'styles/screens/pages.css',
+  'styles/screens/coach-drafting.css',
   'styles/screens/momo-interlude.css',
   'styles/screens/today-play.css',
 ] as const
@@ -72,6 +76,7 @@ const PLAYFUL = [
   /\.k-coach-head\b|\.k-coach-empty\b|\.k-coach-send\b/,
   /\.you-header\b|\.appearance-settings\b|\.appearance-option > input:checked|\.you-shortcuts a\[aria-current/,
   /\.progress-page-header\b|\.k-insights \.k-journey\b|\.consistency-card\b|\.range-chip\[aria-pressed|\.progress-log-btn\b/,
+  /\.k-insights \.insights-open-day\b/,
 ]
 
 /** Innermost blocks are declarations; removing them leaves selectors and at-rules. */
