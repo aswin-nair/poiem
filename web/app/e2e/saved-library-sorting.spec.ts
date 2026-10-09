@@ -53,6 +53,36 @@ for (const width of [320, 390, 1440]) {
       await expect.poll(names).toEqual(['Tomato soup', 'Chicken rice bowl', 'Overnight oats', 'Apple'])
       await expect(saved).toContainText('3 matching journal logs')
       await expect(saved).toContainText('No matching journal logs yet')
+      const sortPicker = page.getByRole('combobox', { name: 'Sort saved meals', exact: true })
+      const destinationPicker = page.getByRole('combobox', { name: 'Logging to', exact: true })
+      for (const picker of [sortPicker, destinationPicker]) {
+        await expect(picker).toHaveCSS('appearance', 'none')
+        await expect(picker).toHaveCSS('font-size', '16px')
+        await picker.focus()
+        await expect(picker).toBeFocused()
+      }
+      await page.evaluate(async () => { await document.fonts.ready })
+      const clippedSelections = await page.locator('.saved-library-select select').evaluateAll(elements => elements.filter(element => {
+        const select = element as HTMLSelectElement
+        const style = getComputedStyle(select)
+        const context = document.createElement('canvas').getContext('2d')!
+        context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`
+        const textWidth = context.measureText(select.selectedOptions[0].textContent ?? '').width
+        return textWidth > select.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) + 1
+      }).map(element => element.id))
+      expect(clippedSelections).toEqual([])
+      const decorativeArrows = page.locator('.saved-library-select svg')
+      await expect(decorativeArrows).toHaveCount(2)
+      for (const arrow of await decorativeArrows.all()) {
+        await expect(arrow).toHaveAttribute('aria-hidden', 'true')
+        await expect(arrow).toHaveCSS('pointer-events', 'none')
+      }
+      await sortPicker.focus()
+      await sortPicker.press('ArrowDown')
+      await expect(sortPicker).toHaveValue('name')
+      await expect.poll(names).toEqual(['Apple', 'Chicken rice bowl', 'Overnight oats', 'Tomato soup'])
+      await sortPicker.press('ArrowUp')
+      await expect(sortPicker).toHaveValue('recent')
       const oats = saved.getByRole('article', { name: 'Overnight oats', exact: true })
       await oats.getByRole('button', { name: /Adjust portion for Overnight oats/ }).click()
       await oats.getByRole('button', { name: 'Increase portion for Overnight oats', exact: true }).click()

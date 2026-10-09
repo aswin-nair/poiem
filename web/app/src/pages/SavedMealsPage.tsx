@@ -10,7 +10,7 @@ import { defaultMealType, recentMeals, mealKey, scaleMeal } from '../lib/meals'
 import { filterMealLibrary, getMealLibraryUsage, sortMealLibrary, type MealLibrarySort } from '../lib/mealLibrary'
 import { mealTypeFromNavState } from '../lib/logContext'
 import { MEAL_LABELS, type FoodEntry, type MealType, type SavedMeal } from '../types'
-import { History } from 'lucide-react'
+import { ChevronDown, History } from 'lucide-react'
 import { makeLogReceipt } from '../lib/logReceipt'
 import { createOnceGuard } from '../lib/onceGuard'
 import { useFeel } from '../hooks/useHaptic'
@@ -90,14 +90,17 @@ export function SavedMealsPage() {
 
         <div className="k-saved-context">
           <label htmlFor="saved-log-meal-type">Logging to</label>
-          <select id="saved-log-meal-type" value={mealType} onChange={event => {
-            const next = event.target.value as MealType
-            feel('select')
-            setMealType(next)
-            navigate(location.pathname, { replace: true, state: { ...(location.state && typeof location.state === 'object' ? location.state : {}), mealType: next } })
-          }}>
-            {(Object.keys(MEAL_LABELS) as MealType[]).map(choice => <option key={choice} value={choice}>{MEAL_LABELS[choice]}</option>)}
-          </select>
+          <span className="saved-library-select">
+            <select id="saved-log-meal-type" value={mealType} onChange={event => {
+              const next = event.target.value as MealType
+              feel('select')
+              setMealType(next)
+              navigate(location.pathname, { replace: true, state: { ...(location.state && typeof location.state === 'object' ? location.state : {}), mealType: next } })
+            }}>
+              {(Object.keys(MEAL_LABELS) as MealType[]).map(choice => <option key={choice} value={choice}>{MEAL_LABELS[choice]}</option>)}
+            </select>
+            <ChevronDown aria-hidden="true" focusable="false" />
+          </span>
           <span>Today</span>
         </div>
 
@@ -111,11 +114,14 @@ export function SavedMealsPage() {
           </div>
           <div className="saved-library-sort">
             <label htmlFor="saved-meal-sort">Sort saved meals</label>
-            <select id="saved-meal-sort" value={sort} onChange={event => { feel('select'); setSort(event.target.value as MealLibrarySort) }}>
-              <option value="recent">Recently used</option>
-              <option value="name">Name</option>
-              <option value="most-used">Most used</option>
-            </select>
+            <span className="saved-library-select">
+              <select id="saved-meal-sort" value={sort} onChange={event => { feel('select'); setSort(event.target.value as MealLibrarySort) }}>
+                <option value="recent">Recently used</option>
+                <option value="name">Name</option>
+                <option value="most-used">Most used</option>
+              </select>
+              <ChevronDown aria-hidden="true" focusable="false" />
+            </span>
           </div>
         </div>
 

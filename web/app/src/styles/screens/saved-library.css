@@ -9,8 +9,13 @@
   .k-saved .discover-search input { min-height: 44px; }
   .k-saved .saved-library-sort { display: flex; align-items: center; justify-content: space-between; gap: var(--k-space-sm); min-width: 0; }
   .k-saved .saved-library-sort label { color: var(--k-role-text-muted); font: 600 var(--k-type-label)/1.3 var(--k-font-body); }
-  .k-saved .saved-library-sort select { min-width: 0; max-width: 100%; min-height: 44px; padding: 0 var(--k-space-sm); border: 2px solid var(--k-role-border); border-radius: 0; background: var(--k-role-surface-raised); color: var(--k-role-text); font: 700 var(--k-type-label)/1.3 var(--k-font-body); }
-  .k-saved .saved-library-sort select:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+  .k-saved .saved-library-select { position: relative; display: inline-flex; align-items: center; min-width: 0; max-width: 100%; }
+  /* Keep the platform picker and keyboard behavior; paint the resting control
+     in the same font path as the page instead of the browser's native widget. */
+  .k-saved .saved-library-select select { appearance: none; min-width: 0; max-width: 100%; min-height: 44px; padding: 0 var(--k-space-2xl) 0 var(--k-space-sm); border: 2px solid var(--k-role-border); border-radius: 0; background: var(--k-role-surface-raised); color: var(--k-role-text); font: 700 var(--k-type-body)/1.3 var(--k-font-body); }
+  .k-saved .k-saved-context .saved-library-select select { padding-left: var(--k-space-md); font-weight: 600; }
+  .k-saved .saved-library-select svg { position: absolute; right: var(--k-space-sm); width: var(--k-space-md); height: var(--k-space-md); color: var(--k-role-text); pointer-events: none; }
+  .k-saved .saved-library-select select:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
   .k-saved .discover-chip-row { display: flex; flex-wrap: nowrap; gap: var(--k-space-sm); overflow-x: auto; padding: var(--k-space-xs) 0; scroll-padding-inline: var(--k-space-xs); }
   .k-saved .discover-chip { flex: 0 0 auto; min-width: 44px; padding-inline: var(--k-space-md); }
   .k-saved .discover-chip:focus-visible { outline-offset: -4px; }

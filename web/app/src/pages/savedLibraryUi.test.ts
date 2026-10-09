@@ -27,6 +27,14 @@ describe('Saved library UI contract', () => {
     expect(html).toContain('<option value="most-used">Most used</option>')
     expect(html).toContain('1 matching journal log')
     expect(html).toContain('class="k-repeat-meal is-compact"')
+    expect(html.match(/class="saved-library-select"/g)).toHaveLength(2)
+    expect(html).toContain('<select id="saved-log-meal-type"')
+    expect(html).toContain('<select id="saved-meal-sort"')
+    const selectControls = [...html.matchAll(/class="saved-library-select">([\s\S]*?)<\/span>/g)]
+    for (const [, control] of selectControls) {
+      expect(control).toContain('aria-hidden="true" focusable="false"')
+      expect(control).toContain('lucide-chevron-down')
+    }
   })
 
   it('shows externally retained portions and the exact rounded nutrition and destination', () => {
