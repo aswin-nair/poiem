@@ -1,4 +1,5 @@
 import { AppShell } from '../components/system/AppShell'
+import { Link } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { BackLink } from '../components/BackLink'
 import { IconArrowUpRight } from '../components/icons'
@@ -33,6 +34,8 @@ export function AboutPage() {
         </section>
 
         <nav className="k-card k-about-links" aria-label="More about Poiem">
+          <Link to="/support" className="k-row-link"><span>Support and help using Poiem</span><IconArrowUpRight size={16} /></Link>
+          <Link to="/settings?panel=data#setting-export" className="k-row-link"><span>Your journal and backups</span><IconArrowUpRight size={16} /></Link>
           <a href="https://github.com/apoorvdarshan/fud-ai" target="_blank" rel="noreferrer" className="k-row-link">
             <span>Original open-source project</span>
             <IconArrowUpRight size={16} />

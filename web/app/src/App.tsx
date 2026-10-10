@@ -9,16 +9,16 @@ import { AuthProvider, useAuth } from './store/AuthContext'
 import { AppProvider, useApp } from './store/AppContext'
 import { ToastProvider } from './components/Toast'
 import { HomePage } from './pages/HomePage'
+import { AppShell as WorkspaceShell } from './components/system/AppShell'
+import { BottomNav } from './components/BottomNav'
+import { WorkspaceRouteRecovery } from './components/WorkspaceRouteRecovery'
 import { LogSheet } from './pages/LogSheet'
 import { LogSheetOpenContext } from './lib/logSheetOpen'
 import { LogTextPage } from './pages/LogTextPage'
 import { PhotoLogPage } from './pages/PhotoLogPage'
-import { SavedMealsPage } from './pages/SavedMealsPage'
 import { ReviewFoodPage } from './pages/ReviewFoodPage'
 import { ManualEntryPage } from './pages/ManualEntryPage'
 import { EditFoodPage } from './pages/EditFoodPage'
-import { ProgressPage } from './pages/ProgressPage'
-import { SettingsPage } from './pages/SettingsPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
 import { MomoInterludeGate } from './components/MomoInterludeGate'
@@ -28,6 +28,7 @@ import { LazyMotion, MotionConfig } from 'motion/react'
 import { getSessionReturnLabel, rememberSessionNavigation, safeSessionDestination, takeSessionReturn, type SessionDestination } from './lib/sessionNavigation'
 import { hydrateLogDrafts } from './lib/logDrafts'
 import { handoffGuestSetupDraft } from './lib/setupDraftHandoff'
+import { findSettingDestination } from './lib/settingDestinations'
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage'))
 const AdminPage = lazy(() => import('./pages/AdminPage'))
@@ -41,14 +42,24 @@ const LoginPage = lazy(() => import('./pages/LoginPage').then(module => ({ defau
 const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage').then(module => ({ default: module.ForgotPasswordPage })))
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage').then(module => ({ default: module.ResetPasswordPage })))
 const CoachPage = lazy(() => import('./pages/CoachPage').then(module => ({ default: module.CoachPage })))
+// Keep the everyday secondary screens out of the first Today download.
+const SavedMealsPage = lazy(() => import('./pages/SavedMealsPage').then(module => ({ default: module.SavedMealsPage })))
+const ProgressPage = lazy(() => import('./pages/ProgressPage').then(module => ({ default: module.ProgressPage })))
+const SettingsPage = lazy(() => import('./pages/SettingsPage').then(module => ({ default: module.SettingsPage })))
 
 function PageFallback() {
   return <main className="app-main"><p role="status">Opening…</p></main>
 }
 
+function WorkspaceFallback() {
+  return <WorkspaceShell screen="k-page" nav={<BottomNav />}>
+    <main className="app-main k-page-main" aria-busy="true"><p role="status">Opening…</p></main>
+  </WorkspaceShell>
+}
+
 /** Client-side navigation keeps the browser's scroll offset by default; land each new page at the top. */
 function ScrollToTop() {
-  const { pathname, search, state } = useLocation()
+  const { pathname, search, hash, state } = useLocation()
   const sheetBackground = useRef<string | null>(null)
   useEffect(() => {
     const title = isWelcomeSurface(pathname) ? 'A little tracking. A lot of living.'
@@ -70,20 +81,27 @@ function ScrollToTop() {
     sheetBackground.current = null
     if (returnedFromSheet) return
     window.scrollTo(0, 0)
-    // A page that loads on demand arrives a moment after the route changes, so keep looking briefly.
+    // Route chunks can arrive after a slow network request. Observe their actual
+    // mount instead of giving up after a fixed number of animation frames.
+    // Settings owns focus when a direct link names one of its controls.
+    const setting = pathname === '/settings' ? findSettingDestination(hash) : undefined
+    if (setting && (setting.panel ?? null) === new URLSearchParams(search).get('panel')) return
     let frame = 0
-    let tries = 0
     const focusHeading = () => {
       const heading = document.querySelector<HTMLElement>('main h1, .app-shell header h1')
-      if (heading) {
+      if (heading && heading.getClientRects().length) {
         heading.tabIndex = -1
         heading.focus({ preventScroll: true })
-      } else if (++tries < 60) {
-        frame = window.requestAnimationFrame(focusHeading)
+        observer.disconnect()
       }
     }
+    const observer = new MutationObserver(() => {
+      window.cancelAnimationFrame(frame)
+      frame = window.requestAnimationFrame(focusHeading)
+    })
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'hidden'] })
     frame = window.requestAnimationFrame(focusHeading)
-    return () => window.cancelAnimationFrame(frame)
+    return () => { observer.disconnect(); window.cancelAnimationFrame(frame) }
   }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
   return null
 }
@@ -178,18 +196,18 @@ function AuthenticatedRoutes() {
     <DirectionalRoutes hold={route.hold}>
     <Routes location={logSheetOpen && background ? background : location}>
       <Route path="/" element={<HomePage />} />
-      <Route path="/progress" element={<ProgressPage />} />
+      <Route path="/progress" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><ProgressPage /></Suspense></WorkspaceRouteRecovery>} />
       <Route path="/coach" element={<Suspense fallback={<PageFallback />}><CoachPage /></Suspense>} />
       {/* Opened directly, the log sheet sits over Today. */}
       <Route path="/log" element={<HomePage />} />
       <Route path="/log/text" element={<LogTextPage />} />
       <Route path="/log/photo" element={<PhotoLogPage />} />
-      <Route path="/log/saved" element={<SavedMealsPage />} />
-      <Route path="/discover" element={<SavedMealsPage />} />
+      <Route path="/log/saved" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><SavedMealsPage /></Suspense></WorkspaceRouteRecovery>} />
+      <Route path="/discover" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><SavedMealsPage /></Suspense></WorkspaceRouteRecovery>} />
       <Route path="/log/manual" element={<ManualEntryPage />} />
       <Route path="/review" element={<ReviewFoodPage />} />
       <Route path="/edit/:id" element={<EditFoodPage />} />
-      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/settings" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><SettingsPage /></Suspense></WorkspaceRouteRecovery>} />
       <Route path="/about" element={<Suspense fallback={<PageFallback />}><AboutPage /></Suspense>} />
       <Route path="/support" element={<Suspense fallback={<PageFallback />}><SupportPage /></Suspense>} />
       <Route path="/admin" element={<Suspense fallback={<PageFallback />}><AdminPage /></Suspense>} />
