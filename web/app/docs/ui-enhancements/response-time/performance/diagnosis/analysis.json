@@ -1,0 +1,1595 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-10T17:10:21.236Z",
+  "sourceRevision": "131bd0d74ebdef897e31e962377f295f758ce927",
+  "purpose": "One-repetition baseline CPU diagnosis; separate from the later unprofiled ten-repetition budget comparison.",
+  "originalReport": {
+    "file": "profile-observation.json",
+    "sha256": "bb1839a98c84aa7898122127b15bfbe241a32ba9cafcde96bcf268dbc95a4e1f",
+    "harnessCommit": "131bd0d74ebdef897e31e962377f295f758ce927",
+    "dirty": true,
+    "harnessSha256": null,
+    "reason": "The executed dirty diagnostic harness preceded hash/profile-directory metadata. Its exact bytes were not retained; a later committed harness SHA must not be assigned retroactively."
+  },
+  "method": {
+    "units": "Raw CDP timeDeltas microseconds divided by 1000; no correction for 4x CPU throttle.",
+    "coordinates": "Published bundle line and column are one-based; match CDP lineNumber and columnNumber at one less.",
+    "self": "Sum timeDeltas[i]/1000 where sampled leaf samples[i] matches any node at the target location.",
+    "inclusive": "Walk sampled leaf parents derived from children edges. Sum each sample once when a matching ancestor exists, even if multiple target nodes occur on its path.",
+    "native": "Sum native leaf sample weights only when a target ancestor exists. Native frames have no bundle coordinates; their parent stack maps the getter/rectangle read.",
+    "negativeDeltas": "Retain raw negative deltas and signed sums without inventing repairs. Also report sums excluding negative intervals. All four selected figures agree under both calculations.",
+    "window": "Profiler runs before trusted-click arming through feedback polling and observer-delivery delay. Sums cover the whole profile, not only the feedback interval. CDP timestamps are not aligned to DOM performance.now here."
+  },
+  "privacyReview": {
+    "passed": true,
+    "scope": "All nonempty CPU callFrame URLs and original baseURL inspected. Profiles contain numeric samples and callFrame metadata; the report contains synthetic UI timing/selectors, not request bodies or storage values.",
+    "allowedOrigin": "http://localhost:5199",
+    "externalHosts": [],
+    "queries": [],
+    "fragments": [],
+    "URLCredentials": [],
+    "notes": "Every nonempty profile URL is a localhost:5199/assets/*.js path; no unrelated app, external URL or runtime API payload is retained."
+  },
+  "targetMappings": [
+    {
+      "id": "home",
+      "label": "Home rendering",
+      "bundle": "index-J9I0-g20.js",
+      "line": 16,
+      "column": 16593,
+      "source": "src/pages/HomePage.tsx",
+      "sourceLine": 65,
+      "coordinates": "one-based",
+      "cdpLineNumber": 15,
+      "cdpColumnNumber": 16592,
+      "laterExactRevisionBundleSha256": "d9b99ad16666ecb6eea651e745cca95df75298856b6dd778a2aaf4cfa16509ca",
+      "bundleExcerptAtColumn": "({guest:e=!1}){let{state:t,ackLevelUp:n,patchGamification:r,deleteEntry:i,restoreEntry:a,refresh:s}=B(),{toast:c}=hn(),l=ke(),d=xe(),f=ct(),m=$a(`calorie_ring`),[g,_]=(0,V.useState)(()=>p(l.state)??D());function v(e){_(e),d(`/`,{replace:!0,state:{journalDay:le(e)}})}let[b,x]=(0,V.useState)(!1),[C,ee]=(0,V.useState)(null),T=(0,V.useRef)(0),E=(0,V.useRef)(null)"
+    },
+    {
+      "id": "overlay",
+      "label": "MascotOverlay rendering",
+      "bundle": "index-J9I0-g20.js",
+      "line": 16,
+      "column": 2963,
+      "source": "src/mascot/MascotOverlay.tsx",
+      "sourceLine": 132,
+      "coordinates": "one-based",
+      "cdpLineNumber": 15,
+      "cdpColumnNumber": 2962,
+      "laterExactRevisionBundleSha256": "d9b99ad16666ecb6eea651e745cca95df75298856b6dd778a2aaf4cfa16509ca",
+      "bundleExcerptAtColumn": "(){let{state:e}=B(),t=ke(),n=Qa(),r=(0,V.useRef)(null),i=(0,V.useRef)(null),[a,o]=(0,V.useState)(!1),s=(0,V.useRef)(Date.now()),c=(0,V.useRef)(null),l=(0,V.useRef)(new Map),u=(0,V.useRef)(null),d=(0,V.useRef)(null),f=(0,V.useRef)({x:0,y:0}),[p,m]=(0,V.useState)(`idle_breathe`),[h,g]=(0,V.useState)(0),[_,v]=(0,V.useState)(!1),[y,b]=(0,V.useState)(`left`),[x,S]"
+    },
+    {
+      "id": "stage",
+      "label": "Mascot stage collision check",
+      "bundle": "index-J9I0-g20.js",
+      "line": 16,
+      "column": 11581,
+      "source": "src/mascot/MascotOverlay.tsx",
+      "sourceLine": 658,
+      "coordinates": "one-based",
+      "cdpLineNumber": 15,
+      "cdpColumnNumber": 11580,
+      "laterExactRevisionBundleSha256": "d9b99ad16666ecb6eea651e745cca95df75298856b6dd778a2aaf4cfa16509ca",
+      "bundleExcerptAtColumn": "()=>{e=0;let t=window.visualViewport?window.innerHeight-window.visualViewport.height>120:!1,n=we||me===`off`||t||Qc()||document.visibilityState===`hidden`;if(!n&&!L){let e={width:window.innerWidth,height:window.innerHeight},t=Zc(),i=r.current;if(i){let n=i.getBoundingClientRect();ps({x:n.left,y:n.top},f.current,Wc,e,t)||De()}let a=hs(Wc,e,t);n=!ds(a,Wc,e,t),!"
+    },
+    {
+      "id": "bubble",
+      "label": "Mascot bubble safety check",
+      "bundle": "index-J9I0-g20.js",
+      "line": 16,
+      "column": 12944,
+      "source": "src/mascot/MascotOverlay.tsx",
+      "sourceLine": 721,
+      "coordinates": "one-based",
+      "cdpLineNumber": 15,
+      "cdpColumnNumber": 12943,
+      "laterExactRevisionBundleSha256": "d9b99ad16666ecb6eea651e745cca95df75298856b6dd778a2aaf4cfa16509ca",
+      "bundleExcerptAtColumn": "()=>{e=0;let t=i.current;if(!t||_||E){o(!1);return}let n=t.getBoundingClientRect(),{left:r,top:a,right:s,bottom:c}=Hc();o(n.left>=r+8&&n.right<=s-8&&n.top>=a+8&&n.bottom<=c-8&&Zc().every(e=>n.right+8<=e.left||n.left-8>=e.right||n.bottom+8<=e.top||n.top-8>=e.bottom))},n=()=>{e||=window.requestAnimationFrame(t)};t(),window.addEventListener(`resize`,n),window.ad"
+    },
+    {
+      "id": "receipt",
+      "label": "LogMoment receipt measurement",
+      "bundle": "index-J9I0-g20.js",
+      "line": 10,
+      "column": 74257,
+      "source": "src/components/LogMoment.tsx",
+      "sourceLine": 43,
+      "coordinates": "one-based",
+      "cdpLineNumber": 9,
+      "cdpColumnNumber": 74256,
+      "laterExactRevisionBundleSha256": "d9b99ad16666ecb6eea651e745cca95df75298856b6dd778a2aaf4cfa16509ca",
+      "bundleExcerptAtColumn": "()=>o(Math.ceil(e.getBoundingClientRect().height));t();let n=new ResizeObserver(t);return n.observe(e),()=>n.disconnect()},[o]);function v(){d.current!==void 0&&(clearTimeout(d.current),d.current=void 0,m.current=Math.max(0,m.current-(Date.now()-h.current)))}function y(){f.current||p.current||(v(),h.current=Date.now(),d.current=setTimeout(()=>{let e=!!l.curre"
+    },
+    {
+      "id": "coach",
+      "label": "Coach draft resize",
+      "bundle": "CoachPage-BFUc0Nw0.js",
+      "line": 33,
+      "column": 3105,
+      "source": "src/pages/CoachPage.tsx",
+      "sourceLine": 148,
+      "coordinates": "one-based",
+      "cdpLineNumber": 32,
+      "cdpColumnNumber": 3104,
+      "laterExactRevisionBundleSha256": "cd48fdb2ec7489130eb758808d4031769305a0d6ffcbe7744da3629507f07f4e",
+      "bundleExcerptAtColumn": "()=>{let e=j.current;if(!e)return;let t=window.visualViewport?.height??window.innerHeight;e.style.maxHeight=`${Math.min(t<500?120:192,t*.28)}px`,e.style.height=`auto`,e.style.height=`${e.scrollHeight+4}px`};return e(),window.addEventListener(`resize`,e),window.visualViewport?.addEventListener(`resize`,e),()=>{window.removeEventListener(`resize`,e),window.visu"
+    }
+  ],
+  "profiles": [
+    {
+      "file": "1-sheet-open.cpuprofile",
+      "sha256": "64206bb755322d82faa07f8dc26fce4ed9c1b3146c3c09651f36f3cccd3a285d",
+      "bytes": 210236,
+      "startTimeUs": 84865773656,
+      "endTimeUs": 84867767769,
+      "durationMs": 1994.113,
+      "samples": 991,
+      "summedSignedWeightsMs": 1991.437,
+      "urls": [
+        "http://localhost:5199/assets/AppContext-Dx860ira.js",
+        "http://localhost:5199/assets/Momo-B0rf4Vom.js",
+        "http://localhost:5199/assets/analytics-C5Rmxn-i.js",
+        "http://localhost:5199/assets/apiClient-B6AmXG_q.js",
+        "http://localhost:5199/assets/arrow-right-CxUcUzFi.js",
+        "http://localhost:5199/assets/chunk-BV7QT456-B5cNqVLe.js",
+        "http://localhost:5199/assets/icons-D6WnjnPE.js",
+        "http://localhost:5199/assets/index-J9I0-g20.js",
+        "http://localhost:5199/assets/jsx-runtime-bzQ4Vb5N.js",
+        "http://localhost:5199/assets/useHaptic-BT3rM8on.js"
+      ],
+      "negativeDeltas": [],
+      "targets": [
+        {
+          "id": "home",
+          "matchingNodeIds": [
+            579
+          ],
+          "selfMs": 4.294,
+          "selfExcludingNegativeMs": 4.294,
+          "inclusiveMs": 11.789,
+          "inclusiveExcludingNegativeMs": 11.789,
+          "selfSampleIndexes": [
+            472,
+            473,
+            477
+          ],
+          "inclusiveSampleCount": 8,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "overlay",
+          "matchingNodeIds": [
+            978,
+            1053,
+            561,
+            179
+          ],
+          "selfMs": 2.792,
+          "selfExcludingNegativeMs": 2.792,
+          "inclusiveMs": 12.351,
+          "inclusiveExcludingNegativeMs": 12.351,
+          "selfSampleIndexes": [
+            155,
+            174
+          ],
+          "inclusiveSampleCount": 9,
+          "nativeLeafSamples": [
+            {
+              "functionName": "URL",
+              "weightedMs": 1.558,
+              "excludingNegativeMs": 1.558,
+              "sampleIndexes": [
+                908
+              ],
+              "leafNodeIds": [
+                988
+              ],
+              "exampleAncestorChainFromLeaf": [
+                988,
+                987,
+                986,
+                978
+              ]
+            },
+            {
+              "functionName": "FixtureDate",
+              "weightedMs": 1.064,
+              "excludingNegativeMs": 1.064,
+              "sampleIndexes": [
+                449
+              ],
+              "leafNodeIds": [
+                562
+              ],
+              "exampleAncestorChainFromLeaf": [
+                562,
+                561
+              ]
+            }
+          ]
+        },
+        {
+          "id": "stage",
+          "matchingNodeIds": [
+            473
+          ],
+          "selfMs": 1.065,
+          "selfExcludingNegativeMs": 1.065,
+          "inclusiveMs": 15.672,
+          "inclusiveExcludingNegativeMs": 15.672,
+          "selfSampleIndexes": [
+            288
+          ],
+          "inclusiveSampleCount": 12,
+          "nativeLeafSamples": [
+            {
+              "functionName": "getComputedStyle",
+              "weightedMs": 1.633,
+              "excludingNegativeMs": 1.633,
+              "sampleIndexes": [
+                858
+              ],
+              "leafNodeIds": [
+                884
+              ],
+              "exampleAncestorChainFromLeaf": [
+                884,
+                883,
+                882,
+                474,
+                473
+              ]
+            },
+            {
+              "functionName": "getBoundingClientRect",
+              "weightedMs": 1.195,
+              "excludingNegativeMs": 1.195,
+              "sampleIndexes": [
+                859
+              ],
+              "leafNodeIds": [
+                885
+              ],
+              "exampleAncestorChainFromLeaf": [
+                885,
+                477,
+                476,
+                473
+              ]
+            },
+            {
+              "functionName": "querySelectorAll",
+              "weightedMs": 1.033,
+              "excludingNegativeMs": 1.033,
+              "sampleIndexes": [
+                287
+              ],
+              "leafNodeIds": [
+                475
+              ],
+              "exampleAncestorChainFromLeaf": [
+                475,
+                474,
+                473
+              ]
+            }
+          ]
+        }
+      ],
+      "profileDurationMinusSignedWeightsMs": 2.676
+    },
+    {
+      "file": "2-sheet-close.cpuprofile",
+      "sha256": "5200e8561189d844be56864ba83cf151641713ba971f48eb74751fd75afa72fe",
+      "bytes": 52444,
+      "startTimeUs": 84867916759,
+      "endTimeUs": 84868136642,
+      "durationMs": 219.883,
+      "samples": 135,
+      "summedSignedWeightsMs": 219.34,
+      "urls": [
+        "http://localhost:5199/assets/AppContext-Dx860ira.js",
+        "http://localhost:5199/assets/apiClient-B6AmXG_q.js",
+        "http://localhost:5199/assets/chunk-BV7QT456-B5cNqVLe.js",
+        "http://localhost:5199/assets/index-J9I0-g20.js",
+        "http://localhost:5199/assets/jsx-runtime-bzQ4Vb5N.js"
+      ],
+      "negativeDeltas": [],
+      "targets": [
+        {
+          "id": "home",
+          "matchingNodeIds": [
+            75
+          ],
+          "selfMs": 0,
+          "selfExcludingNegativeMs": 0,
+          "inclusiveMs": 2.435,
+          "inclusiveExcludingNegativeMs": 2.435,
+          "selfSampleIndexes": [],
+          "inclusiveSampleCount": 2,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "overlay",
+          "matchingNodeIds": [
+            45
+          ],
+          "selfMs": 4.286,
+          "selfExcludingNegativeMs": 4.286,
+          "inclusiveMs": 5.637,
+          "inclusiveExcludingNegativeMs": 5.637,
+          "selfSampleIndexes": [
+            44,
+            45,
+            46
+          ],
+          "inclusiveSampleCount": 4,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "stage",
+          "matchingNodeIds": [
+            283
+          ],
+          "selfMs": 3.62,
+          "selfExcludingNegativeMs": 3.62,
+          "inclusiveMs": 3.62,
+          "inclusiveExcludingNegativeMs": 3.62,
+          "selfSampleIndexes": [
+            74,
+            75
+          ],
+          "inclusiveSampleCount": 2,
+          "nativeLeafSamples": []
+        }
+      ],
+      "profileDurationMinusSignedWeightsMs": 0.543
+    },
+    {
+      "file": "3-manual-save.cpuprofile",
+      "sha256": "54eff596ae9c7eb7fa12e14d178ca594b78ae91f91eefce551b0f91a3d413c35",
+      "bytes": 260015,
+      "startTimeUs": 84870206902,
+      "endTimeUs": 84871765379,
+      "durationMs": 1558.477,
+      "samples": 909,
+      "summedSignedWeightsMs": 1556.923,
+      "urls": [
+        "http://localhost:5199/assets/AppContext-Dx860ira.js",
+        "http://localhost:5199/assets/AuthContext-C-hXuKef.js",
+        "http://localhost:5199/assets/Momo-B0rf4Vom.js",
+        "http://localhost:5199/assets/PressableButton-XyDOkbKA.js",
+        "http://localhost:5199/assets/analytics-C5Rmxn-i.js",
+        "http://localhost:5199/assets/apiClient-B6AmXG_q.js",
+        "http://localhost:5199/assets/arrow-right-CxUcUzFi.js",
+        "http://localhost:5199/assets/chunk-BV7QT456-B5cNqVLe.js",
+        "http://localhost:5199/assets/icons-D6WnjnPE.js",
+        "http://localhost:5199/assets/index-J9I0-g20.js",
+        "http://localhost:5199/assets/jsx-runtime-bzQ4Vb5N.js",
+        "http://localhost:5199/assets/useHaptic-BT3rM8on.js"
+      ],
+      "negativeDeltas": [
+        {
+          "sampleIndex": 134,
+          "deltaUs": -459,
+          "nodeId": 301,
+          "frame": {
+            "functionName": "qi",
+            "scriptId": "6",
+            "url": "http://localhost:5199/assets/index-J9I0-g20.js",
+            "lineNumber": 8,
+            "columnNumber": 33924
+          }
+        }
+      ],
+      "targets": [
+        {
+          "id": "home",
+          "matchingNodeIds": [
+            957,
+            478
+          ],
+          "selfMs": 34.154,
+          "selfExcludingNegativeMs": 34.154,
+          "inclusiveMs": 68.071,
+          "inclusiveExcludingNegativeMs": 68.071,
+          "selfSampleIndexes": [
+            250,
+            255,
+            258,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            275,
+            276,
+            617,
+            618,
+            619,
+            620,
+            855,
+            856,
+            859,
+            860,
+            861,
+            862,
+            863
+          ],
+          "inclusiveSampleCount": 51,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "overlay",
+          "matchingNodeIds": [
+            278,
+            397,
+            443
+          ],
+          "selfMs": 11.893,
+          "selfExcludingNegativeMs": 11.893,
+          "inclusiveMs": 20.891,
+          "inclusiveExcludingNegativeMs": 20.891,
+          "selfSampleIndexes": [
+            126,
+            218,
+            219,
+            220,
+            221,
+            223,
+            225,
+            226
+          ],
+          "inclusiveSampleCount": 15,
+          "nativeLeafSamples": [
+            {
+              "functionName": "URL",
+              "weightedMs": 1.561,
+              "excludingNegativeMs": 1.561,
+              "sampleIndexes": [
+                162
+              ],
+              "leafNodeIds": [
+                403
+              ],
+              "exampleAncestorChainFromLeaf": [
+                403,
+                402,
+                401,
+                397
+              ]
+            }
+          ]
+        },
+        {
+          "id": "stage",
+          "matchingNodeIds": [
+            878,
+            942
+          ],
+          "selfMs": 0,
+          "selfExcludingNegativeMs": 0,
+          "inclusiveMs": 23.69,
+          "inclusiveExcludingNegativeMs": 23.69,
+          "selfSampleIndexes": [],
+          "inclusiveSampleCount": 17,
+          "nativeLeafSamples": [
+            {
+              "functionName": "querySelectorAll",
+              "weightedMs": 2.628,
+              "excludingNegativeMs": 2.628,
+              "sampleIndexes": [
+                566,
+                604
+              ],
+              "leafNodeIds": [
+                880,
+                944
+              ],
+              "exampleAncestorChainFromLeaf": [
+                880,
+                879,
+                878
+              ]
+            },
+            {
+              "functionName": "getPropertyValue",
+              "weightedMs": 1.548,
+              "excludingNegativeMs": 1.548,
+              "sampleIndexes": [
+                606
+              ],
+              "leafNodeIds": [
+                949
+              ],
+              "exampleAncestorChainFromLeaf": [
+                949,
+                948,
+                947,
+                945,
+                942
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bubble",
+          "matchingNodeIds": [
+            1245
+          ],
+          "selfMs": 0,
+          "selfExcludingNegativeMs": 0,
+          "inclusiveMs": 1.147,
+          "inclusiveExcludingNegativeMs": 1.147,
+          "selfSampleIndexes": [],
+          "inclusiveSampleCount": 1,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "receipt",
+          "matchingNodeIds": [
+            1235
+          ],
+          "selfMs": 1.206,
+          "selfExcludingNegativeMs": 1.206,
+          "inclusiveMs": 39.238,
+          "inclusiveExcludingNegativeMs": 39.238,
+          "selfSampleIndexes": [
+            710
+          ],
+          "inclusiveSampleCount": 20,
+          "nativeLeafSamples": [
+            {
+              "functionName": "getBoundingClientRect",
+              "weightedMs": 36.721,
+              "excludingNegativeMs": 36.721,
+              "sampleIndexes": [
+                692,
+                693,
+                694,
+                695,
+                696,
+                697,
+                698,
+                699,
+                700,
+                701,
+                702,
+                703,
+                704,
+                705,
+                706,
+                707,
+                708,
+                709
+              ],
+              "leafNodeIds": [
+                1236
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1236,
+                1235
+              ]
+            },
+            {
+              "functionName": "setProperty",
+              "weightedMs": 1.311,
+              "excludingNegativeMs": 1.311,
+              "sampleIndexes": [
+                711
+              ],
+              "leafNodeIds": [
+                1238
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1238,
+                1237,
+                1235
+              ]
+            }
+          ]
+        }
+      ],
+      "profileDurationMinusSignedWeightsMs": 1.554
+    },
+    {
+      "file": "4-saved-relog.cpuprofile",
+      "sha256": "6fb8f24bc6fc4cad0a5c155250ac92957e6ecf7218bb7ec6c14f277978dc6aef",
+      "bytes": 284862,
+      "startTimeUs": 84874094033,
+      "endTimeUs": 84875997621,
+      "durationMs": 1903.588,
+      "samples": 1029,
+      "summedSignedWeightsMs": 1901.331,
+      "urls": [
+        "http://localhost:5199/assets/AppContext-Dx860ira.js",
+        "http://localhost:5199/assets/AuthContext-C-hXuKef.js",
+        "http://localhost:5199/assets/Momo-B0rf4Vom.js",
+        "http://localhost:5199/assets/SavedMealsPage-ComdZQEG.js",
+        "http://localhost:5199/assets/analytics-C5Rmxn-i.js",
+        "http://localhost:5199/assets/apiClient-B6AmXG_q.js",
+        "http://localhost:5199/assets/arrow-right-CxUcUzFi.js",
+        "http://localhost:5199/assets/chunk-BV7QT456-B5cNqVLe.js",
+        "http://localhost:5199/assets/icons-D6WnjnPE.js",
+        "http://localhost:5199/assets/index-J9I0-g20.js",
+        "http://localhost:5199/assets/jsx-runtime-bzQ4Vb5N.js"
+      ],
+      "negativeDeltas": [
+        {
+          "sampleIndex": 233,
+          "deltaUs": -13,
+          "nodeId": 105,
+          "frame": {
+            "functionName": "Tc",
+            "scriptId": "6",
+            "url": "http://localhost:5199/assets/index-J9I0-g20.js",
+            "lineNumber": 8,
+            "columnNumber": 78389
+          }
+        }
+      ],
+      "targets": [
+        {
+          "id": "home",
+          "matchingNodeIds": [
+            649,
+            1234
+          ],
+          "selfMs": 135.197,
+          "selfExcludingNegativeMs": 135.197,
+          "inclusiveMs": 163.762,
+          "inclusiveExcludingNegativeMs": 163.762,
+          "selfSampleIndexes": [
+            405,
+            408,
+            409,
+            410,
+            411,
+            412,
+            413,
+            414,
+            415,
+            416,
+            417,
+            418,
+            419,
+            420,
+            421,
+            422,
+            423,
+            424,
+            425,
+            426,
+            427,
+            428,
+            429,
+            430,
+            431,
+            432,
+            433,
+            434,
+            435,
+            436,
+            437,
+            438,
+            439,
+            440,
+            441,
+            442,
+            443,
+            444,
+            445,
+            446,
+            447,
+            448,
+            449,
+            450,
+            451,
+            452,
+            453,
+            454,
+            455,
+            456,
+            457,
+            458,
+            459,
+            460,
+            461,
+            462,
+            463,
+            464,
+            465,
+            466,
+            467,
+            468,
+            469,
+            470,
+            471,
+            472,
+            473,
+            474,
+            475,
+            476,
+            477,
+            478,
+            479,
+            480,
+            481,
+            482,
+            483,
+            484,
+            485,
+            486,
+            487,
+            488,
+            489,
+            491,
+            492,
+            493,
+            494,
+            495,
+            496,
+            498,
+            503,
+            504,
+            763,
+            765,
+            1002,
+            1003,
+            1004
+          ],
+          "inclusiveSampleCount": 118,
+          "nativeLeafSamples": [
+            {
+              "functionName": "RegExp: \\b(sushi|salmon|tuna|cod|fish|sardines?|mackerel)\\b",
+              "weightedMs": 1.042,
+              "excludingNegativeMs": 1.042,
+              "sampleIndexes": [
+                499
+              ],
+              "leafNodeIds": [
+                670
+              ],
+              "exampleAncestorChainFromLeaf": [
+                670,
+                669,
+                668,
+                667,
+                666,
+                665,
+                649
+              ]
+            }
+          ]
+        },
+        {
+          "id": "overlay",
+          "matchingNodeIds": [
+            108,
+            626,
+            1378
+          ],
+          "selfMs": 24.181,
+          "selfExcludingNegativeMs": 24.181,
+          "inclusiveMs": 45.534,
+          "inclusiveExcludingNegativeMs": 45.534,
+          "selfSampleIndexes": [
+            242,
+            951,
+            952,
+            953,
+            954,
+            955,
+            956,
+            957,
+            958,
+            959,
+            960,
+            961,
+            964,
+            965,
+            966,
+            968
+          ],
+          "inclusiveSampleCount": 31,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "stage",
+          "matchingNodeIds": [
+            1138,
+            971
+          ],
+          "selfMs": 110.049,
+          "selfExcludingNegativeMs": 110.049,
+          "inclusiveMs": 130.976,
+          "inclusiveExcludingNegativeMs": 130.976,
+          "selfSampleIndexes": [
+            641,
+            642,
+            643,
+            644,
+            645,
+            646,
+            647,
+            648,
+            649,
+            650,
+            651,
+            652,
+            653,
+            654,
+            655,
+            656,
+            657,
+            658,
+            659,
+            660,
+            661,
+            662,
+            663,
+            664,
+            665,
+            666,
+            667,
+            668,
+            669,
+            670,
+            671,
+            672,
+            673,
+            674,
+            675,
+            676,
+            677,
+            678,
+            679,
+            680,
+            681,
+            682,
+            683,
+            684,
+            685,
+            686,
+            687,
+            688,
+            689,
+            690,
+            691,
+            692,
+            693,
+            694,
+            695,
+            696,
+            697,
+            698,
+            699,
+            700,
+            701,
+            702,
+            703,
+            704,
+            705,
+            706,
+            707,
+            708,
+            709,
+            710,
+            711,
+            712,
+            713,
+            714,
+            726,
+            727
+          ],
+          "inclusiveSampleCount": 90,
+          "nativeLeafSamples": [
+            {
+              "functionName": "querySelectorAll",
+              "weightedMs": 3.158,
+              "excludingNegativeMs": 3.158,
+              "sampleIndexes": [
+                728,
+                975
+              ],
+              "leafNodeIds": [
+                1140,
+                1409
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1140,
+                1139,
+                1138
+              ]
+            },
+            {
+              "functionName": "getComputedStyle",
+              "weightedMs": 1.58,
+              "excludingNegativeMs": 1.58,
+              "sampleIndexes": [
+                889
+              ],
+              "leafNodeIds": [
+                1369
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1369,
+                1368,
+                1367,
+                971
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bubble",
+          "matchingNodeIds": [
+            1365
+          ],
+          "selfMs": 0,
+          "selfExcludingNegativeMs": 0,
+          "inclusiveMs": 1.509,
+          "inclusiveExcludingNegativeMs": 1.509,
+          "selfSampleIndexes": [],
+          "inclusiveSampleCount": 1,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "receipt",
+          "matchingNodeIds": [
+            1357
+          ],
+          "selfMs": 1.366,
+          "selfExcludingNegativeMs": 1.366,
+          "inclusiveMs": 13.436,
+          "inclusiveExcludingNegativeMs": 13.436,
+          "selfSampleIndexes": [
+            848
+          ],
+          "inclusiveSampleCount": 9,
+          "nativeLeafSamples": [
+            {
+              "functionName": "getBoundingClientRect",
+              "weightedMs": 12.07,
+              "excludingNegativeMs": 12.07,
+              "sampleIndexes": [
+                840,
+                841,
+                842,
+                843,
+                844,
+                845,
+                846,
+                847
+              ],
+              "leafNodeIds": [
+                1358
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1358,
+                1357
+              ]
+            }
+          ]
+        }
+      ],
+      "profileDurationMinusSignedWeightsMs": 2.257
+    },
+    {
+      "file": "5-first-meal-moment.cpuprofile",
+      "sha256": "f0d2e3aadd76bc61643132f272614459d522c75c2def41a3319e01bc8f5913f2",
+      "bytes": 258641,
+      "startTimeUs": 84878071328,
+      "endTimeUs": 84879529976,
+      "durationMs": 1458.648,
+      "samples": 928,
+      "summedSignedWeightsMs": 1456.735,
+      "urls": [
+        "http://localhost:5199/assets/AppContext-Dx860ira.js",
+        "http://localhost:5199/assets/AuthContext-C-hXuKef.js",
+        "http://localhost:5199/assets/Momo-B0rf4Vom.js",
+        "http://localhost:5199/assets/analytics-C5Rmxn-i.js",
+        "http://localhost:5199/assets/apiClient-B6AmXG_q.js",
+        "http://localhost:5199/assets/arrow-right-CxUcUzFi.js",
+        "http://localhost:5199/assets/chunk-BV7QT456-B5cNqVLe.js",
+        "http://localhost:5199/assets/icons-D6WnjnPE.js",
+        "http://localhost:5199/assets/index-J9I0-g20.js",
+        "http://localhost:5199/assets/jsx-runtime-bzQ4Vb5N.js"
+      ],
+      "negativeDeltas": [],
+      "targets": [
+        {
+          "id": "home",
+          "matchingNodeIds": [
+            1042,
+            414
+          ],
+          "selfMs": 29.142,
+          "selfExcludingNegativeMs": 29.142,
+          "inclusiveMs": 57.856,
+          "inclusiveExcludingNegativeMs": 57.856,
+          "selfSampleIndexes": [
+            240,
+            242,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            255,
+            256,
+            649,
+            652,
+            829,
+            830,
+            832,
+            833
+          ],
+          "inclusiveSampleCount": 39,
+          "nativeLeafSamples": [
+            {
+              "functionName": "RegExp: ^(\\d{4})-(\\d{2})-(\\d{2})",
+              "weightedMs": 1.391,
+              "excludingNegativeMs": 1.391,
+              "sampleIndexes": [
+                238
+              ],
+              "leafNodeIds": [
+                434
+              ],
+              "exampleAncestorChainFromLeaf": [
+                434,
+                433,
+                432,
+                431,
+                430,
+                414
+              ]
+            }
+          ]
+        },
+        {
+          "id": "overlay",
+          "matchingNodeIds": [
+            140,
+            1019,
+            376
+          ],
+          "selfMs": 24.683,
+          "selfExcludingNegativeMs": 24.683,
+          "inclusiveMs": 37.517,
+          "inclusiveExcludingNegativeMs": 37.517,
+          "selfSampleIndexes": [
+            110,
+            111,
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            180,
+            183
+          ],
+          "inclusiveSampleCount": 25,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "stage",
+          "matchingNodeIds": [
+            935,
+            1000
+          ],
+          "selfMs": 4.542,
+          "selfExcludingNegativeMs": 4.542,
+          "inclusiveMs": 18.92,
+          "inclusiveExcludingNegativeMs": 18.92,
+          "selfSampleIndexes": [
+            589,
+            763,
+            903
+          ],
+          "inclusiveSampleCount": 13,
+          "nativeLeafSamples": [
+            {
+              "functionName": "querySelectorAll",
+              "weightedMs": 1.653,
+              "excludingNegativeMs": 1.653,
+              "sampleIndexes": [
+                616
+              ],
+              "leafNodeIds": [
+                1002
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1002,
+                1001,
+                1000
+              ]
+            }
+          ]
+        },
+        {
+          "id": "receipt",
+          "matchingNodeIds": [
+            1141
+          ],
+          "selfMs": 1.073,
+          "selfExcludingNegativeMs": 1.073,
+          "inclusiveMs": 21.985,
+          "inclusiveExcludingNegativeMs": 21.985,
+          "selfSampleIndexes": [
+            729
+          ],
+          "inclusiveSampleCount": 15,
+          "nativeLeafSamples": [
+            {
+              "functionName": "getBoundingClientRect",
+              "weightedMs": 19.87,
+              "excludingNegativeMs": 19.87,
+              "sampleIndexes": [
+                716,
+                717,
+                718,
+                719,
+                720,
+                721,
+                722,
+                723,
+                724,
+                725,
+                726,
+                727,
+                728
+              ],
+              "leafNodeIds": [
+                1142
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1142,
+                1141
+              ]
+            }
+          ]
+        }
+      ],
+      "profileDurationMinusSignedWeightsMs": 1.913
+    },
+    {
+      "file": "6-second-log-toast.cpuprofile",
+      "sha256": "1deb9d5dd5ead66d72846fd4190ecf5fd97ea0b8e5e5994f0590ccfa1e61a6bc",
+      "bytes": 226023,
+      "startTimeUs": 84881621612,
+      "endTimeUs": 84883337447,
+      "durationMs": 1715.835,
+      "samples": 983,
+      "summedSignedWeightsMs": 1714.96,
+      "urls": [
+        "http://localhost:5199/assets/AppContext-Dx860ira.js",
+        "http://localhost:5199/assets/AuthContext-C-hXuKef.js",
+        "http://localhost:5199/assets/Momo-B0rf4Vom.js",
+        "http://localhost:5199/assets/PressableButton-XyDOkbKA.js",
+        "http://localhost:5199/assets/analytics-C5Rmxn-i.js",
+        "http://localhost:5199/assets/apiClient-B6AmXG_q.js",
+        "http://localhost:5199/assets/arrow-right-CxUcUzFi.js",
+        "http://localhost:5199/assets/chunk-BV7QT456-B5cNqVLe.js",
+        "http://localhost:5199/assets/icons-D6WnjnPE.js",
+        "http://localhost:5199/assets/index-J9I0-g20.js",
+        "http://localhost:5199/assets/jsx-runtime-bzQ4Vb5N.js",
+        "http://localhost:5199/assets/useHaptic-BT3rM8on.js"
+      ],
+      "negativeDeltas": [],
+      "targets": [
+        {
+          "id": "home",
+          "matchingNodeIds": [
+            959,
+            484
+          ],
+          "selfMs": 25.298,
+          "selfExcludingNegativeMs": 25.298,
+          "inclusiveMs": 91.326,
+          "inclusiveExcludingNegativeMs": 91.326,
+          "selfSampleIndexes": [
+            359,
+            367,
+            368,
+            369,
+            370,
+            371,
+            372,
+            373,
+            374,
+            375,
+            376,
+            377,
+            378,
+            402,
+            403,
+            732,
+            841,
+            842
+          ],
+          "inclusiveSampleCount": 67,
+          "nativeLeafSamples": [
+            {
+              "functionName": "RegExp: \\b(wine|prosecco|champagne)\\b",
+              "weightedMs": 2.282,
+              "excludingNegativeMs": 2.282,
+              "sampleIndexes": [
+                393,
+                733
+              ],
+              "leafNodeIds": [
+                511,
+                969
+              ],
+              "exampleAncestorChainFromLeaf": [
+                511,
+                505,
+                504,
+                503,
+                502,
+                501,
+                484
+              ]
+            },
+            {
+              "functionName": "RegExp: \\b(eggs?|omelett?e|frittata|shakshuka)\\b",
+              "weightedMs": 1.223,
+              "excludingNegativeMs": 1.223,
+              "sampleIndexes": [
+                398
+              ],
+              "leafNodeIds": [
+                513
+              ],
+              "exampleAncestorChainFromLeaf": [
+                513,
+                505,
+                504,
+                503,
+                502,
+                501,
+                484
+              ]
+            },
+            {
+              "functionName": "RegExp: \\b(coffee|latte|espresso|cappuccino|americano|flat white|mocha|tea|chai|matcha)\\b",
+              "weightedMs": 1.208,
+              "excludingNegativeMs": 1.208,
+              "sampleIndexes": [
+                391
+              ],
+              "leafNodeIds": [
+                509
+              ],
+              "exampleAncestorChainFromLeaf": [
+                509,
+                505,
+                504,
+                503,
+                502,
+                501,
+                484
+              ]
+            },
+            {
+              "functionName": "RegExp: \\b(smoothie|milkshake|shake|milk|yogh?urt|kefir|lassi)\\b",
+              "weightedMs": 1.193,
+              "excludingNegativeMs": 1.193,
+              "sampleIndexes": [
+                392
+              ],
+              "leafNodeIds": [
+                510
+              ],
+              "exampleAncestorChainFromLeaf": [
+                510,
+                505,
+                504,
+                503,
+                502,
+                501,
+                484
+              ]
+            },
+            {
+              "functionName": "RegExp: \\b(cake|cheesecake|muffins?|cupcakes?|pie|tart|pancakes?|waffles?)\\b",
+              "weightedMs": 1.039,
+              "excludingNegativeMs": 1.039,
+              "sampleIndexes": [
+                387
+              ],
+              "leafNodeIds": [
+                507
+              ],
+              "exampleAncestorChainFromLeaf": [
+                507,
+                505,
+                504,
+                503,
+                502,
+                501,
+                484
+              ]
+            },
+            {
+              "functionName": "RegExp: \\b(donuts?|doughnuts?)\\b",
+              "weightedMs": 1.036,
+              "excludingNegativeMs": 1.036,
+              "sampleIndexes": [
+                388
+              ],
+              "leafNodeIds": [
+                508
+              ],
+              "exampleAncestorChainFromLeaf": [
+                508,
+                505,
+                504,
+                503,
+                502,
+                501,
+                484
+              ]
+            },
+            {
+              "functionName": "RegExp: \\b(beef|steak|lamb|pork|bacon|sausages?|ham|meatballs?)\\b",
+              "weightedMs": 1.031,
+              "excludingNegativeMs": 1.031,
+              "sampleIndexes": [
+                397
+              ],
+              "leafNodeIds": [
+                512
+              ],
+              "exampleAncestorChainFromLeaf": [
+                512,
+                505,
+                504,
+                503,
+                502,
+                501,
+                484
+              ]
+            }
+          ]
+        },
+        {
+          "id": "overlay",
+          "matchingNodeIds": [
+            178,
+            413,
+            461
+          ],
+          "selfMs": 14.397,
+          "selfExcludingNegativeMs": 14.397,
+          "inclusiveMs": 31.796,
+          "inclusiveExcludingNegativeMs": 31.796,
+          "selfSampleIndexes": [
+            197,
+            246,
+            316,
+            317,
+            318,
+            319,
+            320,
+            325,
+            326,
+            327
+          ],
+          "inclusiveSampleCount": 22,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "stage",
+          "matchingNodeIds": [
+            401,
+            894
+          ],
+          "selfMs": 2.455,
+          "selfExcludingNegativeMs": 2.455,
+          "inclusiveMs": 18.858,
+          "inclusiveExcludingNegativeMs": 18.858,
+          "selfSampleIndexes": [
+            237,
+            887
+          ],
+          "inclusiveSampleCount": 14,
+          "nativeLeafSamples": [
+            {
+              "functionName": "getBoundingClientRect",
+              "weightedMs": 1.572,
+              "excludingNegativeMs": 1.572,
+              "sampleIndexes": [
+                812
+              ],
+              "leafNodeIds": [
+                1026
+              ],
+              "exampleAncestorChainFromLeaf": [
+                1026,
+                1025,
+                1024,
+                401
+              ]
+            }
+          ]
+        }
+      ],
+      "profileDurationMinusSignedWeightsMs": 0.875
+    },
+    {
+      "file": "7-coach-send.cpuprofile",
+      "sha256": "d2f956d57877414f879be59a40cf4ca5745d8dcef7009f9c681ca7a1475ba47c",
+      "bytes": 164501,
+      "startTimeUs": 84885379107,
+      "endTimeUs": 84886496146,
+      "durationMs": 1117.039,
+      "samples": 451,
+      "summedSignedWeightsMs": 1116.098,
+      "urls": [
+        "http://localhost:5199/assets/AppContext-Dx860ira.js",
+        "http://localhost:5199/assets/AuthContext-C-hXuKef.js",
+        "http://localhost:5199/assets/CoachPage-BFUc0Nw0.js",
+        "http://localhost:5199/assets/Momo-B0rf4Vom.js",
+        "http://localhost:5199/assets/apiClient-B6AmXG_q.js",
+        "http://localhost:5199/assets/arrow-right-CxUcUzFi.js",
+        "http://localhost:5199/assets/chunk-BV7QT456-B5cNqVLe.js",
+        "http://localhost:5199/assets/index-J9I0-g20.js",
+        "http://localhost:5199/assets/jsx-runtime-bzQ4Vb5N.js"
+      ],
+      "negativeDeltas": [],
+      "targets": [
+        {
+          "id": "overlay",
+          "matchingNodeIds": [
+            117,
+            594
+          ],
+          "selfMs": 1.561,
+          "selfExcludingNegativeMs": 1.561,
+          "inclusiveMs": 5.619,
+          "inclusiveExcludingNegativeMs": 5.619,
+          "selfSampleIndexes": [
+            353
+          ],
+          "inclusiveSampleCount": 3,
+          "nativeLeafSamples": []
+        },
+        {
+          "id": "coach",
+          "matchingNodeIds": [
+            458
+          ],
+          "selfMs": 1.377,
+          "selfExcludingNegativeMs": 1.377,
+          "inclusiveMs": 54.669,
+          "inclusiveExcludingNegativeMs": 54.669,
+          "selfSampleIndexes": [
+            239
+          ],
+          "inclusiveSampleCount": 27,
+          "nativeLeafSamples": [
+            {
+              "functionName": "get height",
+              "weightedMs": 53.292,
+              "excludingNegativeMs": 53.292,
+              "sampleIndexes": [
+                213,
+                214,
+                215,
+                216,
+                217,
+                218,
+                219,
+                220,
+                221,
+                222,
+                223,
+                224,
+                225,
+                226,
+                227,
+                228,
+                229,
+                230,
+                231,
+                232,
+                233,
+                234,
+                235,
+                236,
+                237,
+                238
+              ],
+              "leafNodeIds": [
+                459
+              ],
+              "exampleAncestorChainFromLeaf": [
+                459,
+                458
+              ]
+            }
+          ]
+        }
+      ],
+      "profileDurationMinusSignedWeightsMs": 0.941
+    }
+  ],
+  "selectedObservations": [
+    {
+      "profile": "4-saved-relog.cpuprofile",
+      "target": "home",
+      "expectedMs": 135.197,
+      "observedMs": 135.197,
+      "excludingNegativeMs": 135.197,
+      "verified": true,
+      "matchingNodeIds": [
+        649,
+        1234
+      ]
+    },
+    {
+      "profile": "4-saved-relog.cpuprofile",
+      "target": "stage",
+      "expectedMs": 110.049,
+      "observedMs": 110.049,
+      "excludingNegativeMs": 110.049,
+      "verified": true,
+      "matchingNodeIds": [
+        1138,
+        971
+      ]
+    },
+    {
+      "profile": "3-manual-save.cpuprofile",
+      "target": "receipt",
+      "native": "getBoundingClientRect",
+      "expectedMs": 36.721,
+      "observedMs": 36.721,
+      "excludingNegativeMs": 36.721,
+      "verified": true,
+      "matchingNodeIds": [
+        1235
+      ]
+    },
+    {
+      "profile": "7-coach-send.cpuprofile",
+      "target": "coach",
+      "native": "get height",
+      "expectedMs": 53.292,
+      "observedMs": 53.292,
+      "excludingNegativeMs": 53.292,
+      "verified": true,
+      "matchingNodeIds": [
+        458
+      ]
+    }
+  ],
+  "limitations": [
+    "One repetition per action, one baseline source and Windows host with 4x CPU throttle. No comparative gain, stable cost, causal attribution or field-performance claim follows.",
+    "Profiling adds overhead. Original diagnostic timings and budget output must not be combined with unprofiled acceptance samples.",
+    "The fixture uses mascotEnabled=false and hideOverlay=true. The hideOverlay return occurs after hooks, so geometry effects remain active. This does not represent production-visible Momo or a completely unmounted mascot.",
+    "Substantial browser (program) work and automation appear. Some geometry reads belong to Playwright polling; native layout work cannot all be attributed to Momo.",
+    "Original profiles record bundle URLs but no original served-byte hash. Bundle excerpts and hashes below come from the later exact-revision comparison build and support mapping; they do not retroactively cryptographically identify the earlier served bytes.",
+    "Sample weights are sampled-stack estimates, not exact function wall durations. Negative deltas in two original profiles are retained and explicitly listed; no cause is established."
+  ]
+}

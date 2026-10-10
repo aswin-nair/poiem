@@ -1,6 +1,6 @@
 import { spawn, execFileSync } from 'node:child_process'
 import { resolve } from 'node:path'
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
 import { platform, release, cpus } from 'node:os'
 import { createHash } from 'node:crypto'
@@ -16,15 +16,21 @@ const sources = [
   { id: 'candidate', dir: resolve(root, 'web/app'), port: 5199, revision: candidateRevision },
 ]
 const sha256 = data => createHash('sha256').update(data).digest('hex')
-const sourceFiles = ['src/App.tsx', 'src/components/Momo.tsx', 'src/components/Toast.tsx', 'src/pages/CoachPage.tsx', 'src/lib/motionFeatures.ts']
+const sourceFiles = ['src/App.tsx', 'src/components/Momo.tsx', 'src/components/Toast.tsx', 'src/pages/CoachPage.tsx', 'src/lib/motionFeatures.ts', 'src/components/MotionScreen.tsx']
 for (const source of sources) {
   source.sourceHashes = Object.fromEntries(sourceFiles.map(file => {
+    if (!existsSync(resolve(source.dir, file))) {
+      const committedExists = execFileSync('git', ['ls-tree', source.revision, `web/app/${file}`], { cwd: root, encoding: 'utf8' }).trim()
+      if (committedExists) throw new Error(`${source.id} source file missing: ${file}`)
+      return [file, null]
+    }
     const actual = readFileSync(resolve(source.dir, file), 'utf8').replace(/\r\n/g, '\n')
     const committed = execFileSync('git', ['show', `${source.revision}:web/app/${file}`], { cwd: root, encoding: 'utf8' })
     if (actual !== committed) throw new Error(`${source.id} source differs from its revision: ${file}`)
     return [file, sha256(actual)]
   }))
   source.lockfileSha256 = sha256(readFileSync(resolve(source.dir, 'package-lock.json')))
+  source.buildIndexSha256 = sha256(readFileSync(resolve(source.dir, 'dist/index.html')))
 }
 if (sources[0].lockfileSha256 !== sources[1].lockfileSha256) throw new Error('Dependency lockfiles differ')
 const servers = sources.map(source => spawn(process.execPath, [resolve(source.dir, 'node_modules/vite/bin/vite.js'), 'preview', '--mode', 'production', '--port', String(source.port), '--strictPort'], { cwd: source.dir, stdio: 'ignore', windowsHide: true }))
@@ -88,7 +94,7 @@ try {
         resourceTransfers: performance.getEntriesByType('resource').filter(item => /\.(js|css)$/.test(new URL(item.name).pathname)).map(item => ({ name: new URL(item.name).pathname, encodedBodySize: item.encodedBodySize, decodedBodySize: item.decodedBodySize, transferSize: item.transferSize })) }
     })
     const rows = [...assets.values()].sort((a, b) => a.filename.localeCompare(b.filename))
-    observations.push({ revision: source.revision, source: source.id, sourceHashes: source.sourceHashes, lockfileSha256: source.lockfileSha256, width, sample: sample + 1, assets: rows, jsGzip: rows.filter(row => row.type === 'js').reduce((sum, row) => sum + row.gzip, 0), cssGzip: rows.filter(row => row.type === 'css').reduce((sum, row) => sum + row.gzip, 0), metrics, failures })
+    observations.push({ revision: source.revision, source: source.id, sourceHashes: source.sourceHashes, lockfileSha256: source.lockfileSha256, buildIndexSha256: source.buildIndexSha256, width, sample: sample + 1, assets: rows, jsGzip: rows.filter(row => row.type === 'js').reduce((sum, row) => sum + row.gzip, 0), cssGzip: rows.filter(row => row.type === 'css').reduce((sum, row) => sum + row.gzip, 0), metrics, failures })
     console.log(`${source.id} ${width} sample ${sample + 1}: ${observations.at(-1).jsGzip} JS gzip bytes`)
     await context.close()
   }

@@ -10,6 +10,8 @@ This is the active plan. [E2E-CHECKLIST.md](E2E-CHECKLIST.md) defines the observ
 
 **Screen-edge follow-up:** [Safe-area evidence](safe-areas/README.md) records the coordinated viewport, page, navigation, dialog, action-dock and Momo changes after M5. Its synthetic inset checks and before/after comparisons are separate from physical phone verification and the earlier performance measurements.
 
+**Rendering follow-up:** [Response-time evidence](response-time/README.md) records deferred animation features and reuse of unchanged Momo drawings, toast context and Coach reply formatting. Its exact `131bd0d7` baseline includes the screen-edge work. Functional and visual checks are separate from the measured response-time budget and field-performance gate.
+
 **1. The experience we are building**
 
 The visual direction is a playful Neo Brutalist kitchen journal. Keep warm paper, strong ink, bright meal colours, condensed headings and tactile controls. Give Today a clear hierarchy, make logging methods immediately discoverable and let Momo perform short comic scenes during quiet moments.

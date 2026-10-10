@@ -8,6 +8,8 @@ This is the acceptance checklist for the full proposed redesign. Core meal, loca
 
 The subsequent [safe-area follow-up](safe-areas/README.md) implements the original F05 screen-edge request and records its own source, synthetic inset fixtures, gallery and verification outcomes. J14/J16 physical cutout, keyboard and assistive-technology checks remain pending.
 
+The [rendering follow-up](response-time/README.md) records the next local performance experiment against `131bd0d7`. Its browser, screenshot and lab timing outcomes remain distinct; a smaller asset or functional pass does not close the response-time or field-performance gates.
+
 - P0: task completion, navigation, persistence, credentials, primary controls and recovery. A failing applicable P0 blocks release.
 - P1: discovery, efficiency and presentation. Each included enhancement must meet its acceptance condition; cosmetic deferrals must be recorded explicitly.
 - Run relevant checks after each milestone, then an integrated pass on the release candidate. Broaden testing when a change or unresolved failure warrants it. Use existing suites where they already cover the behaviour.
