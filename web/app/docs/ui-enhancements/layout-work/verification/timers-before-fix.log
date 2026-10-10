@@ -1,0 +1,86 @@
+[WebServer] (node:32524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:29848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › e2e\momo-interlude.spec.ts:89:1 › Mute stops subsequent cameos and survives a reload (1.0m)
+(node:1952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › e2e\momo-interlude.spec.ts:115:1 › Calm uses a later static cameo and caps the session at two visits (1.0m)
+
+
+  1) [chromium] › e2e\momo-interlude.spec.ts:89:1 › Mute stops subsequent cameos and survives a reload 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: expect(locator).toBeHidden() failed
+
+    Locator:  getByRole('complementary', { name: 'A little Momo moment' })
+    Expected: hidden
+    Received: undefined
+
+
+      93 |   await expect(cameo(page)).toBeHidden()
+      94 |   await page.clock.runFor(200_000)
+    > 95 |   await expect(cameo(page)).toBeHidden()
+         |                             ^
+      96 |   await expect.poll(() => page.evaluate(async sub => {
+      97 |     const moduleUrl = '/src/lib/durableState.ts'
+      98 |     const { loadDurableState } = await import(moduleUrl)
+        at C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\e2e\momo-interlude.spec.ts:95:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache\layout-work-timers-isolated\momo-interlude-Mute-stops--9b600-ameos-and-survives-a-reload-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .cache\layout-work-timers-isolated\momo-interlude-Mute-stops--9b600-ameos-and-survives-a-reload-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    .cache\layout-work-timers-isolated\momo-interlude-Mute-stops--9b600-ameos-and-survives-a-reload-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace .cache\layout-work-timers-isolated\momo-interlude-Mute-stops--9b600-ameos-and-survives-a-reload-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e\momo-interlude.spec.ts:115:1 › Calm uses a later static cameo and caps the session at two visits 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByRole('complementary', { name: 'A little Momo moment' })
+    Expected: visible
+    Received: undefined
+
+
+      121 |   await expect(cameo(page)).toHaveClass(/is-static/)
+      122 |   await page.clock.runFor(190_000)
+    > 123 |   await expect(cameo(page)).toBeVisible()
+          |                             ^
+      124 |   await page.clock.runFor(400_000)
+      125 |   await expect(cameo(page)).toBeHidden()
+      126 |   expect(await page.evaluate(sub => JSON.parse(sessionStorage.getItem(`poiem-momo-interludes-${sub}`)!).visits, VISUAL_USER.sub)).toBe(2)
+        at C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\e2e\momo-interlude.spec.ts:123:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache\layout-work-timers-isolated\momo-interlude-Calm-uses-a-db366-s-the-session-at-two-visits-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .cache\layout-work-timers-isolated\momo-interlude-Calm-uses-a-db366-s-the-session-at-two-visits-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    .cache\layout-work-timers-isolated\momo-interlude-Calm-uses-a-db366-s-the-session-at-two-visits-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace .cache\layout-work-timers-isolated\momo-interlude-Calm-uses-a-db366-s-the-session-at-two-visits-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e\momo-interlude.spec.ts:89:1 › Mute stops subsequent cameos and survives a reload 
+    [chromium] › e2e\momo-interlude.spec.ts:115:1 › Calm uses a later static cameo and caps the session at two visits 

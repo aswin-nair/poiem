@@ -1,0 +1,102 @@
+[WebServer] (node:22036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 68 tests using 2 workers
+
+(node:17376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › e2e\coach-drafting.spec.ts:71:1 › clear draft and the response follow-up edit the composer without changing chat (5.9s)
+  ok  2 [chromium] › e2e\coach-drafting.spec.ts:39:1 › starter creates an editable multiline draft and sends only after Send (7.1s)
+  ok  3 [chromium] › e2e\coach-drafting.spec.ts:89:1 › copy confirms only after the clipboard accepts the response (1.8s)
+  ok  4 [chromium] › e2e\coach-drafting.spec.ts:109:1 › denied clipboard access gives selected response text for manual copying (1.7s)
+  ok  5 [chromium] › e2e\coach-drafting.spec.ts:127:3 › multiline draft controls fit the short phone viewport in light (1.9s)
+  ok  6 [chromium] › e2e\coach-drafting.spec.ts:127:3 › multiline draft controls fit the short phone viewport in dark (1.8s)
+  ok  7 [chromium] › e2e\coach-recovery.spec.ts:31:1 › Retry reuses the failed prompt and its original history without another user bubble (2.5s)
+  ok  8 [chromium] › e2e\coach-recovery.spec.ts:63:1 › Cancel keeps the original message retryable and ignores a late provider reply (2.0s)
+  ok  9 [chromium] › e2e\coach-recovery.spec.ts:92:1 › Retry excludes conversation messages deleted after the original failure (2.4s)
+  ok 10 [chromium] › e2e\coach-recovery.spec.ts:116:3 › clear during a request prevents its late answer from returning (2.3s)
+  ok 11 [chromium] › e2e\coach-recovery.spec.ts:116:3 › delete during a request prevents its late answer from returning (2.3s)
+  ok 12 [chromium] › e2e\coach-recovery.spec.ts:145:1 › unavailable ordinary coaching preserves the draft while local safety support still responds (2.0s)
+  ok 14 [chromium] › e2e\home.spec.ts:48:3 › Today & food logging › streak, level and XP live on Insights (11.2s)
+  ok 13 [chromium] › e2e\home.spec.ts:9:3 › Today & food logging › shows the day on the first screen: what is left, macros, meals and water (11.6s)
+  ok 15 [chromium] › e2e\home.spec.ts:56:3 › Today & food logging › pause hides nutrition and engagement numbers on Today and Insights (11.4s)
+  ok 16 [chromium] › e2e\home.spec.ts:80:3 › Today & food logging › logs food via manual entry (12.3s)
+  ok 17 [chromium] › e2e\home.spec.ts:93:3 › Today & food logging › the log sheet opens over Today, closes back to it, and logs a recent meal in one tap (10.7s)
+  ok 18 [chromium] › e2e\home.spec.ts:116:3 › Today & food logging › date picker keeps today calories after switching dates (13.3s)
+  ok 19 [chromium] › e2e\home.spec.ts:159:3 › Today & food logging › log FAB reaches every option from the log sheet (11.3s)
+  ok 21 [chromium] › e2e\layout-work.spec.ts:6:1 › Coach draft grows, shrinks and updates its cap after viewport changes (1.9s)
+  ok 20 [chromium] › e2e\home.spec.ts:169:3 › Today & food logging › a later meal confirms with a toast and Undo instead of the full-screen moment (11.1s)
+  ok 22 [chromium] › e2e\layout-work.spec.ts:53:1 › Momo steps aside for the real log dialog and returns after it closes (2.4s)
+  ok 23 [chromium] › e2e\layout-work.spec.ts:69:1 › one scheduled Momo check shares obstacle reads with its speech check (1.7s)
+  ok 24 [chromium] › e2e\layout-work.spec.ts:92:1 › an absent floating Momo does not retry placement on every frame (1.6s)
+  ok 26 [chromium] › e2e\log-moment.spec.ts:145:1 › card scroll clearance survives another Today state update (2.1s)
+  ok 25 [chromium] › e2e\log-moment.spec.ts:110:1 › the first meal shows a moment card, not a dialog, and focus stays where it was (3.0s)
+  ok 27 [chromium] › e2e\log-moment.spec.ts:159:1 › Undo on the moment card removes the entry (2.2s)
+  ok 29 [chromium] › e2e\log-moment.spec.ts:216:1 › a paused account gets a toast and nothing else (2.5s)
+  ok 30 [chromium] › e2e\log-moment.spec.ts:238:1 › a refresh on Today does not replay the moment (3.0s)
+  ok 31 [chromium] › e2e\log-moment.spec.ts:254:1 › deleting the only entry and logging again does not restart the first-meal moment (7.3s)
+  ok 28 [chromium] › e2e\log-moment.spec.ts:171:1 › the second and third log of a day show only a toast (16.4s)
+[WebServer] 3:30:00 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 32 [chromium] › e2e\log-moment.spec.ts:339:1 › reduced motion shows the same text with no decorative motion (7.9s)
+[WebServer] 3:30:05 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 34 [chromium] › e2e\momo-interlude.spec.ts:29:1 › a dense phone Today defers Momo without spending a visit (1.3s)
+  ok 35 [chromium] › e2e\momo-interlude.spec.ts:43:1 › Today opens before cameo code loads, and the original first-visit timing is kept (1.9s)
+[WebServer] 3:30:09 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 36 [chromium] › e2e\momo-interlude.spec.ts:62:3 › Momo arrives without taking focus and stays clear of navigation at 320px (1.4s)
+[WebServer] 3:30:10 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 33 [chromium] › e2e\mascot-motion.spec.ts:4:1 › the saved reduced-motion preference stops every Momo animation but keeps expressions (11.8s)
+  ok 37 [chromium] › e2e\momo-interlude.spec.ts:62:3 › Momo arrives without taking focus and stays clear of navigation at 390px (1.4s)
+[WebServer] 3:30:11 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 38 [chromium] › e2e\momo-interlude.spec.ts:62:3 › Momo arrives without taking focus and stays clear of navigation at 1440px (1.4s)
+  ok 40 [chromium] › e2e\momo-interlude.spec.ts:108:3 › respects existing Momo preferences {"muted":true} (1.4s)
+  ok 39 [chromium] › e2e\momo-interlude.spec.ts:89:1 › Mute stops subsequent cameos and survives a reload (2.4s)
+  ok 41 [chromium] › e2e\momo-interlude.spec.ts:108:3 › respects existing Momo preferences {"paused":true} (922ms)
+  ok 42 [chromium] › e2e\momo-interlude.spec.ts:108:3 › respects existing Momo preferences {"activity":"off"} (1.4s)
+  ok 43 [chromium] › e2e\momo-interlude.spec.ts:115:1 › Calm uses a later static cameo and caps the session at two visits (1.7s)
+  ok 45 [chromium] › e2e\momo-interlude.spec.ts:151:5 › touch cameos › dismissal preserves scroll clearance at 360×844 (1.7s)
+  ok 44 [chromium] › e2e\momo-interlude.spec.ts:129:1 › dialogs and text entry win over an active cameo (2.9s)
+[WebServer] 3:30:18 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 46 [chromium] › e2e\momo-interlude.spec.ts:151:5 › touch cameos › dismissal preserves scroll clearance at 844×390 (1.8s)
+  ok 47 [chromium] › e2e\safe-area-momo.spec.ts:83:3 › Momo respects synthetic safe edges in the portrait quiet area light (1.7s)
+[WebServer] 3:30:20 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 3:30:20 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 48 [chromium] › e2e\safe-area-momo.spec.ts:83:3 › Momo respects synthetic safe edges in the portrait quiet area dark (1.7s)
+  ok 49 [chromium] › e2e\safe-area-momo.spec.ts:83:3 › Momo respects synthetic safe edges in the desktop quiet area light (1.8s)
+[WebServer] 3:30:22 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 3:30:22 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 51 [chromium] › e2e\safe-area-momo.spec.ts:117:1 › a dense phone with synthetic safe edges defers Momo without spending a visit (1.3s)
+  ok 50 [chromium] › e2e\safe-area-momo.spec.ts:83:3 › Momo respects synthetic safe edges in the desktop quiet area dark (1.9s)
+[WebServer] 3:30:23 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+(node:27236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 52 [chromium] › e2e\safe-area-momo.spec.ts:128:1 › an unavailable inset region keeps the visit for a later usable viewport (1.5s)
+(node:24708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 53 [mobile] › e2e\mobile-ux.spec.ts:130:5 › narrow phones: core routes and all You categories fit in light (17.7s)
+  ok 55 [mobile] › e2e\mobile-ux.spec.ts:136:3 › focused Manual and Coach inputs remain usable at keyboard height in light (2.9s)
+  ok 54 [mobile] › e2e\mobile-ux.spec.ts:130:5 › wide phones and landscape: core routes and all You categories fit in light (27.1s)
+  ok 56 [mobile] › e2e\mobile-ux.spec.ts:130:5 › narrow phones: core routes and all You categories fit in dark (18.0s)
+  ok 58 [mobile] › e2e\mobile-ux.spec.ts:136:3 › focused Manual and Coach inputs remain usable at keyboard height in dark (3.0s)
+(node:30008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 57 [mobile] › e2e\mobile-ux.spec.ts:130:5 › wide phones and landscape: core routes and all You categories fit in dark (25.8s)
+(node:2292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 59 [mobile-pixel] › e2e\mobile-ux.spec.ts:130:5 › narrow phones: core routes and all You categories fit in light (16.9s)
+  ok 61 [mobile-pixel] › e2e\mobile-ux.spec.ts:136:3 › focused Manual and Coach inputs remain usable at keyboard height in light (3.0s)
+  ok 60 [mobile-pixel] › e2e\mobile-ux.spec.ts:130:5 › wide phones and landscape: core routes and all You categories fit in light (25.2s)
+  ok 62 [mobile-pixel] › e2e\mobile-ux.spec.ts:130:5 › narrow phones: core routes and all You categories fit in dark (18.2s)
+  ok 64 [mobile-pixel] › e2e\mobile-ux.spec.ts:136:3 › focused Manual and Coach inputs remain usable at keyboard height in dark (3.0s)
+(node:31540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 65 [production] › e2e\production.spec.ts:8:3 › Production build › public entry routes setup and returning members under the app prefix (2.8s)
+  ok 66 [production] › e2e\production.spec.ts:16:3 › Production build › Poiem metadata, manifest and branding images resolve under /app/ (340ms)
+  ok 67 [production] › e2e\production.spec.ts:28:3 › Production build › app loads at /app/ and starts first-time guests in onboarding (1.8s)
+  ok 68 [production] › e2e\production.spec.ts:34:3 › Production build › client router works under /app/ (2.0s)
+  ok 63 [mobile-pixel] › e2e\mobile-ux.spec.ts:130:5 › wide phones and landscape: core routes and all You categories fit in dark (24.8s)
+
+  68 passed (3.7m)
