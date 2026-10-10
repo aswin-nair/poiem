@@ -23,7 +23,7 @@ The [local configuration](local.config.ts) mirrors the isolated configuration us
 
 Canonical screenshots use `mcr.microsoft.com/playwright:v1.61.1-noble`, the exact locked Linux dependencies and local backend. Run the existing `visual` project in that environment after building. Review actual/expected/diff images before updating a deliberate baseline; do not increase the tolerance to hide a difference.
 
-The [focused engine configuration](engines.config.ts) selects backup review, Settings departure, sheet readiness, direct-link/download recovery and navigation on Firefox and WebKit. It uses port 5196, two workers and no retries. Run from `web/app` inside the same pinned image:
+The [focused engine configuration](engines.config.ts) selects backup review, Settings departure, sheet readiness, direct-link/download recovery, navigation and the subsequent safe-area cases on Firefox and WebKit. It uses the explicit loopback address `127.0.0.1:5196`, two workers and no retries. The [safe-area follow-up](../../safe-areas/README.md) records the later engine attempts separately from this source snapshot. Run from `web/app` inside the same pinned image:
 
 ```sh
 npx playwright test --config=docs/ui-enhancements/recovery/verification/engines.config.ts --output=.cache/m5-engines

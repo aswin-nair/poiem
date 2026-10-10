@@ -8,7 +8,7 @@
     "passed": 973
   },
   "lint": {
-    "note": "Existing Fast Refresh export warnings; scoped to source/config/tests with existing ignore file and cache/artifact exclusions",
+    "note": "12 existing Fast Refresh export warnings and one existing accessibility-test children-prop warning; scoped to source/config/tests with existing ignore file and cache/artifact exclusions",
     "errors": 0,
     "warnings": 13
   },

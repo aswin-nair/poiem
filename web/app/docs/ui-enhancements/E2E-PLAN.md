@@ -8,6 +8,8 @@ This is the active plan. [E2E-CHECKLIST.md](E2E-CHECKLIST.md) defines the observ
 
 **Current delivery:** The M2 core meal slice, local M3 first-session/account slice, M4 everyday-use controls and M5 local recovery changes are built. [Core meal evidence](core-meal/README.md), [first-session evidence](first-session/README.md), [everyday-use evidence](ongoing-use/README.md) and [recovery evidence](recovery/README.md) record their scope and checks. The [recovery gallery](recovery/gallery.html) compares Settings departure, backup review, help, Saved controls and sync presentation; [Momo storyboards](first-session/momo/gallery.html) show three finite scenes. Final local integration/performance results are recorded in the recovery report. Full M0/M1 participant evidence, field performance, physical phones, other browser engines and cloud staging remain release gates; local implementation does not close them.
 
+**Screen-edge follow-up:** [Safe-area evidence](safe-areas/README.md) records the coordinated viewport, page, navigation, dialog, action-dock and Momo changes after M5. Its synthetic inset checks and before/after comparisons are separate from physical phone verification and the earlier performance measurements.
+
 **1. The experience we are building**
 
 The visual direction is a playful Neo Brutalist kitchen journal. Keep warm paper, strong ink, bright meal colours, condensed headings and tactile controls. Give Today a clear hierarchy, make logging methods immediately discoverable and let Momo perform short comic scenes during quiet moments.

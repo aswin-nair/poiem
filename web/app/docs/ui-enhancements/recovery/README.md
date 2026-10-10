@@ -40,7 +40,7 @@ The [verification record and reproduction commands](verification/README.md) reta
 | Route download/focus recovery | 23 passed: eight failed-download/hash cases, two direct-link focus cases, twelve exact Settings-search cases and the earliest-mount sheet check |
 | Phone and production coverage | 16 passed: iPhone/Pixel layouts, keyboard-height inputs, landscape and production `/app/` routes/assets |
 | Type check and local production build | Final Windows build passed; main JS 406.12 kB raw / 130.30 kB gzip. Whole initial asset footprint is measured separately below |
-| Lint | Final scoped run: 0 errors; 13 existing Fast Refresh export warnings |
+| Lint | Final scoped run: 0 errors; 13 existing warnings (12 Fast Refresh exports and one accessibility-test children prop) |
 | Pinned Linux screenshots | Final complete run: 63 passed. Four intentional Saved changes reviewed; earlier warm repetitions passed 15/15 |
 | Comparison gallery | 64 selections / 128 loaded images; keyboard and overflow checks passed |
 
@@ -62,6 +62,6 @@ Both revisions completed 70 trusted-click samples without functional errors. All
 
 Physical iOS Safari and Android Chrome, native keyboard/camera/clipboard/selection behavior, safe areas and screen-reader checks remain pending. Focused WebKit/Firefox, participant usability, real cloud staging/account/offline/conflict checks and field performance remain separate. Intercepted local responses and synthetic presentation cannot close them.
 
-At this M5 snapshot, the original F05 safe-area implementation is also still open: the viewport metadata omits `viewport-fit=cover` and top/side clearance needs coordinated owners. This is implementation work followed by physical verification, not a gap that device testing alone closes.
+At this M5 snapshot, the original F05 safe-area implementation was still open: the viewport metadata omitted `viewport-fit=cover` and top/side clearance needed coordinated owners. The subsequent [safe-area follow-up](../safe-areas/README.md) implements those owners and records its own comparisons and checks. This historical M5 gallery and performance data remain tied to `04552501`; physical verification is still pending.
 
 No rollout is performed. The before references are comparison snapshots, not a claim that a deployment has been validated. Work is saved locally; no push, pull request or deployment is included.

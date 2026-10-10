@@ -16,4 +16,3 @@ export default defineConfig({
     { command: 'npm run preview -- --port 4194 --strictPort', url: 'http://localhost:4194/app/login', reuseExistingServer: true, timeout: 120000 },
   ],
 })
-

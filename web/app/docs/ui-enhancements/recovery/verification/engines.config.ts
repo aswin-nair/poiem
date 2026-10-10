@@ -6,18 +6,18 @@ import base from '../../../../playwright.config'
 export default defineConfig({
   ...base,
   testDir: '../../../../e2e',
-  testMatch: /backup-import\.spec\.ts|settings-departure\.spec\.ts|sheet-ready\.spec\.ts|settings-deep-link-recovery\.spec\.ts|route-download-recovery\.spec\.ts|navigation\.spec\.ts/,
+  testMatch: /backup-import\.spec\.ts|settings-departure\.spec\.ts|sheet-ready\.spec\.ts|settings-deep-link-recovery\.spec\.ts|route-download-recovery\.spec\.ts|navigation\.spec\.ts|safe-areas\.spec\.ts/,
   workers: 2,
   retries: 0,
   reporter: [['list']],
-  use: { ...base.use, baseURL: 'http://localhost:5196', timezoneId: 'UTC' },
+  use: { ...base.use, baseURL: 'http://127.0.0.1:5196', timezoneId: 'UTC' },
   projects: [
     { name: 'webkit-recovery', use: { ...devices['Desktop Safari'] } },
     { name: 'firefox-recovery', use: { ...devices['Desktop Firefox'] } },
   ],
   webServer: [{
-    command: 'npm run dev -- --port 5196 --strictPort',
-    url: 'http://localhost:5196',
+    command: 'npm run dev -- --host 127.0.0.1 --port 5196 --strictPort',
+    url: 'http://127.0.0.1:5196',
     reuseExistingServer: false,
     timeout: 120000,
     env: { VITE_GOOGLE_CLIENT_ID: '', VITE_DATA_BACKEND: 'local' },
