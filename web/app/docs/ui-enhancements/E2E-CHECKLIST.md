@@ -2,7 +2,7 @@
 
 October 8, 2026 · Companion to [E2E-PLAN.md](E2E-PLAN.md)
 
-This is the acceptance checklist for the full proposed redesign. The first core meal slice and local first-session/account slice are implemented; actual outcomes are recorded in [core meal evidence](core-meal/README.md) and [first-session evidence](first-session/README.md). Three new Momo stories are captured in the [scene gallery](first-session/momo/gallery.html). Remaining workflow enhancements and external-device/staging checks are pending. A journey listed below is not automatically marked passed by a local suite count.
+This is the acceptance checklist for the full proposed redesign. Core meal, local first-session/account, everyday-use controls and local recovery are implemented; outcomes are recorded in [core meal evidence](core-meal/README.md), [first-session evidence](first-session/README.md), [everyday-use evidence](ongoing-use/README.md) and [recovery evidence](recovery/README.md). Three Momo stories are captured in the [scene gallery](first-session/momo/gallery.html). J11's exact search, cross-panel drafts and route-exit guard, and J13's validated import preview have local checks. J12's new banner checks establish presentation only. Performance budgets, physical devices, other browser engines, participant review and cloud staging remain separate release checks. A journey listed below is not automatically marked passed by a local suite count.
 
 **Coverage levels**
 

@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-10",
+  "sourceRevision": "04552501",
+  "unit": {
+    "note": "Final unchanged recheck passed after sandbox temporary-cache rename prevented the preceding run from starting any tests",
+    "files": 116,
+    "workers": 2,
+    "passed": 973
+  },
+  "lint": {
+    "note": "Existing Fast Refresh export warnings; scoped to source/config/tests with existing ignore file and cache/artifact exclusions",
+    "errors": 0,
+    "warnings": 13
+  },
+  "build": {
+    "localProduction": "passed",
+    "node": "24.14.1",
+    "mainJsGzipKB": 130.3,
+    "typeCheck": "passed",
+    "note": "Windows build used for both performance revisions; single main asset sizes are distinct from total requested assets",
+    "mainJsRawKB": 406.12
+  },
+  "pinnedVisual": {
+    "image": "mcr.microsoft.com/playwright:v1.61.1-noble",
+    "passed": 63,
+    "note": "Two earlier narrow Saved runs timed out during navigation before any image comparison; cause unconfirmed",
+    "browser": "Chromium 149",
+    "intendedBaselines": "Four Saved dropdown captures and eight historical M4 Insights/Coach captures reviewed",
+    "repeats": {
+      "passed": 15,
+      "explanation": "Four Saved plus one Today case, three repetitions each"
+    },
+    "maxDiffPixels": 200
+  },
+  "broadChromium": {
+    "note": "Escape case rechecked, then stronger earliest-mount regression failed and drove layout-effect focus/scroll-lock fix",
+    "failed": 1,
+    "passed": 302,
+    "unchangedRecheckPassed": 3
+  },
+  "affectedIntegration": {
+    "note": "Failed-download fixtures read retired localStorage after IDB migration and stopped before navigation. Corrected durable-state fixtures all passed in final route batch",
+    "fixtureFailures": 6,
+    "passed": 62
+  },
+  "finalRouteFocus": {
+    "earliestSheetMount": 1,
+    "exactSettingsSearch": 12,
+    "directLinks": 2,
+    "passed": 23,
+    "routeDownloadOrHash": 8
+  },
+  "phoneProduction": {
+    "coverage": "iPhone and Pixel touch emulation, keyboard-height and landscape layouts; production /app/ entry, routes, metadata and assets",
+    "workers": 1,
+    "passed": 16
+  },
+  "comparisonGallery": {
+    "keyboardSelectors": 4,
+    "horizontalOverflows": 0,
+    "errors": 0,
+    "loadedImages": 128,
+    "supplementalAfterOnlyRouteImages": 6,
+    "pairs": 64
+  },
+  "engines": {
+    "status": "pending focused pinned WebKit/Firefox run"
+  },
+  "limitations": [
+    "Local client and synthetic fixtures do not establish cloud durability or real service behavior",
+    "Physical iOS Safari and Android Chrome, safe areas, native keyboard/camera/clipboard, screen readers, participant review and field performance remain release checks",
+    "No test timeout or visual tolerance increased",
+    "No push, PR or deployment"
+  ]
+}
