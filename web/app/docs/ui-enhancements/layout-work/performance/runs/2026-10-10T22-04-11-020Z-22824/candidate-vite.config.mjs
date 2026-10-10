@@ -1,0 +1,3 @@
+import original from "file:///C:/Users/aswin/Desktop/Fud%20AI/.claude/worktrees/poiem-motion-return/web/app/vite.config.ts"
+import { mergeConfig } from "file:///C:/Users/aswin/Desktop/Fud%20AI/.claude/worktrees/poiem-motion-return/web/app/node_modules/vite/dist/node/index.js"
+export default async env => mergeConfig(await original(env), { envDir: false, define: { 'import.meta.env.VITE_DATA_BACKEND': '"local"', 'import.meta.env.VITE_GOOGLE_CLIENT_ID': '""', 'import.meta.env.VITE_RELEASE_ID': '"unassigned"' }, build: { outDir: "C:\\Users\\aswin\\Desktop\\Fud AI\\.claude\\worktrees\\poiem-motion-return\\web\\app\\dist", emptyOutDir: true } })

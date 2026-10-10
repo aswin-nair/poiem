@@ -1,0 +1,3107 @@
+{
+  "recordedAt": "2026-10-10T22:05:23.751Z",
+  "runId": "2026-10-10T22-04-11-020Z-22824",
+  "helperSha256": "2f08bf888831de7e322a9a8d35676bf87edbe457ca122c010ea80fbe12a4b453",
+  "browser": "149.0.7827.55",
+  "node": "v24.14.1",
+  "os": "win32",
+  "release": "10.0.26200",
+  "cpu": "Snapdragon(R) X 10-core X1P64100 @ 3.40 GHz",
+  "cpuThrottle": 4,
+  "buildSettings": {
+    "backend": "local",
+    "googleClientId": "",
+    "release": "unassigned",
+    "sourceMap": false,
+    "mode": "production",
+    "envFiles": false
+  },
+  "network": "Unthrottled local preview, fresh context and disabled browser cache; only same-origin assets allowed",
+  "method": "Cold signed-in Today, synthetic account/fixed calendar context, real performance clock. Successful requested JS/CSS gzip footprint computed from matching freshly built files through Calories + fonts + two seconds; gzip is an asset estimate, not measured wire transfer. Actual local resource sizes and content encodings are recorded separately. LCP/CLS/FCP are three controlled samples per width, not field percentiles or INP. Baseline precedes candidate within each width/sample; order is not randomized.",
+  "observations": [
+    {
+      "revision": "84d0cf1e515d0e1b9ff7849a46caa3b10e71bc13",
+      "source": "baseline",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "3b10f2805bf305f5810bbbe4e143e8f8319a47a40e95dc158e667de57a0f7f60",
+        "src/pages/HomePage.tsx": "b22762c062c7cb4c0daa08c903a9141b3d61542136170c7f22008d2c91765e6f",
+        "src/components/LogMoment.tsx": "e9e3b253eeddd5409f8a818533a174f226682aff3022c793c4af4e227a2c9114",
+        "src/mascot/MascotOverlay.tsx": "e0e27baf13c7ccfa9ebff1217420b6d961510ba6739e1cbe40bf1216555cbdfc",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "34dfe68af3f5c683a7456d121f8e005066250f46d0cd656afe26204247833993",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "3408e7a9d44eb57028c45ca77e7895f649b9ff7ea84a47c0340d22f1dc05bf82",
+      "distTreeSha256": "b92ed278c7151c0c159bcd194d6befe10277842461cc10e4efb7f16985b407f4",
+      "width": 390,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DTb16CEL.js",
+          "sha256": "de0c09d5df4749c07cbd517e72d6b0f58da2d802c9bc688486d8a39ea13b6e79",
+          "type": "js",
+          "raw": 379454,
+          "gzip": 119960,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 211951,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 2432,
+        "cls": 0.003544872903988985,
+        "fcpMs": 1144,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DTb16CEL.js",
+            "encodedBodySize": 119960,
+            "decodedBodySize": 379454,
+            "transferSize": 120260
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "bc85116f400ef2735fd720e5a9c86ab1a080c29b",
+      "source": "candidate",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "4a3e6c088efb5efd047068a01ca93b0a1db646daee961432e69b5fcfbecf36a8",
+        "src/pages/HomePage.tsx": "3458ec6913b7dc7af9cca7acde390a5421545bc88866c56676da445c2cff51ca",
+        "src/components/LogMoment.tsx": "d2539621f8af61b20975e950b616d6fbb21e3ac57415bd2d3949bd126e15e7b4",
+        "src/mascot/MascotOverlay.tsx": "b3472a95ffc9c4689650fd9b9844f496c292243e203106dd5a3e15905dd46239",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "abaea5d42170c7398d59ae70bb299fd30248f82348e8098a6e7dd9ddf047621c",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "f762d993e6f4e7b8f7463f63817cb291e9eff53570034d0e635e7231710ae7de",
+      "distTreeSha256": "e60a40c82911717c24a8d059d6fa19422644797ffc7d33abbf9897a02d8910fa",
+      "width": 390,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DfGi1WP-.js",
+          "sha256": "e431f3bbd134761877a3cb199efecd6f308d2e988e6655e9bee5cf6303d2f5fa",
+          "type": "js",
+          "raw": 379511,
+          "gzip": 120228,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 212219,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 2248,
+        "cls": 0.00707073592179778,
+        "fcpMs": 1032,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DfGi1WP-.js",
+            "encodedBodySize": 120228,
+            "decodedBodySize": 379511,
+            "transferSize": 120528
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "84d0cf1e515d0e1b9ff7849a46caa3b10e71bc13",
+      "source": "baseline",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "3b10f2805bf305f5810bbbe4e143e8f8319a47a40e95dc158e667de57a0f7f60",
+        "src/pages/HomePage.tsx": "b22762c062c7cb4c0daa08c903a9141b3d61542136170c7f22008d2c91765e6f",
+        "src/components/LogMoment.tsx": "e9e3b253eeddd5409f8a818533a174f226682aff3022c793c4af4e227a2c9114",
+        "src/mascot/MascotOverlay.tsx": "e0e27baf13c7ccfa9ebff1217420b6d961510ba6739e1cbe40bf1216555cbdfc",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "34dfe68af3f5c683a7456d121f8e005066250f46d0cd656afe26204247833993",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "3408e7a9d44eb57028c45ca77e7895f649b9ff7ea84a47c0340d22f1dc05bf82",
+      "distTreeSha256": "b92ed278c7151c0c159bcd194d6befe10277842461cc10e4efb7f16985b407f4",
+      "width": 1440,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DTb16CEL.js",
+          "sha256": "de0c09d5df4749c07cbd517e72d6b0f58da2d802c9bc688486d8a39ea13b6e79",
+          "type": "js",
+          "raw": 379454,
+          "gzip": 119960,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 211951,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 1796,
+        "cls": 0.00037862179603105704,
+        "fcpMs": 884,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DTb16CEL.js",
+            "encodedBodySize": 119960,
+            "decodedBodySize": 379454,
+            "transferSize": 120260
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "bc85116f400ef2735fd720e5a9c86ab1a080c29b",
+      "source": "candidate",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "4a3e6c088efb5efd047068a01ca93b0a1db646daee961432e69b5fcfbecf36a8",
+        "src/pages/HomePage.tsx": "3458ec6913b7dc7af9cca7acde390a5421545bc88866c56676da445c2cff51ca",
+        "src/components/LogMoment.tsx": "d2539621f8af61b20975e950b616d6fbb21e3ac57415bd2d3949bd126e15e7b4",
+        "src/mascot/MascotOverlay.tsx": "b3472a95ffc9c4689650fd9b9844f496c292243e203106dd5a3e15905dd46239",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "abaea5d42170c7398d59ae70bb299fd30248f82348e8098a6e7dd9ddf047621c",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "f762d993e6f4e7b8f7463f63817cb291e9eff53570034d0e635e7231710ae7de",
+      "distTreeSha256": "e60a40c82911717c24a8d059d6fa19422644797ffc7d33abbf9897a02d8910fa",
+      "width": 1440,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DfGi1WP-.js",
+          "sha256": "e431f3bbd134761877a3cb199efecd6f308d2e988e6655e9bee5cf6303d2f5fa",
+          "type": "js",
+          "raw": 379511,
+          "gzip": 120228,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 212219,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 2004,
+        "cls": 0.000632817456490055,
+        "fcpMs": 856,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DfGi1WP-.js",
+            "encodedBodySize": 120228,
+            "decodedBodySize": 379511,
+            "transferSize": 120528
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "84d0cf1e515d0e1b9ff7849a46caa3b10e71bc13",
+      "source": "baseline",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "3b10f2805bf305f5810bbbe4e143e8f8319a47a40e95dc158e667de57a0f7f60",
+        "src/pages/HomePage.tsx": "b22762c062c7cb4c0daa08c903a9141b3d61542136170c7f22008d2c91765e6f",
+        "src/components/LogMoment.tsx": "e9e3b253eeddd5409f8a818533a174f226682aff3022c793c4af4e227a2c9114",
+        "src/mascot/MascotOverlay.tsx": "e0e27baf13c7ccfa9ebff1217420b6d961510ba6739e1cbe40bf1216555cbdfc",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "34dfe68af3f5c683a7456d121f8e005066250f46d0cd656afe26204247833993",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "3408e7a9d44eb57028c45ca77e7895f649b9ff7ea84a47c0340d22f1dc05bf82",
+      "distTreeSha256": "b92ed278c7151c0c159bcd194d6befe10277842461cc10e4efb7f16985b407f4",
+      "width": 390,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DTb16CEL.js",
+          "sha256": "de0c09d5df4749c07cbd517e72d6b0f58da2d802c9bc688486d8a39ea13b6e79",
+          "type": "js",
+          "raw": 379454,
+          "gzip": 119960,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 211951,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 2176,
+        "cls": 0.004306443048033657,
+        "fcpMs": 1004,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DTb16CEL.js",
+            "encodedBodySize": 119960,
+            "decodedBodySize": 379454,
+            "transferSize": 120260
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "bc85116f400ef2735fd720e5a9c86ab1a080c29b",
+      "source": "candidate",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "4a3e6c088efb5efd047068a01ca93b0a1db646daee961432e69b5fcfbecf36a8",
+        "src/pages/HomePage.tsx": "3458ec6913b7dc7af9cca7acde390a5421545bc88866c56676da445c2cff51ca",
+        "src/components/LogMoment.tsx": "d2539621f8af61b20975e950b616d6fbb21e3ac57415bd2d3949bd126e15e7b4",
+        "src/mascot/MascotOverlay.tsx": "b3472a95ffc9c4689650fd9b9844f496c292243e203106dd5a3e15905dd46239",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "abaea5d42170c7398d59ae70bb299fd30248f82348e8098a6e7dd9ddf047621c",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "f762d993e6f4e7b8f7463f63817cb291e9eff53570034d0e635e7231710ae7de",
+      "distTreeSha256": "e60a40c82911717c24a8d059d6fa19422644797ffc7d33abbf9897a02d8910fa",
+      "width": 390,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DfGi1WP-.js",
+          "sha256": "e431f3bbd134761877a3cb199efecd6f308d2e988e6655e9bee5cf6303d2f5fa",
+          "type": "js",
+          "raw": 379511,
+          "gzip": 120228,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 212219,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 2020,
+        "cls": 0.0025485299288322016,
+        "fcpMs": 888,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DfGi1WP-.js",
+            "encodedBodySize": 120228,
+            "decodedBodySize": 379511,
+            "transferSize": 120528
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "84d0cf1e515d0e1b9ff7849a46caa3b10e71bc13",
+      "source": "baseline",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "3b10f2805bf305f5810bbbe4e143e8f8319a47a40e95dc158e667de57a0f7f60",
+        "src/pages/HomePage.tsx": "b22762c062c7cb4c0daa08c903a9141b3d61542136170c7f22008d2c91765e6f",
+        "src/components/LogMoment.tsx": "e9e3b253eeddd5409f8a818533a174f226682aff3022c793c4af4e227a2c9114",
+        "src/mascot/MascotOverlay.tsx": "e0e27baf13c7ccfa9ebff1217420b6d961510ba6739e1cbe40bf1216555cbdfc",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "34dfe68af3f5c683a7456d121f8e005066250f46d0cd656afe26204247833993",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "3408e7a9d44eb57028c45ca77e7895f649b9ff7ea84a47c0340d22f1dc05bf82",
+      "distTreeSha256": "b92ed278c7151c0c159bcd194d6befe10277842461cc10e4efb7f16985b407f4",
+      "width": 1440,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DTb16CEL.js",
+          "sha256": "de0c09d5df4749c07cbd517e72d6b0f58da2d802c9bc688486d8a39ea13b6e79",
+          "type": "js",
+          "raw": 379454,
+          "gzip": 119960,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 211951,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 1620,
+        "cls": 0.0006409715440538193,
+        "fcpMs": 768,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DTb16CEL.js",
+            "encodedBodySize": 119960,
+            "decodedBodySize": 379454,
+            "transferSize": 120260
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "bc85116f400ef2735fd720e5a9c86ab1a080c29b",
+      "source": "candidate",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "4a3e6c088efb5efd047068a01ca93b0a1db646daee961432e69b5fcfbecf36a8",
+        "src/pages/HomePage.tsx": "3458ec6913b7dc7af9cca7acde390a5421545bc88866c56676da445c2cff51ca",
+        "src/components/LogMoment.tsx": "d2539621f8af61b20975e950b616d6fbb21e3ac57415bd2d3949bd126e15e7b4",
+        "src/mascot/MascotOverlay.tsx": "b3472a95ffc9c4689650fd9b9844f496c292243e203106dd5a3e15905dd46239",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "abaea5d42170c7398d59ae70bb299fd30248f82348e8098a6e7dd9ddf047621c",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "f762d993e6f4e7b8f7463f63817cb291e9eff53570034d0e635e7231710ae7de",
+      "distTreeSha256": "e60a40c82911717c24a8d059d6fa19422644797ffc7d33abbf9897a02d8910fa",
+      "width": 1440,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DfGi1WP-.js",
+          "sha256": "e431f3bbd134761877a3cb199efecd6f308d2e988e6655e9bee5cf6303d2f5fa",
+          "type": "js",
+          "raw": 379511,
+          "gzip": 120228,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 212219,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 1792,
+        "cls": 0.00042201976802286946,
+        "fcpMs": 852,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DfGi1WP-.js",
+            "encodedBodySize": 120228,
+            "decodedBodySize": 379511,
+            "transferSize": 120528
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "84d0cf1e515d0e1b9ff7849a46caa3b10e71bc13",
+      "source": "baseline",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "3b10f2805bf305f5810bbbe4e143e8f8319a47a40e95dc158e667de57a0f7f60",
+        "src/pages/HomePage.tsx": "b22762c062c7cb4c0daa08c903a9141b3d61542136170c7f22008d2c91765e6f",
+        "src/components/LogMoment.tsx": "e9e3b253eeddd5409f8a818533a174f226682aff3022c793c4af4e227a2c9114",
+        "src/mascot/MascotOverlay.tsx": "e0e27baf13c7ccfa9ebff1217420b6d961510ba6739e1cbe40bf1216555cbdfc",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "34dfe68af3f5c683a7456d121f8e005066250f46d0cd656afe26204247833993",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "3408e7a9d44eb57028c45ca77e7895f649b9ff7ea84a47c0340d22f1dc05bf82",
+      "distTreeSha256": "b92ed278c7151c0c159bcd194d6befe10277842461cc10e4efb7f16985b407f4",
+      "width": 390,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DTb16CEL.js",
+          "sha256": "de0c09d5df4749c07cbd517e72d6b0f58da2d802c9bc688486d8a39ea13b6e79",
+          "type": "js",
+          "raw": 379454,
+          "gzip": 119960,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 211951,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 2088,
+        "cls": 0.003317212371221821,
+        "fcpMs": 976,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DTb16CEL.js",
+            "encodedBodySize": 119960,
+            "decodedBodySize": 379454,
+            "transferSize": 120260
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "bc85116f400ef2735fd720e5a9c86ab1a080c29b",
+      "source": "candidate",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "4a3e6c088efb5efd047068a01ca93b0a1db646daee961432e69b5fcfbecf36a8",
+        "src/pages/HomePage.tsx": "3458ec6913b7dc7af9cca7acde390a5421545bc88866c56676da445c2cff51ca",
+        "src/components/LogMoment.tsx": "d2539621f8af61b20975e950b616d6fbb21e3ac57415bd2d3949bd126e15e7b4",
+        "src/mascot/MascotOverlay.tsx": "b3472a95ffc9c4689650fd9b9844f496c292243e203106dd5a3e15905dd46239",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "abaea5d42170c7398d59ae70bb299fd30248f82348e8098a6e7dd9ddf047621c",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "f762d993e6f4e7b8f7463f63817cb291e9eff53570034d0e635e7231710ae7de",
+      "distTreeSha256": "e60a40c82911717c24a8d059d6fa19422644797ffc7d33abbf9897a02d8910fa",
+      "width": 390,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DfGi1WP-.js",
+          "sha256": "e431f3bbd134761877a3cb199efecd6f308d2e988e6655e9bee5cf6303d2f5fa",
+          "type": "js",
+          "raw": 379511,
+          "gzip": 120228,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 212219,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 2088,
+        "cls": 0.003154214776705778,
+        "fcpMs": 900,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DfGi1WP-.js",
+            "encodedBodySize": 120228,
+            "decodedBodySize": 379511,
+            "transferSize": 120528
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "84d0cf1e515d0e1b9ff7849a46caa3b10e71bc13",
+      "source": "baseline",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "3b10f2805bf305f5810bbbe4e143e8f8319a47a40e95dc158e667de57a0f7f60",
+        "src/pages/HomePage.tsx": "b22762c062c7cb4c0daa08c903a9141b3d61542136170c7f22008d2c91765e6f",
+        "src/components/LogMoment.tsx": "e9e3b253eeddd5409f8a818533a174f226682aff3022c793c4af4e227a2c9114",
+        "src/mascot/MascotOverlay.tsx": "e0e27baf13c7ccfa9ebff1217420b6d961510ba6739e1cbe40bf1216555cbdfc",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "34dfe68af3f5c683a7456d121f8e005066250f46d0cd656afe26204247833993",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "3408e7a9d44eb57028c45ca77e7895f649b9ff7ea84a47c0340d22f1dc05bf82",
+      "distTreeSha256": "b92ed278c7151c0c159bcd194d6befe10277842461cc10e4efb7f16985b407f4",
+      "width": 1440,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DTb16CEL.js",
+          "sha256": "de0c09d5df4749c07cbd517e72d6b0f58da2d802c9bc688486d8a39ea13b6e79",
+          "type": "js",
+          "raw": 379454,
+          "gzip": 119960,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 211951,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 1468,
+        "cls": 0.0004501859269842034,
+        "fcpMs": 708,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DTb16CEL.js",
+            "encodedBodySize": 119960,
+            "decodedBodySize": 379454,
+            "transferSize": 120260
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "bc85116f400ef2735fd720e5a9c86ab1a080c29b",
+      "source": "candidate",
+      "sourceHashes": {
+        "src/App.tsx": "18292634f44468d1813bc1378f79fd9c3c6172136c6020cc9edb46a52bd0b109",
+        "src/components/Momo.tsx": "96c908d2cfe650e134e0d37923406f9e14d50999b2d13d62cabeb832941f8825",
+        "src/components/Toast.tsx": "4899a772fad033facf3d4d1c0d469c45b1aad3c652c50e91c8700c7a95180b0d",
+        "src/pages/CoachPage.tsx": "4a3e6c088efb5efd047068a01ca93b0a1db646daee961432e69b5fcfbecf36a8",
+        "src/pages/HomePage.tsx": "3458ec6913b7dc7af9cca7acde390a5421545bc88866c56676da445c2cff51ca",
+        "src/components/LogMoment.tsx": "d2539621f8af61b20975e950b616d6fbb21e3ac57415bd2d3949bd126e15e7b4",
+        "src/mascot/MascotOverlay.tsx": "b3472a95ffc9c4689650fd9b9844f496c292243e203106dd5a3e15905dd46239",
+        "src/lib/motionFeatures.ts": "02d5662342e093ead8074ec3faa9430b1e882f9f4a76a7d80c4b9cb45d778457",
+        "src/components/MotionScreen.tsx": "51e8895a968f60e5fc244bf2577e9cc0728dccaf3dfd9cdceccb1f133c6b70e5"
+      },
+      "sourceTreeSha256": "abaea5d42170c7398d59ae70bb299fd30248f82348e8098a6e7dd9ddf047621c",
+      "lockfileSha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "buildIndexSha256": "f762d993e6f4e7b8f7463f63817cb291e9eff53570034d0e635e7231710ae7de",
+      "distTreeSha256": "e60a40c82911717c24a8d059d6fa19422644797ffc7d33abbf9897a02d8910fa",
+      "width": 1440,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "sha256": "d92443cc2b807ce84632337b219b19906f6f1de454a8dd935f58400115aeadf9",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "sha256": "f2674bcc7a1c59b727c1bce6ec9339dcec1fb87b5ecf3023bb4c97d4a3a7b90b",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "sha256": "e9323fafd8c403dc0c6b99f304392fd7bf78d1d2a15ddc19bfc761ecd1444f4a",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "sha256": "36461a33637d5d132f4b31bdbdd6905161df458ecb50c1366e2afe651ec1746b",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "sha256": "1386176d39d26107932930b74ac9724dd68a13e25d4f281520cf409fb39e28ee",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "sha256": "acfd763e003dc26da91a7ecc46880fec15ce71c9cf959e1b8cc4b8d8e674a7bb",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "sha256": "3ef123b42257899e4dad30c716d2d3b31ea253f2b4d6a355148c92f1b7d1fbf6",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DfGi1WP-.js",
+          "sha256": "e431f3bbd134761877a3cb199efecd6f308d2e988e6655e9bee5cf6303d2f5fa",
+          "type": "js",
+          "raw": 379511,
+          "gzip": 120228,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-TfshLgRz.css",
+          "sha256": "2bbd06ee6bd66f4811fd1a8ed57359f1fde108148f71a859d2ae6f67d855dbd2",
+          "type": "css",
+          "raw": 366165,
+          "gzip": 60430,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "sha256": "9039edd820efc5fa29a0b5c5d75828e8315e8c08d739e4f4be2ae61d094e949f",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-BAxhu156.js",
+          "sha256": "c2ff7aa3486f6640c28d83e70394bc9700f44cae2e275cd39e967e0869bb5aeb",
+          "type": "js",
+          "raw": 12175,
+          "gzip": 4912,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "sha256": "0638b3d70ef3968a4e6bf68e94814a662e373e78a9aa584e9c732e63d57e4226",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "sha256": "4d0d18be297b444a5681aa5b853adf76e2532830c00002fd0e9bad1e1fb5450e",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "sha256": "805c1568192bc1f4ce9ba8945fc8423de9b3b4877087e08cc4fd7714b2207b46",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "sha256": "8f062b2f9a2484cafacce294b3de63db0b498fff6b020ce1aa4887e93a63f203",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 212219,
+      "cssGzip": 60430,
+      "metrics": {
+        "lcpMs": 1580,
+        "cls": 0.0005419211891289436,
+        "fcpMs": 832,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DfGi1WP-.js",
+            "encodedBodySize": 120228,
+            "decodedBodySize": 379511,
+            "transferSize": 120528
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-BAxhu156.js",
+            "encodedBodySize": 4912,
+            "decodedBodySize": 12175,
+            "transferSize": 5212
+          },
+          {
+            "name": "/assets/index-TfshLgRz.css",
+            "encodedBodySize": 60430,
+            "decodedBodySize": 366165,
+            "transferSize": 60730
+          }
+        ]
+      },
+      "failures": []
+    }
+  ]
+}

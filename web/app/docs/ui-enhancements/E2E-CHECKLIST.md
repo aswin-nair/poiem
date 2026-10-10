@@ -10,6 +10,8 @@ The subsequent [safe-area follow-up](safe-areas/README.md) implements the origin
 
 The [rendering follow-up](response-time/README.md) records the next local performance experiment against `131bd0d7`. Its browser, screenshot and lab timing outcomes remain distinct; a smaller asset or functional pass does not close the response-time or field-performance gates.
 
+The [interaction layout follow-up](layout-work/README.md) compares the subsequent Today/Momo/Coach/receipt changes against `84d0cf1e`. Fewer repeated layout reads by construction do not close the response-time budget; retain raw timing samples and failures separately from functional/static checks.
+
 - P0: task completion, navigation, persistence, credentials, primary controls and recovery. A failing applicable P0 blocks release.
 - P1: discovery, efficiency and presentation. Each included enhancement must meet its acceptance condition; cosmetic deferrals must be recorded explicitly.
 - Run relevant checks after each milestone, then an integrated pass on the release candidate. Broaden testing when a change or unresolved failure warrants it. Use existing suites where they already cover the behaviour.

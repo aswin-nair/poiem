@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-10-11",
+  "baseline": "84d0cf1e515d0e1b9ff7849a46caa3b10e71bc13",
+  "firstImplementation": "1f5010d2575d09ec27b5526a576482e0064175c9",
+  "correctedImplementation": "bc85116f400ef2735fd720e5a9c86ab1a080c29b",
+  "unchangedFixtures": "e2e/momo-interlude.spec.ts",
+  "testTimeoutMs": 60000,
+  "retries": 0,
+  "runs": [
+    {
+      "source": "firstImplementation",
+      "batch": "integrated",
+      "passed": 49,
+      "timedOut": 2,
+      "workers": 2,
+      "localLog": "../../../../.cache/layout-work-integration.log"
+    },
+    {
+      "source": "firstImplementation",
+      "batch": "two timer cases, isolated, tracing enabled",
+      "passed": 0,
+      "timedOut": 2,
+      "workers": 1,
+      "log": "timers-before-fix.log",
+      "screenshots": ["momo-mute-before-fix.png", "momo-calm-before-fix.png"],
+      "traces": "Retained in web/app/.cache/layout-work-timers-isolated; not embedded in this review package."
+    },
+    {
+      "source": "baseline",
+      "batch": "same two timer cases, isolated, tracing enabled",
+      "passed": 2,
+      "failed": 0,
+      "workers": 1,
+      "durationSeconds": 9.7,
+      "config": "baseline.config.ts",
+      "log": "timers-baseline.log"
+    },
+    {
+      "source": "correctedImplementation",
+      "batch": "four layout cases and all thirteen Momo interlude cases, tracing enabled",
+      "passed": 17,
+      "failed": 0,
+      "workers": 1,
+      "durationSeconds": 47.3,
+      "muteCaseSeconds": 3.2,
+      "calmCaseSeconds": 2.3,
+      "log": "momo-fixed.log"
+    }
+  ],
+  "diagnosis": "The safety check marked an absent host as repositioned. place() returned without updating positionRef, then repositioned requested another frame indefinitely. The host guard prevents retries that cannot make progress; attachHost still reads fresh geometry on remount.",
+  "scope": "Confirmed local candidate regression and correction. Original timer assertions/timeouts unchanged. Does not establish physical-device or field performance."
+}

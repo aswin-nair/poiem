@@ -12,6 +12,8 @@ This is the active plan. [E2E-CHECKLIST.md](E2E-CHECKLIST.md) defines the observ
 
 **Rendering follow-up:** [Response-time evidence](response-time/README.md) records deferred animation features and reuse of unchanged Momo drawings, toast context and Coach reply formatting. Its exact `131bd0d7` baseline includes the screen-edge work. Functional and visual checks are separate from the measured response-time budget and field-performance gate.
 
+**Interaction layout follow-up:** [Layout-work evidence](layout-work/README.md) records Today derivation/row reuse, fresh shared Momo collision measurements, Coach viewport-cap caching and receipt border-box updates against `84d0cf1e`. Fixture history, browser outcomes, appearance comparisons and timing acceptance remain distinct.
+
 **1. The experience we are building**
 
 The visual direction is a playful Neo Brutalist kitchen journal. Keep warm paper, strong ink, bright meal colours, condensed headings and tactile controls. Give Today a clear hierarchy, make logging methods immediately discoverable and let Momo perform short comic scenes during quiet moments.
