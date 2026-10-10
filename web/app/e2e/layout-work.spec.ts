@@ -88,3 +88,27 @@ test('one scheduled Momo check shares obstacle reads with its speech check', asy
   expect(await page.evaluate(() => (window as Window & { obstacleScans?: number }).obstacleScans)).toBe(1)
   await expect(host).toBeVisible()
 })
+
+test('an absent floating Momo does not retry placement on every frame', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.route('**/api/**', route => route.abort('blockedbyclient'))
+  const state = visualSeedState()
+  state.aiSettings.mascotEnabled = false
+  await applyVisualSeed(page, state)
+  await page.goto('/')
+  await expect(page.getByRole('progressbar', { name: 'Calories', exact: true })).toBeVisible()
+  await expect(page.locator('.mascot-host')).toHaveCount(0)
+  await page.evaluate(() => {
+    const fixture = window as Window & { obstacleScans?: number }
+    fixture.obstacleScans = 0
+    const original = document.querySelectorAll
+    document.querySelectorAll = function (selector: string) {
+      if (selector.includes('main input')) fixture.obstacleScans! += 1
+      return original.call(this, selector)
+    } as typeof document.querySelectorAll
+  })
+  await page.clock.runFor(200_000)
+  // Allow occasional ambient/state checks, but reject a per-frame retry loop.
+  expect(await page.evaluate(() => (window as Window & { obstacleScans?: number }).obstacleScans)).toBeLessThan(100)
+  await expect(page.locator('.mascot-host')).toHaveCount(0)
+})

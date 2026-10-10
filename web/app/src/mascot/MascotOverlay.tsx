@@ -695,7 +695,10 @@ export function MascotOverlay() {
         // The placement fallback can overlap on dense phones. Step aside until
         // a clear resting spot opens up; inline Momo remains part of the page.
         blocked = !isSafeMascotPosition(rest, SIZE, viewport, avoid)
-        if (!blocked && !isSafeMascotPosition(positionRef.current, SIZE, viewport, avoid)) {
+        // A paused/absent host is placed by attachHost when it mounts again.
+        // place() cannot update its position while absent; retrying that move
+        // would otherwise schedule a fresh check forever.
+        if (host && !blocked && !isSafeMascotPosition(positionRef.current, SIZE, viewport, avoid)) {
           stopWalk()
           setBubbleSide(rest.x + SIZE / 2 < viewport.width / 2 ? 'left' : 'right')
           setBubblePlacement(rest.y < 150 ? 'below' : 'above')

@@ -35,6 +35,7 @@ describe('layout work keeps fresh inputs and existing safety paths', () => {
     expect(overlay).toContain('insetViewport({')
     expect(overlay).toContain("attributeFilter: ['aria-modal', 'class', 'hidden', 'open']")
     expect(overlay).toContain('if (repositioned) schedule()')
+    expect(overlay).toContain('if (host && !blocked && !isSafeMascotPosition(positionRef.current')
     expect(overlay).toContain('if (blocked)')
     expect(overlay).toContain('isSafeMascotPath')
   })
