@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState, type ComponentType, type ReactNode } from 'react'
 import { BrandLogo } from './components/BrandLogo'
 import identity from './brand/identity.json'
 import { GoogleOAuthProvider } from '@react-oauth/google'
@@ -24,21 +24,32 @@ import { MascotOverlay } from './mascot/MascotOverlay'
 import { MomoInterludeGate } from './components/MomoInterludeGate'
 import { ActionPlay } from './components/ActionPlay'
 import { useNavDirection } from './hooks/useNavDirection'
-import { LazyMotion, MotionConfig } from 'motion/react'
+import { MotionConfig } from 'motion/react'
 import { getSessionReturnLabel, rememberSessionNavigation, safeSessionDestination, takeSessionReturn, type SessionDestination } from './lib/sessionNavigation'
 import { hydrateLogDrafts } from './lib/logDrafts'
 import { handoffGuestSetupDraft } from './lib/setupDraftHandoff'
 import { findSettingDestination } from './lib/settingDestinations'
 
-const WelcomePage = lazy(() => import('./pages/WelcomePage'))
-const AdminPage = lazy(() => import('./pages/AdminPage'))
+// Feature code is downloaded with the screens that use animated React elements.
+// The no-DOM provider is ready before the screen mounts, including its first pose.
+function lazyMotionScreen(load: () => Promise<{ default: ComponentType }>) {
+  return lazy(async () => {
+    const [{ default: Screen }, { MotionScreen }] = await Promise.all([
+      load(), import('./components/MotionScreen'),
+    ])
+    return { default: function AnimatedScreen() { return <MotionScreen><Screen /></MotionScreen> } }
+  })
+}
+
+const WelcomePage = lazyMotionScreen(() => import('./pages/WelcomePage'))
+const AdminPage = lazyMotionScreen(() => import('./pages/AdminPage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const SupportPage = lazy(() => import('./pages/SupportPage'))
 const JourneyPage = lazy(() => import('./pages/JourneyPage'))
 const ComponentSheetPage = lazy(() => import('./pages/ComponentSheetPage'))
 // Screens most visits never open load on demand: the first run, the account screens and Coach.
-const OnboardingPage = lazy(() => import('./pages/OnboardingPage').then(module => ({ default: module.OnboardingPage })))
-const LoginPage = lazy(() => import('./pages/LoginPage').then(module => ({ default: module.LoginPage })))
+const OnboardingPage = lazyMotionScreen(() => import('./pages/OnboardingPage').then(module => ({ default: module.OnboardingPage })))
+const LoginPage = lazyMotionScreen(() => import('./pages/LoginPage').then(module => ({ default: module.LoginPage })))
 const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage').then(module => ({ default: module.ForgotPasswordPage })))
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage').then(module => ({ default: module.ResetPasswordPage })))
 const CoachPage = lazy(() => import('./pages/CoachPage').then(module => ({ default: module.CoachPage })))
@@ -339,8 +350,6 @@ function AppGate() {
   )
 }
 
-const loadMotionFeatures = () => import('./lib/motionFeatures').then(module => module.default)
-
 function RoutedShell() {
   return (
     <>
@@ -363,13 +372,11 @@ function AppShell() {
   }
 
   return (
-    <LazyMotion features={loadMotionFeatures}>
-      <MotionConfig reducedMotion="user">
-        <AuthProvider>
-          <RouterProvider router={router.current} />
-        </AuthProvider>
-      </MotionConfig>
-    </LazyMotion>
+    <MotionConfig reducedMotion="user">
+      <AuthProvider>
+        <RouterProvider router={router.current} />
+      </AuthProvider>
+    </MotionConfig>
   )
 }
 

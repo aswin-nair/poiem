@@ -1,5 +1,5 @@
 import { AppShell } from '../components/system/AppShell'
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { useApp } from '../store/AppContext'
@@ -22,7 +22,7 @@ type CoachRetryRequest = { userMessage: ChatMessage; history: ChatMessage[] }
 type FailedCoachResponse = CoachRetryRequest & { reason: string; cancelled: boolean }
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
-function CoachMessage({ text }: { text: string }) {
+const CoachMessage = memo(function CoachMessage({ text }: { text: string }) {
   const paragraphs = text.split(/\n{2,}/)
 
   return (
@@ -55,7 +55,7 @@ function CoachMessage({ text }: { text: string }) {
       })}
     </div>
   )
-}
+})
 
 function renderInline(text: string): ReactNode[] {
   const parts = text.split(/(\*\*[^*]+\*\*)/)

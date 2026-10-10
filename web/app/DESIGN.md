@@ -18,6 +18,12 @@ The web viewport uses `viewport-fit=cover` and keeps pinch zoom enabled. `--k-sa
 
 Momo scenes and speech use the same resolved tokens and visual-viewport bounds. They stay hidden when no safe space remains. Synthetic layout checks exercise these owners; physical Safari/Chrome checks still establish actual cutout, browser-chrome and keyboard behavior.
 
+### Motion loading and repeated rendering
+
+`MotionConfig` owns the user's motion preference at the app root. Only Welcome, Login, Onboarding and Admin load the no-DOM `MotionScreen` provider with their screen. Its synchronous `domMax` features are ready before animated elements mount, including Login's shared layout marker. Everyday screens use their existing CSS and motion hooks without downloading that feature payload.
+
+Momo's pure drawing and Coach's formatted message text use React's default shallow memo comparison. Keep every appearance prop and per-instance SVG identifier; outfit updates must remain immutable. Toast's context value follows its stable callback, so adding or dismissing a toast does not invalidate every consumer. These rendering choices preserve the existing animation recipes and feedback timing.
+
 ---
 
 ## Architecture
