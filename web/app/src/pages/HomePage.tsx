@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useReducedMotion } from 'motion/react'
@@ -57,6 +57,29 @@ const MEAL_ICONS: Record<MealType, typeof IconMeal> = {
   breakfast: IconBreakfast, lunch: IconLunch, dinner: IconDinner, snack: IconCarbs, other: IconMeal,
 }
 
+// Receipt timers, Water and calendar controls do not change an existing meal.
+// Default comparison retains every entry field; an edited/restored entry gets
+// its new object and redraws. No custom comparator can hide a changed prop.
+const TodayMealRow = memo(function TodayMealRow({ entry, fresh, onEdit, onTap, onDelete }: {
+  entry: FoodEntry
+  fresh: boolean
+  onEdit: (id: string) => void
+  onTap: (id: string) => void
+  onDelete: (entry: FoodEntry) => void
+}) {
+  return <SwipeRow label={entry.name} actions={[
+    { label: 'Edit', onAct: () => onEdit(entry.id) },
+    { label: 'Delete', tone: 'danger', onAct: () => onDelete(entry) },
+  ]}>
+    <MealRow
+      name={entry.name} fresh={fresh} onClick={() => onTap(entry.id)}
+      tile={<span className={`k-food-tile is-tone-${foodToneFor(entry.name)}`}><FoodIcon emoji={entry.emoji} name={entry.name} size={20} /></span>}
+      meta={`${entryTime(entry)} · P ${Math.round(entry.protein)} · C ${Math.round(entry.carbs)} · F ${Math.round(entry.fat)}`}
+      kcal={`${Math.round(entry.calories)} kcal`}
+    />
+  </SwipeRow>
+})
+
 /**
  * Today: Momo says hello, the number that matters sits on a bright card, and
  * meals are grouped the way the day went, each in its own colour. The ongoing
@@ -104,15 +127,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
 
   const profile = state.profile
   const paused = Boolean(profile.trackingPaused)
-  const dayEntries = entriesForDay(state.foodEntries, selectedDate)
-  const totals = macroTotals(dayEntries)
-  const groups = groupEntriesByMeal(dayEntries)
+  const dayEntries = useMemo(() => entriesForDay(state.foodEntries, selectedDate), [state.foodEntries, selectedDate])
+  const totals = useMemo(() => macroTotals(dayEntries), [dayEntries])
+  const groups = useMemo(() => groupEntriesByMeal(dayEntries), [dayEntries])
   const budget = calorieBudget(totals.calories, effectiveCalories(profile))
   const selectedDayKey = localDayKey(selectedDate)
   const dayLabel = formatDayLabel(selectedDate)
   const isToday = sameDay(selectedDate, new Date())
   const snapshotLabel = isToday ? 'Today’s snapshot' : dayLabel === 'Yesterday' ? 'Yesterday’s snapshot' : `${dayLabel} snapshot`
-  const hasLoggedToday = state.foodEntries.some(entry => sameDay(new Date(entry.timestamp), new Date()))
+  // Include the current local calendar key: an unrelated update after midnight
+  // must still refresh Today status with the same immutable entry array.
+  const currentDayKey = localDayKey(new Date())
+  const hasLoggedToday = useMemo(() => state.foodEntries.some(entry => localDayKey(entry.timestamp) === currentDayKey), [state.foodEntries, currentDayKey])
   const water = state.gamification.waterByDate[selectedDayKey] ?? 0
   const notes = state.gamification.notesByDate[selectedDayKey] ?? 0
   const loggedDays = useMemo(() => new Set(state.foodEntries.map(entry => localDayKey(entry.timestamp))), [state.foodEntries])
@@ -262,13 +288,15 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     navigate('/log', { state: { background: location, mealType } })
   }
 
-  function removeMeal(entry: FoodEntry) {
+  const removeMeal = useCallback((entry: FoodEntry) => {
     deleteEntry(entry.id)
     toast(`Removed ${entry.name}`, {
       type: 'info',
       action: { label: 'Undo', fn: () => restoreEntry(entry) },
     })
-  }
+  }, [deleteEntry, toast, restoreEntry])
+  const editMeal = useCallback((id: string) => navigate(`/edit/${id}`), [navigate])
+  const tapMeal = useCallback((id: string) => { feel('tap'); navigate(`/edit/${id}`) }, [feel, navigate])
 
   function changeWater(next: number) {
     feel('water')
@@ -430,23 +458,8 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                         {group.entries.length > 0 && <span className="tabular">{group.calories.toLocaleString()} kcal</span>}
                       </header>
                       {group.entries.map(entry => (
-                        <SwipeRow
-                          key={entry.id}
-                          label={entry.name}
-                          actions={[
-                            { label: 'Edit', onAct: () => navigate(`/edit/${entry.id}`) },
-                            { label: 'Delete', tone: 'danger', onAct: () => removeMeal(entry) },
-                          ]}
-                        >
-                          <MealRow
-                            name={entry.name}
-                            fresh={entry.id === freshId}
-                            onClick={() => { feel('tap'); navigate(`/edit/${entry.id}`) }}
-                            tile={<span className={`k-food-tile is-tone-${foodToneFor(entry.name)}`}><FoodIcon emoji={entry.emoji} name={entry.name} size={20} /></span>}
-                            meta={`${entryTime(entry)} · P ${Math.round(entry.protein)} · C ${Math.round(entry.carbs)} · F ${Math.round(entry.fat)}`}
-                            kcal={`${Math.round(entry.calories)} kcal`}
-                          />
-                        </SwipeRow>
+                        <TodayMealRow key={entry.id} entry={entry} fresh={entry.id === freshId}
+                          onEdit={editMeal} onTap={tapMeal} onDelete={removeMeal} />
                       ))}
                       {isToday && !guest && (
                         <button type="button" className="k-add-row" onClick={() => openLog(group.type)}>

@@ -1,5 +1,5 @@
 import { AppShell } from '../components/system/AppShell'
-import { memo, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { useApp } from '../store/AppContext'
@@ -137,6 +137,7 @@ export function CoachPage() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const followConversation = useRef(true)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const draftHeightCap = useRef<number | null>(null)
   const requestRef = useRef<AbortController | null>(null)
   const requestMessageRef = useRef<string | null>(null)
   const { availability, refresh } = useAiAccess()
@@ -144,25 +145,39 @@ export function CoachPage() {
 
   useEffect(() => () => { requestRef.current?.abort(); requestRef.current = null }, [])
 
-  useLayoutEffect(() => {
-    const resizeDraft = () => {
+  const resizeDraft = useCallback(() => {
       const textarea = inputRef.current
       if (!textarea) return
       // Measure after resetting the previous height so deleting lines shrinks
       // the draft too. CSS caps its height for short windows and keyboards.
-      const viewportHeight = window.visualViewport?.height ?? window.innerHeight
-      textarea.style.maxHeight = `${Math.min(viewportHeight < 500 ? 120 : 192, viewportHeight * .28)}px`
+      if (draftHeightCap.current === null) {
+        const viewportHeight = window.visualViewport?.height ?? window.innerHeight
+        draftHeightCap.current = Math.min(viewportHeight < 500 ? 120 : 192, viewportHeight * .28)
+      }
+      textarea.style.maxHeight = `${draftHeightCap.current}px`
       textarea.style.height = 'auto'
       textarea.style.height = `${textarea.scrollHeight + 4}px`
-    }
+  }, [])
+  useLayoutEffect(() => {
     resizeDraft()
-    window.addEventListener('resize', resizeDraft)
-    window.visualViewport?.addEventListener('resize', resizeDraft)
-    return () => {
-      window.removeEventListener('resize', resizeDraft)
-      window.visualViewport?.removeEventListener('resize', resizeDraft)
+  }, [input, empty, resizeDraft])
+  useLayoutEffect(() => {
+    let frame = 0
+    const schedule = () => {
+      // Keyboard/zoom/window changes invalidate the cap immediately, including
+      // an edit arriving before the coalesced resize frame.
+      draftHeightCap.current = null
+      if (!frame) frame = window.requestAnimationFrame(() => { frame = 0; resizeDraft() })
     }
-  }, [input, empty])
+    const viewport = window.visualViewport
+    window.addEventListener('resize', schedule)
+    viewport?.addEventListener('resize', schedule)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('resize', schedule)
+      viewport?.removeEventListener('resize', schedule)
+    }
+  }, [resizeDraft])
 
   useEffect(() => {
     let lastTop = document.scrollingElement?.scrollTop ?? 0

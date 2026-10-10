@@ -49,7 +49,7 @@ import {
 import { usesByok } from '../lib/aiClient'
 import { connectionIssue } from '../lib/aiConfig'
 import { poiemTestHooks, rollTestRng, testRng } from '../lib/testHooks'
-import { readSafeAreaInsets, safeAreaAvoidRects, visibleSafeViewport } from '../lib/viewportSafety'
+import { insetViewport, readSafeAreaInsets, safeAreaAvoidRects, type SafeAreaInsets } from '../lib/viewportSafety'
 
 const SIZE = 88
 const MOVE_MS = 600
@@ -77,25 +77,25 @@ const AVOID_SELECTOR = [
   'main [role="button"]',
 ].join(',')
 
-function visibleRect(element: Element): AvoidRect | null {
+function visibleRect(element: Element, width = window.innerWidth, height = window.innerHeight): AvoidRect | null {
   if (!(element instanceof HTMLElement) || !element.isConnected) return null
   const style = window.getComputedStyle(element)
   if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return null
   const rect = element.getBoundingClientRect()
   if (rect.width <= 0 || rect.height <= 0) return null
-  if (rect.bottom <= 0 || rect.right <= 0 || rect.top >= window.innerHeight || rect.left >= window.innerWidth) return null
+  if (rect.bottom <= 0 || rect.right <= 0 || rect.top >= height || rect.left >= width) return null
   return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }
 }
 
-function collectAvoidRects(): AvoidRect[] {
+function collectAvoidRects(width = window.innerWidth, height = window.innerHeight, insets: SafeAreaInsets = readSafeAreaInsets()): AvoidRect[] {
   const controls = [...document.querySelectorAll(AVOID_SELECTOR)]
-    .map(visibleRect)
+    .map(element => visibleRect(element, width, height))
     .filter((rect): rect is AvoidRect => rect !== null)
-  return [...controls, ...safeAreaAvoidRects(window.innerWidth, window.innerHeight, readSafeAreaInsets())]
+  return [...controls, ...safeAreaAvoidRects(width, height, insets)]
 }
 
-function hasBlockingSurface(): boolean {
-  return [...document.querySelectorAll(BLOCKING_SURFACE_SELECTOR)].some(element => visibleRect(element) !== null)
+function hasBlockingSurface(width = window.innerWidth, height = window.innerHeight): boolean {
+  return [...document.querySelectorAll(BLOCKING_SURFACE_SELECTOR)].some(element => visibleRect(element, width, height) !== null)
 }
 
 function isEditingTarget(target: EventTarget | null): boolean {
@@ -273,20 +273,24 @@ export function MascotOverlay() {
     const behavior = behaviorByKey(key)
     if (!behavior) return
     stopWalk()
+    // This reaction owns one fresh read. No geometry survives a DOM change or
+    // another action; destination and path use the same obstacle snapshot.
+    let avoid: AvoidRect[] | undefined
+    const obstacles = () => avoid ??= collectAvoidRects()
     let next: { x: number; y: number } | null = null
     if (!reduced && behavior.anchor) {
       if (!anchors) return
       const rect = anchors.getRect(behavior.anchor)
       if (!rect) return
-      next = targetFromRect(rect, SIZE, undefined, collectAvoidRects())
+      next = targetFromRect(rect, SIZE, undefined, obstacles())
     } else if (!reduced && behavior.roams && !authScreen) {
-      next = roamPosition(SIZE, undefined, positionRef.current, testRng(), collectAvoidRects())
+      next = roamPosition(SIZE, undefined, positionRef.current, testRng(), obstacles())
     }
 
     // If the straight route is blocked, perform the gesture in place.
     // Never cross a control just because the destination happens to be clear.
     if (next && !isSafeMascotPath(positionRef.current, next, SIZE,
-      { width: window.innerWidth, height: window.innerHeight }, collectAvoidRects())) next = null
+      { width: window.innerWidth, height: window.innerHeight }, obstacles())) next = null
     let travelMs = 0
     if (next) {
       const from = positionRef.current
@@ -653,17 +657,33 @@ export function MascotOverlay() {
     return () => media.removeEventListener?.('change', sync)
   }, [])
 
-  useEffect(() => {
+  // Stage and bubble share a fresh snapshot per scheduled check. Keeping both
+  // in one before-paint effect avoids a second obstacle scan after every DOM
+  // mutation without retaining stale geometry across frames or reactions.
+  useLayoutEffect(() => {
     let frame = 0
     const check = () => {
       frame = 0
+      const viewport = { width: window.innerWidth, height: window.innerHeight }
+      const visual = window.visualViewport
       const keyboard = window.visualViewport
-        ? window.innerHeight - window.visualViewport.height > 120
+        ? viewport.height - window.visualViewport.height > 120
         : false
-      let blocked = quiet || activity === 'off' || keyboard || hasBlockingSurface() || document.visibilityState === 'hidden'
+      let blocked = quiet || activity === 'off' || keyboard || hasBlockingSurface(viewport.width, viewport.height) || document.visibilityState === 'hidden'
+      if (blocked) {
+        setPaused(true)
+        stopWalk()
+        setBubbleSafe(false)
+        return
+      }
+      const insets = readSafeAreaInsets()
+      const avoid = collectAvoidRects(viewport.width, viewport.height, insets)
+      // Read the speech rectangle before moving the host. A changed resting
+      // position hides speech until the next fresh check, never stale paint.
+      const bubble = bubbleRef.current
+      const bubbleRect = bubble && !walking ? bubble.getBoundingClientRect() : null
+      let repositioned = false
       if (!blocked && !authScreen) {
-        const viewport = { width: window.innerWidth, height: window.innerHeight }
-        const avoid = collectAvoidRects()
         const host = hostRef.current
         if (host) {
           const rect = host.getBoundingClientRect()
@@ -680,10 +700,21 @@ export function MascotOverlay() {
           setBubbleSide(rest.x + SIZE / 2 < viewport.width / 2 ? 'left' : 'right')
           setBubblePlacement(rest.y < 150 ? 'below' : 'above')
           place(rest.x, rest.y, 0)
+          repositioned = true
         }
       }
       setPaused(blocked)
       if (blocked) stopWalk()
+      const bounds = insetViewport({
+        left: visual?.offsetLeft ?? 0, top: visual?.offsetTop ?? 0,
+        width: visual?.width ?? viewport.width, height: visual?.height ?? viewport.height,
+      }, insets)
+      setBubbleSafe(Boolean(bubbleRect && !blocked && !repositioned
+        && bubbleRect.left >= bounds.left + 8 && bubbleRect.right <= bounds.right - 8
+        && bubbleRect.top >= bounds.top + 8 && bubbleRect.bottom <= bounds.bottom - 8
+        && avoid.every(rect => bubbleRect.right + 8 <= rect.left
+          || bubbleRect.left - 8 >= rect.right || bubbleRect.bottom + 8 <= rect.top || bubbleRect.top - 8 >= rect.bottom)))
+      if (repositioned) schedule()
     }
     const schedule = () => { if (!frame) frame = window.requestAnimationFrame(check) }
     check()
@@ -699,6 +730,8 @@ export function MascotOverlay() {
       attributes: true,
       attributeFilter: ['aria-modal', 'class', 'hidden', 'open'],
     })
+    const resize = new ResizeObserver(schedule)
+    if (bubbleRef.current) resize.observe(bubbleRef.current)
     return () => {
       window.cancelAnimationFrame(frame)
       window.removeEventListener('resize', schedule)
@@ -707,48 +740,13 @@ export function MascotOverlay() {
       window.visualViewport?.removeEventListener('scroll', schedule)
       document.removeEventListener('visibilitychange', schedule)
       obs.disconnect()
+      resize.disconnect()
     }
-  }, [activity, authScreen, place, quiet, stopWalk])
+  }, [activity, authScreen, place, quiet, stopWalk, says, thinking, walking, paused, bubblePlacement, bubbleSide, interactionPaused])
 
   useEffect(() => {
     if (reduced || paused || interactionPaused) stopWalk()
   }, [interactionPaused, paused, reduced, stopWalk])
-
-  // Measure the actual bubble, not an assumed text width. Optional commentary
-  // stays hidden when it would cover a control or leave the visible viewport.
-  useLayoutEffect(() => {
-    let frame = 0
-    const check = () => {
-      frame = 0
-      const bubble = bubbleRef.current
-      if (!bubble || walking || paused) { setBubbleSafe(false); return }
-      const rect = bubble.getBoundingClientRect()
-      const { left, top, right, bottom } = visibleSafeViewport()
-      setBubbleSafe(rect.left >= left + 8 && rect.right <= right - 8
-        && rect.top >= top + 8 && rect.bottom <= bottom - 8
-        && collectAvoidRects().every(avoid => rect.right + 8 <= avoid.left
-          || rect.left - 8 >= avoid.right || rect.bottom + 8 <= avoid.top || rect.top - 8 >= avoid.bottom))
-    }
-    const schedule = () => { if (!frame) frame = window.requestAnimationFrame(check) }
-    check()
-    window.addEventListener('resize', schedule)
-    window.addEventListener('scroll', schedule, { passive: true, capture: true })
-    window.visualViewport?.addEventListener('resize', schedule)
-    window.visualViewport?.addEventListener('scroll', schedule, { passive: true })
-    const mutations = new MutationObserver(schedule)
-    mutations.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden', 'open'] })
-    const resize = new ResizeObserver(schedule)
-    if (bubbleRef.current) resize.observe(bubbleRef.current)
-    return () => {
-      window.cancelAnimationFrame(frame)
-      mutations.disconnect()
-      resize.disconnect()
-      window.removeEventListener('resize', schedule)
-      window.removeEventListener('scroll', schedule, { capture: true })
-      window.visualViewport?.removeEventListener('resize', schedule)
-      window.visualViewport?.removeEventListener('scroll', schedule)
-    }
-  }, [says, thinking, walking, paused, bubblePlacement, bubbleSide, interactionPaused])
 
   useEffect(() => {
     if (timerRef.current) window.clearTimeout(timerRef.current)

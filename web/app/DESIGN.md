@@ -24,6 +24,12 @@ Momo scenes and speech use the same resolved tokens and visual-viewport bounds. 
 
 Momo's pure drawing and Coach's formatted message text use React's default shallow memo comparison. Keep every appearance prop and per-instance SVG identifier; outfit updates must remain immutable. Toast's context value follows its stable callback, so adding or dismissing a toast does not invalidate every consumer. These rendering choices preserve the existing animation recipes and feedback timing.
 
+Today's selected-day entries, totals and meal groups follow immutable entry/date inputs; its current-day status also depends on the local calendar key. Meal rows use default shallow memo comparison with complete entry objects and stable actions. Edited/restored objects and the fresh-row flag must still redraw.
+
+Floating Momo's stage and speech checks share one fresh geometry snapshot per scheduled frame, with before-paint speech protection. No obstacle geometry is retained across frames or reactions. Dialog/toast, visibility, safe-inset, keyboard, mutation and scroll checks remain. If the host moves to a new resting spot, speech stays hidden until the next fresh check.
+
+Coach caches its draft height cap until a window or visual-viewport resize, coalescing resize events while still measuring text after edits so deleting lines shrinks the field. The log receipt keeps its initial before-paint clearance read; later ResizeObserver updates use the reported border-box height and retain a rectangle-read fallback for engines without box sizes.
+
 ---
 
 ## Architecture
