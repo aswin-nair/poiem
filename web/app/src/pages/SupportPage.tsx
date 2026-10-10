@@ -113,10 +113,18 @@ export function SupportPage() {
           <p className="k-support-detail">
             You can also step away from the numbers without losing your streak.
           </p>
-          <Link className="k-row-link" to="/settings">
+          <Link className="k-row-link" to="/settings?panel=preferences#setting-pause">
             <span>Pause tracking</span>
             <IconArrowUpRight size={16} />
           </Link>
+        </section>
+
+        <section className="k-card k-support-app" aria-labelledby="support-app-title">
+          <h2 id="support-app-title">Using Poiem</h2>
+          <p className="k-support-detail">Open the setting you need. Your saved journal stays in place while you review it.</p>
+          <Link className="k-row-link" to="/settings?panel=ai#setting-own-api"><span>AI setup and your own connection</span><IconArrowUpRight size={16} /></Link>
+          <Link className="k-row-link" to="/settings?panel=data#setting-export"><span>Back up or restore your journal</span><IconArrowUpRight size={16} /></Link>
+          <Link className="k-row-link" to="/settings?panel=account#setting-account-identity"><span>Account and sign-in details</span><IconArrowUpRight size={16} /></Link>
         </section>
 
         <p className="k-page-foot">

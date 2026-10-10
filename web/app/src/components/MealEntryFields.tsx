@@ -29,29 +29,36 @@ export function MealNameField({ name, emoji, onChange, error }: { name: string; 
   </div>
 }
 
-export function NutritionFields({ values, onChange, optionalMacros = false, errors = {} }: {
+export function NutritionFields({ values, onChange, optionalMacros = false, errors = {}, corrections }: {
   values: NutritionValues; onChange: (field: NutritionField, value: string) => void; optionalMacros?: boolean; errors?: FoodFieldErrors
+  corrections?: { adjusted: ReadonlySet<NutritionField>; onReset: (field: NutritionField) => void }
 }) {
   const id = useId()
+  function correction(field: NutritionField, label: string) {
+    return corrections?.adjusted.has(field) ? <div className="k-review-correction">
+      <span id={`${id}-${field}-adjusted`}>Adjusted</span>
+      <button type="button" aria-label={`Reset ${label.toLowerCase()} to estimate`} onClick={() => corrections.onReset(field)}>Reset</button>
+    </div> : null
+  }
   return <fieldset className="flow-nutrition">
     <legend>Nutrition total</legend>
     <p id={`${id}-hint`} className="flow-field-hint">For the whole portion you’re logging.{optionalMacros ? ' Blank macros are saved as 0 g.' : ' All four values are editable.'}</p>
-    <label className="flow-calories" htmlFor={`${id}-calories`}>
+    <div className={corrections ? 'k-review-calorie-field' : undefined}><label className="flow-calories" htmlFor={`${id}-calories`}>
       <span>Calories</span>
       <span className="flow-number-wrap"><input id={`${id}-calories`} data-food-field="calories" type="number" inputMode="decimal" required
         min="0" max="100000" step="any" value={values.calories} onChange={event => onChange('calories', event.target.value)}
-        aria-invalid={errors.calories ? true : undefined} aria-describedby={`${id}-hint${errors.calories ? ` ${id}-calories-error` : ''}`} /><span>kcal</span></span>
+        aria-invalid={errors.calories ? true : undefined} aria-describedby={`${id}-hint${errors.calories ? ` ${id}-calories-error` : ''}${corrections?.adjusted.has('calories') ? ` ${id}-calories-adjusted` : ''}`} /><span>kcal</span></span>
       {errors.calories && <span id={`${id}-calories-error`} className="field-error">{errors.calories}</span>}
-    </label>
+    </label>{correction('calories', 'Calories')}</div>
     <div className="flow-macros">
-      {MACROS.map(({ key, label, Icon }) => <label key={key} className={`flow-macro is-${key}`} htmlFor={`${id}-${key}`}>
+      {MACROS.map(({ key, label, Icon }) => <div key={key} className={corrections ? 'k-review-macro-field' : undefined}><label className={`flow-macro is-${key}`} htmlFor={`${id}-${key}`}>
         <span className="flow-macro-label"><Icon size={20} />{label}</span>
         <span className="flow-number-wrap"><input id={`${id}-${key}`} data-food-field={key} type="number" inputMode="decimal" min="0" max="10000" step="any"
           required={!optionalMacros} value={values[key]} onChange={event => onChange(key, event.target.value)} aria-invalid={errors[key] ? true : undefined}
-          aria-describedby={`${id}-hint${errors[key] ? ` ${id}-${key}-error` : ''}`} />
+          aria-describedby={`${id}-hint${errors[key] ? ` ${id}-${key}-error` : ''}${corrections?.adjusted.has(key) ? ` ${id}-${key}-adjusted` : ''}`} />
           <span>g</span></span>
         {errors[key] && <span id={`${id}-${key}-error`} className="field-error">{errors[key]}</span>}
-      </label>)}
+      </label>{correction(key, label)}</div>)}
     </div>
   </fieldset>
 }

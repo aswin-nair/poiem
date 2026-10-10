@@ -1,4 +1,4 @@
-import { useId, type CSSProperties, type ReactNode } from 'react'
+import { memo, useId, type CSSProperties, type ReactNode } from 'react'
 import {
   MOMO_BODY_PATH,
   MOMO_COLORS,
@@ -18,7 +18,7 @@ import type { MomoOutfit } from '../types'
  * steam and arms follow the performance; the outfit follows his wardrobe. Arms,
  * pupils, face and shadow keep their class names so every pose still animates.
  */
-export function Momo({
+export const Momo = memo(function Momo({
   mood = 'neutral',
   pose = 'idle_breathe',
   outfit,
@@ -58,7 +58,7 @@ export function Momo({
       {momoScene({ face: expression, arms, outfit, steam }).map((shape, index) => renderShape(shape, index, clipId))}
     </svg>
   )
-}
+})
 
 function paint(shape: MomoShape): CSSProperties {
   return {

@@ -1,16 +1,7 @@
 import { useId, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowUpRight, Search, X } from 'lucide-react'
-
-const DESTINATIONS = [
-  { href: '/settings#you-appearance', label: 'Appearance', detail: 'Light, dark or system', words: 'theme colour color night display mode' },
-  { href: '/settings?panel=profile', label: 'Profile & goals', detail: 'Your details and daily targets', words: 'name age birthday date birth gender height weight activity calorie protein carbs fat pace routine' },
-  { href: '/settings?panel=preferences', label: 'Everyday preferences', detail: 'Sound, reminders and taking a break', words: 'notifications haptics vibration pause tracking support coach' },
-  { href: '/settings?panel=momo', label: 'Momo', detail: 'Personality, movement and outfits', words: 'mascot hide mute quiet sound reduced motion wardrobe roast jokes companion' },
-  { href: '/settings?panel=ai', label: 'AI setup', detail: 'Poiem AI and your own API connection', words: 'key provider endpoint compatible anthropic gemini openai model photo text api auth' },
-  { href: '/settings?panel=account', label: 'Account', detail: 'Sign-in and account access', words: 'email password google sign out logout delete' },
-  { href: '/settings?panel=data', label: 'Your data', detail: 'Export, import and a fresh start', words: 'backup restore download reset clear journal privacy' },
-]
+import { searchSettings, settingHref } from '../lib/settingDestinations'
 
 export function SettingsFinder() {
   const [query, setQuery] = useState('')
@@ -18,23 +9,14 @@ export function SettingsFinder() {
   const input = useRef<HTMLInputElement>(null)
   const resultsId = useId()
   const term = query.trim().toLowerCase()
-  const matches = DESTINATIONS.filter(item => {
-    const searchable = `${item.label} ${item.detail} ${item.words}`.toLowerCase()
-    return term.split(/\s+/).every(word => searchable.includes(word))
-  })
+  const matches = searchSettings(term)
   const status = !term ? '' : matches.length
-    ? `${matches.length} ${matches.length === 1 ? 'place' : 'places'} to look`
+    ? `${matches.length} ${matches.length === 1 ? 'setting' : 'settings'} found`
     : 'No match yet. Try “dark”, “Momo” or “password”.'
 
   function jump(href: string) {
     setQuery('')
     navigate(href)
-    const hash = href.split('#')[1]
-    if (!hash) return
-    requestAnimationFrame(() => {
-      document.getElementById(hash)?.focus({ preventScroll: true })
-      document.getElementById(hash)?.scrollIntoView({ block: 'start', behavior: 'instant' })
-    })
   }
 
   return <div className="poiem-settings-finder" role="search" aria-label="Find settings" data-mascot-avoid>
@@ -51,8 +33,8 @@ export function SettingsFinder() {
     <p className="sr-only" role="status">{status}</p>
     {term && <div className="poiem-settings-results" id={resultsId}>
       <p className="poiem-search-status" aria-hidden="true">{status}</p>
-      {matches.length > 0 && <ul>{matches.map(item => <li key={item.href}>
-        <Link to={item.href} onClick={event => { event.preventDefault(); jump(item.href) }}>
+      {matches.length > 0 && <ul>{matches.map(item => <li key={item.id}>
+        <Link to={settingHref(item)} onClick={event => { event.preventDefault(); jump(settingHref(item)) }}>
           <span><strong>{item.label}</strong><small>{item.detail}</small></span><ArrowUpRight size={20} aria-hidden="true" />
         </Link>
       </li>)}</ul>}

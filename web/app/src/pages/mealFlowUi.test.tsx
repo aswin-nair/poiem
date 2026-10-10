@@ -147,6 +147,24 @@ describe('meal logging UI contracts', () => {
     expect(html).toContain('Fill in the meal details')
     expect(html).toContain('required="" aria-describedby=')
     expect(html).toContain('Unfinished meal restored')
+    expect(html).toContain('Its original estimate isn’t available to reset')
+    expect(html).not.toContain('Reset calories to estimate')
+  })
+
+  it('shows field-specific reset for a restored correction without marking portion scaling as a correction', () => {
+    const baseAnalysis = { ...analysis, calories: 300, ingredients: undefined }
+    drafts.review = {
+      analysis: { ...baseAnalysis, calories: 450, protein: 30, carbs: 45, fat: 22.5, servingSizeGrams: 270 },
+      baseAnalysis, originalAnalysis: analysis, servings: 1.5, mealType: 'snack', source: 'textInput',
+      emptyNumericFields: [], updatedAt: new Date().toISOString(),
+    }
+    const html = renderToStaticMarkup(<MemoryRouter><ReviewFoodPage /></MemoryRouter>)
+    expect(html).toContain('Reset calories to estimate')
+    expect(html).not.toContain('Reset protein to estimate')
+    expect(html).toContain('Final macronutrients')
+    expect(html).toContain('30 g')
+    expect(html).toContain('Final meal confirmation')
+    expect((html.match(/type="submit"/g) ?? [])).toHaveLength(1)
   })
 
   it('waits for a recoverable draft before showing an empty review', () => {

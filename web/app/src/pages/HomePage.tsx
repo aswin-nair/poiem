@@ -70,6 +70,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const feel = useFeel()
   const budgetAnchor = useAnchor('calorie_ring')
   const [selectedDate, setSelectedDate] = useState(() => journalDayFromNavState(location.state) ?? startOfDay())
+  function selectJournalDate(date: Date) {
+    setSelectedDate(date)
+    // Keep only the chosen day in navigation context so an expired session can resume it.
+    navigate('/', { replace: true, state: { journalDay: localDayKey(date) } })
+  }
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)
   // Retain clearance until Today unmounts: dismissing a card at the scroll end must not jump the page.
@@ -303,7 +308,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
         <div className="k-week" data-mascot-avoid>
           <WeekStrip
             selectedDate={selectedDate}
-            onSelect={setSelectedDate}
+            onSelect={selectJournalDate}
             loggedDays={loggedDays}
             frozenDays={frozenDays}
             showWeekNav={false}
@@ -314,7 +319,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       {showDatePicker && (
         <DatePickerModal
           selectedDate={selectedDate}
-          onSelect={setSelectedDate}
+          onSelect={selectJournalDate}
           onClose={() => setShowDatePicker(false)}
         />
       )}
@@ -335,33 +340,17 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   <Surface variant="outlined" as="section" className="k-notice" aria-labelledby="guest-title">
                     <p className="k-eyebrow">Your first log is here</p>
                     <h2 id="guest-title">Save your progress</h2>
-                    <p>Continue to create an account and keep this device copy available across sign-in.</p>
+                    <p>Your first meal is saved on this device. Create an account to keep this start, or sign in to your existing journal.</p>
                     <div className="k-notice-actions">
                       <button type="button" className="k-button is-primary" onClick={() => navigate('/login?mode=signup&claim=1')}>
-                        Continue
+                        Create account
                       </button>
                       <button type="button" className="k-text-button" onClick={() => navigate('/login?mode=signin&claim=1')}>
-                        I already have an account
+                        Sign in
                       </button>
                     </div>
                   </Surface>
                 )}
-
-                {showMomo && (
-                  <TodayMomo
-                    greeting={greeting}
-                    outfit={state.gamification.outfit}
-                    roasts={Boolean(profile.mascotRoasts)}
-                    onRoast={() => mascotEvent('poke')}
-                  />
-                )}
-
-                <DayRing
-                  progress={ring}
-                  justClosed={isToday && ringCheck !== null}
-                  closeMs={ringCheck ?? RING_CHECK_MS}
-                  note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
-                />
 
                 <Surface
                   variant="hero"
@@ -390,6 +379,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                     <span className="tabular">{budget.consumed.toLocaleString()} eaten</span>
                     <span className="tabular">{budget.target.toLocaleString()} guide</span>
                   </p>
+                  {isToday && !guest && (
+                    <button type="button" className="k-button is-primary k-budget-action" data-action-play="submit" onClick={() => openLog()}>
+                      <IconPlus size={20} aria-hidden="true" /> Log a meal
+                    </button>
+                  )}
                 </Surface>
 
                 <section className="k-macros" aria-label="Macros">
@@ -429,7 +423,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   if (!isToday && group.entries.length === 0) return null
                   const GroupIcon = MEAL_ICONS[group.type]
                   return (
-                    <section key={group.type} className={`k-meal-group is-${group.type}`} aria-labelledby={`meal-${group.type}`}>
+                    <section key={group.type} className={`k-meal-group is-${group.type}${group.entries.length === 0 ? ' is-empty' : ''}`} aria-labelledby={`meal-${group.type}`}>
                       <header className="k-meal-head">
                         <span className="k-meal-icon" aria-hidden="true"><GroupIcon size={16} /></span>
                         <h3 id={`meal-${group.type}`}>{group.label}</h3>
@@ -463,11 +457,27 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   )
                 })}
                 {!isToday && (
-                  <button type="button" className="k-button k-back-today" onClick={() => setSelectedDate(startOfDay())}>
+                  <button type="button" className="k-button k-back-today" onClick={() => selectJournalDate(startOfDay())}>
                     Back to today
                   </button>
                 )}
               </Section>
+              <div className="k-today-companion">
+                {showMomo && (
+                  <TodayMomo
+                    greeting={greeting}
+                    outfit={state.gamification.outfit}
+                    roasts={Boolean(profile.mascotRoasts)}
+                    onRoast={() => mascotEvent('poke')}
+                  />
+                )}
+                <DayRing
+                  progress={ring}
+                  justClosed={isToday && ringCheck !== null}
+                  closeMs={ringCheck ?? RING_CHECK_MS}
+                  note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
+                />
+              </div>
                 {isToday && !guest && (
                   <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
                     <div className="k-water-block">

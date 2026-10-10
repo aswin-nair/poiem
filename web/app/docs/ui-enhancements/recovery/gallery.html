@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Poiem · local recovery</title>
+  <style>
+    :root{color-scheme:light;--paper:#fff8eb;--ink:#20221d;--acid:#e9ff54;--mint:#8fe4bf;--pink:#ffa9ce;--action:#ff784e}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,sans-serif}
+    header,main{max-width:1440px;margin:auto;padding:24px}header{border-bottom:3px solid var(--ink)}
+    .eyebrow{font:700 12px/1.4 monospace;text-transform:uppercase;letter-spacing:.08em}
+    h1{font-size:clamp(32px,5vw,56px);line-height:1;letter-spacing:-.04em;margin:12px 0}p{line-height:1.5;max-width:850px}
+    .status{display:inline-block;background:var(--acid);border:2px solid var(--ink);padding:8px 12px;font-weight:700}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin:0 0 20px}.controls label{display:grid;gap:8px;font-size:14px;font-weight:700}
+    select,button{min-height:44px;padding:8px 12px;border:2px solid var(--ink);background:#fffdf7;color:var(--ink);font:inherit}
+    select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--action);outline-offset:3px}
+    .journey{display:flex;gap:8px;flex-wrap:wrap;padding:0;margin:0 0 24px;list-style:none}.journey button{font-size:14px;font-weight:700;cursor:pointer}.journey button[aria-current=step]{background:var(--mint)}
+    .compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.compare.phone{max-width:840px;margin:auto}
+    .shot{min-width:0;margin:0;border:3px solid var(--ink);background:#fffdf7}.shot figcaption{border-bottom:3px solid var(--ink);padding:12px;font-weight:700;display:flex;justify-content:space-between;gap:12px}.shot:last-child figcaption{background:var(--acid)}
+    .shot img{display:block;width:100%;height:auto}.shot a{color:inherit}.note{border-left:6px solid var(--pink);padding:12px 16px;margin:24px 0;background:#fffdf7}
+    .links{display:flex;gap:20px;flex-wrap:wrap;margin-top:24px}.links a{color:inherit;min-height:44px;display:inline-flex;align-items:center}footer{margin-top:24px;font:13px/1.6 monospace}.caption{min-height:48px;margin:0 0 20px}
+    @media(max-width:680px){header,main{padding:16px}.compare{grid-template-columns:minmax(0,1fr)}h1{font-size:36px}.controls label:first-child{width:100%}.controls select{max-width:100%}}
+  </style>
+</head>
+<body>
+  <header><span class="eyebrow">Poiem · desktop + phone</span><h1>A chance to check.<br>A way to come back.</h1><p>Keep an unfinished edit, review a backup before replacing data and find the right help. Clear recovery choices for the moments when plans change.</p><span class="status">Local build · recovery</span></header>
+  <main>
+    <div class="controls">
+      <label>Screen<select id="screen"><option value="departure">You · Unsaved edits</option><option value="backup-review">Backup · Review before applying</option><option value="backup-error">Backup · Invalid file</option><option value="support">Support · Find a setting</option><option value="about">About · Help and backup</option><option value="saved">Saved · Consistent controls</option><option value="sync-offline">Sync · Offline presentation</option><option value="sync-conflict">Sync · Conflict presentation</option></select></label>
+      <label>Device<select id="width"><option value="390">Phone · 390 × 844</option><option value="1440">Desktop · 1440 × 900</option></select></label>
+      <label>Appearance<select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+      <label>View<select id="view"><option value="-viewport">Visible screen</option><option value="">Whole page</option></select></label>
+    </div>
+    <nav aria-label="Local recovery screens"><ol class="journey"><li><button data-screen="departure">Unsaved edits</button></li><li><button data-screen="backup-review">Review backup</button></li><li><button data-screen="backup-error">Invalid file</button></li><li><button data-screen="support">Support</button></li><li><button data-screen="about">About</button></li><li><button data-screen="saved">Saved</button></li><li><button data-screen="sync-offline">Offline</button></li><li><button data-screen="sync-conflict">Conflict</button></li></ol></nav>
+    <p id="caption" class="caption" aria-live="polite"></p>
+    <div id="compare" class="compare phone"><figure class="shot"><figcaption>Before <a id="before-link" target="_blank" rel="noopener">Open image</a></figcaption><img id="before" alt="Previous Poiem screen"></figure><figure class="shot"><figcaption>After <a id="after-link" target="_blank" rel="noopener">Open image</a></figcaption><img id="after" alt="Updated Poiem screen"></figure></div>
+    <div class="note">Both sides use the same synthetic account and frozen date (19 September 2026). No AI request is sent. Offline and conflict screens use synthetic presentation fixtures: they show the banner layout and actions, and do not demonstrate real cloud sync. Modal comparisons use the visible screen for both views. Whole-page images of other screens retain fixed controls at their screen position; use Visible screen to judge the current view.</div>
+    <details class="note"><summary>Failed-screen recovery · additional after-only captures</summary><p>These captures deliberately fail a secondary-screen download. Reload retries the same URL; Return to Today and workspace navigation remain available. The tests verify focus and unchanged durable meal data after reload. These are not before/after pairs.</p><div class="links"><a href="route-download/route-download-saved-390.png">Saved · phone</a><a href="route-download/route-download-saved-1440.png">Saved · desktop</a><a href="route-download/route-download-insights-390.png">Insights · phone</a><a href="route-download/route-download-insights-1440.png">Insights · desktop</a><a href="route-download/route-download-you-390.png">You · phone</a><a href="route-download/route-download-you-1440.png">You · desktop</a></div></details>
+    <div class="links"><a href="README.md">Changes and verification</a><a href="../RECOVERY-STATE-SHEET.md">Recovery choices and retained data</a><a href="../ongoing-use/gallery.html">Everyday-use comparison</a><a href="../E2E-PLAN.md">Full delivery plan</a></div>
+    <footer>Before: revision e9c5eddb. After: this local M5 implementation.<br>Phone captures use Chromium with iPhone touch settings. Physical devices, native keyboard behavior, participant review and cloud staging remain separate checks.</footer>
+  </main>
+  <script>
+    const descriptions={
+      departure:'Before: leaving You loses an unsaved edit. After: the departure sheet offers Stay, Discard or Save and continue, preserving the intended destination. Invalid drafts return to the relevant field. Signing out offers Stay or Discard and sign out.',
+      'backup-review':'Before: a valid backup applies immediately after file selection. After: a review shows the current data, backup counts and replacement scope before an explicit confirmation. Cancel keeps current data and drafts. Applying a backup replaces local data; it does not confirm cloud sync.',
+      'backup-error':'Before: an invalid file opens a browser alert, dismissed before this capture. After: the error appears next to the import control with a way to choose another file. Current data remains unchanged, and the same file can be selected again.',
+      support:'Support now provides direct links to AI setup, backup and account settings. The Pause link targets the exact preference control. Each destination opens the relevant You panel and focuses the available control.',
+      about:'About now links to Support and the exact backup setting, making help and recovery reachable from the information page.',
+      saved:'Saved keeps semantic native select controls for sorting and destination. Selected text is 16px, with a consistent decorative arrow and room for the label. Keyboard selection and the existing portion behavior remain available.',
+      'sync-offline':'Synthetic offline presentation only. The sync banner now sits in page flow, with readable wrapped text and actions sized for touch. It no longer covers the journal. This comparison does not demonstrate offline persistence or live cloud recovery.',
+      'sync-conflict':'Synthetic conflict presentation only. Long messages and conflict actions fit the banner in phone and desktop layouts, with visible keyboard focus. Existing sync decisions remain unchanged; this comparison does not demonstrate a real account conflict.'
+    };
+    function recoveryScreen(value){if(value==='backup-review')return 'backup-review';if(value==='backup-error')return 'backup-error';if(value==='support')return 'support';if(value==='about')return 'about';if(value==='saved')return 'saved';if(value==='sync-offline')return 'sync-offline';if(value==='sync-conflict')return 'sync-conflict';return 'departure'}
+    function recoveryLabel(screen){if(screen==='backup-review')return 'Backup · Review before applying';if(screen==='backup-error')return 'Backup · Invalid file';if(screen==='support')return 'Support · Find a setting';if(screen==='about')return 'About · Help and backup';if(screen==='saved')return 'Saved · Consistent controls';if(screen==='sync-offline')return 'Sync · Offline presentation';if(screen==='sync-conflict')return 'Sync · Conflict presentation';return 'You · Unsaved edits'}
+    function deviceWidth(value){return value==='1440'?'1440':'390'}
+    function themeName(value){return value==='dark'?'dark':'light'}
+    function pageView(value){return value===''?'':'-viewport'}
+    function update(){const screen=recoveryScreen(document.querySelector('#screen').value),width=deviceWidth(document.querySelector('#width').value),theme=themeName(document.querySelector('#theme').value),view=pageView(document.querySelector('#view').value),label=recoveryLabel(screen);document.querySelector('#screen').value=screen;document.querySelector('#caption').textContent=descriptions[screen];document.querySelector('#compare').classList.toggle('phone',width==='390');document.querySelectorAll('[data-screen]').forEach(button=>{if(button.dataset.screen===screen)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')});for(const phase of ['before','after']){const path=phase+'/'+screen+'-'+width+'-'+theme+view+'.png';document.querySelector('#'+phase).src=path;document.querySelector('#'+phase).alt=phase+' · '+label+' · '+width+'px · '+theme;document.querySelector('#'+phase+'-link').href=path}}
+    document.querySelectorAll('select').forEach(el=>el.addEventListener('change',update));document.querySelectorAll('[data-screen]').forEach(button=>button.addEventListener('click',()=>{document.querySelector('#screen').value=button.dataset.screen;update()}));update();
+  </script>
+</body>
+</html>

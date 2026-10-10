@@ -146,7 +146,7 @@ test('Today fields stay aligned and Momo stays off Saved and Insights', async ({
 test('Momo yields to the primary action and stays quiet while editing', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await signUpAndOnboard(page)
-  await page.getByRole('button', { name: 'Log a meal', exact: true }).click()
+  await page.getByTestId('fab').click()
   await expect(page).toHaveURL('/log')
   await page.getByRole('link', { name: /Describe your meal/i }).click()
   const input = page.getByLabel('Your meal, your words')

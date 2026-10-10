@@ -152,7 +152,8 @@ export async function openYouDestination(page: Page, name: string | RegExp) {
     const labels = await picker.locator('option').allTextContents()
     const label = labels.find(label => typeof name === 'string' ? label === name : name.test(label))
     if (!label) throw new Error(`Unknown You category: ${name}`)
-    await picker.selectOption({ label })
+    const [panel] = await picker.selectOption({ label })
+    await expect(page).toHaveURL(url => url.searchParams.get('panel') === panel)
     return
   }
   await youNav(page).getByRole('link', { name }).click()

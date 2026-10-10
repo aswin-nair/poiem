@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { IconClose } from './icons'
 
 type ToastType = 'success' | 'error' | 'info'
@@ -54,6 +54,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     timers.current.set(id, setTimeout(() => dismiss(id), opts?.action ? 10000 : 4000))
   }, [dismiss])
 
+  const context = useMemo(() => ({ toast }), [toast])
+
   function pause(id: number) {
     clearTimeout(timers.current.get(id))
     timers.current.delete(id)
@@ -65,7 +67,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ToastCtx.Provider value={{ toast }}>
+    <ToastCtx.Provider value={context}>
       {children}
       <div className="toast-stack" aria-live="polite">
         {items.map(item => (

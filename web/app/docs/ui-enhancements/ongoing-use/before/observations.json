@@ -1,0 +1,294 @@
+{
+  "capturedAt": "2026-09-19T20:00:00.000Z",
+  "baseline": "989e5320",
+  "observations": [
+    {
+      "screen": "saved",
+      "width": 390,
+      "theme": "light",
+      "route": "/discover",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1799
+    },
+    {
+      "screen": "insights-week",
+      "width": 390,
+      "theme": "light",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2862
+    },
+    {
+      "screen": "insights-month",
+      "width": 390,
+      "theme": "light",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2862
+    },
+    {
+      "screen": "coach-draft",
+      "width": 390,
+      "theme": "light",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844
+    },
+    {
+      "screen": "coach-response",
+      "width": 390,
+      "theme": "light",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844
+    },
+    {
+      "screen": "settings-results",
+      "width": 390,
+      "theme": "light",
+      "route": "/settings",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1478
+    },
+    {
+      "screen": "settings-height",
+      "width": 390,
+      "theme": "light",
+      "route": "/settings?panel=profile#setting-height",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1541
+    },
+    {
+      "screen": "settings-hidden",
+      "width": 390,
+      "theme": "light",
+      "route": "/settings?panel=ai#ai-auth-type",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1012
+    },
+    {
+      "screen": "saved",
+      "width": 390,
+      "theme": "dark",
+      "route": "/discover",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1799
+    },
+    {
+      "screen": "insights-week",
+      "width": 390,
+      "theme": "dark",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2862
+    },
+    {
+      "screen": "insights-month",
+      "width": 390,
+      "theme": "dark",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2862
+    },
+    {
+      "screen": "coach-draft",
+      "width": 390,
+      "theme": "dark",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844
+    },
+    {
+      "screen": "coach-response",
+      "width": 390,
+      "theme": "dark",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844
+    },
+    {
+      "screen": "settings-results",
+      "width": 390,
+      "theme": "dark",
+      "route": "/settings",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1478
+    },
+    {
+      "screen": "settings-height",
+      "width": 390,
+      "theme": "dark",
+      "route": "/settings?panel=profile#setting-height",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1541
+    },
+    {
+      "screen": "settings-hidden",
+      "width": 390,
+      "theme": "dark",
+      "route": "/settings?panel=ai#ai-auth-type",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1012
+    },
+    {
+      "screen": "saved",
+      "width": 1440,
+      "theme": "light",
+      "route": "/discover",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1448
+    },
+    {
+      "screen": "insights-week",
+      "width": 1440,
+      "theme": "light",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2158
+    },
+    {
+      "screen": "insights-month",
+      "width": 1440,
+      "theme": "light",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2158
+    },
+    {
+      "screen": "coach-draft",
+      "width": 1440,
+      "theme": "light",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900
+    },
+    {
+      "screen": "coach-response",
+      "width": 1440,
+      "theme": "light",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900
+    },
+    {
+      "screen": "settings-results",
+      "width": 1440,
+      "theme": "light",
+      "route": "/settings",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1351
+    },
+    {
+      "screen": "settings-height",
+      "width": 1440,
+      "theme": "light",
+      "route": "/settings?panel=profile#setting-height",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1397
+    },
+    {
+      "screen": "settings-hidden",
+      "width": 1440,
+      "theme": "light",
+      "route": "/settings?panel=ai#ai-auth-type",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 941
+    },
+    {
+      "screen": "saved",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/discover",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1448
+    },
+    {
+      "screen": "insights-week",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2158
+    },
+    {
+      "screen": "insights-month",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/progress",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 2158
+    },
+    {
+      "screen": "coach-draft",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900
+    },
+    {
+      "screen": "coach-response",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/coach",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900
+    },
+    {
+      "screen": "settings-results",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/settings",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1351
+    },
+    {
+      "screen": "settings-height",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/settings?panel=profile#setting-height",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1397
+    },
+    {
+      "screen": "settings-hidden",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/settings?panel=ai#ai-auth-type",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 941
+    }
+  ]
+}

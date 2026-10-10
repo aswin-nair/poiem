@@ -12,7 +12,7 @@ test('signup keeps its URL, password privacy, and validation feedback in sync', 
   await page.getByRole('button', { name: 'Show password', exact: true }).click()
   await expect(page.getByLabel('Password', { exact: true })).toHaveAttribute('type', 'text')
   await page.getByLabel('Confirm password', { exact: true }).fill('Mismatch123')
-  await page.getByRole('button', { name: 'Continue', exact: true }).click()
+  await page.getByRole('button', { name: 'Create account', exact: true }).click()
   await expect(page.getByRole('alert')).toHaveText('Passwords do not match')
   await expect(page.getByRole('alert')).toBeFocused()
   await page.locator('.auth-tabs').getByRole('button', { name: 'Sign in', exact: true }).click()

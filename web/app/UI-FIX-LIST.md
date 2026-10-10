@@ -2,6 +2,8 @@
 
 Reviewed **4 October 2026**, on branch **`poiem-ui-audit`**, against `DESIGN.md`.
 
+This is the historical audit checkpoint. Subsequent authorized implementation and its current acceptance status are recorded in the [UI delivery plan](docs/ui-enhancements/E2E-PLAN.md) and [checklist](docs/ui-enhancements/E2E-CHECKLIST.md). The observations and proposed fixes below describe the reviewed source at that date.
+
 ## Review checkpoint
 
 **Only the explicitly confirmed Today spacing defect has been fixed.** All remaining items below are proposals for review. No other application source, test configuration, API/data code, Expo code or visual baseline has changed. Nothing has been pushed and no PR has been opened.
@@ -92,6 +94,7 @@ P1 = obscured content or broken modal behavior. P2 = frequent interaction, narro
 - **Screen / viewport / theme:** Shared headers, bottom nav, docked actions, sheets and toasts on notched phones; both themes. **Source-confirmed / device verification.**
 - **Cause:** `index.html:8` omits `viewport-fit=cover`. Bottom inset rules already exist, but headers in `src/styles/system/foundations.css:24`, first-run bars in `src/styles/screens/first-run.css:19` and `:205`, and the sticky You toolbar at `you.css:116` have no deliberate top/side safe-area treatment.
 - **Proposed fix:** Add `viewport-fit=cover` while retaining pinch zoom; introduce `--k-*` safe-area tokens and apply top, bottom and landscape side clearance consistently to shell chrome, sheets, docks and toasts. Do not add zoom restrictions. Check physical iPhone Safari before calling this resolved.
+- **10 October follow-up:** Implementation `5ff6164b` adds the viewport metadata, shared inset owners and Momo safe bounds. [Synthetic checks and 34 comparison pairs](docs/ui-enhancements/safe-areas/README.md) record the local result; physical iPhone/Android verification remains pending.
 
 ### F06 · P2 — Calendar and week-strip touch targets are too small
 

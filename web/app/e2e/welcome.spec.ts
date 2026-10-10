@@ -74,9 +74,10 @@ test.describe('welcome page', () => {
     await expect(page.getByRole('figure', { name: 'Poiem Facts' })).toContainText('Food guilt')
   })
 
-  test('starting a journal leads to sign up', async ({ page }) => {
+  test('starting a journal leads to setup with a direct returning-member route', async ({ page }) => {
     await page.goto('/welcome')
     await page.getByRole('link', { name: 'Start your journal' }).first().click()
-    await page.waitForURL(/\/login\?mode=signup/)
+    await page.waitForURL(/\/onboarding/)
+    await expect(page.getByRole('button', { name: 'Get started', exact: true })).toBeVisible()
   })
 })

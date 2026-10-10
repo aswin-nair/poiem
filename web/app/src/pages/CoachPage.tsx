@@ -1,5 +1,5 @@
 import { AppShell } from '../components/system/AppShell'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { BottomNav } from '../components/BottomNav'
 import { useApp } from '../store/AppContext'
@@ -11,7 +11,7 @@ import { usesByok } from '../lib/aiClient'
 import { IconArrowUpRight, IconSend } from '../components/icons'
 import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
-import { Sparkles, Trash2 } from 'lucide-react'
+import { Check, Copy, Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
 import { prefersReducedMotion } from '../lib/tokens'
@@ -22,7 +22,7 @@ type CoachRetryRequest = { userMessage: ChatMessage; history: ChatMessage[] }
 type FailedCoachResponse = CoachRetryRequest & { reason: string; cancelled: boolean }
 
 /** Render AI message with paragraphs, bullet lists, and **bold**. */
-function CoachMessage({ text }: { text: string }) {
+const CoachMessage = memo(function CoachMessage({ text }: { text: string }) {
   const paragraphs = text.split(/\n{2,}/)
 
   return (
@@ -55,7 +55,7 @@ function CoachMessage({ text }: { text: string }) {
       })}
     </div>
   )
-}
+})
 
 function renderInline(text: string): ReactNode[] {
   const parts = text.split(/(\*\*[^*]+\*\*)/)
@@ -87,6 +87,46 @@ function TypingIndicator() {
   )
 }
 
+function CoachResponseCopy({ text, onFollowUp }: { text: string; onFollowUp?: () => void }) {
+  const [copyState, setCopyState] = useState<'idle' | 'copying' | 'copied' | 'failed'>('idle')
+  const manualCopyRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (copyState !== 'failed') return
+    manualCopyRef.current?.focus()
+    manualCopyRef.current?.select()
+  }, [copyState])
+
+  async function copyResponse() {
+    setCopyState('copying')
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable')
+      await navigator.clipboard.writeText(text)
+      setCopyState('copied')
+    } catch {
+      setCopyState('failed')
+    }
+  }
+
+  return (
+    <div className="k-coach-response-tools">
+      <div className="k-coach-response-actions">
+        <button type="button" className="k-coach-copy" onClick={() => { void copyResponse() }} disabled={copyState === 'copying'}>
+          {copyState === 'copied' ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />} Copy response
+        </button>
+        {onFollowUp && <button type="button" className="k-coach-follow-up" onClick={onFollowUp}>Draft a follow-up</button>}
+      </div>
+      {copyState !== 'idle' && <p className="k-coach-copy-feedback" role="status">
+        {copyState === 'copying' ? 'Copying response…' : copyState === 'copied' ? 'Response copied.' : 'Couldn’t copy automatically. Select the response below and copy it.'}
+      </p>}
+      {copyState === 'failed' && <label className="k-coach-manual-copy">
+        <span>Response text for manual copying</span>
+        <textarea ref={manualCopyRef} readOnly value={text} rows={3} onFocus={event => event.currentTarget.select()} />
+      </label>}
+    </div>
+  )
+}
+
 export function CoachPage() {
   const { state, addChatMessage, clearChat, replaceState } = useApp()
   const [input, setInput] = useState('')
@@ -96,12 +136,33 @@ export function CoachPage() {
   const [showSafetySupport, setShowSafetySupport] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const followConversation = useRef(true)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const requestRef = useRef<AbortController | null>(null)
   const requestMessageRef = useRef<string | null>(null)
   const { availability, refresh } = useAiAccess()
+  const empty = state.chatMessages.length === 0 && !loading
 
   useEffect(() => () => { requestRef.current?.abort(); requestRef.current = null }, [])
+
+  useLayoutEffect(() => {
+    const resizeDraft = () => {
+      const textarea = inputRef.current
+      if (!textarea) return
+      // Measure after resetting the previous height so deleting lines shrinks
+      // the draft too. CSS caps its height for short windows and keyboards.
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight
+      textarea.style.maxHeight = `${Math.min(viewportHeight < 500 ? 120 : 192, viewportHeight * .28)}px`
+      textarea.style.height = 'auto'
+      textarea.style.height = `${textarea.scrollHeight + 4}px`
+    }
+    resizeDraft()
+    window.addEventListener('resize', resizeDraft)
+    window.visualViewport?.addEventListener('resize', resizeDraft)
+    return () => {
+      window.removeEventListener('resize', resizeDraft)
+      window.visualViewport?.removeEventListener('resize', resizeDraft)
+    }
+  }, [input, empty])
 
   useEffect(() => {
     let lastTop = document.scrollingElement?.scrollTop ?? 0
@@ -131,6 +192,18 @@ export function CoachPage() {
   const byok = usesByok(state.aiSettings)
   const provider = byok ? providerLabel(state.aiSettings.provider) : 'Poiem AI'
   const canChat = ai.kind === 'ready'
+
+  function prepareDraft(text: string) {
+    setInput(text)
+    setError(null)
+    inputRef.current?.focus()
+    requestAnimationFrame(() => {
+      const textarea = inputRef.current
+      if (!textarea) return
+      textarea.setSelectionRange(textarea.value.length, textarea.value.length)
+      textarea.scrollIntoView({ block: 'nearest', behavior: 'instant' })
+    })
+  }
 
   async function send(text: string, retry?: CoachRetryRequest) {
     const trimmed = text.trim()
@@ -216,35 +289,53 @@ export function CoachPage() {
     }
   }
 
-  const empty = state.chatMessages.length === 0 && !loading
+  const lastAssistantId = state.chatMessages.findLast(message => message.role === 'assistant')?.id
   const compose = (
-      <div className={`k-coach-compose${empty ? ' is-inline' : ''}`}>
-        {loading && (
+      <div className={`k-coach-compose${empty ? ' is-inline' : ''}`} data-mascot-avoid>
+        {loading && <div className="k-coach-request-status">
+          <p>Coach is responding…</p>
           <PressableButton variant="secondary" label="Cancel response" onClick={() => requestRef.current?.abort()} />
-        )}
+        </div>}
         <AiAllowanceHint availability={ai} task="coach" />
         <form
           className="k-coach-form"
           onSubmit={e => { e.preventDefault(); send(input) }}
         >
-          <input
-            ref={inputRef}
-            className="k-coach-input"
-            aria-label="Message Coach"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder={canChat ? 'Ask Coach…' : 'Ask for support…'}
-            disabled={loading}
-          />
-          <button
-            type="submit"
-            className="k-coach-send"
-            disabled={loading || !input.trim()}
-            aria-label="Send"
-          >
-            <IconSend size={18} />
-          </button>
+          <div className="k-coach-draft-head">
+            <label htmlFor="coach-draft">Your draft</label>
+            <button type="button" className="k-coach-clear-draft" disabled={loading || !input} onClick={() => { setInput(''); setError(null); inputRef.current?.focus() }}>Clear draft</button>
+          </div>
+          <div className="k-coach-draft-row">
+            <textarea
+              id="coach-draft"
+              ref={inputRef}
+              className="k-coach-input"
+              aria-label="Message Coach"
+              aria-describedby={`coach-draft-hint${error ? ' coach-draft-error' : ''}`}
+              rows={2}
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && !e.nativeEvent.isComposing) {
+                  e.preventDefault()
+                  void send(input)
+                }
+              }}
+              placeholder={canChat ? 'Ask Coach…' : 'Ask for support…'}
+              disabled={loading}
+            />
+            <button
+              type="submit"
+              className="k-coach-send"
+              disabled={loading || !input.trim()}
+              aria-label="Send"
+            >
+              <IconSend size={18} />
+            </button>
+          </div>
+          <p id="coach-draft-hint" className="k-coach-draft-hint">Enter adds a line. Send when you’re ready.</p>
         </form>
+        {error && <div id="coach-draft-error" className="error-banner" role="alert">{error}</div>}
       </div>
   )
 
@@ -281,8 +372,6 @@ export function CoachPage() {
 
       {/* Momo walks beside the column on wide screens and stays off the conversation on a phone. */}
       <main className="app-main k-coach-main" data-mascot-avoid>
-        {error && <div className="error-banner" role="alert">{error}</div>}
-
         {!canChat && (
           <AiAvailabilityCard
             availability={ai}
@@ -308,8 +397,8 @@ export function CoachPage() {
                   key={starter.text}
                   type="button"
                   className={`k-coach-starter is-tone-${starter.tone}`}
-                  onClick={() => send(starter.text)}
-                  disabled={!canChat}
+                  onClick={() => prepareDraft(starter.text)}
+                  disabled={loading}
                 >
                   <Sparkles size={16} aria-hidden="true" /> {starter.text}
                 </button>
@@ -327,7 +416,7 @@ export function CoachPage() {
               )}
               <div className="k-coach-bubble">
                 {msg.role === 'assistant'
-                  ? <CoachMessage text={msg.content} />
+                  ? <><CoachMessage text={msg.content} /><CoachResponseCopy text={msg.content} onFollowUp={msg.id === lastAssistantId && !loading ? () => prepareDraft('Could you give me a practical example?') : undefined} /></>
                   : <p className="k-coach-text">{msg.content}</p>
                 }
                 {failedResponses[msg.id] && <div className="k-coach-recovery" role="status" aria-live="polite">

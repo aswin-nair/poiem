@@ -49,7 +49,7 @@ export function SettingsNavigation({ panel, hasChanges, pendingLabel, saved, inv
           : panel === 'profile' ? 'Profile changes use Save.'
           : panel === 'ai' ? 'AI setup changes use Save.' : 'Preferences save immediately.'}
       </div>
-      {hasChanges && <PressableButton label="Save settings" variant="primary" onClick={onSave} disabled={invalid} />}
+      {hasChanges && <PressableButton label="Save settings" variant="primary" onClick={onSave} />}
       {invalid && <Link className="you-save-error" to="/settings?panel=profile">Check your profile to save</Link>}
     </div>
   </div>

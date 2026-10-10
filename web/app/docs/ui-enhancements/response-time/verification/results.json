@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-10T17:13:33.118Z",
+  "baseline": "131bd0d74ebdef897e31e962377f295f758ce927",
+  "implementation": "40be9ec36bfd886077ab547cb0e79073600db233",
+  "scope": "Local rendering follow-up. Independent batches, not an exhaustive release or field-performance certification.",
+  "unit": {
+    "passed": 990,
+    "files": 118,
+    "workers": 2,
+    "exitCode": 0
+  },
+  "lint": {
+    "errors": 0,
+    "existingWarnings": 13,
+    "exitCode": 0
+  },
+  "build": {
+    "platform": "Windows",
+    "node": "v24.14.1",
+    "typeCheck": "passed",
+    "productionLocalBuild": "passed",
+    "mainAssetRawKB": 379.45,
+    "mainAssetGzipKB": 121.01,
+    "note": "One asset, not total initial download."
+  },
+  "browserBatches": [
+    {
+      "name": "motion-loading",
+      "project": "chromium",
+      "passed": 6,
+      "failed": 0,
+      "retries": 0,
+      "workers": 2
+    },
+    {
+      "name": "existing account/setup/Coach/motion/mascot/safe-areas",
+      "project": "chromium",
+      "passed": 57,
+      "failed": 0,
+      "retries": 0,
+      "workers": 2
+    },
+    {
+      "name": "meal feedback, phone viewports and production routes",
+      "passed": 24,
+      "failed": 0,
+      "retries": 0,
+      "workers": 2,
+      "projects": {
+        "chromium": 8,
+        "mobileChromiumIPhone13": 6,
+        "mobileChromiumPixel7": 6,
+        "productionChromium": 4
+      }
+    }
+  ],
+  "canonicalVisuals": {
+    "passed": 63,
+    "failed": 0,
+    "workers": 1,
+    "retries": 0,
+    "image": "mcr.microsoft.com/playwright:v1.61.1-noble",
+    "changedBaselines": 0,
+    "maxDiffPixels": 200,
+    "toleranceChanged": false
+  },
+  "gallery": {
+    "status": "complete",
+    "pairs": 24,
+    "images": 48,
+    "screens": 6,
+    "themes": 2,
+    "views": [
+      {
+        "id": "phone",
+        "title": "Phone",
+        "width": 390,
+        "height": 900
+      },
+      {
+        "id": "desktop",
+        "title": "Desktop",
+        "width": 1440,
+        "height": 900
+      }
+    ],
+    "pageErrors": 0,
+    "horizontalOverflow": 0,
+    "captureHashesVerified": true,
+    "sourceRecheckedAfterCapture": true,
+    "byteIdenticalPairs": 24,
+    "viewer": {
+      "browser": "149.0.7827.55",
+      "images": 48,
+      "comparisons": 24,
+      "keyboardControls": 4,
+      "widths": [
+        {
+          "width": 320,
+          "overflow": 0
+        },
+        {
+          "width": 390,
+          "overflow": 0
+        },
+        {
+          "width": 1440,
+          "overflow": 0
+        }
+      ],
+      "errors": []
+    },
+    "note": "Byte equality is reported only as an observation; canonical visual checks and manual review establish the local appearance result. Static reduced-motion Chromium captures, zero synthetic insets, no physical-device or animation-fidelity certification.",
+    "history": [
+      "gallery-first-attempt.json: 27px report-only View-select overflow at 320px; 48 product captures completed.",
+      "gallery-second-attempt.json: report overflow fixed; exact keyboard label lookup timed out; 48 product captures completed.",
+      "Final full capture and independent viewer check passed after explicit control labels."
+    ]
+  },
+  "performance": {
+    "initialLoad": {
+      "baseline": {
+        "samples": 6,
+        "jsGzipBytes": 251911,
+        "cssGzipBytes": 60430,
+        "combinedGzipBytes": 312341,
+        "requestedJsCssFiles": 21
+      },
+      "candidate": {
+        "samples": 6,
+        "jsGzipBytes": 211951,
+        "cssGzipBytes": 60430,
+        "combinedGzipBytes": 272381,
+        "requestedJsCssFiles": 16
+      },
+      "combinedComputedGzipReductionBytes": 39960,
+      "combinedComputedGzipReductionPercent": 12.793709439362743,
+      "errors": 0,
+      "note": "Three paired ordered samples per width; no stable or field speed claim. Fonts and images excluded from this footprint."
+    },
+    "actions": {
+      "samplesPerAction": 10,
+      "actions": 7,
+      "functionalErrors": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "budget": {
+        "p95Ms": 100,
+        "attributableLongTasks": 0
+      },
+      "baselineSummary": [
+        {
+          "interaction": "sheet-open",
+          "samples": 10,
+          "p95Ms": 1017.0999999977648,
+          "longTasks": 19
+        },
+        {
+          "interaction": "sheet-close",
+          "samples": 10,
+          "p95Ms": 245.10000000149012,
+          "longTasks": 18
+        },
+        {
+          "interaction": "manual-save",
+          "samples": 10,
+          "p95Ms": 1158.199999999255,
+          "longTasks": 44
+        },
+        {
+          "interaction": "saved-relog",
+          "samples": 10,
+          "p95Ms": 1159.699999999255,
+          "longTasks": 44
+        },
+        {
+          "interaction": "first-meal-moment",
+          "samples": 10,
+          "p95Ms": 1417.699999999255,
+          "longTasks": 47
+        },
+        {
+          "interaction": "second-log-toast",
+          "samples": 10,
+          "p95Ms": 950.6999999992549,
+          "longTasks": 47
+        },
+        {
+          "interaction": "coach-send",
+          "samples": 10,
+          "p95Ms": 345.19999999925494,
+          "longTasks": 10
+        }
+      ],
+      "candidateSummary": [
+        {
+          "interaction": "sheet-open",
+          "samples": 10,
+          "p95Ms": 1083.4000000022352,
+          "longTasks": 22
+        },
+        {
+          "interaction": "sheet-close",
+          "samples": 10,
+          "p95Ms": 261.3999999985099,
+          "longTasks": 14
+        },
+        {
+          "interaction": "manual-save",
+          "samples": 10,
+          "p95Ms": 1242.5999999977648,
+          "longTasks": 42
+        },
+        {
+          "interaction": "saved-relog",
+          "samples": 10,
+          "p95Ms": 1207.3999999985099,
+          "longTasks": 49
+        },
+        {
+          "interaction": "first-meal-moment",
+          "samples": 10,
+          "p95Ms": 1178.5,
+          "longTasks": 47
+        },
+        {
+          "interaction": "second-log-toast",
+          "samples": 10,
+          "p95Ms": 1083,
+          "longTasks": 41
+        },
+        {
+          "interaction": "coach-send",
+          "samples": 10,
+          "p95Ms": 334.19999999925494,
+          "longTasks": 10
+        }
+      ],
+      "baselineBudgetExitCode": 1,
+      "candidateBudgetExitCode": 1,
+      "gate": "failed",
+      "note": "All seven actions fail both sources. Mixed p95 changes; trusted-click to feedback DOM to following rAF proxy is not INP or presented-frame latency. Long-task overlap is temporal, not causal."
+    }
+  },
+  "openReleaseWork": [
+    "Response-time budget and further main-thread profiling",
+    "Field LCP/CLS/INP",
+    "Physical iOS/Android cutout and keyboard checks",
+    "Assistive technology and participant evidence",
+    "Earlier intermittent Pixel and other-engine loading failures remain unclosed despite this green Chromium batch",
+    "Real cloud durability"
+  ],
+  "delivery": {
+    "localOnly": true,
+    "pushed": false,
+    "deployed": false
+  },
+  "evidenceSha256": {
+    "observations.json": "f702f110e359c01ee382fe1c0efca99c72655ac9e4471b2c9d693d9657cee3de",
+    "verification/gallery-check.json": "39024c4ffa6bd0c79b4f3ebc9d9882c5c2a04b2dc103d2cdd968a096f0b3028d",
+    "performance/initial-load.json": "2554f7d0888e100427259255a3a6e40617f52f01388917ae24c5471810bd43bc",
+    "performance/baseline-interactions.json": "a9d666c7a860bee3a389c95a3b24e57ce056d38760c71169c2da359e764a6b25",
+    "performance/candidate-interactions.json": "cb0daaeb053b7606f38d25b04ec60e4c336c387027ff7f8aa8af09419218ffe3",
+    "performance/diagnosis/analysis.json": "4e962fad6297e38551c6e0d15af6b22716ce84e9aa555e3dd81bb11954a60f4d"
+  }
+}

@@ -1,0 +1,23 @@
+@layer screens {
+  .settings-departure-sheet h2 {
+    margin: var(--k-space-sm) 0 var(--k-space-lg);
+    color: var(--k-ink);
+    font: 900 var(--k-type-panel)/1.1 var(--k-font-display);
+    text-transform: uppercase;
+  }
+  .settings-departure-sheet p:not(.k-eyebrow) {
+    color: var(--k-muted);
+    font-size: var(--k-type-body);
+    line-height: 1.6;
+  }
+  .settings-departure-note {
+    border-top: 1px solid var(--k-hair);
+    padding-top: var(--k-space-lg);
+  }
+  .settings-departure-actions {
+    display: grid;
+    gap: var(--k-space-md);
+    margin-top: var(--k-space-xl);
+  }
+  .settings-departure-actions .pressable-face { white-space: normal; }
+}

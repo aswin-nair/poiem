@@ -1,0 +1,21 @@
+{
+  "browser": "149.0.7827.55",
+  "images": 48,
+  "comparisons": 24,
+  "keyboardControls": 4,
+  "widths": [
+    {
+      "width": 320,
+      "overflow": 0
+    },
+    {
+      "width": 390,
+      "overflow": 0
+    },
+    {
+      "width": 1440,
+      "overflow": 0
+    }
+  ],
+  "errors": []
+}

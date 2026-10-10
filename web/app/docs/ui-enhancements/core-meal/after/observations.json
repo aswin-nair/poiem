@@ -1,0 +1,318 @@
+[
+  {
+    "screen": "today",
+    "width": 390,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 490.15625,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 1163.75,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 1249.53125,
+        "height": 157.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 390,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 490.15625,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 1163.75,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 1249.53125,
+        "height": 157.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 249.890625,
+        "height": 136
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 390,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 1328.96875,
+        "height": 292.359375
+      },
+      {
+        "selector": "k-review-confirm",
+        "y": 763,
+        "height": 81
+      }
+    ]
+  },
+  {
+    "screen": "today",
+    "width": 390,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 490.15625,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 1163.75,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 1249.53125,
+        "height": 157.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 390,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 490.15625,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 1163.75,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 1249.53125,
+        "height": 157.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 249.890625,
+        "height": 136
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 390,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 1328.96875,
+        "height": 292.359375
+      },
+      {
+        "selector": "k-review-confirm",
+        "y": 763,
+        "height": 81
+      }
+    ]
+  },
+  {
+    "screen": "today",
+    "width": 1440,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 506.15625,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 591.9375,
+        "height": 181.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 1440,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 506.15625,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 591.9375,
+        "height": 181.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 256.28125,
+        "height": 92.59375
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 1440,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 542,
+        "height": 299.75
+      },
+      {
+        "selector": "k-review-confirm",
+        "y": 855.75,
+        "height": 54
+      }
+    ]
+  },
+  {
+    "screen": "today",
+    "width": 1440,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 506.15625,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 591.9375,
+        "height": 181.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 1440,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 171.59375,
+        "height": 207.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 657.59375
+      },
+      {
+        "selector": "k-momo",
+        "y": 506.15625,
+        "height": 69.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 591.9375,
+        "height": 181.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 256.28125,
+        "height": 92.59375
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 1440,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 542,
+        "height": 299.75
+      },
+      {
+        "selector": "k-review-confirm",
+        "y": 855.75,
+        "height": 54
+      }
+    ]
+  }
+]

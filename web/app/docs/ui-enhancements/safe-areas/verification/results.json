@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-10",
+  "sourceRevision": "5ff6164b0e5a2207705b7fdf7bd997281ba11fed",
+  "beforeRevision": "e042f587",
+  "overallReleasePass": false,
+  "unit": {
+    "passed": 981,
+    "files": 117,
+    "workers": 2,
+    "durationSeconds": 31.29,
+    "includesFinalWelcomeHeaderCorrection": true
+  },
+  "lint": {
+    "errors": 0,
+    "existingWarnings": 13,
+    "fastRefreshExportWarnings": 12,
+    "accessibilityTestChildrenPropWarnings": 1
+  },
+  "build": {
+    "typeCheck": "passed",
+    "windowsLocalProduction": "passed",
+    "mainJsRawKB": 407.27,
+    "mainJsGzipKB": 130.64,
+    "mainCssRawKB": 366.16,
+    "mainCssGzipKB": 60.31,
+    "note": "Individual asset sizes; total initial download and response-time measurements were not repeated"
+  },
+  "insetInteractions": {
+    "finalPassed": 15,
+    "themes": ["light", "dark"],
+    "shapes": ["portrait", "landscape", "short screen"],
+    "preFixSelectedFailures": 2,
+    "firstAfterBatch": {"passed": 9, "fixtureFailures": 6},
+    "note": "Fixtures fix UTC and ordinary toast ownership; actions are scrolled into reach. No assertion threshold increased. Synthetic CSS insets are not physical-device certification"
+  },
+  "momoInsetInteractions": {
+    "finalPassed": 6,
+    "firstIntegrationBatch": {"passed": 31, "fixtureFailures": 2},
+    "note": "Desktop avoid regions protect actual navigation actions; phones protect the entire bar. Safe bounds, 44px buttons, focus retention, dismissal and deferral assertions remain"
+  },
+  "windowsIntegration": {
+    "total": 64,
+    "passed": 63,
+    "failed": 1,
+    "chromiumPassed": 48,
+    "phoneProductionPassed": 15,
+    "failure": "Pixel narrow-phone light case stopped at Describe navigation with ERR_NETWORK_IO_SUSPENDED before its layout assertion",
+    "durationMinutes": 12.1
+  },
+  "pixelUnchangedRechecks": [
+    {
+      "passed": 2,
+      "failed": 1,
+      "failure": "Second repeat could not find Photo heading within existing five-second readiness assertion"
+    },
+    {
+      "passed": 3,
+      "failed": 0,
+      "traces": true,
+      "workers": 1,
+      "durationMinutes": 2.9,
+      "note": "Isolated after screenshot capture closed. Earlier loading failures and their unconfirmed cause remain open"
+    }
+  ],
+  "pinnedVisual": {
+    "image": "mcr.microsoft.com/playwright:v1.61.1-noble",
+    "workers": 1,
+    "retries": 0,
+    "initialPassed": 61,
+    "initialDifferences": 2,
+    "reviewedUpdatedBaselines": ["log-sheet-844-landscape-light.png", "log-sheet-844-landscape-dark.png"],
+    "finalPassed": 63,
+    "finalFailed": 0,
+    "maxDiffPixels": 200,
+    "note": "Expected, actual and diff images retained. Remaining 61 baselines unchanged"
+  },
+  "comparisonGallery": {
+    "pairs": 34,
+    "images": 68,
+    "loadedImages": 68,
+    "pageErrors": 0,
+    "horizontalOverflows": 0,
+    "keyboardControls": 3,
+    "checkedWidths": [320, 390, 1440],
+    "sourceHashesMatchedCommittedRevision": true,
+    "finalCapture": "Fourteen before images captured before one Today readiness timeout; unchanged source-hash-validated resume completed all images",
+    "earlierCapture": "Partial capture stopped at 43 images waiting for Settings field; cause unconfirmed",
+    "galleryCheckHistory": "Initial selector followed old accessible name after toggle label changed; corrected stable button identity retains label and state assertions"
+  },
+  "otherEngines": {
+    "status": "open; failed attempts do not verify these engines",
+    "webkit": {
+      "initialSetupFailures": 8,
+      "scheduledEngineBatchCases": 126,
+      "batchStopped": true,
+      "followups": ["Initial document request timed out with blank page and no script/CSS requests", "Explicit loopback attempt reached onboarding then missed confirmation"],
+      "cause": "unconfirmed"
+    },
+    "firefox": {
+      "failedBeforeInsetAssertions": 2,
+      "notRun": 13,
+      "failures": ["NS_ERROR_ABORT during initial document navigation", "Initial document navigation timeout"],
+      "cause": "unconfirmed"
+    }
+  },
+  "openWork": [
+    "Investigate intermittent loading failures and complete focused WebKit/Firefox checks",
+    "Meet response-time budget; historical measurements at 04552501 failed the lab budget and were not repeated here",
+    "Physical cutouts, native keyboard and browser chrome, pinch gestures, VoiceOver and TalkBack",
+    "Participant usability evidence and cloud staging durability"
+  ],
+  "publication": {"localCommitsOnly": true, "pushed": false, "deployed": false}
+}

@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MemoryRouter } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { freshState } from '../lib/storage'
 import { SettingsPage } from './SettingsPage'
@@ -13,7 +13,9 @@ vi.mock('../store/AuthContext', () => ({
   useAuth: () => ({ user: null, signOut: vi.fn() }),
 }))
 vi.mock('../components/Momo', () => ({ Momo: () => null }))
-const renderPage = (url = '/settings') => renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: [url] }, createElement(SettingsPage)))
+const renderPage = (url = '/settings') => renderToStaticMarkup(createElement(RouterProvider, {
+  router: createMemoryRouter([{ path: '*', element: createElement(SettingsPage) }], { initialEntries: [url] }),
+}))
 beforeEach(() => { state = freshState() })
 
 describe('You page UI', () => {
@@ -71,9 +73,10 @@ describe('You page UI', () => {
 
   it('keeps wardrobe and Momo live AI in native, initially closed disclosures', () => {
     const momo = renderPage('/settings?panel=momo')
-    expect(momo.match(/<details class="you-disclosure">/g)).toHaveLength(1)
+    expect(momo.match(/<details class="you-disclosure"[^>]*>/g)).toHaveLength(1)
+    expect(momo).toContain('id="setting-momo-wardrobe"')
     expect(momo).toContain('role="switch"')
-    expect(momo).not.toContain('<details class="you-disclosure" open=')
+    expect(momo).not.toMatch(/<details class="you-disclosure"[^>]*\bopen=/)
     const ai = renderPage('/settings?panel=ai')
     expect(ai.match(/<details class="you-disclosure">/g)).toHaveLength(1)
     expect(ai).toContain('Use my own API')

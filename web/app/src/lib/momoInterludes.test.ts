@@ -66,4 +66,38 @@ describe('Momo interludes', () => {
     expect(momoInterludeDelay('lively', true, () => Number.NaN)).toBe(26_500)
     expect(nextMomoInterlude({ visits: 0, seen: [] }, () => 1).entry.id).toBe(MOMO_INTERLUDES.at(-1)!.id)
   })
+
+  it('gives submit and save their new prop story before the ordinary action reaction', () => {
+    for (const [action, story, reaction] of [
+      ['submit', 'ticket-plane', 'action-submit'],
+      ['save', 'saved-waiter', 'action-save'],
+    ] as const) {
+      const first = nextMomoInterlude({ visits: 0, seen: [] }, () => 0, { action })
+      expect(first.entry.id).toBe(story)
+      expect(first.entry.story).toBe(story)
+      const next = nextMomoInterlude(first.ledger, () => 0, { action })
+      expect(next.entry.id).toBe(reaction)
+      expect(next.ledger.seen).toEqual([story, reaction])
+    }
+  })
+
+  it('keeps the first title and water performances and gives the polisher a later turn', () => {
+    let ledger = { visits: 0, seen: [] as string[] }
+    const titleIds: string[] = []
+    for (let i = 0; i < 4; i++) {
+      const next = nextMomoInterlude(ledger, () => 0, { target: 'title' })
+      titleIds.push(next.entry.id)
+      ledger = next.ledger
+    }
+    expect(titleIds).toEqual(['title-borrow', 'title-heavy', 'title-wiggle', 'heading-polish'])
+    expect(nextMomoInterlude({ visits: 0, seen: [] }, () => 0, { target: 'water' }).entry.id).toBe('water-splash')
+    expect(nextMomoInterlude({ visits: 1, seen: ['water-splash'] }, () => 0, { target: 'water' }).entry.id).toBe('water-lifeguard')
+  })
+
+  it('adds exactly three local public-prop stories and accepts their persisted seen ids', () => {
+    const stories = MOMO_INTERLUDES.filter(entry => entry.story)
+    expect(stories.map(entry => entry.story)).toEqual(['heading-polish', 'ticket-plane', 'saved-waiter'])
+    expect(new Set(MOMO_INTERLUDES.map(entry => entry.id)).size).toBe(MOMO_INTERLUDES.length)
+    expect(readMomoInterludeLedger({ visits: 2, seen: stories.map(entry => entry.id) }).seen).toEqual(stories.map(entry => entry.id))
+  })
 })

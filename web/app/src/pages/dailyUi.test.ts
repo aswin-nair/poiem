@@ -62,7 +62,7 @@ describe('log sheet', () => {
     expect(renderSheet({ mealType: 'dinner' })).toContain('aria-controls="log-meal-choices">Dinner')
   })
 
-  it('puts recent meals first, with one-tap logging and a separate, named portion button', () => {
+  it('puts methods before recent meals, with one-tap logging and a separate, named portion button', () => {
     state.foodEntries = [oats()]
     state.favoriteMeals = [{ id: 'saved', name: 'Rice', calories: 200, protein: 4, carbs: 44, fat: 1, mealType: 'lunch' }]
     const html = renderSheet()
@@ -74,7 +74,7 @@ describe('log sheet', () => {
     expect(html).toContain('Saved</button>')
     expect(html).not.toContain('Favourites')
     expect(html).not.toMatch(/<button\b[^>]*>(?:(?!<\/button>)[\s\S])*<button\b/)
-    expect(html.indexOf('Recent · tap Log to repeat')).toBeLessThan(html.indexOf('aria-label="Other ways to log"'))
+    expect(html.indexOf('aria-label="Ways to log"')).toBeLessThan(html.indexOf('Recent · tap Log to repeat'))
     state.foodEntries = []
     expect(renderSheet()).toContain('aria-label="Adjust portion for Rice, currently 1 times your saved meal"')
   })

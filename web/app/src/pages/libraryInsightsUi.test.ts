@@ -56,7 +56,7 @@ describe('Saved UI', () => {
     state.favoriteMeals = [{ id: 'rice', name: 'Rice bowl', calories: 320, protein: 8, carbs: 60, fat: 5, mealType: 'lunch', servingSizeGrams: 180 }]
     state.foodEntries = [{ ...state.favoriteMeals[0], id: 'recent', name: 'Oats', timestamp: new Date().toISOString(), source: 'manual' }]
     const html = savedHtml()
-    expect(html).toContain('<article class="k-repeat-meal" aria-label="Rice bowl"')
+    expect(html).toContain('<article class="k-repeat-meal is-compact" aria-label="Rice bowl"')
     expect(html).toContain('1× = your saved meal · 180 g')
     expect(html).toContain('1× = your previous meal · 180 g')
     expect(html).toContain('Protein 8g · Carbs 60g · Fat 5g')
@@ -81,7 +81,9 @@ describe('Saved UI', () => {
 describe('Insights UI', () => {
   it('scopes the chart selector separately from monthly consistency', () => {
     const html = insightsHtml()
-    expect(html.indexOf('Consistency')).toBeLessThan(html.indexOf('Weight and calorie chart range'))
+    expect(html.indexOf('Your week')).toBeLessThan(html.indexOf('Weight and calorie chart range'))
+    expect(html).toContain('aria-labelledby="journey-title"')
+    expect(html).toContain('aria-labelledby="trends-title"')
     expect(html).toContain('role="group" aria-label="Chart time range"')
     expect(html).toContain('aria-pressed="true">Week</button>')
     expect(html).toContain('Last 7 days · Applies to the two charts below.')
@@ -117,7 +119,7 @@ describe('Insights UI', () => {
     expect(html).not.toContain('>Average</span>')
     expect(html).toContain('aria-expanded="false" aria-controls="weight-history"')
     expect(html).toContain('id="weight-history" hidden=""')
-    expect(html).toContain('Average uses logged days only')
+    expect(html).toContain('Average uses 1 logged day only')
     expect(html).toContain('Avg 320 kcal')
   })
   it('shows change and average only after two observations and keeps a chosen goal', () => {

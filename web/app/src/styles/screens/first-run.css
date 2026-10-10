@@ -210,7 +210,7 @@
     display: inline-flex;
     align-items: center;
     justify-self: start;
-    min-height: 36px;
+    min-height: 44px;
     color: var(--k-muted);
     font: 600 var(--k-text-sm)/1.2 var(--k-font-body);
     text-decoration: underline;
@@ -223,6 +223,9 @@
   .k-setup-step-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; font: 600 var(--k-text-xs)/1.2 var(--k-font-mono); }
   .k-setup-step { color: var(--k-ink); }
   .k-setup-chapter { padding: 3px 8px; border: 2px solid var(--k-line); background: var(--tone); color: var(--k-on-tone); letter-spacing: .06em; text-transform: uppercase; }
+  .k-setup-progress-note { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; color: var(--k-muted); font: 500 var(--k-text-xs)/1.4 var(--k-font-mono); }
+  .k-setup-resumed { display: flex; align-items: flex-start; gap: 8px; margin: 0; padding: 8px 12px; border-left: 4px solid var(--k-role-border); background: var(--k-mint); color: var(--k-on-tone); font: 600 var(--k-text-sm)/1.4 var(--k-font-body); }
+  .k-setup-resumed svg { flex: none; margin-top: 1px; }
   .k-setup .progress-recipe { position: relative; flex: none; height: 14px; overflow: hidden; border: 2px solid var(--k-line); border-radius: 0; background: var(--k-card); box-shadow: none; }
   .k-setup .progress-recipe-fill { display: block; height: 100%; background: var(--k-acid); transition: width 280ms var(--k-ease); }
   .k-setup .progress-recipe-stops { position: absolute; inset: 0; display: grid; }
@@ -424,17 +427,25 @@
   .k-setup-review .k-text-button { justify-self: start; }
 
   /* First meal: Photo and Describe hand over to the AI flows; Manual is the form below. */
-  .k-setup .first-meal-methods { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin: 0; }
-  .k-setup .first-meal-methods .k-method { width: 100%; font: inherit; text-align: left; cursor: pointer; }
+  .k-setup .first-meal-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: 8px; margin: 0; }
+  .k-setup .first-meal-methods .k-method { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; width: 100%; min-height: 64px; padding: 8px; font: inherit; text-align: left; cursor: pointer; }
+  .k-setup .first-meal-methods .k-method.is-manual { grid-column: 1 / -1; }
+  .k-setup .first-meal-methods .k-method-icon { width: 24px; height: 32px; border: 0; }
+  .k-setup .first-meal-methods .k-method-text { overflow-wrap: anywhere; }
+  .k-setup-method-context { margin: 0; font: 500 var(--k-text-sm)/1.45 var(--k-font-body); color: var(--k-muted); text-wrap: pretty; }
+  .k-setup-manual { display: grid; gap: 14px; min-width: 0; padding-top: 14px; border-top: 2px dashed var(--k-hair-strong); }
+  .k-setup-manual-head { display: grid; gap: 4px; }
+  .k-setup-manual-head h2 { margin: 0; font: 900 1.75rem/1 var(--k-font-display); color: var(--k-ink); text-transform: uppercase; }
+  .k-setup-manual-head span { font: 500 var(--k-text-xs)/1.4 var(--k-font-mono); color: var(--k-muted); }
   .k-setup .field.is-calories input { border-color: var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid); }
   .k-setup .field.is-calories input::placeholder { color: color-mix(in srgb, var(--k-on-acid) 62%, transparent); }
   .k-setup-label .k-optional { margin-left: 6px; }
-  .k-setup-macros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: -6px; }
+  .k-setup-macros { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 4rem), 1fr)); gap: 8px; margin-top: -6px; }
   .k-setup-macros .field { padding: 12px 8px 8px; border: 2px solid var(--k-line); background: var(--k-card); box-shadow: inset 0 6px 0 var(--tone); }
   .k-setup-macros .field.is-protein { --tone: var(--k-action); }
   .k-setup-macros .field.is-carbs { --tone: var(--k-acid); }
   .k-setup-macros .field.is-fat { --tone: var(--k-sky-strong); }
-  .k-setup-macros .field > label { letter-spacing: 0; }
+  .k-setup-macros .field > label { letter-spacing: 0; overflow-wrap: anywhere; }
   .k-setup-macros .field input { min-height: 44px; padding: 0 2px; border: 0; border-bottom: 2px solid var(--k-line); background: transparent; font-size: var(--k-text-md); }
   .k-setup-meals { display: flex; flex-wrap: wrap; gap: 6px; }
   .k-setup-meal.is-breakfast { --tone: var(--k-butter); }
@@ -481,6 +492,8 @@
     .k-setup-companion { position: sticky; top: 20px; grid-area: aside; gap: 14px; }
     .k-setup-form { grid-area: form; padding: 24px; }
     .k-setup .first-meal-methods { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .k-setup .first-meal-methods .k-method { grid-template-columns: minmax(0, 1fr); }
+    .k-setup .first-meal-methods .k-method.is-manual { grid-column: auto; }
     .k-setup-momo { grid-template-columns: 1fr; justify-items: start; gap: 12px; padding: 16px; box-shadow: var(--k-shadow); }
     .k-setup-momo-art { width: 124px; height: 132px; padding: 6px; }
     .k-setup-momo-line { font-size: var(--k-text-md); }

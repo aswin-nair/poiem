@@ -76,6 +76,13 @@
 
     --k-shell: 480px;
     --k-gutter: 20px;
+    /* Viewport owners use these once; their children retain ordinary gutters.
+       The legacy alias keeps existing bottom clearances on the same contract. */
+    --k-safe-top: env(safe-area-inset-top, 0px);
+    --k-safe-right: env(safe-area-inset-right, 0px);
+    --k-safe-bottom: env(safe-area-inset-bottom, 0px);
+    --k-safe-left: env(safe-area-inset-left, 0px);
+    --safe-bottom: var(--k-safe-bottom);
     --k-tabbar-h: 88px;
     --k-z-nav: 100;
     --k-z-sheet: 900;

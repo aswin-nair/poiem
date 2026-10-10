@@ -18,14 +18,23 @@ const LAYERED = {
   'styles/screens/kitchen.css': 'screens',
   'styles/screens/today.css': 'screens',
   'styles/screens/flows.css': 'screens',
+  'styles/screens/log-picker.css': 'screens',
+  'styles/screens/saved-library.css': 'screens',
+  'styles/screens/meal-review.css': 'screens',
   'styles/screens/insights.css': 'screens',
   'styles/screens/you.css': 'screens',
+  'styles/screens/settings-departure.css': 'screens',
+  'styles/screens/backup-preview.css': 'screens',
+  'styles/screens/sync-recovery.css': 'screens',
   'styles/screens/admin.css': 'screens',
   'styles/screens/first-run.css': 'screens',
   'styles/screens/pages.css': 'screens',
+  'styles/screens/coach-drafting.css': 'screens',
   'styles/screens/account.css': 'screens',
+  'styles/screens/entry.css': 'screens',
   'styles/screens/momo-interlude.css': 'screens',
   'styles/screens/today-play.css': 'screens',
+  'styles/screens/safe-area.css': 'screens',
 } as const
 
 /** Held to the whole contract: approved type, curated offset blocks, upright text. */
@@ -39,11 +48,20 @@ const MIGRATED = [
   'styles/screens/today.css',
   'styles/screens/kitchen.css',
   'styles/screens/flows.css',
+  'styles/screens/log-picker.css',
+  'styles/screens/saved-library.css',
+  'styles/screens/meal-review.css',
+  'styles/screens/entry.css',
   'styles/screens/insights.css',
   'styles/screens/you.css',
+  'styles/screens/settings-departure.css',
+  'styles/screens/backup-preview.css',
+  'styles/screens/sync-recovery.css',
   'styles/screens/pages.css',
+  'styles/screens/coach-drafting.css',
   'styles/screens/momo-interlude.css',
   'styles/screens/today-play.css',
+  'styles/screens/safe-area.css',
 ] as const
 
 const APPROVED_TYPE = new Set([12, 14, 16, 18, 28, 40, 64])
@@ -66,6 +84,7 @@ const PLAYFUL = [
   /\.k-coach-head\b|\.k-coach-empty\b|\.k-coach-send\b/,
   /\.you-header\b|\.appearance-settings\b|\.appearance-option > input:checked|\.you-shortcuts a\[aria-current/,
   /\.progress-page-header\b|\.k-insights \.k-journey\b|\.consistency-card\b|\.range-chip\[aria-pressed|\.progress-log-btn\b/,
+  /\.k-insights \.insights-open-day\b/,
 ]
 
 /** Innermost blocks are declarations; removing them leaves selectors and at-rules. */
@@ -102,6 +121,17 @@ function* rulesOf(css: string) {
 const imports = [...read('index.css').matchAll(/@import '([^']+)'/g)].map(match => match[1])
 
 describe('Poiem design system', () => {
+  it('shares four safe-area tokens while retaining unrestricted viewport zoom', () => {
+    const tokens = withoutComments(read('styles/system/tokens.css'))
+    for (const side of ['top', 'right', 'bottom', 'left']) {
+      expect(tokens).toMatch(new RegExp(`--k-safe-${side}:\\s*env\\(safe-area-inset-${side},\\s*0px\\)`))
+    }
+    expect(tokens).toMatch(/--safe-bottom:\s*var\(--k-safe-bottom\)/)
+    const html = read('../index.html')
+    expect(html).toContain('viewport-fit=cover')
+    expect(html).not.toMatch(/maximum-scale\s*=|user-scalable\s*=\s*(?:no|0)/i)
+  })
+
   it('declares the cascade order once, before anything else, and loads accessibility overrides last', () => {
     expect(withoutComments(read('index.css')).trim().split(/\r?\n/)[0]).toBe('@layer legacy, system, screens;')
     expect(imports.at(-1)).toBe('./styles/a11y.css')

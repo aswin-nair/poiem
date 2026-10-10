@@ -1,51 +1,76 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState, type ComponentType, type ReactNode } from 'react'
 import { BrandLogo } from './components/BrandLogo'
 import identity from './brand/identity.json'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Navigate, Route, RouterProvider, Routes, createBrowserRouter, useLocation, type Location } from 'react-router-dom'
 import { googleClientId, isGoogleAuthConfigured } from './lib/auth'
-import { hasSeenAccount } from './lib/guestMode'
+import { guestUserId, hasSeenAccount } from './lib/guestMode'
 import { AuthProvider, useAuth } from './store/AuthContext'
 import { AppProvider, useApp } from './store/AppContext'
 import { ToastProvider } from './components/Toast'
 import { HomePage } from './pages/HomePage'
+import { AppShell as WorkspaceShell } from './components/system/AppShell'
+import { BottomNav } from './components/BottomNav'
+import { WorkspaceRouteRecovery } from './components/WorkspaceRouteRecovery'
 import { LogSheet } from './pages/LogSheet'
 import { LogSheetOpenContext } from './lib/logSheetOpen'
 import { LogTextPage } from './pages/LogTextPage'
 import { PhotoLogPage } from './pages/PhotoLogPage'
-import { SavedMealsPage } from './pages/SavedMealsPage'
 import { ReviewFoodPage } from './pages/ReviewFoodPage'
 import { ManualEntryPage } from './pages/ManualEntryPage'
 import { EditFoodPage } from './pages/EditFoodPage'
-import { ProgressPage } from './pages/ProgressPage'
-import { SettingsPage } from './pages/SettingsPage'
 import { AnchorProvider } from './mascot/anchors'
 import { MascotOverlay } from './mascot/MascotOverlay'
 import { MomoInterludeGate } from './components/MomoInterludeGate'
 import { ActionPlay } from './components/ActionPlay'
 import { useNavDirection } from './hooks/useNavDirection'
-import { LazyMotion, MotionConfig } from 'motion/react'
+import { MotionConfig } from 'motion/react'
+import { getSessionReturnLabel, rememberSessionNavigation, safeSessionDestination, takeSessionReturn, type SessionDestination } from './lib/sessionNavigation'
+import { hydrateLogDrafts } from './lib/logDrafts'
+import { handoffGuestSetupDraft } from './lib/setupDraftHandoff'
+import { findSettingDestination } from './lib/settingDestinations'
 
-const WelcomePage = lazy(() => import('./pages/WelcomePage'))
-const AdminPage = lazy(() => import('./pages/AdminPage'))
+// Feature code is downloaded with the screens that use animated React elements.
+// The no-DOM provider is ready before the screen mounts, including its first pose.
+function lazyMotionScreen(load: () => Promise<{ default: ComponentType }>) {
+  return lazy(async () => {
+    const [{ default: Screen }, { MotionScreen }] = await Promise.all([
+      load(), import('./components/MotionScreen'),
+    ])
+    return { default: function AnimatedScreen() { return <MotionScreen><Screen /></MotionScreen> } }
+  })
+}
+
+const WelcomePage = lazyMotionScreen(() => import('./pages/WelcomePage'))
+const AdminPage = lazyMotionScreen(() => import('./pages/AdminPage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const SupportPage = lazy(() => import('./pages/SupportPage'))
 const JourneyPage = lazy(() => import('./pages/JourneyPage'))
 const ComponentSheetPage = lazy(() => import('./pages/ComponentSheetPage'))
 // Screens most visits never open load on demand: the first run, the account screens and Coach.
-const OnboardingPage = lazy(() => import('./pages/OnboardingPage').then(module => ({ default: module.OnboardingPage })))
-const LoginPage = lazy(() => import('./pages/LoginPage').then(module => ({ default: module.LoginPage })))
+const OnboardingPage = lazyMotionScreen(() => import('./pages/OnboardingPage').then(module => ({ default: module.OnboardingPage })))
+const LoginPage = lazyMotionScreen(() => import('./pages/LoginPage').then(module => ({ default: module.LoginPage })))
 const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage').then(module => ({ default: module.ForgotPasswordPage })))
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage').then(module => ({ default: module.ResetPasswordPage })))
 const CoachPage = lazy(() => import('./pages/CoachPage').then(module => ({ default: module.CoachPage })))
+// Keep the everyday secondary screens out of the first Today download.
+const SavedMealsPage = lazy(() => import('./pages/SavedMealsPage').then(module => ({ default: module.SavedMealsPage })))
+const ProgressPage = lazy(() => import('./pages/ProgressPage').then(module => ({ default: module.ProgressPage })))
+const SettingsPage = lazy(() => import('./pages/SettingsPage').then(module => ({ default: module.SettingsPage })))
 
 function PageFallback() {
   return <main className="app-main"><p role="status">Opening…</p></main>
 }
 
+function WorkspaceFallback() {
+  return <WorkspaceShell screen="k-page" nav={<BottomNav />}>
+    <main className="app-main k-page-main" aria-busy="true"><p role="status">Opening…</p></main>
+  </WorkspaceShell>
+}
+
 /** Client-side navigation keeps the browser's scroll offset by default; land each new page at the top. */
 function ScrollToTop() {
-  const { pathname, search, state } = useLocation()
+  const { pathname, search, hash, state } = useLocation()
   const sheetBackground = useRef<string | null>(null)
   useEffect(() => {
     const title = isWelcomeSurface(pathname) ? 'A little tracking. A lot of living.'
@@ -67,20 +92,27 @@ function ScrollToTop() {
     sheetBackground.current = null
     if (returnedFromSheet) return
     window.scrollTo(0, 0)
-    // A page that loads on demand arrives a moment after the route changes, so keep looking briefly.
+    // Route chunks can arrive after a slow network request. Observe their actual
+    // mount instead of giving up after a fixed number of animation frames.
+    // Settings owns focus when a direct link names one of its controls.
+    const setting = pathname === '/settings' ? findSettingDestination(hash) : undefined
+    if (setting && (setting.panel ?? null) === new URLSearchParams(search).get('panel')) return
     let frame = 0
-    let tries = 0
     const focusHeading = () => {
       const heading = document.querySelector<HTMLElement>('main h1, .app-shell header h1')
-      if (heading) {
+      if (heading && heading.getClientRects().length) {
         heading.tabIndex = -1
         heading.focus({ preventScroll: true })
-      } else if (++tries < 60) {
-        frame = window.requestAnimationFrame(focusHeading)
+        observer.disconnect()
       }
     }
+    const observer = new MutationObserver(() => {
+      window.cancelAnimationFrame(frame)
+      frame = window.requestAnimationFrame(focusHeading)
+    })
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'hidden'] })
     frame = window.requestAnimationFrame(focusHeading)
-    return () => window.cancelAnimationFrame(frame)
+    return () => { observer.disconnect(); window.cancelAnimationFrame(frame) }
   }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
   return null
 }
@@ -175,18 +207,18 @@ function AuthenticatedRoutes() {
     <DirectionalRoutes hold={route.hold}>
     <Routes location={logSheetOpen && background ? background : location}>
       <Route path="/" element={<HomePage />} />
-      <Route path="/progress" element={<ProgressPage />} />
+      <Route path="/progress" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><ProgressPage /></Suspense></WorkspaceRouteRecovery>} />
       <Route path="/coach" element={<Suspense fallback={<PageFallback />}><CoachPage /></Suspense>} />
       {/* Opened directly, the log sheet sits over Today. */}
       <Route path="/log" element={<HomePage />} />
       <Route path="/log/text" element={<LogTextPage />} />
       <Route path="/log/photo" element={<PhotoLogPage />} />
-      <Route path="/log/saved" element={<SavedMealsPage />} />
-      <Route path="/discover" element={<SavedMealsPage />} />
+      <Route path="/log/saved" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><SavedMealsPage /></Suspense></WorkspaceRouteRecovery>} />
+      <Route path="/discover" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><SavedMealsPage /></Suspense></WorkspaceRouteRecovery>} />
       <Route path="/log/manual" element={<ManualEntryPage />} />
       <Route path="/review" element={<ReviewFoodPage />} />
       <Route path="/edit/:id" element={<EditFoodPage />} />
-      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/settings" element={<WorkspaceRouteRecovery><Suspense fallback={<WorkspaceFallback />}><SettingsPage /></Suspense></WorkspaceRouteRecovery>} />
       <Route path="/about" element={<Suspense fallback={<PageFallback />}><AboutPage /></Suspense>} />
       <Route path="/support" element={<Suspense fallback={<PageFallback />}><SupportPage /></Suspense>} />
       <Route path="/admin" element={<Suspense fallback={<PageFallback />}><AdminPage /></Suspense>} />
@@ -204,12 +236,12 @@ function AuthenticatedRoutes() {
 function GuestRoutes() {
   const { state } = useApp()
 
-  if (!state.onboarded) {
+  if (!state.onboarded || getSessionReturnLabel()) {
     // A device that has held an account belongs to someone coming back, not to a
     // first-time visitor. Sending them to onboarding would make them rebuild a
     // profile they already have, so the fallback becomes the login screen —
     // which also covers session expiry, not just an explicit sign-out.
-    const fallback = hasSeenAccount() ? '/login' : '/onboarding'
+    const fallback = getSessionReturnLabel() || hasSeenAccount() ? '/login' : '/onboarding'
     return (
       <AnchorProvider>
         <MascotOverlay />
@@ -238,6 +270,55 @@ function GuestRoutes() {
   )
 }
 
+/** Account hydration finishes before this mounts. Draft hydration must also finish before a review can return. */
+function AccountEntryRoutes() {
+  const { user } = useAuth()
+  const { state } = useApp()
+  const location = useLocation()
+  const [entry, setEntry] = useState<{ ready: boolean; destination: SessionDestination | null }>({ ready: false, destination: null })
+  useEffect(() => {
+    let cancelled = false
+    void hydrateLogDrafts(user!.sub).then(drafts => {
+      if (cancelled) return
+      const setupHandoff = location.pathname === '/login' && new URLSearchParams(location.search).get('setup') === '1'
+      if (setupHandoff && !state.onboarded) handoffGuestSetupDraft(guestUserId(), user!.sub, state.onboarded, state.profile)
+      let destination = takeSessionReturn(user!.sub)
+      if (destination?.pathname === '/review' && !drafts.review) destination = { ...destination, pathname: '/log', search: '' }
+      if (destination?.pathname.startsWith('/edit/') && !state.foodEntries.some(food => food.id === destination!.pathname.slice(6))) {
+        destination = { pathname: '/', search: '' }
+      }
+      setEntry({ ready: true, destination })
+    }).catch(() => {
+      if (!cancelled) {
+        takeSessionReturn(user!.sub)
+        setEntry({ ready: true, destination: null })
+      }
+    })
+    return () => { cancelled = true }
+    // This provider mounts once per account, after its account snapshot is known.
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (entry.destination && location.pathname === entry.destination.pathname && location.search === entry.destination.search) {
+      setEntry(current => ({ ...current, destination: null }))
+    }
+  }, [entry.destination, location.pathname, location.search])
+  if (!entry.ready) return <PageFallback />
+  if (entry.destination && (location.pathname !== entry.destination.pathname || location.search !== entry.destination.search)) {
+    return <Navigate to={entry.destination.pathname + entry.destination.search} state={entry.destination.state} replace />
+  }
+  return <AuthenticatedRoutes />
+}
+
+function SessionNavigationObserver() {
+  const { user } = useAuth()
+  const location = useLocation()
+  useEffect(() => {
+    const destination = safeSessionDestination(location.pathname, location.search, location.state)
+    if (user && destination) rememberSessionNavigation(user.sub, destination)
+  }, [user, location.pathname, location.search, location.state])
+  return null
+}
+
 function AppGate() {
   const { user, sessionReady } = useAuth()
 
@@ -264,17 +345,16 @@ function AppGate() {
   return (
     <AppProvider key={user.sub}>
       <ActionPlay />
-      <AuthenticatedRoutes />
+      <AccountEntryRoutes />
     </AppProvider>
   )
 }
-
-const loadMotionFeatures = () => import('./lib/motionFeatures').then(module => module.default)
 
 function RoutedShell() {
   return (
     <>
       <ScrollToTop />
+      <SessionNavigationObserver />
       <ToastProvider>
         <RootSurface />
       </ToastProvider>
@@ -292,13 +372,11 @@ function AppShell() {
   }
 
   return (
-    <LazyMotion features={loadMotionFeatures}>
-      <MotionConfig reducedMotion="user">
-        <AuthProvider>
-          <RouterProvider router={router.current} />
-        </AuthProvider>
-      </MotionConfig>
-    </LazyMotion>
+    <MotionConfig reducedMotion="user">
+      <AuthProvider>
+        <RouterProvider router={router.current} />
+      </AuthProvider>
+    </MotionConfig>
   )
 }
 
