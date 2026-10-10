@@ -7,7 +7,7 @@ import { useApp } from '../store/AppContext'
 import { useAuth } from '../store/AuthContext'
 import { BottomNav } from '../components/BottomNav'
 import { SettingsFinder } from '../components/SettingsFinder'
-import type { ActivityLevel, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
+import type { ActivityLevel, AppState, Gender, LoggingCommitment, UserProfile, WeightGoal } from '../types'
 import type { AIAPIFormat, AIAccessMode, AIAuthType, MascotPersonality } from '../lib/aiConfig'
 import { useAiAccess } from '../lib/aiAccess'
 import { allowanceCopy } from '../lib/aiAvailability'
@@ -30,7 +30,7 @@ import {
   maxWeeklyChangeKg,
   profileInputIssue,
 } from '../lib/profile'
-import { clearUserState, exportData, importData } from '../lib/storage'
+import { clearUserState, exportData } from '../lib/storage'
 import { clearAnalytics, track } from '../lib/analytics'
 import { clearNotificationHistory, requestNotifyPermission } from '../lib/notifications'
 import { clearRingAck } from '../lib/ringAck'
@@ -47,6 +47,11 @@ import { RoastPreview } from '../components/RoastPreview'
 import { SettingsNavigation, YOU_PANELS, type YouPanel } from '../components/SettingsNavigation'
 import { AppearanceControl } from '../components/AppearanceControl'
 import { findSettingDestination, SETTING_DESTINATIONS } from '../lib/settingDestinations'
+import { useSettingsDeparture } from '../hooks/useSettingsDeparture'
+import { SettingsDepartureSheet } from '../components/SettingsDepartureSheet'
+import { aiIssueControl, profileIssueControl } from '../lib/settingsDeparture'
+import { useBackupImportReview } from '../hooks/useBackupImportReview'
+import { BackupImportPreview } from '../components/BackupImportPreview'
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <h3 className="settings-section-label">{children}</h3>
@@ -115,6 +120,12 @@ export function SettingsPage() {
   const [params, setParams] = useSearchParams()
   const location = useLocation()
   const [searchNotice, setSearchNotice] = useState('')
+  const [signOutIntent, setSignOutIntent] = useState<'device' | 'everywhere' | null>(null)
+  const [focusRequest, setFocusRequest] = useState<{ panel: YouPanel; id: string } | null>(null)
+  const draftOwner = useRef(user?.sub)
+  const ownsDraft = Boolean(user?.sub && draftOwner.current === user.sub)
+  const [importConfirmation, setImportConfirmation] = useState('')
+  const backupImport = useBackupImportReview({ accountId: user?.sub ?? null, currentState: state, onApply: applyImportedBackup })
   const panelParam = params.get('panel')
   const panel = YOU_PANELS.some(([id]) => id === panelParam) ? panelParam as YouPanel : null
   const isHub = panel == null
@@ -192,6 +203,37 @@ export function SettingsPage() {
   const hasChanges = hasProfileChanges || hasAIChanges
   const pendingLabel = hasProfileChanges && hasAIChanges ? 'Unsaved profile and AI changes'
     : hasProfileChanges ? 'Unsaved profile changes' : 'Unsaved AI changes'
+  // Account expiry/change must clear private drafts through the existing account
+  // handoff, never wait behind a prompt from the previous account.
+  const blocker = useSettingsDeparture(hasChanges && ownsDraft)
+  const reviewingBackup = backupImport.status.status === 'review' || backupImport.status.status === 'applying'
+
+  useEffect(() => {
+    if (blocker.state === 'blocked' || signOutIntent) backupImport.cancel()
+    // Cancel the pending file before showing a departure decision. The import
+    // controller owns late reads; it never applies a cancelled preview.
+  }, [blocker.state, signOutIntent]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (profileError && profileError !== currentProfileIssue) setProfileError(null)
+  }, [currentProfileIssue, profileError])
+
+  useEffect(() => {
+    if (!focusRequest || panel !== focusRequest.panel) return
+    const frame = window.requestAnimationFrame(() => {
+      const target = document.getElementById(focusRequest.id)
+      if (!target) return
+      for (let ancestor: HTMLElement | null = target; ancestor; ancestor = ancestor.parentElement) {
+        if (ancestor instanceof HTMLDetailsElement) ancestor.open = true
+      }
+      const control = target.matches('input, select, textarea, button') ? target
+        : target.querySelector<HTMLElement>('input:not(:disabled), select:not(:disabled), textarea:not(:disabled), button:not(:disabled)') ?? target
+      control.focus({ preventScroll: true })
+      control.scrollIntoView({ behavior: 'instant', block: 'center' })
+      setFocusRequest(null)
+    })
+    return () => window.cancelAnimationFrame(frame)
+  }, [focusRequest, panel])
 
   useEffect(() => {
     if (preferenceConfirmation === 'Changes save right away.') return
@@ -220,16 +262,23 @@ export function SettingsPage() {
     setAIError(false)
   }
 
-  function saveProfile() {
+  function focusIssue(targetPanel: YouPanel, id: string) {
+    if (panel !== targetPanel) setParams({ panel: targetPanel })
+    setFocusRequest({ panel: targetPanel, id })
+  }
+
+  function saveProfile(): boolean {
+    // Validate both drafts before applying either. Immediate preferences remain
+    // independent of this explicit save.
     if (hasProfileChanges && currentProfileIssue) {
       setProfileError(currentProfileIssue)
-      return
+      focusIssue('profile', profileIssueControl(currentProfileIssue))
+      return false
     }
     if (hasAIChanges && currentAIIssue) {
       setAIError(true)
-      if (panel !== 'ai') setParams({ panel: 'ai' })
-      else window.requestAnimationFrame(() => document.getElementById('ai-setup-error')?.focus())
-      return
+      focusIssue('ai', aiIssueControl(connectionDraft, currentAIIssue))
+      return false
     }
     if (hasProfileChanges) updateProfile({ ...state.profile, ...profileFormValues(profile) })
     if (hasAIChanges) updateAISettings({
@@ -245,6 +294,57 @@ export function SettingsPage() {
     setSaved(hasProfileChanges && hasAIChanges ? 'Profile and AI settings saved'
       : hasProfileChanges ? 'Profile saved' : 'AI settings saved')
     if (hasAIChanges) void refreshAiStatus()
+    return true
+  }
+
+  function discardDrafts() {
+    setProfile(state.profile)
+    setAccessMode(state.aiSettings.accessMode ?? (state.aiSettings.apiKey ? 'byok' : 'managed'))
+    setAPIFormat(apiFormatFor(state.aiSettings))
+    setEndpointUrl(state.aiSettings.endpointUrl ?? (hasSavedConnection ? defaultEndpointFor(state.aiSettings.provider, apiFormatFor(state.aiSettings)) : ''))
+    setAuthType(authTypeFor(state.aiSettings))
+    setAuthHeader(authHeaderFor(state.aiSettings))
+    setApiKey(state.aiSettings.apiKey)
+    setModel(hasSavedConnection ? state.aiSettings.model : '')
+    setInstructions(state.aiSettings.customInstructions ?? '')
+    setMascotEnabled(state.aiSettings.mascotEnabled !== false)
+    setMascotPersonality(state.aiSettings.mascotPersonality ?? 'sassy')
+    setShowKey(false)
+    setProfileError(null)
+    setAIError(false)
+    setSaved(null)
+    setFocusRequest(null)
+  }
+
+  function stayInSettings() {
+    setSignOutIntent(null)
+    if (blocker.state === 'blocked') blocker.reset()
+  }
+
+  function discardAndLeave() {
+    discardDrafts()
+    if (signOutIntent) {
+      const intent = signOutIntent
+      setSignOutIntent(null)
+      if (intent === 'everywhere') void handleSignOutEverywhere()
+      else signOut()
+    } else if (blocker.state === 'blocked') blocker.proceed()
+  }
+
+  function saveAndLeave() {
+    if (blocker.state !== 'blocked') return
+    if ((hasProfileChanges && currentProfileIssue) || (hasAIChanges && currentAIIssue)) {
+      blocker.reset()
+      saveProfile()
+      return
+    }
+    if (saveProfile()) blocker.proceed()
+  }
+
+  function requestSignOut(intent: 'device' | 'everywhere') {
+    if (hasChanges && ownsDraft) setSignOutIntent(intent)
+    else if (intent === 'everywhere') void handleSignOutEverywhere()
+    else signOut()
   }
 
   function handleExport() {
@@ -258,13 +358,7 @@ export function SettingsPage() {
     track({ name: 'export_completed' })
   }
 
-  function handleImport(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onload = () => {
-      try {
-        const next = importData(String(reader.result), state.aiSettings.apiKey, state.aiSettings)
+  function applyImportedBackup(next: AppState) {
         replaceState(next)
         setProfile(next.profile)
         setAccessMode(next.aiSettings.accessMode ?? (next.aiSettings.apiKey ? 'byok' : 'managed'))
@@ -278,11 +372,12 @@ export function SettingsPage() {
         setInstructions(next.aiSettings.customInstructions ?? '')
         setMascotEnabled(next.aiSettings.mascotEnabled !== false)
         setMascotPersonality(next.aiSettings.mascotPersonality ?? 'sassy')
-      } catch {
-        alert('Invalid backup file')
-      }
-    }
-    reader.readAsText(file)
+        setShowKey(false)
+        setProfileError(null)
+        setAIError(false)
+        setFocusRequest(null)
+        setSaved(null)
+        setImportConfirmation(cloud ? 'Backup applied to this device. Account sync has its own status.' : 'Backup applied to this device.')
   }
 
   async function handleChangePassword() {
@@ -460,7 +555,7 @@ export function SettingsPage() {
         {/* Profile */}
         <SectionLabel>Profile</SectionLabel>
         {(profileError || currentProfileIssue) && (
-          <div className="error-banner" role="alert">{profileError ?? currentProfileIssue}</div>
+          <div className="error-banner" id="you-profile-error" role="alert" tabIndex={-1}>{profileError ?? currentProfileIssue}</div>
         )}
         <SettingsCard>
           <SettingsRow searchId="setting-name" label="Name">
@@ -841,7 +936,7 @@ export function SettingsPage() {
               </div>
             </div>
           )}
-          <button type="button" id="setting-signout" className="settings-signout-btn" onClick={signOut} disabled={Boolean(accountAction)}>
+          <button type="button" id="setting-signout" className="settings-signout-btn" onClick={() => requestSignOut('device')} disabled={Boolean(accountAction)}>
             Sign out
           </button>
           {cloud && user?.provider === 'email' && (
@@ -885,7 +980,7 @@ export function SettingsPage() {
                 type="button"
                 className="settings-data-btn"
                 id="setting-signout-all"
-                onClick={() => void handleSignOutEverywhere()}
+                onClick={() => requestSignOut('everywhere')}
                 disabled={Boolean(accountAction)}
               >
                 {accountAction === 'logout-all' ? 'Signing out…' : 'Sign out on all devices'}
@@ -976,9 +1071,15 @@ export function SettingsPage() {
             accept=".json"
             hidden
             aria-label="Import backup file"
-            onChange={handleImport}
+            onChange={event => { setImportConfirmation(''); backupImport.onFileChange(event) }}
           />
         </SettingsCard>
+        {backupImport.status.status === 'reading' && <div className="settings-import-notice" role="status">
+          <p>Reading <bdi>{backupImport.status.filename}</bdi>… Your data has not changed.</p>
+          <button type="button" className="k-text-button" onClick={backupImport.cancel}>Cancel import</button>
+        </div>}
+        {backupImport.status.status === 'idle' && backupImport.status.error && <p className="error-banner" role="alert">{backupImport.status.error}</p>}
+        {importConfirmation && <p className="settings-import-notice" role="status">{importConfirmation}</p>}
 
         {/* About */}
         <SectionLabel>About</SectionLabel>
@@ -992,6 +1093,23 @@ export function SettingsPage() {
 
         <p className="settings-footer">Poiem · Poiem AI or your own key · Privacy-first</p>
       </main>
+      {(backupImport.status.status === 'review' || backupImport.status.status === 'applying') && <BackupImportPreview
+        {...backupImport.status.review}
+        accountLabel={user?.email || user?.name || 'this account'}
+        cloud={cloud}
+        hasUnsavedChanges={hasChanges}
+        busy={backupImport.status.status === 'applying'}
+        error={backupImport.status.error}
+        onCancel={backupImport.cancel}
+        onConfirm={backupImport.confirm}
+      />}
+      {ownsDraft && !reviewingBackup && (signOutIntent || blocker.state === 'blocked') && <SettingsDepartureSheet
+        pendingLabel={pendingLabel}
+        signOut={signOutIntent}
+        onStay={stayInSettings}
+        onDiscard={discardAndLeave}
+        onSave={saveAndLeave}
+      />}
     </AppShell>
   )
 }

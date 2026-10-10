@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MemoryRouter } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { freshState } from '../lib/storage'
 import { SettingsPage } from './SettingsPage'
@@ -13,7 +13,9 @@ vi.mock('../store/AuthContext', () => ({
   useAuth: () => ({ user: null, signOut: vi.fn() }),
 }))
 vi.mock('../components/Momo', () => ({ Momo: () => null }))
-const renderPage = (url = '/settings') => renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: [url] }, createElement(SettingsPage)))
+const renderPage = (url = '/settings') => renderToStaticMarkup(createElement(RouterProvider, {
+  router: createMemoryRouter([{ path: '*', element: createElement(SettingsPage) }], { initialEntries: [url] }),
+}))
 beforeEach(() => { state = freshState() })
 
 describe('You page UI', () => {

@@ -45,6 +45,9 @@
 @import './styles/screens/meal-review.css';
 @import './styles/screens/insights.css';
 @import './styles/screens/you.css';
+@import './styles/screens/settings-departure.css';
+@import './styles/screens/backup-preview.css';
+@import './styles/screens/sync-recovery.css';
 @import './styles/screens/admin.css';
 @import './styles/screens/first-run.css';
 @import './styles/screens/pages.css';

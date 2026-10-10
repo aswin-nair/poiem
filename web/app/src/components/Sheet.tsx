@@ -1,5 +1,6 @@
-import { useRef, type ReactNode } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
 import { useDialogFocus } from '../hooks/useDialogFocus'
+import { lockModalScroll } from '../lib/modalScrollLock'
 
 /**
  * A bottom sheet on phones and a centred dialog on wide screens.
@@ -18,6 +19,7 @@ export function Sheet({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   useDialogFocus(ref, onClose)
+  useLayoutEffect(() => lockModalScroll(document.body), [])
 
   return (
     <div className="k-sheet-backdrop" role="presentation" onClick={onClose}>

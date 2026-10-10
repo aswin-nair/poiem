@@ -1,4 +1,4 @@
-import { useEffect, useRef, type RefObject } from 'react'
+import { useLayoutEffect, useRef, type RefObject } from 'react'
 
 const FOCUSABLE = [
   'a[href]',
@@ -16,7 +16,8 @@ export function useDialogFocus(
   const onEscapeRef = useRef(onEscape)
   onEscapeRef.current = onEscape
 
-  useEffect(() => {
+  // A visible modal must already own focus and Escape at its first paint.
+  useLayoutEffect(() => {
     const root = containerRef.current
     if (!root) return
 

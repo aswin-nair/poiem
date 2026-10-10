@@ -113,7 +113,9 @@ test('immediate preferences preserve invalid profile and AI drafts until explici
   await page.getByRole('switch', { name: 'Sound', exact: true }).uncheck()
   await expect(page.getByRole('switch', { name: 'Haptics', exact: true })).toBeChecked()
   await expect(page.locator('.you-save-bar')).toContainText('Unsaved profile and AI changes')
-  await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toBeDisabled()
+  await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toBeEnabled()
+  await page.getByRole('button', { name: 'Save settings', exact: true }).click()
+  await expect(page.getByRole('spinbutton', { name: 'Height', exact: true })).toBeFocused()
   await expect.poll(async () => (await persistedSettings(page)).state.profile).toMatchObject({
     name: account.name,
     heightCm: Number(appliedHeight),
@@ -140,7 +142,7 @@ test('immediate preferences preserve invalid profile and AI drafts until explici
   await page.getByRole('button', { name: 'Save settings', exact: true }).click()
   await expect(page).toHaveURL(/panel=ai/)
   await expect(page.locator('#ai-setup-error')).toBeVisible()
-  await expect(page.locator('#ai-setup-error')).toBeFocused()
+  await expect(page.getByLabel('API endpoint', { exact: true })).toBeFocused()
   await page.getByLabel('API endpoint', { exact: true }).fill('https://custom-ai.example/v1/chat/completions')
   await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toHaveCount(0)
   await openYouDestination(page, 'Preferences')
