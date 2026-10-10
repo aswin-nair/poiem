@@ -49,6 +49,7 @@ import {
 import { usesByok } from '../lib/aiClient'
 import { connectionIssue } from '../lib/aiConfig'
 import { poiemTestHooks, rollTestRng, testRng } from '../lib/testHooks'
+import { readSafeAreaInsets, safeAreaAvoidRects, visibleSafeViewport } from '../lib/viewportSafety'
 
 const SIZE = 88
 const MOVE_MS = 600
@@ -87,9 +88,10 @@ function visibleRect(element: Element): AvoidRect | null {
 }
 
 function collectAvoidRects(): AvoidRect[] {
-  return [...document.querySelectorAll(AVOID_SELECTOR)]
+  const controls = [...document.querySelectorAll(AVOID_SELECTOR)]
     .map(visibleRect)
     .filter((rect): rect is AvoidRect => rect !== null)
+  return [...controls, ...safeAreaAvoidRects(window.innerWidth, window.innerHeight, readSafeAreaInsets())]
 }
 
 function hasBlockingSurface(): boolean {
@@ -688,6 +690,7 @@ export function MascotOverlay() {
     window.addEventListener('resize', schedule)
     window.addEventListener('scroll', schedule, { passive: true, capture: true })
     window.visualViewport?.addEventListener('resize', schedule)
+    window.visualViewport?.addEventListener('scroll', schedule, { passive: true })
     document.addEventListener('visibilitychange', schedule)
     const obs = new MutationObserver(schedule)
     obs.observe(document.body, {
@@ -701,6 +704,7 @@ export function MascotOverlay() {
       window.removeEventListener('resize', schedule)
       window.removeEventListener('scroll', schedule, { capture: true })
       window.visualViewport?.removeEventListener('resize', schedule)
+      window.visualViewport?.removeEventListener('scroll', schedule)
       document.removeEventListener('visibilitychange', schedule)
       obs.disconnect()
     }
@@ -719,11 +723,7 @@ export function MascotOverlay() {
       const bubble = bubbleRef.current
       if (!bubble || walking || paused) { setBubbleSafe(false); return }
       const rect = bubble.getBoundingClientRect()
-      const viewport = window.visualViewport
-      const left = viewport?.offsetLeft ?? 0
-      const top = viewport?.offsetTop ?? 0
-      const right = left + (viewport?.width ?? window.innerWidth)
-      const bottom = top + (viewport?.height ?? window.innerHeight)
+      const { left, top, right, bottom } = visibleSafeViewport()
       setBubbleSafe(rect.left >= left + 8 && rect.right <= right - 8
         && rect.top >= top + 8 && rect.bottom <= bottom - 8
         && collectAvoidRects().every(avoid => rect.right + 8 <= avoid.left
@@ -734,6 +734,7 @@ export function MascotOverlay() {
     window.addEventListener('resize', schedule)
     window.addEventListener('scroll', schedule, { passive: true, capture: true })
     window.visualViewport?.addEventListener('resize', schedule)
+    window.visualViewport?.addEventListener('scroll', schedule, { passive: true })
     const mutations = new MutationObserver(schedule)
     mutations.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden', 'open'] })
     const resize = new ResizeObserver(schedule)
@@ -745,6 +746,7 @@ export function MascotOverlay() {
       window.removeEventListener('resize', schedule)
       window.removeEventListener('scroll', schedule, { capture: true })
       window.visualViewport?.removeEventListener('resize', schedule)
+      window.visualViewport?.removeEventListener('scroll', schedule)
     }
   }, [says, thinking, walking, paused, bubblePlacement, bubbleSide, interactionPaused])
 

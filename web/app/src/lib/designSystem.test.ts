@@ -34,6 +34,7 @@ const LAYERED = {
   'styles/screens/entry.css': 'screens',
   'styles/screens/momo-interlude.css': 'screens',
   'styles/screens/today-play.css': 'screens',
+  'styles/screens/safe-area.css': 'screens',
 } as const
 
 /** Held to the whole contract: approved type, curated offset blocks, upright text. */
@@ -60,6 +61,7 @@ const MIGRATED = [
   'styles/screens/coach-drafting.css',
   'styles/screens/momo-interlude.css',
   'styles/screens/today-play.css',
+  'styles/screens/safe-area.css',
 ] as const
 
 const APPROVED_TYPE = new Set([12, 14, 16, 18, 28, 40, 64])
@@ -119,6 +121,17 @@ function* rulesOf(css: string) {
 const imports = [...read('index.css').matchAll(/@import '([^']+)'/g)].map(match => match[1])
 
 describe('Poiem design system', () => {
+  it('shares four safe-area tokens while retaining unrestricted viewport zoom', () => {
+    const tokens = withoutComments(read('styles/system/tokens.css'))
+    for (const side of ['top', 'right', 'bottom', 'left']) {
+      expect(tokens).toMatch(new RegExp(`--k-safe-${side}:\\s*env\\(safe-area-inset-${side},\\s*0px\\)`))
+    }
+    expect(tokens).toMatch(/--safe-bottom:\s*var\(--k-safe-bottom\)/)
+    const html = read('../index.html')
+    expect(html).toContain('viewport-fit=cover')
+    expect(html).not.toMatch(/maximum-scale\s*=|user-scalable\s*=\s*(?:no|0)/i)
+  })
+
   it('declares the cascade order once, before anything else, and loads accessibility overrides last', () => {
     expect(withoutComments(read('index.css')).trim().split(/\r?\n/)[0]).toBe('@layer legacy, system, screens;')
     expect(imports.at(-1)).toBe('./styles/a11y.css')

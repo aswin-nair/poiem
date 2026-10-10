@@ -14,6 +14,7 @@ import { poiemTestHooks, testRng } from '../lib/testHooks'
 import type { BehaviorKey } from '../mascot/behaviors'
 import type { MomoOutfit } from '../types'
 import { Momo } from './Momo'
+import { visibleSafeViewport } from '../lib/viewportSafety'
 
 type Interlude = (typeof MOMO_INTERLUDES)[number]
 type SceneTarget = { element: HTMLElement; kind: MomoPlayTarget; word: string }
@@ -52,13 +53,15 @@ function readSession(key: string): MomoInterludeLedger {
 
 /** The prop copies only these public interface words, never the person's text. */
 function findTarget(pathname: string, action?: MomoPlayAction): SceneTarget | undefined {
+  const safeViewport = visibleSafeViewport()
   const routeTarget: MomoPlayTarget = pathname === '/discover' ? 'saved' : pathname === '/progress' ? 'insights' : pathname === '/journey' ? 'journey' : 'title'
   const kinds = [...new Set<MomoPlayTarget>([...(action === 'water' ? ['water' as const] : []), routeTarget, 'journey', 'water'])]
   for (const kind of kinds) {
     for (const element of document.querySelectorAll<HTMLElement>(TARGETS[kind])) {
       if (!visible(element) || element.closest(CONTROLS) || element.closest('.k-momo-interlude')) continue
       const rect = element.getBoundingClientRect()
-      if (rect.top < 8 || rect.bottom > innerHeight - 12) continue
+      if (rect.top < safeViewport.top + 8 || rect.bottom > safeViewport.bottom - 12
+        || rect.left < safeViewport.left || rect.right > safeViewport.right) continue
       const heading = element.matches('h1, h2, h3') ? element : element.querySelector<HTMLElement>('h1, h2, h3')
       const text = (heading ?? element).textContent?.trim().toLowerCase()
       const word = APPROVED_WORDS.find(value => value.toLowerCase() === text) ?? 'TA-DA!'
@@ -70,10 +73,11 @@ function findTarget(pathname: string, action?: MomoPlayAction): SceneTarget | un
 /** A transparent stage can sit over reading space, but never an action target. */
 function scenePosition(target?: SceneTarget, measured?: { height: number; parts: Array<{ left: number; top: number; width: number; height: number }> }, compactScene?: boolean): ScenePosition | undefined {
   const viewport = window.visualViewport
-  const leftEdge = (viewport?.offsetLeft ?? 0) + 12
-  const topEdge = (viewport?.offsetTop ?? 0) + 12
-  const rightEdge = leftEdge + (viewport?.width ?? innerWidth) - 24
-  let bottomEdge = topEdge + (viewport?.height ?? innerHeight) - 24
+  const safeViewport = visibleSafeViewport(12)
+  const leftEdge = safeViewport.left
+  const topEdge = safeViewport.top
+  const rightEdge = safeViewport.right
+  let bottomEdge = safeViewport.bottom
   for (const nav of document.querySelectorAll('.bottom-nav')) {
     const rect = nav.getBoundingClientRect()
     if (visible(nav) && rect.width > innerWidth / 2 && rect.top > innerHeight / 2) bottomEdge = Math.min(bottomEdge, rect.top - 12)
@@ -386,12 +390,14 @@ function InterludeScene({ entry, host, target, position: initial, outfit, static
     document.addEventListener('scroll', request, { passive: true, capture: true })
     window.addEventListener('resize', request, { passive: true })
     window.visualViewport?.addEventListener('resize', request, { passive: true })
+    window.visualViewport?.addEventListener('scroll', request, { passive: true })
     return () => {
       cancelAnimationFrame(frame)
       observer.disconnect()
       document.removeEventListener('scroll', request, true)
       window.removeEventListener('resize', request)
       window.visualViewport?.removeEventListener('resize', request)
+      window.visualViewport?.removeEventListener('scroll', request)
     }
   }, [host, target, position.compact])
 

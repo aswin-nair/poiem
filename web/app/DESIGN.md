@@ -12,6 +12,12 @@ This file describes the **Poiem system**: the tokens, components and screen rule
 
 The Expo `mobile/` app stays a private alpha. It does **not** extract shared tokens from this vocabulary until a later converge-or-retire decision. Web ships the system first; carrying two design systems at once is the expensive option, so Expo waits. Shared *behaviour* (meal slots, streaks, notifications) already lives in `packages/domain` with JSON fixtures that both apps test against.
 
+## Screen edges
+
+The web viewport uses `viewport-fit=cover` and keeps pinch zoom enabled. `--k-safe-top/right/bottom/left` resolve the browser's safe-area insets; `--safe-bottom` aliases the bottom token for existing components. Each viewport edge has one owner in [`safe-area.css`](src/styles/screens/safe-area.css): the page shell protects normal content, while fixed navigation, toasts and action docks protect their own content. Phone sheets put the bottom inset inside the panel; centered dialogs put all four insets on the backdrop. Sticky headers add the top inset to their existing offset.
+
+Momo scenes and speech use the same resolved tokens and visual-viewport bounds. They stay hidden when no safe space remains. Synthetic layout checks exercise these owners; physical Safari/Chrome checks still establish actual cutout, browser-chrome and keyboard behavior.
+
 ---
 
 ## Architecture
