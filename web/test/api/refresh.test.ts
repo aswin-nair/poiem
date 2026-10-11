@@ -90,4 +90,69 @@ describe('refresh rotation', () => {
     expect(mocks.sign).not.toHaveBeenCalled()
     expect(res.headers.get('set-cookie')).toContain('Max-Age=0')
   })
+
+  it.each(['rate limit lookup', 'session lookup'])(
+    'preserves the refresh cookie when %s has a temporary server failure',
+    async (step) => {
+      const failure = new Error('Temporary account service failure')
+      if (step === 'rate limit lookup') mocks.rate.mockRejectedValue(failure)
+      else mocks.rotate.mockRejectedValue(failure)
+      const res = response()
+      await refreshHandler(request({
+        method: 'POST',
+        headers: { cookie: 'fud_refresh=current-refresh-token' },
+      }) as never, res as never)
+
+      expect(res.statusCode).toBe(500)
+      expect(res.body).toEqual({ error: 'Internal server error' })
+      expect(res.headers.get('set-cookie')).toBeUndefined()
+      expect(mocks.sign).not.toHaveBeenCalled()
+    },
+  )
+
+  it('preserves the refresh cookie when the caller must wait before retrying', async () => {
+    mocks.rate.mockRejectedValue(new mocks.RateLimitExceeded())
+    const res = response()
+    await refreshHandler(request({
+      method: 'POST',
+      headers: { cookie: 'fud_refresh=current-refresh-token' },
+    }) as never, res as never)
+
+    expect(res.statusCode).toBe(429)
+    expect(res.body).toEqual({ error: 'Too many requests. Try again later.' })
+    expect(res.headers.get('retry-after')).toBe('60')
+    expect(res.headers.get('set-cookie')).toBeUndefined()
+    expect(mocks.rotate).not.toHaveBeenCalled()
+  })
+
+  it('still clears an inactive refresh cookie', async () => {
+    mocks.rotate.mockRejectedValue(new mocks.RefreshNotFoundError())
+    const res = response()
+    await refreshHandler(request({
+      method: 'POST',
+      headers: { cookie: 'fud_refresh=inactive-refresh-token' },
+    }) as never, res as never)
+
+    expect(res.statusCode).toBe(401)
+    expect(res.headers.get('set-cookie')).toContain('Max-Age=0')
+    expect(mocks.sign).not.toHaveBeenCalled()
+  })
+
+  it.each([
+    { label: 'missing cookie', headers: {}, body: undefined },
+    { label: 'invalid cookie', headers: { cookie: 'fud_refresh=short' }, body: undefined },
+    {
+      label: 'invalid JSON',
+      headers: { cookie: 'fud_refresh=current-refresh-token' },
+      body: '{invalid',
+    },
+  ])('still clears the cookie for $label', async ({ headers, body }) => {
+    const res = response()
+    await refreshHandler(request({ method: 'POST', headers, body }) as never, res as never)
+
+    expect(res.statusCode).toBe(401)
+    expect(res.headers.get('set-cookie')).toContain('Max-Age=0')
+    expect(mocks.rotate).not.toHaveBeenCalled()
+    expect(mocks.sign).not.toHaveBeenCalled()
+  })
 })
