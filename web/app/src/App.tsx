@@ -97,22 +97,42 @@ function ScrollToTop() {
     // Settings owns focus when a direct link names one of its controls.
     const setting = pathname === '/settings' ? findSettingDestination(hash) : undefined
     if (setting && (setting.panel ?? null) === new URLSearchParams(search).get('panel')) return
+    // A screen can own focus before this passive effect runs (for example a
+    // dialog or validation field). A retained navigation link still lets the
+    // destination announce itself when its heading eventually arrives.
+    const active = document.activeElement
+    if (active instanceof Element && active.closest('main, .app-shell header, [role="dialog"]')) return
     let frame = 0
+    let stopped = false
+    const stop = () => {
+      stopped = true
+      observer.disconnect()
+      window.cancelAnimationFrame(frame)
+      document.removeEventListener('focusin', onFocus)
+    }
+    const onFocus = (event: FocusEvent) => {
+      if (event.target instanceof Element && event.target !== document.body && event.target !== document.documentElement) stop()
+    }
     const focusHeading = () => {
+      if (stopped) return
       const heading = document.querySelector<HTMLElement>('main h1, .app-shell header h1')
       if (heading && heading.getClientRects().length) {
+        // Retire before focusing so this default cannot compete with a later
+        // user choice, or reappear after that control blurs.
+        stop()
         heading.tabIndex = -1
         heading.focus({ preventScroll: true })
-        observer.disconnect()
       }
     }
     const observer = new MutationObserver(() => {
+      if (stopped) return
       window.cancelAnimationFrame(frame)
       frame = window.requestAnimationFrame(focusHeading)
     })
+    document.addEventListener('focusin', onFocus)
     observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'hidden'] })
     frame = window.requestAnimationFrame(focusHeading)
-    return () => { observer.disconnect(); window.cancelAnimationFrame(frame) }
+    return stop
   }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
   return null
 }

@@ -19,3 +19,11 @@ test('an overview Appearance deep link keeps focus on its setting', async ({ pag
   await expect(page.locator('#you-appearance')).toBeFocused()
   await expect(page.getByRole('group', { name: 'Appearance', exact: true })).toBeVisible()
 })
+
+test('a direct AI setup panel keeps its section focus after the route frame', async ({ page }) => {
+  await page.goto('/settings?panel=ai')
+  const panel = page.locator('#you-ai')
+  await expect(panel).toBeFocused()
+  await page.clock.runFor(200)
+  await expect(panel).toBeFocused()
+})
