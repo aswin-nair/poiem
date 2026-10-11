@@ -36,7 +36,7 @@ import { clearNotificationHistory, requestNotifyPermission } from '../lib/notifi
 import { clearRingAck } from '../lib/ringAck'
 import { userInitials } from '../lib/auth'
 import { IconChevronRight, IconCoach } from '../components/icons'
-import { apiChangePassword, apiDeleteAccount, apiLogoutAll, loadAuthToken, saveAuthToken } from '../lib/apiClient'
+import { apiChangePassword, apiDeleteAccount, apiLogoutAll, loadAuthToken, saveVerifiedAuthToken } from '../lib/apiClient'
 import { isCloudBackend } from '../lib/dataBackend'
 import { deleteLocalAccount } from '../lib/localAuth'
 import { clearDurableUser } from '../lib/durableState'
@@ -387,7 +387,7 @@ export function SettingsPage() {
     setPasswordSaved(false)
     try {
       const next = await apiChangePassword(currentPassword, newPassword)
-      saveAuthToken(next.token)
+      saveVerifiedAuthToken(next.token, next.user.sub)
       setCurrentPassword('')
       setNewPassword('')
       setPasswordSaved(true)

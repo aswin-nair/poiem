@@ -10,9 +10,10 @@ async function service(page: Page) {
   const controls = {
     saved: visualSeedState(), version: 1, gets: 0, puts: [] as Array<{ mutationId: string; baseVersion: number; state: AppState }>,
     readFailure: null as null | number | 'abort' | 'invalid', failNextWrite: false,
+    writeFailure: null as number | null, sessionGeneration: 0,
     holdNextGet: false, heldGet: null as Route | null,
   }
-  const token = `e2e.${Buffer.from(JSON.stringify({ sub: VISUAL_USER.sub, iat: 1_791_486_000 })).toString('base64url')}.simulated`
+  const token = () => `e2e.${Buffer.from(JSON.stringify({ sub: VISUAL_USER.sub, iat: 1_791_486_000 + controls.sessionGeneration })).toString('base64url')}.simulated`
   // Start at the fixture's calendar date while Date.now and retry timers advance.
   await page.clock.install({ time: new Date(VISUAL_NOW) })
   await page.addInitScript(user => {
@@ -22,7 +23,7 @@ async function service(page: Page) {
   }, VISUAL_USER)
   await page.route('**/api/**', async route => {
     const url = new URL(route.request().url())
-    if (url.pathname === '/api/auth') return route.fulfill({ json: { token, user: VISUAL_USER, ok: true } })
+    if (url.pathname === '/api/auth') return route.fulfill({ json: { token: token(), user: VISUAL_USER, ok: true } })
     if (url.pathname !== '/api/state') return route.fulfill({ status: 503, json: { error: 'Simulated service unavailable' } })
     if (route.request().method() === 'GET') {
       controls.gets += 1
@@ -34,6 +35,7 @@ async function service(page: Page) {
     }
     const body = route.request().postDataJSON() as { mutationId: string; baseVersion: number; state: AppState }
     controls.puts.push(body)
+    if (controls.writeFailure !== null) return route.fulfill({ status: controls.writeFailure, json: { error: 'Simulated write outage' } })
     if (controls.failNextWrite) { controls.failNextWrite = false; return route.fulfill({ status: 503, json: { error: 'Simulated write outage' } }) }
     controls.saved = body.state
     controls.version = body.baseVersion + 1
@@ -55,6 +57,92 @@ async function settled(page: Page) {
   await expect.poll(() => pending(page)).toBe(0)
   await expect(page.locator('.cloud-sync-banner')).toHaveCount(0)
 }
+
+async function deviceCopy(page: Page) {
+  return page.evaluate(async userId => {
+    const moduleUrl = '/src/lib/durableState.ts'
+    const { loadDurableState } = await import(moduleUrl)
+    return loadDurableState(userId)
+  }, VISUAL_USER.sub)
+}
+
+for (const width of [390, 1440]) {
+  test(`verified new session recovers queued work during account 500 at ${width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: 844 })
+    const theme = width === 390 ? 'dark' : 'light'
+    await page.addInitScript(value => localStorage.setItem('fud-appearance-v1', value), theme)
+    const controls = await service(page)
+    await page.goto('/')
+    await settled(page)
+    const waterBefore = controls.saved.gamification.waterByDate[VISUAL_DAY] ?? 0
+    controls.writeFailure = 500
+    const writesBefore = controls.puts.length
+    await page.getByRole('button', { name: 'Add a glass of water', exact: true }).click()
+    await expect.poll(() => controls.puts.length).toBeGreaterThan(writesBefore)
+    await expect.poll(() => pending(page)).toBeGreaterThan(0)
+    const queued = controls.puts[writesBefore]
+    controls.readFailure = 500
+    controls.sessionGeneration += 1
+    const replayStart = controls.puts.length
+    await page.reload()
+    await expect(page.getByRole('heading', { name: 'Today', exact: true })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'We could not load your account' })).toHaveCount(0)
+    const water = page.getByRole('group', { name: 'Water glasses' })
+    await expect(water.locator('.tabular')).toHaveText(`${waterBefore + 1}/8`)
+    await expect.poll(async () => (await deviceCopy(page))?.pendingSessions.every(session => session.issuedAt === 1_791_486_001)).toBe(true)
+    await expect.poll(() => controls.puts.slice(replayStart).filter(write => write.mutationId === queued.mutationId).length).toBeGreaterThan(0)
+    const replay = controls.puts.slice(replayStart).find(write => write.mutationId === queued.mutationId)!
+    expect(replay.baseVersion).toBe(queued.baseVersion)
+    expect(replay.state).toEqual(queued.state)
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0)
+    await page.evaluate(() => document.fonts.ready)
+    await page.screenshot({ path: testInfo.outputPath('verified-account-recovery.png'), fullPage: true })
+    controls.readFailure = null
+    controls.writeFailure = null
+    await page.locator('.cloud-sync-banner').getByRole('button', { name: 'Sync now', exact: true }).click()
+    await expect.poll(() => pending(page)).toBe(0)
+    await expect(page.locator('.cloud-sync-banner')).toHaveCount(0)
+    expect(controls.saved.gamification.waterByDate[VISUAL_DAY]).toBe(waterBefore + 1)
+  })
+}
+
+test('unvalidated account data does not adopt a changed session; blocked recovery resumes on focus', async ({ page }) => {
+  const controls = await service(page)
+  await page.goto('/')
+  await settled(page)
+  controls.writeFailure = 500
+  await page.getByRole('button', { name: 'Add a glass of water', exact: true }).click()
+  await expect.poll(() => pending(page)).toBeGreaterThan(0)
+  controls.readFailure = 'invalid'
+  controls.sessionGeneration += 1
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'We could not load your account' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Download device copy', exact: true })).toBeVisible()
+  expect((await deviceCopy(page))?.pendingSessions.every(session => session.issuedAt === 1_791_486_000)).toBe(true)
+  const downloadPromise = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download device copy', exact: true }).click()
+  const download = await downloadPromise
+  expect(download.suggestedFilename()).toMatch(/^fud-ai-device-copy-/)
+  controls.readFailure = null
+  controls.writeFailure = null
+  await page.clock.runFor(1_100)
+  await page.evaluate(() => window.dispatchEvent(new Event('focus')))
+  await expect(page.getByRole('heading', { name: 'Today', exact: true })).toBeVisible()
+  await expect.poll(() => pending(page)).toBe(0)
+})
+
+test('account 500 without a device copy stays blocked and Try again loads the recovered service', async ({ page }) => {
+  const controls = await service(page)
+  controls.readFailure = 500
+  await page.goto('/')
+  await expect(page.getByRole('heading', { name: 'We could not load your account' })).toBeVisible()
+  await expect(page.getByText(/temporarily unavailable \(500\)/)).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Download device copy', exact: true })).toHaveCount(0)
+  expect(controls.puts).toHaveLength(0)
+  controls.readFailure = null
+  await page.getByRole('button', { name: 'Try again', exact: true }).click()
+  await settled(page)
+})
 
 test('offline then online clears the banner with an empty outbox and no new write', async ({ page, context }) => {
   const controls = await service(page)
