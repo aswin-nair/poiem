@@ -32,6 +32,14 @@ export class ApiError extends Error {
   }
 }
 
+/** The server answered, but its successful response did not match the contract. */
+export class ApiResponseError extends ApiError {
+  constructor(message: string) {
+    super(message, 200)
+    this.name = 'ApiResponseError'
+  }
+}
+
 export function saveAuthToken(token: string): void {
   accessToken = token
   clearLegacyAuthToken()
@@ -220,7 +228,7 @@ export async function apiLoadState(
     sessionToken,
   )
   if (!Number.isSafeInteger(result.version) || result.version < 0) {
-    throw new ApiError('The account state version is invalid.', 0)
+    throw new ApiResponseError('The account state version is invalid.')
   }
   return result
 }

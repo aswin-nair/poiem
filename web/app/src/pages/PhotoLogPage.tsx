@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useApp } from '../store/AppContext'
-import { analyzeImageFood, fileToBase64 } from '../lib/foodAI'
+import { analyzeImageFood } from '../lib/foodAI'
+import { prepareFoodPhoto } from '../lib/photoUpload'
 import { providerLabel } from '../lib/aiConfig'
 import { useAiAccess } from '../lib/aiAccess'
 import { usesByok } from '../lib/aiClient'
@@ -118,7 +119,7 @@ export function PhotoLogPage() {
     setNotice(null)
     track({ name: 'ai_analysis_started', method: 'photo_ai' })
     try {
-      const { base64, mimeType } = await fileToBase64(selectedFile)
+      const { base64, mimeType } = await prepareFoodPhoto(selectedFile, controller.signal)
       if (controller.signal.aborted || requestRef.current !== controller) return
       const analysis = await analyzeImageFood(base64, state.aiSettings, mimeType, controller.signal)
       if (controller.signal.aborted || requestRef.current !== controller) return
@@ -199,7 +200,7 @@ export function PhotoLogPage() {
             <span className="flow-camera-sticker"><IconCamera size={44} /></span>
             <span className="photo-upload-title">Tap to choose a photo</span>
             <span className="photo-upload-sub">A clear view of the whole plate works best.</span>
-            <span className="flow-upload-limit">Image files · up to 15 MB</span>
+            <span className="flow-upload-limit">Image files · up to 15 MB. Resized on your device before sending.</span>
           </button>}
 
           {loading ? <AnalysisStatus method="photo" onCancel={cancelAnalysis} /> : canAnalyze && <>

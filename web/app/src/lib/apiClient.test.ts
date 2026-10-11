@@ -88,6 +88,19 @@ describe('session-bound state requests', () => {
       message: expect.stringMatching(/retry automatically/i),
     })
   })
+
+  it.each([
+    { state: null, version: -1 },
+    { state: null, version: '1' },
+    {},
+  ])('keeps an invalid successful account response distinct from a network failure', async result => {
+    vi.stubEnv('VITE_DATA_BACKEND', 'neon')
+    vi.stubGlobal('localStorage', memoryStorage())
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify(result), { status: 200 })))
+    await expect(apiLoadState('captured-account-token')).rejects.toMatchObject({
+      name: 'ApiResponseError', status: 200, message: 'The account state version is invalid.',
+    })
+  })
 })
 
 function unsignedToken(sub: string, iat = 1): string {

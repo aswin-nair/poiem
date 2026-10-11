@@ -99,6 +99,8 @@ describe('meal logging UI contracts', () => {
     expect(selection).toContain('URL.createObjectURL(file)')
     expect(selection).not.toContain('analyzeImageFood(')
     expect(selection).not.toContain('fileToBase64(')
+    expect(selection).not.toContain('prepareFoodPhoto(')
+    expect(source).toContain('await prepareFoodPhoto(selectedFile, controller.signal)')
     expect(source).toContain('URL.revokeObjectURL(preview)')
     expect(source).toContain("event.target.value = ''")
   })

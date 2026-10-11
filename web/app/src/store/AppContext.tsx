@@ -52,6 +52,7 @@ import {
 } from '../lib/durableState'
 
 import { isCloudBackend } from '../lib/dataBackend'
+import { accountReadFailureMessage, connectionStatusMessage, isRetryableAccountReadError } from '../lib/connectionStatus'
 
 
 import { advanceAfterLog, openSession, transitionTrackingPause } from '../lib/gamification'
@@ -255,6 +256,10 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
   const forceNextPersist = useRef(false)
   const suppressNextPersist = useRef<string | null>(null)
   const leaseOwner = useRef(crypto.randomUUID())
+  const currentState = useRef(state)
+  currentState.current = state
+  const accountCheckPromise = useRef<Promise<void> | null>(null)
+  const checkAccountRef = useRef<() => Promise<void>>(async () => undefined)
   // Bind writes to this account. A later login in another tab may replace the
   // in-memory token; only a same-subject refresh is adopted.
   const cloudSessionToken = useRef(cloud ? loadAuthToken() : null)
@@ -451,6 +456,76 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     }
   }, [boundSessionToken, cloud, drainOutbox, networkOnline, userId])
 
+  // A connection check does not rehydrate/remount the app. In-progress forms
+  // and drafts stay in place, and a newer server version needs explicit
+  // recovery instead of replacing the device copy behind someone's back.
+  const checkAccountConnection = useCallback(async (): Promise<void> => {
+    if (!cloud || !hydrated.current || !cloudWritable.current || clearInFlight.current
+      || (typeof navigator !== 'undefined' && !navigator.onLine)) return
+    if (accountCheckPromise.current) return accountCheckPromise.current
+    const sessionToken = boundSessionToken()
+    if (!sessionToken || authTokenSubject(sessionToken) !== userId) { expireSession(); return }
+    const epoch = syncEpoch.current
+    const signature = JSON.stringify(stateWithoutPrivateSecrets(currentState.current))
+    const version = cloudVersion.current
+    const stillCurrent = () => epoch === syncEpoch.current && cloudWritable.current && !clearInFlight.current
+    let task: Promise<void>
+    task = (async () => {
+      try {
+        const cached = await loadDurableState(userId)
+        if (!stillCurrent()) return
+        if (cached?.pendingCount) { await drainOutboxRef.current(); return }
+        // A render may have changed state before its durable write was queued.
+        // Let that write settle; it must not be mistaken for a clean account.
+        if (!cached || JSON.stringify(stateWithoutPrivateSecrets(cached.state)) !== signature) return
+        const remote = await apiLoadState(sessionToken)
+        const remoteState = remote.state === null ? null : importData(JSON.stringify(remote.state))
+        if (!stillCurrent()) return
+        const latest = await loadDurableState(userId)
+        if (!stillCurrent()) return
+        if (latest?.pendingCount) { await drainOutboxRef.current(); return }
+        if (cloudVersion.current !== version
+          || JSON.stringify(stateWithoutPrivateSecrets(currentState.current)) !== signature
+          || !latest || JSON.stringify(stateWithoutPrivateSecrets(latest.state)) !== signature) return
+        const deviceOnly = cached.origin === 'local' || cached.origin === 'legacy'
+        const copiesDiffer = remoteState !== null
+          && JSON.stringify(stateWithoutPrivateSecrets(remoteState)) !== signature
+        if (remote.version !== version || (deviceOnly && copiesDiffer) || (!remoteState && !deviceOnly)) {
+          cloudWritable.current = false
+          setCloudSyncConflict(true)
+          setConflictExported(false)
+          setCloudSyncError('The account server and this device have different copies. Both are preserved.')
+          return
+        }
+        if (!remoteState && deviceOnly) {
+          // A verified empty account can receive its existing device copy via
+          // the same durable mutation path used for every ordinary edit.
+          await saveCloudSnapshot(currentState.current, { force: true })
+          return
+        }
+        setCloudSyncError(null)
+        setHydratedFromDevice(false)
+      } catch (error) {
+        if (!stillCurrent()) return
+        // A newer edit or acknowledged write supersedes this account check,
+        // including its failure. Do not reopen recovery for an older snapshot.
+        if (cloudVersion.current !== version
+          || JSON.stringify(stateWithoutPrivateSecrets(currentState.current)) !== signature) return
+        if (error instanceof ApiError && error.status === 401) { expireSession(); return }
+        if (error instanceof CloudSyncUnavailableError) return
+        if (!isRetryableAccountReadError(error)) {
+          cloudWritable.current = false
+          setCloudSyncConflict(true)
+          setConflictExported(false)
+        }
+        setCloudSyncError(accountReadFailureMessage(error))
+      }
+    })().finally(() => { if (accountCheckPromise.current === task) accountCheckPromise.current = null })
+    accountCheckPromise.current = task
+    return task
+  }, [boundSessionToken, cloud, expireSession, saveCloudSnapshot, userId])
+  checkAccountRef.current = checkAccountConnection
+
 
 
   useEffect(() => {
@@ -463,6 +538,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     const currentLeaseOwner = leaseOwner.current
     syncEpoch.current = epoch
     drainPromise.current = null
+    accountCheckPromise.current = null
     clearInFlight.current = false
     forceNextPersist.current = false
     suppressNextPersist.current = null
@@ -663,8 +739,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
               hydrationFailed = true
               return
             }
-            const retryableReadFailure = error instanceof ApiError
-              && (error.status === 0 || error.status === 429 || error.status >= 500)
+            const retryableReadFailure = isRetryableAccountReadError(error)
             if (!retryableReadFailure) {
               cloudVersion.current = cached.serverVersion
               cloudWritable.current = false
@@ -682,7 +757,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
             cloudWritable.current = true
             setPendingSyncCount(cached.pendingCount)
             setHydratedFromDevice(true)
-            setCloudSyncError('Offline. Changes are saved on this device.')
+            setCloudSyncError(accountReadFailureMessage(error))
             setState(cached.state)
             return
           }
@@ -819,8 +894,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
         clearTimeout(retryTimer.current)
         retryTimer.current = null
       }
-      if (hydratedFromDevice && pendingSyncCount === 0) {
-        setHydrateAttempt(attempt => attempt + 1)
+      if (pendingSyncCount === 0 && (hydratedFromDevice || cloudSyncError)) {
+        void checkAccountRef.current()
       } else {
         void drainOutboxRef.current()
       }
@@ -828,7 +903,6 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
     function offline() {
       setNetworkOnline(false)
-      setCloudSyncError('Offline. Changes are saved on this device.')
     }
 
     window.addEventListener('online', online)
@@ -837,7 +911,23 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
       window.removeEventListener('online', online)
       window.removeEventListener('offline', offline)
     }
-  }, [cloud, hydratedFromDevice, pendingSyncCount])
+  }, [cloud, cloudSyncError, hydratedFromDevice, pendingSyncCount])
+
+  // Server outages can recover while the browser remains online, so a browser
+  // online event alone is insufficient. A foreground return or explicit Check
+  // account retries in the background, with at most one account GET in flight.
+  useEffect(() => {
+    if (!cloud || !networkOnline || cloudSyncConflict || pendingSyncCount > 0
+      || (!cloudSyncError && !hydratedFromDevice)) return
+    const focus = () => { void checkAccountRef.current() }
+    const visible = () => { if (document.visibilityState === 'visible') focus() }
+    window.addEventListener('focus', focus)
+    document.addEventListener('visibilitychange', visible)
+    return () => {
+      window.removeEventListener('focus', focus)
+      document.removeEventListener('visibilitychange', visible)
+    }
+  }, [cloud, cloudSyncConflict, cloudSyncError, hydratedFromDevice, networkOnline, pendingSyncCount])
 
   useEffect(() => {
     if (cloud && networkOnline && hydrated.current) void drainOutboxRef.current()
@@ -1254,17 +1344,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
 
 
-  const syncMessage = cloudSyncConflict
-    ? `${cloudSyncError ?? 'Sync needs recovery.'} Download the device copy before choosing which version to keep.`
-    : !networkOnline
-      ? `Offline. ${pendingSyncCount > 0 ? `${pendingSyncCount} change${pendingSyncCount === 1 ? '' : 's'} saved on this device.` : 'Your saved device copy is available.'}`
-      : cloudSyncError
-        ? `${cloudSyncError} ${pendingSyncCount > 0 ? 'Retry is scheduled.' : ''}`
-        : pendingSyncCount > 0
-          ? `Syncing ${pendingSyncCount} saved change${pendingSyncCount === 1 ? '' : 's'}…`
-          : hydratedFromDevice
-            ? 'Recovered your last saved device copy. Sync is checking the account server.'
-            : storageRecovery
+  const syncMessage = connectionStatusMessage({ cloud, online: networkOnline, error: cloudSyncError,
+    conflict: cloudSyncConflict, pending: pendingSyncCount, recoveredFromDevice: hydratedFromDevice, storageRecovery })
 
 
 
@@ -1276,7 +1357,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           role={cloudSyncConflict ? 'alert' : 'status'}
           aria-live={cloudSyncConflict ? 'assertive' : 'polite'}
         >
-          {!networkOnline ? <IconOffline /> : cloudSyncConflict || cloudSyncError ? <IconShield /> : <IconCloud />}
+          {cloud && !networkOnline ? <IconOffline /> : cloudSyncConflict || cloudSyncError || storageRecovery ? <IconShield /> : <IconCloud />}
           <span>{syncMessage}</span>
           {(pendingSyncCount > 0 || cloudSyncConflict || cloudSyncError) && (
             <div>
@@ -1305,14 +1386,14 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
                   type="button"
                   disabled={!networkOnline}
                   onClick={() => {
-                    if (hydratedFromDevice && pendingSyncCount === 0) {
-                      setHydrateAttempt(attempt => attempt + 1)
+                    if (pendingSyncCount === 0 && (hydratedFromDevice || cloudSyncError)) {
+                      void checkAccountRef.current()
                       return
                     }
                     void drainOutboxRef.current()
                   }}
                 >
-                  {hydratedFromDevice && pendingSyncCount === 0 ? 'Check account' : 'Sync now'}
+                  {pendingSyncCount === 0 && (hydratedFromDevice || cloudSyncError) ? 'Check account' : 'Sync now'}
                 </button>
               )}
               <button type="button" onClick={signOut}>Sign out</button>
