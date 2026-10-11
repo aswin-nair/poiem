@@ -1,0 +1,47 @@
+/* Sync remains part of the document flow, above the journal. Actions never
+   cover a meal, keyboard field or bottom navigation. State comes from the
+   existing persistence layer; this sheet changes presentation only. */
+@layer screens {
+  .cloud-sync-banner {
+    position: static;
+    inset: auto;
+    transform: none;
+    width: auto;
+    z-index: auto;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--k-space-md);
+    padding: var(--k-space-lg) var(--k-pad-panel);
+    border-bottom: 2px solid var(--k-role-border);
+    background: var(--k-sky);
+    color: var(--k-on-tone);
+    font: 500 var(--k-type-label)/1.5 var(--k-font-body);
+  }
+  .cloud-sync-banner > svg { width: var(--k-space-lg); height: var(--k-space-lg); margin-top: var(--k-space-xs); }
+  .cloud-sync-banner > span { min-width: 0; overflow-wrap: anywhere; }
+  .cloud-sync-banner > div { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--k-space-sm); min-width: 0; margin: 0; }
+  .cloud-sync-banner button {
+    flex: 1 1 auto;
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--k-space-sm) var(--k-space-md);
+    border: 2px solid var(--k-role-border);
+    border-radius: 0;
+    background: var(--k-role-surface-raised);
+    color: var(--k-role-text);
+    font: 700 var(--k-type-label)/1.3 var(--k-font-body);
+    overflow-wrap: anywhere;
+    cursor: pointer;
+  }
+  .cloud-sync-banner button:disabled { background: var(--k-sunken); color: var(--k-role-text-muted); cursor: default; }
+  .cloud-sync-banner button:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+  @media (min-width: 768px) {
+    .cloud-sync-banner { padding-inline: max(var(--k-pad-panel), calc((100vw - var(--k-workspace)) / 2)); }
+    .cloud-sync-banner > div { grid-column: 2; }
+    .cloud-sync-banner button { flex-grow: 0; }
+  }
+}

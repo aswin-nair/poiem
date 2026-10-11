@@ -1,0 +1,702 @@
+{
+  "capturedAt": "2026-10-09T12:00:00.000Z",
+  "baseline": "cda79780",
+  "observations": [
+    {
+      "phase": "after",
+      "screen": "welcome",
+      "width": 390,
+      "theme": "light",
+      "route": "/welcome",
+      "url": "http://localhost:5194/welcome",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 12049,
+      "regions": [
+        {
+          "selector": "wp-hero",
+          "y": 79,
+          "height": 1802.59375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "age",
+      "width": 390,
+      "theme": "light",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 118,
+          "height": 71.1875
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 203.1875,
+          "height": 459.765625
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 676.953125,
+          "height": 111.1875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "first-meal",
+      "width": 390,
+      "theme": "light",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1645,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 118,
+          "height": 155.171875
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 287.171875,
+          "height": 1200.484375
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 1501.65625,
+          "height": 111.1875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "guest-today",
+      "width": 390,
+      "theme": "light",
+      "route": "/",
+      "url": "http://localhost:5194/",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1386,
+      "regions": [
+        {
+          "selector": "k-surface is-outlined k-notice",
+          "y": 171.59375,
+          "height": 221.1875
+        },
+        {
+          "selector": "k-surface is-hero k-budget",
+          "y": 408.78125,
+          "height": 151.375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "claim-signup",
+      "width": 390,
+      "theme": "light",
+      "route": "/login?mode=signup&claim=1",
+      "url": "http://localhost:5194/login?mode=signup&claim=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1412,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 74,
+          "height": 985.109375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "setup-signin",
+      "width": 390,
+      "theme": "light",
+      "route": "/login?setup=1",
+      "url": "http://localhost:5194/login?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1347,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 74,
+          "height": 920.578125
+        },
+        {
+          "selector": "k-account-context",
+          "y": 221.015625,
+          "height": 161.59375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "forgot",
+      "width": 390,
+      "theme": "light",
+      "route": "/forgot-password?setup=1",
+      "url": "http://localhost:5194/forgot-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 67.515625,
+          "height": 422.328125
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "reset-missing",
+      "width": 390,
+      "theme": "light",
+      "route": "/reset-password?setup=1",
+      "url": "http://localhost:5194/reset-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 67.515625,
+          "height": 365.234375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "welcome",
+      "width": 390,
+      "theme": "dark",
+      "route": "/welcome",
+      "url": "http://localhost:5194/welcome",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 12049,
+      "regions": [
+        {
+          "selector": "wp-hero",
+          "y": 79,
+          "height": 1802.59375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "age",
+      "width": 390,
+      "theme": "dark",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 118,
+          "height": 71.1875
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 203.1875,
+          "height": 459.765625
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 676.953125,
+          "height": 111.1875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "first-meal",
+      "width": 390,
+      "theme": "dark",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1645,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 118,
+          "height": 155.171875
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 287.171875,
+          "height": 1200.484375
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 1501.65625,
+          "height": 111.1875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "guest-today",
+      "width": 390,
+      "theme": "dark",
+      "route": "/",
+      "url": "http://localhost:5194/",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1386,
+      "regions": [
+        {
+          "selector": "k-surface is-outlined k-notice",
+          "y": 171.59375,
+          "height": 221.1875
+        },
+        {
+          "selector": "k-surface is-hero k-budget",
+          "y": 408.78125,
+          "height": 151.375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "claim-signup",
+      "width": 390,
+      "theme": "dark",
+      "route": "/login?mode=signup&claim=1",
+      "url": "http://localhost:5194/login?mode=signup&claim=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1412,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 74,
+          "height": 985.109375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "setup-signin",
+      "width": 390,
+      "theme": "dark",
+      "route": "/login?setup=1",
+      "url": "http://localhost:5194/login?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1347,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 74,
+          "height": 920.578125
+        },
+        {
+          "selector": "k-account-context",
+          "y": 221.015625,
+          "height": 161.59375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "forgot",
+      "width": 390,
+      "theme": "dark",
+      "route": "/forgot-password?setup=1",
+      "url": "http://localhost:5194/forgot-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 67.515625,
+          "height": 422.328125
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "reset-missing",
+      "width": 390,
+      "theme": "dark",
+      "route": "/reset-password?setup=1",
+      "url": "http://localhost:5194/reset-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 844,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 67.515625,
+          "height": 365.234375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "welcome",
+      "width": 1440,
+      "theme": "light",
+      "route": "/welcome",
+      "url": "http://localhost:5194/welcome",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 7681,
+      "regions": [
+        {
+          "selector": "wp-hero",
+          "y": 79,
+          "height": 1056.671875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "age",
+      "width": 1440,
+      "theme": "light",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 130,
+          "height": 71.1875
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 249.515625,
+          "height": 428.46875
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 130,
+          "height": 582.3125
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "first-meal",
+      "width": 1440,
+      "theme": "light",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1343,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 130,
+          "height": 114.78125
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 258.78125,
+          "height": 1052
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 130,
+          "height": 582.3125
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "guest-today",
+      "width": 1440,
+      "theme": "light",
+      "route": "/",
+      "url": "http://localhost:5194/",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1035,
+      "regions": [
+        {
+          "selector": "k-surface is-outlined k-notice",
+          "y": 171.59375,
+          "height": 221.1875
+        },
+        {
+          "selector": "k-surface is-hero k-budget",
+          "y": 416.78125,
+          "height": 151.375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "claim-signup",
+      "width": 1440,
+      "theme": "light",
+      "route": "/login?mode=signup&claim=1",
+      "url": "http://localhost:5194/login?mode=signup&claim=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1074,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 88,
+          "height": 954.234375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "setup-signin",
+      "width": 1440,
+      "theme": "light",
+      "route": "/login?setup=1",
+      "url": "http://localhost:5194/login?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1010,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 88,
+          "height": 889.703125
+        },
+        {
+          "selector": "k-account-context",
+          "y": 246.9375,
+          "height": 161.59375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "forgot",
+      "width": 1440,
+      "theme": "light",
+      "route": "/forgot-password?setup=1",
+      "url": "http://localhost:5194/forgot-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 72,
+          "height": 414.421875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "reset-missing",
+      "width": 1440,
+      "theme": "light",
+      "route": "/reset-password?setup=1",
+      "url": "http://localhost:5194/reset-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 72,
+          "height": 365.421875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "welcome",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/welcome",
+      "url": "http://localhost:5194/welcome",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 7681,
+      "regions": [
+        {
+          "selector": "wp-hero",
+          "y": 79,
+          "height": 1056.671875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "age",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 130,
+          "height": 71.1875
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 249.515625,
+          "height": 428.46875
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 130,
+          "height": 582.3125
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "first-meal",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/onboarding",
+      "url": "http://localhost:5194/onboarding",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1343,
+      "regions": [
+        {
+          "selector": "k-setup-head",
+          "y": 130,
+          "height": 114.78125
+        },
+        {
+          "selector": "setup-form k-setup-form",
+          "y": 258.78125,
+          "height": 1052
+        },
+        {
+          "selector": "k-setup-companion",
+          "y": 130,
+          "height": 582.3125
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "guest-today",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/",
+      "url": "http://localhost:5194/",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1035,
+      "regions": [
+        {
+          "selector": "k-surface is-outlined k-notice",
+          "y": 171.59375,
+          "height": 221.1875
+        },
+        {
+          "selector": "k-surface is-hero k-budget",
+          "y": 416.78125,
+          "height": 151.375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "claim-signup",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/login?mode=signup&claim=1",
+      "url": "http://localhost:5194/login?mode=signup&claim=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1074,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 88,
+          "height": 954.234375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "setup-signin",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/login?setup=1",
+      "url": "http://localhost:5194/login?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 1010,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 88,
+          "height": 889.703125
+        },
+        {
+          "selector": "k-account-context",
+          "y": 246.9375,
+          "height": 161.59375
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "forgot",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/forgot-password?setup=1",
+      "url": "http://localhost:5194/forgot-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 72,
+          "height": 414.421875
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "screen": "reset-missing",
+      "width": 1440,
+      "theme": "dark",
+      "route": "/reset-password?setup=1",
+      "url": "http://localhost:5194/reset-password?setup=1",
+      "errors": [],
+      "overflow": 0,
+      "pageHeight": 900,
+      "regions": [
+        {
+          "selector": "login-card k-account-card",
+          "y": 72,
+          "height": 365.421875
+        }
+      ]
+    }
+  ]
+}

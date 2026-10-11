@@ -1,0 +1,500 @@
+[
+  {
+    "name": "iphone",
+    "theme": "light",
+    "screen": "today",
+    "viewport": {
+      "width": 390,
+      "height": 664
+    },
+    "overflow": 0
+  },
+  {
+    "name": "iphone",
+    "theme": "light",
+    "screen": "picker",
+    "viewport": {
+      "width": 390,
+      "height": 664
+    },
+    "overflow": 0
+  },
+  {
+    "name": "iphone",
+    "theme": "light",
+    "screen": "review",
+    "viewport": {
+      "width": 390,
+      "height": 664
+    },
+    "overflow": 0
+  },
+  {
+    "name": "iphone",
+    "theme": "light",
+    "screen": "reset-and-keyboard",
+    "viewport": {
+      "width": 390,
+      "height": 400
+    },
+    "resetCalories": 400,
+    "retainedProtein": 25,
+    "focusedError": true,
+    "confirmationPosition": "static"
+  },
+  {
+    "name": "iphone",
+    "theme": "dark",
+    "screen": "today",
+    "viewport": {
+      "width": 390,
+      "height": 664
+    },
+    "overflow": 0
+  },
+  {
+    "name": "iphone",
+    "theme": "dark",
+    "screen": "picker",
+    "viewport": {
+      "width": 390,
+      "height": 664
+    },
+    "overflow": 0
+  },
+  {
+    "name": "iphone",
+    "theme": "dark",
+    "screen": "review",
+    "viewport": {
+      "width": 390,
+      "height": 664
+    },
+    "overflow": 0
+  },
+  {
+    "name": "iphone",
+    "theme": "dark",
+    "screen": "reset-and-keyboard",
+    "viewport": {
+      "width": 390,
+      "height": 400
+    },
+    "resetCalories": 400,
+    "retainedProtein": 25,
+    "focusedError": true,
+    "confirmationPosition": "static"
+  },
+  {
+    "name": "pixel",
+    "theme": "light",
+    "screen": "today",
+    "viewport": {
+      "width": 412,
+      "height": 839
+    },
+    "overflow": 0
+  },
+  {
+    "name": "pixel",
+    "theme": "light",
+    "screen": "picker",
+    "viewport": {
+      "width": 412,
+      "height": 839
+    },
+    "overflow": 0
+  },
+  {
+    "name": "pixel",
+    "theme": "light",
+    "screen": "review",
+    "viewport": {
+      "width": 412,
+      "height": 839
+    },
+    "overflow": 0
+  },
+  {
+    "name": "pixel",
+    "theme": "light",
+    "screen": "reset-and-keyboard",
+    "viewport": {
+      "width": 412,
+      "height": 400
+    },
+    "resetCalories": 400,
+    "retainedProtein": 25,
+    "focusedError": true,
+    "confirmationPosition": "static"
+  },
+  {
+    "name": "pixel",
+    "theme": "dark",
+    "screen": "today",
+    "viewport": {
+      "width": 412,
+      "height": 839
+    },
+    "overflow": 0
+  },
+  {
+    "name": "pixel",
+    "theme": "dark",
+    "screen": "picker",
+    "viewport": {
+      "width": 412,
+      "height": 839
+    },
+    "overflow": 0
+  },
+  {
+    "name": "pixel",
+    "theme": "dark",
+    "screen": "review",
+    "viewport": {
+      "width": 412,
+      "height": 839
+    },
+    "overflow": 0
+  },
+  {
+    "name": "pixel",
+    "theme": "dark",
+    "screen": "reset-and-keyboard",
+    "viewport": {
+      "width": 412,
+      "height": 400
+    },
+    "resetCalories": 400,
+    "retainedProtein": 25,
+    "focusedError": true,
+    "confirmationPosition": "static"
+  },
+  {
+    "name": "touch-320",
+    "theme": "light",
+    "screen": "today",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-320",
+    "theme": "light",
+    "screen": "picker",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-320",
+    "theme": "light",
+    "screen": "review",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-320",
+    "theme": "light",
+    "screen": "reset-and-keyboard",
+    "viewport": {
+      "width": 320,
+      "height": 400
+    },
+    "resetCalories": 400,
+    "retainedProtein": 25,
+    "focusedError": true,
+    "confirmationPosition": "static"
+  },
+  {
+    "name": "touch-320",
+    "theme": "dark",
+    "screen": "today",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-320",
+    "theme": "dark",
+    "screen": "picker",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-320",
+    "theme": "dark",
+    "screen": "review",
+    "viewport": {
+      "width": 320,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-320",
+    "theme": "dark",
+    "screen": "reset-and-keyboard",
+    "viewport": {
+      "width": 320,
+      "height": 400
+    },
+    "resetCalories": 400,
+    "retainedProtein": 25,
+    "focusedError": true,
+    "confirmationPosition": "static"
+  },
+  {
+    "name": "touch-360",
+    "theme": "light",
+    "screen": "today",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-360",
+    "theme": "light",
+    "screen": "picker",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-360",
+    "theme": "light",
+    "screen": "review",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-360",
+    "theme": "dark",
+    "screen": "today",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-360",
+    "theme": "dark",
+    "screen": "picker",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-360",
+    "theme": "dark",
+    "screen": "review",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-430",
+    "theme": "light",
+    "screen": "today",
+    "viewport": {
+      "width": 430,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-430",
+    "theme": "light",
+    "screen": "picker",
+    "viewport": {
+      "width": 430,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-430",
+    "theme": "light",
+    "screen": "review",
+    "viewport": {
+      "width": 430,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-430",
+    "theme": "dark",
+    "screen": "today",
+    "viewport": {
+      "width": 430,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-430",
+    "theme": "dark",
+    "screen": "picker",
+    "viewport": {
+      "width": 430,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-430",
+    "theme": "dark",
+    "screen": "review",
+    "viewport": {
+      "width": 430,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-768",
+    "theme": "light",
+    "screen": "today",
+    "viewport": {
+      "width": 768,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-768",
+    "theme": "light",
+    "screen": "picker",
+    "viewport": {
+      "width": 768,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-768",
+    "theme": "light",
+    "screen": "review",
+    "viewport": {
+      "width": 768,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-768",
+    "theme": "dark",
+    "screen": "today",
+    "viewport": {
+      "width": 768,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-768",
+    "theme": "dark",
+    "screen": "picker",
+    "viewport": {
+      "width": 768,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "touch-768",
+    "theme": "dark",
+    "screen": "review",
+    "viewport": {
+      "width": 768,
+      "height": 844
+    },
+    "overflow": 0
+  },
+  {
+    "name": "landscape",
+    "theme": "light",
+    "screen": "today",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "overflow": 0
+  },
+  {
+    "name": "landscape",
+    "theme": "light",
+    "screen": "picker",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "overflow": 0
+  },
+  {
+    "name": "landscape",
+    "theme": "light",
+    "screen": "review",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "overflow": 0
+  },
+  {
+    "name": "landscape",
+    "theme": "dark",
+    "screen": "today",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "overflow": 0
+  },
+  {
+    "name": "landscape",
+    "theme": "dark",
+    "screen": "picker",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "overflow": 0
+  },
+  {
+    "name": "landscape",
+    "theme": "dark",
+    "screen": "review",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "overflow": 0
+  }
+]

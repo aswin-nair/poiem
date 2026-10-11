@@ -1,0 +1,32 @@
+[WebServer] (node:31948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 17 tests using 1 worker
+
+(node:31496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › e2e\layout-work.spec.ts:6:1 › Coach draft grows, shrinks and updates its cap after viewport changes (5.0s)
+  ok  2 [chromium] › e2e\layout-work.spec.ts:53:1 › Momo steps aside for the real log dialog and returns after it closes (3.0s)
+  ok  3 [chromium] › e2e\layout-work.spec.ts:69:1 › one scheduled Momo check shares obstacle reads with its speech check (2.0s)
+  ok  4 [chromium] › e2e\layout-work.spec.ts:92:1 › an absent floating Momo does not retry placement on every frame (1.9s)
+[WebServer] 3:25:51 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  5 [chromium] › e2e\momo-interlude.spec.ts:29:1 › a dense phone Today defers Momo without spending a visit (1.5s)
+  ok  6 [chromium] › e2e\momo-interlude.spec.ts:43:1 › Today opens before cameo code loads, and the original first-visit timing is kept (2.2s)
+[WebServer] 3:25:55 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  7 [chromium] › e2e\momo-interlude.spec.ts:62:3 › Momo arrives without taking focus and stays clear of navigation at 320px (1.8s)
+[WebServer] 3:25:56 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  8 [chromium] › e2e\momo-interlude.spec.ts:62:3 › Momo arrives without taking focus and stays clear of navigation at 390px (1.8s)
+[WebServer] 3:25:58 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  9 [chromium] › e2e\momo-interlude.spec.ts:62:3 › Momo arrives without taking focus and stays clear of navigation at 1440px (1.8s)
+  ok 10 [chromium] › e2e\momo-interlude.spec.ts:89:1 › Mute stops subsequent cameos and survives a reload (3.2s)
+  ok 11 [chromium] › e2e\momo-interlude.spec.ts:108:3 › respects existing Momo preferences {"muted":true} (1.7s)
+  ok 12 [chromium] › e2e\momo-interlude.spec.ts:108:3 › respects existing Momo preferences {"paused":true} (1.2s)
+  ok 13 [chromium] › e2e\momo-interlude.spec.ts:108:3 › respects existing Momo preferences {"activity":"off"} (1.8s)
+  ok 14 [chromium] › e2e\momo-interlude.spec.ts:115:1 › Calm uses a later static cameo and caps the session at two visits (2.3s)
+  ok 15 [chromium] › e2e\momo-interlude.spec.ts:129:1 › dialogs and text entry win over an active cameo (4.9s)
+  ok 16 [chromium] › e2e\momo-interlude.spec.ts:151:5 › touch cameos › dismissal preserves scroll clearance at 360×844 (2.2s)
+  ok 17 [chromium] › e2e\momo-interlude.spec.ts:151:5 › touch cameos › dismissal preserves scroll clearance at 844×390 (2.2s)
+
+  17 passed (47.3s)

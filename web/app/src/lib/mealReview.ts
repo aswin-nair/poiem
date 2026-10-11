@@ -1,5 +1,7 @@
 import type { FoodAnalysis } from '../types'
 
+type NutritionField = 'calories' | 'protein' | 'carbs' | 'fat'
+
 export function normalizeServings(value: number, fallback = 1): number {
   return Number.isFinite(value) ? Math.min(1000, Math.max(0.25, Math.round(value * 4) / 4)) : fallback
 }
@@ -21,5 +23,19 @@ export function scaleFoodAnalysis(base: FoodAnalysis, servings: number, current:
       carbs: Math.round(ingredient.carbs * servings * 10) / 10,
       fat: Math.round(ingredient.fat * servings * 10) / 10,
     })),
+  }
+}
+
+/** Reset one correction, preserving the stable bases of the other fields. */
+export function resetFoodAnalysisField(
+  original: FoodAnalysis,
+  base: FoodAnalysis,
+  current: FoodAnalysis,
+  servings: number,
+  field: NutritionField,
+): { base: FoodAnalysis; analysis: FoodAnalysis } {
+  return {
+    base: { ...base, [field]: original[field], ingredients: undefined },
+    analysis: { ...current, [field]: scaleFoodAnalysis(original, servings)[field], ingredients: undefined },
   }
 }

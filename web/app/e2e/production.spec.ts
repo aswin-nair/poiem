@@ -5,6 +5,14 @@ import { test, expect } from '@playwright/test'
  * Runs in the "production" project defined in playwright.config.ts.
  */
 test.describe('Production build', () => {
+  test('public entry routes setup and returning members under the app prefix', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('/')
+    await expect(page.getByRole('link', { name: 'Already a member? Sign in' })).toHaveAttribute('href', '/app/login?mode=signin')
+    await page.getByRole('link', { name: 'Start your journal' }).first().click()
+    await expect(page).toHaveURL(/\/app\/onboarding/)
+    await expect(page.getByRole('button', { name: 'Get started', exact: true })).toBeVisible()
+  })
   test('Poiem metadata, manifest and branding images resolve under /app/', async ({ page, request }) => {
     await page.goto('/app/login?mode=signup')
     await expect(page).toHaveTitle('Sign up · Poiem')

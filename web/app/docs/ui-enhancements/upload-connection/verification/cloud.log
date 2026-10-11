@@ -1,0 +1,32 @@
+[WebServer] [poiem] Cloud backend: /api is proxied to http://127.0.0.1:3001. Start the API first (from web/: npm run dev:all).
+[WebServer] (node:17412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+(node:26336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\connection-recovery.spec.ts:59:1 › offline then online clears the banner with an empty outbox and no new write (27.5s)
+  ok  2 e2e\connection-recovery.spec.ts:73:3 › cached account 429 stays honest and Check account preserves an open draft (14.0s)
+  ok  3 e2e\connection-recovery.spec.ts:73:3 › cached account 503 stays honest and Check account preserves an open draft (11.5s)
+  ok  4 e2e\connection-recovery.spec.ts:104:1 › a failed account GET recovers on foreground focus without an online event (10.8s)
+  ok  5 e2e\connection-recovery.spec.ts:120:1 › offline queued work retries the same mutation and clears only after acknowledgement (6.1s)
+  ok  6 e2e\connection-recovery.spec.ts:141:1 › a newer server copy requires explicit recovery and survives reconnect (10.1s)
+  ok  7 e2e\connection-recovery.spec.ts:166:1 › invalid successful account responses enter validation recovery, not offline mode (10.1s)
+  ok  8 e2e\connection-recovery.spec.ts:180:3 › a delayed 503 account check cannot override an acknowledged edit (10.9s)
+  ok  9 e2e\connection-recovery.spec.ts:180:3 › a delayed invalid account check cannot override an acknowledged edit (7.6s)
+[WebServer] 11:08:47 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 10 e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 390px light (5.2s)
+[WebServer] 11:08:50 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 11 e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 390px dark (3.2s)
+[WebServer] 11:08:53 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 12 e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 1440px light (3.6s)
+[WebServer] 11:08:57 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 13 e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 1440px dark (3.9s)
+  ok 14 e2e\photo-upload.spec.ts:98:1 › a large phone photo is prepared only on Analyze and fits the managed request limits (9.2s)
+  ok 15 e2e\photo-upload.spec.ts:134:1 › a failed analysis preserves the original large draft for reload and retry (11.6s)
+  ok 16 e2e\photo-upload.spec.ts:157:1 › stopping local image preparation sends no AI request and keeps the selected photo (6.7s)
+  ok 17 e2e\photo-upload.spec.ts:179:3 › EXIF rotation is applied once while keeping the entire frame (bitmap decoder) (5.2s)
+  ok 18 e2e\photo-upload.spec.ts:179:3 › EXIF rotation is applied once while keeping the entire frame (Image fallback) (2.7s)
+
+  18 passed (3.3m)

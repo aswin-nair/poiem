@@ -23,6 +23,10 @@ for (const viewport of [{ width: 320, height: 844 }, { width: 390, height: 844 }
       await settlePageLayout(page)
       const overflow = await page.evaluate(() => Math.max(document.body.scrollWidth, document.documentElement.scrollWidth) - document.documentElement.clientWidth)
       expect(overflow, `Horizontal overflow at step ${step + 1}`).toBeLessThanOrEqual(1)
+      const form = await page.locator('.k-setup-form').boundingBox()
+      const companion = await page.getByRole('complementary', { name: 'Your setup journey' }).boundingBox()
+      if (viewport.width < 960) expect(form!.y + form!.height).toBeLessThanOrEqual(companion!.y)
+      await expect(page.locator('.k-setup-progress-note')).toContainText(step === 7 ? 'Final step · one real meal' : `${7 - step} ${7 - step === 1 ? 'step' : 'steps'} after this`)
       if ([0, 3, 4, 6, 7].includes(step)) await page.screenshot({ path: testInfo.outputPath(`step-${step + 1}.png`), animations: 'disabled', fullPage: true })
       if (step === 0) await page.getByLabel('Date of birth').fill(birthdayYearsAgo(25))
       if (step === 4) {
@@ -93,7 +97,58 @@ test('small screens, enlarged text and keyboard navigation keep setup readable',
   await expect(page.getByRole('button', { name: /^Gain Weight/ })).toHaveAttribute('aria-pressed', 'true')
   await fits()
   await page.screenshot({ path: testInfo.outputPath('goal-large-text.png'), animations: 'disabled', fullPage: true })
+  for (let step = 3; step <= 5; step++) await page.getByRole('button', { name: 'Continue', exact: true }).click()
+  await page.getByRole('button', { name: 'Continue to first meal' }).click()
+  await fits()
+  await expect(page.getByRole('heading', { name: 'Log your first meal' })).toBeFocused()
+  const methods = page.getByRole('navigation', { name: 'Ways to log your first meal' })
+  for (const text of await methods.locator('.k-method-text').all()) {
+    expect(await text.evaluate(element => element.scrollWidth - element.clientWidth)).toBeLessThanOrEqual(1)
+  }
+  await page.screenshot({ path: testInfo.outputPath('first-meal-large-text.png'), animations: 'disabled', fullPage: true })
 })
+
+for (const theme of ['Light', 'Dark'] as const) {
+  test(`guest first-meal draft survives Back, reload and the AI sign-in path in ${theme.toLowerCase()}`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('/onboarding')
+    await page.getByRole('button', { name: 'Get started', exact: true }).click()
+    await page.getByRole('radio', { name: theme, exact: true }).check()
+    await page.getByLabel('Date of birth').fill(birthdayYearsAgo(25))
+    for (let step = 0; step < 6; step++) await page.getByRole('button', { name: 'Continue', exact: true }).click()
+    await page.getByRole('button', { name: 'Continue to first meal' }).click()
+
+    const methods = page.getByRole('navigation', { name: 'Ways to log your first meal' })
+    await expect(methods.getByRole('button', { name: /^Manual/ })).toBeVisible()
+    await expect(methods.getByRole('link', { name: /^Photo/ })).toHaveAttribute('href', '/login?setup=1')
+    await expect(methods.getByRole('link', { name: /^Describe/ })).toHaveAttribute('href', '/login?setup=1')
+    await expect(page.locator('.k-setup-method-context')).toContainText('Manual works now, without an account.')
+    for (const method of await methods.locator('button, a').all()) {
+      const box = await method.boundingBox()
+      expect(box!.height).toBeGreaterThanOrEqual(44)
+      expect(box!.width).toBeGreaterThanOrEqual(44)
+    }
+    await methods.getByRole('button', { name: /^Manual/ }).click()
+    await expect(page.getByLabel('Meal name')).toBeFocused()
+    await page.getByLabel('Meal name').fill('First soup')
+    await page.getByLabel('Calories', { exact: true }).fill('280')
+    await page.getByRole('button', { name: 'Back to Review', exact: true }).click()
+    await page.getByRole('button', { name: 'Continue to first meal' }).click()
+    await expect(page.getByLabel('Meal name')).toHaveValue('First soup')
+    await page.reload()
+    await expect(page.locator('.k-setup-resumed')).toHaveText('Welcome back. Your first meal step is ready to continue.')
+    await expect(page.getByLabel('Meal name')).toHaveValue('First soup')
+    await expect(page.getByLabel('Calories', { exact: true })).toHaveValue('280')
+    await expect(page.getByRole('heading', { name: 'Log your first meal' })).toBeFocused()
+    await expect(page.locator('.k-setup-total')).toContainText('280 kcal')
+    await methods.getByRole('link', { name: /^Photo/ }).click()
+    await expect(page).toHaveURL(/\/login\?setup=1$/)
+    await page.goBack()
+    await expect(page.getByRole('heading', { name: 'Log your first meal' })).toBeVisible()
+    await expect(page.getByLabel('Meal name')).toHaveValue('First soup')
+    await expect(page.getByLabel('Calories', { exact: true })).toHaveValue('280')
+  })
+}
 
 test('underage age gate offers a safe way to correct the date', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })

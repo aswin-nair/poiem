@@ -4,6 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { platform, release, cpus } from 'node:os'
+import { createHash } from 'node:crypto'
 import { VISUAL_USER, VISUAL_NOW, visualSeedState } from '../src/lib/visualSeed.ts'
 
 const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -12,6 +13,7 @@ const value = (flag, fallback) => process.argv.includes(flag) ? process.argv[pro
 const baseURL = value('--url', 'http://localhost:4298/app/')
 const output = resolve(value('--output', resolve(repoRoot, '.cache/interaction-trace.json')))
 const repetitions = Number(value('--repetitions', '10'))
+const cpuProfileDir = value('--cpu-profile-dir', null)
 const baseline = process.argv.includes('--baseline')
 if (!Number.isInteger(repetitions) || repetitions < 1) throw new Error('Repetitions must be a positive integer')
 const pieces = [...readFileSync(resolve(repoRoot, 'packages/product/src/wardrobe.ts'), 'utf8').matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1])
@@ -89,13 +91,29 @@ async function prepare(first = false, second = false) {
 async function measure(page, label, target, feedback, absent = false) {
   await target.waitFor({ state: 'visible' })
   await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))) })
-  await page.evaluate(({ feedback, absent }) => window.__interactionTrace.arm(feedback, absent), { feedback, absent })
-  await target.click()
-  await page.waitForFunction(() => window.__interactionTrace.result() !== null, undefined, { timeout: 10_000 })
-  // Let the observer deliver any completed task overlapping the feedback window.
-  await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 60)))
-  const result = await page.evaluate(() => window.__interactionTrace.result())
-  results.push({ interaction: label, ...result })
+  // Optional diagnosis only. Compare budgets in separate runs without profiling.
+  const profiler = cpuProfileDir ? await page.context().newCDPSession(page) : null
+  if (profiler) {
+    await profiler.send('Profiler.enable')
+    await profiler.send('Profiler.start')
+  }
+  try {
+    await page.evaluate(({ feedback, absent }) => window.__interactionTrace.arm(feedback, absent), { feedback, absent })
+    await target.click()
+    await page.waitForFunction(() => window.__interactionTrace.result() !== null, undefined, { timeout: 10_000 })
+    // Let the observer deliver any completed task overlapping the feedback window.
+    await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 60)))
+    const result = await page.evaluate(() => window.__interactionTrace.result())
+    results.push({ interaction: label, ...result })
+  } finally {
+    if (profiler) {
+      const { profile } = await profiler.send('Profiler.stop')
+      const directory = resolve(cpuProfileDir)
+      mkdirSync(directory, { recursive: true })
+      writeFileSync(resolve(directory, `${results.length}-${label}.cpuprofile`), JSON.stringify(profile))
+      await profiler.detach()
+    }
+  }
 }
 
 try {
@@ -139,6 +157,8 @@ const summary = [...new Set(results.map(result => result.interaction))].map(inte
 })
 const git = args => execFileSync('git', args, { cwd: repoRoot, encoding: 'utf8' }).trim()
 const report = { recordedAt: new Date().toISOString(), commit: value('--revision', git(['rev-parse', 'HEAD'])), harnessCommit: git(['rev-parse', 'HEAD']), dirty: Boolean(git(['status', '--porcelain'])),
+  harnessSha256: createHash('sha256').update(readFileSync(fileURLToPath(import.meta.url))).digest('hex'),
+  cpuProfileDir: cpuProfileDir ? resolve(cpuProfileDir) : null,
   browser: browser.version(), device: { os: platform(), release: release(), cpu: cpus()[0]?.model, viewport: '390×844', cpuThrottle: 4 },
   baseURL, repetitions, baseline, method: 'Trusted click capture → first present/absent feedback DOM with nonzero opacity → following real rAF (conservative paint proxy). Long tasks overlap that window; excludes initial loading. Cold navigation per sample; no fake performance clock. Coach response is mocked; send metric is local message feedback, not model latency. Baseline mode accepts retired dialogs/toasts as its save acknowledgement.',
   budgets: { p95Ms: 100, attributableLongTasks: 0 }, summary, results, errors }

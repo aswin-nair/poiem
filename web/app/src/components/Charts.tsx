@@ -1,10 +1,14 @@
+import { useEffect, useRef } from 'react'
+import type { InsightDay } from '../lib/insights'
+import { insightDayLabel } from '../lib/insights'
+
 function ChartDataTable({
   caption,
   rows,
   unit = '',
 }: {
   caption: string
-  rows: { label: string; value: number }[]
+  rows: { label: string; value: number | null }[]
   unit?: string
 }) {
   return (
@@ -20,7 +24,7 @@ function ChartDataTable({
         {rows.map(row => (
           <tr key={row.label}>
             <th scope="row">{row.label}</th>
-            <td>{row.value}</td>
+            <td>{row.value ?? 'Not logged'}</td>
           </tr>
         ))}
       </tbody>
@@ -229,16 +233,34 @@ export function ProgressLineChart({
 export function ProgressBarChart({
   bars,
   goal,
+  selectedDayKey,
+  onSelectDay,
 }: {
-  bars: { label: string; value: number }[]
+  bars: InsightDay[]
   goal?: number
+  selectedDayKey: string
+  onSelectDay: (dayKey: string) => void
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const dayRefs = useRef<(HTMLButtonElement | null)[]>([])
+  useEffect(() => {
+    const scroller = scrollRef.current
+    const button = dayRefs.current[bars.findIndex(day => day.dayKey === selectedDayKey)]
+    if (!scroller || !button) return
+    // Move only the chart's own viewport; inspecting a day never jumps the page.
+    const left = button.getBoundingClientRect().left - scroller.getBoundingClientRect().left + scroller.scrollLeft
+    const right = left + button.offsetWidth
+    if (left < scroller.scrollLeft) scroller.scrollLeft = left
+    else if (right > scroller.scrollLeft + scroller.clientWidth) scroller.scrollLeft = right - scroller.clientWidth
+  }, [bars, selectedDayKey])
+
   if (bars.length === 0) return <p className="chart-empty">No calorie data in this range</p>
 
   const maxVal = Math.max(...bars.map(b => b.value), goal ?? 0, 4000)
   const yMax = Math.ceil(maxVal / 500) * 500
   const h = 180
-  const w = 340
+  // Each bar is a real 44px control, even when the month chart needs scrolling.
+  const w = Math.max(340, bars.length * 48 + 46)
   const padL = 38
   const padR = 8
   const padT = 20
@@ -253,6 +275,8 @@ export function ProgressBarChart({
 
   return (
     <div className="progress-chart-wrap">
+      <div className="insights-chart-scroll" ref={scrollRef}>
+      <div className="insights-chart-plot" style={{ minWidth: w }}>
       <svg viewBox={`0 0 ${w} ${h}`} className="progress-bar-chart" aria-hidden>
         <defs>
           <linearGradient id="bar-grad" x1="0" y1="0" x2="0" y2="1">
@@ -279,17 +303,20 @@ export function ProgressBarChart({
           const x = padL + (i + 0.5) * (chartW / bars.length) - barW / 2
           const y = padT + chartH - barH
           return (
-            <g key={b.label}>
+            <g key={b.dayKey}>
               <rect
                 x={x} y={padT} width={barW} height={trackH}
-                rx="4" fill="var(--k-sunken)"
+                fill={b.logged ? 'var(--k-sunken)' : 'none'}
+                stroke={b.logged ? 'none' : 'var(--k-hair-strong)'}
+                strokeDasharray={b.logged ? undefined : '3 3'}
               />
               {b.value > 0 && (
                 <rect
                   x={x} y={y} width={barW} height={barH}
-                  rx="4" fill="url(#bar-grad)"
+                  fill="url(#bar-grad)"
                 />
               )}
+              {b.logged && b.value === 0 && <line x1={x} y1={padT + chartH} x2={x + barW} y2={padT + chartH} stroke="var(--k-action)" strokeWidth="4" />}
               {showLabels && b.value > 0 && (
                 <text
                   x={x + barW / 2} y={y - 4}
@@ -315,7 +342,32 @@ export function ProgressBarChart({
           </g>
         )}
       </svg>
-      <ChartDataTable caption="Calories by day" rows={bars} />
+      <div className="insights-chart-controls" style={{ left: `${padL / w * 100}%`, right: `${padR / w * 100}%`, top: `${padT / h * 100}%`, bottom: `${padB / h * 100}%`, gridTemplateColumns: `repeat(${bars.length}, minmax(44px, 1fr))` }} role="group" aria-label="Inspect a calorie chart day">
+        {bars.map((day, index) => (
+          <button
+            key={day.dayKey}
+            ref={node => { dayRefs.current[index] = node }}
+            type="button"
+            className="insights-chart-day"
+            aria-label={`Inspect ${insightDayLabel(day.dayKey)}: ${day.logged ? `${day.value.toLocaleString()} kcal logged` : 'not logged'}`}
+            aria-pressed={day.dayKey === selectedDayKey}
+            tabIndex={day.dayKey === selectedDayKey ? 0 : -1}
+            onClick={() => onSelectDay(day.dayKey)}
+            onKeyDown={event => {
+              const next = event.key === 'ArrowLeft' ? Math.max(0, index - 1)
+                : event.key === 'ArrowRight' ? Math.min(bars.length - 1, index + 1)
+                : event.key === 'Home' ? 0 : event.key === 'End' ? bars.length - 1 : null
+              if (next == null) return
+              event.preventDefault()
+              onSelectDay(bars[next].dayKey)
+              dayRefs.current[next]?.focus({ preventScroll: true })
+            }}
+          />
+        ))}
+      </div>
+      </div>
+      </div>
+      <ChartDataTable caption="Calories by day" rows={bars.map(day => ({ label: insightDayLabel(day.dayKey), value: day.logged ? day.value : null }))} unit="kcal" />
     </div>
   )
 }

@@ -1,0 +1,214 @@
+{
+  "recordedAt": "2026-10-10T08:21:32.237Z",
+  "commit": "131bd0d74ebdef897e31e962377f295f758ce927",
+  "harnessCommit": "131bd0d74ebdef897e31e962377f295f758ce927",
+  "dirty": true,
+  "browser": "149.0.7827.55",
+  "device": {
+    "os": "win32",
+    "release": "10.0.26200",
+    "cpu": "Snapdragon(R) X 10-core X1P64100 @ 3.40 GHz",
+    "viewport": "390×844",
+    "cpuThrottle": 4
+  },
+  "baseURL": "http://localhost:5199/app/",
+  "repetitions": 1,
+  "baseline": false,
+  "method": "Trusted click capture → first present/absent feedback DOM with nonzero opacity → following real rAF (conservative paint proxy). Long tasks overlap that window; excludes initial loading. Cold navigation per sample; no fake performance clock. Coach response is mocked; send metric is local message feedback, not model latency. Baseline mode accepts retired dialogs/toasts as its save acknowledgement.",
+  "budgets": {
+    "p95Ms": 100,
+    "attributableLongTasks": 0
+  },
+  "summary": [
+    {
+      "interaction": "sheet-open",
+      "samples": 1,
+      "p95Ms": 1046.9000000059605,
+      "longTasks": 3
+    },
+    {
+      "interaction": "sheet-close",
+      "samples": 1,
+      "p95Ms": 47.400000005960464,
+      "longTasks": 0
+    },
+    {
+      "interaction": "manual-save",
+      "samples": 1,
+      "p95Ms": 943.5999999940395,
+      "longTasks": 4
+    },
+    {
+      "interaction": "saved-relog",
+      "samples": 1,
+      "p95Ms": 1119.2999999970198,
+      "longTasks": 5
+    },
+    {
+      "interaction": "first-meal-moment",
+      "samples": 1,
+      "p95Ms": 953,
+      "longTasks": 3
+    },
+    {
+      "interaction": "second-log-toast",
+      "samples": 1,
+      "p95Ms": 867,
+      "longTasks": 3
+    },
+    {
+      "interaction": "coach-send",
+      "samples": 1,
+      "p95Ms": 390.79999999701977,
+      "longTasks": 1
+    }
+  ],
+  "results": [
+    {
+      "interaction": "sheet-open",
+      "selector": "[role=\"dialog\"]",
+      "absent": false,
+      "start": 3523.199999988079,
+      "end": 4570.0999999940395,
+      "feedbackMs": 1046.9000000059605,
+      "longTasks": [
+        {
+          "start": 3453.5999999940395,
+          "duration": 195
+        },
+        {
+          "start": 4306.0999999940395,
+          "duration": 127
+        },
+        {
+          "start": 4433.0999999940395,
+          "duration": 71
+        }
+      ]
+    },
+    {
+      "interaction": "sheet-close",
+      "selector": "[role=\"dialog\"]",
+      "absent": true,
+      "start": 4914.199999988079,
+      "end": 4961.5999999940395,
+      "feedbackMs": 47.400000005960464,
+      "longTasks": []
+    },
+    {
+      "interaction": "manual-save",
+      "selector": ".k-log-moment",
+      "absent": false,
+      "start": 2430.1000000089407,
+      "end": 3373.7000000029802,
+      "feedbackMs": 943.5999999940395,
+      "longTasks": [
+        {
+          "start": 2378.4000000059605,
+          "duration": 110
+        },
+        {
+          "start": 2853.7000000029802,
+          "duration": 134
+        },
+        {
+          "start": 3062.1000000089407,
+          "duration": 160
+        },
+        {
+          "start": 3223,
+          "duration": 92
+        }
+      ]
+    },
+    {
+      "interaction": "saved-relog",
+      "selector": ".k-log-moment, .toast",
+      "absent": false,
+      "start": 2764.0999999940395,
+      "end": 3883.3999999910593,
+      "feedbackMs": 1119.2999999970198,
+      "longTasks": [
+        {
+          "start": 2697.7000000029802,
+          "duration": 299
+        },
+        {
+          "start": 3123.0999999940395,
+          "duration": 148
+        },
+        {
+          "start": 3462.5999999940395,
+          "duration": 115
+        },
+        {
+          "start": 3634.5,
+          "duration": 123
+        },
+        {
+          "start": 3758.7000000029802,
+          "duration": 71
+        }
+      ]
+    },
+    {
+      "interaction": "first-meal-moment",
+      "selector": ".k-log-moment",
+      "absent": false,
+      "start": 2234.3999999910593,
+      "end": 3187.3999999910593,
+      "feedbackMs": 953,
+      "longTasks": [
+        {
+          "start": 2198.8999999910593,
+          "duration": 131
+        },
+        {
+          "start": 2946,
+          "duration": 139
+        },
+        {
+          "start": 3085.7999999970198,
+          "duration": 56
+        }
+      ]
+    },
+    {
+      "interaction": "second-log-toast",
+      "selector": ".toast",
+      "absent": false,
+      "start": 2526.1000000089407,
+      "end": 3393.1000000089407,
+      "feedbackMs": 867,
+      "longTasks": [
+        {
+          "start": 2451.7000000029802,
+          "duration": 216
+        },
+        {
+          "start": 2823.9000000059605,
+          "duration": 81
+        },
+        {
+          "start": 3122.1000000089407,
+          "duration": 121
+        }
+      ]
+    },
+    {
+      "interaction": "coach-send",
+      "selector": ".k-coach-thread article",
+      "absent": false,
+      "start": 2355.2000000029802,
+      "end": 2746,
+      "feedbackMs": 390.79999999701977,
+      "longTasks": [
+        {
+          "start": 2311.5999999940395,
+          "duration": 393
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

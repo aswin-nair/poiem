@@ -49,12 +49,13 @@ test('settings search supports keyboard jumps and immediately saved preferences'
   await expect(search).toHaveValue('')
 
   await search.fill('momo')
-  await finder.getByRole('link', { name: /Momo/ }).click()
-  await expect(page.locator('#you-momo')).toBeFocused()
+  await finder.getByRole('link', { name: /^Show Momo/ }).click()
+  await expect(page.getByRole('switch', { name: 'Show Momo' })).toBeFocused()
   await page.getByRole('switch', { name: 'Mute Momo' }).setChecked(true)
   await search.fill('password')
   await finder.getByRole('link', { name: /Account/ }).click()
-  await expect(page.locator('#you-account')).toBeFocused()
+  await expect(page.locator('#setting-account-identity')).toBeFocused()
+  await expect(page.getByRole('status').filter({ hasText: 'Password fields are available' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Save settings' })).toHaveCount(0)
   await openYouDestination(page, 'Momo')
   await expect(page.getByRole('switch', { name: 'Mute Momo' })).toBeChecked()
@@ -70,7 +71,7 @@ test('settings search supports keyboard jumps and immediately saved preferences'
   await expect(search).toHaveValue('')
   await expect(finder.getByRole('link')).toHaveCount(0)
   await search.fill('AI key')
-  await expect(finder.getByRole('link', { name: /AI setup/ })).toBeVisible()
+  await expect(finder.getByRole('link', { name: /^API key/ })).toBeVisible()
 })
 
 async function persistedSettings(page: Page) {
@@ -112,7 +113,9 @@ test('immediate preferences preserve invalid profile and AI drafts until explici
   await page.getByRole('switch', { name: 'Sound', exact: true }).uncheck()
   await expect(page.getByRole('switch', { name: 'Haptics', exact: true })).toBeChecked()
   await expect(page.locator('.you-save-bar')).toContainText('Unsaved profile and AI changes')
-  await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toBeDisabled()
+  await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toBeEnabled()
+  await page.getByRole('button', { name: 'Save settings', exact: true }).click()
+  await expect(page.getByRole('spinbutton', { name: 'Height', exact: true })).toBeFocused()
   await expect.poll(async () => (await persistedSettings(page)).state.profile).toMatchObject({
     name: account.name,
     heightCm: Number(appliedHeight),
@@ -139,7 +142,7 @@ test('immediate preferences preserve invalid profile and AI drafts until explici
   await page.getByRole('button', { name: 'Save settings', exact: true }).click()
   await expect(page).toHaveURL(/panel=ai/)
   await expect(page.locator('#ai-setup-error')).toBeVisible()
-  await expect(page.locator('#ai-setup-error')).toBeFocused()
+  await expect(page.getByLabel('API endpoint', { exact: true })).toBeFocused()
   await page.getByLabel('API endpoint', { exact: true }).fill('https://custom-ai.example/v1/chat/completions')
   await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toHaveCount(0)
   await openYouDestination(page, 'Preferences')

@@ -4,10 +4,12 @@ export function SettingsRow({
   label,
   hint,
   children,
+  searchId,
 }: {
   label: string
   hint?: string
   children: ReactNode
+  searchId?: string
 }) {
   const id = useId()
   const labelId = `${id}-label`
@@ -20,7 +22,7 @@ export function SettingsRow({
     : children
 
   return (
-    <div className="settings-row">
+    <div className="settings-row" id={searchId} tabIndex={searchId ? -1 : undefined}>
       <div className="settings-row-labels">
         <span className="settings-row-label" id={labelId}>{label}</span>
         {hint && <span className="settings-row-hint" id={hintId}>{hint}</span>}

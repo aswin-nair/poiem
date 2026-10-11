@@ -1,0 +1,298 @@
+[
+  {
+    "screen": "today",
+    "width": 390,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 99.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 287.375,
+        "height": 157.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 460.96875,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 735.53125,
+        "height": 669.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 390,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 99.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 287.375,
+        "height": 157.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 460.96875,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 735.53125,
+        "height": 669.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 923.15625,
+        "height": 159.1875
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 390,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 1326.96875,
+        "height": 274.578125
+      }
+    ]
+  },
+  {
+    "screen": "today",
+    "width": 390,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 99.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 287.375,
+        "height": 157.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 460.96875,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 735.53125,
+        "height": 669.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 390,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 99.78125
+      },
+      {
+        "selector": "k-ring",
+        "y": 287.375,
+        "height": 157.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 460.96875,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 735.53125,
+        "height": 669.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 923.15625,
+        "height": 159.1875
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 390,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 1326.96875,
+        "height": 274.578125
+      }
+    ]
+  },
+  {
+    "screen": "today",
+    "width": 1440,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 149.1875
+      },
+      {
+        "selector": "k-ring",
+        "y": 344.78125,
+        "height": 181.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 550.375,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 669.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 1440,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 149.1875
+      },
+      {
+        "selector": "k-ring",
+        "y": 344.78125,
+        "height": 181.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 550.375,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 669.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 882.75,
+        "height": 148
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 1440,
+    "theme": "light",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 542,
+        "height": 281.96875
+      }
+    ]
+  },
+  {
+    "screen": "today",
+    "width": 1440,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 149.1875
+      },
+      {
+        "selector": "k-ring",
+        "y": 344.78125,
+        "height": 181.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 550.375,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 669.59375
+      }
+    ]
+  },
+  {
+    "screen": "picker",
+    "width": 1440,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "k-momo",
+        "y": 171.59375,
+        "height": 149.1875
+      },
+      {
+        "selector": "k-ring",
+        "y": 344.78125,
+        "height": 181.59375
+      },
+      {
+        "selector": "k-surface is-hero k-budget",
+        "y": 550.375,
+        "height": 163.375
+      },
+      {
+        "selector": "k-section k-meals",
+        "y": 171.59375,
+        "height": 669.59375
+      },
+      {
+        "selector": "k-methods",
+        "y": 882.75,
+        "height": 148
+      }
+    ]
+  },
+  {
+    "screen": "review",
+    "width": 1440,
+    "theme": "dark",
+    "overflow": 0,
+    "regions": [
+      {
+        "selector": "flow-review-summary",
+        "y": 542,
+        "height": 281.96875
+      }
+    ]
+  }
+]

@@ -42,7 +42,14 @@ export function LogMoment({ plan, foodName, outfit, showMomo, onUndo, onDone, on
     if (!element || !onHeight) return
     const measure = () => onHeight(Math.ceil(element.getBoundingClientRect().height))
     measure()
-    const observer = new ResizeObserver(measure)
+    const observer = new ResizeObserver(entries => {
+      const entry = entries.find(item => item.target === element)
+      const height = entry?.borderBoxSize?.[0]?.blockSize
+      // ResizeObserver already measured the box. Preserve the initial
+      // before-paint read and fall back on older engines without box sizes.
+      if (height !== undefined && Number.isFinite(height) && height > 0) onHeight(Math.ceil(height))
+      else measure()
+    })
     observer.observe(element)
     return () => observer.disconnect()
   }, [onHeight])

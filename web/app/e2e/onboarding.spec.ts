@@ -16,7 +16,9 @@ test.describe('Onboarding activation', () => {
     await expect(page.getByRole('heading', { name: 'Save your progress' })).toBeVisible()
     await expect(page.locator('.k-meal-row').filter({ hasText: 'Guest yogurt bowl' })).toBeVisible()
     await expect(page.getByLabel('Main')).toHaveCount(0)
-    await expect(page.getByRole('button', { name: 'Continue' })).toBeVisible()
+    const saveProgress = page.getByRole('region', { name: 'Save your progress' })
+    await expect(saveProgress.getByRole('button', { name: 'Create account', exact: true })).toBeVisible()
+    await expect(saveProgress.getByRole('button', { name: 'Sign in', exact: true })).toBeVisible()
   })
 
   test('requires an explicit adult birthday and persists an under-age block', async ({ page }) => {
@@ -51,6 +53,7 @@ test.describe('Onboarding activation', () => {
     await page.reload()
     await expect(page.getByRole('heading', { name: 'Your body' })).toBeVisible()
     await expect(page.getByLabel('Height (cm)')).toHaveValue('182')
+    await expect(page.locator('.k-setup-resumed')).toHaveText('Welcome back. Your body step is ready to continue.')
 
     await page.getByRole('button', { name: 'Continue', exact: true }).click()
     await expect(page.getByRole('heading', { name: 'Your goal' })).toBeVisible()

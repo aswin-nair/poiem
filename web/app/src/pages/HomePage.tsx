@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useReducedMotion } from 'motion/react'
@@ -57,6 +57,29 @@ const MEAL_ICONS: Record<MealType, typeof IconMeal> = {
   breakfast: IconBreakfast, lunch: IconLunch, dinner: IconDinner, snack: IconCarbs, other: IconMeal,
 }
 
+// Receipt timers, Water and calendar controls do not change an existing meal.
+// Default comparison retains every entry field; an edited/restored entry gets
+// its new object and redraws. No custom comparator can hide a changed prop.
+const TodayMealRow = memo(function TodayMealRow({ entry, fresh, onEdit, onTap, onDelete }: {
+  entry: FoodEntry
+  fresh: boolean
+  onEdit: (id: string) => void
+  onTap: (id: string) => void
+  onDelete: (entry: FoodEntry) => void
+}) {
+  return <SwipeRow label={entry.name} actions={[
+    { label: 'Edit', onAct: () => onEdit(entry.id) },
+    { label: 'Delete', tone: 'danger', onAct: () => onDelete(entry) },
+  ]}>
+    <MealRow
+      name={entry.name} fresh={fresh} onClick={() => onTap(entry.id)}
+      tile={<span className={`k-food-tile is-tone-${foodToneFor(entry.name)}`}><FoodIcon emoji={entry.emoji} name={entry.name} size={20} /></span>}
+      meta={`${entryTime(entry)} · P ${Math.round(entry.protein)} · C ${Math.round(entry.carbs)} · F ${Math.round(entry.fat)}`}
+      kcal={`${Math.round(entry.calories)} kcal`}
+    />
+  </SwipeRow>
+})
+
 /**
  * Today: Momo says hello, the number that matters sits on a bright card, and
  * meals are grouped the way the day went, each in its own colour. The ongoing
@@ -70,6 +93,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const feel = useFeel()
   const budgetAnchor = useAnchor('calorie_ring')
   const [selectedDate, setSelectedDate] = useState(() => journalDayFromNavState(location.state) ?? startOfDay())
+  function selectJournalDate(date: Date) {
+    setSelectedDate(date)
+    // Keep only the chosen day in navigation context so an expired session can resume it.
+    navigate('/', { replace: true, state: { journalDay: localDayKey(date) } })
+  }
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)
   // Retain clearance until Today unmounts: dismissing a card at the scroll end must not jump the page.
@@ -99,15 +127,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
 
   const profile = state.profile
   const paused = Boolean(profile.trackingPaused)
-  const dayEntries = entriesForDay(state.foodEntries, selectedDate)
-  const totals = macroTotals(dayEntries)
-  const groups = groupEntriesByMeal(dayEntries)
+  const dayEntries = useMemo(() => entriesForDay(state.foodEntries, selectedDate), [state.foodEntries, selectedDate])
+  const totals = useMemo(() => macroTotals(dayEntries), [dayEntries])
+  const groups = useMemo(() => groupEntriesByMeal(dayEntries), [dayEntries])
   const budget = calorieBudget(totals.calories, effectiveCalories(profile))
   const selectedDayKey = localDayKey(selectedDate)
   const dayLabel = formatDayLabel(selectedDate)
   const isToday = sameDay(selectedDate, new Date())
   const snapshotLabel = isToday ? 'Today’s snapshot' : dayLabel === 'Yesterday' ? 'Yesterday’s snapshot' : `${dayLabel} snapshot`
-  const hasLoggedToday = state.foodEntries.some(entry => sameDay(new Date(entry.timestamp), new Date()))
+  // Include the current local calendar key: an unrelated update after midnight
+  // must still refresh Today status with the same immutable entry array.
+  const currentDayKey = localDayKey(new Date())
+  const hasLoggedToday = useMemo(() => state.foodEntries.some(entry => localDayKey(entry.timestamp) === currentDayKey), [state.foodEntries, currentDayKey])
   const water = state.gamification.waterByDate[selectedDayKey] ?? 0
   const notes = state.gamification.notesByDate[selectedDayKey] ?? 0
   const loggedDays = useMemo(() => new Set(state.foodEntries.map(entry => localDayKey(entry.timestamp))), [state.foodEntries])
@@ -257,13 +288,15 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     navigate('/log', { state: { background: location, mealType } })
   }
 
-  function removeMeal(entry: FoodEntry) {
+  const removeMeal = useCallback((entry: FoodEntry) => {
     deleteEntry(entry.id)
     toast(`Removed ${entry.name}`, {
       type: 'info',
       action: { label: 'Undo', fn: () => restoreEntry(entry) },
     })
-  }
+  }, [deleteEntry, toast, restoreEntry])
+  const editMeal = useCallback((id: string) => navigate(`/edit/${id}`), [navigate])
+  const tapMeal = useCallback((id: string) => { feel('tap'); navigate(`/edit/${id}`) }, [feel, navigate])
 
   function changeWater(next: number) {
     feel('water')
@@ -303,7 +336,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
         <div className="k-week" data-mascot-avoid>
           <WeekStrip
             selectedDate={selectedDate}
-            onSelect={setSelectedDate}
+            onSelect={selectJournalDate}
             loggedDays={loggedDays}
             frozenDays={frozenDays}
             showWeekNav={false}
@@ -314,7 +347,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
       {showDatePicker && (
         <DatePickerModal
           selectedDate={selectedDate}
-          onSelect={setSelectedDate}
+          onSelect={selectJournalDate}
           onClose={() => setShowDatePicker(false)}
         />
       )}
@@ -335,33 +368,17 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   <Surface variant="outlined" as="section" className="k-notice" aria-labelledby="guest-title">
                     <p className="k-eyebrow">Your first log is here</p>
                     <h2 id="guest-title">Save your progress</h2>
-                    <p>Continue to create an account and keep this device copy available across sign-in.</p>
+                    <p>Your first meal is saved on this device. Create an account to keep this start, or sign in to your existing journal.</p>
                     <div className="k-notice-actions">
                       <button type="button" className="k-button is-primary" onClick={() => navigate('/login?mode=signup&claim=1')}>
-                        Continue
+                        Create account
                       </button>
                       <button type="button" className="k-text-button" onClick={() => navigate('/login?mode=signin&claim=1')}>
-                        I already have an account
+                        Sign in
                       </button>
                     </div>
                   </Surface>
                 )}
-
-                {showMomo && (
-                  <TodayMomo
-                    greeting={greeting}
-                    outfit={state.gamification.outfit}
-                    roasts={Boolean(profile.mascotRoasts)}
-                    onRoast={() => mascotEvent('poke')}
-                  />
-                )}
-
-                <DayRing
-                  progress={ring}
-                  justClosed={isToday && ringCheck !== null}
-                  closeMs={ringCheck ?? RING_CHECK_MS}
-                  note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
-                />
 
                 <Surface
                   variant="hero"
@@ -390,6 +407,11 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                     <span className="tabular">{budget.consumed.toLocaleString()} eaten</span>
                     <span className="tabular">{budget.target.toLocaleString()} guide</span>
                   </p>
+                  {isToday && !guest && (
+                    <button type="button" className="k-button is-primary k-budget-action" data-action-play="submit" onClick={() => openLog()}>
+                      <IconPlus size={20} aria-hidden="true" /> Log a meal
+                    </button>
+                  )}
                 </Surface>
 
                 <section className="k-macros" aria-label="Macros">
@@ -429,30 +451,15 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   if (!isToday && group.entries.length === 0) return null
                   const GroupIcon = MEAL_ICONS[group.type]
                   return (
-                    <section key={group.type} className={`k-meal-group is-${group.type}`} aria-labelledby={`meal-${group.type}`}>
+                    <section key={group.type} className={`k-meal-group is-${group.type}${group.entries.length === 0 ? ' is-empty' : ''}`} aria-labelledby={`meal-${group.type}`}>
                       <header className="k-meal-head">
                         <span className="k-meal-icon" aria-hidden="true"><GroupIcon size={16} /></span>
                         <h3 id={`meal-${group.type}`}>{group.label}</h3>
                         {group.entries.length > 0 && <span className="tabular">{group.calories.toLocaleString()} kcal</span>}
                       </header>
                       {group.entries.map(entry => (
-                        <SwipeRow
-                          key={entry.id}
-                          label={entry.name}
-                          actions={[
-                            { label: 'Edit', onAct: () => navigate(`/edit/${entry.id}`) },
-                            { label: 'Delete', tone: 'danger', onAct: () => removeMeal(entry) },
-                          ]}
-                        >
-                          <MealRow
-                            name={entry.name}
-                            fresh={entry.id === freshId}
-                            onClick={() => { feel('tap'); navigate(`/edit/${entry.id}`) }}
-                            tile={<span className={`k-food-tile is-tone-${foodToneFor(entry.name)}`}><FoodIcon emoji={entry.emoji} name={entry.name} size={20} /></span>}
-                            meta={`${entryTime(entry)} · P ${Math.round(entry.protein)} · C ${Math.round(entry.carbs)} · F ${Math.round(entry.fat)}`}
-                            kcal={`${Math.round(entry.calories)} kcal`}
-                          />
-                        </SwipeRow>
+                        <TodayMealRow key={entry.id} entry={entry} fresh={entry.id === freshId}
+                          onEdit={editMeal} onTap={tapMeal} onDelete={removeMeal} />
                       ))}
                       {isToday && !guest && (
                         <button type="button" className="k-add-row" onClick={() => openLog(group.type)}>
@@ -463,11 +470,27 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   )
                 })}
                 {!isToday && (
-                  <button type="button" className="k-button k-back-today" onClick={() => setSelectedDate(startOfDay())}>
+                  <button type="button" className="k-button k-back-today" onClick={() => selectJournalDate(startOfDay())}>
                     Back to today
                   </button>
                 )}
               </Section>
+              <div className="k-today-companion">
+                {showMomo && (
+                  <TodayMomo
+                    greeting={greeting}
+                    outfit={state.gamification.outfit}
+                    roasts={Boolean(profile.mascotRoasts)}
+                    onRoast={() => mascotEvent('poke')}
+                  />
+                )}
+                <DayRing
+                  progress={ring}
+                  justClosed={isToday && ringCheck !== null}
+                  closeMs={ringCheck ?? RING_CHECK_MS}
+                  note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
+                />
+              </div>
                 {isToday && !guest && (
                   <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">
                     <div className="k-water-block">

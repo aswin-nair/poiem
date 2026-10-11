@@ -3,6 +3,7 @@ import type { MomoExpression } from '../mascot/expressions'
 
 export type MomoPlayTarget = 'title' | 'water' | 'saved' | 'insights' | 'journey'
 export type MomoPlayAction = 'tap' | 'navigate' | 'select' | 'water' | 'save' | 'submit' | 'remove'
+export type MomoInterludeStory = 'ticket-plane' | 'heading-polish' | 'saved-waiter'
 export interface MomoInterludeContext { target?: MomoPlayTarget; action?: MomoPlayAction }
 export interface MomoInterludeEntry {
   id: string
@@ -10,6 +11,7 @@ export interface MomoInterludeEntry {
   expression: MomoExpression
   target?: MomoPlayTarget
   action?: MomoPlayAction
+  story?: MomoInterludeStory
 }
 
 /** Local lines react to the interface, never meals, targets, bodies or private data. */
@@ -49,6 +51,9 @@ export const MOMO_INTERLUDES: ReadonlyArray<MomoInterludeEntry> = [
   { id: 'journey-step', target: 'journey', line: 'One tiny step. Then a completely optional dance.', expression: 'happy' },
   { id: 'journey-sign', target: 'journey', line: 'Borrowed the sign. Returning it with extra flair.', expression: 'proud' },
   { id: 'journey-map', target: 'journey', line: 'The map says: a little nonsense goes here.', expression: 'curious' },
+  { id: 'heading-polish', target: 'title', story: 'heading-polish', line: 'Polished the sign. The letters now have tiny shoes.', expression: 'proud' },
+  { id: 'ticket-plane', action: 'submit', story: 'ticket-plane', line: 'This ticket has decided to pursue aviation.', expression: 'surprised' },
+  { id: 'saved-waiter', action: 'save', target: 'saved', story: 'saved-waiter', line: 'One star, served with unreasonable elegance.', expression: 'proud' },
   { id: 'action-tap', action: 'tap', line: 'That tap had excellent comedic timing.', expression: 'wink' },
   { id: 'action-navigate', action: 'navigate', line: 'Plot twist: another screen. I brought a prop.', expression: 'surprised' },
   { id: 'action-select', action: 'select', line: 'A choice! I shall add tiny jazz hands.', expression: 'happy' },
@@ -108,8 +113,11 @@ export function nextMomoInterlude(ledger: MomoInterludeLedger, rng: () => number
   const unseen = MOMO_INTERLUDES.filter(entry => !ledger.seen.includes(entry.id))
   const pool = unseen.length ? unseen : MOMO_INTERLUDES
   const actionPool = context?.action ? pool.filter(entry => entry.action === context.action) : []
+  // A new task prop gets its turn before the older one-line action reactions.
+  // Once seen, the ordinary pool still gives this session variety.
+  const actionStories = actionPool.filter(entry => entry.story)
   const targetPool = context?.target ? pool.filter(entry => entry.target === context.target && !entry.action) : []
-  const candidates = actionPool.length ? actionPool : targetPool.length ? targetPool : pool
+  const candidates = actionStories.length ? actionStories : actionPool.length ? actionPool : targetPool.length ? targetPool : pool
   const entry = candidates[Math.min(candidates.length - 1, Math.floor(roll(rng) * candidates.length))]
   return {
     entry,

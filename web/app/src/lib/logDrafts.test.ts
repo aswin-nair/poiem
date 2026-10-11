@@ -158,6 +158,26 @@ describe('food logging drafts', () => {
     })
   })
 
+  it('retains the immutable estimate separately from corrected values and rejects an unsafe original', () => {
+    const correctedBase = { ...analysis, calories: 490, protein: 25 }
+    const draft = {
+      analysis: { ...correctedBase, calories: 735, protein: 37.5 },
+      baseAnalysis: correctedBase,
+      originalAnalysis: analysis,
+      mealType: 'snack' as const,
+      servings: 1.5,
+      source: 'textInput' as const,
+      emptyNumericFields: [],
+    }
+    expect(saveReviewLogDraft('person-a', draft)).toBe(true)
+    const restored = loadLogDrafts('person-a').review
+    expect(restored?.originalAnalysis?.calories).toBe(520)
+    expect(restored?.baseAnalysis.calories).toBe(490)
+    expect(restored?.analysis.calories).toBe(735)
+    expect(saveReviewLogDraft('person-a', { ...draft, originalAnalysis: { ...analysis, calories: -1 } })).toBe(false)
+    expect(loadLogDrafts('person-a').review?.originalAnalysis?.calories).toBe(520)
+  })
+
   it('quarantines malformed draft data instead of hydrating it', () => {
     const [key, recovery] = logDraftStorageKeys('person-a')
     localStorage.setItem(key, JSON.stringify({ version: 1, review: { analysis: { calories: -1 } } }))
@@ -286,6 +306,20 @@ describe('food logging drafts in IndexedDB', () => {
 
     await resetLogDraftRuntime()
     expect(await hydrateLogDrafts('person-a')).toEqual({ version: 1 })
+  })
+
+  it('keeps a cleared meal description when reload beats the IndexedDB commit', async () => {
+    saveTextLogDraft('person-a', 'Vegetable soup and bread')
+    saveManualLogDraft('person-a', {
+      name: 'Soup draft', calories: '120', protein: '', carbs: '', fat: '', mealType: 'dinner', servings: 1,
+    })
+    await flushLogDraftWrites()
+    clearLogDraft('person-a', 'text')
+
+    await resetLogDraftRuntime()
+    const hydrated = await hydrateLogDrafts('person-a')
+    expect(hydrated.text).toBeUndefined()
+    expect(hydrated.manual?.name).toBe('Soup draft')
   })
 
   it('does not restore a photo that was replaced or cleared while hydration was in flight', async () => {

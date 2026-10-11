@@ -1,0 +1,2959 @@
+{
+  "recordedAt": "2026-10-10T05:13:15.125Z",
+  "browser": "149.0.7827.55",
+  "node": "v24.14.1",
+  "os": "win32",
+  "release": "10.0.26200",
+  "cpu": "Snapdragon(R) X 10-core X1P64100 @ 3.40 GHz",
+  "cpuThrottle": 4,
+  "network": "Unthrottled local preview, fresh context and disabled browser cache; only same-origin assets allowed",
+  "method": "Cold signed-in Today, synthetic account/fixed calendar context, real performance clock. Successful requested JS/CSS gzip footprint computed from matching build files through Calories + fonts + two seconds; gzip is an asset estimate, not measured wire transfer. Actual local resource sizes and content encodings are recorded separately. LCP/CLS/FCP are three controlled samples per width, not field percentiles or INP. Source order alternates baseline/candidate within each width/sample.",
+  "observations": [
+    {
+      "revision": "923f2e4e",
+      "source": "baseline",
+      "width": 390,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/apiClient-BOEclrTN.js",
+          "type": "js",
+          "raw": 55711,
+          "gzip": 18380,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-Q9Lbncw2.js",
+          "type": "js",
+          "raw": 18709,
+          "gzip": 6465,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-Dv5k_78K.css",
+          "type": "css",
+          "raw": 330298,
+          "gzip": 55063,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DyTH4tHp.js",
+          "type": "js",
+          "raw": 531177,
+          "gzip": 167406,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-Bbk9b_o5.js",
+          "type": "js",
+          "raw": 4303,
+          "gzip": 2076,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DQDG_Jr0.js",
+          "type": "js",
+          "raw": 79944,
+          "gzip": 25760,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-e8NlyZLM.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2237,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-B74tx9b0.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 290,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 260715,
+      "cssGzip": 55063,
+      "metrics": {
+        "lcpMs": 5176,
+        "cls": 0.003639006300829514,
+        "fcpMs": 3100,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DyTH4tHp.js",
+            "encodedBodySize": 167406,
+            "decodedBodySize": 531177,
+            "transferSize": 167706
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-BOEclrTN.js",
+            "encodedBodySize": 18380,
+            "decodedBodySize": 55711,
+            "transferSize": 18680
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-Q9Lbncw2.js",
+            "encodedBodySize": 6465,
+            "decodedBodySize": 18709,
+            "transferSize": 6765
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/index-Dv5k_78K.css",
+            "encodedBodySize": 55063,
+            "decodedBodySize": 330298,
+            "transferSize": 55363
+          },
+          {
+            "name": "/assets/motionFeatures-DQDG_Jr0.js",
+            "encodedBodySize": 25760,
+            "decodedBodySize": 79944,
+            "transferSize": 26060
+          },
+          {
+            "name": "/assets/is-svg-component-Bbk9b_o5.js",
+            "encodedBodySize": 2076,
+            "decodedBodySize": 4303,
+            "transferSize": 2376
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-e8NlyZLM.js",
+            "encodedBodySize": 2237,
+            "decodedBodySize": 4604,
+            "transferSize": 2537
+          },
+          {
+            "name": "/assets/use-presence-B74tx9b0.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "045525012a42bd136d25fcda8251a395e800658c",
+      "source": "candidate",
+      "width": 390,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-C1D148VX.css",
+          "type": "css",
+          "raw": 360243,
+          "gzip": 59573,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-IffnJFcD.js",
+          "type": "js",
+          "raw": 406125,
+          "gzip": 129104,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-CvNcgDOX.js",
+          "type": "js",
+          "raw": 4304,
+          "gzip": 2079,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-B0rf4Vom.js",
+          "type": "js",
+          "raw": 12162,
+          "gzip": 4903,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DLPUTq74.js",
+          "type": "js",
+          "raw": 79950,
+          "gzip": 25747,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-ByrZjbDX.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2230,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-CCbcaev7.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 291,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 251560,
+      "cssGzip": 59573,
+      "metrics": {
+        "lcpMs": 16104,
+        "cls": 0.003757290387019896,
+        "fcpMs": 13472,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-IffnJFcD.js",
+            "encodedBodySize": 129104,
+            "decodedBodySize": 406125,
+            "transferSize": 129404
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-B0rf4Vom.js",
+            "encodedBodySize": 4903,
+            "decodedBodySize": 12162,
+            "transferSize": 5203
+          },
+          {
+            "name": "/assets/index-C1D148VX.css",
+            "encodedBodySize": 59573,
+            "decodedBodySize": 360243,
+            "transferSize": 59873
+          },
+          {
+            "name": "/assets/motionFeatures-DLPUTq74.js",
+            "encodedBodySize": 25747,
+            "decodedBodySize": 79950,
+            "transferSize": 26047
+          },
+          {
+            "name": "/assets/is-svg-component-CvNcgDOX.js",
+            "encodedBodySize": 2079,
+            "decodedBodySize": 4304,
+            "transferSize": 2379
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-ByrZjbDX.js",
+            "encodedBodySize": 2230,
+            "decodedBodySize": 4604,
+            "transferSize": 2530
+          },
+          {
+            "name": "/assets/use-presence-CCbcaev7.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "923f2e4e",
+      "source": "baseline",
+      "width": 1440,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/apiClient-BOEclrTN.js",
+          "type": "js",
+          "raw": 55711,
+          "gzip": 18380,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-Q9Lbncw2.js",
+          "type": "js",
+          "raw": 18709,
+          "gzip": 6465,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-Dv5k_78K.css",
+          "type": "css",
+          "raw": 330298,
+          "gzip": 55063,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DyTH4tHp.js",
+          "type": "js",
+          "raw": 531177,
+          "gzip": 167406,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-Bbk9b_o5.js",
+          "type": "js",
+          "raw": 4303,
+          "gzip": 2076,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DQDG_Jr0.js",
+          "type": "js",
+          "raw": 79944,
+          "gzip": 25760,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-e8NlyZLM.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2237,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-B74tx9b0.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 290,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 260715,
+      "cssGzip": 55063,
+      "metrics": {
+        "lcpMs": 1980,
+        "cls": 0.0004844232420535408,
+        "fcpMs": 1804,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DyTH4tHp.js",
+            "encodedBodySize": 167406,
+            "decodedBodySize": 531177,
+            "transferSize": 167706
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-BOEclrTN.js",
+            "encodedBodySize": 18380,
+            "decodedBodySize": 55711,
+            "transferSize": 18680
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-Q9Lbncw2.js",
+            "encodedBodySize": 6465,
+            "decodedBodySize": 18709,
+            "transferSize": 6765
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/index-Dv5k_78K.css",
+            "encodedBodySize": 55063,
+            "decodedBodySize": 330298,
+            "transferSize": 55363
+          },
+          {
+            "name": "/assets/motionFeatures-DQDG_Jr0.js",
+            "encodedBodySize": 25760,
+            "decodedBodySize": 79944,
+            "transferSize": 26060
+          },
+          {
+            "name": "/assets/is-svg-component-Bbk9b_o5.js",
+            "encodedBodySize": 2076,
+            "decodedBodySize": 4303,
+            "transferSize": 2376
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-e8NlyZLM.js",
+            "encodedBodySize": 2237,
+            "decodedBodySize": 4604,
+            "transferSize": 2537
+          },
+          {
+            "name": "/assets/use-presence-B74tx9b0.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "045525012a42bd136d25fcda8251a395e800658c",
+      "source": "candidate",
+      "width": 1440,
+      "sample": 1,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-C1D148VX.css",
+          "type": "css",
+          "raw": 360243,
+          "gzip": 59573,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-IffnJFcD.js",
+          "type": "js",
+          "raw": 406125,
+          "gzip": 129104,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-CvNcgDOX.js",
+          "type": "js",
+          "raw": 4304,
+          "gzip": 2079,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-B0rf4Vom.js",
+          "type": "js",
+          "raw": 12162,
+          "gzip": 4903,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DLPUTq74.js",
+          "type": "js",
+          "raw": 79950,
+          "gzip": 25747,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-ByrZjbDX.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2230,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-CCbcaev7.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 291,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 251560,
+      "cssGzip": 59573,
+      "metrics": {
+        "lcpMs": 1892,
+        "cls": 0.0004601020551349237,
+        "fcpMs": 784,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-IffnJFcD.js",
+            "encodedBodySize": 129104,
+            "decodedBodySize": 406125,
+            "transferSize": 129404
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-B0rf4Vom.js",
+            "encodedBodySize": 4903,
+            "decodedBodySize": 12162,
+            "transferSize": 5203
+          },
+          {
+            "name": "/assets/index-C1D148VX.css",
+            "encodedBodySize": 59573,
+            "decodedBodySize": 360243,
+            "transferSize": 59873
+          },
+          {
+            "name": "/assets/motionFeatures-DLPUTq74.js",
+            "encodedBodySize": 25747,
+            "decodedBodySize": 79950,
+            "transferSize": 26047
+          },
+          {
+            "name": "/assets/is-svg-component-CvNcgDOX.js",
+            "encodedBodySize": 2079,
+            "decodedBodySize": 4304,
+            "transferSize": 2379
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-ByrZjbDX.js",
+            "encodedBodySize": 2230,
+            "decodedBodySize": 4604,
+            "transferSize": 2530
+          },
+          {
+            "name": "/assets/use-presence-CCbcaev7.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "923f2e4e",
+      "source": "baseline",
+      "width": 390,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/apiClient-BOEclrTN.js",
+          "type": "js",
+          "raw": 55711,
+          "gzip": 18380,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-Q9Lbncw2.js",
+          "type": "js",
+          "raw": 18709,
+          "gzip": 6465,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-Dv5k_78K.css",
+          "type": "css",
+          "raw": 330298,
+          "gzip": 55063,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DyTH4tHp.js",
+          "type": "js",
+          "raw": 531177,
+          "gzip": 167406,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-Bbk9b_o5.js",
+          "type": "js",
+          "raw": 4303,
+          "gzip": 2076,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DQDG_Jr0.js",
+          "type": "js",
+          "raw": 79944,
+          "gzip": 25760,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-e8NlyZLM.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2237,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-B74tx9b0.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 290,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 260715,
+      "cssGzip": 55063,
+      "metrics": {
+        "lcpMs": 2760,
+        "cls": 0.004074201501315428,
+        "fcpMs": 1496,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DyTH4tHp.js",
+            "encodedBodySize": 167406,
+            "decodedBodySize": 531177,
+            "transferSize": 167706
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-BOEclrTN.js",
+            "encodedBodySize": 18380,
+            "decodedBodySize": 55711,
+            "transferSize": 18680
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-Q9Lbncw2.js",
+            "encodedBodySize": 6465,
+            "decodedBodySize": 18709,
+            "transferSize": 6765
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/index-Dv5k_78K.css",
+            "encodedBodySize": 55063,
+            "decodedBodySize": 330298,
+            "transferSize": 55363
+          },
+          {
+            "name": "/assets/motionFeatures-DQDG_Jr0.js",
+            "encodedBodySize": 25760,
+            "decodedBodySize": 79944,
+            "transferSize": 26060
+          },
+          {
+            "name": "/assets/is-svg-component-Bbk9b_o5.js",
+            "encodedBodySize": 2076,
+            "decodedBodySize": 4303,
+            "transferSize": 2376
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-e8NlyZLM.js",
+            "encodedBodySize": 2237,
+            "decodedBodySize": 4604,
+            "transferSize": 2537
+          },
+          {
+            "name": "/assets/use-presence-B74tx9b0.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "045525012a42bd136d25fcda8251a395e800658c",
+      "source": "candidate",
+      "width": 390,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-C1D148VX.css",
+          "type": "css",
+          "raw": 360243,
+          "gzip": 59573,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-IffnJFcD.js",
+          "type": "js",
+          "raw": 406125,
+          "gzip": 129104,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-CvNcgDOX.js",
+          "type": "js",
+          "raw": 4304,
+          "gzip": 2079,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-B0rf4Vom.js",
+          "type": "js",
+          "raw": 12162,
+          "gzip": 4903,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DLPUTq74.js",
+          "type": "js",
+          "raw": 79950,
+          "gzip": 25747,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-ByrZjbDX.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2230,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-CCbcaev7.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 291,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 251560,
+      "cssGzip": 59573,
+      "metrics": {
+        "lcpMs": 1616,
+        "cls": 0.0034196666779333184,
+        "fcpMs": 804,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-IffnJFcD.js",
+            "encodedBodySize": 129104,
+            "decodedBodySize": 406125,
+            "transferSize": 129404
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-B0rf4Vom.js",
+            "encodedBodySize": 4903,
+            "decodedBodySize": 12162,
+            "transferSize": 5203
+          },
+          {
+            "name": "/assets/index-C1D148VX.css",
+            "encodedBodySize": 59573,
+            "decodedBodySize": 360243,
+            "transferSize": 59873
+          },
+          {
+            "name": "/assets/motionFeatures-DLPUTq74.js",
+            "encodedBodySize": 25747,
+            "decodedBodySize": 79950,
+            "transferSize": 26047
+          },
+          {
+            "name": "/assets/is-svg-component-CvNcgDOX.js",
+            "encodedBodySize": 2079,
+            "decodedBodySize": 4304,
+            "transferSize": 2379
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-ByrZjbDX.js",
+            "encodedBodySize": 2230,
+            "decodedBodySize": 4604,
+            "transferSize": 2530
+          },
+          {
+            "name": "/assets/use-presence-CCbcaev7.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "923f2e4e",
+      "source": "baseline",
+      "width": 1440,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/apiClient-BOEclrTN.js",
+          "type": "js",
+          "raw": 55711,
+          "gzip": 18380,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-Q9Lbncw2.js",
+          "type": "js",
+          "raw": 18709,
+          "gzip": 6465,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-Dv5k_78K.css",
+          "type": "css",
+          "raw": 330298,
+          "gzip": 55063,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DyTH4tHp.js",
+          "type": "js",
+          "raw": 531177,
+          "gzip": 167406,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-Bbk9b_o5.js",
+          "type": "js",
+          "raw": 4303,
+          "gzip": 2076,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DQDG_Jr0.js",
+          "type": "js",
+          "raw": 79944,
+          "gzip": 25760,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-e8NlyZLM.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2237,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-B74tx9b0.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 290,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 260715,
+      "cssGzip": 55063,
+      "metrics": {
+        "lcpMs": 4404,
+        "cls": 0.0005167144398630403,
+        "fcpMs": 2080,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DyTH4tHp.js",
+            "encodedBodySize": 167406,
+            "decodedBodySize": 531177,
+            "transferSize": 167706
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-BOEclrTN.js",
+            "encodedBodySize": 18380,
+            "decodedBodySize": 55711,
+            "transferSize": 18680
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-Q9Lbncw2.js",
+            "encodedBodySize": 6465,
+            "decodedBodySize": 18709,
+            "transferSize": 6765
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/index-Dv5k_78K.css",
+            "encodedBodySize": 55063,
+            "decodedBodySize": 330298,
+            "transferSize": 55363
+          },
+          {
+            "name": "/assets/motionFeatures-DQDG_Jr0.js",
+            "encodedBodySize": 25760,
+            "decodedBodySize": 79944,
+            "transferSize": 26060
+          },
+          {
+            "name": "/assets/is-svg-component-Bbk9b_o5.js",
+            "encodedBodySize": 2076,
+            "decodedBodySize": 4303,
+            "transferSize": 2376
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-e8NlyZLM.js",
+            "encodedBodySize": 2237,
+            "decodedBodySize": 4604,
+            "transferSize": 2537
+          },
+          {
+            "name": "/assets/use-presence-B74tx9b0.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "045525012a42bd136d25fcda8251a395e800658c",
+      "source": "candidate",
+      "width": 1440,
+      "sample": 2,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-C1D148VX.css",
+          "type": "css",
+          "raw": 360243,
+          "gzip": 59573,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-IffnJFcD.js",
+          "type": "js",
+          "raw": 406125,
+          "gzip": 129104,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-CvNcgDOX.js",
+          "type": "js",
+          "raw": 4304,
+          "gzip": 2079,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-B0rf4Vom.js",
+          "type": "js",
+          "raw": 12162,
+          "gzip": 4903,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DLPUTq74.js",
+          "type": "js",
+          "raw": 79950,
+          "gzip": 25747,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-ByrZjbDX.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2230,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-CCbcaev7.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 291,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 251560,
+      "cssGzip": 59573,
+      "metrics": {
+        "lcpMs": 2028,
+        "cls": 0.0003864466453939472,
+        "fcpMs": 944,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-IffnJFcD.js",
+            "encodedBodySize": 129104,
+            "decodedBodySize": 406125,
+            "transferSize": 129404
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-B0rf4Vom.js",
+            "encodedBodySize": 4903,
+            "decodedBodySize": 12162,
+            "transferSize": 5203
+          },
+          {
+            "name": "/assets/index-C1D148VX.css",
+            "encodedBodySize": 59573,
+            "decodedBodySize": 360243,
+            "transferSize": 59873
+          },
+          {
+            "name": "/assets/motionFeatures-DLPUTq74.js",
+            "encodedBodySize": 25747,
+            "decodedBodySize": 79950,
+            "transferSize": 26047
+          },
+          {
+            "name": "/assets/is-svg-component-CvNcgDOX.js",
+            "encodedBodySize": 2079,
+            "decodedBodySize": 4304,
+            "transferSize": 2379
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-ByrZjbDX.js",
+            "encodedBodySize": 2230,
+            "decodedBodySize": 4604,
+            "transferSize": 2530
+          },
+          {
+            "name": "/assets/use-presence-CCbcaev7.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "923f2e4e",
+      "source": "baseline",
+      "width": 390,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/apiClient-BOEclrTN.js",
+          "type": "js",
+          "raw": 55711,
+          "gzip": 18380,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-Q9Lbncw2.js",
+          "type": "js",
+          "raw": 18709,
+          "gzip": 6465,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-Dv5k_78K.css",
+          "type": "css",
+          "raw": 330298,
+          "gzip": 55063,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DyTH4tHp.js",
+          "type": "js",
+          "raw": 531177,
+          "gzip": 167406,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-Bbk9b_o5.js",
+          "type": "js",
+          "raw": 4303,
+          "gzip": 2076,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DQDG_Jr0.js",
+          "type": "js",
+          "raw": 79944,
+          "gzip": 25760,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-e8NlyZLM.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2237,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-B74tx9b0.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 290,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 260715,
+      "cssGzip": 55063,
+      "metrics": {
+        "lcpMs": 1964,
+        "cls": 0.0031793326252441225,
+        "fcpMs": 1516,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DyTH4tHp.js",
+            "encodedBodySize": 167406,
+            "decodedBodySize": 531177,
+            "transferSize": 167706
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-BOEclrTN.js",
+            "encodedBodySize": 18380,
+            "decodedBodySize": 55711,
+            "transferSize": 18680
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-Q9Lbncw2.js",
+            "encodedBodySize": 6465,
+            "decodedBodySize": 18709,
+            "transferSize": 6765
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/index-Dv5k_78K.css",
+            "encodedBodySize": 55063,
+            "decodedBodySize": 330298,
+            "transferSize": 55363
+          },
+          {
+            "name": "/assets/motionFeatures-DQDG_Jr0.js",
+            "encodedBodySize": 25760,
+            "decodedBodySize": 79944,
+            "transferSize": 26060
+          },
+          {
+            "name": "/assets/is-svg-component-Bbk9b_o5.js",
+            "encodedBodySize": 2076,
+            "decodedBodySize": 4303,
+            "transferSize": 2376
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-e8NlyZLM.js",
+            "encodedBodySize": 2237,
+            "decodedBodySize": 4604,
+            "transferSize": 2537
+          },
+          {
+            "name": "/assets/use-presence-B74tx9b0.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "045525012a42bd136d25fcda8251a395e800658c",
+      "source": "candidate",
+      "width": 390,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-C1D148VX.css",
+          "type": "css",
+          "raw": 360243,
+          "gzip": 59573,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-IffnJFcD.js",
+          "type": "js",
+          "raw": 406125,
+          "gzip": 129104,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-CvNcgDOX.js",
+          "type": "js",
+          "raw": 4304,
+          "gzip": 2079,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-B0rf4Vom.js",
+          "type": "js",
+          "raw": 12162,
+          "gzip": 4903,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DLPUTq74.js",
+          "type": "js",
+          "raw": 79950,
+          "gzip": 25747,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-ByrZjbDX.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2230,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-CCbcaev7.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 291,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 251560,
+      "cssGzip": 59573,
+      "metrics": {
+        "lcpMs": 2740,
+        "cls": 0.0026326197970750194,
+        "fcpMs": 1160,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-IffnJFcD.js",
+            "encodedBodySize": 129104,
+            "decodedBodySize": 406125,
+            "transferSize": 129404
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-B0rf4Vom.js",
+            "encodedBodySize": 4903,
+            "decodedBodySize": 12162,
+            "transferSize": 5203
+          },
+          {
+            "name": "/assets/index-C1D148VX.css",
+            "encodedBodySize": 59573,
+            "decodedBodySize": 360243,
+            "transferSize": 59873
+          },
+          {
+            "name": "/assets/motionFeatures-DLPUTq74.js",
+            "encodedBodySize": 25747,
+            "decodedBodySize": 79950,
+            "transferSize": 26047
+          },
+          {
+            "name": "/assets/is-svg-component-CvNcgDOX.js",
+            "encodedBodySize": 2079,
+            "decodedBodySize": 4304,
+            "transferSize": 2379
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-ByrZjbDX.js",
+            "encodedBodySize": 2230,
+            "decodedBodySize": 4604,
+            "transferSize": 2530
+          },
+          {
+            "name": "/assets/use-presence-CCbcaev7.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "923f2e4e",
+      "source": "baseline",
+      "width": 1440,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/apiClient-BOEclrTN.js",
+          "type": "js",
+          "raw": 55711,
+          "gzip": 18380,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-Q9Lbncw2.js",
+          "type": "js",
+          "raw": 18709,
+          "gzip": 6465,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-Dv5k_78K.css",
+          "type": "css",
+          "raw": 330298,
+          "gzip": 55063,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-DyTH4tHp.js",
+          "type": "js",
+          "raw": 531177,
+          "gzip": 167406,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-Bbk9b_o5.js",
+          "type": "js",
+          "raw": 4303,
+          "gzip": 2076,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DQDG_Jr0.js",
+          "type": "js",
+          "raw": 79944,
+          "gzip": 25760,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-e8NlyZLM.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2237,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-B74tx9b0.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 290,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 260715,
+      "cssGzip": 55063,
+      "metrics": {
+        "lcpMs": 2436,
+        "cls": 0.0003884364584672925,
+        "fcpMs": 1960,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-DyTH4tHp.js",
+            "encodedBodySize": 167406,
+            "decodedBodySize": 531177,
+            "transferSize": 167706
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-BOEclrTN.js",
+            "encodedBodySize": 18380,
+            "decodedBodySize": 55711,
+            "transferSize": 18680
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-Q9Lbncw2.js",
+            "encodedBodySize": 6465,
+            "decodedBodySize": 18709,
+            "transferSize": 6765
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/index-Dv5k_78K.css",
+            "encodedBodySize": 55063,
+            "decodedBodySize": 330298,
+            "transferSize": 55363
+          },
+          {
+            "name": "/assets/motionFeatures-DQDG_Jr0.js",
+            "encodedBodySize": 25760,
+            "decodedBodySize": 79944,
+            "transferSize": 26060
+          },
+          {
+            "name": "/assets/is-svg-component-Bbk9b_o5.js",
+            "encodedBodySize": 2076,
+            "decodedBodySize": 4303,
+            "transferSize": 2376
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-e8NlyZLM.js",
+            "encodedBodySize": 2237,
+            "decodedBodySize": 4604,
+            "transferSize": 2537
+          },
+          {
+            "name": "/assets/use-presence-B74tx9b0.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "revision": "045525012a42bd136d25fcda8251a395e800658c",
+      "source": "candidate",
+      "width": 1440,
+      "sample": 3,
+      "assets": [
+        {
+          "filename": "appearance-init.js",
+          "type": "js",
+          "raw": 756,
+          "gzip": 427,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/analytics-C5Rmxn-i.js",
+          "type": "js",
+          "raw": 9961,
+          "gzip": 3404,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/apiClient-B6AmXG_q.js",
+          "type": "js",
+          "raw": 55800,
+          "gzip": 18385,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AppContext-Dx860ira.js",
+          "type": "js",
+          "raw": 26319,
+          "gzip": 8904,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/arrow-right-CxUcUzFi.js",
+          "type": "js",
+          "raw": 1492,
+          "gzip": 849,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/AuthContext-C-hXuKef.js",
+          "type": "js",
+          "raw": 21999,
+          "gzip": 7538,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/chunk-BV7QT456-B5cNqVLe.js",
+          "type": "js",
+          "raw": 98513,
+          "gzip": 32316,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/icons-D6WnjnPE.js",
+          "type": "js",
+          "raw": 23602,
+          "gzip": 8709,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-C1D148VX.css",
+          "type": "css",
+          "raw": 360243,
+          "gzip": 59573,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/index-IffnJFcD.js",
+          "type": "js",
+          "raw": 406125,
+          "gzip": 129104,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/is-html-element-DvgHo_1h.js",
+          "type": "js",
+          "raw": 122,
+          "gzip": 127,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/is-svg-component-CvNcgDOX.js",
+          "type": "js",
+          "raw": 4304,
+          "gzip": 2079,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/jsx-runtime-bzQ4Vb5N.js",
+          "type": "js",
+          "raw": 8408,
+          "gzip": 3206,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/Momo-B0rf4Vom.js",
+          "type": "js",
+          "raw": 12162,
+          "gzip": 4903,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/motionFeatures-DLPUTq74.js",
+          "type": "js",
+          "raw": 79950,
+          "gzip": 25747,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/PressableButton-XyDOkbKA.js",
+          "type": "js",
+          "raw": 1173,
+          "gzip": 616,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/resize-ByrZjbDX.js",
+          "type": "js",
+          "raw": 4604,
+          "gzip": 2230,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/shield-check-DvYUb-BX.js",
+          "type": "js",
+          "raw": 1376,
+          "gzip": 664,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/sun-CU9SMxfF.js",
+          "type": "js",
+          "raw": 2193,
+          "gzip": 885,
+          "contentEncoding": "gzip"
+        },
+        {
+          "filename": "assets/use-presence-CCbcaev7.js",
+          "type": "js",
+          "raw": 384,
+          "gzip": 291,
+          "contentEncoding": "identity"
+        },
+        {
+          "filename": "assets/useHaptic-BT3rM8on.js",
+          "type": "js",
+          "raw": 3035,
+          "gzip": 1176,
+          "contentEncoding": "gzip"
+        }
+      ],
+      "jsGzip": 251560,
+      "cssGzip": 59573,
+      "metrics": {
+        "lcpMs": 3908,
+        "cls": 0.00043801987887409974,
+        "fcpMs": 1828,
+        "resourceTransfers": [
+          {
+            "name": "/appearance-init.js",
+            "encodedBodySize": 756,
+            "decodedBodySize": 756,
+            "transferSize": 1056
+          },
+          {
+            "name": "/assets/index-IffnJFcD.js",
+            "encodedBodySize": 129104,
+            "decodedBodySize": 406125,
+            "transferSize": 129404
+          },
+          {
+            "name": "/assets/jsx-runtime-bzQ4Vb5N.js",
+            "encodedBodySize": 3206,
+            "decodedBodySize": 8408,
+            "transferSize": 3506
+          },
+          {
+            "name": "/assets/apiClient-B6AmXG_q.js",
+            "encodedBodySize": 18385,
+            "decodedBodySize": 55800,
+            "transferSize": 18685
+          },
+          {
+            "name": "/assets/chunk-BV7QT456-B5cNqVLe.js",
+            "encodedBodySize": 32316,
+            "decodedBodySize": 98513,
+            "transferSize": 32616
+          },
+          {
+            "name": "/assets/AuthContext-C-hXuKef.js",
+            "encodedBodySize": 7538,
+            "decodedBodySize": 21999,
+            "transferSize": 7838
+          },
+          {
+            "name": "/assets/useHaptic-BT3rM8on.js",
+            "encodedBodySize": 1176,
+            "decodedBodySize": 3035,
+            "transferSize": 1476
+          },
+          {
+            "name": "/assets/arrow-right-CxUcUzFi.js",
+            "encodedBodySize": 849,
+            "decodedBodySize": 1492,
+            "transferSize": 1149
+          },
+          {
+            "name": "/assets/sun-CU9SMxfF.js",
+            "encodedBodySize": 885,
+            "decodedBodySize": 2193,
+            "transferSize": 1185
+          },
+          {
+            "name": "/assets/shield-check-DvYUb-BX.js",
+            "encodedBodySize": 664,
+            "decodedBodySize": 1376,
+            "transferSize": 964
+          },
+          {
+            "name": "/assets/icons-D6WnjnPE.js",
+            "encodedBodySize": 8709,
+            "decodedBodySize": 23602,
+            "transferSize": 9009
+          },
+          {
+            "name": "/assets/analytics-C5Rmxn-i.js",
+            "encodedBodySize": 3404,
+            "decodedBodySize": 9961,
+            "transferSize": 3704
+          },
+          {
+            "name": "/assets/PressableButton-XyDOkbKA.js",
+            "encodedBodySize": 616,
+            "decodedBodySize": 1173,
+            "transferSize": 916
+          },
+          {
+            "name": "/assets/AppContext-Dx860ira.js",
+            "encodedBodySize": 8904,
+            "decodedBodySize": 26319,
+            "transferSize": 9204
+          },
+          {
+            "name": "/assets/Momo-B0rf4Vom.js",
+            "encodedBodySize": 4903,
+            "decodedBodySize": 12162,
+            "transferSize": 5203
+          },
+          {
+            "name": "/assets/index-C1D148VX.css",
+            "encodedBodySize": 59573,
+            "decodedBodySize": 360243,
+            "transferSize": 59873
+          },
+          {
+            "name": "/assets/motionFeatures-DLPUTq74.js",
+            "encodedBodySize": 25747,
+            "decodedBodySize": 79950,
+            "transferSize": 26047
+          },
+          {
+            "name": "/assets/is-svg-component-CvNcgDOX.js",
+            "encodedBodySize": 2079,
+            "decodedBodySize": 4304,
+            "transferSize": 2379
+          },
+          {
+            "name": "/assets/is-html-element-DvgHo_1h.js",
+            "encodedBodySize": 122,
+            "decodedBodySize": 122,
+            "transferSize": 422
+          },
+          {
+            "name": "/assets/resize-ByrZjbDX.js",
+            "encodedBodySize": 2230,
+            "decodedBodySize": 4604,
+            "transferSize": 2530
+          },
+          {
+            "name": "/assets/use-presence-CCbcaev7.js",
+            "encodedBodySize": 384,
+            "decodedBodySize": 384,
+            "transferSize": 684
+          }
+        ]
+      },
+      "failures": []
+    }
+  ]
+}

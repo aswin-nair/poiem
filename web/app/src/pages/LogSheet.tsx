@@ -41,7 +41,7 @@ const PROMPTS: Record<MealType, string> = {
 }
 /** How many recents to offer before the list stops being scannable. */
 const RECENT_LIMIT = 12
-const RECENT_PREVIEW = 5
+const RECENT_PREVIEW = 3
 
 export interface LogRouteState {
   background?: Location
@@ -49,9 +49,9 @@ export interface LogRouteState {
 }
 
 /**
- * The log sheet opens over whatever you were looking at. Returning users see
- * their recent meals first, where one tap logs; new ways to log sit directly
- * underneath. It never opens the phone keyboard on arrival.
+ * The log sheet opens over whatever you were looking at. Logging methods are
+ * immediately visible, followed by compact repeat shortcuts. It never opens
+ * the phone keyboard on arrival.
  */
 export function LogSheet() {
   const { state, addEntry } = useApp()
@@ -166,6 +166,7 @@ export function LogSheet() {
           >
             {MEAL_LABELS[mealType]} <IconChevronDown size={16} />
           </button>
+          <span className="k-log-day">· Today</span>
         </div>
         {choosingMeal && (
           <div id="log-meal-choices" className="k-chip-row" role="group" aria-labelledby="log-meal-label">
@@ -182,6 +183,16 @@ export function LogSheet() {
             ))}
           </div>
         )}
+
+        <nav className="k-methods" aria-label="Ways to log">
+          {METHODS.map(({ to, short, hint, name, method, Icon, tone }) => (
+            <Link key={to} to={to} state={{ mealType }} className={`k-method is-tone-${tone}`} onClick={() => selectLogMethod(method)}>
+              <span className="k-method-icon" aria-hidden="true"><Icon size={22} /></span>
+              <span className="k-method-text" aria-hidden="true"><strong>{short}</strong><small>{hint}</small></span>
+              <span className="sr-only">{name}</span>
+            </Link>
+          ))}
+        </nav>
 
         <div className="k-search">
           <span className="k-search-field">
@@ -258,21 +269,11 @@ export function LogSheet() {
                 ))}
               </ul>
             ) : (
-              <p className="k-empty">No recent or saved meals match “{query.trim()}”. Try one of the ways to log below.</p>
+              <p className="k-empty">No recent or saved meals match “{query.trim()}”. Try a method above, or change your search.</p>
             )}
           </>
         )}
 
-        <p className="k-list-label">More ways to log</p>
-        <nav className="k-methods" aria-label="Other ways to log">
-          {METHODS.map(({ to, short, hint, name, method, Icon, tone }) => (
-            <Link key={to} to={to} state={{ mealType }} className={`k-method is-tone-${tone}`} onClick={() => selectLogMethod(method)}>
-              <span className="k-method-icon" aria-hidden="true"><Icon size={22} /></span>
-              <span className="k-method-text" aria-hidden="true"><strong>{short}</strong><small>{hint}</small></span>
-              <span className="sr-only">{name}</span>
-            </Link>
-          ))}
-        </nav>
       </Sheet>
 
       {portionFor && (
@@ -308,7 +309,7 @@ function PickRow({
 }) {
   return (
     <li className="k-pick">
-      <RepeatMealRow item={item} basis={'timestamp' in item ? 'previous' : 'saved'} mealType={mealType} onLog={onPick} onPortion={onPortion} showNutrition={false} />
+      <RepeatMealRow item={item} basis={'timestamp' in item ? 'previous' : 'saved'} mealType={mealType} onLog={onPick} onPortion={onPortion} showNutrition={false} compact />
     </li>
   )
 }

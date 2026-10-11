@@ -5,7 +5,9 @@ import { BottomNav } from '../components/BottomNav'
 import { ProgressLineChart, ProgressBarChart } from '../components/Charts'
 import { useApp } from '../store/AppContext'
 import { effectiveCalories } from '../lib/profile'
-import { localDayKey } from '../lib/dates'
+import { formatMacroValue, localDayKey } from '../lib/dates'
+import { entryDayKey } from '@fud-ai/product/localDate'
+import { insightDays, insightDayLabel, insightPeriod, insightSummary } from '../lib/insights'
 import { getStreakWithFreezes, getAllBadges, getBreakfastComparison, getMonthConsistency, getTotalLoggedDays } from '../lib/journey'
 import { HabitMilestones } from '../components/HabitMilestones'
 import { Meter } from '../components/Meter'
@@ -50,6 +52,7 @@ function StatCard({ label, value, sub, accent }: StatCardProps) {
 export function ProgressPage() {
   const { state, addWeightEntry, deleteWeightEntry } = useApp()
   const [range, setRange] = useState<RangeId>('1W')
+  const [selectedDayKey, setSelectedDayKey] = useState(() => localDayKey(new Date()))
   const streak = getStreakWithFreezes(
     state.foodEntries,
     state.gamification.freezeUsedDates,
@@ -79,24 +82,12 @@ export function ProgressPage() {
     : currentWeight
   const netChange = currentWeight - startWeight
 
-  const calorieBars = useMemo(() => {
-    const result: { label: string; value: number }[] = []
-    for (let i = days - 1; i >= 0; i--) {
-      const d = new Date()
-      d.setDate(d.getDate() - i)
-      const key = localDayKey(d)
-      const cals = state.foodEntries
-        .filter(e => localDayKey(e.timestamp) === key)
-        .reduce((s, e) => s + e.calories, 0)
-      if (cals > 0 || range === '1W') {
-        result.push({
-          label: d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' }),
-          value: cals,
-        })
-      }
-    }
-    return result
-  }, [state.foodEntries, days, range])
+  const weeklyDays = useMemo(() => insightDays(state.foodEntries, 7), [state.foodEntries])
+  const weeklySummary = insightSummary(weeklyDays)
+  const calorieBars = useMemo(() => insightDays(state.foodEntries, days), [state.foodEntries, days])
+  const periodSummary = insightSummary(calorieBars)
+  const selectedDay = calorieBars.find(day => day.dayKey === selectedDayKey) ?? calorieBars[calorieBars.length - 1]
+  const selectedDayIndex = calorieBars.indexOf(selectedDay)
 
   const mostLogged = useMemo(() => {
     const counts = new Map<string, number>()
@@ -107,14 +98,12 @@ export function ProgressPage() {
   }, [state.foodEntries])
 
   const archiveDays = useMemo(() => {
-    const days = [...new Set(state.foodEntries.map(e => localDayKey(e.timestamp)))].sort().reverse()
+    const days = [...new Set(state.foodEntries.map(entryDayKey))].sort().reverse()
     return days.slice(0, 8)
   }, [state.foodEntries])
 
-  const calorieDays = calorieBars.filter(b => b.value > 0)
-  const avgCalories = calorieDays.length
-    ? Math.round(calorieDays.reduce((s, b) => s + b.value, 0) / calorieDays.length)
-    : 0
+  const calorieDays = calorieBars.filter(day => day.logged)
+  const avgCalories = periodSummary.averageCalories
 
   const weightPoints = filteredWeights.map(w => ({
     label: new Date(w.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }),
@@ -124,6 +113,14 @@ export function ProgressPage() {
   function logWeight(value: number) {
     addWeightEntry(value)
     setShowLog(false)
+  }
+
+  function changeRange(next: RangeId) {
+    if (range === next) return
+    feel('select')
+    const nextDays = insightDays(state.foodEntries, RANGES.find(item => item.id === next)!.days)
+    if (!nextDays.some(day => day.dayKey === selectedDayKey)) setSelectedDayKey(nextDays[nextDays.length - 1].dayKey)
+    setRange(next)
   }
 
   if (state.profile.trackingPaused) {
@@ -158,91 +155,35 @@ export function ProgressPage() {
           </div>
         </header>
 
-        {/* Streak, level and XP live here; Today shows only the day itself. */}
-        <section className="k-card k-journey" aria-labelledby="journey-title">
-          <div className="k-section-head">
-            <h2 id="journey-title">Journey</h2>
-            <span className="tabular">Level {level}</span>
+        <section className="insights-week-summary" aria-labelledby="week-summary-title">
+          <div className="insights-week-heading">
+            <h2 id="week-summary-title">Your week</h2>
+            <p>Last 7 days · {insightPeriod(weeklyDays)}</p>
           </div>
-          <dl className="k-journey-stats">
-            <div><dt>Day streak</dt><dd className="tabular">{streak}</dd></div>
-            <div><dt>Total XP</dt><dd className="tabular">{state.gamification.xp.toLocaleString()}</dd></div>
-            <div><dt>Freezes</dt><dd className="tabular">{state.gamification.streakFreezes}</dd></div>
-          </dl>
-          <Meter
-            label="Progress to the next level"
-            tone="acid"
-            value={atTopLevel ? 1 : state.gamification.xp - levelStart}
-            max={atTopLevel ? 1 : levelEnd - levelStart}
-          />
-          <p className="k-journey-note">
-            {LEVEL_NAMES[level] || 'Your journey'}{atTopLevel ? ' · Top level reached' : ` · ${xpToNext.toLocaleString()} XP to level ${level + 1}`}
+          <p className="insights-week-fact">
+            <strong className="tabular">{weeklySummary.loggedDays} of 7 days logged</strong>
+            <span>{weeklySummary.meals} {weeklySummary.meals === 1 ? 'meal' : 'meals'} saved in your journal.</span>
           </p>
-          <details className="k-journey-help">
-            <summary>About XP and freezes</summary>
-            <p>XP records your logging activity and moves Momo through levels. A freeze protects your streak on a missed day; it doesn’t count as a logged day.</p>
-          </details>
+          <p className="insights-week-note">{weeklySummary.loggedDays ? 'A logged day has at least one saved meal. Today is still in progress.' : 'Your next saved meal will start this week’s summary.'}</p>
         </section>
 
-        <HabitMilestones loggedDays={getTotalLoggedDays(state.foodEntries)} />
-
-        {/* §9.3: consistency leads. Calories and weight are downstream of the
-            habit, so the habit is what the page opens with. */}
-        <div className="progress-card consistency-card">
-          <div className="progress-card-header">
-            <h2 className="progress-card-title">Consistency</h2>
-            <span className="consistency-streak">{streak}-day streak</span>
-          </div>
-
-          <div className="consistency-layout">
-          <div className="insights-heat" aria-hidden>
-            {consistency.days.map((logged, i) => (
-              <span
-                key={i}
-                className={
-                  'insights-heat-cell'
-                  + (logged ? ' is-logged' : '')
-                  + (i >= consistency.elapsed ? ' is-future' : '')
-                }
-              />
-            ))}
-          </div>
-          <div className="consistency-summary">
-          <div className="consistency-headline">
-            <strong className="consistency-number">{consistency.logged}</strong>
-            <span className="consistency-unit">
-              {consistency.logged === 1 ? 'day logged' : 'days logged'}
-            </span>
-          </div>
-          <p className="consistency-sub">
-            of {consistency.elapsed} {consistency.elapsed === 1 ? 'day' : 'days'} so far this month
-          </p>
-          <p className="page-sub">Days you logged, not how the numbers landed.</p>
-          </div>
-          </div>
-          <ol className="sr-only">
-            {consistency.days.map((logged, i) => (
-              <li key={i}>
-                Day {i + 1}: {i >= consistency.elapsed ? 'upcoming' : logged ? 'logged' : 'not logged'}
-              </li>
-            ))}
-          </ol>
-          <div className="insights-legend" aria-hidden="true"><span><i className="is-logged" />Logged</span><span><i />Not logged</span><span><i className="is-future" />Upcoming</span></div>
-          <div className="own-past-callout">
-            <strong>You logged breakfast {breakfastComparison.recent} of the last 7 days.</strong>
-            <span>Your best seven-day stretch is {breakfastComparison.best}.</span>
-          </div>
-        </div>
-
+        <section className="insights-trends insights-section" aria-labelledby="trends-title">
+        <header className="insights-section-heading">
+          <h2 id="trends-title">Trends</h2>
+          <p>Weight &amp; calories</p>
+        </header>
         <section className="insights-range-control" aria-label="Weight and calorie chart range">
-          <h2>Weight &amp; calories</h2>
           <div className="range-chips" role="group" aria-label="Chart time range">
             {RANGES.map(r => <button key={r.id} type="button" className={`range-chip${range === r.id ? ' active' : ''}`}
-              aria-pressed={range === r.id} onClick={() => { if (range === r.id) return; feel('select'); setRange(r.id) }}>{r.label}</button>)}
+              aria-pressed={range === r.id} onClick={() => changeRange(r.id)}>{r.label}</button>)}
           </div>
           <p role="status" aria-live="polite">Last {days} days · Applies to the two charts below.</p>
+          <p>{insightPeriod(calorieBars)} · Meals from your journal and saved weigh-ins.</p>
         </section>
 
+        <div className="insights-trend-grid">
+
+        <div className="insights-weight-group">
         {/* Weight card */}
         <div className="progress-card">
           <div className="progress-card-header">
@@ -291,12 +232,14 @@ export function ProgressPage() {
           </div>
         )}
 
+        </div>
+
         {/* Calories card */}
         <div className="progress-card">
           <div className="progress-card-header">
             <h2 className="progress-card-title">Calories</h2>
             <div className="progress-avg-pill">
-              {calorieDays.length ? `Avg ${avgCalories.toLocaleString()} kcal` : 'No logged days'}
+              {avgCalories != null ? `Avg ${avgCalories.toLocaleString()} kcal` : 'No logged days'}
             </div>
           </div>
 
@@ -309,7 +252,118 @@ export function ProgressPage() {
             />
           </div>
 
-          {calorieDays.length ? <><ProgressBarChart bars={calorieBars} goal={goal} /><p className="insights-chart-note">Average uses logged days only. An empty day doesn’t mean you ate nothing.</p></> : <p className="insights-empty">No meals logged in this range. Your calorie chart will appear as you log.</p>}
+          {!calorieDays.length && <p className="insights-empty">No meals logged in this range. Choose any day below to open its journal.</p>}
+          <p className="insights-chart-note">Average uses {calorieDays.length} logged {calorieDays.length === 1 ? 'day' : 'days'} only. An unlogged day has no known intake.</p>
+          <ProgressBarChart bars={calorieBars} goal={goal} selectedDayKey={selectedDay.dayKey} onSelectDay={setSelectedDayKey} />
+          <p className="insights-chart-note">Dashed bars are unlogged days. Choose a bar or a date below. Use the arrow keys on a bar; scroll the chart for more days.</p>
+          <section className="insights-day-inspector" aria-labelledby="inspected-day-title">
+            <div className="insights-day-controls">
+              <label htmlFor="insights-day">Inspect a day</label>
+              <div className="insights-day-picker">
+                <button type="button" aria-label="Inspect previous day" disabled={selectedDayIndex === 0} onClick={() => setSelectedDayKey(calorieBars[selectedDayIndex - 1].dayKey)}><span aria-hidden="true">←</span></button>
+                <select id="insights-day" value={selectedDay.dayKey} onChange={event => setSelectedDayKey(event.target.value)}>
+                  {calorieBars.map(day => <option key={day.dayKey} value={day.dayKey}>{day.label} · {day.logged ? `${day.mealCount} ${day.mealCount === 1 ? 'meal' : 'meals'}` : 'Not logged'}</option>)}
+                </select>
+                <button type="button" aria-label="Inspect next day" disabled={selectedDayIndex === calorieBars.length - 1} onClick={() => setSelectedDayKey(calorieBars[selectedDayIndex + 1].dayKey)}><span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+            <div className="insights-day-reading" aria-live="polite" aria-atomic="true">
+              <h3 id="inspected-day-title">{insightDayLabel(selectedDay.dayKey)}</h3>
+              {selectedDay.logged ? <>
+                <p><strong className="tabular">{selectedDay.value.toLocaleString()} kcal logged</strong> · {selectedDay.mealCount} {selectedDay.mealCount === 1 ? 'meal' : 'meals'}</p>
+                <dl className="insights-day-macros">
+                  <div><dt>Protein</dt><dd>{formatMacroValue(selectedDay.protein)} g</dd></div>
+                  <div><dt>Carbs</dt><dd>{formatMacroValue(selectedDay.carbs)} g</dd></div>
+                  <div><dt>Fat</dt><dd>{formatMacroValue(selectedDay.fat)} g</dd></div>
+                </dl>
+              </> : <p>No meals logged. This day’s intake is unknown.</p>}
+            </div>
+            <Link className="insights-open-day" to="/" state={{ journalDay: selectedDay.dayKey }} aria-label={`Open this day: ${insightDayLabel(selectedDay.dayKey)}`}>Open this day <IconChevronRight size={18} /></Link>
+          </section>
+        </div>
+
+        </div>
+        </section>
+
+        <section className="insights-section insights-journey-group" aria-labelledby="journey-title">
+          <header className="insights-section-heading">
+            <h2 id="journey-title">Journey</h2>
+            <p>Logging activity, milestones and journal history</p>
+          </header>
+          <div className="insights-journey-grid">
+        {/* Streak, level and XP live here; Today shows only the day itself. */}
+        <section className="k-card k-journey" aria-labelledby="journey-level-title">
+          <div className="k-section-head">
+            <h3 id="journey-level-title">Level &amp; streak</h3>
+            <span className="tabular">Level {level}</span>
+          </div>
+          <dl className="k-journey-stats">
+            <div><dt>Day streak</dt><dd className="tabular">{streak}</dd></div>
+            <div><dt>Total XP</dt><dd className="tabular">{state.gamification.xp.toLocaleString()}</dd></div>
+            <div><dt>Freezes</dt><dd className="tabular">{state.gamification.streakFreezes}</dd></div>
+          </dl>
+          <Meter
+            label="Progress to the next level"
+            tone="acid"
+            value={atTopLevel ? 1 : state.gamification.xp - levelStart}
+            max={atTopLevel ? 1 : levelEnd - levelStart}
+          />
+          <p className="k-journey-note">
+            {LEVEL_NAMES[level] || 'Your journey'}{atTopLevel ? ' · Top level reached' : ` · ${xpToNext.toLocaleString()} XP to level ${level + 1}`}
+          </p>
+          <details className="k-journey-help">
+            <summary>About XP and freezes</summary>
+            <p>XP records your logging activity and moves Momo through levels. A freeze protects your streak on a missed day; it doesn’t count as a logged day.</p>
+          </details>
+        </section>
+
+        <HabitMilestones loggedDays={getTotalLoggedDays(state.foodEntries)} />
+
+        {/* Consistency describes this calendar month, independently of the chart range. */}
+        <div className="progress-card consistency-card">
+          <div className="progress-card-header">
+            <h2 className="progress-card-title">Consistency</h2>
+            <span className="consistency-streak">{streak}-day streak</span>
+          </div>
+
+          <div className="consistency-layout">
+          <div className="insights-heat" aria-hidden>
+            {consistency.days.map((logged, i) => (
+              <span
+                key={i}
+                className={
+                  'insights-heat-cell'
+                  + (logged ? ' is-logged' : '')
+                  + (i >= consistency.elapsed ? ' is-future' : '')
+                }
+              />
+            ))}
+          </div>
+          <div className="consistency-summary">
+          <div className="consistency-headline">
+            <strong className="consistency-number">{consistency.logged}</strong>
+            <span className="consistency-unit">
+              {consistency.logged === 1 ? 'day logged' : 'days logged'}
+            </span>
+          </div>
+          <p className="consistency-sub">
+            of {consistency.elapsed} {consistency.elapsed === 1 ? 'day' : 'days'} so far this month
+          </p>
+          <p className="page-sub">Days you logged, not how the numbers landed.</p>
+          </div>
+          </div>
+          <ol className="sr-only">
+            {consistency.days.map((logged, i) => (
+              <li key={i}>
+                Day {i + 1}: {i >= consistency.elapsed ? 'upcoming' : logged ? 'logged' : 'not logged'}
+              </li>
+            ))}
+          </ol>
+          <div className="insights-legend" aria-hidden="true"><span><i className="is-logged" />Logged</span><span><i />Not logged</span><span><i className="is-future" />Upcoming</span></div>
+          <div className="own-past-callout">
+            <strong>You logged breakfast {breakfastComparison.recent} of the last 7 days.</strong>
+            <span>Your best seven-day stretch is {breakfastComparison.best}.</span>
+          </div>
         </div>
 
         <div className="progress-card">
@@ -380,6 +434,9 @@ export function ProgressPage() {
           </div>
           </div>
         </details>
+
+          </div>
+        </section>
 
       </main>
 

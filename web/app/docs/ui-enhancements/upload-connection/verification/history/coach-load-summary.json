@@ -1,0 +1,82 @@
+{
+  "trace": ".cache\\upload-connection-regression-final\\coach-recovery-Retry-reuse-c4f9c-without-another-user-bubble-chromium\\trace.zip",
+  "browserGotoMs": 17864.776,
+  "headingExpectation": {
+    "start": 35107.193,
+    "failedAt": 40209.592,
+    "afterSnapshot": 40232.167,
+    "headingPresentInAfterSnapshot": true
+  },
+  "lateModule": [
+    {
+      "url": "http://localhost:5194/src/pages/CoachPage.tsx",
+      "startedAt": 35905.492,
+      "durationMs": 1462.035,
+      "finishedAt": 37367.527,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/src/lib/coachAI.ts",
+      "startedAt": 37330.132,
+      "durationMs": 117.48899999999999,
+      "finishedAt": 37447.621,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/src/lib/coachSafety.ts",
+      "startedAt": 37330.476,
+      "durationMs": 150.322,
+      "finishedAt": 37480.798,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/src/lib/coachScroll.ts",
+      "startedAt": 37338.436,
+      "durationMs": 157.866,
+      "finishedAt": 37496.302,
+      "status": 200
+    }
+  ],
+  "longestRequests": [
+    {
+      "url": "http://localhost:5194/src/index.css",
+      "durationMs": 12551.559,
+      "waitingMs": 12509.854,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/src/styles/snack-attack-primitives.css",
+      "durationMs": 10382.041000000001,
+      "waitingMs": 10277.796,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/@vite/client",
+      "durationMs": 7937.51,
+      "waitingMs": 7874.621,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/src/components/Toast.tsx",
+      "durationMs": 4379.002,
+      "waitingMs": 4356.482,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/coach",
+      "durationMs": 4280.538,
+      "waitingMs": 4249.117,
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5194/src/store/AppContext.tsx",
+      "durationMs": 2512.418,
+      "waitingMs": 2476.942,
+      "status": 200
+    }
+  ],
+  "failedNetworkRecords": [],
+  "consoleErrors": [],
+  "screenshotInspection": "test-failed-1.png shows the fully rendered Coach screen and heading, not the Opening fallback.",
+  "limit": "Late DOM arrival observed after the assertion deadline. Trace records slow local development-server responses but does not establish their cause or application CPU timing."
+}

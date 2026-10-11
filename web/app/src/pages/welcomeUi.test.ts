@@ -14,7 +14,8 @@ vi.mock('@assets/welcome-3.webp', () => ({ default: '/welcome-3.webp' }))
 vi.mock('../store/AppContext', () => ({
   useApp: () => ({ state, updateProfile: vi.fn(), setOnboarded: vi.fn(), addEntry: vi.fn() }),
 }))
-vi.mock('../store/AuthContext', () => ({ useAuth: () => ({ user: { sub: 'welcome-test' } }) }))
+vi.mock('../store/AuthContext', () => ({ useAuth: () => ({ user }) }))
+vi.mock('../lib/guestMode', () => ({ guestUserId: () => 'guest-welcome-test' }))
 vi.mock('../lib/onboarding', async importOriginal => ({
   ...await importOriginal<typeof import('../lib/onboarding')>(),
   loadOnboardingDraft: () => draft,
@@ -22,9 +23,13 @@ vi.mock('../lib/onboarding', async importOriginal => ({
 
 const state = freshState()
 let draft = createOnboardingDraft(state.profile)
+let user: { sub: string } | null = { sub: 'welcome-test' }
 const render = () => renderToStaticMarkup(createElement(MemoryRouter, null, createElement(OnboardingPage)))
 
-beforeEach(() => { draft = createOnboardingDraft(state.profile) })
+beforeEach(() => {
+  draft = createOnboardingDraft(state.profile)
+  user = { sub: 'welcome-test' }
+})
 
 describe('welcome page UX', () => {
   it('offers one primary start action for an account already signed in', () => {
@@ -33,7 +38,7 @@ describe('welcome page UX', () => {
     expect(html).toContain('<span>Meet</span> <span>Momo.</span>')
     expect(html).not.toContain('poster-')
     expect(html.match(/>Get started\s*</g)).toHaveLength(1)
-    expect(html).not.toContain('href="/login"')
+    expect(html).not.toContain('href="/login?setup=1"')
     expect(html).not.toContain('onboarding-birthday')
     expect(html).toContain('class="k-intro-stage"')
     expect(html).toContain('class="momo-sticker" aria-hidden="true"')
@@ -43,7 +48,7 @@ describe('welcome page UX', () => {
     const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(OnboardingWelcome, {
       index: 0, signedIn: false, onSlideChange: vi.fn(), onStart: vi.fn(),
     })))
-    expect(html).toContain('href="/login"')
+    expect(html).toContain('href="/login?setup=1"')
     expect(html).toContain('<strong>Sign in</strong>')
   })
 
@@ -64,7 +69,7 @@ describe('welcome page UX', () => {
     expect(html).toContain('What is your date of birth?')
     expect(html).toContain('id="onboarding-birthday"')
     expect(html).not.toContain('k-intro')
-    expect(html).toContain('class="app-shell k-screen k-setup"')
+    expect(html).toContain('class="app-shell k-screen k-setup" data-chapter="profile"')
     expect(html).toContain('Step 1 of 8: Age')
   })
 })
@@ -91,6 +96,30 @@ describe('profile setup pages', () => {
     expect(html).toContain('Your account is ready')
     expect(html).toContain(`aria-valuenow="${step + 1}"`)
     expect(html.toLowerCase()).not.toContain('autofocus')
+    expect(html.indexOf('<form')).toBeLessThan(html.indexOf('aria-label="Your setup journey"'))
+    expect(html).toContain('Back keeps your answers')
+    expect(html).toContain(step === 7 ? 'Final step · one real meal' : `${7 - step} ${7 - step === 1 ? 'step' : 'steps'} after this`)
+  })
+
+  it('announces a saved setup at its current step', () => {
+    showSetupStep(2)
+    const html = render()
+    expect(html).toContain('role="status"')
+    expect(html).toContain('Welcome back. Your body step is ready to continue.')
+  })
+
+  it('explains guest manual access and keeps sign-in beside AI methods', () => {
+    user = null
+    showSetupStep(7)
+    const html = render()
+    expect(html).toContain('data-mode="guest"')
+    expect(html).toContain('Manual works now, without an account.')
+    expect(html.indexOf('>Manual</strong>')).toBeLessThan(html.indexOf('>Photo</strong>'))
+    expect(html.match(/href="\/login\?setup=1"/g)).toHaveLength(3)
+    expect(html).toContain('Sign in to estimate')
+    expect(html).not.toContain('Your account is ready')
+    expect(html).toContain('aria-labelledby="first-meal-manual-heading"')
+    expect(html).toContain('Name + calories required')
   })
 
   it('connects the birthday field to the purpose and profile controls', () => {

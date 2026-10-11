@@ -6,7 +6,7 @@ import { Momo } from './Momo'
 import { IconFlame } from './icons'
 
 /**
- * Momo says hello at the top of Today, dressed in his current outfit. A tap
+ * Momo says hello beside the day's chosen steps, dressed in his current outfit. A tap
  * gets a playful line and a little bop; nothing moves or talks on its own.
  */
 export function TodayMomo({ greeting, outfit, roasts, onRoast }: {

@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-10-10T05:25:53.919Z",
+  "browser": "149.0.7827.55",
+  "expectedPairs": 64,
+  "checkedPairs": 64,
+  "loadedImages": 128,
+  "imageFailures": [],
+  "pageErrors": [],
+  "overflow": [],
+  "keyboardSelectChecks": [
+    {
+      "id": "screen",
+      "focused": true,
+      "value": "backup-review",
+      "visibleFocus": true,
+      "expected": "backup-review",
+      "passed": true
+    },
+    {
+      "id": "width",
+      "focused": true,
+      "value": "1440",
+      "visibleFocus": true,
+      "expected": "1440",
+      "passed": true
+    },
+    {
+      "id": "theme",
+      "focused": true,
+      "value": "dark",
+      "visibleFocus": true,
+      "expected": "dark",
+      "passed": true
+    },
+    {
+      "id": "view",
+      "focused": true,
+      "value": "",
+      "visibleFocus": true,
+      "expected": "",
+      "passed": true
+    }
+  ]
+}

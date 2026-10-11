@@ -1,0 +1,294 @@
+{
+  "baseline": "e9c5eddb",
+  "calendar": "2026-09-19T20:00:00.000Z",
+  "observations": [
+    {
+      "screen": "departure",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1571
+    },
+    {
+      "screen": "backup-review",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1051
+    },
+    {
+      "screen": "backup-error",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1154
+    },
+    {
+      "screen": "support",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 2322
+    },
+    {
+      "screen": "about",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1146
+    },
+    {
+      "screen": "saved",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1163
+    },
+    {
+      "screen": "sync-offline",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1800
+    },
+    {
+      "screen": "sync-conflict",
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1894
+    },
+    {
+      "screen": "departure",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1571
+    },
+    {
+      "screen": "backup-review",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1051
+    },
+    {
+      "screen": "backup-error",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1154
+    },
+    {
+      "screen": "support",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 2322
+    },
+    {
+      "screen": "about",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1146
+    },
+    {
+      "screen": "saved",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1163
+    },
+    {
+      "screen": "sync-offline",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1800
+    },
+    {
+      "screen": "sync-conflict",
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1894
+    },
+    {
+      "screen": "departure",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1427
+    },
+    {
+      "screen": "backup-review",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1009
+    },
+    {
+      "screen": "backup-error",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1070
+    },
+    {
+      "screen": "support",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 2192
+    },
+    {
+      "screen": "about",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1016
+    },
+    {
+      "screen": "saved",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 900
+    },
+    {
+      "screen": "sync-offline",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1115
+    },
+    {
+      "screen": "sync-conflict",
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1115
+    },
+    {
+      "screen": "departure",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1427
+    },
+    {
+      "screen": "backup-review",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1009
+    },
+    {
+      "screen": "backup-error",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1070
+    },
+    {
+      "screen": "support",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 2192
+    },
+    {
+      "screen": "about",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 1016
+    },
+    {
+      "screen": "saved",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": false,
+      "overflow": 0,
+      "pageHeight": 900
+    },
+    {
+      "screen": "sync-offline",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1115
+    },
+    {
+      "screen": "sync-conflict",
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "syntheticSyncPresentation": true,
+      "overflow": 0,
+      "pageHeight": 1115
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test'
 import { settlePageLayout } from './helpers'
-import { applyVisualSeed, visualSeedState } from './seed'
+import { applyVisualSeed, visualSeedState, VISUAL_NOW, VISUAL_USER } from './seed'
 
 const WIDTHS = [320, 390, 768, 1440] as const
 /* The two widths that decide a composition: one phone column, one desktop rail. */
@@ -83,12 +83,18 @@ test.describe('Momo surprise cameos', () => {
       test(`momo cameo ${width} ${theme}`, async ({ page }) => {
         const state = visualSeedState()
         state.gamification.mascotActivity = 'lively'
+        // An incomplete chosen-step ring supplies real reading space. The
+        // completed ring's Details action remains protected by the scheduler.
+        if (width < 1120) state.profile.loggingCommitment = 'detailed'
         await prepare(page, width, theme, 900, state)
         await page.addInitScript(() => { window.__POIEM_TEST__ = { rng: () => 0, hideOverlay: true, momoInterludes: true } })
         await page.goto('/')
         await expect(page.getByRole('progressbar', { name: 'Calories' })).toBeVisible()
         await page.waitForFunction(() => window.__POIEM_TEST__?.momoInterludeReady === true)
         await settlePageLayout(page)
+        if (width < 1120) {
+          await page.locator('.k-today-companion').evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }))
+        }
         await page.clock.runFor(18_500)
         await expect(page.getByRole('complementary', { name: 'A little Momo moment' })).toBeVisible()
         await expect(page).toHaveScreenshot(`momo-cameo-${width}-${theme}.png`, { fullPage: false, animations: 'disabled' })
@@ -96,6 +102,35 @@ test.describe('Momo surprise cameos', () => {
     }
   }
 })
+
+for (const width of PHONE_AND_DESKTOP) {
+  for (const theme of THEMES) {
+    test(`review corrections ${width} ${theme}`, async ({ page }) => {
+      await prepare(page, width, theme)
+      await page.addInitScript(({ userId, now }) => {
+        const original = { name: 'Rice with tofu', calories: 400, protein: 20, carbs: 50, fat: 13.3, servingSizeGrams: 300 }
+        const analysis = { ...original, calories: 580, protein: 35, carbs: 75, fat: 20, servingSizeGrams: 450 }
+        const base = { ...original, calories: 580 / 1.5, protein: 35 / 1.5 }
+        localStorage.setItem(`fud-log-drafts-v1-${encodeURIComponent(userId)}`, JSON.stringify({ version: 1, review: {
+          analysis, baseAnalysis: base, originalAnalysis: original, servings: 1.5,
+          mealType: 'lunch', source: 'textInput', emptyNumericFields: [], updatedAt: now,
+        } }))
+      }, { userId: VISUAL_USER.sub, now: VISUAL_NOW })
+      await page.goto('/review')
+      await page.getByRole('button', { name: 'Continue', exact: true }).click()
+      await expect(page.getByRole('button', { name: 'Reset calories to estimate', exact: true })).toBeVisible()
+      await expect(page.getByRole('button', { name: 'Reset protein to estimate', exact: true })).toBeVisible()
+      await settlePageLayout(page)
+      if (width === 390) {
+        await page.locator('.flow-nutrition').evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }))
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true)
+      const confirmation = page.getByRole('region', { name: 'Final meal confirmation', exact: true })
+      await expect(confirmation).toHaveCSS('position', width === 390 ? 'fixed' : 'static')
+      await expect(page).toHaveScreenshot(`review-corrections-${width}-${theme}.png`, { fullPage: width === 1440, animations: 'disabled' })
+    })
+  }
+}
 
 test('Today fields stay aligned and Momo stays off the numbers', async ({ page }) => {
   await prepare(page, 390, 'light')

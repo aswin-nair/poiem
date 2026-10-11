@@ -13,7 +13,8 @@ test.describe('Today & food logging', () => {
       await expect(page.getByRole('progressbar', { name: macro })).toBeVisible()
     }
     await expect(page.getByRole('button', { name: /^Onboarding yogurt bowl/ })).toBeVisible()
-    await expect(page.getByRole('button', { name: 'Log a meal', exact: true })).toHaveCount(1)
+    await expect(page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('button', { name: 'Log a meal', exact: true })).toHaveCount(1)
+    await expect(page.locator('.k-budget').getByRole('button', { name: 'Log a meal', exact: true })).toHaveCount(1)
     // Streaks, levels and XP live on Insights.
     await expect(page.locator('.k-today-header')).not.toContainText(/streak|level/i)
     await expect(page.locator('.ticket')).toHaveCount(0)

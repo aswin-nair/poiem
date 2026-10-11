@@ -31,7 +31,8 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testIgnore: /production\.spec\.ts|visual\.spec\.ts|mobile-ux\.spec\.ts/,
+      // Cloud-client lifecycle checks run with their isolated cloud configuration.
+      testIgnore: /production\.spec\.ts|visual\.spec\.ts|mobile-ux\.spec\.ts|session-expiry\.spec\.ts|connection-recovery\.spec\.ts|photo-upload\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
     {

@@ -1,5 +1,4 @@
-/* Insights: a bold, colourful journal spread. Journey and consistency lead;
-   charts, sparse states and the date archive keep the same useful structure. */
+/* Insights: a factual weekly snapshot, inspectable trends and a separate Journey. */
 @layer screens {
   .k-insights { min-height: 100dvh; }
   .k-insights-main {
@@ -31,6 +30,20 @@
   .k-insights .insights-intro { margin: 0; max-width: 34ch; font: 500 var(--k-text-md)/1.45 var(--k-font-body); color: var(--k-sticker-ink); }
   .k-insights .k-notice .pressable { justify-self: start; }
 
+  .k-insights .insights-week-summary { display: grid; gap: var(--k-space-md); margin: 0; padding: var(--k-space-lg); border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-butter); color: var(--k-sticker-ink); box-shadow: none; }
+  .k-insights .insights-week-heading { display: grid; gap: var(--k-space-xs); }
+  .k-insights .insights-week-heading h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }
+  .k-insights .insights-week-heading p { margin: 0; font: 600 var(--k-text-xs)/1.5 var(--k-font-mono); }
+  .k-insights .insights-week-fact { display: grid; gap: var(--k-space-xs); margin: 0; font: 600 var(--k-text-sm)/1.4 var(--k-font-body); }
+  .k-insights .insights-week-fact strong { font: 900 var(--k-type-figure)/1.1 var(--k-font-display); overflow-wrap: anywhere; }
+  .k-insights .insights-week-note { margin: 0; font: 500 var(--k-text-xs)/1.5 var(--k-font-body); }
+  .k-insights .insights-section { display: grid; min-width: 0; gap: var(--k-space-lg); }
+  .k-insights .insights-section-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--k-space-sm) var(--k-space-lg); padding-bottom: var(--k-space-sm); border-bottom: 2px solid var(--k-role-border); }
+  .k-insights .insights-section-heading h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }
+  .k-insights .insights-section-heading p { margin: 0; font: 500 var(--k-text-sm)/1.4 var(--k-font-body); color: var(--k-muted); }
+  .k-insights :is(.insights-trend-grid, .insights-journey-grid, .insights-weight-group) { display: grid; min-width: 0; gap: var(--k-space-lg); align-content: start; }
+  .k-insights :is(.insights-trend-grid, .insights-journey-grid) > * { min-width: 0; }
+
   /* ── Cards ─────────────────────────────────────────────────── */
   .k-insights :is(.progress-card, .habit-milestones) {
     margin: 0;
@@ -48,7 +61,7 @@
   /* Journey has three punchy stat blocks and the level's acid meter. */
   .k-insights .k-journey { margin: 0; border: 2px solid var(--k-role-border); box-shadow: var(--k-shadow); }
   .k-insights .k-journey .k-section-head { border-bottom: 2px solid var(--k-role-border); }
-  .k-insights .k-journey .k-section-head h2 { font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }
+  .k-insights .k-journey .k-section-head :is(h2, h3) { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }
   .k-insights .k-journey .k-section-head > span { padding: var(--k-space-xs) var(--k-space-sm); border: 2px solid var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid); }
   .k-insights .k-journey-stats div { min-width: 0; padding: var(--k-space-sm); border: 2px solid var(--k-sticker-ink); background: var(--tone, var(--k-sticker-butter)); }
   .k-insights .k-journey-stats div:nth-child(1) { --tone: var(--k-sticker-peach); }
@@ -145,6 +158,30 @@
   .k-insights :is(.insights-empty, .insights-chart-note, .chart-footnote, .chart-empty) { margin: 8px 0 0; font: 500 var(--k-text-xs)/1.45 var(--k-font-body); color: var(--k-muted); }
   .k-insights .progress-chart-wrap { margin: 6px 0 0; padding: 8px 0 0; border: 0; background: none; box-shadow: none; }
   .k-insights .progress-chart-wrap svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .k-insights .insights-chart-scroll { max-width: 100%; overflow-x: auto; padding: 4px 0; scrollbar-color: var(--k-hair-strong) var(--k-card); }
+  .k-insights .insights-chart-plot { position: relative; }
+  .k-insights .insights-chart-controls { position: absolute; display: grid; }
+  .k-insights .insights-chart-day { min-width: 44px; min-height: 44px; margin: 0; padding: 0; border: 2px solid transparent; border-radius: 0; background: transparent; box-shadow: none; cursor: pointer; touch-action: pan-x pan-y; }
+  .k-insights .insights-chart-day[aria-pressed="true"] { border-color: var(--k-ink); }
+  .k-insights .insights-chart-day:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: -5px; }
+  .k-insights .insights-day-inspector { display: grid; gap: var(--k-space-md); margin-top: var(--k-space-md); padding: var(--k-space-md); border: 2px solid var(--k-role-border); background: var(--k-ground); }
+  .k-insights .insights-day-controls { display: grid; gap: var(--k-space-xs); }
+  .k-insights .insights-day-controls label { font: 600 var(--k-text-xs)/1.3 var(--k-font-mono); text-transform: uppercase; }
+  .k-insights .insights-day-picker { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; gap: var(--k-space-xs); }
+  .k-insights .insights-day-picker :is(button, select) { min-width: 0; min-height: 44px; margin: 0; padding: var(--k-space-xs); border: 2px solid var(--k-role-border); border-radius: 0; background: var(--k-card); color: var(--k-ink); box-shadow: none; font: 700 var(--k-text-sm)/1.3 var(--k-font-body); cursor: pointer; }
+  .k-insights .insights-day-picker button { font-size: var(--k-text-lg); }
+  .k-insights .insights-day-picker button:disabled { cursor: default; color: var(--k-muted); border-style: dashed; }
+  .k-insights .insights-day-picker :is(button, select):focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 2px; }
+  .k-insights .insights-day-reading { display: grid; gap: var(--k-space-sm); }
+  .k-insights .insights-day-reading h3 { margin: 0; font: 800 var(--k-text-md)/1.4 var(--k-font-body); }
+  .k-insights .insights-day-reading p { margin: 0; font: 500 var(--k-text-sm)/1.5 var(--k-font-body); }
+  .k-insights .insights-day-macros { display: flex; flex-wrap: wrap; gap: var(--k-space-sm) var(--k-space-lg); margin: 0; }
+  .k-insights .insights-day-macros div { display: grid; gap: var(--k-space-xs); }
+  .k-insights .insights-day-macros dt { font: 500 var(--k-text-xs)/1.4 var(--k-font-body); color: var(--k-muted); }
+  .k-insights .insights-day-macros dd { margin: 0; font: 700 var(--k-text-sm)/1.4 var(--k-font-mono); }
+  .k-insights .insights-open-day { display: flex; align-items: center; justify-content: space-between; gap: var(--k-space-sm); min-height: 44px; padding: var(--k-space-sm) var(--k-space-md); border: 2px solid var(--k-on-acid); background: var(--k-acid); color: var(--k-on-acid); box-shadow: var(--k-shadow-sm); font: 800 var(--k-text-sm)/1.4 var(--k-font-body); text-decoration: none; }
+  .k-insights .insights-open-day:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 3px; }
 
   .k-insights .history-link-card {
     display: grid;
@@ -269,7 +306,6 @@
     .k-insights .modal-sheet.weight-log-sheet { border-bottom: 2px solid var(--k-line); border-radius: 0; box-shadow: var(--k-shadow); }
   }
   @media (min-width: 768px) {
-    .k-insights-main { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-    .k-insights-main > :is(.progress-page-header, .insights-range-control, .k-notice) { grid-column: 1 / -1; }
+    .k-insights :is(.insights-trend-grid, .insights-journey-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
   }
 }

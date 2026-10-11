@@ -73,20 +73,21 @@ async function saveMeal(page: Page, name: string, mealType: MealType = 'snack', 
 
 const ring = (page: Page) => page.getByRole('region', { name: 'Your day', exact: true })
 
-test('Today shows the ring under Momo for an active account', async ({ page }) => {
+test('Today keeps chosen steps after the meal list and nutrition summary', async ({ page }) => {
   await seed(page, activeState())
   await page.goto('/')
   await expect(ring(page)).toBeVisible()
   await expect(ring(page).locator('.k-ring-note')).not.toBeEmpty()
   const order = await page.locator('.k-today-summary').evaluate(element => {
     const children = Array.from(element.children)
-    return { momo: children.findIndex(child => child.classList.contains('k-momo')),
-      ring: children.findIndex(child => child.classList.contains('k-ring')),
-      hero: children.findIndex(child => child.classList.contains('k-budget')) }
+    return { hero: children.findIndex(child => child.classList.contains('k-budget')) }
   })
-  expect(order.momo).toBeGreaterThanOrEqual(0)
-  expect(order.ring).toBe(order.momo + 1)
-  expect(order.hero).toBe(order.ring + 1)
+  expect(order.hero).toBe(0)
+  const position = await page.locator('.k-today-layout').evaluate(element => {
+    const children = Array.from(element.children)
+    return { meals: children.findIndex(child => child.classList.contains('k-meals')), companion: children.findIndex(child => child.classList.contains('k-today-companion')) }
+  })
+  expect(position.companion).toBe(position.meals + 1)
   await expect(ring(page)).not.toHaveClass(/k-hero|day-ring/)
   await expect(ring(page).getByRole('img')).toHaveAccessibleName('0 of 2 chosen steps complete')
 })

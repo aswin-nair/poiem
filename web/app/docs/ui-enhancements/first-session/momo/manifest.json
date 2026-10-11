@@ -1,0 +1,514 @@
+{
+  "capturedOn": "2026-10-09",
+  "source": "Current local Poiem application; seeded demo account; no provider requests.",
+  "rendering": "Chromium on Windows. Viewport captures at CSS pixel scale. Native CSS keyframes sampled at finite story phases; pose timers use the installed clock.",
+  "note": "These are new review fixtures, not locked regression baseline updates. Phone Today is scrolled to the companion/Water reading space. Heading polish uses About.",
+  "screens": [
+    {
+      "story": "ticket-plane",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 2800,
+      "filename": "ticket-plane-390-light.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "This ticket has decided to pursue aviation.",
+      "errors": []
+    },
+    {
+      "story": "ticket-plane",
+      "width": 390,
+      "theme": "dark",
+      "phaseMs": 2800,
+      "filename": "ticket-plane-390-dark.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "This ticket has decided to pursue aviation.",
+      "errors": []
+    },
+    {
+      "story": "ticket-plane",
+      "width": 1440,
+      "theme": "light",
+      "phaseMs": 2800,
+      "filename": "ticket-plane-1440-light.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scene": {
+        "x": 259,
+        "y": 597.9375,
+        "width": 340,
+        "height": 140
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "This ticket has decided to pursue aviation.",
+      "errors": []
+    },
+    {
+      "story": "ticket-plane",
+      "width": 1440,
+      "theme": "dark",
+      "phaseMs": 2800,
+      "filename": "ticket-plane-1440-dark.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scene": {
+        "x": 259,
+        "y": 597.9375,
+        "width": 340,
+        "height": 140
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "This ticket has decided to pursue aviation.",
+      "errors": []
+    },
+    {
+      "story": "heading-polish",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 3000,
+      "filename": "heading-polish-390-light.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 83.59375,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "Polished the sign. The letters now have tiny shoes.",
+      "errors": []
+    },
+    {
+      "story": "heading-polish",
+      "width": 390,
+      "theme": "dark",
+      "phaseMs": 3000,
+      "filename": "heading-polish-390-dark.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 83.59375,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "Polished the sign. The letters now have tiny shoes.",
+      "errors": []
+    },
+    {
+      "story": "heading-polish",
+      "width": 1440,
+      "theme": "light",
+      "phaseMs": 3000,
+      "filename": "heading-polish-1440-light.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scene": {
+        "x": 1088,
+        "y": 83.59375,
+        "width": 340,
+        "height": 140
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "Polished the sign. The letters now have tiny shoes.",
+      "errors": []
+    },
+    {
+      "story": "heading-polish",
+      "width": 1440,
+      "theme": "dark",
+      "phaseMs": 3000,
+      "filename": "heading-polish-1440-dark.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scene": {
+        "x": 1088,
+        "y": 83.59375,
+        "width": 340,
+        "height": 140
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "Polished the sign. The letters now have tiny shoes.",
+      "errors": []
+    },
+    {
+      "story": "saved-waiter",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 2200,
+      "filename": "saved-waiter-390-light.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "One star, served with unreasonable elegance.",
+      "errors": []
+    },
+    {
+      "story": "saved-waiter",
+      "width": 390,
+      "theme": "dark",
+      "phaseMs": 2200,
+      "filename": "saved-waiter-390-dark.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "One star, served with unreasonable elegance.",
+      "errors": []
+    },
+    {
+      "story": "saved-waiter",
+      "width": 1440,
+      "theme": "light",
+      "phaseMs": 2200,
+      "filename": "saved-waiter-1440-light.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scene": {
+        "x": 259,
+        "y": 597.9375,
+        "width": 340,
+        "height": 140
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "One star, served with unreasonable elegance.",
+      "errors": []
+    },
+    {
+      "story": "saved-waiter",
+      "width": 1440,
+      "theme": "dark",
+      "phaseMs": 2200,
+      "filename": "saved-waiter-1440-dark.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scene": {
+        "x": 259,
+        "y": 597.9375,
+        "width": 340,
+        "height": 140
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "One star, served with unreasonable elegance.",
+      "errors": []
+    }
+  ],
+  "beats": [
+    {
+      "story": "ticket-plane",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 800,
+      "filename": "ticket-plane-390-light-beat-1.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "This ticket has decided to pursue aviation.",
+      "errors": []
+    },
+    {
+      "story": "ticket-plane",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 2600,
+      "filename": "ticket-plane-390-light-beat-2.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "This ticket has decided to pursue aviation.",
+      "errors": []
+    },
+    {
+      "story": "ticket-plane",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 4800,
+      "filename": "ticket-plane-390-light-beat-3.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "This ticket has decided to pursue aviation.",
+      "errors": []
+    },
+    {
+      "story": "heading-polish",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 700,
+      "filename": "heading-polish-390-light-beat-1.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 83.59375,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "Polished the sign. The letters now have tiny shoes.",
+      "errors": []
+    },
+    {
+      "story": "heading-polish",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 2100,
+      "filename": "heading-polish-390-light-beat-2.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 83.59375,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "Polished the sign. The letters now have tiny shoes.",
+      "errors": []
+    },
+    {
+      "story": "heading-polish",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 4800,
+      "filename": "heading-polish-390-light-beat-3.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 83.59375,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 0,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "Polished the sign. The letters now have tiny shoes.",
+      "errors": []
+    },
+    {
+      "story": "saved-waiter",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 700,
+      "filename": "saved-waiter-390-light-beat-1.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "One star, served with unreasonable elegance.",
+      "errors": []
+    },
+    {
+      "story": "saved-waiter",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 2200,
+      "filename": "saved-waiter-390-light-beat-2.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "One star, served with unreasonable elegance.",
+      "errors": []
+    },
+    {
+      "story": "saved-waiter",
+      "width": 390,
+      "theme": "light",
+      "phaseMs": 4800,
+      "filename": "saved-waiter-390-light-beat-3.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": {
+        "x": 92,
+        "y": 292.75,
+        "width": 286,
+        "height": 300
+      },
+      "scrollY": 860,
+      "overflow": false,
+      "collisions": [],
+      "focus": "H1",
+      "motion": "finite",
+      "line": "One star, served with unreasonable elegance.",
+      "errors": []
+    }
+  ]
+}

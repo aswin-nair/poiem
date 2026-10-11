@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { normalizeServings, scaleFoodAnalysis } from './mealReview'
+import { normalizeServings, resetFoodAnalysisField, scaleFoodAnalysis } from './mealReview'
 import { photoFileIssue } from './photoSelection'
 import { reviewFoodIssue, validateManualFood } from './foodEntryValidation'
 import type { FoodAnalysis } from '../types'
@@ -32,6 +32,20 @@ describe('review portion maths', () => {
   it('lets validation reject totals that go outside safe entry limits after scaling', () => {
     const scaled = scaleFoodAnalysis(base, 1000)
     expect(reviewFoodIssue(scaled, new Set())).not.toBeNull()
+  })
+  it('resets only the selected correction to the original estimate at the current portion', () => {
+    const correctedBase = { ...base, calories: 110, protein: 7, ingredients: undefined }
+    const current = { ...scaleFoodAnalysis(correctedBase, 1.5), name: 'My soup' }
+    const reset = resetFoodAnalysisField(base, correctedBase, current, 1.5, 'calories')
+    expect(reset.analysis).toMatchObject({ name: 'My soup', calories: 180, protein: 10.5, carbs: 22.5, fat: 7.5 })
+    expect(reset.base.calories).toBe(120)
+    expect(reset.base.protein).toBe(7)
+    expect(reset.analysis.ingredients).toBeUndefined()
+    // Further portion changes use that base once, without accumulating rounding.
+    const half = scaleFoodAnalysis(reset.base, 0.5, reset.analysis)
+    expect(half).toMatchObject({ calories: 60, protein: 3.5 })
+    expect(scaleFoodAnalysis(reset.base, 1.5, half)).toEqual(reset.analysis)
+    expect(base.ingredients).toHaveLength(1)
   })
   it.each(['-1', 'NaN', 'Infinity', '100001', ''])('rejects invalid edited calories %s', calories => {
     expect(validateManualFood({ name: 'Soup', calories, protein: '4', carbs: '15', fat: '5', servings: 1 }).ok).toBe(false)

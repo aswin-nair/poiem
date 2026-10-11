@@ -12,6 +12,7 @@
   --wp-duration-enter: 0.5s;
   --wp-duration-press: 0.12s;
   color: var(--wp-fg); background: var(--wp-bg); font-family: var(--wp-body); overflow: clip;
+  padding-inline: var(--k-safe-left) var(--k-safe-right);
 }
 :root[data-theme='dark'] .welcome-poster { --wp-bg: #121211; --wp-cell: #1c1c1a; --wp-fg: #f3f0e6; --wp-muted: #bcb9ae; --wp-line: #f3f0e6; --wp-shadow: #e7f258; --wp-focus: #e7f258; }
 .welcome-poster * { box-sizing: border-box; }
@@ -19,7 +20,7 @@
 .welcome-poster :is(h1, h2, h3) { font-family: var(--wp-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; text-wrap: balance; }
 .welcome-poster a { color: inherit; text-decoration: none; }
 .welcome-poster :is(a, button, summary):focus-visible { outline: 3px solid var(--wp-focus); outline-offset: 4px; }
-.welcome-poster .wp-skip { position: absolute; z-index: 50; top: 8px; left: 8px; padding: 14px 18px; color: #121212; background: #e7f258; border: 3px solid #121212; transform: translateY(-200%); }
+.welcome-poster .wp-skip { position: absolute; z-index: 50; top: calc(var(--k-space-sm) + var(--k-safe-top)); left: calc(var(--k-space-sm) + var(--k-safe-left)); padding: calc(var(--k-space-md) + var(--k-space-xs) / 2) calc(var(--k-space-lg) + var(--k-space-xs) / 2); color: #121212; background: #e7f258; border: var(--k-border-bold) solid #121212; transform: translateY(calc(-200% - var(--k-safe-top))); }
 .welcome-poster .wp-skip:focus { transform: none; }
 .wp-label { font: 600 12px/1.4 var(--wp-mono); letter-spacing: .04em; text-transform: uppercase; }
 .wp-meta-row { display: flex; justify-content: space-between; gap: 12px; padding-top: 10px; border-top: 3px solid var(--wp-line); font: 600 12px/1.3 var(--wp-mono); letter-spacing: .04em; text-transform: uppercase; }
@@ -43,7 +44,7 @@
 .wp-actions { display: flex; flex-wrap: wrap; gap: 18px; }
 
 /* Header: a row of ruled cells */
-.wp-header { position: sticky; top: 0; z-index: 30; background: var(--wp-bg); border-bottom: 3px solid var(--wp-line); }
+.wp-header { position: sticky; top: 0; z-index: 30; padding-top: var(--k-safe-top); background: var(--wp-bg); border-bottom: 3px solid var(--wp-line); }
 .wp-header-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; min-height: 76px; transition: min-height .15s ease; }
 .wp-header.is-condensed .wp-header-inner { min-height: 62px; }
 .wp-brand { display: flex; align-items: center; padding: 0 clamp(20px, 3vw, 40px); border-right: 3px solid var(--wp-line); }
@@ -54,7 +55,7 @@
 .wp-header-actions { display: flex; align-items: center; gap: 16px; padding-right: clamp(14px, 3vw, 40px); border-left: 3px solid var(--wp-line); }
 .welcome-poster .appearance-toggle { align-self: stretch; width: 64px; display: grid; place-items: center; padding: 0; border: 0; border-right: 3px solid var(--wp-line); background: transparent; color: var(--wp-fg); cursor: pointer; }
 .welcome-poster .appearance-toggle:hover { background: var(--wp-accent); color: #121212; }
-.wp-header-link { padding: 12px 2px; font: 600 12px/1 var(--wp-mono); letter-spacing: .04em; text-transform: uppercase; text-decoration: underline !important; text-decoration-thickness: 2px !important; text-underline-offset: 5px; }
+.wp-header-link { display: inline-flex; align-items: center; min-width: calc(var(--k-space-3xl) - var(--k-space-xs)); min-height: calc(var(--k-space-3xl) - var(--k-space-xs)); white-space: nowrap; padding: 12px 2px; font: 600 12px/1 var(--wp-mono); letter-spacing: .04em; text-transform: uppercase; text-decoration: underline !important; text-decoration-thickness: 2px !important; text-underline-offset: 5px; }
 
 /* Hero: "a little" is set small and "a lot" is set huge, beside a plate being read */
 .wp-hero { border-bottom: 3px solid var(--wp-line); }
@@ -145,7 +146,7 @@
 .wp-figure img { display: block; width: 100%; height: auto; aspect-ratio: 390 / 740; object-fit: cover; object-position: top; background: #fff8eb; }
 
 /* Sections */
-.wp-section { padding: clamp(64px, 8vw, 120px) 0; border-bottom: 3px solid var(--wp-line); scroll-margin-top: 60px; }
+.wp-section { padding: clamp(64px, 8vw, 120px) 0; border-bottom: 3px solid var(--wp-line); scroll-margin-top: calc(var(--k-space-4xl) - var(--k-space-xs) + var(--k-safe-top)); }
 .wp-head { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) minmax(0, 280px); gap: 20px 40px; align-items: end; padding-bottom: 32px; border-bottom: 3px solid var(--wp-line); }
 .wp-head .wp-label { align-self: start; padding-top: 10px; }
 .wp-head h2 { font-size: clamp(48px, 6.4vw, 104px); line-height: .86; }
@@ -153,9 +154,9 @@
 .wp-head-note { color: var(--wp-muted); text-align: right; font: 600 12px/1.5 var(--wp-mono); letter-spacing: .04em; text-transform: uppercase; }
 
 /* [01] Plate to numbers: pinned and scroll-linked on roomy screens, laid out in order elsewhere */
-.wp-p2n { border-bottom: 3px solid var(--wp-line); scroll-margin-top: 62px; }
+.wp-p2n { border-bottom: 3px solid var(--wp-line); scroll-margin-top: calc(62px + var(--k-safe-top)); }
 .wp-p2n.is-pinned { height: 300vh; }
-.wp-p2n-sticky { position: sticky; top: 62px; height: calc(100vh - 62px); overflow: hidden; }
+.wp-p2n-sticky { position: sticky; top: calc(62px + var(--k-safe-top)); height: calc(100vh - 62px - var(--k-safe-top) - var(--k-safe-bottom)); overflow: hidden; }
 .wp-p2n-inner { height: 100%; display: flex; flex-direction: column; gap: clamp(16px, 2.6vh, 32px); padding-block: clamp(20px, 3.4vh, 44px); }
 .wp-p2n-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 24px; padding-bottom: clamp(12px, 2vh, 24px); border-bottom: 3px solid var(--wp-line); }
 .wp-p2n-head h2 { margin-top: 10px; font-size: clamp(40px, 7.2vh, 84px); line-height: .86; }
@@ -207,7 +208,7 @@
 .wp-step.is-active p { color: inherit; }
 .wp-step.is-active .wp-step-num { background: var(--wp-accent); color: #121212; }
 .wp-step-figure { display: none; }
-.wp-steps-stage { position: sticky; top: 96px; }
+.wp-steps-stage { position: sticky; top: calc(2 * var(--k-space-3xl) + var(--k-safe-top)); }
 .wp-steps-stage .wp-figure { width: min(100%, 380px); margin-left: auto; }
 .wp-stage-screens { position: relative; aspect-ratio: 390 / 740; overflow: hidden; background: #fff8eb; }
 .wp-stage-screens img { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; opacity: 0; }
@@ -252,7 +253,7 @@
 
 /* [05] FAQ: questions on hairline-free ruled rows, the heading pinned beside them */
 .wp-faq-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
-.wp-faq-head { position: sticky; top: 100px; }
+.wp-faq-head { position: sticky; top: calc(2 * var(--k-space-3xl) + var(--k-space-xs) + var(--k-safe-top)); }
 .wp-faq-head h2 { margin-top: 18px; font-size: clamp(56px, 7vw, 120px); line-height: .86; }
 .wp-faq-head h2 span { color: var(--wp-muted); }
 .wp-faq { border-bottom: 3px solid var(--wp-line); }
@@ -296,7 +297,7 @@
 .wp-footer nav .wp-label { margin-bottom: 6px; color: var(--wp-muted); }
 .wp-footer nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 800; }
 .wp-footer nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
-.wp-footer-legal { padding: 18px clamp(20px, 4.5vw, 64px); color: var(--wp-muted); font: 600 11px/1.5 var(--wp-mono); letter-spacing: .04em; text-transform: uppercase; }
+.wp-footer-legal { padding: calc(var(--k-space-lg) + var(--k-space-xs) / 2) clamp(20px, 4.5vw, 64px) calc(var(--k-space-lg) + var(--k-space-xs) / 2 + var(--k-safe-bottom)); color: var(--wp-muted); font: 600 11px/1.5 var(--wp-mono); letter-spacing: .04em; text-transform: uppercase; }
 
 /* The cut: an ink panel covers the page before the app loads */
 .wp-cut { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; pointer-events: none; background: #121212; color: #e7f258; transform: translateY(101%); transition: transform .32s cubic-bezier(.7, 0, .3, 1); }
@@ -343,8 +344,8 @@
 @media (max-width: 600px) {
   .wp-brand { padding: 0 16px; }
   .wp-brand .poiem-logo { width: 92px; height: 30px; }
-  .welcome-poster .appearance-toggle { width: 52px; }
-  .wp-header-actions { gap: 12px; padding-right: 12px; }
+  .welcome-poster .appearance-toggle { width: calc(var(--k-space-3xl) - var(--k-space-xs)); }
+  .wp-header-actions { gap: var(--k-space-sm); padding-right: var(--k-space-md); }
   .wp-hero-small { font-size: 22px; }
   .wp-hero-copy .wp-meta-row > :last-child { display: none; }
   .wp-hero-big { font-size: clamp(56px, 21vw, 110px); }

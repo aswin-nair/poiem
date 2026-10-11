@@ -1,0 +1,158 @@
+/* A viewport edge has one safe-area owner. Page headers and content keep their
+   existing gutters inside the shell; fixed surfaces have their own viewport.
+   Zero insets retain the current layout. */
+@layer screens {
+  .app-shell.k-screen,
+  .k-account:not(.is-simple),
+  .k-intro,
+  .admin-workspace {
+    padding-top: var(--k-safe-top);
+    padding-left: var(--k-safe-left);
+    padding-right: var(--k-safe-right);
+  }
+  .k-account.is-simple {
+    padding-top: calc(clamp(var(--k-space-xl), 8vh, calc(var(--k-space-4xl) + var(--k-space-sm))) + var(--k-safe-top));
+    padding-right: calc(var(--k-gutter) + var(--k-safe-right));
+    padding-bottom: calc(var(--k-space-2xl) + var(--k-space-sm) + var(--k-safe-bottom));
+    padding-left: calc(var(--k-gutter) + var(--k-safe-left));
+  }
+  .admin-workspace { padding-bottom: var(--k-safe-bottom); }
+
+  /* Fixed wrappers are centred within the usable viewport, including when the
+     left and right insets differ. Their inner gutters remain unchanged. */
+  .bottom-nav-wrap {
+    right: var(--k-safe-right);
+    left: var(--k-safe-left);
+    width: auto;
+    margin-inline: auto;
+    transform: none;
+  }
+  .toast-stack {
+    right: calc(var(--k-space-md) + var(--k-safe-right));
+    left: calc(var(--k-space-md) + var(--k-safe-left));
+    width: auto;
+    margin-inline: auto;
+    transform: none;
+  }
+  .k-log-moment,
+  .k-today-main {
+    --k-moment-max-height: max(0px, calc(100dvh - var(--k-safe-top) - var(--k-tabbar-h) - var(--k-safe-bottom) - 2 * var(--k-space-4xl)));
+  }
+  .k-log-moment {
+    right: calc(var(--k-pad-panel) + var(--k-safe-right));
+    left: calc(var(--k-pad-panel) + var(--k-safe-left));
+  }
+
+  /* Sticky surfaces are already inside the shell's side insets. */
+  .k-you .you-toolbar { top: var(--k-safe-top); }
+  .k-you :is(.appearance-settings, .you-section) {
+    scroll-margin-top: calc(var(--you-toolbar-height, calc(2 * var(--k-space-4xl) + var(--k-space-xs))) + var(--k-safe-top) + var(--k-space-md));
+  }
+  .k-you [data-setting-highlight] { scroll-margin-block: calc(var(--k-space-4xl) + var(--k-space-3xl) + var(--k-space-sm) + var(--k-safe-top)); }
+  .k-setup-companion { top: calc(var(--k-space-lg) + var(--k-space-xs) + var(--k-safe-top)); }
+  .k-flow-wide .flow-review-side,
+  .k-account-poster { top: calc(var(--k-space-xl) + var(--k-safe-top)); }
+  .admin-section-nav { top: calc(var(--k-space-lg) + var(--k-space-xs) + var(--k-safe-top)); }
+  .admin-section { scroll-margin-top: calc(var(--k-space-xl) + var(--k-safe-top)); }
+
+  /* Bottom sheets paint through the home-indicator area, with their bottom
+     inset inside. Backdrops own only top and sides on a phone. */
+  .k-sheet-backdrop,
+  .k-insights .modal-backdrop,
+  .activity-sheet-backdrop {
+    padding: var(--k-safe-top) var(--k-safe-right) 0 var(--k-safe-left);
+  }
+  .k-sheet,
+  .k-insights .modal-sheet.weight-log-sheet {
+    max-height: min(90dvh, 780px, calc(100dvh - var(--k-safe-top)));
+  }
+  .k-sheet {
+    padding-bottom: calc(var(--k-space-lg) + var(--k-space-md) / 2 + var(--k-safe-bottom));
+    scroll-padding-bottom: calc(var(--k-space-lg) + var(--k-space-md) / 2 + var(--k-safe-bottom));
+  }
+  .k-backup-preview { padding-bottom: calc(var(--k-space-lg) + var(--k-safe-bottom)); }
+  .k-insights .modal-sheet.weight-log-sheet { padding-bottom: calc(var(--k-space-lg) + var(--k-space-xs) + var(--k-safe-bottom)); }
+  .activity-sheet {
+    max-height: calc(100dvh - var(--k-safe-top));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: calc(var(--k-space-2xl) + var(--k-space-xs) + var(--k-safe-bottom));
+  }
+
+  /* Floating dialogs keep all four edges on the backdrop, so the panel does
+     not add the home-indicator inset a second time. Short screens can scroll. */
+  .date-modal-overlay {
+    padding: calc(var(--k-space-xl) + var(--k-safe-top)) calc(var(--k-space-xl) + var(--k-safe-right)) calc(var(--k-space-xl) + var(--k-safe-bottom)) calc(var(--k-space-xl) + var(--k-safe-left));
+  }
+  .date-modal {
+    max-height: calc(100dvh - var(--k-space-3xl) - var(--k-safe-top) - var(--k-safe-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .portion-overlay {
+    padding: calc(var(--k-space-md) + var(--k-safe-top)) calc(var(--k-space-md) + var(--k-safe-right)) calc(var(--k-space-md) + var(--k-safe-bottom)) calc(var(--k-space-md) + var(--k-safe-left));
+  }
+  .portion-sheet {
+    max-height: min(calc(100dvh - var(--k-space-2xl)), calc(100dvh - var(--k-space-xl) - var(--k-safe-top) - var(--k-safe-bottom)));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: var(--k-space-lg);
+  }
+  .splash-screen {
+    padding: var(--k-safe-top) var(--k-safe-right) var(--k-safe-bottom) var(--k-safe-left);
+  }
+
+  @media (max-width: 899px) {
+    .k-account:not(.is-simple) {
+      padding-bottom: calc(var(--k-space-lg) + var(--k-safe-bottom));
+      scroll-padding-bottom: calc(var(--k-space-4xl) + var(--k-space-2xl) + var(--k-space-md) + var(--k-safe-bottom));
+    }
+    .k-account .auth-form { scroll-padding-bottom: calc(var(--k-space-4xl) + var(--k-space-2xl) + var(--k-space-md) + var(--k-safe-bottom)); }
+    .k-account .auth-submit-dock { padding-bottom: calc(var(--k-space-md) + var(--k-safe-bottom)); }
+    .k-account .auth-submit-dock.is-docked {
+      --k-auth-dock-gutter: max(var(--k-gutter), calc((100vw - var(--k-safe-left) - var(--k-safe-right) - 440px) / 2));
+      padding-right: calc(var(--k-auth-dock-gutter) + var(--k-safe-right));
+      padding-bottom: calc(var(--k-space-md) + var(--k-space-xs) / 2 + var(--k-safe-bottom));
+      padding-left: calc(var(--k-auth-dock-gutter) + var(--k-safe-left));
+    }
+    .k-account :is(input, button, a, .error-banner) { scroll-margin-bottom: calc(var(--k-space-4xl) + var(--k-space-2xl) + var(--k-space-md) + var(--k-safe-bottom)); }
+  }
+  @media (max-width: 767px) {
+    .k-meal-review:not(.has-review-keyboard) .k-review-confirm {
+      padding-left: calc(var(--k-pad-panel) + var(--k-safe-left));
+      padding-right: calc(var(--k-pad-panel) + var(--k-safe-right));
+    }
+  }
+  @media (min-width: 720px) {
+    .k-sheet-backdrop,
+    .k-insights .modal-backdrop {
+      padding: calc(var(--k-space-xl) + var(--k-safe-top)) calc(var(--k-space-xl) + var(--k-safe-right)) calc(var(--k-space-xl) + var(--k-safe-bottom)) calc(var(--k-space-xl) + var(--k-safe-left));
+    }
+    .k-sheet,
+    .k-insights .modal-sheet.weight-log-sheet {
+      max-height: min(90dvh, 780px, calc(100dvh - var(--k-space-3xl) - var(--k-safe-top) - var(--k-safe-bottom)));
+    }
+    .k-sheet {
+      padding-bottom: calc(var(--k-space-lg) + var(--k-space-md) / 2);
+      scroll-padding-bottom: calc(var(--k-space-lg) + var(--k-space-md) / 2);
+    }
+    .k-backup-preview { padding-bottom: var(--k-space-xl); }
+    .k-insights .modal-sheet.weight-log-sheet { padding-bottom: calc(var(--k-space-lg) + var(--k-space-xs)); }
+  }
+  @media (min-width: 1120px) {
+    .k-app.has-nav {
+      padding-left: calc(var(--k-space-xl) + var(--k-safe-left));
+      padding-right: calc(var(--k-space-xl) + var(--k-safe-right));
+    }
+    .k-app .bottom-nav-wrap {
+      top: var(--k-safe-top);
+      right: auto;
+      left: auto;
+      width: var(--k-nav-side);
+      height: calc(100dvh - var(--k-safe-top) - var(--k-safe-bottom));
+      margin-inline: 0;
+    }
+    .k-coach .k-workspace-col { padding-bottom: var(--k-safe-bottom); }
+    .k-coach-compose { bottom: var(--k-safe-bottom); }
+  }
+}

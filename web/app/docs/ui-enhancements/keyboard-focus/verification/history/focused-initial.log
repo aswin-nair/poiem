@@ -1,0 +1,68 @@
+[WebServer] (node:29508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 11 tests using 1 worker
+
+(node:32420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › e2e\route-focus.spec.ts:18:3 › pending route focus preserves a selected Manual field at 390px (7.0s)
+  ok  2 [chromium] › e2e\route-focus.spec.ts:44:3 › pending route focus preserves a selected action at 390px (1.7s)
+  ok  3 [chromium] › e2e\route-focus.spec.ts:18:3 › pending route focus preserves a selected Manual field at 1440px (2.3s)
+  ok  4 [chromium] › e2e\route-focus.spec.ts:44:3 › pending route focus preserves a selected action at 1440px (1.9s)
+  ok  5 [chromium] › e2e\route-focus.spec.ts:57:1 › a direct Manual arrival without interaction focuses its heading (1.9s)
+  ok  6 [chromium] › e2e\route-focus.spec.ts:65:1 › keyboard navigation moves focus from the retained tab to each destination heading (4.3s)
+  ok  7 [chromium] › e2e\route-focus.spec.ts:87:5 › iPhone 13 › a selected Manual field retains focus at keyboard height while route focus is pending (2.5s)
+  ok  8 [chromium] › e2e\route-focus.spec.ts:87:5 › Pixel 7 › a selected Manual field retains focus at keyboard height while route focus is pending (2.0s)
+[WebServer] 10:55:50 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/SettingsPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+  ok  9 [chromium] › e2e\settings-deep-link-recovery.spec.ts:9:1 › a valid Settings deep link focuses the recovery heading when its screen download fails (2.7s)
+  ok 10 [chromium] › e2e\settings-deep-link-recovery.spec.ts:17:1 › an overview Appearance deep link keeps focus on its setting (2.5s)
+  x  11 [chromium] › e2e\settings-deep-link-recovery.spec.ts:23:1 › a direct AI setup panel keeps its section focus after the route frame (6.8s)
+
+
+  1) [chromium] › e2e\settings-deep-link-recovery.spec.ts:23:1 › a direct AI setup panel keeps its section focus after the route frame 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator: locator('#you-ai')
+    Expected: focused
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for locator('#you-ai')
+
+
+      26 |   await page.goto('/settings?panel=ai')
+      27 |   const panel = page.locator('#you-ai')
+    > 28 |   await expect(panel).toBeFocused()
+         |                       ^
+      29 |   await page.clock.runFor(200)
+      30 |   await expect(panel).toBeFocused()
+      31 | })
+        at C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\e2e\settings-deep-link-recovery.spec.ts:28:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache\route-focus-focused\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .cache\route-focus-focused\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    .cache\route-focus-focused\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace .cache\route-focus-focused\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e\settings-deep-link-recovery.spec.ts:23:1 › a direct AI setup panel keeps its section focus after the route frame 
+  10 passed (41.8s)

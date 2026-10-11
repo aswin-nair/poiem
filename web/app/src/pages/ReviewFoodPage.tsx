@@ -5,7 +5,7 @@ import { BackLink } from '../components/BackLink'
 import { IconChevronDown, IconPlus, IconTrash } from '../components/icons'
 import { EstimateNote, FlowFeedback, LogFlowHeader, LoggingContextLine, RestoredDraftNotice } from '../components/LogFlowUI'
 import { MealNameField, MealTotals, MealTypePicker, NutritionFields, PortionControl } from '../components/MealEntryFields'
-import { normalizeServings, scaleFoodAnalysis } from '../lib/mealReview'
+import { normalizeServings, resetFoodAnalysisField, scaleFoodAnalysis } from '../lib/mealReview'
 import type { FoodAnalysis, FoodSource, MealType } from '../types'
 import { clearLogDraft, hydrateLogDrafts, loadLogDrafts, saveReviewLogDraft, type ReviewNumericField } from '../lib/logDrafts'
 import { reviewFoodFieldErrors, reviewFoodIssue, type FoodField, type FoodFieldErrors } from '../lib/foodEntryValidation'
@@ -16,6 +16,26 @@ import { defaultMealType } from '../lib/meals'
 import { logContextFromNavState } from '../lib/logContext'
 import { makeLogReceipt } from '../lib/logReceipt'
 import { createOnceGuard } from '../lib/onceGuard'
+
+/** Keep the confirmation in the document when a keyboard leaves little room. */
+function useReviewKeyboard() {
+  const [keyboardOpen, setKeyboardOpen] = useState(false)
+  useEffect(() => {
+    function update() {
+      const viewport = window.visualViewport
+      const keyboardInset = viewport ? window.innerHeight - viewport.height : 0
+      setKeyboardOpen(window.innerWidth < 768 && (keyboardInset > 120 || (viewport?.height ?? window.innerHeight) < 500))
+    }
+    update()
+    window.addEventListener('resize', update)
+    window.visualViewport?.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('resize', update)
+      window.visualViewport?.removeEventListener('resize', update)
+    }
+  }, [])
+  return keyboardOpen
+}
 
 export function ReviewFoodPage() {
   const {
@@ -48,6 +68,9 @@ export function ReviewFoodPage() {
   const [restored, setRestored] = useState(!pendingAnalysis && Boolean(saved))
   const formRef = useRef<HTMLFormElement>(null)
   const baseRef = useRef<FoodAnalysis | null>(pendingAnalysis ?? saved?.baseAnalysis ?? null)
+  // Legacy drafts cannot recover the pre-correction model estimate truthfully.
+  const originalRef = useRef<FoodAnalysis | null>(pendingAnalysis ?? saved?.originalAnalysis ?? null)
+  const keyboardOpen = useReviewKeyboard()
   const [loadingDraft, setLoadingDraft] = useState(!initialAnalysis)
   const [saveGuard] = useState(createOnceGuard)
   const reviewTracked = useRef(false)
@@ -64,6 +87,7 @@ export function ReviewFoodPage() {
       setServings(review.servings)
       setEmptyNumericFields(new Set(review.emptyNumericFields))
       baseRef.current = review.baseAnalysis
+      originalRef.current = review.originalAnalysis ?? null
       setAnalysis(review.analysis)
       setRestored(true)
     }).finally(() => { if (!cancelled) setLoadingDraft(false) })
@@ -77,6 +101,7 @@ export function ReviewFoodPage() {
     saveReviewLogDraft(userId, {
       analysis,
       baseAnalysis: baseRef.current,
+      ...(originalRef.current ? { originalAnalysis: originalRef.current } : {}),
       mealType,
       servings,
       source,
@@ -140,6 +165,21 @@ export function ReviewFoodPage() {
     setAnalysis(current => current ? scaleFoodAnalysis(base, s, current) : current)
   }
 
+  function resetNumeric(field: ReviewNumericField) {
+    if (!analysis || !baseRef.current || !originalRef.current) return
+    const reset = resetFoodAnalysisField(originalRef.current, baseRef.current, analysis, servings, field)
+    baseRef.current = reset.base
+    setAnalysis(reset.analysis)
+    setEmptyNumericFields(current => {
+      const next = new Set(current)
+      next.delete(field)
+      return next
+    })
+    setError(null)
+    // Reset stays in the editing flow even when its button disappears.
+    formRef.current?.querySelector<HTMLInputElement>(`[data-food-field="${field}"]`)?.focus()
+  }
+
   function save() {
     if (!analysis) return
     saveGuard.run(() => {
@@ -195,9 +235,15 @@ export function ReviewFoodPage() {
     carbs: emptyNumericFields.has('carbs') ? '' : analysis.carbs,
     fat: emptyNumericFields.has('fat') ? '' : analysis.fat,
   }
+  const adjusted = new Set<ReviewNumericField>()
+  if (originalRef.current && baseRef.current) {
+    for (const field of ['calories', 'protein', 'carbs', 'fat'] as const) {
+      if (emptyNumericFields.has(field) || Math.abs(baseRef.current[field] - originalRef.current[field]) > 0.000001) adjusted.add(field)
+    }
+  }
 
   return (
-    <div className="app-shell k-screen k-flow k-flow-wide">
+    <div className={`app-shell k-screen k-flow k-flow-wide k-meal-review${keyboardOpen ? ' has-review-keyboard' : ''}`}>
       <main className="app-main">
         <BackLink onClick={() => discard()} label="Start over" />
         <LogFlowHeader
@@ -215,7 +261,9 @@ export function ReviewFoodPage() {
             <MealNameField name={analysis.name} emoji={analysis.emoji} onChange={value => update('name', value)} error={fieldErrors.name} />
             <PortionControl value={servings} grams={analysis.servingSizeGrams} onChange={changeServings} error={fieldErrors.servings}
               calories={!emptyNumericFields.has('calories') && analysis.calories <= 100_000 ? analysis.calories : undefined} />
-            <NutritionFields values={nutrition} onChange={updateNumeric} errors={fieldErrors} />
+            <NutritionFields values={nutrition} onChange={updateNumeric} errors={fieldErrors}
+              corrections={originalRef.current ? { adjusted, onReset: resetNumeric } : undefined} />
+            {!originalRef.current && <p className="flow-field-hint k-review-legacy-note">This older draft keeps your changes. Its original estimate isn’t available to reset.</p>}
             <MealTypePicker value={mealType} onChange={value => {
               markCorrected()
               setMealType(value)
@@ -230,9 +278,20 @@ export function ReviewFoodPage() {
             <div className="flow-review-summary">
               {!issue ? <MealTotals name={analysis.name} calories={analysis.calories} mealType={mealType} servings={servings} />
                 : <p className="flow-summary-hint">Fill in the meal details to see your final total here.</p>}
+              {!issue && <dl className="k-review-final-macros" aria-label="Final macronutrients">
+                <div><dt>Protein</dt><dd>{analysis.protein} g</dd></div>
+                <div><dt>Carbs</dt><dd>{analysis.carbs} g</dd></div>
+                <div><dt>Fat</dt><dd>{analysis.fat} g</dd></div>
+              </dl>}
               <LoggingContextLine mealType={mealType} />
-              <PressableButton fullWidth type="submit" cue={null}><IconPlus size={20} /> Log meal</PressableButton>
               <p className="flow-save-hint">You can edit it later from Today.</p>
+            </div>
+            <div className="k-review-confirm" role="region" aria-label="Final meal confirmation">
+              <div className="k-review-confirm-total">{!issue
+                ? <><strong>{Math.round(analysis.calories).toLocaleString()} <small>kcal</small></strong><span>{servings}× portion · {mealType.charAt(0).toUpperCase() + mealType.slice(1)}</span></>
+                : <><strong>Check details</strong><span>Your changes are kept.</span></>}
+              </div>
+              <PressableButton fullWidth type="submit" cue={null}><IconPlus size={20} /> Log meal</PressableButton>
             </div>
             {analysis.ingredients && analysis.ingredients.length > 0 && <details className="flow-breakdown">
               <summary>Inside the estimate <span>{analysis.ingredients.length} items</span><IconChevronDown size={18} /></summary>

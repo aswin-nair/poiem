@@ -112,6 +112,11 @@ export function OnboardingPage() {
   })
 
   const { profile, firstMeal, step } = draft
+  const [resumedStep, setResumedStep] = useState<number | null>(() => (
+    draft.welcomeIndex >= WELCOME_SLIDE_COUNT && (draft.birthdayInput || draft.step > 0 || draft.firstMeal.name)
+      ? draft.step
+      : null
+  ))
   const showingWelcome = draft.welcomeIndex < WELCOME_SLIDE_COUNT
   const birthdayStatus = birthdayEligibility(draft.birthdayInput)
   const targets = birthdayStatus === 'eligible' ? computeTargets(profile) : null
@@ -156,6 +161,7 @@ export function OnboardingPage() {
   function updateDraft(update: (current: OnboardingDraft) => OnboardingDraft) {
     setDraft(update)
     setValidationError(null)
+    setResumedStep(null)
   }
 
   function updateDraftProfile(update: (current: UserProfile) => UserProfile) {
@@ -308,7 +314,7 @@ export function OnboardingPage() {
           <AppearanceControl compact />
         </div>
       </div>
-      {!user ? <Link to="/login" className="k-setup-signin">Already a member? Sign in</Link> : null}
+      {!user ? <Link to="/login?setup=1" className="k-setup-signin">Already a member? Sign in</Link> : null}
     </div>
   )
 
@@ -351,9 +357,13 @@ export function OnboardingPage() {
             <span className="k-setup-chapter">{step < 3 ? 'Your profile' : step < 6 ? 'Your routine' : 'Ready to begin'}</span>
           </div>
           <ProgressRecipe current={step} labels={STEPS} />
+          <div className="k-setup-progress-note">
+            <span>{step === FIRST_MEAL_STEP ? 'Final step · one real meal' : `${FIRST_MEAL_STEP - step} ${FIRST_MEAL_STEP - step === 1 ? 'step' : 'steps'} after this`}</span>
+            <span>Back keeps your answers</span>
+          </div>
+          {resumedStep !== null && <p className="k-setup-resumed" role="status"><IconCheck size={18} /> Welcome back. Your {STEPS[resumedStep].toLowerCase()} step is ready to continue.</p>}
         </div>
 
-        <OnboardingCompanion step={step} error={Boolean(validationError)} profile={profile} />
         {/* Replace the old form immediately so focus and submit always belong to the current step. */}
         <m.form key={STEPS[step]} className="setup-form k-setup-form" {...(reducedMotion ? motionOpacity : motionStep)} noValidate onSubmit={event => {
           event.preventDefault()
@@ -664,23 +674,28 @@ export function OnboardingPage() {
         {step === FIRST_MEAL_STEP && (
           <div className="k-setup-content">
             <h1 className="k-setup-title">Log your first meal</h1>
-            <p className="k-setup-sub">Photograph it, describe it, or type the numbers. You’ll review the estimate before it counts, then Momo puts on his first piece.</p>
-            <nav className="first-meal-methods" aria-label="Ways to log your first meal">
-              <button type="button" className="k-method is-tone-butter" onClick={() => startAiFirstMeal('photo')}>
-                <span className="k-method-icon" aria-hidden="true"><IconCamera size={22} /></span>
-                <span className="k-method-text"><strong>Photo</strong><small>Point, shoot, check</small></span>
-              </button>
-              <button type="button" className="k-method is-tone-sky" onClick={() => startAiFirstMeal('text')}>
-                <span className="k-method-icon" aria-hidden="true"><IconEdit size={22} /></span>
-                <span className="k-method-text"><strong>Describe</strong><small>Say it in your words</small></span>
-              </button>
-              <button type="button" className="k-method is-tone-mint" onClick={() => document.getElementById('first-meal-name')?.focus()}>
-                <span className="k-method-icon" aria-hidden="true"><IconClipboard size={22} /></span>
-                <span className="k-method-text"><strong>Manual</strong><small>Type the numbers</small></span>
-              </button>
+            <p className="k-setup-sub">One meal starts your journal and gives Momo his first piece. Leftovers count.</p>
+            <nav className="first-meal-methods" data-mode={user ? 'account' : 'guest'} aria-label="Ways to log your first meal" aria-describedby="first-meal-account-context">
+              {(!user ? ['manual', 'photo', 'text'] : ['photo', 'text', 'manual']).map(method => {
+                const Icon = method === 'photo' ? IconCamera : method === 'text' ? IconEdit : IconClipboard
+                const name = method === 'photo' ? 'Photo' : method === 'text' ? 'Describe' : 'Manual'
+                const className = `k-method is-${method} is-tone-${method === 'photo' ? 'butter' : method === 'text' ? 'sky' : 'mint'}`
+                const content = <><span className="k-method-icon" aria-hidden="true"><Icon size={22} /></span><span className="k-method-text"><strong>{name}</strong><small>{method === 'manual' ? 'Type the numbers below' : !user ? 'Sign in to estimate' : method === 'photo' ? 'Point, shoot, check' : 'Say it in your words'}</small></span></>
+                return !user && method !== 'manual'
+                  ? <Link key={method} to="/login?setup=1" className={className}>{content}</Link>
+                  : <button key={method} type="button" className={className} onClick={() => {
+                    if (method === 'manual') document.getElementById('first-meal-name')?.focus()
+                    else startAiFirstMeal(method as 'photo' | 'text')
+                  }}>{content}</button>
+              })}
             </nav>
-            {!user && <p className="k-setup-note">Photo and description need an account. You can still type a meal now.</p>}
-            <p className="k-setup-note">Check the name, calories, and macros. You can edit this meal from Today after it’s saved.</p>
+            <p className="k-setup-method-context" id="first-meal-account-context">{user
+              ? 'Photo and Describe use AI when available. You’ll review the estimate before saving.'
+              : <>Manual works now, without an account. Sign in for Photo or Describe; your setup comes with you.</>}
+            </p>
+            <section className="k-setup-manual" aria-labelledby="first-meal-manual-heading">
+            <div className="k-setup-manual-head"><h2 id="first-meal-manual-heading">Type this meal</h2><span>Name + calories required</span></div>
+            <p className="k-setup-note">Check the numbers before saving. You can edit the meal from Today later.</p>
             <div className="k-setup-fields">
             <div className="field">
               <label htmlFor="first-meal-name">Meal name</label>
@@ -753,11 +768,12 @@ export function OnboardingPage() {
               <strong className="tabular">{Math.round(firstMealCalories!)} kcal</strong>
               <small>{MEAL_LABELS[firstMeal.mealType]} · Total for this meal</small>
             </section>}
+            </section>
           </div>
         )}
 
         <div className="k-setup-footer"><div className="k-setup-actions">
-            <PressableButton variant="ghost" onClick={back}>
+            <PressableButton variant="ghost" onClick={back} aria-label={`Back to ${step > 0 ? STEPS[step - 1] : 'welcome'}`}>
               <IconChevronLeft size={15} strokeWidth={2.4} /> Back
             </PressableButton>
           <PressableButton
@@ -773,9 +789,10 @@ export function OnboardingPage() {
                 : <>Continue <IconChevronRight size={16} strokeWidth={2.4} /></>}
           </PressableButton>
         </div>
-        <p className="k-setup-next">{step < FIRST_MEAL_STEP ? `Next: ${STEPS[step + 1]}` : 'Your meal will be saved to Today, and Momo gets his first piece.'}</p>
+        <p className="k-setup-next">{step < FIRST_MEAL_STEP ? `Next: ${STEPS[step + 1]}` : user ? 'Saves this meal to Today. Momo gets his first piece.' : 'Saves to your device journal. Choose an account to keep your progress next.'}</p>
         </div>
         </m.form>
+        <OnboardingCompanion step={step} error={Boolean(validationError)} profile={profile} />
         </div>
       </main>
     </div>

@@ -1,0 +1,44 @@
+/* Immediate logging choices and compact repeat shortcuts. */
+@layer screens {
+  .k-log-sheet .k-log-head { padding: var(--k-space-sm) var(--k-space-md); }
+  .k-log-sheet .k-log-momo .momo-sticker { width: 44px; height: 48px; }
+  .k-log-sheet .k-log-title { gap: var(--k-space-xs); }
+  .k-log-sheet .k-log-for { gap: var(--k-space-sm); margin: var(--k-space-md) 0; }
+  .k-log-day { color: var(--k-role-text-muted); font: 600 var(--k-type-label)/1.3 var(--k-font-body); }
+
+  .k-log-sheet .k-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--k-space-sm); margin: 0 0 var(--k-space-lg); }
+  .k-log-sheet .k-method { grid-template-columns: 24px minmax(0, 1fr); gap: var(--k-space-sm); min-height: 64px; padding: var(--k-space-sm); }
+  .k-log-sheet .k-method-icon { width: 24px; height: 32px; border: 0; }
+  .k-log-sheet .k-method-text { gap: var(--k-space-xs); }
+  .k-log-sheet .k-search { gap: var(--k-space-xs) var(--k-space-sm); }
+  .k-log-sheet .k-shelf { margin-top: var(--k-space-md); }
+  .k-log-sheet .k-list-label { margin-top: var(--k-space-md); }
+
+  .k-log-sheet .k-repeat-meal.is-compact { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--k-space-md); padding-block: var(--k-space-sm); background: transparent; }
+  .k-log-sheet .is-compact .k-repeat-main { grid-template-columns: 32px minmax(0, 1fr); gap: var(--k-space-sm); align-items: start; }
+  .k-log-sheet .is-compact .k-food-tile { width: 32px; height: 32px; }
+  .k-log-sheet .is-compact .k-repeat-info { gap: var(--k-space-xs); }
+  .k-log-sheet .is-compact .k-repeat-kcal { font: 700 var(--k-type-label)/1.3 var(--k-font-mono); }
+  .k-log-sheet .is-compact .k-repeat-basis { line-height: 1.3; }
+  .k-log-sheet .is-compact .k-repeat-footer { display: block; }
+  .k-log-sheet .is-compact .k-repeat-actions { display: grid; justify-items: stretch; gap: var(--k-space-sm); }
+  .k-log-sheet .is-compact .k-repeat-portion { padding-inline: var(--k-space-xs); }
+  .k-log-sheet .is-compact .k-repeat-log { min-width: 72px; padding-inline: var(--k-space-sm); }
+
+  /* An expanded portion remains in the row, with room for full-size controls. */
+  .k-log-sheet .is-compact.is-adjusting { grid-template-columns: minmax(0, 1fr); gap: var(--k-space-xs); }
+  .k-log-sheet .is-compact.is-adjusting .k-repeat-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--k-space-sm); }
+  .k-log-sheet .is-compact.is-adjusting .k-repeat-log { margin-left: auto; }
+
+  @media (min-width: 720px) {
+    .k-log-sheet { max-width: 640px; }
+    .k-log-sheet .k-methods { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--k-space-md); }
+    .k-log-sheet .k-method { grid-template-columns: minmax(0, 1fr); gap: var(--k-space-xs); }
+    .k-log-sheet .k-method-text { gap: var(--k-space-xs); }
+    .k-log-sheet .is-compact .k-repeat-main { grid-template-columns: 44px minmax(0, 1fr); gap: var(--k-space-md); }
+    .k-log-sheet .is-compact .k-food-tile { width: 44px; height: 44px; }
+    .k-log-sheet .is-compact .k-repeat-actions { display: flex; gap: var(--k-space-sm); }
+    .k-log-sheet .is-compact.is-adjusting { grid-template-columns: minmax(0, 1fr) auto; }
+    .k-log-sheet .is-compact.is-adjusting .k-repeat-actions { max-width: 280px; }
+  }
+}
