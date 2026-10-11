@@ -308,6 +308,20 @@ describe('food logging drafts in IndexedDB', () => {
     expect(await hydrateLogDrafts('person-a')).toEqual({ version: 1 })
   })
 
+  it('keeps a cleared meal description when reload beats the IndexedDB commit', async () => {
+    saveTextLogDraft('person-a', 'Vegetable soup and bread')
+    saveManualLogDraft('person-a', {
+      name: 'Soup draft', calories: '120', protein: '', carbs: '', fat: '', mealType: 'dinner', servings: 1,
+    })
+    await flushLogDraftWrites()
+    clearLogDraft('person-a', 'text')
+
+    await resetLogDraftRuntime()
+    const hydrated = await hydrateLogDrafts('person-a')
+    expect(hydrated.text).toBeUndefined()
+    expect(hydrated.manual?.name).toBe('Soup draft')
+  })
+
   it('does not restore a photo that was replaced or cleared while hydration was in flight', async () => {
     const older = new File([Uint8Array.of(1)], 'old.png', { type: 'image/png', lastModified: 1 })
     const newer = new File([Uint8Array.of(2)], 'new.png', { type: 'image/png', lastModified: 2 })

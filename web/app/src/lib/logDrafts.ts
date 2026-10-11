@@ -3,6 +3,7 @@ import type { FoodAnalysis, FoodSource, MealType } from '../types'
 const VERSION = 1 as const
 const KEY_PREFIX = 'fud-log-drafts-v1-'
 const RECOVERY_PREFIX = 'fud-log-drafts-recovery-v1-'
+const SNAPSHOT_PREFIX = 'fud-log-drafts-snapshot-v1-'
 const DATABASE_NAME = 'fud-ai-web-drafts'
 const DATABASE_VERSION = 1
 const DRAFT_STORE = 'drafts'
@@ -60,11 +61,23 @@ interface StoredPhotoDraft {
   bytes: ArrayBuffer
 }
 
+interface DraftSnapshot {
+  revision: number
+  /** null clears a section that IndexedDB may not have committed yet. */
+  text?: LogDraftEnvelope['text'] | null
+  manual?: ManualLogDraft | null
+  review?: ReviewLogDraft | null
+  clearPhoto?: true
+  clearRecovery?: true
+}
+
 interface StoredDrafts {
   userId: string
   envelope: LogDraftEnvelope
   recovery?: RecoveryBlob
   photo?: StoredPhotoDraft
+  /** Matches the synchronous snapshot written before the IndexedDB transaction commits. */
+  revision?: number
 }
 
 const memory = new Map<string, LogDraftEnvelope>()
@@ -77,6 +90,7 @@ const photoMemory = new Map<string, File>()
 const photoRevision = new Map<string, number>()
 let databasePromise: Promise<IDBDatabase | null> | null = null
 let writeQueue: Promise<void> = Promise.resolve()
+let writeEpoch = 0
 
 function envelopeRevision(userId: string): EnvelopeRevision {
   return envelopeRevisions.get(userId) ?? { all: 0, text: 0, manual: 0, review: 0 }
@@ -118,6 +132,10 @@ function storageKey(userId: string): string {
 
 function recoveryKey(userId: string): string {
   return `${RECOVERY_PREFIX}${encodeURIComponent(userId)}`
+}
+
+function snapshotKey(userId: string): string {
+  return `${SNAPSHOT_PREFIX}${encodeURIComponent(userId)}`
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -270,6 +288,70 @@ function removeFallback(userId: string): void {
   localStorage.removeItem(storageKey(userId))
 }
 
+function readSnapshot(userId: string): DraftSnapshot {
+  try {
+    const raw = localStorage.getItem(snapshotKey(userId))
+    if (!raw) return { revision: 0 }
+    const parsed: unknown = JSON.parse(raw)
+    if (!isRecord(parsed) || !isFiniteNumber(parsed.revision, 1, Number.MAX_SAFE_INTEGER)) return { revision: 0 }
+    const snapshot: DraftSnapshot = { revision: parsed.revision }
+    if (parsed.text === null) snapshot.text = null
+    else if (isTextDraft(parsed.text)) snapshot.text = parsed.text
+    if (parsed.manual === null) snapshot.manual = null
+    else if (isManualDraft(parsed.manual)) snapshot.manual = parsed.manual
+    if (parsed.review === null) snapshot.review = null
+    else if (isReviewDraft(parsed.review)) snapshot.review = parsed.review
+    if (parsed.clearPhoto === true) snapshot.clearPhoto = true
+    if (parsed.clearRecovery === true) snapshot.clearRecovery = true
+    return snapshot
+  } catch {
+    return { revision: 0 }
+  }
+}
+
+/** Survive a reload that lands before the IndexedDB transaction commits. */
+function writeSnapshot(
+  userId: string,
+  envelope: LogDraftEnvelope,
+  section: EnvelopeSection | 'all',
+  flags?: Pick<DraftSnapshot, 'clearPhoto' | 'clearRecovery'>,
+): void {
+  const previous = readSnapshot(userId)
+  const snapshot: DraftSnapshot = {
+    revision: previous.revision + 1,
+    ...(flags?.clearPhoto ? { clearPhoto: true as const } : {}),
+    ...(flags?.clearRecovery ? { clearRecovery: true as const } : {}),
+  }
+  if (section === 'all' || section === 'text') snapshot.text = envelope.text ?? null
+  else if (previous.text !== undefined) snapshot.text = previous.text
+  if (section === 'all' || section === 'manual') snapshot.manual = envelope.manual ?? null
+  else if (previous.manual !== undefined) snapshot.manual = previous.manual
+  if (section === 'all' || section === 'review') snapshot.review = envelope.review ?? null
+  else if (previous.review !== undefined) snapshot.review = previous.review
+  localStorage.setItem(snapshotKey(userId), JSON.stringify(snapshot))
+}
+
+function commitSnapshot(userId: string, revision: number): void {
+  const current = readSnapshot(userId)
+  if (current.revision !== revision) return
+  localStorage.setItem(snapshotKey(userId), JSON.stringify({ revision }))
+}
+
+function applySnapshot(envelope: LogDraftEnvelope, snapshot: DraftSnapshot): LogDraftEnvelope {
+  const next: LogDraftEnvelope = { ...envelope, version: VERSION }
+  if (snapshot.text === null) delete next.text
+  else if (snapshot.text) next.text = snapshot.text
+  if (snapshot.manual === null) delete next.manual
+  else if (snapshot.manual) next.manual = snapshot.manual
+  if (snapshot.review === null) delete next.review
+  else if (snapshot.review) next.review = snapshot.review
+  return next
+}
+
+function storedRevision(record: StoredDrafts | null): number {
+  return record && isFiniteNumber(record.revision, 0, Number.MAX_SAFE_INTEGER) ? record.revision : 0
+}
+
 function removeRecovery(userId: string): void {
   localStorage.removeItem(recoveryKey(userId))
 }
@@ -334,7 +416,12 @@ function photoRevisionMatches(userId: string, revision: number): boolean {
 }
 
 function enqueueWrite(task: () => Promise<void>): void {
-  writeQueue = writeQueue.then(task, task)
+  const epoch = writeEpoch
+  const run = () => {
+    if (epoch !== writeEpoch) return
+    return task()
+  }
+  writeQueue = writeQueue.then(run, run)
 }
 
 async function idbGet(db: IDBDatabase, userId: string): Promise<StoredDrafts | null> {
@@ -402,7 +489,7 @@ function quarantineRaw(userId: string, raw: string, now: Date): void {
   })
 }
 
-function persist(userId: string, next: LogDraftEnvelope): boolean {
+function persist(userId: string, next: LogDraftEnvelope, section: EnvelopeSection | 'all'): boolean {
   const envelope = expireEnvelope(next)
   memory.set(userId, envelope)
   const empty = isEmptyEnvelope(envelope)
@@ -418,18 +505,33 @@ function persist(userId: string, next: LogDraftEnvelope): boolean {
     return true
   }
 
+  try {
+    writeSnapshot(userId, envelope, section)
+  } catch {
+    // IndexedDB still receives the draft when ordinary storage is unavailable.
+  }
+
   enqueueWrite(async () => {
     const db = await openDraftDatabase()
+    const latest = memory.get(userId)
+    // A full clear drops the in-memory draft and owns the durable delete.
+    if (!latest) return
     if (db) {
       const current = await idbGet(db, userId)
-      const latest = memory.get(userId) ?? envelope
+      const still = memory.get(userId)
+      if (!still) return
       const photo = current?.photo
-      if (isEmptyEnvelope(latest) && !photo && !photoMemory.has(userId)) await idbDelete(db, userId)
-      else await idbPut(db, { userId, envelope: latest, recovery: current?.recovery, photo })
-      try { removeFallback(userId) } catch { /* keep the fallback if it cannot be removed */ }
+      const revision = readSnapshot(userId).revision
+      if (isEmptyEnvelope(still) && !photo && !photoMemory.has(userId)) await idbDelete(db, userId)
+      else await idbPut(db, { userId, envelope: still, recovery: current?.recovery, photo, revision })
+      try {
+        if (memory.get(userId) === still && readSnapshot(userId).revision === revision) {
+          removeFallback(userId)
+          commitSnapshot(userId, revision)
+        }
+      } catch { /* keep the fallback if it cannot be removed */ }
       return
     }
-    const latest = memory.get(userId) ?? envelope
     try {
       if (isEmptyEnvelope(latest)) removeFallback(userId)
       else localStorage.setItem(storageKey(userId), JSON.stringify(latest))
@@ -446,7 +548,7 @@ export function loadLogDrafts(userId: string, now = new Date()): LogDraftEnvelop
   const cached = memory.get(userId)
   if (cached) {
     const envelope = expireEnvelope(cached, now.getTime())
-    if (JSON.stringify(envelope) !== JSON.stringify(cached)) persist(userId, envelope)
+    if (JSON.stringify(envelope) !== JSON.stringify(cached)) persist(userId, envelope, 'all')
     else memory.set(userId, envelope)
     return envelope
   }
@@ -483,6 +585,9 @@ async function hydrateEnvelope(userId: string, now: Date): Promise<LogDraftEnvel
     record = null
   }
 
+  const snapshot = readSnapshot(userId)
+  const recordRevision = storedRevision(record)
+  const snapshotWins = snapshot.revision > recordRevision
   let envelope = emptyEnvelope()
   if (record && isEnvelope(record.envelope)) {
     envelope = expireEnvelope(record.envelope, now.getTime())
@@ -492,20 +597,23 @@ async function hydrateEnvelope(userId: string, now: Date): Promise<LogDraftEnvel
   } else {
     envelope = readFallbackEnvelope(userId, now)
   }
+  if (snapshotWins) envelope = applySnapshot(envelope, snapshot)
 
   envelope = mergeHydratedEnvelope(userId, envelope, revision)
   const fullyCleared = envelopeRevision(userId).all !== revision.all
-  let recovery = fullyCleared ? undefined : record?.recovery
+  let recovery = fullyCleared || (snapshotWins && snapshot.clearRecovery) ? undefined : record?.recovery
   if (recovery && isTimestampExpired(recovery.quarantinedAt, now.getTime(), RECOVERY_TTL_MS)) {
     recovery = undefined
   }
 
   memory.set(userId, envelope)
-  const photo = fullyCleared ? undefined : record?.photo
+  const photo = fullyCleared || (snapshotWins && snapshot.clearPhoto) ? undefined : record?.photo
+  const durableRevision = Math.max(recordRevision, snapshot.revision)
   try {
     if (isEmptyEnvelope(envelope) && !recovery && !photo && !photoMemory.has(userId)) await idbDelete(db, userId)
-    else await idbPut(db, { userId, envelope, recovery, photo })
+    else await idbPut(db, { userId, envelope, recovery, photo, ...(durableRevision > 0 ? { revision: durableRevision } : {}) })
     removeFallback(userId)
+    if (snapshot.revision > 0) commitSnapshot(userId, snapshot.revision)
   } catch {
     // Keep the in-memory draft when the durable write cannot complete.
   }
@@ -518,7 +626,7 @@ export function saveTextLogDraft(userId: string, text: string): boolean {
   const next = { ...current }
   if (text.length === 0) delete next.text
   else next.text = { text: text.slice(0, 5_000), updatedAt: new Date().toISOString() }
-  return persist(userId, next)
+  return persist(userId, next, 'text')
 }
 
 export function saveManualLogDraft(userId: string, draft: Omit<ManualLogDraft, 'updatedAt'>): boolean {
@@ -529,7 +637,7 @@ export function saveManualLogDraft(userId: string, draft: Omit<ManualLogDraft, '
     || draft.servings !== 1
   if (hasDetails) next.manual = { ...draft, updatedAt: new Date().toISOString() }
   else delete next.manual
-  return persist(userId, next)
+  return persist(userId, next, 'manual')
 }
 
 export function saveReviewLogDraft(userId: string, draft: Omit<ReviewLogDraft, 'updatedAt'>): boolean {
@@ -537,7 +645,7 @@ export function saveReviewLogDraft(userId: string, draft: Omit<ReviewLogDraft, '
   if (!isReviewDraft({ ...draft, updatedAt: new Date().toISOString() })) return false
   markEnvelopeEdit(userId, 'review')
   const current = loadLogDrafts(userId)
-  return persist(userId, { ...current, review: { ...draft, updatedAt: new Date().toISOString() } })
+  return persist(userId, { ...current, review: { ...draft, updatedAt: new Date().toISOString() } }, 'review')
 }
 
 export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'review' | 'photo'): void {
@@ -549,7 +657,8 @@ export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'rev
     bumpPhotoRevision(userId)
     photoMemory.delete(userId)
     try {
-      removeFallback(userId)
+      if (typeof indexedDB !== 'undefined') writeSnapshot(userId, emptyEnvelope(), 'all', { clearPhoto: true, clearRecovery: true })
+      else removeFallback(userId)
       removeRecovery(userId)
     } catch {
       // Best effort for browsers with unavailable storage.
@@ -568,7 +677,7 @@ export function clearLogDraft(userId: string, section?: 'text' | 'manual' | 'rev
   markEnvelopeEdit(userId, section)
   const current = { ...loadLogDrafts(userId) }
   delete current[section]
-  persist(userId, current)
+  persist(userId, current, section)
 }
 
 function fileFromPhoto(photo: StoredPhotoDraft): File {
@@ -658,6 +767,7 @@ export async function resetLogDraftRuntime(): Promise<void> {
   hydrationByUser.clear()
   photoMemory.clear()
   photoRevision.clear()
+  writeEpoch += 1
   writeQueue = Promise.resolve()
   if (databasePromise) {
     const db = await databasePromise

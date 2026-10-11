@@ -141,7 +141,7 @@ test('Forward can Stay and resumes the pending in-app history destination', asyn
   await expect(page.getByRole('spinbutton', { name: 'Height', exact: true })).toHaveValue('175')
 })
 
-test('Back keeps drafts through panel history and protects the previous app route', async ({ page }) => {
+test('Back keeps drafts through panel history and protects the previous app route', async ({ page, baseURL }) => {
   await page.goto('/')
   await nav(page).getByRole('link', { name: 'You', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'You', exact: true })).toBeVisible()
@@ -157,7 +157,7 @@ test('Back keeps drafts through panel history and protects the previous app rout
   await page.evaluate(() => history.back())
   await expect(departure(page)).toBeVisible()
   await departure(page).getByRole('button', { name: 'Discard and leave', exact: true }).click()
-  await expect(page).toHaveURL(/localhost:5194\/$/)
+  await expect(page).toHaveURL(`${new URL(baseURL!).origin}/`)
   await page.goForward()
   await expect(page).toHaveURL(/\/settings$/)
   await expect(page.getByRole('button', { name: 'Save settings', exact: true })).toHaveCount(0)
