@@ -12,6 +12,8 @@ The [rendering follow-up](response-time/README.md) records the next local perfor
 
 The [interaction layout follow-up](layout-work/README.md) compares the subsequent Today/Momo/Coach/receipt changes against `84d0cf1e`. Fewer repeated layout reads by construction do not close the response-time budget; retain raw timing samples and failures separately from functional/static checks.
 
+The [photo and connection follow-up](upload-connection/README.md) adds intercepted local recovery checks for J03/J12. The [keyboard focus follow-up](keyboard-focus/README.md) adds a deterministic pending-heading check for J15/J16, including selection retention and phone emulation. These reports keep local results distinct from real services, physical phones and remaining release gates.
+
 - P0: task completion, navigation, persistence, credentials, primary controls and recovery. A failing applicable P0 blocks release.
 - P1: discovery, efficiency and presentation. Each included enhancement must meet its acceptance condition; cosmetic deferrals must be recorded explicitly.
 - Run relevant checks after each milestone, then an integrated pass on the release candidate. Broaden testing when a change or unresolved failure warrants it. Use existing suites where they already cover the behaviour.

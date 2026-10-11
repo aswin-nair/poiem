@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poiem · Keep your place</title>
+<style>
+  :root { color-scheme: light; font-family: system-ui, sans-serif; color: #20231f; background: #fff8eb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  main { max-width: 1280px; margin: auto; padding: 24px; }
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; margin: 12px 0; }
+  p { max-width: 76ch; line-height: 1.6; }
+  section { margin-top: 36px; }
+  .comparison { display: grid; gap: 20px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  figure { margin: 0; border: 2px solid; padding: 16px; background: #fffdf7; }
+  figcaption { font-weight: 700; margin-bottom: 12px; }
+  img { display: block; width: 100%; height: auto; }
+  .phone img { max-width: 390px; margin: auto; }
+  a { color: inherit; text-underline-offset: 3px; }
+  .note { background: #dfff65; padding: 16px; border: 2px solid; }
+  @media (max-width: 620px) { main { padding: 16px; } .comparison { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <p>Poiem · Keyboard focus follow-up · 11 October 2026</p>
+  <h1>Keep your place.</h1>
+  <p>Both versions start with “and” selected in the meal field. These captures show what happens after the pending page-focus step runs. The updated version keeps the field focused and the selection ready to edit.</p>
+  <p class="note">The visual design is unchanged. This fix prevents a delayed page heading from interrupting a selected control.</p>
+  <section aria-labelledby="phone-title">
+    <h2 id="phone-title">Phone · 390px</h2>
+    <div class="comparison phone">
+      <figure><figcaption>Before · field focus is lost</figcaption><a href="images/before-390.png"><img src="images/before-390.png" alt="Manual meal field after the delayed focus step, with no focus ring or active selection."></a></figure>
+      <figure><figcaption>After · selection stays ready</figcaption><a href="images/after-390.png"><img src="images/after-390.png" alt="The same meal field keeps its focus ring and selected word after the delayed focus step."></a></figure>
+    </div>
+  </section>
+  <section aria-labelledby="desktop-title">
+    <h2 id="desktop-title">Desktop · 1440px</h2>
+    <div class="comparison">
+      <figure><figcaption>Before · field focus is lost</figcaption><a href="images/before-1440.png"><img src="images/before-1440.png" alt="Desktop Manual entry with the filled meal field no longer focused."></a></figure>
+      <figure><figcaption>After · selection stays ready</figcaption><a href="images/after-1440.png"><img src="images/after-1440.png" alt="Desktop Manual entry with the meal field and selected word still focused."></a></figure>
+    </div>
+  </section>
+  <p>Phone touch emulation, slow-screen navigation, Settings links and sheets have separate behavioral checks. Physical keyboards and browsers on real phones remain a release check. See the <a href="README.md">verification report</a> for scope and results.</p>
+</main>
+</html>

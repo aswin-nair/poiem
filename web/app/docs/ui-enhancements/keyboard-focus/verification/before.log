@@ -1,0 +1,96 @@
+[WebServer] (node:4164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:28304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:31872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › e2e\route-focus.spec.ts:7:3 › pending route focus preserves a selected Manual field at 390px (11.0s)
+(node:29680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › e2e\route-focus.spec.ts:7:3 › pending route focus preserves a selected Manual field at 1440px (6.6s)
+
+
+  1) [chromium] › e2e\route-focus.spec.ts:7:3 › pending route focus preserves a selected Manual field at 390px 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByLabel('Food name')
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for getByLabel('Food name')
+        13 × locator resolved to <input required="" maxlength="500" id="manual-name" autocomplete="off" value="Rice and vegetables" placeholder="e.g. Protein shake"/>
+           - unexpected value "inactive"
+
+
+      23 |     await page.clock.runFor(200)
+      24 |     await page.screenshot({ path: testInfo.outputPath(`after-frame-${width}.png`), animations: 'allow' })
+    > 25 |     await expect(name).toBeFocused()
+         |                        ^
+      26 |     await expect(name).toHaveValue('Rice and vegetables')
+      27 |     expect(await name.evaluate((element: HTMLInputElement) => [element.selectionStart, element.selectionEnd])).toEqual([5, 8])
+      28 |   })
+        at C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\e2e\route-focus.spec.ts:25:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache\route-focus-reproduction\route-focus-pending-route--c789e-ected-Manual-field-at-390px-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .cache\route-focus-reproduction\route-focus-pending-route--c789e-ected-Manual-field-at-390px-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    .cache\route-focus-reproduction\route-focus-pending-route--c789e-ected-Manual-field-at-390px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace .cache\route-focus-reproduction\route-focus-pending-route--c789e-ected-Manual-field-at-390px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e\route-focus.spec.ts:7:3 › pending route focus preserves a selected Manual field at 1440px 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByLabel('Food name')
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for getByLabel('Food name')
+        14 × locator resolved to <input required="" maxlength="500" id="manual-name" autocomplete="off" value="Rice and vegetables" placeholder="e.g. Protein shake"/>
+           - unexpected value "inactive"
+
+
+      23 |     await page.clock.runFor(200)
+      24 |     await page.screenshot({ path: testInfo.outputPath(`after-frame-${width}.png`), animations: 'allow' })
+    > 25 |     await expect(name).toBeFocused()
+         |                        ^
+      26 |     await expect(name).toHaveValue('Rice and vegetables')
+      27 |     expect(await name.evaluate((element: HTMLInputElement) => [element.selectionStart, element.selectionEnd])).toEqual([5, 8])
+      28 |   })
+        at C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\e2e\route-focus.spec.ts:25:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache\route-focus-reproduction\route-focus-pending-route--4c99e-cted-Manual-field-at-1440px-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .cache\route-focus-reproduction\route-focus-pending-route--4c99e-cted-Manual-field-at-1440px-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    .cache\route-focus-reproduction\route-focus-pending-route--4c99e-cted-Manual-field-at-1440px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace .cache\route-focus-reproduction\route-focus-pending-route--4c99e-cted-Manual-field-at-1440px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e\route-focus.spec.ts:7:3 › pending route focus preserves a selected Manual field at 390px 
+    [chromium] › e2e\route-focus.spec.ts:7:3 › pending route focus preserves a selected Manual field at 1440px 

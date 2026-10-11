@@ -1,0 +1,53 @@
+
+> app@0.0.0 build:local
+> node scripts/build.mjs local
+
+vite v8.1.0 building client environment for production...
+[2K
+transforming...✓ 645 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               2.76 kB │ gzip:   0.93 kB
+dist/assets/WelcomePage-DNxGvGBb.css         42.64 kB │ gzip:   9.35 kB
+dist/assets/index-TfshLgRz.css              366.16 kB │ gzip:  60.31 kB
+dist/assets/is-html-element-DvgHo_1h.js       0.12 kB │ gzip:   0.12 kB
+dist/assets/authLinks-DuTnjUp5.js             0.20 kB │ gzip:   0.17 kB
+dist/assets/JourneyPage-BgzIfscx.js           0.20 kB │ gzip:   0.18 kB
+dist/assets/monitor-DVe8OFvD.js               0.25 kB │ gzip:   0.20 kB
+dist/assets/use-presence-KNxNc-OY.js          0.38 kB │ gzip:   0.29 kB
+dist/assets/motionPresets-CPyIirhZ.js         1.00 kB │ gzip:   0.39 kB
+dist/assets/AppearanceControl-CXRIkyNZ.js     1.10 kB │ gzip:   0.54 kB
+dist/assets/PressableButton-XyDOkbKA.js       1.17 kB │ gzip:   0.61 kB
+dist/assets/shield-check-DvYUb-BX.js          1.37 kB │ gzip:   0.66 kB
+dist/assets/arrow-right-CxUcUzFi.js           1.49 kB │ gzip:   0.85 kB
+dist/assets/sun-CU9SMxfF.js                   2.19 kB │ gzip:   0.88 kB
+dist/assets/ForgotPasswordPage-Bwpz0T_Z.js    2.29 kB │ gzip:   1.12 kB
+dist/assets/ResetPasswordPage-R9QQrCba.js     2.47 kB │ gzip:   1.10 kB
+dist/assets/AboutPage-DCZUFx-k.js             2.63 kB │ gzip:   1.07 kB
+dist/assets/useHaptic-BT3rM8on.js             3.03 kB │ gzip:   1.17 kB
+dist/assets/ComponentSheetPage-C9NWxDbH.js    3.58 kB │ gzip:   1.39 kB
+dist/assets/SupportPage-DOo3-o78.js           4.35 kB │ gzip:   1.69 kB
+dist/assets/resize-DQojfRx4.js                4.57 kB │ gzip:   2.21 kB
+dist/assets/elements-B7clTOkU.js              6.74 kB │ gzip:   2.93 kB
+dist/assets/SavedMealsPage-Dx0n98zN.js        7.13 kB │ gzip:   2.64 kB
+dist/assets/jsx-runtime-bzQ4Vb5N.js           8.40 kB │ gzip:   3.20 kB
+dist/assets/analytics-C5Rmxn-i.js             9.96 kB │ gzip:   3.42 kB
+dist/assets/Momo-BAxhu156.js                 12.17 kB │ gzip:   4.93 kB
+dist/assets/LoginPage-B-8lnfxR.js            16.30 kB │ gzip:   6.13 kB
+dist/assets/CoachPage-9j8NF34z.js            18.32 kB │ gzip:   7.14 kB
+dist/assets/MomoInterlude-On-s97pW.js        21.06 kB │ gzip:   7.54 kB
+dist/assets/AuthContext-BEf_lgWf.js          21.99 kB │ gzip:   7.56 kB
+dist/assets/icons-D6WnjnPE.js                23.60 kB │ gzip:   8.80 kB
+dist/assets/ProgressPage-WqJdXCAC.js         27.14 kB │ gzip:   7.88 kB
+dist/assets/AppContext-gR9ct40m.js           28.70 kB │ gzip:   9.54 kB
+dist/assets/AdminPage-Cnki_riX.js            30.67 kB │ gzip:   9.04 kB
+dist/assets/is-svg-component-C45uHe93.js     31.68 kB │ gzip:  11.43 kB
+dist/assets/OnboardingPage-BMD94uPT.js       33.28 kB │ gzip:   9.72 kB
+dist/assets/WelcomePage-NnoU73T0.js          54.21 kB │ gzip:  16.85 kB
+dist/assets/SettingsPage-B_j1qLdK.js         55.84 kB │ gzip:  15.14 kB
+dist/assets/apiClient-Bv9G3iDi.js            55.87 kB │ gzip:  18.51 kB
+dist/assets/MotionScreen-BUwX6mWA.js         80.37 kB │ gzip:  26.14 kB
+dist/assets/chunk-BV7QT456-B5cNqVLe.js       98.51 kB │ gzip:  32.65 kB
+dist/assets/index-cqMY7Qzi.js               382.67 kB │ gzip: 122.46 kB
+
+✓ built in 739ms

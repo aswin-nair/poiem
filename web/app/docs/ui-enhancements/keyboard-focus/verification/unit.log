@@ -1,0 +1,13 @@
+
+> app@0.0.0 test
+> vitest run --maxWorkers=2
+
+
+ RUN  v4.1.11 C:/Users/aswin/Desktop/Fud AI/.claude/worktrees/poiem-motion-return/web/app
+
+
+ Test Files  121 passed (121)
+      Tests  1024 passed (1024)
+   Start at  23:02:45
+   Duration  19.84s (transform 3.83s, setup 0ms, import 12.92s, tests 3.42s, environment 9ms)
+

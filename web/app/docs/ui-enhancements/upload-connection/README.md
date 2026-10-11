@@ -64,6 +64,8 @@ After the broader batch ended, the same unchanged Coach case passed alone in 7.0
 
 The phone failure remains unproven; its unchanged Pixel 7 light keyboard-height case passed in the traced rerun. An independent source review identified a pre-existing delayed route-heading focus that can supersede an already-focused input. No active-element timeline was retained in the first failing run, so this is a follow-up hypothesis, not a confirmed cause. It is separate from photo preparation and cloud recovery; neither change adds a local-mode focus action.
 
+The subsequent [keyboard focus follow-up](../keyboard-focus/README.md) reproduces that separate route-heading race with a controlled pending frame at 390px and 1440px, then fixes it. This new reproduction establishes the route defect; it does not retrospectively prove the cause of the earlier Pixel 7 failure.
+
 The canonical four photo-route screenshots passed on pinned Linux Playwright 1.61.1, without baseline or tolerance changes. Those seeded routes show the existing AI-access gate, so they do not prove the new uploader copy fits. Four separate managed-availability cases capture the actual uploader, check both themes and assert zero horizontal overflow.
 
 The [original Coach trace](verification/history/coach-load-trace.zip) is retained alongside its summary, context and screenshot. These changes are local; publication and real production endpoint checks remain separate. Existing performance and physical-device release checks are not closed by this follow-up.

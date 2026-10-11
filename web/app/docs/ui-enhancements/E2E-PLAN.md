@@ -14,6 +14,10 @@ This is the active plan. [E2E-CHECKLIST.md](E2E-CHECKLIST.md) defines the observ
 
 **Interaction layout follow-up:** [Layout-work evidence](layout-work/README.md) records Today derivation/row reuse, fresh shared Momo collision measurements, Coach viewport-cap caching and receipt border-box updates against `84d0cf1e`. Fixture history, browser outcomes, appearance comparisons and timing acceptance remain distinct.
 
+**Photo and connection follow-up:** [Upload and connection evidence](upload-connection/README.md) records photo preparation before requests and recovery from stale or misleading account warnings. Service responses are intercepted locally; actual deployment and provider checks remain separate.
+
+**Keyboard focus follow-up:** [Focus evidence](keyboard-focus/README.md) records a deterministic delayed-heading interruption and the fix that preserves a selected control. Its [before/after gallery](keyboard-focus/gallery.html) shows the retained field selection at phone and desktop widths. This local follow-up does not close physical-device or performance gates.
+
 **1. The experience we are building**
 
 The visual direction is a playful Neo Brutalist kitchen journal. Keep warm paper, strong ink, bright meal colours, condensed headings and tactile controls. Give Today a clear hierarchy, make logging methods immediately discoverable and let Momo perform short comic scenes during quiet moments.

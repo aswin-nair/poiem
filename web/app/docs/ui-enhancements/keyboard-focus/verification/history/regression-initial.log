@@ -1,0 +1,201 @@
+[WebServer] (node:1168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 40 tests using 1 worker
+
+(node:10816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 10:57:27 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:30 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:32 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:34 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  1 [chromium] › e2e\recovery-links.spec.ts:12:5 › Support and About recovery links 320 light (14.6s)
+[WebServer] 10:57:37 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:40 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:42 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:45 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  2 [chromium] › e2e\recovery-links.spec.ts:12:5 › Support and About recovery links 320 dark (10.4s)
+[WebServer] 10:57:48 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:50 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:52 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:57:55 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  3 [chromium] › e2e\recovery-links.spec.ts:12:5 › Support and About recovery links 390 light (9.7s)
+[WebServer] 10:57:58 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:00 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:03 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:05 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  4 [chromium] › e2e\recovery-links.spec.ts:12:5 › Support and About recovery links 390 dark (10.1s)
+[WebServer] 10:58:08 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:10 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:13 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:15 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  5 [chromium] › e2e\recovery-links.spec.ts:12:5 › Support and About recovery links 1440 light (9.9s)
+[WebServer] 10:58:18 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:20 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:23 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:25 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  6 [chromium] › e2e\recovery-links.spec.ts:12:5 › Support and About recovery links 1440 dark (9.6s)
+[WebServer] 10:58:28 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  7 [chromium] › e2e\recovery-links.spec.ts:36:1 › a slow Settings route chunk retains navigation and focuses the loaded heading (4.5s)
+[WebServer] 10:58:33 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:34 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/SavedMealsPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+[WebServer] 10:58:36 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  8 [chromium] › e2e\route-download-recovery.spec.ts:33:5 › failed Saved download keeps navigation and reloads 390 (7.0s)
+[WebServer] 10:58:40 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:40 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/ProgressPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+[WebServer] 10:58:42 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok  9 [chromium] › e2e\route-download-recovery.spec.ts:33:5 › failed Insights download keeps navigation and reloads 390 (5.8s)
+[WebServer] 10:58:46 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:47 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/SettingsPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+[WebServer] 10:58:49 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 10 [chromium] › e2e\route-download-recovery.spec.ts:33:5 › failed You download keeps navigation and reloads 390 (5.9s)
+[WebServer] 10:58:52 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:53 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/SavedMealsPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+[WebServer] 10:58:54 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 11 [chromium] › e2e\route-download-recovery.spec.ts:33:5 › failed Saved download keeps navigation and reloads 1440 (5.4s)
+[WebServer] 10:58:57 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:58:58 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/ProgressPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+[WebServer] 10:59:00 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 12 [chromium] › e2e\route-download-recovery.spec.ts:33:5 › failed Insights download keeps navigation and reloads 1440 (5.7s)
+[WebServer] 10:59:03 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:59:04 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/SettingsPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+[WebServer] 10:59:06 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 13 [chromium] › e2e\route-download-recovery.spec.ts:33:5 › failed You download keeps navigation and reloads 1440 (5.8s)
+[WebServer] 10:59:09 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:59:10 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/SavedMealsPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+  ok 14 [chromium] › e2e\route-download-recovery.spec.ts:63:1 › a failed screen can return to Today without a reload (2.9s)
+[WebServer] 10:59:12 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 10:59:13 pm [vite] (client) [console.warn] You are trying to use a blocker on a POP navigation to a location that was not created by @remix-run/router. This will fail silently in production. This can happen if you are navigating outside the router via `window.history.pushState`/`window.location.hash` instead of using router navigation APIs.  This can also happen if you are using createHashRouter and the user manually changes the URL.
+  ok 15 [chromium] › e2e\route-download-recovery.spec.ts:73:1 › unknown Settings hashes fall back to the You heading (2.9s)
+  ok 16 [chromium] › e2e\route-focus.spec.ts:18:3 › pending route focus preserves a selected Manual field at 390px (2.5s)
+  ok 17 [chromium] › e2e\route-focus.spec.ts:44:3 › pending route focus preserves a selected action at 390px (2.0s)
+  ok 18 [chromium] › e2e\route-focus.spec.ts:18:3 › pending route focus preserves a selected Manual field at 1440px (2.6s)
+  ok 19 [chromium] › e2e\route-focus.spec.ts:44:3 › pending route focus preserves a selected action at 1440px (2.1s)
+  ok 20 [chromium] › e2e\route-focus.spec.ts:57:1 › a direct Manual arrival without interaction focuses its heading (1.9s)
+  ok 21 [chromium] › e2e\route-focus.spec.ts:65:1 › keyboard navigation moves focus from the retained tab to each destination heading (4.1s)
+  ok 22 [chromium] › e2e\route-focus.spec.ts:77:1 › leaving a pending screen retires its focus request before its download finishes (3.5s)
+  ok 23 [chromium] › e2e\route-focus.spec.ts:113:5 › iPhone 13 › a selected Manual field retains focus at keyboard height while route focus is pending (2.3s)
+  ok 24 [chromium] › e2e\route-focus.spec.ts:113:5 › Pixel 7 › a selected Manual field retains focus at keyboard height while route focus is pending (2.4s)
+[WebServer] 10:59:40 pm [vite] (client) [console.error] TypeError: Failed to fetch dynamically imported module: http://localhost:5194/src/pages/SettingsPage.tsx
+[WebServer] 
+[WebServer] The above error occurred in one of your React components.
+[WebServer] 
+[WebServer] React will try to recreate this component tree from scratch using the error boundary you provided, RouteRecoveryBoundary.
+[WebServer] 
+  ok 25 [chromium] › e2e\settings-deep-link-recovery.spec.ts:9:1 › a valid Settings deep link focuses the recovery heading when its screen download fails (3.0s)
+  ok 26 [chromium] › e2e\settings-deep-link-recovery.spec.ts:17:1 › an overview Appearance deep link keeps focus on its setting (2.8s)
+  x  27 [chromium] › e2e\settings-deep-link-recovery.spec.ts:23:1 › a direct AI setup panel keeps its section focus after the route frame (6.2s)
+(node:25568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 10:59:53 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:00:00 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 28 [chromium] › e2e\settings-exact-search.spec.ts:18:1 › search focuses exact fields while retaining unsaved edits across panels (13.8s)
+[WebServer] 11:00:08 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:00:15 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 29 [chromium] › e2e\settings-exact-search.spec.ts:33:1 › hidden connection and goal fields explain their prerequisite without enabling it (11.0s)
+[WebServer] 11:00:20 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:00:26 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 30 [chromium] › e2e\settings-exact-search.spec.ts:46:1 › search reveals authentication and wardrobe disclosures without changing values (11.3s)
+[WebServer] 11:00:32 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:00:39 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 31 [chromium] › e2e\settings-exact-search.spec.ts:58:1 › search only focuses import and deletion actions and does not activate them (12.3s)
+[WebServer] 11:00:45 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:00:51 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 32 [chromium] › e2e\settings-exact-search.spec.ts:74:1 › disabled Momo controls focus their prerequisite without changing it (13.1s)
+[WebServer] 11:00:58 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:01:05 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 33 [chromium] › e2e\settings-exact-search.spec.ts:91:1 › large text search stays scrollable and supports re-focusing the same destination (11.7s)
+[WebServer] 11:01:10 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:01:18 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 34 [chromium] › e2e\settings-exact-search.spec.ts:108:3 › exact Settings search fits 320px light (12.4s)
+[WebServer] 11:01:23 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:01:30 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 35 [chromium] › e2e\settings-exact-search.spec.ts:108:3 › exact Settings search fits 320px dark (11.6s)
+[WebServer] 11:01:35 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:01:42 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 36 [chromium] › e2e\settings-exact-search.spec.ts:108:3 › exact Settings search fits 390px light (11.9s)
+[WebServer] 11:01:48 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:01:55 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 37 [chromium] › e2e\settings-exact-search.spec.ts:108:3 › exact Settings search fits 390px dark (13.1s)
+[WebServer] 11:02:01 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:02:08 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 38 [chromium] › e2e\settings-exact-search.spec.ts:108:3 › exact Settings search fits 1440px light (11.9s)
+[WebServer] 11:02:13 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 11:02:21 pm [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 39 [chromium] › e2e\settings-exact-search.spec.ts:108:3 › exact Settings search fits 1440px dark (12.9s)
+  ok 40 [chromium] › e2e\sheet-ready.spec.ts:4:1 › the log sheet owns focus and Escape as soon as it is mounted (3.2s)
+
+
+  1) [chromium] › e2e\settings-deep-link-recovery.spec.ts:23:1 › a direct AI setup panel keeps its section focus after the route frame 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      29 |     await page.clock.runFor(16)
+      30 |     return panel.count()
+    > 31 |   }).toBe(1)
+         |      ^
+      32 |   await expect(panel).toBeFocused()
+      33 |   await page.clock.runFor(200)
+      34 |   await expect(panel).toBeFocused()
+        at C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\e2e\settings-deep-link-recovery.spec.ts:31:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .cache\route-focus-regression\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .cache\route-focus-regression\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    .cache\route-focus-regression\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace .cache\route-focus-regression\settings-deep-link-recover-7f5ba-focus-after-the-route-frame-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e\settings-deep-link-recovery.spec.ts:23:1 › a direct AI setup panel keeps its section focus after the route frame 
+  39 passed (5.2m)

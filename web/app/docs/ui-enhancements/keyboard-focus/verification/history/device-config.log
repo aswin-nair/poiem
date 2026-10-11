@@ -1,0 +1,53 @@
+[WebServer] (node:21508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:30160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+Cannot use({ defaultBrowserType }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at route-focus.spec.ts:79
+
+  77 | for (const device of ['iPhone 13', 'Pixel 7']) {
+  78 |   test.describe(device, () => {
+> 79 |     test.use({ ...devices[device], browserName: 'chromium' })
+     |          ^
+  80 |
+  81 |     test('a selected Manual field retains focus at keyboard height while route focus is pending', async ({ page }) => {
+  82 |       await pauseRouteFrame(page)
+Cannot use({ browserName }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at route-focus.spec.ts:79
+
+  77 | for (const device of ['iPhone 13', 'Pixel 7']) {
+  78 |   test.describe(device, () => {
+> 79 |     test.use({ ...devices[device], browserName: 'chromium' })
+     |          ^
+  80 |
+  81 |     test('a selected Manual field retains focus at keyboard height while route focus is pending', async ({ page }) => {
+  82 |       await pauseRouteFrame(page)
+Cannot use({ defaultBrowserType }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at route-focus.spec.ts:79
+
+  77 | for (const device of ['iPhone 13', 'Pixel 7']) {
+  78 |   test.describe(device, () => {
+> 79 |     test.use({ ...devices[device], browserName: 'chromium' })
+     |          ^
+  80 |
+  81 |     test('a selected Manual field retains focus at keyboard height while route focus is pending', async ({ page }) => {
+  82 |       await pauseRouteFrame(page)
+Cannot use({ browserName }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at route-focus.spec.ts:79
+
+  77 | for (const device of ['iPhone 13', 'Pixel 7']) {
+  78 |   test.describe(device, () => {
+> 79 |     test.use({ ...devices[device], browserName: 'chromium' })
+     |          ^
+  80 |
+  81 |     test('a selected Manual field retains focus at keyboard height while route focus is pending', async ({ page }) => {
+  82 |       await pauseRouteFrame(page)
+
