@@ -1,0 +1,16 @@
+[WebServer] [poiem] Cloud backend: /api is proxied to http://127.0.0.1:3001. Start the API first (from web/: npm run dev:all).
+[WebServer] (node:30316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:15200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 e2e\session-expiry.spec.ts:56:1 › cold refresh expiry returns the same account to its hydrated corrected review once (48.9s)
+  ok 2 e2e\session-expiry.spec.ts:72:1 › a 401 on a queued write preserves work and restores the settings panel after sign-in (9.5s)
+  ok 3 e2e\session-expiry.spec.ts:90:1 › signing into another account drops the old destination and private draft (9.2s)
+  ok 4 e2e\session-expiry.spec.ts:103:1 › an expired review without a valid hydrated draft returns to the meal picker (7.2s)
+  ok 5 e2e\session-expiry.spec.ts:112:1 › session expiry preserves the selected journal day after a same-account return (12.1s)
+  ok 6 e2e\session-expiry.spec.ts:136:1 › cloud password recovery retains setup context without forwarding private URL fields (11.8s)
+
+  6 passed (2.0m)

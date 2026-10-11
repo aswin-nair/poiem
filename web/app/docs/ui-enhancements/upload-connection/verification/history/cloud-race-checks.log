@@ -1,0 +1,24 @@
+[WebServer] [poiem] Cloud backend: /api is proxied to http://127.0.0.1:3001. Start the API first (from web/: npm run dev:all).
+[WebServer] (node:32252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+(node:6780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\connection-recovery.spec.ts:59:1 › offline then online clears the banner with an empty outbox and no new write (17.7s)
+  ok  2 e2e\connection-recovery.spec.ts:73:3 › cached account 429 stays honest and Check account preserves an open draft (10.3s)
+  ok  3 e2e\connection-recovery.spec.ts:73:3 › cached account 503 stays honest and Check account preserves an open draft (9.2s)
+  ok  4 e2e\connection-recovery.spec.ts:104:1 › a failed account GET recovers on foreground focus without an online event (11.4s)
+  ok  5 e2e\connection-recovery.spec.ts:120:1 › offline queued work retries the same mutation and clears only after acknowledgement (8.4s)
+  ok  6 e2e\connection-recovery.spec.ts:141:1 › a newer server copy requires explicit recovery and survives reconnect (9.1s)
+  ok  7 e2e\connection-recovery.spec.ts:166:1 › invalid successful account responses enter validation recovery, not offline mode (11.2s)
+  ok  8 e2e\connection-recovery.spec.ts:180:3 › a delayed 503 account check cannot override an acknowledged edit (9.1s)
+  ok  9 e2e\connection-recovery.spec.ts:180:3 › a delayed invalid account check cannot override an acknowledged edit (9.0s)
+  ok 10 e2e\photo-upload.spec.ts:79:1 › a large phone photo is prepared only on Analyze and fits the managed request limits (10.5s)
+  ok 11 e2e\photo-upload.spec.ts:105:1 › a failed analysis preserves the original large draft for reload and retry (12.5s)
+  ok 12 e2e\photo-upload.spec.ts:128:1 › stopping local image preparation sends no AI request and keeps the selected photo (5.8s)
+  ok 13 e2e\photo-upload.spec.ts:150:3 › EXIF rotation is applied once while keeping the entire frame (bitmap decoder) (4.4s)
+  ok 14 e2e\photo-upload.spec.ts:150:3 › EXIF rotation is applied once while keeping the entire frame (Image fallback) (4.4s)
+
+  14 passed (2.4m)

@@ -1,0 +1,41 @@
+[WebServer] [poiem] Cloud backend: /api is proxied to http://127.0.0.1:3001. Start the API first (from web/: npm run dev:all).
+[WebServer] (node:28252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:28048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 e2e\session-expiry.spec.ts:56:1 › cold refresh expiry returns the same account to its hydrated corrected review once (1.1m)
+(node:13732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 e2e\session-expiry.spec.ts:72:1 › a 401 on a queued write preserves work and restores the settings panel after sign-in (5.0s)
+  ok 3 e2e\session-expiry.spec.ts:90:1 › signing into another account drops the old destination and private draft (5.9s)
+  ok 4 e2e\session-expiry.spec.ts:103:1 › an expired review without a valid hydrated draft returns to the meal picker (4.9s)
+  ok 5 e2e\session-expiry.spec.ts:112:1 › session expiry preserves the selected journal day after a same-account return (5.2s)
+  ok 6 e2e\session-expiry.spec.ts:136:1 › cloud password recovery retains setup context without forwarding private URL fields (2.6s)
+
+
+  1) e2e\session-expiry.spec.ts:56:1 › cold refresh expiry returns the same account to its hydrated corrected review once 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.goto: Test timeout of 60000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:5294/review", waiting until "load"
+
+
+      57 |   await service(page, false)
+      58 |   await seedReview(page)
+    > 59 |   await page.goto('/review')
+         |              ^
+      60 |   await expect(page).toHaveURL('/login')
+      61 |   await expect(page.getByRole('status').filter({ hasText: 'Your session ended' })).toContainText('meal review')
+      62 |   await signInWithEmail(page, VISUAL_USER.email, 'SimulatedPass123!')
+        at C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\e2e\session-expiry.spec.ts:59:14
+
+    Error Context: .cache\upload-connection-session\session-expiry-cold-refres-9a7f0-rated-corrected-review-once\error-context.md
+
+  1 failed
+    e2e\session-expiry.spec.ts:56:1 › cold refresh expiry returns the same account to its hydrated corrected review once 
+  5 passed (2.2m)
