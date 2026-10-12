@@ -10,6 +10,7 @@ import { FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
 import { MealNameField, MealTotals, MealTypePicker, NutritionFields } from '../components/MealEntryFields'
 import { validateManualFood } from '../lib/foodEntryValidation'
 import { feel } from '../lib/feel'
+import { ConfirmDialog } from '../components/ConfirmDialog'
 
 export function EditFoodPage() {
   const { id } = useParams<{ id: string }>()
@@ -24,6 +25,7 @@ export function EditFoodPage() {
   })
   const [mealType, setMealType] = useState<MealType>(entry?.mealType ?? 'other')
   const [error, setError] = useState<string | null>(null)
+  const [confirmingLeave, setConfirmingLeave] = useState(false)
 
   if (!entry) return <div className="app-shell k-screen k-flow"><main className="app-main">
     <BackLink to="/" label="Today" />
@@ -59,7 +61,7 @@ export function EditFoodPage() {
   }
 
   function leave() {
-    if (changed && !window.confirm('Leave without saving your changes?')) return
+    if (changed) { setConfirmingLeave(true); return }
     navigate('/')
   }
 
@@ -101,6 +103,17 @@ export function EditFoodPage() {
           </div>
         </form>
       </main>
+      {confirmingLeave && (
+        <ConfirmDialog
+          title="Leave without saving?"
+          cancelLabel="Keep editing"
+          confirmLabel="Leave without saving"
+          onCancel={() => setConfirmingLeave(false)}
+          onConfirm={() => navigate('/')}
+        >
+          <p>Your changes to this meal haven’t been saved yet.</p>
+        </ConfirmDialog>
+      )}
     </div>
   )
 }

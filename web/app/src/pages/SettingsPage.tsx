@@ -50,6 +50,7 @@ import { AppearanceControl } from '../components/AppearanceControl'
 import { findSettingDestination, SETTING_DESTINATIONS } from '../lib/settingDestinations'
 import { useSettingsDeparture } from '../hooks/useSettingsDeparture'
 import { SettingsDepartureSheet } from '../components/SettingsDepartureSheet'
+import { ConfirmDialog } from '../components/ConfirmDialog'
 import { aiIssueControl, profileIssueControl } from '../lib/settingsDeparture'
 import { useBackupImportReview } from '../hooks/useBackupImportReview'
 import { BackupImportPreview } from '../components/BackupImportPreview'
@@ -126,6 +127,8 @@ export function SettingsPage() {
   const draftOwner = useRef(user?.sub)
   const ownsDraft = Boolean(user?.sub && draftOwner.current === user.sub)
   const [importConfirmation, setImportConfirmation] = useState('')
+  const [confirmingDelete, setConfirmingDelete] = useState(false)
+  const [deleteError, setDeleteError] = useState('')
   const backupImport = useBackupImportReview({ accountId: user?.sub ?? null, currentState: state, onApply: applyImportedBackup })
   const panelParam = params.get('panel')
   const panel = YOU_PANELS.some(([id]) => id === panelParam) ? panelParam as YouPanel : null
@@ -1059,11 +1062,7 @@ export function SettingsPage() {
             type="button"
             className="settings-data-btn danger"
             id="setting-delete-data"
-            onClick={async () => {
-              if (!confirm('Delete all saved data? This cannot be undone.')) return
-              const cleared = await clearAllData()
-              if (!cleared) alert('Your data was not deleted because the server could not confirm the request. Try again.')
-            }}
+            onClick={() => { setDeleteError(''); setConfirmingDelete(true) }}
           >
             Delete all data
           </button>
@@ -1080,6 +1079,7 @@ export function SettingsPage() {
           <p>Reading <bdi>{backupImport.status.filename}</bdi>… Your data has not changed.</p>
           <button type="button" className="k-text-button" onClick={backupImport.cancel}>Cancel import</button>
         </div>}
+        {deleteError && <p className="error-banner" role="alert">{deleteError}</p>}
         {backupImport.status.status === 'idle' && backupImport.status.error && <p className="error-banner" role="alert">{backupImport.status.error}</p>}
         {importConfirmation && <p className="settings-import-notice" role="status">{importConfirmation}</p>}
 
@@ -1105,6 +1105,24 @@ export function SettingsPage() {
         onCancel={backupImport.cancel}
         onConfirm={backupImport.confirm}
       />}
+      {confirmingDelete && (
+        <ConfirmDialog
+          eyebrow="Your data"
+          title="Delete all saved data?"
+          cancelLabel="Keep my data"
+          confirmLabel="Delete everything"
+          destructive
+          onCancel={() => setConfirmingDelete(false)}
+          onConfirm={async () => {
+            setConfirmingDelete(false)
+            const cleared = await clearAllData()
+            if (!cleared) setDeleteError('Your data was not deleted because the server could not confirm the request. Try again.')
+          }}
+        >
+          <p>This permanently deletes your meals, weigh-ins, Saved meals, Coach chat and profile from this account, and takes you back to setup. It can’t be undone.</p>
+          <p>Export a backup first if you might want any of it back.</p>
+        </ConfirmDialog>
+      )}
       {ownsDraft && !reviewingBackup && (signOutIntent || blocker.state === 'blocked') && <SettingsDepartureSheet
         pendingLabel={pendingLabel}
         signOut={signOutIntent}

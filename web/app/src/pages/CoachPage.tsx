@@ -11,6 +11,7 @@ import { usesByok } from '../lib/aiClient'
 import { IconArrowUpRight, IconSend } from '../components/icons'
 import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
+import { ConfirmDialog } from '../components/ConfirmDialog'
 import { Check, Copy, Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
@@ -134,6 +135,7 @@ export function CoachPage() {
   const [error, setError] = useState<string | null>(null)
   const [failedResponses, setFailedResponses] = useState<Record<string, FailedCoachResponse>>({})
   const [showSafetySupport, setShowSafetySupport] = useState(false)
+  const [confirmingClear, setConfirmingClear] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const followConversation = useRef(true)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -306,6 +308,18 @@ export function CoachPage() {
     }
   }
 
+  function clearConversation() {
+    setConfirmingClear(false)
+    requestRef.current?.abort()
+    requestRef.current = null
+    requestMessageRef.current = null
+    setLoading(false)
+    setFailedResponses({})
+    setError(null)
+    clearChat()
+    setShowSafetySupport(false)
+  }
+
   const lastAssistantId = state.chatMessages.findLast(message => message.role === 'assistant')?.id
   const compose = (
       <div className={`k-coach-compose${empty ? ' is-inline' : ''}`} data-mascot-avoid>
@@ -369,18 +383,7 @@ export function CoachPage() {
           <button
             type="button"
             className="k-text-button k-coach-clear"
-            onClick={() => {
-              if (confirm('Clear chat history?')) {
-                requestRef.current?.abort()
-                requestRef.current = null
-                requestMessageRef.current = null
-                setLoading(false)
-                setFailedResponses({})
-                setError(null)
-                clearChat()
-                setShowSafetySupport(false)
-              }
-            }}
+            onClick={() => setConfirmingClear(true)}
           >
             <Trash2 size={16} aria-hidden="true" /> Clear
           </button>
@@ -485,6 +488,20 @@ export function CoachPage() {
       </main>
 
       {!empty && compose}
+
+      {confirmingClear && (
+        <ConfirmDialog
+          eyebrow="Coach"
+          title="Clear chat history?"
+          cancelLabel="Keep chat"
+          confirmLabel="Clear chat"
+          destructive
+          onCancel={() => setConfirmingClear(false)}
+          onConfirm={clearConversation}
+        >
+          <p>This removes the whole conversation from your Poiem data. It can’t be undone.</p>
+        </ConfirmDialog>
+      )}
 
     </AppShell>
   )

@@ -16,6 +16,7 @@ import { defaultMealType } from '../lib/meals'
 import { logContextFromNavState } from '../lib/logContext'
 import { makeLogReceipt } from '../lib/logReceipt'
 import { createOnceGuard } from '../lib/onceGuard'
+import { ConfirmDialog } from '../components/ConfirmDialog'
 
 /** Keep the confirmation in the document when a keyboard leaves little room. */
 function useReviewKeyboard() {
@@ -73,6 +74,7 @@ export function ReviewFoodPage() {
   const keyboardOpen = useReviewKeyboard()
   const [loadingDraft, setLoadingDraft] = useState(!initialAnalysis)
   const [saveGuard] = useState(createOnceGuard)
+  const [confirmingDiscard, setConfirmingDiscard] = useState(false)
   const reviewTracked = useRef(false)
   const correctionTracked = useRef(false)
 
@@ -220,7 +222,8 @@ export function ReviewFoodPage() {
   }
 
   function discard(confirm = true) {
-    if (confirm && !window.confirm('Discard this estimate and start a new meal?')) return
+    if (confirm) { setConfirmingDiscard(true); return }
+    setConfirmingDiscard(false)
     setPendingAnalysis(null)
     setPendingImagePreview(null)
     clearLogDraft(userId, 'review')
@@ -305,6 +308,17 @@ export function ReviewFoodPage() {
           </div>
         </form>
       </main>
+      {confirmingDiscard && (
+        <ConfirmDialog
+          title="Discard this estimate?"
+          cancelLabel="Keep this estimate"
+          confirmLabel="Discard and start over"
+          onCancel={() => setConfirmingDiscard(false)}
+          onConfirm={() => discard(false)}
+        >
+          <p>Starting a new meal clears this estimate and any changes you made to it.</p>
+        </ConfirmDialog>
+      )}
     </div>
   )
 }
