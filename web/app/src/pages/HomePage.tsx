@@ -28,7 +28,10 @@ import { evaluateNotifications } from '../lib/notifications'
 import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../lib/today'
 import { planLogFeedback, type LogFeedbackPlan } from '../lib/logFeedbackPlan'
 import { RING_CHECK_MS, levelUpToToast, presentLogFeedback, ringCheckMs } from '../lib/logPresentation'
-import type { LogReceipt } from '../lib/logReceipt'
+import { makeLogReceipt, type LogReceipt } from '../lib/logReceipt'
+import { createOnceGuard } from '../lib/onceGuard'
+import { entryToSaved, savedToEntry } from '../lib/meals'
+import { usualMeal } from '../lib/usualMeal'
 import { LogSheetOpenContext } from '../lib/logSheetOpen'
 import { dayRingEntries } from '../lib/dayRingEntries'
 import { dayRingProgress } from '../lib/dayRing'
@@ -87,7 +90,7 @@ const TodayMealRow = memo(function TodayMealRow({ entry, fresh, onEdit, onTap, o
  * progress dashboard lives on Insights; a log receipt can acknowledge XP and level once.
  */
 export function HomePage({ guest = false }: { guest?: boolean }) {
-  const { state, ackLevelUp, patchGamification, deleteEntry, restoreEntry, refresh } = useApp()
+  const { state, ackLevelUp, patchGamification, addEntry, deleteEntry, restoreEntry, refresh } = useApp()
   const { toast } = useToast()
   const location = useLocation()
   const navigate = useNavigate()
@@ -148,6 +151,15 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   // must still refresh Today status with the same immutable entry array.
   const currentDayKey = localDayKey(new Date())
   const hasLoggedToday = useMemo(() => state.foodEntries.some(entry => localDayKey(entry.timestamp) === currentDayKey), [state.foodEntries, currentDayKey])
+  // What this person usually has in each slot, for a quiet one-tap repeat in the slots still empty today.
+  const [usualGuard] = useState(() => createOnceGuard({ releaseAfterMs: 600 }))
+  const usualBySlot = useMemo(() => {
+    const slots: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack']
+    if (guest || paused) return {} as Partial<Record<MealType, FoodEntry | null>>
+    const now = new Date()
+    return Object.fromEntries(slots.map(slot => [slot, usualMeal(state.foodEntries, slot, now)])) as Partial<Record<MealType, FoodEntry | null>>
+    // The calendar day is a dependency: yesterday's entries are today's history after midnight.
+  }, [state.foodEntries, currentDayKey, guest, paused])
   const water = state.gamification.waterByDate[selectedDayKey] ?? 0
   const notes = state.gamification.notesByDate[selectedDayKey] ?? 0
   const loggedDays = useMemo(() => new Set(state.foodEntries.map(entry => localDayKey(entry.timestamp))), [state.foodEntries])
@@ -295,6 +307,16 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   function openLog(mealType?: MealType) {
     feel('press')
     navigate('/log', { state: { background: location, mealType } })
+  }
+
+  /** The same path as logging a recent meal from the sheet, so XP, the ring and the receipt behave alike. */
+  function logUsual(source: FoodEntry, slot: MealType) {
+    usualGuard.run(() => {
+      const logged = savedToEntry({ ...entryToSaved(source), mealType: slot }, 'recent')
+      const receipt = makeLogReceipt(logged, state.gamification.awardedKeys.length)
+      addEntry(logged)
+      navigate('.', { replace: true, state: { justLogged: receipt } })
+    })
   }
 
   const removeMeal = useCallback((entry: FoodEntry) => {
@@ -459,6 +481,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                 {groups.map(group => {
                   if (!isToday && group.entries.length === 0) return null
                   const GroupIcon = MEAL_ICONS[group.type]
+                  const usual = isToday && !guest && !paused && group.entries.length === 0 ? usualBySlot[group.type] : null
                   return (
                     <section key={group.type} className={`k-meal-group is-${group.type}${group.entries.length === 0 ? ' is-empty' : ''}`} aria-labelledby={`meal-${group.type}`}>
                       <header className="k-meal-head">
@@ -470,6 +493,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                         <TodayMealRow key={entry.id} entry={entry} fresh={entry.id === freshId}
                           onEdit={editMeal} onTap={tapMeal} onDelete={removeMeal} />
                       ))}
+                      {usual && (
+                        <div className="k-usual-row">
+                          <span className={`k-food-tile is-tone-${foodToneFor(usual.name)}`} aria-hidden="true"><FoodIcon emoji={usual.emoji} name={usual.name} size={20} /></span>
+                          <span className="k-usual-name"><small>Your usual</small>{usual.name}</span>
+                          <button
+                            type="button"
+                            className="k-text-button k-usual-log"
+                            aria-label={`Log ${usual.name} again to ${group.label}`}
+                            onClick={() => logUsual(usual, group.type)}
+                          >Log again</button>
+                        </div>
+                      )}
                       {isToday && !guest && (
                         <button type="button" className="k-add-row" onClick={() => openLog(group.type)}>
                           <span className="k-add-plus" aria-hidden="true"><IconPlus size={16} /></span> Add {group.label.toLowerCase()}
