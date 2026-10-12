@@ -37,6 +37,11 @@
   .k-insights .insights-week-fact { display: grid; gap: var(--k-space-xs); margin: 0; font: 600 var(--k-text-sm)/1.4 var(--k-font-body); }
   .k-insights .insights-week-fact strong { font: 900 var(--k-type-figure)/1.1 var(--k-font-display); overflow-wrap: anywhere; }
   .k-insights .insights-week-note { margin: 0; font: 500 var(--k-text-xs)/1.5 var(--k-font-body); }
+  /* Patterns: a few plain lines about how they log, never about the numbers. */
+  .k-insights .insights-patterns { display: grid; gap: var(--k-space-sm); margin: 0; padding: var(--k-space-lg); border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-mint); color: var(--k-sticker-ink); }
+  .k-insights .insights-patterns h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }
+  .k-insights .insights-patterns ul { display: grid; gap: var(--k-space-xs); margin: 0; padding: 0; list-style: none; }
+  .k-insights .insights-patterns li { margin: 0; font: 600 var(--k-type-body)/1.45 var(--k-font-body); }
   .k-insights .insights-section { display: grid; min-width: 0; gap: var(--k-space-lg); }
   .k-insights .insights-section-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--k-space-sm) var(--k-space-lg); padding-bottom: var(--k-space-sm); border-bottom: 2px solid var(--k-role-border); }
   .k-insights .insights-section-heading h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }

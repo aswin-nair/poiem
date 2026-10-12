@@ -8,6 +8,7 @@ import { effectiveCalories } from '../lib/profile'
 import { formatMacroValue, localDayKey } from '../lib/dates'
 import { entryDayKey } from '@fud-ai/product/localDate'
 import { insightDays, insightDayLabel, insightPeriod, insightSummary } from '../lib/insights'
+import { insightStories } from '../lib/insightStories'
 import { getStreakWithFreezes, getAllBadges, getBreakfastComparison, getMonthConsistency, getTotalLoggedDays } from '../lib/journey'
 import { HabitMilestones } from '../components/HabitMilestones'
 import { Meter } from '../components/Meter'
@@ -82,6 +83,8 @@ export function ProgressPage() {
     : currentWeight
   const netChange = currentWeight - startWeight
 
+  // A few plain observations about how they log; empty until there are five logged days.
+  const stories = useMemo(() => insightStories(state.foodEntries), [state.foodEntries])
   const weeklyDays = useMemo(() => insightDays(state.foodEntries, 7), [state.foodEntries])
   const weeklySummary = insightSummary(weeklyDays)
   const calorieBars = useMemo(() => insightDays(state.foodEntries, days), [state.foodEntries, days])
@@ -166,6 +169,15 @@ export function ProgressPage() {
           </p>
           <p className="insights-week-note">{weeklySummary.loggedDays ? 'A logged day has at least one saved meal. Today is still in progress.' : 'Your next saved meal will start this week’s summary.'}</p>
         </section>
+
+        {stories.length > 0 && (
+          <section className="insights-patterns" aria-labelledby="patterns-title">
+            <h2 id="patterns-title">Patterns</h2>
+            <ul>
+              {stories.map(story => <li key={story.id}>{story.text}</li>)}
+            </ul>
+          </section>
+        )}
 
         <section className="insights-trends insights-section" aria-labelledby="trends-title">
         <header className="insights-section-heading">
