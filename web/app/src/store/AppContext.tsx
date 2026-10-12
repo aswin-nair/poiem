@@ -29,7 +29,7 @@ import { useAuth } from './AuthContext'
 
 import { authTokenSubject } from '../lib/auth'
 
-import { accessTokenForAccount, ApiError, apiLoadState, apiSaveState, loadAuthToken } from '../lib/apiClient'
+import { accessTokenForAccount, ApiError, apiLoadState, apiSaveState, hasVerifiedAccountSession, loadAuthToken } from '../lib/apiClient'
 
 import {
   acknowledgeMutation,
@@ -195,6 +195,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
   const [slowSplash, setSlowSplash] = useState(false)
 
   const [cloudLoadError, setCloudLoadError] = useState(false)
+  const [cloudLoadMessage, setCloudLoadMessage] = useState<string | null>(null)
+  const [loadRecoveryCopy, setLoadRecoveryCopy] = useState<AppState | null>(null)
 
   // Saved Sound and Haptics apply here, at the product boundary, so every
   // screen honours them, not only Today. A layout effect, not useEffect: a
@@ -555,6 +557,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     setLoading(true)
 
     setCloudLoadError(false)
+    setCloudLoadMessage(null)
+    setLoadRecoveryCopy(null)
 
     setCloudSyncError(null)
 
@@ -643,15 +647,19 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           expireSession()
           return
         }
-        const activeSessionIssuedAt = tokenIssuedAt(sessionToken)
-
         try {
           const remote = await apiLoadState(sessionToken)
+          if (cancelled || epoch !== syncEpoch.current) return
+          // The GET may have refreshed its bearer internally.
+          const activeSessionToken = boundSessionToken()
+          if (!activeSessionToken || authTokenSubject(activeSessionToken) !== userId) { expireSession(); return }
+          const activeSessionIssuedAt = tokenIssuedAt(activeSessionToken)
           if (!Number.isSafeInteger(remote.version) || remote.version < 0) {
             throw new Error('The account state version is invalid.')
           }
           const remoteState = remote.state === null ? null : importData(JSON.stringify(remote.state))
           if (remoteState) remoteState.aiSettings.apiKey = await loadPrivateAIKey(userId, remoteState.aiSettings)
+          if (cancelled || epoch !== syncEpoch.current) return
 
           if (cached?.pendingCount) {
             // Replay the stable device mutations before considering the server
@@ -662,6 +670,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
               // The successful GET authenticated this replacement session, so
               // it can explicitly adopt same-account queued work.
               await rebindDurableMutations(userId, userId, activeSessionIssuedAt)
+              if (cancelled || epoch !== syncEpoch.current) return
             }
             cloudVersion.current = cached.serverVersion
             cloudWritable.current = true
@@ -685,7 +694,7 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
             const mutation = await enqueueDurableMutation({
               userId,
               sessionSubject: userId,
-              sessionIssuedAt: tokenIssuedAt(sessionToken),
+              sessionIssuedAt: activeSessionIssuedAt,
               state: cached.state,
               confirmedVersion: remote.version,
               force: true,
@@ -723,11 +732,14 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           cloudWritable.current = true
           if (!cancelled) setState(next)
         } catch (error) {
-          if (cancelled) return
+          if (cancelled || epoch !== syncEpoch.current) return
           if (error instanceof ApiError && error.status === 401) {
             expireSession()
             return
           }
+          const retryableReadFailure = isRetryableAccountReadError(error)
+          const activeSessionToken = boundSessionToken()
+          const activeSessionIssuedAt = activeSessionToken ? tokenIssuedAt(activeSessionToken) : null
           if (cached) {
             if (
               cached.pendingCount > 0
@@ -735,11 +747,30 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
                 session.subject !== userId || session.issuedAt !== activeSessionIssuedAt
               ))
             ) {
-              setStorageRecovery('Reconnect to verify this session before recovering its queued changes.')
-              hydrationFailed = true
-              return
+              // Login/refresh already authenticated this exact bearer. A data
+              // outage does not undo that proof or make same-account work unsafe.
+              // Never adopt work using a decoded JWT or browser-stored identity alone.
+              const verifiedSameAccount = retryableReadFailure && activeSessionToken
+                && hasVerifiedAccountSession(userId, activeSessionToken)
+                && cached.pendingSessions.every(session => session.subject === userId)
+              if (verifiedSameAccount) {
+                try {
+                  await rebindDurableMutations(userId, userId, activeSessionIssuedAt)
+                  if (cancelled || epoch !== syncEpoch.current) return
+                } catch {
+                  if (cancelled || epoch !== syncEpoch.current) return
+                  setCloudLoadMessage('Your saved changes are preserved, but this device could not recover them. Download a copy and try again.')
+                  setLoadRecoveryCopy(cached.state)
+                  hydrationFailed = true
+                  return
+                }
+              } else {
+                setCloudLoadMessage('Your saved changes are preserved. This session needs to be verified before they can be recovered. Try again when the account service is available.')
+                setLoadRecoveryCopy(cached.state)
+                hydrationFailed = true
+                return
+              }
             }
-            const retryableReadFailure = isRetryableAccountReadError(error)
             if (!retryableReadFailure) {
               cloudVersion.current = cached.serverVersion
               cloudWritable.current = false
@@ -762,6 +793,9 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
             return
           }
           // Do not expose an editable fresh state without either source.
+          setCloudLoadMessage(error instanceof ApiError && error.status >= 500
+            ? `The account service is temporarily unavailable (${error.status}). Try again shortly. Your saved data has not been changed.`
+            : 'Your saved data has not been changed. Check your connection and try again.')
           hydrationFailed = true
         }
       })()
@@ -848,6 +882,27 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     }
 
   }, [boundSessionToken, userId, cloud, guest, hydrateAttempt, expireSession])
+
+  // A blocked cold start has no hydrated outbox to drain. Re-run hydration
+  // when connectivity/foreground returns, sharing the normal Retry path.
+  useEffect(() => {
+    if (!cloud || !cloudLoadError) return
+    let lastAttempt = Date.now()
+    const retry = () => {
+      if (!navigator.onLine || Date.now() - lastAttempt < 1_000) return
+      lastAttempt = Date.now()
+      setHydrateAttempt(attempt => attempt + 1)
+    }
+    const visible = () => { if (document.visibilityState === 'visible') retry() }
+    window.addEventListener('online', retry)
+    window.addEventListener('focus', retry)
+    document.addEventListener('visibilitychange', visible)
+    return () => {
+      window.removeEventListener('online', retry)
+      window.removeEventListener('focus', retry)
+      document.removeEventListener('visibilitychange', visible)
+    }
+  }, [cloud, cloudLoadError])
 
 
 
@@ -945,8 +1000,8 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
 
   }, [user?.name, state.profile.name])
 
-  function downloadConflictCopy(): void {
-    const blob = new Blob([exportData(state)], { type: 'application/json' })
+  function downloadDeviceCopy(snapshot: AppState): void {
+    const blob = new Blob([exportData(snapshot)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
@@ -955,6 +1010,10 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
     link.click()
     link.remove()
     setTimeout(() => URL.revokeObjectURL(url), 0)
+  }
+
+  function downloadConflictCopy(): void {
+    downloadDeviceCopy(state)
     setConflictExported(true)
   }
 
@@ -1296,11 +1355,12 @@ export function AppProvider({ children, guest = false }: { children: ReactNode; 
           <div className="onboarding-step-content">
             <h1 className="onboarding-title">We could not load your account</h1>
             <p className="onboarding-sub">
-              {storageRecovery
+              {cloudLoadMessage ?? (storageRecovery
                 ? `${storageRecovery} Connect to the account server and retry before logging anything new.`
-                : 'Your saved data was not changed. Check your connection and try again before logging anything new.'}
+                : 'Your saved data was not changed. Check your connection and try again before logging anything new.')}
             </p>
-            <PressableButton fullWidth label="Retry" onClick={() => setHydrateAttempt(attempt => attempt + 1)} />
+            <PressableButton fullWidth label="Try again" onClick={() => setHydrateAttempt(attempt => attempt + 1)} />
+            {loadRecoveryCopy && <PressableButton fullWidth variant="secondary" label="Download device copy" onClick={() => downloadDeviceCopy(loadRecoveryCopy)} />}
             <PressableButton fullWidth variant="ghost" label="Sign out" onClick={signOut} />
           </div>
         </main>

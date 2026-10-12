@@ -23,6 +23,7 @@ import { formatDayLabel, journalDayFromNavState, localDayKey, sameDay, startOfDa
 import { applyNote, applyWaterChange } from '../lib/enamelEconomy'
 import { useFeel } from '../hooks/useHaptic'
 import { useCountUp } from '../hooks/useCountUp'
+import { useLocalDay } from '../hooks/useLocalDay'
 import { evaluateNotifications } from '../lib/notifications'
 import { calorieBudget, entryTime, groupEntriesByMeal, macroBudget } from '../lib/today'
 import { planLogFeedback, type LogFeedbackPlan } from '../lib/logFeedbackPlan'
@@ -93,10 +94,18 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
   const feel = useFeel()
   const budgetAnchor = useAnchor('calorie_ring')
   const [selectedDate, setSelectedDate] = useState(() => journalDayFromNavState(location.state) ?? startOfDay())
+  // Following today means the view moves on with the calendar; a day the reader picked stays where it is.
+  const followingToday = useRef(sameDay(selectedDate, new Date()))
+  const calendarDay = useLocalDay()
+  useEffect(() => {
+    if (followingToday.current && localDayKey(selectedDate) !== calendarDay) setSelectedDate(startOfDay())
+  }, [calendarDay, selectedDate])
   function selectJournalDate(date: Date) {
     setSelectedDate(date)
-    // Keep only the chosen day in navigation context so an expired session can resume it.
-    navigate('/', { replace: true, state: { journalDay: localDayKey(date) } })
+    followingToday.current = sameDay(date, new Date())
+    // Keep only a chosen past day in navigation context so an expired session can resume it.
+    // Today is the default and needs none, so a tab restored tomorrow opens on tomorrow's today.
+    navigate('/', { replace: true, state: followingToday.current ? null : { journalDay: localDayKey(date) } })
   }
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [moment, setMoment] = useState<MomentState | null>(null)

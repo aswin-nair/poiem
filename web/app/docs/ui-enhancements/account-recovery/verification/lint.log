@@ -1,0 +1,17 @@
+
+> app@0.0.0 lint
+> oxlint --ignore-path .gitignore --ignore-pattern .cache/** --ignore-pattern artifacts/** --threads=2
+
+src/components/Toast.tsx:18:14: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/SettingsNavigation.tsx:6:14: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/PortionSheet.tsx:8:14: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/store/AuthContext.tsx:142:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/store/AppContext.tsx:1471:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/store/AppContext.tsx:1481:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/accessibility.test.ts:202:7: warning react(no-children-prop): Avoid passing children using a prop. help: The canonical way to pass children in React is to use JSX elements
+src/mascot/MascotOverlay.tsx:111:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/mascot/MascotOverlay.tsx:120:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/mascot/MascotOverlay.tsx:894:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/mascot/anchors.tsx:100:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/mascot/anchors.tsx:104:17: warning react(only-export-components): Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/main.tsx:15:10: warning react(only-export-components): Fast refresh only works when a file has exports. Move your component(s) to a separate file.

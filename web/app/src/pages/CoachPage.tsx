@@ -11,6 +11,7 @@ import { usesByok } from '../lib/aiClient'
 import { IconArrowUpRight, IconSend } from '../components/icons'
 import { track } from '../lib/analytics'
 import { PressableButton } from '../components/PressableButton'
+import { ConfirmDialog } from '../components/ConfirmDialog'
 import { Check, Copy, Sparkles, Trash2 } from 'lucide-react'
 import { MomoSticker } from '../components/MomoSticker'
 import { AiAllowanceHint, AiAvailabilityCard } from '../components/LogFlowUI'
@@ -134,6 +135,7 @@ export function CoachPage() {
   const [error, setError] = useState<string | null>(null)
   const [failedResponses, setFailedResponses] = useState<Record<string, FailedCoachResponse>>({})
   const [showSafetySupport, setShowSafetySupport] = useState(false)
+  const [confirmingClear, setConfirmingClear] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const followConversation = useRef(true)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -196,17 +198,21 @@ export function CoachPage() {
   }, [])
 
   useEffect(() => {
-    if (!followConversation.current) return
+    // An empty conversation opens at the top: there is nothing newer to follow, and the
+    // heading and the setup notice belong in view, not scrolled past.
+    if (!followConversation.current || empty) return
     /* No `block`: the default clamps to the maximum scroll, which keeps the newest
        message above the sticky compose bar and the tab bar. */
     bottomRef.current?.scrollIntoView({ behavior: followScrollBehavior(prefersReducedMotion()) })
-  }, [state.chatMessages, loading])
+  }, [state.chatMessages, loading, empty])
 
   const ai = availability(state.aiSettings, 'coach')
   const foodAi = availability(state.aiSettings, 'food_text')
   const byok = usesByok(state.aiSettings)
   const provider = byok ? providerLabel(state.aiSettings.provider) : 'Poiem AI'
   const canChat = ai.kind === 'ready'
+  // While availability is still being checked the page looks as it will when ready, so it does not flip.
+  const aiBlocked = !canChat && ai.kind !== 'checking'
 
   function prepareDraft(text: string) {
     setInput(text)
@@ -304,6 +310,18 @@ export function CoachPage() {
     }
   }
 
+  function clearConversation() {
+    setConfirmingClear(false)
+    requestRef.current?.abort()
+    requestRef.current = null
+    requestMessageRef.current = null
+    setLoading(false)
+    setFailedResponses({})
+    setError(null)
+    clearChat()
+    setShowSafetySupport(false)
+  }
+
   const lastAssistantId = state.chatMessages.findLast(message => message.role === 'assistant')?.id
   const compose = (
       <div className={`k-coach-compose${empty ? ' is-inline' : ''}`} data-mascot-avoid>
@@ -367,18 +385,7 @@ export function CoachPage() {
           <button
             type="button"
             className="k-text-button k-coach-clear"
-            onClick={() => {
-              if (confirm('Clear chat history?')) {
-                requestRef.current?.abort()
-                requestRef.current = null
-                requestMessageRef.current = null
-                setLoading(false)
-                setFailedResponses({})
-                setError(null)
-                clearChat()
-                setShowSafetySupport(false)
-              }
-            }}
+            onClick={() => setConfirmingClear(true)}
           >
             <Trash2 size={16} aria-hidden="true" /> Clear
           </button>
@@ -404,21 +411,32 @@ export function CoachPage() {
 
         {state.chatMessages.length === 0 && (
           <section className="k-card k-coach-empty" aria-labelledby="coach-empty-title">
-            <h2 id="coach-empty-title">Ask me anything</h2>
-            <p>Reflect on recent logging patterns or ask for general meal ideas.</p>
-            <div className="k-coach-starters">
-              {STARTERS.map(starter => (
-                <button
-                  key={starter.text}
-                  type="button"
-                  className={`k-coach-starter is-tone-${starter.tone}`}
-                  onClick={() => prepareDraft(starter.text)}
-                  disabled={loading}
-                >
-                  <Sparkles size={16} aria-hidden="true" /> {starter.text}
-                </button>
-              ))}
-            </div>
+            {aiBlocked ? (
+              <>
+                {/* Starters only fill a draft that cannot be answered, so they stay out of the way. The
+                    composer stays: local safety support answers without an AI connection. */}
+                <h2 id="coach-empty-title">Write it down here</h2>
+                <p>Replies from Coach need AI set up. You can still write here, and support options appear if you mention something that needs care.</p>
+              </>
+            ) : (
+              <>
+                <h2 id="coach-empty-title">Ask me anything</h2>
+                <p>Reflect on recent logging patterns or ask for general meal ideas.</p>
+                <div className="k-coach-starters">
+                  {STARTERS.map(starter => (
+                    <button
+                      key={starter.text}
+                      type="button"
+                      className={`k-coach-starter is-tone-${starter.tone}`}
+                      onClick={() => prepareDraft(starter.text)}
+                      disabled={loading}
+                    >
+                      <Sparkles size={16} aria-hidden="true" /> {starter.text}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
             {compose}
           </section>
         )}
@@ -483,6 +501,20 @@ export function CoachPage() {
       </main>
 
       {!empty && compose}
+
+      {confirmingClear && (
+        <ConfirmDialog
+          eyebrow="Coach"
+          title="Clear chat history?"
+          cancelLabel="Keep chat"
+          confirmLabel="Clear chat"
+          destructive
+          onCancel={() => setConfirmingClear(false)}
+          onConfirm={clearConversation}
+        >
+          <p>This removes the whole conversation from your Poiem data. It can’t be undone.</p>
+        </ConfirmDialog>
+      )}
 
     </AppShell>
   )

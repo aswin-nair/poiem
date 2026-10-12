@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { InsightDay } from '../lib/insights'
 import { insightDayLabel } from '../lib/insights'
+import { calorieAxis } from '../lib/chartScale'
 
 function ChartDataTable({
   caption,
@@ -256,9 +257,9 @@ export function ProgressBarChart({
 
   if (bars.length === 0) return <p className="chart-empty">No calorie data in this range</p>
 
-  const maxVal = Math.max(...bars.map(b => b.value), goal ?? 0, 4000)
-  const yMax = Math.ceil(maxVal / 500) * 500
-  const h = 180
+  // The axis fits the data and the goal, so a typical day fills the chart instead of a fixed 4,000 ceiling.
+  const { max: yMax, ticks: yTicks } = calorieAxis(Math.max(...bars.map(b => b.value)), goal)
+  const h = 200
   // Each bar is a real 44px control, even when the month chart needs scrolling.
   const w = Math.max(340, bars.length * 48 + 46)
   const padL = 38
@@ -270,7 +271,6 @@ export function ProgressBarChart({
   const barW = Math.max(6, Math.min(22, chartW / bars.length - 4))
   const showLabels = bars.length <= 7
 
-  const yTicks = [0, Math.round(yMax / 2 / 100) * 100, yMax]
   const goalY = goal != null ? padT + chartH - (goal / yMax) * chartH : null
 
   return (
@@ -290,7 +290,7 @@ export function ProgressBarChart({
           return (
             <g key={tick}>
               <line x1={padL} y1={y} x2={w - padR} y2={y} stroke="var(--k-hair)" strokeWidth="1" />
-              <text x={padL - 6} y={y + 4} textAnchor="end" fill="var(--k-muted)" fontSize="9">
+              <text x={padL - 6} y={y + 4} textAnchor="end" fill="var(--k-muted)" fontSize="11">
                 {tick >= 1000 ? `${tick / 1000}k` : tick}
               </text>
             </g>
@@ -317,30 +317,36 @@ export function ProgressBarChart({
                 />
               )}
               {b.logged && b.value === 0 && <line x1={x} y1={padT + chartH} x2={x + barW} y2={padT + chartH} stroke="var(--k-action)" strokeWidth="4" />}
-              {showLabels && b.value > 0 && (
-                <text
-                  x={x + barW / 2} y={y - 4}
-                  textAnchor="middle" fill="var(--k-muted)" fontSize="8" fontWeight="600"
-                >
-                  {b.value >= 1000 ? `${(b.value / 1000).toFixed(1)}k` : b.value}
-                </text>
-              )}
-              <text x={x + barW / 2} y={h - 6} textAnchor="middle" fill="var(--k-muted)" fontSize="9">{b.label}</text>
+              <text x={x + barW / 2} y={h - 6} textAnchor="middle" fill="var(--k-muted)" fontSize="11">{b.label}</text>
             </g>
           )
         })}
 
-        {/* Drawn over the bars so the tracks never hide the goal or its label. */}
+        {/* Drawn over the bars so the tracks never hide the goal. The key below names it; a label
+            at the right edge ran under the selected day's outline. */}
         {goalY != null && (
-          <g>
-            <line
-              x1={padL} y1={goalY} x2={w - padR} y2={goalY}
-              stroke="var(--k-ink)" strokeDasharray="5 4" strokeWidth="1.5"
-            />
-            <text x={w - padR} y={goalY - 4} textAnchor="end" fill="var(--k-ink)" fontSize="9" fontWeight="600"
-              stroke="var(--k-card)" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke">goal</text>
-          </g>
+          <line
+            x1={padL} y1={goalY} x2={w - padR} y2={goalY}
+            stroke="var(--k-ink)" strokeDasharray="5 4" strokeWidth="1.5"
+          />
         )}
+
+        {/* Values go over the goal line, with a halo, so a day just under the goal stays readable. */}
+        {showLabels && bars.map((b, i) => {
+          if (b.value <= 0) return null
+          const barH = Math.max((b.value / yMax) * chartH, 3)
+          const x = padL + (i + 0.5) * (chartW / bars.length)
+          return (
+            <text
+              key={b.dayKey}
+              x={x} y={padT + chartH - barH - 4}
+              textAnchor="middle" fill="var(--k-muted)" fontSize="11" fontWeight="600"
+              stroke="var(--k-card)" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke"
+            >
+              {b.value >= 1000 ? `${(b.value / 1000).toFixed(1)}k` : b.value}
+            </text>
+          )
+        })}
       </svg>
       <div className="insights-chart-controls" style={{ left: `${padL / w * 100}%`, right: `${padR / w * 100}%`, top: `${padT / h * 100}%`, bottom: `${padB / h * 100}%`, gridTemplateColumns: `repeat(${bars.length}, minmax(44px, 1fr))` }} role="group" aria-label="Inspect a calorie chart day">
         {bars.map((day, index) => (
@@ -367,6 +373,11 @@ export function ProgressBarChart({
       </div>
       </div>
       </div>
+      <ul className="insights-chart-key" aria-label="Chart key">
+        {goal != null && <li><span className="key-goal" aria-hidden="true" />Goal {goal.toLocaleString()} kcal</li>}
+        <li><span className="key-logged" aria-hidden="true" />Logged</li>
+        <li><span className="key-unlogged" aria-hidden="true" />Not logged</li>
+      </ul>
       <ChartDataTable caption="Calories by day" rows={bars.map(day => ({ label: insightDayLabel(day.dayKey), value: day.logged ? day.value : null }))} unit="kcal" />
     </div>
   )

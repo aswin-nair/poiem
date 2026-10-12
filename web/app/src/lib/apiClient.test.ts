@@ -9,7 +9,9 @@ import {
   apiSaveState,
   clearAuthToken,
   clearLegacyAuthToken,
+  hasVerifiedAccountSession,
   saveAuthToken,
+  saveVerifiedAuthToken,
 } from './apiClient'
 import { freshState } from './storage'
 
@@ -109,6 +111,32 @@ function unsignedToken(sub: string, iat = 1): string {
 }
 
 describe('in-memory access tokens', () => {
+  it('requires an exact token from server authentication to recover another session’s queued work', () => {
+    const alice = '00000000-0000-4000-8000-000000000001'
+    const bob = '00000000-0000-4000-8000-000000000002'
+    const token = unsignedToken(alice, 2)
+    saveAuthToken(token)
+    expect(hasVerifiedAccountSession(alice, token)).toBe(false)
+    saveVerifiedAuthToken(token, alice)
+    expect(hasVerifiedAccountSession(alice, token)).toBe(true)
+    expect(hasVerifiedAccountSession(alice, unsignedToken(alice, 1))).toBe(false)
+    expect(hasVerifiedAccountSession(bob, token)).toBe(false)
+    saveAuthToken(token)
+    expect(hasVerifiedAccountSession(alice, token)).toBe(false)
+    saveVerifiedAuthToken(token, alice)
+    clearAuthToken()
+    expect(hasVerifiedAccountSession(alice, token)).toBe(false)
+  })
+
+  it('rejects a server token/account mismatch without retaining authorization', () => {
+    const alice = '00000000-0000-4000-8000-000000000001'
+    const bob = '00000000-0000-4000-8000-000000000002'
+    const token = unsignedToken(alice)
+    expect(() => saveVerifiedAuthToken(token, bob)).toThrow(/did not match/)
+    expect(accessTokenForAccount(alice)).toBeNull()
+    expect(hasVerifiedAccountSession(alice, token)).toBe(false)
+  })
+
   it('clears a legacy 30-day bearer from ordinary browser storage', () => {
     const storage = memoryStorage()
     storage.setItem('fud-ai-auth-token', 'legacy-30-day-token')

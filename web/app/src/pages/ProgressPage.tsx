@@ -235,7 +235,8 @@ export function ProgressPage() {
         </div>
 
         {/* Calories card */}
-        <div className="progress-card">
+        <div className="progress-card insights-calories-card">
+          <div className="insights-calories-main">
           <div className="progress-card-header">
             <h2 className="progress-card-title">Calories</h2>
             <div className="progress-avg-pill">
@@ -255,7 +256,8 @@ export function ProgressPage() {
           {!calorieDays.length && <p className="insights-empty">No meals logged in this range. Choose any day below to open its journal.</p>}
           <p className="insights-chart-note">Average uses {calorieDays.length} logged {calorieDays.length === 1 ? 'day' : 'days'} only. An unlogged day has no known intake.</p>
           <ProgressBarChart bars={calorieBars} goal={goal} selectedDayKey={selectedDay.dayKey} onSelectDay={setSelectedDayKey} />
-          <p className="insights-chart-note">Dashed bars are unlogged days. Choose a bar or a date below. Use the arrow keys on a bar; scroll the chart for more days.</p>
+          <p className="insights-chart-note">Choose a bar or a date below. Use the arrow keys on a bar; scroll the chart for more days.</p>
+          </div>
           <section className="insights-day-inspector" aria-labelledby="inspected-day-title">
             <div className="insights-day-controls">
               <label htmlFor="insights-day">Inspect a day</label>

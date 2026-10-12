@@ -1,0 +1,3212 @@
+{
+  "phase": "before",
+  "checkedAt": "2026-10-11T20:05:54.522Z",
+  "revision": "060337c80c99efd836062f0fb77357f9bf30c82b",
+  "baseline": "C:\\Users\\aswin\\Desktop\\Fud AI\\.claude\\worktrees\\poiem-motion-return\\.cache\\account-recovery-baseline-060337c8",
+  "sourceMatchesRevision": true,
+  "failures": [],
+  "sourceFiles": [
+    {
+      "path": "packages/contracts/README.md",
+      "gitBlob": "90a2afd111065059df49be08a498773bc5393702",
+      "sha256": "b7d34dbc452c2cf58aeb6b7ceb633aba804568505e4c99485f4c2b92b3ab05f3",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/fixtures/telemetry-redaction.v1.json",
+      "gitBlob": "4512eb2c7a27610d0cd2a5bbc53463da07c38592",
+      "sha256": "44dd5cf26e8aa75a50e1a0807b529570578942ed757a8532ab2f5386618ee875",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/package.json",
+      "gitBlob": "4b2eee0bacab59e95111b0408ac1bd04700c87e4",
+      "sha256": "62b78ecc04c5967a32ee98434b14957fa09669a5b22a2a783429dcc5f6c31430",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/alerts.ts",
+      "gitBlob": "24eda57f5d1a346e1bdca34a53576d981bf4e89c",
+      "sha256": "e97302f67f6337cf633df0f727c6bcdb55879d63e32c774fbef21dfff0a4ea95",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/calendarContext.ts",
+      "gitBlob": "57e175ae1ac4b4c30df89c189fee6facf0451912",
+      "sha256": "a6a0a7c95b748e7baab6e899c1994c5ef327a8ff57cc5ee7b3231f518f9d8b66",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/checksum.ts",
+      "gitBlob": "bbee5e11a526f1e721f061c817c7025478fb8c17",
+      "sha256": "a394b5ab122ac67e176004b2541328b31a09fec7fd306a0526ec3b46060bc225",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/entities.ts",
+      "gitBlob": "c17b8998710ddd61fda2c5e3e3e1a516c031d6be",
+      "sha256": "4cba8a71e12e99384a9b2e6b36d6e22891791a295e902d79a197b8f578c93f4e",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "gitBlob": "2c6b52dd97cc8493b6ebfef034d17ef186da8d8f",
+      "sha256": "073a336d48b163cb24163a594d1d091548742fe30b4d8e2d195437d178a6fa18",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/migration.ts",
+      "gitBlob": "4822a0170ebffe48077add44ca83d8a6b4d75ff9",
+      "sha256": "5bfed3060f8da13ce34ea735e0357203a365c75e7fc749eb7db6df4fefcd33b2",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/mutations.ts",
+      "gitBlob": "1908e77323b24bcfefff86f7bec6bc42d2ad7cc2",
+      "sha256": "33637756bd31650f290b1d3012df12c21d0a93cf168b3fe9b29cc4f229fcdf48",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/progression.ts",
+      "gitBlob": "1e9aa402173bdf5bed26dabd6063b5079220933a",
+      "sha256": "db3953031222fe23300cc8fdda55e233593f1ff7964250ff9f26aa39d10f4bff",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/projectSnapshot.ts",
+      "gitBlob": "ea5e7a3d8125517a4a9a6b0a63a9948ee01508a9",
+      "sha256": "dc81eb13679c7044de9c885bb8f18967076dfe8d3ba2000a99d2d9bfd7260852",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/rollout.ts",
+      "gitBlob": "dd2249fe5aa53042c49d9a666a7ae7a1ef0a39bf",
+      "sha256": "5e3614db90c4c35d3daa5989010bc51739f6124062912e409bc41dcd2d188d6d",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/contracts/src/telemetry.ts",
+      "gitBlob": "b401d0078285aabf8415516bcde030cc7c242842",
+      "sha256": "ea1e21236574b9291e6be44e255fe565b1102814be7a8e1aead1c333f68512ad",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/README.md",
+      "gitBlob": "cc9fdf0f327ea8f4e43384c260d090258a5ddce5",
+      "sha256": "344a4c1bfb2b5072447d84cddaa28a5ffa86818dcf7df32d1896fc9e60f7f127",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/calendar.v1.json",
+      "gitBlob": "d76d9a5623c6fd4700f7f6756c8c978ed52c7d9a",
+      "sha256": "765911313a2f1e338307aa62ece955d586afa47f6aa112e94d02f4e9cb8b488b",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/freezes.v1.json",
+      "gitBlob": "fed68a67773f50ef68ae52a648cadb225d2860cc",
+      "sha256": "e6cd810702dd0608fbbf6ca1c7e38aa9050fecd81c0bafa85d78ed3e7cc2563c",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/meals.v1.json",
+      "gitBlob": "1822d76e7cb4bfa000c37be8c7b0c5734689ba44",
+      "sha256": "058acb28aed66ed1d67983c98ed1d1c278fe5884052a9d90509ec8ce8b940ae4",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/notifications.v2.json",
+      "gitBlob": "f93df6663f55761dbda0c1924baa19cfa1a2d37d",
+      "sha256": "aa3f3638dfb7252f922897402dff6a3022dab9b70fb9dd6557407d22e8ae5e0d",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/quests.v1.json",
+      "gitBlob": "6b9edbfdafff40f96be592ed747039aaddfb97e5",
+      "sha256": "c51dfa245b1024d91da72dcdf4f6f3a45d72cb161972280ca5b47700dd5d0bae",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/streaks.v1.json",
+      "gitBlob": "93af8c07601e76c085cd2d042d67a36df1b9ef2c",
+      "sha256": "5dd6cc83024c7aa453756bf65b8b0a819fc7c3728a6216957f7db0bf2977b935",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/targets.v1.json",
+      "gitBlob": "6080e02c3f9c9fb16a81d2756561c09e17a65e82",
+      "sha256": "657105a47a73fb6926a6630511ef3595f936b35eee7d1b80bf3236d993a680ef",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/fixtures/xp.v1.json",
+      "gitBlob": "c492e469170fc7f97c0406956a62717e503c62e0",
+      "sha256": "52580a9620716bc105ad8578c51a9761448e3ecf0c103b0746f3892def6a3256",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/package.json",
+      "gitBlob": "321bff03e08137ef498fe052dd13a0d28f3bf2e0",
+      "sha256": "d617c337979ce289efcde5dbcf409a0d096f46cd4a66dbaefdfe56f8a77a018a",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/calendar.ts",
+      "gitBlob": "54d152baf1c1eef989c210328a28c9d8ca06a5b0",
+      "sha256": "d01a81d768d6e4f3851c13055ba2fcfb442899f50ec250711cd8ef51cbd2eec1",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/freezes.ts",
+      "gitBlob": "902fc844d71d6c2423d46e2f7c2a40f2ca2d4046",
+      "sha256": "1e1401a32268cd2e5900d1056db06f3e4bb544759d61fbee67720d2e20661101",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/index.ts",
+      "gitBlob": "3735df693600a28b02cd09d48da84e0036619549",
+      "sha256": "55aa8b8a7299fad99f9a013852b3aa6c61f61c3e0d73632702b7d3e01afffb78",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/meals.ts",
+      "gitBlob": "f728e7cba847760a7907a40684e21fc6e04943a4",
+      "sha256": "c9b565aa4153e03cb47a7c39e2d3468cb91f1398f9884677900f430617d2814e",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/notifications.ts",
+      "gitBlob": "ddefba849518951692e228c7cb91f9141db73db1",
+      "sha256": "2bb2752d6686a4af09056362446756508289f0fad59f25645a474b52482d028a",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/nutrition.ts",
+      "gitBlob": "0d86c7269fdee44f01ab0e312b0fe44fdffa71cc",
+      "sha256": "eca00c7dc0ef8665952a6573a43046ccb76527791f3877a9a56f817f4354f27d",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/quests.ts",
+      "gitBlob": "57f9dbe320c7fe0075e2f8de2cc414f11e4b1086",
+      "sha256": "c17bc929819054cc6885d75bbd3be16cce64229e5cf4c3ab59ec0add7d321403",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/streak.ts",
+      "gitBlob": "ccb0eb8eb149e4fcf412f9ba5d7d672c199319b1",
+      "sha256": "4670aab2d1910fba3a4fb04cfedf6c813e0a40c80df05747d005a3054a95fda2",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/domain/src/xp.ts",
+      "gitBlob": "c1b5026e828115f425ed07741b58fbd4dedbdc5b",
+      "sha256": "eb707b22ac4e0e55357aef4d3f15dca64ebe1e67ff0123de46273257c65ceaf3",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/package.json",
+      "gitBlob": "cadb78ce9b6e37c9f2c840fd0f2826770ce15fb0",
+      "sha256": "55ed7f58184a7027e8d8ad54c9ebdbf75675cd6a7a14038affbc5107dd05ca73",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/dayRing.test.ts",
+      "gitBlob": "88660f5a1a4da2d98452ebb09550e13a2109c0e7",
+      "sha256": "627728f7c72f68fea0834f9bea78dcbe954676f1895b3d5843110b4c78efc509",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/dayRing.ts",
+      "gitBlob": "ffbdec82157c2b368a191a619dd94cd3032a5094",
+      "sha256": "23117a925051870b41a0505aa93bd14405d2582966a4dddccf8e29c70f88f0df",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/enamelAwards.ts",
+      "gitBlob": "b9e6809970f0c766d14337138ac55087c3ced78c",
+      "sha256": "27e4c4e0d8a04b729ffd2ee30cf17ec52b1f46d4044b1cf5c596d7c6c5e7f9e4",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/guestClaim.test.ts",
+      "gitBlob": "06f8dce8f6eb6d9cd2b793a31f939ef8a7185998",
+      "sha256": "4086e61fbe37d93c8d65b7a53e153e7a8878baad1c95a2ffa68dc31e634d6cc3",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/guestClaim.ts",
+      "gitBlob": "6f483ca2828c605331723474f583697812800243",
+      "sha256": "59d14a6ea75a4b289866652e2ddb661df9ea45fdef94a03ea0b36f1ea68dc888",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/index.ts",
+      "gitBlob": "20f546cb85336fc7783633f44753672dcc78db5b",
+      "sha256": "d39fc252ce6d5db2703cce5c0d6e531c9384460e26965bb55b472efac5b9b5e7",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/localDate.test.ts",
+      "gitBlob": "bf75e23269c049336a6de940218391de8bc50c5d",
+      "sha256": "d34bb79ab678c262bd31318c2777b0ea0e26b11ae2d04c8f874d7297196eafb3",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/localDate.ts",
+      "gitBlob": "7a99be6d9a1b31b585fb2428fd46a0cdc6ca6040",
+      "sha256": "3ef5c0066599d30a8f709c8d69781c90b31b21b9713d9511a4c289979ee9ee1e",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/mascotLines.ts",
+      "gitBlob": "02695ef2ac148c50d47484457b1facc7bd25f84a",
+      "sha256": "66a3f5af2f60a8c3c724dc0004b13078197cbe99aa9cda8a92bdde621b398b19",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/mascotVoice.test.ts",
+      "gitBlob": "8b63be705a0a6e767a1809273d82ba7917338d5f",
+      "sha256": "7ee6f445534a44428528099b9ef44ddd162b39a15dbfeab64a197b96d4860b1a",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/mascotVoice.ts",
+      "gitBlob": "e936daefb9f8052d8fb04cb0a49f4aeb61157355",
+      "sha256": "1f7b89e304692ead6652c755b12fdb07a6bbc53b25a8e6d54fff83eb8f20ad5e",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/momoArt.ts",
+      "gitBlob": "d01b45fcceb3f3a9551500ca9a4e9a34dd842eb3",
+      "sha256": "b12c5e793b0e539dcd8eb6ea38129021579632a22da5148b8d739fd21f01ed8c",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/wardrobe.test.ts",
+      "gitBlob": "6e9878059110994997b90ccb451f6a21e6e51a25",
+      "sha256": "1a6569cfbb3d235a4827b8f14e175e199c1e5fe3cd1b1b5dc1a37c390cdb3537",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "packages/product/src/wardrobe.ts",
+      "gitBlob": "6b9020e463ed4ab080a345bd3f76857d70058f5a",
+      "sha256": "35d8630dac2fa42a53cdb79cd8a9d7aab8b7d294586bbb24c133633f8111c564",
+      "format": "crlf-normalized",
+      "reusedDependencyFormat": "crlf-normalized"
+    },
+    {
+      "path": "web/app/index.html",
+      "gitBlob": "5dac8ca4267ce8b9c5a90307292d53ca6e1fe7af",
+      "sha256": "d1f576060c960d7eb5f9ee8fed5085d06250cf4d32340eda58000a3006866581",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/package-lock.json",
+      "gitBlob": "59127122f7ff9605484792dbe28a827536cc6ae3",
+      "sha256": "e0e64de87beae108982d5ff1fab842acad839fb0cde7c505d0e30ab1222ed1df",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/package.json",
+      "gitBlob": "291bc3b330b154b6ac2f3e83a0a2ab3bdcdb4e92",
+      "sha256": "f2d7a336abf7791e3defd9a7be0b9e5b9769da98316c01cad680d9f2b64cd697",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/appearance-init.js",
+      "gitBlob": "2363ad90bbe906b078870bf11830a5bc88bbe14b",
+      "sha256": "c84f9950b3e05e5d4041dfa5253e0c99ba23cda60ea47296ab26b132b60a6674",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/index.html",
+      "gitBlob": "64b41023044318e47322e01c5b8c23fb0121d310",
+      "sha256": "2aaf521d5ca7abb15c39719ed0514475730c574c11cdab4c46f4b89fe7fba8cb",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/momo.svg",
+      "gitBlob": "b4c2e210370219ebe63437d04fc535ad253173c8",
+      "sha256": "bbb5f86732b24d607d85c2c13a7f6d28ed8cbd41aeaa3cc2a8715f97b4962b60",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/poiem-app-icon.svg",
+      "gitBlob": "2d4cfb69c92521f91fb92df3d54d49b9e960d7d9",
+      "sha256": "a23f9d4f0ae5471e690c6b9b572eff6b05f5e69ea193c0fd524399e966dde763",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/poiem-icon-1024.png",
+      "gitBlob": "66c402cea7abf77efff101e7eaee5704e71f7864",
+      "sha256": "e9f08604ddca3e0c7c106c9aaa5e2c4eb5357cd343d46c694ceb2a6c680e3286",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/brand/poiem-icon-180.png",
+      "gitBlob": "0131991111bae74a83237444b5140bc7497d8f33",
+      "sha256": "207fb5151409e623bac3befaa96969c345b97f1b6e49ebb66af48e3f55ee118a",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/brand/poiem-icon-192.png",
+      "gitBlob": "d61809b917057cc032f400225c664a1f459f7fbd",
+      "sha256": "9cca68e98a47f290e2b30dbb4e9aacdb5bcdd684dfe567d514177f702f146e29",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/brand/poiem-icon-512.png",
+      "gitBlob": "2507d5b05c1a4737a188c0911c5ad399d70b1ece",
+      "sha256": "b1d1fe811d823ce83d51564fc750a48d839f6d28136b80e06321de5b22ff6303",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/brand/poiem-mark.svg",
+      "gitBlob": "fce3f35693e7167248d27dccd89f2939791a65ed",
+      "sha256": "835b5cf456d3271e2247a0d7d4207be8bd4965899847640ea8308113c97d5cef",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/poiem-social.png",
+      "gitBlob": "962980f80a6861cb28c60d6709f1d503f79a1e09",
+      "sha256": "d8fb0018730f6043e84eff5c92a65e154bc058ff7ad5a16cb900c71ef7eb5f0a",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/brand/poiem-social.svg",
+      "gitBlob": "617a5e784e860cbdc9ed615f7b8a9ea8c6bd0359",
+      "sha256": "44684a093f2eea5ab70e155c89cc6e9af46f3d0f960b6337892ca71866de56dd",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/poiem-wordmark-light.svg",
+      "gitBlob": "7ebeb341a32444b659f43ffe8fd49bb21cf8f05f",
+      "sha256": "360b250c08231f9e7ff56cf06539a811a5145e1123f2f8d796da7119a288757b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/poiem-wordmark-mono.svg",
+      "gitBlob": "de00d117101b21f1c5a633967222f6f06426ad87",
+      "sha256": "8b2d51c9a9197280dd4337c2f2d348aca671ae7acd79ded4a6a68d3b327acfd8",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/brand/poiem-wordmark.svg",
+      "gitBlob": "3684bf9900f8c63c7dd7648eec43414e7ed06c19",
+      "sha256": "954db0819bb02448857ec283a3632ab3bc35a44a3ab8e5b12c6004810c953d60",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/favicon.svg",
+      "gitBlob": "fce3f35693e7167248d27dccd89f2939791a65ed",
+      "sha256": "835b5cf456d3271e2247a0d7d4207be8bd4965899847640ea8308113c97d5cef",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3twJwl1FgtIU.woff2",
+      "gitBlob": "7d066e9264cbb8e831f941d5f8f867285582fc5c",
+      "sha256": "3febe5c7f22e4b07b4552738673c3dbe8bced2dc5f48b866edf7ccd9552d109a",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3twJwl5FgtIU.woff2",
+      "gitBlob": "6f33f8c0578588d14260678edb9bffe9c10d2bd3",
+      "sha256": "6bb06407c97584b0867a959e05e8874693bfeb8c317de190811c51598f2d99ea",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3twJwl9FgtIU.woff2",
+      "gitBlob": "392089009854b61c7db04965bab86d7b7712badc",
+      "sha256": "781633d95de88040fb77141d1e65d928c87c0144691fbc74da5a64d137a7e910",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3twJwlBFgg.woff2",
+      "gitBlob": "090f82f7ec7997047324e07650865305a099969a",
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3twJwlRFgtIU.woff2",
+      "gitBlob": "328efe3dbc8c2e910c3827d51fcf450a809bbb60",
+      "sha256": "1d89462e86cb8e87e7e9d6f6635605bd7c3081baca6caaecee84916bf7b60edc",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl1FgtIU.woff2",
+      "gitBlob": "7ebf1f27bf1e3de917939006b61ea5c0efdff447",
+      "sha256": "83109cdd4f8665b475dfc11d61bd44da328bf7e6eab3d3953d39c49b1b9f6015",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl5FgtIU.woff2",
+      "gitBlob": "c0b57de452cf226f844eca7ca22ea9a5ac1b6cdf",
+      "sha256": "32057cf50dd14bdb21a2c93766c4a2c43e4abe688ea3922df3203cac7751a98b",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl9FgtIU.woff2",
+      "gitBlob": "a1c5bd3393c22c6ce76cd1274cd9d3a8bf24b008",
+      "sha256": "51b74d53e106ba8a26dd33464b231a562069be2a234b923c115beb622e6f6bc6",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3vAOwlBFgg.woff2",
+      "gitBlob": "67aeeb0104a02cf060b813abf6dcb6fdb97b7512",
+      "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/-F6qfjptAgt5VM-kVkqdyU8n3vAOwlRFgtIU.woff2",
+      "gitBlob": "56fa97f5d2d765c4ce372f2e0fdd2b0e7941790c",
+      "sha256": "2b05a8695c7f9f4abd7178b279646a3b005a8ce57546bef6fd145f25d131e0aa",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/HTxwL3I-JCGChYJ8VI-L6OO_au7B45L0z3bWuQ.woff2",
+      "gitBlob": "aaf01af0dd34a7789e312ceeb208d8682313716e",
+      "sha256": "aa01966de3f608a765a172237a3ffc6161fe4c7e3870b1a904dc6437e54c4e24",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/HTxwL3I-JCGChYJ8VI-L6OO_au7B45L0z3jWuZEC.woff2",
+      "gitBlob": "96fc9d74eb04adb719d677678caff0dd7a05e0f6",
+      "sha256": "62fc8c02419c40cbccb8aff2de806999b1c4015936f4371d7055f7f223882f07",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/HTxwL3I-JCGChYJ8VI-L6OO_au7B45L0z3nWuZEC.woff2",
+      "gitBlob": "ea3167e1369a13a88e95b90b0fcb276d84ec44be",
+      "sha256": "92a1a5a866f6a16935b798f5f676f55a45dc66df2b05c416fab1951e6fa7467e",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2",
+      "gitBlob": "a180dc40f205fc48979a75ccbe8a10221a71a4ba",
+      "sha256": "153fc85b70298beeb1d61a5f723331649e7f23bb77302a66e61cb3e2fbdb5e79",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2",
+      "gitBlob": "f82597ce4a5f5478b12b9213cc446aabdae73b0d",
+      "sha256": "38e3b8fd8045048eb311d90170a4429ed2c8f405852dc3d91b5af8452758703f",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2",
+      "gitBlob": "8c846a0201ed62923fe5bb11b4418caf78785407",
+      "sha256": "b275d1258601dda240fc6a1d4a6cad56e691d898f5cdf1b0e4fd6ca0022d8e40",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2",
+      "gitBlob": "05b801966dab5d23bc32629462c3d9423070a755",
+      "sha256": "c46a510ab43925a55ecfe6c2d5fad0ce1902cd48ab276621d41f7afa42e4daee",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/fonts/README.md",
+      "gitBlob": "771e597fead48f5c1e56a45030b8c78bf1a47863",
+      "sha256": "46505dffdb56268016f8294e18cc39e5b94a0a0debbe485d3fcb0027d9d60aa3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/icons.svg",
+      "gitBlob": "e9522193d9f796a9748e9ad8c952a5df73c87db9",
+      "sha256": "7ca2d67c9c3aebf50cdc8709ee8aacf8cdb8cc7ea6325ea94939caef5da1c53d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/manifest.webmanifest",
+      "gitBlob": "74c725fe6fdc33e3739840d66fb2099cf4cc8e6d",
+      "sha256": "ef6e0e7cacac7711d2c6f5b7661f5ab67a091f31ec7fbbe45c5fb1a06da3f986",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/public/showcase/edit.jpg",
+      "gitBlob": "d77908167981cbbd367238e42b1cc72ba4da3930",
+      "sha256": "638ea3b7068b75f8c79865b397e9a8491ef3975f84dddf103271132cb3506bf3",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/showcase/insights.jpg",
+      "gitBlob": "c01ea19da44dbfc107df6ef19ead7ba91c051869",
+      "sha256": "6ceb6ea9b77653e1f416a9055acea11d45ce8e4f960b1620d998c936dba6559d",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/showcase/log.jpg",
+      "gitBlob": "95d9ac2ee1c650964f870bab0470ff63069cbd53",
+      "sha256": "7aa0be97b4184f1debc731cdf1dffaf8ed4abd648f4220b6b967de758170156a",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/showcase/saved.jpg",
+      "gitBlob": "fcdb411ee29201f1f33b4340faf3dde8f261b5c8",
+      "sha256": "b19382d0e4a77eb51b0f2f55ff4ee95f6a367befc87e1d1994ab203c03c4f306",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/public/showcase/today.jpg",
+      "gitBlob": "7a27e1f6ed240393efeeb8edc3a3ce06b5cdab7b",
+      "sha256": "f69da70953a42e6739c36bb31d1736c0b7a1385814e525a7f1e0477c00485222",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/scripts/audit-styles.mjs",
+      "gitBlob": "3e3e8ac93535485a492cb6bfbdba947819900eef",
+      "sha256": "7e5d4e9e1f08babe1f5f14a3b16be0d5ae696e0f6c029e3cca993e4d7c3cfa31",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/build-brand-assets.mjs",
+      "gitBlob": "2595f2461ec32ff478b863682c4692646f4a5699",
+      "sha256": "74528c87ce1fe83265b7d49f4c96a2e6c8dd272ced4821f812c1076747d0d243",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/build-momo-asset.mjs",
+      "gitBlob": "69ebe036f5537484500b53f10c456ea55d6c1960",
+      "sha256": "aee67b899930b433dd60aeb8d5c7a400fda2168eaa60abdacd58c2fb41947ab6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/build.mjs",
+      "gitBlob": "1594bfc2f0b395c43951fbd34af06236a8a3999e",
+      "sha256": "fa7a21389e83a1ee9c591c3dc9c8f88805fe00a26703b0658816ddcfdcbe7e64",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/chunk-sizes.mjs",
+      "gitBlob": "22d37253fc00a9ecbdf660f825a04c3cb41e600b",
+      "sha256": "dd125c55d1c9203457c1edb38891b7ecffee5572fdc6248328bd25ddff24489e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/contact-sheet.mjs",
+      "gitBlob": "14c483b3e3ac39835dd553b3fd4446165e1a4d98",
+      "sha256": "669fcb9cb0ca08233555c165a5c4612006dc12086568314f6876032f3588ffe1",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/dead-classes.mjs",
+      "gitBlob": "446e5fd77153e19d29b7e1378b3a1d3886a5a167",
+      "sha256": "52463fe01f9d217c606fdca450bbb98225bbe0a55f55a8f1a2b7901a57dc02ed",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/dev.mjs",
+      "gitBlob": "bd15fa7a74bf9a70ad2e4b311d6515b63759b483",
+      "sha256": "972d17062c7ee4f43f5168418d215778e8dc42348c19924623c53d9b0291527c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/interaction-trace.mjs",
+      "gitBlob": "1fce073d7d80116fe0e8f8e561c895e2256ba220",
+      "sha256": "b2157bcaec8f0bee59d7b93c107fa33807e7e7a6c887f1fd049b79f0c55466e6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/sheet-effect.mjs",
+      "gitBlob": "881ff271a44cd9d14bc8f58081eb09f3e6d285f9",
+      "sha256": "7092bba1d8f7be850cc8ff7f365ed018a282d8899a10f8112b074a547bbea93b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/style-effect/playwright.config.ts",
+      "gitBlob": "125c69e8e647faacc9fd369ceabdafe7c075d550",
+      "sha256": "2999cdb8c6dedf333d6b90dced73994db3a75c921922c2db7ca88c567ae7423b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/style-effect/style-effect.spec.ts",
+      "gitBlob": "72fe072b3ed9d7abc957ddfcc159968adf870106",
+      "sha256": "6495207f9714b9d052c047e8bb70152b2aa4da2165c05b042265c976b6dbe466",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/verify-cloud-build.mjs",
+      "gitBlob": "7f97bc5ce155313b972bdc631ad8b71c64ae30f0",
+      "sha256": "3db241876ac5ff4edbc5f5e1aa49e77e9a4d6becb397f56fad1c9d2a3ea724ec",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/scripts/visual.mjs",
+      "gitBlob": "53a66556303b3331a854db424f60f1548b551939",
+      "sha256": "3c3ec341d5f794abd0914dcda724da8cf2c9b1f38e0401a4b160320057cd1b57",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/App.tsx",
+      "gitBlob": "f1149425bf043296e4e02f0bea3cfbbdc7bc9258",
+      "sha256": "3c6d6d974e19e859615a67c4f2a0d0c37a9b7a8e0adc2eaf8d09f6e45f953851",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/assets/hero.png",
+      "gitBlob": "02251f4b956c55af2d76fd0788124d7eee2b45eb",
+      "sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+      "format": "raw"
+    },
+    {
+      "path": "web/app/src/assets/vite.svg",
+      "gitBlob": "5101b674df391399da71c767aa5c976426c9dc7a",
+      "sha256": "2f1f6c6f90a0ef7422cbb4cfafcd8ad329c507a18afdc34cc21fa72179b9c54a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/brand/identity.json",
+      "gitBlob": "986c2be64246968da78a1b909967b0f988d13aff",
+      "sha256": "b31efb18071f67aad645ccba660274ec8e5edb997f17095f9bdfcc56c60f8186",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/brand/identity.test.ts",
+      "gitBlob": "6a04d287bf1b3a0a10f881a665a701c490e53288",
+      "sha256": "aca7ebce62b61632932dedaa0fed69215433402b95a9a59c0e460642db257e3e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/ActionPlay.tsx",
+      "gitBlob": "9f8673dc635f7e8c7e8a1aee92e0fc1654afc40b",
+      "sha256": "5c044e97569a3b65c708c96ff9da07b4058b34cda2848e628fd6f297ffc5328b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/ActivitySheet.tsx",
+      "gitBlob": "bdb844d2a7ed3f2f883799035cacd063b23153c7",
+      "sha256": "f373e59556b75b79f4ec247df77e6242478d6c35b4febddecf685a551b4248a2",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/AppearanceControl.tsx",
+      "gitBlob": "45c83a13ec72ac8f618d7ce0704f57eb686a07c9",
+      "sha256": "3e6c222627f404b992967ba7c5e4816ca31035c8954384992bfe5c541fd35a79",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/AppearanceToggle.tsx",
+      "gitBlob": "ba3911303ac4c6a2abeda253dafa34b323fc3449",
+      "sha256": "59fe9a79af7003d18b8a12eddd5afcff1bcb9798efb06928b324897adb34093e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/BackLink.tsx",
+      "gitBlob": "acd51e27169f290cdd344c7110d14d2dcfb87b9c",
+      "sha256": "1b90d82c77a4587c0c1e376ef90eeb4e94af022607e05f9f1a01a5fa50f3c909",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/BackupImportPreview.test.tsx",
+      "gitBlob": "dacfcee565144cc3d751d0b4244b60095d035a04",
+      "sha256": "787a457ff719b55e41d3e80bc2f58874a9007a3d5bff5d8d8428ab3a4111f83e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/BackupImportPreview.tsx",
+      "gitBlob": "3d117d130bca8ced5d238780fae318377f0136bc",
+      "sha256": "afb3edb682b5023bd2b534489ea1232ea049b2c92ac2b75159570e1105d94ef0",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/BottomNav.tsx",
+      "gitBlob": "644ecde43a4f81bc58ba211b4a7abf9d4ba1f1bc",
+      "sha256": "108b57f96aaebc6e334feee28daba421c7a595fb94261437a59d02f66257a44a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/BrandLogo.tsx",
+      "gitBlob": "644908d2d0ced6b079c3c0ae08a192c167405a38",
+      "sha256": "82de7019418cb8d0536bf6f885c091805ef11203b021adb471f9596c615477cf",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/CalorieRing.tsx",
+      "gitBlob": "885e2b6706f2c96607b8ff372841186c4802b260",
+      "sha256": "c678b727bbc2b6863ee1846ed2fbbed24241a636d729594e76b8c589ad733f81",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Charts.tsx",
+      "gitBlob": "a0de64dfb52fa8959aa415739f47871be721b498",
+      "sha256": "bcc60cef6a26c528a342bf535640a306ceb2befd26c43e7b3599b086a260401f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/ClayInput.tsx",
+      "gitBlob": "17d95ec74e34aba6d0b8da923f4c7a958408715f",
+      "sha256": "dbd77b584e0d01e6c3b0b4daa36e7660a55bde182cdbbdc6f03e0c1fbbb9d7d8",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Counter.tsx",
+      "gitBlob": "c75d6ee4061c312adb295580695acba4e5c73ffe",
+      "sha256": "d44f08d2d28d7e27d0d2135cfdb9e7bc91af5a75306fc3ebb65c67e3d47a9779",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/DatePickerModal.tsx",
+      "gitBlob": "79b129bd72fd8a3d2b786d6d3d30de50561fa42b",
+      "sha256": "86d3a15b70726ff241718baee2f7c40f42c260d0b75558d9bec11ea2907cc98f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/DayRing.test.tsx",
+      "gitBlob": "50b01b0dd6346074eb44a003bb0b09d72610b7c3",
+      "sha256": "dc68b1f0b43222aab9aebdc10f1ee150ffbf97e93b71c600021ac7fcb402fac7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/DayRing.tsx",
+      "gitBlob": "8207579cfea95a80a48d0fcae8e3b30a9d1337d8",
+      "sha256": "675a12977cad180c43918b709a839e3888db29c0cbd180800a432ef892171b16",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/FoodClubScene.tsx",
+      "gitBlob": "934721b9db71b0ed0b14a904ec92c50d6cc60733",
+      "sha256": "a59479373ca460d156d1cc54f0535c52251ad682e5dd4be474d80cd9303cb405",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/FoodList.tsx",
+      "gitBlob": "707b078fd05a9c016f991480de5afa396187dc1e",
+      "sha256": "d308f6709a31e815da7ef9a450c9f6eabc6dd76077131150ea4550cd46849e6c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/GoogleOriginHelp.tsx",
+      "gitBlob": "63d14017fe2863afb82b9e929ee012f04f4602f6",
+      "sha256": "96517549a92693769be349ef4b19daac208ffb26e6e97a79c0a5cf7611426388",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/HabitMilestones.tsx",
+      "gitBlob": "c1dc8bce661b535925bee51224695c53159e89c5",
+      "sha256": "2388daef65f4f475832bdcd5d0dae2a0409b485d640bce2e660aa96775f5ee75",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/HomeSkeleton.tsx",
+      "gitBlob": "566ccf0d3863d607c0d7f924a77655c2fe12fa47",
+      "sha256": "eb2f9608a04a29ce2952e0bea7b55bfec38e88a910529bc55470ac08dbaea549",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/LogFlowUI.tsx",
+      "gitBlob": "e2f982be861b803adea77df49964abd161e97ac4",
+      "sha256": "1f1e8b8d1eccfe6d524ac8a005e9463630e492cd98054df4552eb4d1e560b220",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/LogMoment.test.tsx",
+      "gitBlob": "dbc043a41a01c8c20f954c759800802b5cfc2768",
+      "sha256": "f9cd9ac15b5e623dc049f28423e60889b9a6d5195ce64f988d081cf98a79436a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/LogMoment.tsx",
+      "gitBlob": "23dc4f25c14c48c3a4905030065ff8b809aa3ed5",
+      "sha256": "5b7f908e19514620bed8d3830650f063032296fa0e47b294519d0ec409db3bcf",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MacroGrid.tsx",
+      "gitBlob": "10f201e2e4b3715905a8f7652217ad9415ad4bb6",
+      "sha256": "1fd8ad54f382141a32c69ceef8933c9151fca3db7261d470af41cdc0e9b7677c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Mascot.tsx",
+      "gitBlob": "8b992e6b7c132aec56e0f70589de0e314a796047",
+      "sha256": "45e7108ed718f7079d55a123903cab92b8ce379ab6ee5463c0ccc04ad226d1af",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MascotRoamer.tsx",
+      "gitBlob": "5ce30fba96ec31dad913719228aa83bc59b5893b",
+      "sha256": "6ad06fbdee10e98b2326555a1106fb036b4aba56c18da93df3f2ab38da767f14",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MascotSay.tsx",
+      "gitBlob": "bcca4802105e9a47a14f37ed31605b91d5965760",
+      "sha256": "b9ab6d8a006c05b85894d95bb3a2b0e27fb0df628cbd04c2396be9289c13ec3c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MealEntryFields.tsx",
+      "gitBlob": "264697e8d205c9b9f6e99ed73980db9755f0b2ba",
+      "sha256": "8258504a79cfb7894a0babf32dc16fdb8ff021d3b741db896ff6027c4105c44a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MealPath.tsx",
+      "gitBlob": "9dcce0d22d54f6738500782c8f9bf92385730b45",
+      "sha256": "3d349d59784ab0b8aafef85f16984315ee222d31140d4ab85e0e56bead626bbb",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Meter.test.tsx",
+      "gitBlob": "418531b8c0e0d86ea76c7b2d144291a3f8e39d45",
+      "sha256": "1f4b9449f4c762a1667e9b9c0f6edb697d5542c32dc1d530f88fa8133a11af22",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Meter.tsx",
+      "gitBlob": "dfc152370f8cb1513d1385ce3b3d3a307cccce41",
+      "sha256": "c12ec8bd785e4d23f44c7419494fcdea3d77f4f7c8914aa54dc60726f196d0f7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Momo.tsx",
+      "gitBlob": "2524c0d9070d3d8f6bfa3298a5db2ee0e7e64927",
+      "sha256": "a0f401f0bc0024b0a53a3779ff50c78a964d27f3becad86bb2eab4fcd1389a10",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MomoInterlude.test.tsx",
+      "gitBlob": "9b526c45bc4fb5eb3179aed41022921b6e307be5",
+      "sha256": "5b994daebce12a5d7a8608fd92ba23a2d0a16a11353368ef588e71bf73d45afe",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MomoInterlude.tsx",
+      "gitBlob": "87eb2b54830e231aa2e9649fb2e971821a890c5a",
+      "sha256": "6ab786bdda8b8eff0fc1c87ae15fc0bcf9835e43f14262a337d0222ebab19d6c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MomoInterludeGate.tsx",
+      "gitBlob": "23e760d0f5b6e737fcc6efbdaea2a5fec26bd24d",
+      "sha256": "8d3a359605ec53fadd2f0c9f17fffba411ff42315e4659b356da250e3718f128",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MomoSticker.tsx",
+      "gitBlob": "cefdc56162ea7d5837fbb5b98bb40354160fc66b",
+      "sha256": "628b298c8cb6d19b845adaacb366f9b9f787bdf71924723c6699f25dad6b3964",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MomoWardrobe.tsx",
+      "gitBlob": "736165a71497e3bb362e0e85da4ece045284bfdf",
+      "sha256": "efdbe4572d29b6bb104cbcb69076bd982dfe1febb342bb099ffabd8eff4d0322",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/MotionScreen.tsx",
+      "gitBlob": "200f7093649c472c0f2a0fc42e2857797173600f",
+      "sha256": "0269252b2fe8b443650d08de31c5b03f10dc3c29fcbee4fa6bb900c7351e95c7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/OnboardingCompanion.tsx",
+      "gitBlob": "785fb7b629d0a37a8919e69f25c6b3972ab9c264",
+      "sha256": "80bdc3a0bed9b8ddfbbfee6af5cedce3d963029e3ef79b47b987744380de4b00",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/OnboardingWelcome.tsx",
+      "gitBlob": "72a3e87181688829bfdb06d79c2bf4f7aeb9324b",
+      "sha256": "ac8683f9f96632ed34289ece7ef1d8879d141dc271972c1cfe8c3e3db8759d52",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/PathNode.tsx",
+      "gitBlob": "43dfa23005c41e5461ddc53051fa3bba223f8df9",
+      "sha256": "ce5b830abab7ed03713f8fe98140ae6027e8a38a441f63a517b2911a02ea007e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/PoiemSectionLabel.tsx",
+      "gitBlob": "97f1bf2a6287d9853e01ceeb799049038c378530",
+      "sha256": "d705f55a67225822ad22f54dc2c1c36f444cd845789f10675737b06e32abe503",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/PortionSheet.tsx",
+      "gitBlob": "f79ac9178eb9089d26f8e3940437092abc616cb1",
+      "sha256": "c48b768b25ef751ccf3780decf24e32e68337adbe2c701020ddb995597bb9124",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/PosterPrimitives.tsx",
+      "gitBlob": "ad19cc03cf79e2030c23f1060de73a34ce1bd533",
+      "sha256": "8d7b524ae1be2138bd598e3ea9c1c025bdecfe0f9f694f512d5bd03eaba98888",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/PressableButton.tsx",
+      "gitBlob": "550d9569c2837e7e2abe4343161484ba19b04b7e",
+      "sha256": "fe56c9de6d9f98bdbb2593863ec2c45966a387c44df71a4ba991ef51637db2c1",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/PullToRefresh.tsx",
+      "gitBlob": "218beb9dea61524c472fdc1291b5f8e97b611c75",
+      "sha256": "a988282e811ac77fbd064b2cb2207ec7b1fb25e635f938716fc49bf17dc071b0",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/RepeatMealRow.tsx",
+      "gitBlob": "bd9482efc22ed1c993079c494e48d03fcd0d5f51",
+      "sha256": "99af7e76f856ad27744c10ef86805a19d84f9d3d7bcac00be281808340fec41e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/RoastPreview.tsx",
+      "gitBlob": "670d345cf21f7ed6eb3ff2d6171c81c8b3986617",
+      "sha256": "6c6d56ab61c52e5d99ab49be03a83d8510557660649ea33add1ed57446ec5987",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/SettingsDepartureSheet.tsx",
+      "gitBlob": "87ba70c68cca786bb27ba51b1064418e052cf4f7",
+      "sha256": "b0ccb1798e49261b85e9bd084705bdf132114aebbe901f143c9c97e247041c9e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/SettingsFinder.tsx",
+      "gitBlob": "23bbed66266bf38e32aa1331742052d4b47120c6",
+      "sha256": "9dce7d1c2a58fae3aa2a796ce62efbd68f86f9989528ae3b6767679a21bcdc84",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/SettingsNavigation.tsx",
+      "gitBlob": "ce0909e4b8d31488935a611891c8fdcc5299133f",
+      "sha256": "7c1a95dcd0f6af86503c19c70c63172129bae2999ae5266192f5c94a0a8d16a5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/SettingsRow.tsx",
+      "gitBlob": "8463a121d00d74cf1dcd651f8d0d4a187de35752",
+      "sha256": "9d05f9df90eb248cff581ed0721a164844ec4f01905ca4cf2c905844fed5cc9b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Sheet.tsx",
+      "gitBlob": "69d8366d02220662bde33b1aa6b784e656ca136f",
+      "sha256": "d26de0803d481c1c0e9503268410d527c5af18dfc8c3f858b7a2373f4f001916",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Skeleton.tsx",
+      "gitBlob": "6c5a641f889fdf405e2249d317ac2c708e8f22dc",
+      "sha256": "a28e356d5370cd1c756d7853a8c955434b53788c065a5a320e1a20f607b60061",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/SnackAttackPrimitives.tsx",
+      "gitBlob": "a3b8cca95f9f922691d094dc51b35aeb672a12e8",
+      "sha256": "ff46b1319e40ea7b3ceb9a80abfa5cd64d51054bfde3f82f67d52f2146750a9e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/SplashScreen.tsx",
+      "gitBlob": "bfa18b8827f73c985866daa40f5e39c2ebf27f37",
+      "sha256": "9c1da3c88806ec7190b737002a9c80008452cb8dc55d096fc01dbe55c7fad43d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/StreakCard.tsx",
+      "gitBlob": "e3501474cd710d58059846ff4fec3ea14cf3819d",
+      "sha256": "9f501495c9f94ed26b92ea29b85d3717205ae7dae4ab505eef3f6cf44f11b028",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Surface.tsx",
+      "gitBlob": "e129939c38d78dc3392be279c9fefc52d16fb794",
+      "sha256": "be80608c9e117c4fe60b39dc999e7b57840b6e08dea7419e8f6a9ed1bd751441",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/SwipeRow.tsx",
+      "gitBlob": "681b98f6cb281e02b595e3574c1cc2d10e58cd7d",
+      "sha256": "bb372dba150703965315b2c473738ffcfcfd8ea153d867141a3152c17eb706c4",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Ticket.tsx",
+      "gitBlob": "72972c4649fec90ddb358abc980bbef44dcfc026",
+      "sha256": "1c1fa1f3fb0c996483fa4d9909d344646a0e6208a7d5c0ca56a7924ca3a68879",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Toast.tsx",
+      "gitBlob": "e206f6a56cd54ba46d1634075a2c0fc2052582c3",
+      "sha256": "b6168700363ae1d995db23ebf25a7520e4954f7bfee792f36bd82cdb4d64f4f9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/TodayMomo.tsx",
+      "gitBlob": "3a6088edd45aca8be48a9b808bc5c2e4549c06d9",
+      "sha256": "74dad52da3e0811f17c69656df102b648f58300eca2519ffabaf79fbebf474ed",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/Toggle.tsx",
+      "gitBlob": "0e20290516bb12c1d63475f1652abfec4ecd210f",
+      "sha256": "86f91cd63bf222278204c259bbbeaac7bc88f24ae169b9e96ba60f9b5f7996e3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/WeekStrip.tsx",
+      "gitBlob": "ffa9e0222ee519fb6a419d3bc60906fa02ff728e",
+      "sha256": "30454b1466f52cc196cd350d775db58d36c41859ceec4344503d6dd9a3eb5a99",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/WeightLogSheet.tsx",
+      "gitBlob": "dfb668501aff4198c256d1087f39aee1d6e99980",
+      "sha256": "a7b54b5563512bbe986390a62c9bf0c4b936733f40e2eccfb7678c16d8694e96",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/WorkspaceRouteRecovery.tsx",
+      "gitBlob": "a323183f6709c8252de534d3541b6a2e7bfe20f4",
+      "sha256": "1bb5f9010a2ce8980e91c6c904b5b1fa336f5333d0c81101cb0ea3b44609c651",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/accessibility.test.ts",
+      "gitBlob": "4f994693c8176e59564b270b93717e75ddfe32dc",
+      "sha256": "0d6e2aa9ad02da831d6d0ed30a2f418b69eb19d014bf349a2dc3914852cc7782",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/icons.test.tsx",
+      "gitBlob": "512535f1fdacb03e54e62a3105605d34c2e41ee5",
+      "sha256": "90622f972c47bd58191d2d99949f390beff417674a33605357deb2f1bb5efcb3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/icons.tsx",
+      "gitBlob": "3fcd57f20a76f4093b47b9f8abae581bffaca1f8",
+      "sha256": "b28c4e81fd56ac7c8ab88b852268cbd079918a4ff47d5e4e6f0808885a39fc75",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/momoWardrobe.test.tsx",
+      "gitBlob": "c18f98fe28167794a0c10d9e93008be8d73904b8",
+      "sha256": "4e441773685be8cd6d2b2588eb25c7fee0d10db4b56315219224eba299c2cb74",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/renderEfficiency.test.tsx",
+      "gitBlob": "8adde573160fc4ed95869620190e61d527a5beef",
+      "sha256": "f67149636b25aa502201f8ae28d299b0253f13cb6c224873b1fa2c114472c3ed",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/selectionCues.test.tsx",
+      "gitBlob": "70b856340430673142fe3dbd8f581cdc7767b332",
+      "sha256": "080552f53dad02ba9ad046548e62abf763b7d508a990472e369e0894307e6d0f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/AppShell.tsx",
+      "gitBlob": "f1befc713549813f72807b430cd05532f2ee08b4",
+      "sha256": "38b2e0ab4b2e98972f5bfda4e65e9a9cdbf8af09fc57a9470cb368ef5b788e4e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/EmptyState.tsx",
+      "gitBlob": "8c1d858237e8eebffa8bbee4a38f358fce616861",
+      "sha256": "733ac875649d6dbf62a351683392567cdd1ae53f3032b88b773f0242d2fbba42",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/FieldGrid.tsx",
+      "gitBlob": "f6c1f99da889b50810ac9af35fcf39327e252e38",
+      "sha256": "b64d984708f2029c036a46153f1631620ac11284d7caf2dda54cbfb34031bbda",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/FilterGroup.tsx",
+      "gitBlob": "101c8627988068e7154ee31d0a8c262b9b154afb",
+      "sha256": "041f4f83caf9624a013c10f3e7f0857720385c4009c379b1a87c4e1d9c580235",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/FormField.tsx",
+      "gitBlob": "d58e1bb3e0306b09733ea4120b0e772aa89b2397",
+      "sha256": "2187070f8f71067521925d8922bf5e07d539cfaebb54429c333dc7358e9b8418",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/MealRow.tsx",
+      "gitBlob": "6982caa1c96139c43a28761ae8a9b85746905769",
+      "sha256": "ce83d6e1cb387df853d74f6a0ea26e4f357a741bca2b05bdf7fd5f456cd50f21",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/PageHeader.tsx",
+      "gitBlob": "42ad29d0b4015fc8d7121e33f42d5cf78336b26b",
+      "sha256": "4794b3b12a9338fae36a59519d300fbe7ea747157c429f43422c562e93ebf73a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/Section.tsx",
+      "gitBlob": "707769f9df9be4efba41ae9c3070e59b93064001",
+      "sha256": "e7dc9f05207b143d070b24258acf1e17780e226f7f51a68ba1f31db61249bc2f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/Surface.tsx",
+      "gitBlob": "55f64e4c71f6c6c45c899ee07f09a1973b5800cf",
+      "sha256": "54e9b0c53b685d4c2dc3387a84faf1129a8d47ceee030b79009eee701288f09c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/components/system/index.ts",
+      "gitBlob": "cee360ad7a635c667688f59ab4d07d45902968fc",
+      "sha256": "a546fc35df7d66d9992328a31d2c5bd6ce63393138a559c8eaa84098ae3efd2d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/deployConfig.test.ts",
+      "gitBlob": "5c70bf38c667c2713280431007182b0b974bf275",
+      "sha256": "a4b91f7d7d158da9e063b8fab413038430d21f3c9195b3ced81e36ea4fb161cb",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useBackupImportReview.ts",
+      "gitBlob": "3f0974ee491be79e502fd77c79c400212ea3a49e",
+      "sha256": "8f71e58deb1d0d309d7edcdc330406c5473836ae0518c0e281d5a17acd0089a9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useCountUp.test.ts",
+      "gitBlob": "09d1a3b35074b879496ac76730810f01cd6f484d",
+      "sha256": "1b2f3f99d6b6aa05554843b15d5b29b2bc38fb90dfec363dad806f1d2d759a57",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useCountUp.ts",
+      "gitBlob": "9aa89763a70ccf05ceb234ae9f6aa49b939b85c2",
+      "sha256": "ef99c7910d56e87c6110f0d6d3664dfa96c62d02ccbdddb2754a8a75dff4bad7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useDialogFocus.ts",
+      "gitBlob": "39678f59314f817edf3dcdd7ec1de532a8bfe030",
+      "sha256": "6474167c63fc3bd9b8fbb204b4b5d718d6482cf41f1d9ce339bc94f31e0e199e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useHaptic.ts",
+      "gitBlob": "9e6dc4fdf046bddbd514a7d4eae2bcde1a69da40",
+      "sha256": "a22da3a3969e430e7696583361804e795dc791338112d61f638afb569f0f33da",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useLongPress.ts",
+      "gitBlob": "255c05794dbbd8f084a24e80b6e7aee884d6baf8",
+      "sha256": "122ade499f848e69014159df63d4a698266da3123cfb93395503c7f5afe462d7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useMascotLife.ts",
+      "gitBlob": "861a9ce8f0bcb2b3bd84e1fc924be7ec43acaeb5",
+      "sha256": "18c7624835e6127d6803e1ed8f51755add7e3d00ed014da5cfd8392fcaf12346",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useNavDirection.ts",
+      "gitBlob": "e46a099b67671f5d8307f9b1908e3c0e6afd768f",
+      "sha256": "e72a5357dbce602cc16c0e2319c7ec2a8074303dcd1d4eebc94f275755db2fed",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useSettingsDeparture.ts",
+      "gitBlob": "02847bc4aee77d1a450951f12e0993f1ee1073b6",
+      "sha256": "31df0351bfaec95fb11c17c6722ac737195d64e33d3bea64eca30342c249061d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/hooks/useTransitionNavigate.ts",
+      "gitBlob": "5efe5aed2c827e81395173cdfb4519d8e682f0fa",
+      "sha256": "e0f189ef3c581cc6c3a2ac90493a69237004a0d560f6fbad3d416712655a487a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/index.css",
+      "gitBlob": "166b16d34913d836cafdfa499eb6fbbd3b9acd65",
+      "sha256": "12c6cc0a02e8239895e66ff2a121c4a19c5dc37d74a4c04ec52f74a030b2da37",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/actionPlay.ts",
+      "gitBlob": "88c942e465aa4f4864fa5a59a931c09d2b546bbb",
+      "sha256": "49ace5b7187a5d028ccc3d959901a4d411499cc6d126a077a8acbc2bc3a4dd47",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/activities.ts",
+      "gitBlob": "dfccf3fe3703b4e968c9e98d557e3db560155a15",
+      "sha256": "98216d3ffdd30a350df553dd61dc86796afba93f5c2d292e7c9684a6eaa70a53",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/adminNavigation.test.ts",
+      "gitBlob": "a4728cfcdc70687af24e13eebc52ce85bee4acf5",
+      "sha256": "3d1a93f474f4c0edd00667390d5af1d455266ec455fafb946b97746dc5905adc",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/adminNavigation.ts",
+      "gitBlob": "bee7a715ea4926ccad8c9b0d1cee3a92a242d2c2",
+      "sha256": "c8bb2b90653f3c47e70520ca9e1904c4a7f65728c6372fe7d4b68d8d24c8ad9c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/adminReview.ts",
+      "gitBlob": "043189a39f360f4a6d389c1d80f9347be4d214d0",
+      "sha256": "866530fd4c5ded45573479df27882241fe9bb1830a7e13ce0251813c2943c3ab",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/aiAccess.test.ts",
+      "gitBlob": "3d41ff11c95f5947b262a4feb434666f43e8187b",
+      "sha256": "f5a5a8347f54b587d140bc912cd15aff079b67bd98c991718e354459143c40c4",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/aiAccess.ts",
+      "gitBlob": "69aa7f15f1844191e459e8c7485f4a0673fcd7fa",
+      "sha256": "428de45cb415d1b8d4e9fdd6339804f7c99dec871dc955f494320ecba8f53870",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/aiAvailability.ts",
+      "gitBlob": "40402e90703b559fdf313a0204eac9e586fb326d",
+      "sha256": "0bc1f6f31ca7a88e9c9acaf0efc394fc9e57fca3d9a37b0e6aef57a98ceac72a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/aiClient.test.ts",
+      "gitBlob": "7e53d918d7a96d69ef08fde29f22aa8a07d1b684",
+      "sha256": "21d53238ddc3d9a68df2f6429d64c9b2ca71954e867ced9fbd31894031d15047",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/aiClient.ts",
+      "gitBlob": "cce9f4c4a956adee0d27b8ce48c85ef712bd4c25",
+      "sha256": "94d202356940dcc939f255542615f95584e0f10f4158bc655a841aa66c723c96",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/aiConfig.test.ts",
+      "gitBlob": "7644aa21cf5465ced2229a2eda8923367abb432b",
+      "sha256": "f85926d5d44ab39831b20ce2e1e701d24e77cd64315ba4e56525713c14545e07",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/aiConfig.ts",
+      "gitBlob": "02ba5f47d6be4a664846935713ebae2b00f15412",
+      "sha256": "1e16d1d3e7933e3f57ef65dd48ccdae608d7216ba1538af7954dacb37793b12d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/analytics.test.ts",
+      "gitBlob": "138947fefebf49aa23c53309b04296d7073713c6",
+      "sha256": "1f4a8e1d1cfef3f3117a6e63d474c8b066cb292b258e3d0aa92e42014ae50d2d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/analytics.ts",
+      "gitBlob": "98e3863174ff665ff41f4a6f6d839f22c37d1768",
+      "sha256": "9cca38d2c5509a0b07ab82f1de62ec7abad3c4ab9fc716b2426731f8557d2381",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/apiClient.test.ts",
+      "gitBlob": "4dd30654e80b5414d13de056aab6e914c85540c5",
+      "sha256": "bff1471b26445cf9b0bd129fb4ba5148a43a7689f30f201f6d60c12755509596",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/apiClient.ts",
+      "gitBlob": "20021cc18cb3fcaf26a20eca7278bd464a75c712",
+      "sha256": "dd56d58b04874a4c133554dc2509ab11dcf04eee16127d5ecf7df7bc9700402b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/appStateContract.test.ts",
+      "gitBlob": "9483b51a01df256ea0ffeb35f53ac3cff41be7e7",
+      "sha256": "55b50ba25d85c4715d993cc4ab8638f4188333fa3a1123522efa00298190bb3c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/appearance.test.ts",
+      "gitBlob": "e2af75004ea9faa6933480195b93b5b34a985030",
+      "sha256": "3fa909e0fcd6626bd002983b559c7112a9a803593e05e5c76bf773eb9126a14a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/appearance.ts",
+      "gitBlob": "3f72a61decfd7f68cba236d9b85d35669efa6f55",
+      "sha256": "a23546769716ddc6047256d4a9e4c5b76b3d56c1421bb6e92ee8ac5b8f5e030b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/auth.ts",
+      "gitBlob": "5236759f61290ecd0ee25b0ac7eead367e982a1d",
+      "sha256": "0c771ed59f825ae5edb3c9ec050f4cb32d1dcdc77e70ad3f9838119fa0ac7254",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/authLinks.test.ts",
+      "gitBlob": "d1cc250e0a5286dbced630405f5b107abe4dfac1",
+      "sha256": "fe932534c6e4e2de19bd7774a55539613ea67da6d6fe9278dd58da2fc96b9e1b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/authLinks.ts",
+      "gitBlob": "fabcad5f6e6b030d5c3079691504ed9a05fbfab7",
+      "sha256": "48fd9455cced28ed0805015f13dfc48afd0a6acfce9e9bfd1503dc473d217769",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/authService.test.ts",
+      "gitBlob": "40e8228290c585449b34786cf1f50d7fa0ce9f68",
+      "sha256": "f38136a6ca68af133c39f94a2eec45037cc32c3532de31b1244b49ed39b66a31",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/authService.ts",
+      "gitBlob": "26da1e854de2d3f337f9c20c3d76b4b345d98c2d",
+      "sha256": "2392786f33a99a99cab3bb277ac2d1e973bf51f3f50f60b989fa153d7bdd8ebe",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/backupImportReview.test.ts",
+      "gitBlob": "f4394989ad7fa9e36c16044f696ca4f97f9879ca",
+      "sha256": "9c6019457125af52b98779fca2ff23b45e7867e4031b3c17c359a3ac12aea4f3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/backupImportReview.ts",
+      "gitBlob": "9a296233a4d9b12838b79efc66e88a88b29ef12f",
+      "sha256": "b8371c93901070e827ce5bb4ee051dedbf349812c347724207100c0a99f92a49",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/backupPreview.test.ts",
+      "gitBlob": "89c9c775cf2a01d06ced3c3a41d819ff394298a0",
+      "sha256": "82d2a71371609ebd17cdf6c6232242858686b7c877afc23c89e31a4b3c6e407b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/backupPreview.ts",
+      "gitBlob": "a20cdee6de5f42d04b077fdfce99c36fdf47e3e4",
+      "sha256": "6160b08cc2d92d6f62b8eeaef8980e1978d0eab612cd848d9607ee4fcf46692b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/build-mode.test.ts",
+      "gitBlob": "d12244e0e7bb91be6f48cb1328f6aa42feb64916",
+      "sha256": "79ca494f5b4d05b7a10f9eed81b4f7b6e897262ddd7e5cf40164352c99f45d5b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/calendarFixture.test.ts",
+      "gitBlob": "60dd23d82bdd9f724c6093919ca36fa9b79c1d5e",
+      "sha256": "deb480967266c8e39c03e2fee01fbb0ba7f36a2a7d26326ad81b50be4fa480d6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/cameraPreload.ts",
+      "gitBlob": "ff93486e71597c1ae4cd639c7eb2107e57d7b447",
+      "sha256": "de8dbbe038c0586215403a3ade2529ff1cba7770dfae6864522c776665c249c4",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/chunkSizes.test.ts",
+      "gitBlob": "a7ccbd4a4870f5eea171d9633237b880ff9eab99",
+      "sha256": "d9fa5ec327f7c9cee86a3c9c807300ecc0391c1f10c571623a7c2986be5e014e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/clay-contrast.test.ts",
+      "gitBlob": "e7919a813d28c1b3877bcd121f1a04113fc1a275",
+      "sha256": "c9d1ca6bd930eaad0d3418f9d532288d9dde421776c165ebba5ac77ff2b868d9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/coachAI.ts",
+      "gitBlob": "15c28cf5b0ea841bd63ca0327ce1acc95858a66e",
+      "sha256": "c2913df9e3b6a3ce1be801d865de0d5defde6b01cb630712e4181c336fcdf310",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/coachSafety.test.ts",
+      "gitBlob": "7927166438f8f7305e527bc7af65516fa620e419",
+      "sha256": "47571802de4f18610745bcba8bfaa69432aec4ec5ad2001e0224e2a41663e5fc",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/coachSafety.ts",
+      "gitBlob": "23f03f1fa57a6240ab4aedb3295e6ef2b2710a66",
+      "sha256": "c80ff7d0ed377616abf154240b5e68bb969b3559f98d6a462128686c26801468",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/coachScroll.test.ts",
+      "gitBlob": "0d1d71e4d9fc21b60ec4c99b86a89e35af286a47",
+      "sha256": "05e584fdd3a7b21e8d42dd82cfcd2dc56d3b110147b7f84a8ad84cae712cf886",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/coachScroll.ts",
+      "gitBlob": "4599a8339e284638ae5e2930a31b30844ffcd6ba",
+      "sha256": "b5021621c7e9ac5a2480125cbf259a604ec8a6380519114214b7e349fa17cf57",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/connectionStatus.test.ts",
+      "gitBlob": "99a4abcf0ee0152fdb74479ea16ea34d7120861f",
+      "sha256": "d15404f582367152570140b50e39617fbae3bf1c33a943487f1b021df8abfe94",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/connectionStatus.ts",
+      "gitBlob": "910fece6e45ac1c583acb2097be25a594c058f68",
+      "sha256": "78a8eb9666b3e8d2dec154c2cf6d6161cde6fc53a23c8e17665fdf1018ca7774",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/copy-policy.test.ts",
+      "gitBlob": "a1b8c7faf02989eeb4e7751facc5c17406036284",
+      "sha256": "d417fc8f907d51fd744911f859abdb14aa30f6406d31804abe622ca4afd1c930",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/crash.test.ts",
+      "gitBlob": "7079ca34c7165b589f7736015862c83cef70b12a",
+      "sha256": "e9c5fecb992701c9ed1efc999ef1ca358fb4d1fe542eba71b9d8ca480d08a72c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/crash.ts",
+      "gitBlob": "08afee079a5b4c6b48f2bdf4c1b59660b68d6917",
+      "sha256": "10217916645f2d11758579aabe8564cd747f753635f7bdf3763cbe10fd39a675",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dataBackend.test.ts",
+      "gitBlob": "f538141ac9cf5f9ac626a4e64c7db517944d0005",
+      "sha256": "2ce6f8eb4ee55414b7d70b629ceb928187184003e02d0a591afe1c20c7037cc2",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dataBackend.ts",
+      "gitBlob": "6c6a0442c4628bbb757a77392a32d08ae23375d4",
+      "sha256": "149cb427485147c078206a2e6373300bde44e6ed02f83a705ea1e89bf9271820",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dates.test.ts",
+      "gitBlob": "a9ae12e6c12628edc29d6d25986e4652e1dfbb98",
+      "sha256": "fb0c6b84ea923aa6299a72381e174a6e85425eb04f910aa714819a99bbeff6c9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dates.ts",
+      "gitBlob": "893c5435fc968384817571dab49eeb96b6c0e6f7",
+      "sha256": "f6e29e96108f8f02f528a7e474b234d21bc5466c9dff39e17afe37e2d17f78ad",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dayRing.test.ts",
+      "gitBlob": "bc13fac0dfc679dcafe8d125f47a15d8d590e7a6",
+      "sha256": "79725a5e2140f442fe7afa51b7ad5454a7c33de664ac48b6a13d4cc25e97116e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dayRing.ts",
+      "gitBlob": "7b3ad1eab0766e10250d36afe81a0258dd0086b5",
+      "sha256": "ab6000036c2ffbcb5624b4c5249906407089cbf6c0d9eeadc020eb930351631d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dayRingEntries.test.ts",
+      "gitBlob": "e429a4d692efb1ac65c9e2589211aa4944e8fac1",
+      "sha256": "de594b8a0d2b4df2b25b7176bef72e311c80da7f0bb783efe3cbb94dbd1074af",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/dayRingEntries.ts",
+      "gitBlob": "db4309b963dfda1e8b748a5f833925a1454b8a37",
+      "sha256": "aa05a82e0e58e5a92cb8f7f4ff270c0d7fa51a3060ec9d4fd7631b25c5f40da6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/design-policy.test.ts",
+      "gitBlob": "f60609938998bfe546934773614ad243c2fe19aa",
+      "sha256": "ae440addc6807cc52d0a83aa2be452e53579c0abf1ae8dad15b96c0f9a429c4e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/designSystem.test.ts",
+      "gitBlob": "b80b3e1cf121b3090f9b4bf531c26fabd3ae06cb",
+      "sha256": "92f030d13c153182ced1d64ca0467f44ea92171afc315d1ff45071668aa7a88c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/deviceLocalCleanup.test.ts",
+      "gitBlob": "55db235d796435348ae5ad0981cb946149e3ae31",
+      "sha256": "44e8a9eec8ed759ced8ba5a18a814700e28c955a36bec705a0f4480780331489",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/durableState.test.ts",
+      "gitBlob": "a09c71d4329fb58ab06b975ec5506f6537929368",
+      "sha256": "871dc5a3b28c5231a8809b4d2097eb61187671a111dd3af1e65389708b7919e8",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/durableState.ts",
+      "gitBlob": "0c0e12e643a568bd815e0e325a4d1d4736dc59f3",
+      "sha256": "a68de6904ddd5d6c9d56d5dd8a73829f25f3c078f1e74f0816993f29fb4bfa1e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/enamelEconomy.test.ts",
+      "gitBlob": "15c1f9cc4d754e2824ddc9fe5db904052c4ce7e1",
+      "sha256": "03f1366c94182626a67b60fe87a1be6b668c90de34efde2dcd96a8ff8e5594aa",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/enamelEconomy.ts",
+      "gitBlob": "c40ed51898353b50d9f80445461f22921437c64f",
+      "sha256": "8f84a034ca367228898deb0a91e777d27a69e060d0f7ee204b302fcd943caf15",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/engagement.test.ts",
+      "gitBlob": "7b057091877ab49539ec3b1e6bd2cb87326a36e6",
+      "sha256": "46849f52c04d56d408ddb9afebcb39010029411dadcf09a734a8c051bff90535",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/entryUndo.test.ts",
+      "gitBlob": "4086ce9b7f1ed64c2c77aa8025f314c664d9b706",
+      "sha256": "41385547e58c57f8b9d8c325d6bc841b913514a02f31419a04e31b9d7da4fdb3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/entryUndo.ts",
+      "gitBlob": "21f73b54a9da68653a65b87fc31ec86883a0e401",
+      "sha256": "beea800e1aed4476d0738c7b184abb2c53df41a777bfaba2fdb63ef96b0b70b5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/feel.test.ts",
+      "gitBlob": "0c73a0ce1e5c3d39a98e3f84024011e5f77cfd70",
+      "sha256": "9ec7835047808ad7a31ed95e7130e50ccdf072d60aa43aa5fb85f93437a9e7ec",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/feel.ts",
+      "gitBlob": "48daece870374cbea51719334cf8f6322cfaa5fe",
+      "sha256": "c06677fb6b9a459b8553c17664fa7e0138b1a2bccfbc61a5a992eb7da6d2394d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/firstMeal.ts",
+      "gitBlob": "bcdf0fdca72ebf7977c6d800878a19fc7a3e0df0",
+      "sha256": "88cfd21dbf110857b6d8036d6f00cb9c01990a4d59b78858d3ac44cdff2d560b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/foodAI.ts",
+      "gitBlob": "d8feabf29a7d915614f1e0abf4bea3bb7a2a2bf7",
+      "sha256": "a56dae1e2539e4fe0a65e540a53c96e3e7d144f64897c11c82e5ea82b38b413e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/foodEntryValidation.test.ts",
+      "gitBlob": "62eeb163a620efcb82474c698ba609a5cd668127",
+      "sha256": "7d4281ce06813942a59faeb33110ee8d87b238f0a24a2f856b0d7b88a97080b9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/foodEntryValidation.ts",
+      "gitBlob": "2257f6d10bcd9e18606a9be9802a7e0371b48170",
+      "sha256": "ffea0784f58dea591bb3a62f56bf6e038f2c32722ff21851f6600fa0737fa881",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/foodGlyph.test.ts",
+      "gitBlob": "e0f12e1649edb469c7ee13289dea5bf35434ddca",
+      "sha256": "c741773c6de747a1793331ae970af2f2f32c450f2c64c3f6a2d14668d3daf24d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/foodGlyph.ts",
+      "gitBlob": "f31df96e33964102d10e912626232713fb0a671d",
+      "sha256": "e1dcd124cebdaec093ea46b2b1ef4f7073a60511a5f1ad5cb2edb17a9244bb02",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/freezesFixture.test.ts",
+      "gitBlob": "4b38a3b4cc729ff958f285d7ea6f723785a65447",
+      "sha256": "52454789f03135540878c9ab047ae8899ddf2594d07d72f3ed39d95fbaf356c6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/gamification.test.ts",
+      "gitBlob": "995ab9718ec135fbeb927264b32dfee45a47f499",
+      "sha256": "8dabc1292e64b1cf46a234487b9fafc91e74dd99590fef9c9cab9758effb220a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/gamification.ts",
+      "gitBlob": "801efa636f8692d25425dcfc81118f5700a6131a",
+      "sha256": "b5cafc7d6988c1d3a03f175edeacebe1fb046464d50c5b6925f8fe424f50da67",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/guestMode.test.ts",
+      "gitBlob": "783a5c9d28b94aa691707ecc1c58fe94f72c41fc",
+      "sha256": "4f20804f568dbd19b18813f37065fd8d356e28612c1b7560da654a544e2fe575",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/guestMode.ts",
+      "gitBlob": "ec6b1d88d1add5088733cf05499f8854f886db05",
+      "sha256": "42a1a22f156dedb4c6e6b51a970155ebf468b1ac5484c010aa24fdfc33699907",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/habitMilestones.ts",
+      "gitBlob": "38792277c2fe99bcc889c6883eabff52ad47ae93",
+      "sha256": "563b6d303363bca8f948e98f737d1ced2629b30cca0094ec8ada99e03f2e8e4b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/insights.test.ts",
+      "gitBlob": "08fb05a20fcd2441d6496c1900284474a77eab3a",
+      "sha256": "7f2e0e306fcbf17f797e9826650383296be68ea55cfe68e56a058296ba4b6e7f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/insights.ts",
+      "gitBlob": "0b07c703f36c92a30e9847377fb820bcba571c46",
+      "sha256": "7abf71a25d6f7b0b61c88c321dc4ae397505eef71a3ca443caec5eb54e252831",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/journey.test.ts",
+      "gitBlob": "0667716cdc70f720f1bd10f0825c6feb6eda5c53",
+      "sha256": "2b2537391542c4d9edcd5960c9dbac4e2c5bda4966b26e7013800205bf706c93",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/journey.ts",
+      "gitBlob": "5eed8cb77f6e0dd2af8158181f5ba11f4583e561",
+      "sha256": "0247e958b186e0815eae1e239f34095e54b20f9207ecf302869ebd7263f6d509",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/layoutWork.test.ts",
+      "gitBlob": "41658d031f15cbb4ccb0740fb1fda2dafd38b19f",
+      "sha256": "31a0088a230e20f54eefa37d7226030470f1d04a850e8934c1cce21e352e6513",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/localAuth.ts",
+      "gitBlob": "fffbb0d7205239d83d8a2679f4cbddca7761d3e3",
+      "sha256": "b90d6a8a3a6f338304a0bf7ff6db708c446278910bb88299b815368c614172fb",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logContext.test.ts",
+      "gitBlob": "d7012d273fa699573803e524469d0130265225eb",
+      "sha256": "38d41f5a26821b6121c158367d0dd43b057f2ca3f2bb7a793689ab8ec7c187cf",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logContext.ts",
+      "gitBlob": "1bdd794e3754d3a3c7807b340e3c7358b7f8e381",
+      "sha256": "e791a0ad534bea82b8a952bc11e9733e97fc8a71c7f433a79f0f7f51c034bfda",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logDrafts.test.ts",
+      "gitBlob": "c8d47db670a13e39664f87e69d7343339d8f55a3",
+      "sha256": "a1801a3c64ce0eb2460a9b451f23b188381f2fa386aa0465adc3693ab6a3ca45",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logDrafts.ts",
+      "gitBlob": "486bc727548e9d241445b01f37603f832b75b0a3",
+      "sha256": "d44008f1fddcd0aa419bf88ba1f42edec8845d08760b08217575e254cd7306b4",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logFeedbackPlan.test.ts",
+      "gitBlob": "bc965cbdb9ea47aa8d5d20749d55e71b5d8ce659",
+      "sha256": "9909ac657de7d0a267a039dceabc0c3c5258feb7c1aa49390b20e15c30b1b9d0",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logFeedbackPlan.ts",
+      "gitBlob": "4f17880916529c864b646345856a447106973dbf",
+      "sha256": "1ff1700c2d57ea83659ee4706b73cb2e4fc17f13d06010dbc5ce52e4f5d4a2ae",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logPresentation.test.ts",
+      "gitBlob": "b25dfb443790c084b0a9681d92c41b215b8d020c",
+      "sha256": "e6470eae068dfce90b243fb79fe9910e6142920b732dd3c93b3351e6333f9f9f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logPresentation.ts",
+      "gitBlob": "cce6885c598b767d7280c12a9bcd5f2a74f6ec7a",
+      "sha256": "8d3230e8fdedb0aba5196a8a6ba858283447a33a7308068b4f782aec76459390",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logReceipt.test.ts",
+      "gitBlob": "6def6e522950c5414a6cdc5361f5ce76e1ce1b40",
+      "sha256": "2db592cfe0ca0090a747a6c4bf0c7ad08611fa49d19e2ea95b29d65dcac7862d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logReceipt.ts",
+      "gitBlob": "b7ad29b3f82ccd5f54d5c66104896f884b19a31a",
+      "sha256": "104fc62ec4f339f25666dcce56a44064721a30c40e14bc2a3d3a54cedfc4ae01",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/logSheetOpen.ts",
+      "gitBlob": "6f522818a608dd601de63f50c32de8aeb6274864",
+      "sha256": "09a648500946086a1f5a7a6c81d3aa1d1930caded90714ba0739ab41f5c6249d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mascotAI.test.ts",
+      "gitBlob": "2f9426c86d157739dc23a92e3a0feb8d8509b27c",
+      "sha256": "2fc8ec20a431d2e86db4971448566059d311ad370466cf45353c05741b4bc62c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mascotAI.ts",
+      "gitBlob": "5d65b3b1d2a0737f30dcfcae43cee57ea8788936",
+      "sha256": "c171b32e32564f6c23c80079df0ab9428811d790d311cd8b750db7a63ffb5358",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mascotMemory.test.ts",
+      "gitBlob": "4413f1bcf8a895263851e80542c278e68806b763",
+      "sha256": "f2d9e9aaa6b92e60c8a09a060a6b259812abb9edcae29fff6b06a575e8e71eeb",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mascotMemory.ts",
+      "gitBlob": "92a33553496cf6ccb4cf990d663576e5cece789f",
+      "sha256": "13de4f8485e58a90b53d0cada3509c12eb053acdb9e80103d0df8c701da25cc1",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mascotRoasts.test.ts",
+      "gitBlob": "e6189718bdb9e33d5d2e7d5b5a75ff449f280461",
+      "sha256": "bca37f83dc4f9bb597125f31337287a095f11252623dc20e99fe44825f56a0b5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mascotRoasts.ts",
+      "gitBlob": "e314b6bbd6bb74ad94e4825747899016ede3bac7",
+      "sha256": "0f8386af83f67aa9b2c60b353c691f3d9ac04bd39aa92147afebadc5bc36893f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mascotVoice.ts",
+      "gitBlob": "bbd9d1e557b9fb5611f066fdbdedf6197f1ca40a",
+      "sha256": "40c6f7316d814442a2820015f515f83ee0b500ed5ec65fc40f667c3b84fac073",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mealLibrary.test.ts",
+      "gitBlob": "c65bd4a0bd3f821f4828dbe80719551f102a6056",
+      "sha256": "22415645df05fac8d120cbba3f430cc33be0b5c98a50844313012b46c0a84795",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mealLibrary.ts",
+      "gitBlob": "8379e129dfb3b545e5747a5fb97acf76ba2391c1",
+      "sha256": "55a87a01fd46cb69574ea624a3752374dc89af9be81da074c8e2b0241ae97d67",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mealPath.test.ts",
+      "gitBlob": "f7e6dd2ee100d1b48fabe24d625587e788b91cfa",
+      "sha256": "5b41670ebc98959e2aa058b15494c16c091ffed7a9ebc423242679a8b06f359c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mealPath.ts",
+      "gitBlob": "7feb871b7de7c28010a77c6231e00d7668a38a7a",
+      "sha256": "2420c0882a710d0a637a132026d1faef46a43e1f27507134efd3db45409b4012",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mealReview.test.ts",
+      "gitBlob": "34611245855bddc8f800deff8b0192b25be66e1d",
+      "sha256": "270e4bdea99bbfac5d8c9d481b96c84ba6e79fc6a34d854c57695669bc6ff118",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mealReview.ts",
+      "gitBlob": "2f78695b261e07ac25f2aee71a857a2f03498f4a",
+      "sha256": "e42450f4f43ab850a8a8dd0eb13b38ee7497814d9d2e2857760193aaa04fb327",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/meals.test.ts",
+      "gitBlob": "00f307cc3199ea4b54b331b9014c67aa5cb3e51d",
+      "sha256": "838aefa3c31af3204c3df7c0f9f5d7b6eebb68ba2a427352488901cecfe300b8",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/meals.ts",
+      "gitBlob": "5c81520d2ce84a630f4df845dca59245abf5c1e1",
+      "sha256": "01dbbb7f9500dfdfb1f2d6f6de9621c1d0f6a135610ff60aaed266b9278c923c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/mealsFixture.test.ts",
+      "gitBlob": "34a1ce48792221c0ea9f94b4ea8b53154a0134d2",
+      "sha256": "0d78e0c97fdb80eb2c4a32d7389bef7970dc61f6447a3f100c8cb8578de3a9af",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/modalScrollLock.test.ts",
+      "gitBlob": "7d082030137ddcee0dd322fb9a81fe7d69c9953b",
+      "sha256": "fc6de960fb689e191b00cea3848167c3bc514661269f2964653f4fbd4699f908",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/modalScrollLock.ts",
+      "gitBlob": "6e7f95ce00cd890bf957e07740dc884c50e028c3",
+      "sha256": "1185f85260c574feee7da2ec96414eb05119ab6787adb6a4d0f4293d19a9d4a0",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/momoInterludes.test.ts",
+      "gitBlob": "e1d2abdc07269ece0304ddc5c09a07f9c047f28f",
+      "sha256": "c3c8a04a096f0207a931ef6de5ca60cd66da1df8631e9dcc420bd683748e8c94",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/momoInterludes.ts",
+      "gitBlob": "250bfcb59d606e3152330ba90424c5effc7f745b",
+      "sha256": "3faa9b37289218c2740dabc67c6a8b39906948af2823555e0d5965d92e2bfbed",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/motionFeatures.ts",
+      "gitBlob": "87b4e0764d76496fac1ef30918ed75cd9a406099",
+      "sha256": "6e44ae34d493a23d39b2489191a26018f91fcf1194391ffcbb26197d54606127",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/motionPresets.test.ts",
+      "gitBlob": "37000123211d48fb58972be3de2136354842e406",
+      "sha256": "d692ab63db25759dbd5a3509277a57a472928478baaccf6065f0fdffb2817e0c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/motionPresets.ts",
+      "gitBlob": "6ae6268d3ecb778c24cbf9e1d07c0954d819ec50",
+      "sha256": "92543d9979dc9f1e107ecb5e582f22b83f91521a3fc1c5cd6828929cd00ef721",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/motionRules.test.ts",
+      "gitBlob": "c45330a23a26c90cc5107a1a0d9dc4f835a10bae",
+      "sha256": "efb5afac96b255bcc8ced34a3f8fc29f4a5b63b3f3b3425ed8348d0fda4c1866",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/notifications.test.ts",
+      "gitBlob": "a3b733656d9c621c26decef4d9ff73cb92968003",
+      "sha256": "8bf281026fe53773c4fee2fa088abab2e92db5c7a287fe8945d21623f7c28c70",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/notifications.ts",
+      "gitBlob": "b3114d03b52045430c40927924d39c637ffbe3c1",
+      "sha256": "9f2b48c2852e31ee5271bbf817aa39b4c8d79139f10e1147a79406441b36b215",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/notificationsFixture.test.ts",
+      "gitBlob": "a8db14aa1d889c414c62421ba6f37f23b4645ff0",
+      "sha256": "527d8f7d99a6287ae8ca04c1d6180e471417da12653ce4f52ced1077fef34327",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/onboarding.test.ts",
+      "gitBlob": "f7c4a90b87b458756517553ab2e93f1c328b763a",
+      "sha256": "bfe5a4c10746979437c79b1b9ec04a568fbf415b68834138ce1aa2155ec1aef0",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/onboarding.ts",
+      "gitBlob": "cfc11d0138b8fac146bc863dea5b2aa873357aec",
+      "sha256": "58cfd9b66a45c96d983b7a062623ec889ad89c0e9745138cfd65642b2179f438",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/onceGuard.test.ts",
+      "gitBlob": "86b02f778b118558838c898b5d481a01797e8308",
+      "sha256": "cb06a0191f3d5b885fe44a92920ed4f7a125512d036e15640ce283c0e6299e4e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/onceGuard.ts",
+      "gitBlob": "090c7a42c1c329c1182602be97b5f853fe1755c6",
+      "sha256": "91801c5a4294b71c08c56306c5b3b083193af9f8cf0598c856f2c8385ce98045",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/pendingDraftWriter.test.ts",
+      "gitBlob": "3eb26fbca929ead32b015c6a31793b72c9a6fec3",
+      "sha256": "7f50db238610bc60e490ef8e8db70cf02b8a686f64241910ecdb650366c4c161",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/pendingDraftWriter.ts",
+      "gitBlob": "068a6e74c3d4fd0a60762a00f8a2341dafd3c57c",
+      "sha256": "ee5ccf078d2eab6f00fcff86810eeedaf525fe0ca34005a70639db9f5501a3cd",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/photoSelection.ts",
+      "gitBlob": "c8da2276229d991857dbc75771f590216317a527",
+      "sha256": "59acc23cb5e7d6d91fe0b7162eb50fdd268d37192305c96705f2573f38e492fc",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/photoUpload.test.ts",
+      "gitBlob": "b8cd586feb4165733584d03f72fb3d9ef3cd6dda",
+      "sha256": "0248369aaa0f81e173b26610727c40ab4b5bd4005f44b7c37b85c1ae1e8b6a66",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/photoUpload.ts",
+      "gitBlob": "a55460ebb78a9bfac1f98c8fde2e27ed08579218",
+      "sha256": "996b44eba96aebe38b2d60033c92eda4c6767980d15303aea0832619236fa04c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/playfulContrast.test.ts",
+      "gitBlob": "517f936869dcb7900bc233157877202a6d699066",
+      "sha256": "0750162aeaf95fb6f7aff1497ffbbebac8f36a2eb6cb0635135b855bdc9867e4",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/pressSystem.test.ts",
+      "gitBlob": "89f5eed458d47ceeb3651a85ca8572c486bd42b9",
+      "sha256": "8f820e78bf556fd2cdb93615414b26c58449e6fa14df4ee547536e384b7f2a57",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/profile.test.ts",
+      "gitBlob": "70a99d4631c79ea3cc395aed9a40cfda8c4b5b0b",
+      "sha256": "152044a8b96196986001c17f6d926b602040bae07a7a0bfbaca02fd93ed95cb2",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/profile.ts",
+      "gitBlob": "dddc921fd132cb63dd613c983155066d4009b815",
+      "sha256": "71872589c621c56ad6c0946c816f9aeb2e2f7a8eba43d55782117242c86851aa",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/progressNote.test.ts",
+      "gitBlob": "ae626a09b58620646f5be1b38a54223c57ed44c9",
+      "sha256": "b5114fa4239f1dfada1e52ace266409376d428258c6597dcf65a419c47c3e43c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/progressNote.ts",
+      "gitBlob": "b90bff4f1b12a2aba98c24bb98a848bf4e5ec679",
+      "sha256": "e83679e26bb0430e53c757859022bc25e6ee38ceda0b04fe190dd2f50fcf81e9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/redesign-landing.test.ts",
+      "gitBlob": "edb32a4a4827ba6ad74ab98fa2f6a6d86c056182",
+      "sha256": "7e89ad73dd4cf3f21cfafe3d1df01bdeaafc2bf10da7308e6c73b5e367cbb44c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/ringAck.test.ts",
+      "gitBlob": "dc946de67876b6b703d354d7c54e584cfd23d72c",
+      "sha256": "5a54b89aeb69ce2e30c6445046296ce4941cddea0805f1b4bbd8a045e8fea3a6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/ringAck.ts",
+      "gitBlob": "023356b23f2a1b865217cbc3c2b0356858941b3d",
+      "sha256": "33b5daf52230a6b14e1b2d7a4a48db9f3d710deba5d6b26fe025f47e4f78f46d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/scaleMeal.test.ts",
+      "gitBlob": "9983cf6946f39f70856abc71385e159e5bbc5cb3",
+      "sha256": "ae722c088174fa0a9e3c485ad4af75af7755a86c5f2b81649e663791de87f12c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/sessionNavigation.test.ts",
+      "gitBlob": "affda4ce575a860ac4b154a19591811bb53b046c",
+      "sha256": "9597342ac0ee8d760a52aca5bfe2ef21a844b4ec2a0f29b9ca77df446a80780a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/sessionNavigation.ts",
+      "gitBlob": "d2c14a7cd7fdedf5237b0731632facce86abd116",
+      "sha256": "e18ddac7c3b9a66b7cb7c796458ac2426982f7c2efb86ac515cdca65e9c44585",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/settingDestinations.test.ts",
+      "gitBlob": "11f2af65d886d561001d80f68c14339806c9c09b",
+      "sha256": "6f5aff19b1ed5d865181c244ea875af601e30e89cb843c6e4f2e4f061436f71e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/settingDestinations.ts",
+      "gitBlob": "558012f7f226047ef3128adde12b8b58d8623398",
+      "sha256": "ba7f048011f6ad283ea76d808564be1484e442b3dfa06a102ab94e07816e76d5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/settingsDeparture.test.ts",
+      "gitBlob": "388b5da275e96e6a3d51eedcf7fec6598a4a656c",
+      "sha256": "02f80fa04bddb5d8542abb7f7f4680b379a8ff3b873e88feb6dec56a12b889d5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/settingsDeparture.ts",
+      "gitBlob": "f0ffdec02beef092407784b86de1903b54da690b",
+      "sha256": "78449705d6bd85426245cee99e5ad09cfde4e9fa22fa144b1c6b638e51efa568",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/setupDraftHandoff.test.ts",
+      "gitBlob": "dfc927711ae84b6180ee9f7d752409c0391fe755",
+      "sha256": "cb2be161438b7d63d6f6e44706e5d9ca6ebdb2b2fb25e06345a670347cb41ccd",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/setupDraftHandoff.ts",
+      "gitBlob": "5382ccae66e1520707541577ba7e546d37f8c20e",
+      "sha256": "1f8e7e504cb6b34f1b48a36999383f3d77ab68c481f09fc05b3d7fe4c97afdcf",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/shared-domain.test.ts",
+      "gitBlob": "282f7f181901d78294f02d912909e56347edea3b",
+      "sha256": "05dfed67fd8d8cbb6655d2a6b6738d5819fdb77b6248ad0f0a25b3e0ccad2877",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/splashTiming.test.ts",
+      "gitBlob": "337b35019bee035247d9c989e07863f6b2c35077",
+      "sha256": "710a232b2c2333b471b0eb9ac5e9d0c7117400487b72f63dbc2e0c029090f124",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/splashTiming.ts",
+      "gitBlob": "7eb9292ad28c59869bc829de39afff64e69efe80",
+      "sha256": "8c1a73145310d9afdc9dad62d4d9059b31f688f638ac8600aafb045421f9cf9f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/storage.test.ts",
+      "gitBlob": "4bfea6d09c2783a27ffa2b00e250fa164c1bfc0c",
+      "sha256": "44b627519386937845c0a4111935eec34b22a5d3b584dae08b999bcd6e4c1f60",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/storage.ts",
+      "gitBlob": "07f09c90562079ab07c0f9261c5545aa03549514",
+      "sha256": "d86fea269b3da503d595c85f70366df777621cb07dff6587443c5f7f06367ba3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/streak-parity.test.ts",
+      "gitBlob": "5119cb336d49b7277c6267fa422c69259b63d226",
+      "sha256": "162aa14b26eaecd6c17b5753f9dd76931243c0389f3a4bac67e2a5fd3bd87541",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/streak.test.ts",
+      "gitBlob": "0fc4de7e0ef30dda066cdf6a15a7ca849eff4711",
+      "sha256": "cbc6e86fd528c340b0dee21ba4567076647c966ebfad8da328b3935af36b571c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/streak.ts",
+      "gitBlob": "799cd15ddf7400788259689de0a6c01f3182b7e6",
+      "sha256": "23a456b92fc2b1af6599fa57b14820789ba53d3f919cacfb6b9c31d090fa40ae",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/target-characterization.test.ts",
+      "gitBlob": "81ef01b461c386754c2d65c5b99fbaf0c9590559",
+      "sha256": "62850a74b70ac40a61923d1a2c1cbd49c7b399ef176e15e9f98911533c150b6c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/testHooks.ts",
+      "gitBlob": "3e026dfe340730ca95dc322abb83fe537fb767f6",
+      "sha256": "acff2c832fa29df39b1ffe4212e71a90fa46d5a001066ce6122a81fbb91823f2",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/today.test.ts",
+      "gitBlob": "5b188db07cd370a9b137cb9ab5c6eedc65a87f16",
+      "sha256": "eb13f7d681d045ee0f747e95e72dc56b34d27dce0c27f412df06aeb078aeda33",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/today.ts",
+      "gitBlob": "34c064c1028532d9f7e9986f8b55d42e19140805",
+      "sha256": "15662f32357fdc2de3c9448ca39972860964e9836962a2cd0feebee1e450e9c5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/todayGreeting.test.ts",
+      "gitBlob": "abe0fa3bffe0ec2954d3aee4e7cf53b478503fe1",
+      "sha256": "fdabd4d02897b18ec72a73460cea70014dd06c5aeb1f036ff75bbffdcca6b008",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/todayGreeting.ts",
+      "gitBlob": "6fdf81a78b59182e475416488aa26f7d3cfcb80c",
+      "sha256": "cc0ab69c4718b4d83f272e5b183f9660a2786c19072882ba772819e540f7f44c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/tokens.ts",
+      "gitBlob": "0f6765d6de4962dd7d0cb7395f3160a4b809106e",
+      "sha256": "72af60e0cf876b9725c576a08b59c1e21cc2c6e9af3b771c44fd8759a158c709",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/viewportSafety.test.ts",
+      "gitBlob": "fcdb3497dade451226d0c8cf97e8746bda4ea8a1",
+      "sha256": "6babe16643f42c7203616bbd04aaf2d50ffd4818db21ecec28805abd71018fa9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/viewportSafety.ts",
+      "gitBlob": "0a235b16741f86cc1eb55e1e6958fa01d9bfe343",
+      "sha256": "9e7d6d5d3bac17a246e6566fe670262d7879f02aaa2c7acab6d6e7c3b50062d9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/visualSeed.test.ts",
+      "gitBlob": "8ea8a4f79ede405c108f3b5f7bde484d92409025",
+      "sha256": "a2214a5cfd91a59203ecf5dac60e48064584e4d1e5f42e3bd87fc81e6f278d08",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/visualSeed.ts",
+      "gitBlob": "881fdc83e6d7ad5e75bb61c621ce6dadc9b4db24",
+      "sha256": "2e8322248dc0b3e4d2c056de289776cb02849f3a01d503626256f7e9c03a7226",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/visualTheme.test.ts",
+      "gitBlob": "f3f3046fa9085b46bd8edd9922cf72852b93ee42",
+      "sha256": "efe71b075b9751ec81c2f34b98f884412325e6f11001f1e5c54973f0223ce917",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/xp.ts",
+      "gitBlob": "6ecc43c093e83b395958d8ea56799dfe1eaa0881",
+      "sha256": "049a3754d68ef78ab5857be1e3feb4f8de4623beac3d13d020c94baca89be8d6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/lib/xpFixture.test.ts",
+      "gitBlob": "ee4fd23805e3f68c34b42c0a584f2aa553068086",
+      "sha256": "8047d258678dedf79e26c7d4343201acfee62a13fce4b0a6eaaa5809cd709ead",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/main.tsx",
+      "gitBlob": "20ef0093f453fcf3c15ade0ffe7e459a0d069b5a",
+      "sha256": "b4046ea8d8efec64d5a1e360f1c58cb947ff77cd9c2fbe7f62e560e055a82244",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/MascotOverlay.tsx",
+      "gitBlob": "82ad6b00586e6f63fbe372f32cc75dbdd7d5da8f",
+      "sha256": "2f8b6090e48dcec31a46ad2aa3f7a2537d69cb8e9b771d012081c79d246c8615",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/anchors.tsx",
+      "gitBlob": "cd6cda22abfae43834f0ab4f4caf0555bfa4519d",
+      "sha256": "de2ed24464f68f17d62f9bb530eb3b3e028d3674a666b75eb552f1cdc828e0b8",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/behaviors.test.ts",
+      "gitBlob": "ff3f52daccb0d675419faaf5897b26f49c1fb802",
+      "sha256": "d2f0532e3d89a0aaad808aeba808f0951d78ce93e0e8a8dee4eb138fe81ffbc5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/behaviors.ts",
+      "gitBlob": "d8c09f111971d4a67022d9316086e67eafd6ca22",
+      "sha256": "9cf10f6e00b2d0b2ca102acad19143720b349a482469bdc0ee4107cb73ad1b77",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/controller.test.ts",
+      "gitBlob": "384487afc699a93ba21cb3b5430988e99522097b",
+      "sha256": "c3946c743a5b7f05297063f3e5a46c05043ca8c84996fa3591e637647a5a06ad",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/controller.ts",
+      "gitBlob": "c42f3c143cc733c970477b19fffb0f45cc09b9f7",
+      "sha256": "ce3ddde82b20d8c89e09566ef1b9a53dce691f489a2c48fc330f359b47828a36",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/expressions.test.ts",
+      "gitBlob": "5f75a42ad75bcffbe9262976ce6f47d112feb225",
+      "sha256": "3ee1280204333f841702015530abddfe7ea8fef37686b348c1075cfc72055a1a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/mascot/expressions.ts",
+      "gitBlob": "881c4f1aebb8e586ae1ec8599ea914ade64675a5",
+      "sha256": "dc5a4ff96dead2decc0aa1aebffe0305d49963bca9a4c5a13180ab671499c333",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/AboutPage.tsx",
+      "gitBlob": "7f555f828520c2b4c49eca0c429e019610b27b1d",
+      "sha256": "f39cd707d1bce7d91765e07dee0dbfa20637a1da30d09d9d9bf6781142a4f52a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/AdminPage.test.tsx",
+      "gitBlob": "d37accb746615b2c869cfd7ae10b030ad3694c4b",
+      "sha256": "92ede036e99062266d8db32a6b062ebff7157a800608276f257bf7d12aab1b56",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/AdminPage.tsx",
+      "gitBlob": "77f725a17c93bcc87bbf3daa66a8e7a0c0450b37",
+      "sha256": "44082193e4188e3b66f82c190e30e9bb9011ea2e77c29cf9810e2936b2de31d9",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/CoachPage.tsx",
+      "gitBlob": "689de1a088d2d1f299b3c81ffe42c14a576f14db",
+      "sha256": "f6b043f437d33feae85c090a59c7316c3f29df6dd039e265725b9ad315d1cce3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/ComponentSheetPage.tsx",
+      "gitBlob": "a17203c24c85b0e73578468830f45f7234d7c9cd",
+      "sha256": "1fb181b1da0af17064f7e5961b2bf6e2e9174245cd6fa1b68e54f7fc27e01fe2",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/EditFoodPage.tsx",
+      "gitBlob": "5bbccf610c453b70d6ff1c544bc7890501b6f29d",
+      "sha256": "86372481fbbd2b8d8cb8f5dc66fd350d9a6b4598af0277f2a3df340f39d5be50",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/ForgotPasswordPage.tsx",
+      "gitBlob": "32aa125ba64f43cf4ec8067118529a46f1289796",
+      "sha256": "8f5599795938c9f563dd2e27d04644691ceaf5f54ad44ee8b432b43bda25b5a2",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/HomePage.tsx",
+      "gitBlob": "534806d492173fc3475eb2e43b657900967470d8",
+      "sha256": "bd0fff194dcc09744d838f3f9221f790aa2a4e2559f98de9e3792c5b9d8d0e5e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/JourneyPage.tsx",
+      "gitBlob": "ac4b0a9806c27a73dff1c965788482c6594f6007",
+      "sha256": "a07c8d1db1d7e1a70727f341f9d4f97ae14910492912ccbc634466604b6e3a12",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/LogSheet.tsx",
+      "gitBlob": "5e84d28f6b73e434101aa0f694fffc65547c4a63",
+      "sha256": "7bd5a029dbefaf49b29568e428a08f40bad80522d5f9d1448e2379c301291a20",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/LogTextPage.tsx",
+      "gitBlob": "0c4db931bc575677003ce5f3a9321eb644414771",
+      "sha256": "2cd649a9915007f10e2e5da8188cef8ed0ae9ef2c08ca39a1ff13689aacc499b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/LoginPage.tsx",
+      "gitBlob": "b9af985b3c20e42059f8d77085b8c6c5c26055cb",
+      "sha256": "56e41d6d3dd056afffd7fd65e7af1e33fe35572a72f912151a78141350b7840a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/ManualEntryPage.tsx",
+      "gitBlob": "8bb2c481d54e454e17647688c211be1a0489881c",
+      "sha256": "b6456910fe56efddb0bc560e398562dc0e92cf9034b01996ac6d3338d003e8c5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/OnboardingPage.tsx",
+      "gitBlob": "42304e7158ef73dc49324c56e3eff97f80555798",
+      "sha256": "d89d37637ebe6c28c29af3cee869bde7970baa5b6599c6fc600275d58196c902",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/PhotoLogPage.tsx",
+      "gitBlob": "2120abceaeab5dd5f4f2c7f0950b37c12dcba597",
+      "sha256": "c8e8af3ce02f05afb63ea1c3524c00971bb64613e0ca69f8d3456ac5b3e05b0f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/ProgressPage.tsx",
+      "gitBlob": "f107f43ecb6c2a544d3c2ef5e48793aeb201eba0",
+      "sha256": "f792f3fc051564b5435b962310b5524453e6d77519e983a41b490b1fe44a0193",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/ResetPasswordPage.tsx",
+      "gitBlob": "b955c84e8064948f4f84bb4affc4d1148cadf919",
+      "sha256": "44eb70d2bd07edc818dbddee6f2c3d1e6efecdc2f9ba6c1687b0d984055d12d8",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/ReviewFoodPage.tsx",
+      "gitBlob": "4e9921917e04d4138e7b0ebb4c12fea63c7b3a2e",
+      "sha256": "f8455dde194bfb4c5a0353e0a7a5da7a18f10c7e4bbf6c5fc150e4e2b1ba7d42",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/SavedMealsPage.tsx",
+      "gitBlob": "ab19c029a748144b6a55a52f03736c01c8714fba",
+      "sha256": "968c95ded3d4059a1db85aae51dbca7318aee0b5c85f204eb031964d72aac8d6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/SettingsPage.tsx",
+      "gitBlob": "2827d374807efdc6eedcf20d9550318c66716cf2",
+      "sha256": "5ee7b2c185b610ac5fdf84c313b4d27ca62832e3373774d42c7e99a5d469c060",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/SupportPage.tsx",
+      "gitBlob": "e30cdbac2b951cd5225a9c01e77f4b13570ecf93",
+      "sha256": "d24c5b48f45647b64d89ae5c169dd83f7334c71ebd6199119c000ab592afa4fd",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/WelcomePage.tsx",
+      "gitBlob": "09d297be3ac9a3dbb971edd1afdea0a8e32c7516",
+      "sha256": "715b269ef392c47f696833859c5bd3541496b3d68f48db2f42c8f52fc954ab39",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/accountRecoveryUi.test.tsx",
+      "gitBlob": "330b98ed4b0c4c479427488dd28d0d10f8aebdc1",
+      "sha256": "d5d0f63b1c3024fcbd442745bfbb6766b6737300f5821d27ff911287a903ddaf",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/dailyUi.test.ts",
+      "gitBlob": "8e42b75c2cd53d47f0691fb9296526537b422795",
+      "sha256": "311d1c7ab22d21854674be65dd69848215c32f5efd5d6e281390c2ccaac6e765",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/libraryInsightsUi.test.ts",
+      "gitBlob": "32ec52c9337dd9b30e554f92348059d3c35f8cd5",
+      "sha256": "bb40f0258b869c3e56a7014ba39f61ad380b98fee8963d8d079834dd64ba1fca",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/loginUi.test.ts",
+      "gitBlob": "1a1d37d7bad41a00c2e03089955364457747983c",
+      "sha256": "1535d68396dc7108a7d910e0fe79696c94d20d564d35550a867dc944acbbe8ce",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/mealFlowUi.test.tsx",
+      "gitBlob": "510b8dd10ce9baf85dfcfc2c362aa5773d7d32f1",
+      "sha256": "391282cea61f7a1c3322b8763b15522311d0e7875bf4d2a301d4535424b577c3",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/recoveryLinksUi.test.ts",
+      "gitBlob": "6fa1885b2c3a702a7bc9125e9f75c8c22a8f66dc",
+      "sha256": "9a1947251dcf4363eae865cf51c5a20396ff797b1844bd642390baa9a0af08e8",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/savedLibraryUi.test.ts",
+      "gitBlob": "1e78f122e00331ac60363a219141736d17ee1160",
+      "sha256": "d2b7d3b2633d9b06ed453eca3a8bc9ba61c9b3337cf57dbf58d13153e298c56d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/todayUi.test.tsx",
+      "gitBlob": "8873f96b0c78b34da02d15a4fffd8b2bbef808b2",
+      "sha256": "582c2974ec515db5cbc1e281f8f72533c34ee268816d411264bea68f16201031",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/CursorAccent.tsx",
+      "gitBlob": "a81da6b93d6c602a8baf8487bd8a70b47f376155",
+      "sha256": "fd6e90864e880fceb4e87ac5626131b5b0f18b8f56e391f672ea18045da3ea89",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/FoodTicker.tsx",
+      "gitBlob": "f46e79969fee58e61ec93b8b359de198be1ccf46",
+      "sha256": "46608eb0999c49200f9e894aebb5d649c19f0a607163a11abd89037117f1e00a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/MomoAside.tsx",
+      "gitBlob": "3e8bf2459b48b6e836f19b09e715d986f90f7454",
+      "sha256": "4e9534e9026df6128e6f33539d13d6fdc2e82d886e8e94a75bcb5805aa7fbc9c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/PlateArt.tsx",
+      "gitBlob": "0a041643d2cc62d8466358bed401e21c7126eb87",
+      "sha256": "617917cb975bcb9d0e9e2c982630d43dbb82041e50a053095e6e0f7e67ede06b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/PlateToNumbers.tsx",
+      "gitBlob": "c9c1af4ea259e2b75c7565ce1b51e161035e0101",
+      "sha256": "38b3391a352fc7aba75f10606afa607e06fa8bca5857f8545ab21fe854f5fbfa",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/PoiemFacts.tsx",
+      "gitBlob": "3d28564b8395173340d52136e59b31164557888c",
+      "sha256": "1b5291546f4a29448f7a19f413a2320ff2657f30a03218ae8d6fea22a5e95f4b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/ScanPanel.tsx",
+      "gitBlob": "0385226c5eb9d92880747adffe81707cf8e27938",
+      "sha256": "96db20b14249b94d202a0ba21360dc62611576acdbcc4d5ac32c2ba04f54db8e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/SectionHead.tsx",
+      "gitBlob": "c0c1b5d0c5b1915bc793659d3d735e34c9eba0aa",
+      "sha256": "045a39059cc405a0e0478fa92c6ae8ea2e0ec3c861d08dcc4a76e8226b3b8f93",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/WeekBlocks.tsx",
+      "gitBlob": "49dba5694b135102975deedb3a818d53bfd54dcf",
+      "sha256": "09ea4002bd8add61f570b7845a31f543f68a93ba530c102667bf56ee3fb6ce77",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/callouts.test.ts",
+      "gitBlob": "f398884a0fc7ac212c8fff06c98e5d2dd1526c05",
+      "sha256": "89c33f59a85f4f2bd57ada748139dabf4dc577644433fe4b1b85c49accea62af",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/callouts.ts",
+      "gitBlob": "8eff8e1bac234d3515f093971ffa86be66afa6bf",
+      "sha256": "e1f1db587f078252ab98ec8effc2331c9b5a08f101d16deb5440d1bd012f2c28",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/meals.test.ts",
+      "gitBlob": "0ffca9a739518e01e8aab57bd9173c6ec6c3eea8",
+      "sha256": "46af918cc86c16547f7e288b9e1fd88ee7d8e2ec43a40ae9c2b38f15f24a9e0e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/meals.ts",
+      "gitBlob": "4c7e65047767ef9ed0fa0fa292b9d20cd1af2b7a",
+      "sha256": "c7211a5b44b743cb0e84051609024075d5eceb8e0ef50ad75e8c4be3897affb5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/useCutNavigation.ts",
+      "gitBlob": "c9296b5be3245151eaec2c1cfb8b5e0d7da7a5f5",
+      "sha256": "fcb61a2bbf62e439f87f56abde6213853b8ed8ee1a2cb323bdf5d98a1853bf34",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcome/useMediaQuery.ts",
+      "gitBlob": "b2bab953103df8e81de8ac8ede93b79b9845644b",
+      "sha256": "308871629f798235465d69ac70b260c992bf49a31716219eb07e42d7b2d58d08",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/welcomeUi.test.ts",
+      "gitBlob": "a2716009a8db642352e613cc2ab7b33fc914c7e7",
+      "sha256": "9d67d59952dd46a6da6f02fc58fe466149dd01d85f447d3ea7978cadfee54c0c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/pages/youUi.test.ts",
+      "gitBlob": "440474e31d228d37521d05844ae1777db0cf8d7d",
+      "sha256": "f55eef5f8cf5ccca40f791682f80bfe22be0be488cc0620487f4247bd1f0f1cf",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/store/AppContext.tsx",
+      "gitBlob": "848480cd57a64a8fda4bf5bc3ceac62429f14c04",
+      "sha256": "a777b3df27a1f69480f74aebfaf9088aabe3fdcd16478d04f29e86b61622e6ba",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/store/AuthContext.tsx",
+      "gitBlob": "ab7ecd739788d7a327a2c78d8247d412224c96d6",
+      "sha256": "fd54dfa35681526281412c99939133e5a23f50ad920c9aca83308ce712af8128",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/a11y.css",
+      "gitBlob": "bd48eaa64083d8c7bd5a6b94fe843b12eee43498",
+      "sha256": "edf6fa57d0dff88cd012b2f2b1c683ef95b711b66ee5a05fc5cd938204c15b7a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/appearance.css",
+      "gitBlob": "f6a8c0c54278643abf09400e1b1aa7d94b6c0188",
+      "sha256": "fc8eb5d6f6457f32e539fa4403bf8104e9ea2df7ab0e7a13a6b9828c6ab9291f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/base.css",
+      "gitBlob": "a85949446bc48d974cd6a4c94e3774451a1b1077",
+      "sha256": "33575bf743dcbb454df916fa9424504e215f01655882741bc43f3e958a64505d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/clay.css",
+      "gitBlob": "214c653c55508d7137df466fc5dff4be6d7b9918",
+      "sha256": "fdf2fb6839ee7ff684cb7c4f053f237b3ad30ba652e80addeb707a3513d32bca",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/activity.css",
+      "gitBlob": "ebb22b76908fc61bbabc1d53f02a2e2421c3872f",
+      "sha256": "8d38563ee66f3ac059efcea2e3241c45c122f936dec124c88d245e3e461ca3c7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/buttons.css",
+      "gitBlob": "1307585e9315cdcaa59d90f861d99f2816104eca",
+      "sha256": "a3209577c619cc296fe1e55d8a9d82b695192b7df9d54ad994f66eec7a0e3e16",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/food.css",
+      "gitBlob": "fc4277b09671e2cf5319d820d8a083c2d1903e23",
+      "sha256": "25f76088d7870aa1efdab260bc5250a4e1fa55d924d1ab74a27d14304f0617c5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/forms.css",
+      "gitBlob": "89d986b391c241c85dda0071d412b74debcf042a",
+      "sha256": "c5397f4e0a2a945260c6e23de10ddfdc72a49801128e8abbe885fdc080045a7c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/gamification.css",
+      "gitBlob": "2d9ec080b021d161734c057d9cf5fada32319412",
+      "sha256": "d0dc4a2421ea789d5475389262d707fc93c34189078c329c7c8f13cbf53f28ed",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/mascot.css",
+      "gitBlob": "4bfafcb4438da071c9159ce2a42eff1cd85fe7bd",
+      "sha256": "2098f61152398d0dec716c13e54e460935fed4b8697f041382a96b7a1b0fe909",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/nav.css",
+      "gitBlob": "44ea6a046c2579700ed7b8e221dd4e4384b0aaec",
+      "sha256": "ff5483c420dd96e668243cdf686757b44c3f907f22274856e7033b37de542cbf",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/overlays.css",
+      "gitBlob": "488b61aee697b15d33d4820a9dbee4ea3f19e1d4",
+      "sha256": "78072d40981b5aaaed6eca36b23ff75c94913d85ce241a5f90d6e992269c8fd1",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/swipe.css",
+      "gitBlob": "fa2779dc7c1170b3ab0c8e223826a4a17fb9d931",
+      "sha256": "33f5bb647db3f18f6fba7238d8f80841447320e16ba7567d6180f52024d5bb28",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/components/toggle.css",
+      "gitBlob": "1c84ab934b86ea6c6dfa379d9bba6b81e3127108",
+      "sha256": "444a1d2623c1a67c1649114e13ce06e5b515310984c0864aa6b7805f057fd213",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/daily-ui.css",
+      "gitBlob": "7476d4b3bc92a835894ba286bad8eeeaef0c0c71",
+      "sha256": "bc9c69de16fbedd705428532deb0980ec97bd52e61113ac22b998bfa5b1f73be",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/dark-mode.css",
+      "gitBlob": "e9e6f97bb38d94130e0bc1ff50fe4b5ceecad579",
+      "sha256": "8b0c816f3badb58de3b800991008a9a6af4f2c1de2ea30ec89801edab2e72b35",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/enamel.css",
+      "gitBlob": "53e84b3c870d8bb5ae4930a7bdbd78dfe786fd80",
+      "sha256": "882d6c444e2e00a89b911c0c8c2b3bd18d30724e8860c0cba41262d8b3484d9a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/food-club.css",
+      "gitBlob": "f12c2a00c1bc9cac88efca0364fceb82a893c00d",
+      "sha256": "c2f40832035346789ddd0020311c0586746c0da0c4b3a0e862274b41ab8f41a6",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/icon-motion.css",
+      "gitBlob": "b5c8a038483e8621a4024d82d06a908b5b83b324",
+      "sha256": "e534a7a19186eae84607c7812acbd0ae9cb464b3d9251f98f7c9fa471619fc7b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/library-insights-ui.css",
+      "gitBlob": "ab6179a50fdc44c20c848071950e165ea62d48f7",
+      "sha256": "61758f71132f0ba3db8500ced1e9f27bd64dfeb56706c4e238e226f6f83dc38c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/motion.css",
+      "gitBlob": "153465a9cea2c9a785a288d2a9bd1802a5c1b472",
+      "sha256": "d403466aad7f27973f3c9626f4f48881f23b053c319b7ffd116aad2c2941f34e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/poiem-brand.css",
+      "gitBlob": "0f35f5fdf47edd295637e36d4d733f64e62f6d29",
+      "sha256": "a46eb6aeb79b0b578132c85b07b4b2950696c6d03d38d3d473a695c1ed321fd4",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/product-ui.css",
+      "gitBlob": "e5e17e8a2eb71a0f9864186803f0b0b0ec78b5bd",
+      "sha256": "19122748f6ef13130225d9da0665ede4426b97d2d49b518125859fc0a58b3567",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/redesign.css",
+      "gitBlob": "68e5fffbe95701091a1cda424906b3bf77dbccb6",
+      "sha256": "11c3d6ba291f710d9a19557a0ebfc4ecdcf65ca2609c6f370e52a92137f51ddc",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/account.css",
+      "gitBlob": "2d3b088e66e05132df896a9344593cac4c1d694f",
+      "sha256": "ecb7eb0c8742ca5101b01719c403256054c4165184432fedec0eb24dc782d91d",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/admin.css",
+      "gitBlob": "73e7a94f21746a959a824f36de88b283260dedb1",
+      "sha256": "dc03f7afc0674064a56f076561ddd783ce8bf4428d90a0521c4ec82f4a0ca48e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/backup-preview.css",
+      "gitBlob": "e579ee6ce4c6516fde4fa6e79ed969fd2d1764f2",
+      "sha256": "ec9f115c54290bf3cb654277e137603a7d38ed1bfb667c0765e3be79c2eeb01f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/coach-drafting.css",
+      "gitBlob": "eab06b4403e1e8641d165f4fd59860e08e296ab0",
+      "sha256": "93465b92a4b1afdb7f9fca4c50c27c0af5a8544e32bce7d0d2813fd0deb50b0e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/entry.css",
+      "gitBlob": "14c5a14be6463ccd4e5600f73bcc4a21ed2c480f",
+      "sha256": "3e9e62d06453878e807ce95774a1e7671b463548b0d58b81028f9064a421a5ad",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/first-run.css",
+      "gitBlob": "6300408fefeb933035039cd83bf1a3abd3c736b7",
+      "sha256": "581b27c803c65a5f19c3382496d463043f91d5e4c211fcb043e0ea52fdc37a66",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/flows.css",
+      "gitBlob": "ab48e55d5ba5e865e928c6877d0e9ecb5aad10ed",
+      "sha256": "254f48561fa5f3762c1ea5f714814b28bf53dabf87eebb916278316cc651290c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/home.css",
+      "gitBlob": "433db15d3397de830fe859686a2bb538c6eee7fa",
+      "sha256": "4a3d78321888224e445403c942cd2b9e1667c3846523f2e09a9684dfd94b7268",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/insights.css",
+      "gitBlob": "91a05d3609ee248410bac2a7c6447d638877a070",
+      "sha256": "d2fe4d03c7d726dfd73e52f5f5c3fb8b44b6605b6fa9af3a0635bec3cd8e9854",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/kitchen.css",
+      "gitBlob": "51a9a0b051fd3bcba30870a0c7cae8276a096232",
+      "sha256": "28f5b7b75ff6d6a7e5ef95b55f13bff7b1fb79abf02bcf3256798c5990448736",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/log-picker.css",
+      "gitBlob": "06bede51a463d17bce059a78463e22792a906984",
+      "sha256": "dd2bd2e5191daae6a465f59ec3435988f333a99b56171cb3b9f7a817d54a0a35",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/log.css",
+      "gitBlob": "c265bc01a8662fd9b708f905a3f7d4d11bb6e10e",
+      "sha256": "828c28def99592a653997e3dc82e6246666753797d7d08ff8451a4d065d39f3a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/meal-review.css",
+      "gitBlob": "66f721b2e9ae4cf35b593335d79186f2195dd92c",
+      "sha256": "2048616eeacf0e4f8e2f2abb9b8c3f02d880b4fc691f6bd25511fcd999337b6f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/momo-interlude.css",
+      "gitBlob": "b889e4f1fa5ce1f2c55755ed22c16e599001084d",
+      "sha256": "eda849648efdada31485b28b486780a6e51e8d0ec987e6607ef19902dc7c9f89",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/onboarding.css",
+      "gitBlob": "3cf72b8c334a2a2ae0737b7ea2fe42837f0ac18e",
+      "sha256": "6407cc9fa5914a11cb1162b304cf563d0070f888d6dc9227849a304498ab9f3b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/pages.css",
+      "gitBlob": "5b0e6a4990b12d7412522b6aea11369eec60871b",
+      "sha256": "e4cc632d9096925c5c1b92993c2f9ce34820e211b35f1a0b3d96fe36137c1c44",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/progress.css",
+      "gitBlob": "b312ee80e9417e40be5ca9835bbecee273837e16",
+      "sha256": "feae9b0843c4310699e25d8e73a78aaef409f587d98bd45a1e5f11f87083b77a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/safe-area.css",
+      "gitBlob": "b10f63389e20d860dd12f8ef81fb3613e449e1cf",
+      "sha256": "a1b369d4b53cbee3186783440600327b652c6ae3d12ba900f25a43b704ddd463",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/saved-library.css",
+      "gitBlob": "c41c2f857d3b9ee20c0b8b538dc9f17993524d35",
+      "sha256": "4d0ff805457226c6b330f9fb647153961b9eaf37a409c1a8ff0e7d708e4e5687",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/settings-departure.css",
+      "gitBlob": "46aaab671386662582e37f6e813f55a16f50171b",
+      "sha256": "056df40087841f7667deb34df6da681f338c56287b9d0e86ad757b77db272ca7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/sync-recovery.css",
+      "gitBlob": "4020759d9c8ebef0e7d675dad51e36dc81437e1a",
+      "sha256": "ada4e88dad8d140df5caa770f31a561f3a6109a7383645e236f6cfe235a18e7e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/today-play.css",
+      "gitBlob": "58f1c3e7c81adbc126b65b080948c12ddad035fe",
+      "sha256": "35aefef98c25e8b16e19ae7d6d0a35487e00da334d277ebbe8d4a43b8b1f1f28",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/today.css",
+      "gitBlob": "e851004d15633c42ea95a5726db0c9509b063b91",
+      "sha256": "d20de35232a0e6b9665c129120b15cde83c31fc2dc0182a68ed758985cf4f15f",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/screens/you.css",
+      "gitBlob": "7eef62c7ac1ec6303f4d452e17d5ecb8b455c287",
+      "sha256": "e002bc13a3f15cd28f90c85ac25f125f3836fc08c1559206823b47b2b7a09556",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/snack-attack-primitives.css",
+      "gitBlob": "d53340defe9f685bdab39229af1eba2b454fded0",
+      "sha256": "1e75e95fe5d60a5f8c4bf49758ecf5e220020b5bb8eb7f3c0b4a1517579d4274",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/system/action-play.css",
+      "gitBlob": "99a039c77ad68f2920b79bad7cf44dc1e76ff9da",
+      "sha256": "34902209bb950b982595265e9cd525376e1dcb999d9a55e0865bb7a6716ff3d2",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/system/components.css",
+      "gitBlob": "ae21de2f4e7701e5faa0c88ecce14a479c2bde51",
+      "sha256": "04f7e953c514cb4b554e0a9a2f765328b219435c7808d8f3de0d79f7dc0a614b",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/system/fonts.css",
+      "gitBlob": "e635a5f21b7d7880558bd50c9f8de7f02067d463",
+      "sha256": "6996a5f1028660a94a6f841635256719e9132b7c1a51a9a4122d4e68c127ce04",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/system/foundations.css",
+      "gitBlob": "ceabb1ac36d352cf2cf329ef764e054c61d2929e",
+      "sha256": "572aedcbc9291c29d9c89a1b34f9fdc1dfd4ed5bcb78be8c6419760ce3086b3a",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/system/momo.css",
+      "gitBlob": "57d65bf93cee5718927468aaa5494d298b5b29e5",
+      "sha256": "ff5bda25d2cc4f9a6200a5d8ea2bfe8531e9a7a619b8bf5eed7c512ca9ef75ca",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/system/semantic-play.css",
+      "gitBlob": "d603229355a052805034ddecd1ba6c26f03aebd5",
+      "sha256": "336ef98976427631dd54cf83cb41c644a79e1c1be6fe61f501162116533821e5",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/system/tokens.css",
+      "gitBlob": "952b50ba2ecd47f77541df7ce416014db1bac116",
+      "sha256": "406286a6919fb12a681f04d3aa2cfb346908de2579b12fae45af79c46a5c2f13",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/tokens.css",
+      "gitBlob": "f356ff3d9e76b1f80ae8623a9b6ff4d84b51c5d4",
+      "sha256": "7445a5a7edb502eb80d57ed6cfb804478daaf4911a6d61b5a30923a5ee9c083c",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/welcome-cursor.css",
+      "gitBlob": "0a866f248ffcc4c5ef4fd205b5b462054e31badf",
+      "sha256": "e140eca6c1c4549e4c815c6a86f0e5eae938b10edc503f26569e2c1fa83465af",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/welcome-details.css",
+      "gitBlob": "f2f406d663622387dc02937de5e64e928ee6bf8e",
+      "sha256": "2860d23019d635a02cc31bb3a2af43e0f9c1613eb793cb2c5ed4efd6e870a283",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/welcome-motion.css",
+      "gitBlob": "f82f42e037bd412407546af519e20e038b8b7429",
+      "sha256": "4ca0c6e9f14bcba3e9bbc03098ccad82e3d724f25c81b4a9606351ad84f75ac7",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/styles/welcome-poster.css",
+      "gitBlob": "a941ad245e93a9b754575e4da2043d8d03a97749",
+      "sha256": "6b436a65d2312b637163895e695efde6836be1b1dd221b80cdb4e5b56c87f957",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/types.ts",
+      "gitBlob": "d1da666b9bf334d73f752b664563be07818462b9",
+      "sha256": "94af69a0f20c03e73bd609c18d05b0d900c208e9b43c175b0b6f7bdd45b51a05",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/src/vite-env.d.ts",
+      "gitBlob": "759b7bc2a70796ed68d56bf0a352ea60fc00d82b",
+      "sha256": "eb4ebe1d9207f3bd2061c2b1917424868a44b599d97ce068494d0a4dc4172def",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/tsconfig.app.json",
+      "gitBlob": "1a998c1bfec60c959caaea43432162f0558f23b9",
+      "sha256": "45c6a610b7eebc37c5c23f9860f7e0963a0113518262825f4bea0f7719f86201",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/tsconfig.json",
+      "gitBlob": "1ffef600d959ec9e396d5a260bd3f5b927b2cef8",
+      "sha256": "ad28d132ee48d6e23917cf5827cace785d0fc01a44ca68b0dda51cc8c3fd3f52",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/tsconfig.node.json",
+      "gitBlob": "8455dcbc2c947322adef8783a42741878edaea9c",
+      "sha256": "a9e6c7f6fd3ec455a6fe1d4fbb83091e774b62fe116008ab6d8c5e1e88af4629",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/app/vite.config.ts",
+      "gitBlob": "30cacfb8fc37cabcb9e5761d02f3e10e835cd365",
+      "sha256": "49de43b93a489bb8405acf77e7a891ef144539f7a5cbcadd61b6ba183c2cc867",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/assets/.DS_Store",
+      "gitBlob": "9a1c8549c58a0809ab7801ed51ebd0687188eddb",
+      "sha256": "4df4bbd77e8f0ee77d82b2ac5325c2c14dcc97e549b8b3e3e419d88571daa671",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/calorie logo transparent.png",
+      "gitBlob": "351e5d142d72c4364da47a1f8737050504362496",
+      "sha256": "263d469c0e6a4b8ebf65038ddc0f77f267cd0b37f4388ed4213cd160d559c982",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/og-preview.png",
+      "gitBlob": "a8a03d2f454af71ea949845246022636b94273a3",
+      "sha256": "52978f8359534276a8e02a5eedda15beff45b4d67b9668943e71d51e6e303d4d",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/opengraph.jpg",
+      "gitBlob": "5d42ea136352d553c78957a03c3512ed55b99290",
+      "sha256": "77f2648eef9c80d7d32093d3dfe4af83b890c3a2ac26ebfafc431c91bb903b50",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/coach.png",
+      "gitBlob": "aa0981ada05e63ce5ab0f13fd962373d155e4adc",
+      "sha256": "529fe71790b6bad270d7f8d563eef91d671605933007f7e3fc0b93ff531998fc",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/home.png",
+      "gitBlob": "c6a828a08d5239639ce2f4d85321cf28880adb4f",
+      "sha256": "a4066ca5496fe0965535f94885b3e30749abe159cd1aed086e4e8260ba5f06f9",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/logging.png",
+      "gitBlob": "254e53defc69ab7dc0bc9a8538b815c642f566ea",
+      "sha256": "1fe567eb66c0b92fb4ec56bf3ba3b5e41642e56b612eac6969c950439af7219f",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/meals.png",
+      "gitBlob": "4cb6920d5eec9d345c7ea3e52334d84ea9fe1967",
+      "sha256": "57af31b768ea0b57036e83739a1f0afb9536d8e62ed3403407c0add32a896a71",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/micronutrients.png",
+      "gitBlob": "baaa33a9388314131b61fe06d46efdfee9f98109",
+      "sha256": "6154d66c9934c4b057f6d3a9c3267b83926a270b5a62135375db60d72e0c7d93",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/progress.png",
+      "gitBlob": "36fcefeb8404b2799a94aecc0400604b193315ea",
+      "sha256": "27e9af432c98805f3bd5996d919bcd00484924ee1ec469ce3d5a25edd7756d6b",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/review.png",
+      "gitBlob": "574ef05c45848dfb8d307469ef5fcbafc949c634",
+      "sha256": "fbcd86c3c7a7f51b38863332765dd310c894932b078ff836ef04244e1d4899b1",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/screenshots/snap.png",
+      "gitBlob": "72e0246e99cb7b35a4808bd145c167093c5d99c0",
+      "sha256": "5e6bb3af34d628adf46c0654f6f677d147b473e4da44f694eaf26c330f82e88a",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/welcome-1.webp",
+      "gitBlob": "303395cb5c087f42d1d4683020bd3f33b390c265",
+      "sha256": "f4f6ce90fb4e2d46547e8c6fcf0d48c12f2473ab8a907028d18cac4f0a4bc582",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/welcome-2.webp",
+      "gitBlob": "8239be63a1106de1ab011c333211723b28300882",
+      "sha256": "0d21490532b0cb1569d0c388014fa33ebff411e7c22cd29e022e9cd5bc4080c1",
+      "format": "raw"
+    },
+    {
+      "path": "web/assets/welcome-3.webp",
+      "gitBlob": "8dffb6d0c069f171ebf07d33defb5eb337294509",
+      "sha256": "22949acc0184ded5c01d73939ceec7b5629f80cac3d8b41cc24a1fe38e7e6107",
+      "format": "raw"
+    },
+    {
+      "path": "web/shared/aiConnection.ts",
+      "gitBlob": "d7329c1054e3911765f648357541fa34a1f9b22d",
+      "sha256": "2741ec30179f62086b9d1a89015a72681677d9cde54cf18db63909665ded2392",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/shared/aiPlans.ts",
+      "gitBlob": "f0daf3ae3d62c372b81d078720d9cbd7d9751fcf",
+      "sha256": "4a63ac45ec0af5e9d03a0b9c7cde336a15241db3eabbc9516002cda316267f12",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/shared/appStateContract.ts",
+      "gitBlob": "fa89587069b7c4e99a8c417b5fa249ac4794580c",
+      "sha256": "59bad9940e108331a28995ad82585cf0a7065f4b9bdbb4189f34510ea7e453bd",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/shared/browserSecurityHeaders.ts",
+      "gitBlob": "2f960ff17bb60ab7d1bb4b377051f34e00b34bfe",
+      "sha256": "e00260b4fe810e8a278a953e90e5204f19ae342daa8a1347929aec93d299c8ba",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/shared/googleOAuth.ts",
+      "gitBlob": "d739d03f2b710ce2e1a21356a7372c70cdd5d650",
+      "sha256": "8defa7acbca26fa485a6a541ab335a5a508087802826e3613189433512f1e66e",
+      "format": "crlf-normalized"
+    },
+    {
+      "path": "web/vercel.json",
+      "gitBlob": "305305abdf1a8a3d47be9dfcaa88e70414494431",
+      "sha256": "cce3dc25d9728c13f1c0ab645502acc730b84b9a9c401b3b6da49543122159a0",
+      "format": "crlf-normalized"
+    }
+  ],
+  "harness": [
+    {
+      "path": "before.config.ts",
+      "sha256": "772b347017398bcb69c155f14db4123908a70e3e0a16e960be5dfe55c3af8f67"
+    },
+    {
+      "path": "before.spec.ts",
+      "sha256": "5482835bf7a173ff03bc547bf196e01ef276c569ab53dc0231ba1ba9b9d6956a"
+    },
+    {
+      "path": "before.vite.config.mjs",
+      "sha256": "0dee532aa5ecb11c9daf6684525603b330bd08fcd773349ddd161690fc7ec90d"
+    },
+    {
+      "path": "before-provenance.mjs",
+      "sha256": "b0e192efecd4c4e5733158ec64435d3bd2802d866bda8c4931ef7bb8555d4fe3"
+    }
+  ],
+  "seeds": [
+    {
+      "path": "web/app/e2e/seed.ts",
+      "sha256": "2f38d848a3195998c29dd8b34570d35584ec8e7e39e4523d296efe058504a414"
+    },
+    {
+      "path": "web/app/src/lib/visualSeed.ts",
+      "sha256": "2e8322248dc0b3e4d2c056de289776cb02849f3a01d503626256f7e9c03a7226"
+    }
+  ],
+  "archiveSha256": "619643bdd379969d0e708858c277e6d8dff8781ef395c4d7a4d8684932d4ed3f",
+  "environment": {
+    "node": "v24.14.1",
+    "platform": "win32",
+    "port": 5397,
+    "backend": "neon",
+    "googleClientId": "",
+    "liveApi": false,
+    "liveDatabase": false,
+    "cacheDir": "C:\\Users\\aswin\\Desktop\\Fud AI\\.claude\\worktrees\\poiem-motion-return\\.cache\\account-recovery-baseline-060337c8\\.cache\\vite",
+    "appDependencies": "C:\\Users\\aswin\\Desktop\\Fud AI\\.claude\\worktrees\\poiem-motion-return\\web\\app\\node_modules"
+  }
+}

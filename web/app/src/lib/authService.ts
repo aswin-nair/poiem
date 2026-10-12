@@ -7,7 +7,7 @@ import {
   apiRegister,
   clearAuthToken,
   loadAuthToken,
-  saveAuthToken,
+  saveVerifiedAuthToken,
 } from './apiClient'
 import { registerWithEmail, loginWithEmail } from './localAuth'
 
@@ -19,7 +19,7 @@ export async function registerAccount(
 ): Promise<AuthUser> {
   if (cloud) {
     const { token, user } = await apiRegister(name, email, password)
-    saveAuthToken(token)
+    saveVerifiedAuthToken(token, user.sub)
     saveAuthSession(user)
     return user
   }
@@ -35,7 +35,7 @@ export async function loginAccount(
 ): Promise<AuthUser> {
   if (cloud) {
     const { token, user } = await apiLogin(email, password)
-    saveAuthToken(token)
+    saveVerifiedAuthToken(token, user.sub)
     saveAuthSession(user)
     return user
   }
@@ -47,7 +47,7 @@ export async function loginAccount(
 export async function googleAccount(credential: string, cloud: boolean): Promise<AuthUser> {
   if (cloud) {
     const { token, user } = await apiGoogleAuth(credential)
-    saveAuthToken(token)
+    saveVerifiedAuthToken(token, user.sub)
     saveAuthSession(user)
     return user
   }

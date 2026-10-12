@@ -1,0 +1,4 @@
+
+> typecheck:api
+> tsc -p api/tsconfig.json --noEmit
+

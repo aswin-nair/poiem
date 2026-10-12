@@ -20,6 +20,8 @@ const NO_REFRESH_PATHS = new Set([
 ])
 
 let accessToken: string | null = null
+// Memory only: a decoded/stored JWT is not evidence of server authentication.
+let verifiedAccount: string | null = null
 let refreshInFlight: Promise<boolean> | null = null
 
 export class ApiError extends Error {
@@ -42,7 +44,22 @@ export class ApiResponseError extends ApiError {
 
 export function saveAuthToken(token: string): void {
   accessToken = token
+  verifiedAccount = null
   clearLegacyAuthToken()
+}
+
+/** Call only with the token/account pair returned by a successful auth request. */
+export function saveVerifiedAuthToken(token: string, userId: string): void {
+  if (!userId || authTokenSubject(token) !== userId) {
+    clearAuthToken()
+    throw new ApiResponseError('The sign-in response did not match this account. Please sign in again.')
+  }
+  saveAuthToken(token)
+  verifiedAccount = userId
+}
+
+export function hasVerifiedAccountSession(userId: string, token: string): boolean {
+  return accessToken === token && verifiedAccount === userId && authTokenSubject(token) === userId
 }
 
 export function loadAuthToken(): string | null {
@@ -51,6 +68,7 @@ export function loadAuthToken(): string | null {
 
 export function clearAuthToken(): void {
   accessToken = null
+  verifiedAccount = null
   clearLegacyAuthToken()
 }
 
@@ -74,9 +92,10 @@ export async function tryRefreshAccessToken(): Promise<boolean> {
   if (refreshInFlight) return refreshInFlight
   refreshInFlight = (async () => {
     try {
-      const result = await apiFetch<{ token?: string }>(authApiPath('refresh'), { method: 'POST' })
+      const result = await apiFetch<{ token?: string; user?: AuthUser }>(authApiPath('refresh'), { method: 'POST' })
       if (typeof result.token !== 'string' || !result.token) return false
-      saveAuthToken(result.token)
+      if (result.user?.sub) saveVerifiedAuthToken(result.token, result.user.sub)
+      else saveAuthToken(result.token)
       return true
     } catch {
       return false
@@ -189,7 +208,7 @@ export async function apiRefreshSession(): Promise<{ token: string; user: AuthUs
       method: 'POST',
     })
     if (typeof result.token !== 'string' || !result.user?.sub) return null
-    saveAuthToken(result.token)
+    saveVerifiedAuthToken(result.token, result.user.sub)
     return result
   } catch {
     clearAuthToken()

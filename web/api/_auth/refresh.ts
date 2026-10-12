@@ -28,15 +28,16 @@ async function handler(req: VercelRequest, res: VercelResponse) {
     setRefreshCookie(res, rotated.refreshToken, rotated.expiresAt, req)
     return json(res, 200, { token, user: rotated.user })
   } catch (err) {
-    clearRefreshCookie(res, req)
-    if (err instanceof RefreshReplayError || err instanceof RefreshNotFoundError) {
+    if (err instanceof RefreshReplayError || err instanceof RefreshNotFoundError || err instanceof InvalidJsonError) {
+      clearRefreshCookie(res, req)
       return unauthorized(res)
     }
-    if (err instanceof InvalidJsonError) return unauthorized(res)
     if (err instanceof RateLimitExceeded) {
       res.setHeader('Retry-After', String(err.retryAfterSeconds))
       return json(res, 429, { error: 'Too many requests. Try again later.' })
     }
+    // A temporary server failure does not prove that the refresh token is
+    // invalid. Keep its cookie so the browser can retry after recovery.
     return serverError(res, err)
   }
 }

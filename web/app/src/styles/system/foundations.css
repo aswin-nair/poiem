@@ -206,6 +206,8 @@
       overflow: hidden;
       color: var(--k-ink);
       font: 700 var(--k-type-label)/1.2 var(--k-font-body);
+      /* One line, as tall as the brand mark beside it: a 44px target that still truncates with an ellipsis. */
+      line-height: 44px;
       text-decoration: none;
       text-overflow: ellipsis;
       white-space: nowrap;

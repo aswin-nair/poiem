@@ -1,0 +1,48 @@
+[WebServer] [poiem] Cloud backend: /api is proxied to http://127.0.0.1:3001. Start the API first (from web/: npm run dev:all).
+[WebServer] (node:20948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 30 tests using 1 worker
+
+(node:26760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [desktop] › e2e\connection-recovery.spec.ts:70:3 › verified new session recovers queued work during account 500 at 390px (28.6s)
+  ok  2 [desktop] › e2e\connection-recovery.spec.ts:70:3 › verified new session recovers queued work during account 500 at 1440px (16.0s)
+  ok  3 [desktop] › e2e\connection-recovery.spec.ts:109:1 › unvalidated account data does not adopt a changed session; blocked recovery resumes on focus (11.3s)
+  ok  4 [desktop] › e2e\connection-recovery.spec.ts:134:1 › account 500 without a device copy stays blocked and Try again loads the recovered service (5.6s)
+  ok  5 [desktop] › e2e\connection-recovery.spec.ts:147:1 › offline then online clears the banner with an empty outbox and no new write (8.5s)
+  ok  6 [desktop] › e2e\connection-recovery.spec.ts:161:3 › cached account 429 stays honest and Check account preserves an open draft (12.5s)
+  ok  7 [desktop] › e2e\connection-recovery.spec.ts:161:3 › cached account 503 stays honest and Check account preserves an open draft (14.2s)
+  ok  8 [desktop] › e2e\connection-recovery.spec.ts:192:1 › a failed account GET recovers on foreground focus without an online event (11.8s)
+  ok  9 [desktop] › e2e\connection-recovery.spec.ts:208:1 › offline queued work retries the same mutation and clears only after acknowledgement (11.4s)
+  ok 10 [desktop] › e2e\connection-recovery.spec.ts:229:1 › a newer server copy requires explicit recovery and survives reconnect (18.7s)
+  ok 11 [desktop] › e2e\connection-recovery.spec.ts:254:1 › invalid successful account responses enter validation recovery, not offline mode (15.8s)
+  ok 12 [desktop] › e2e\connection-recovery.spec.ts:268:3 › a delayed 503 account check cannot override an acknowledged edit (16.0s)
+  ok 13 [desktop] › e2e\connection-recovery.spec.ts:268:3 › a delayed invalid account check cannot override an acknowledged edit (14.8s)
+[WebServer] 1:32:27 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 14 [desktop] › e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 390px light (21.6s)
+[WebServer] 1:32:57 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 15 [desktop] › e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 390px dark (24.2s)
+[WebServer] 1:33:18 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 16 [desktop] › e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 1440px light (22.1s)
+[WebServer] 1:33:37 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 17 [desktop] › e2e\photo-upload.spec.ts:80:3 › the available photo uploader fits 1440px dark (14.5s)
+  ok 18 [desktop] › e2e\photo-upload.spec.ts:98:1 › a large phone photo is prepared only on Analyze and fits the managed request limits (27.9s)
+  ok 19 [desktop] › e2e\photo-upload.spec.ts:134:1 › a failed analysis preserves the original large draft for reload and retry (14.2s)
+  ok 20 [desktop] › e2e\photo-upload.spec.ts:157:1 › stopping local image preparation sends no AI request and keeps the selected photo (12.1s)
+  ok 21 [desktop] › e2e\photo-upload.spec.ts:179:3 › EXIF rotation is applied once while keeping the entire frame (bitmap decoder) (5.3s)
+  ok 22 [desktop] › e2e\photo-upload.spec.ts:179:3 › EXIF rotation is applied once while keeping the entire frame (Image fallback) (5.7s)
+  ok 23 [desktop] › e2e\session-expiry.spec.ts:56:1 › cold refresh expiry returns the same account to its hydrated corrected review once (17.0s)
+  ok 24 [desktop] › e2e\session-expiry.spec.ts:72:1 › a 401 on a queued write preserves work and restores the settings panel after sign-in (10.1s)
+  ok 25 [desktop] › e2e\session-expiry.spec.ts:90:1 › signing into another account drops the old destination and private draft (11.3s)
+  ok 26 [desktop] › e2e\session-expiry.spec.ts:103:1 › an expired review without a valid hydrated draft returns to the meal picker (6.4s)
+  ok 27 [desktop] › e2e\session-expiry.spec.ts:112:1 › session expiry preserves the selected journal day after a same-account return (8.3s)
+  ok 28 [desktop] › e2e\session-expiry.spec.ts:136:1 › cloud password recovery retains setup context without forwarding private URL fields (8.5s)
+(node:30284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 29 [iphone] › e2e\connection-recovery.spec.ts:70:3 › verified new session recovers queued work during account 500 at 390px (29.2s)
+(node:28240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 30 [pixel] › e2e\connection-recovery.spec.ts:70:3 › verified new session recovers queued work during account 500 at 390px (14.8s)
+
+  30 passed (8.6m)

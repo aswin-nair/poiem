@@ -125,8 +125,8 @@ for (const action of ['clear', 'delete'] as const) {
     await send(page, 'Help me think of a snack.')
     await expect.poll(() => Boolean(held)).toBe(true)
     if (action === 'clear') {
-      page.once('dialog', dialog => dialog.accept())
       await page.getByRole('button', { name: 'Clear', exact: true }).click()
+      await page.getByRole('dialog', { name: 'Clear chat history?' }).getByRole('button', { name: 'Clear chat', exact: true }).click()
     } else {
       await page.getByRole('button', { name: 'Delete your message', exact: true }).click()
     }

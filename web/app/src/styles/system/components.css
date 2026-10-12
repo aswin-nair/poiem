@@ -456,6 +456,17 @@
     animation: k-sheet-up 240ms var(--k-ease) both;
   }
   .k-sheet-grab { display: block; width: 44px; height: 4px; margin: 2px auto 10px; border-radius: 4px; background: var(--k-hair-strong); }
+  /* ConfirmDialog: the in-page stand-in for window.confirm. */
+  .k-confirm h2 {
+    margin: var(--k-space-sm) 0 var(--k-space-lg);
+    color: var(--k-ink);
+    font: 900 var(--k-type-panel)/1.1 var(--k-font-display);
+    text-transform: uppercase;
+  }
+  .k-confirm-body p { margin: 0 0 var(--k-space-md); color: var(--k-muted); font-size: var(--k-type-body); line-height: 1.6; }
+  .k-confirm-body p:last-child { margin-bottom: 0; }
+  .k-confirm-actions { display: grid; gap: var(--k-space-md); margin-top: var(--k-space-xl); }
+  .k-confirm-actions .pressable-face { white-space: normal; }
   @media (min-width: 720px) {
     .k-sheet-backdrop { align-items: center; padding: 24px; }
     .k-sheet { border-bottom: 2px solid var(--k-line); border-radius: 0; box-shadow: var(--k-shadow); }
