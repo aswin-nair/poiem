@@ -243,7 +243,22 @@ export function ProgressBarChart({
   onSelectDay: (dayKey: string) => void
 }) {
   const scrollRef = useRef<HTMLDivElement>(null)
+  const controlsRef = useRef<HTMLDivElement>(null)
+  const scrubbing = useRef(false)
   const dayRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  /** The day under a pointer, from where it sits across the row of bars. */
+  function dayUnder(clientX: number): InsightDay | null {
+    const box = controlsRef.current?.getBoundingClientRect()
+    if (!box || box.width <= 0 || bars.length === 0) return null
+    const index = Math.min(bars.length - 1, Math.max(0, Math.floor(((clientX - box.left) / box.width) * bars.length)))
+    return bars[index]
+  }
+
+  function scrubTo(clientX: number) {
+    const day = dayUnder(clientX)
+    if (day && day.dayKey !== selectedDayKey) onSelectDay(day.dayKey)
+  }
   useEffect(() => {
     const scroller = scrollRef.current
     const button = dayRefs.current[bars.findIndex(day => day.dayKey === selectedDayKey)]
@@ -314,6 +329,7 @@ export function ProgressBarChart({
                 <rect
                   x={x} y={y} width={barW} height={barH}
                   fill="url(#bar-grad)"
+                  className="insights-bar"
                 />
               )}
               {b.logged && b.value === 0 && <line x1={x} y1={padT + chartH} x2={x + barW} y2={padT + chartH} stroke="var(--k-action)" strokeWidth="4" />}
@@ -339,6 +355,7 @@ export function ProgressBarChart({
           return (
             <text
               key={b.dayKey}
+              className="insights-bar-value"
               x={x} y={padT + chartH - barH - 4}
               textAnchor="middle" fill="var(--k-muted)" fontSize="11" fontWeight="600"
               stroke="var(--k-card)" strokeWidth="3" strokeLinejoin="round" paintOrder="stroke"
@@ -348,7 +365,24 @@ export function ProgressBarChart({
           )
         })}
       </svg>
-      <div className="insights-chart-controls" style={{ left: `${padL / w * 100}%`, right: `${padR / w * 100}%`, top: `${padT / h * 100}%`, bottom: `${padB / h * 100}%`, gridTemplateColumns: `repeat(${bars.length}, minmax(44px, 1fr))` }} role="group" aria-label="Inspect a calorie chart day">
+      <div
+        ref={controlsRef}
+        className="insights-chart-controls"
+        // A mouse or pen can drag across the bars. Touch is left alone: on a phone this chart is
+        // wider than its card and a horizontal drag scrolls it, so tap still selects a day.
+        onPointerDown={event => {
+          if (event.pointerType === 'touch' || event.button !== 0) return
+          scrubbing.current = true
+          event.currentTarget.setPointerCapture(event.pointerId)
+          scrubTo(event.clientX)
+        }}
+        onPointerMove={event => { if (scrubbing.current) scrubTo(event.clientX) }}
+        onPointerUp={event => {
+          scrubbing.current = false
+          if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
+        }}
+        onPointerCancel={() => { scrubbing.current = false }}
+        style={{ left: `${padL / w * 100}%`, right: `${padR / w * 100}%`, top: `${padT / h * 100}%`, bottom: `${padB / h * 100}%`, gridTemplateColumns: `repeat(${bars.length}, minmax(44px, 1fr))` }} role="group" aria-label="Inspect a calorie chart day">
         {bars.map((day, index) => (
           <button
             key={day.dayKey}

@@ -53,6 +53,47 @@ test.describe('Insights calorie chart', () => {
     expect(weight.width).toBeGreaterThan(780)
   })
 
+  test('a mouse can drag across the bars and the inspector follows', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 })
+    await openInsights(page)
+    const group = page.getByRole('group', { name: 'Inspect a calorie chart day' })
+    // The chart sits below the first screen, and a mouse event outside the viewport goes nowhere.
+    await group.scrollIntoViewIfNeeded()
+    const box = await group.boundingBox()
+    if (!box) throw new Error('the chart bars are not on screen')
+    const at = (index: number) => box.x + (box.width * (index + 0.5)) / 7
+    const y = box.y + box.height / 2
+    const inspected = page.getByLabel('Inspect a day', { exact: true })
+
+    await page.mouse.move(at(6), y)
+    await page.mouse.down()
+    await page.mouse.move(at(4), y, { steps: 6 })
+    await expect(inspected).toHaveValue('2026-09-17')
+    await page.mouse.move(at(1), y, { steps: 6 })
+    await expect(inspected).toHaveValue('2026-09-14')
+    await page.mouse.up()
+    // Releasing stops it: moving on without the button down changes nothing.
+    await page.mouse.move(at(5), y, { steps: 4 })
+    await expect(inspected).toHaveValue('2026-09-14')
+  })
+
+  test('the bars rise once on arrival, with transform only', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 })
+    await openInsights(page)
+    const bar = page.locator('.insights-bar').first()
+    await expect(bar).toHaveCSS('animation-name', 'k-insights-bar-rise')
+    await expect(bar).toHaveCSS('animation-duration', '0.24s')
+  })
+
+  test('the rise is reduced to nothing under reduced motion', async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1280, height: 900 }, timezoneId: 'UTC', locale: 'en-GB' })
+    const page = await context.newPage()
+    await openInsights(page)
+    const seconds = await page.locator('.insights-bar').first().evaluate(element => parseFloat(getComputedStyle(element).animationDuration))
+    expect(seconds).toBeLessThan(0.001)
+    await context.close()
+  })
+
   test('does not horizontally overflow at the 768 two-column width', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1024 })
     await openInsights(page)

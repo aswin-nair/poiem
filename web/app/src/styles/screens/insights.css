@@ -167,6 +167,16 @@
   .k-insights .insights-chart-scroll { max-width: 100%; overflow-x: auto; padding: 4px 0; scrollbar-color: var(--k-hair-strong) var(--k-card); }
   .k-insights .insights-chart-plot { position: relative; }
   .k-insights .insights-chart-controls { position: absolute; display: grid; }
+  /* A mouse or pen can drag across the bars, so the pointer says so. Touch still taps and scrolls. */
+  @media (hover: hover) and (pointer: fine) {
+    .k-insights .insights-chart-controls { cursor: ew-resize; user-select: none; }
+  }
+  /* The bars rise from the baseline once when they arrive, all together; their values fade in with them.
+     Transform and opacity only, and the global reduced-motion rule collapses both. */
+  .k-insights .insights-bar { transform-box: fill-box; transform-origin: 50% 100%; animation: k-insights-bar-rise 240ms var(--k-ease) both; }
+  .k-insights .insights-bar-value { animation: k-insights-value-in 240ms var(--k-ease) both; }
+  @keyframes k-insights-bar-rise { from { transform: scaleY(0); } }
+  @keyframes k-insights-value-in { from { opacity: 0; } }
   .k-insights .insights-chart-day { min-width: 44px; min-height: 44px; margin: 0; padding: 0; border: 2px solid transparent; border-radius: 0; background: transparent; box-shadow: none; cursor: pointer; touch-action: pan-x pan-y; }
   .k-insights .insights-chart-day[aria-pressed="true"] { border-color: var(--k-ink); }
   .k-insights .insights-chart-day:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: -5px; }
