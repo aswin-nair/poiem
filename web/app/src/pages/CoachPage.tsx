@@ -196,11 +196,13 @@ export function CoachPage() {
   }, [])
 
   useEffect(() => {
-    if (!followConversation.current) return
+    // An empty conversation opens at the top: there is nothing newer to follow, and the
+    // heading and the setup notice belong in view, not scrolled past.
+    if (!followConversation.current || empty) return
     /* No `block`: the default clamps to the maximum scroll, which keeps the newest
        message above the sticky compose bar and the tab bar. */
     bottomRef.current?.scrollIntoView({ behavior: followScrollBehavior(prefersReducedMotion()) })
-  }, [state.chatMessages, loading])
+  }, [state.chatMessages, loading, empty])
 
   const ai = availability(state.aiSettings, 'coach')
   const foodAi = availability(state.aiSettings, 'food_text')
