@@ -13,4 +13,14 @@ test.describe('Coach opening position', () => {
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
     expect(await page.evaluate(() => Math.round(window.scrollY))).toBe(0)
   })
+
+  test('without AI it leads with setup, offers no starters, and keeps the composer', async ({ page }) => {
+    await applyVisualSeed(page)
+    await page.goto('/coach')
+    await expect(page.getByRole('link', { name: 'Set up AI' }).or(page.getByRole('button', { name: 'Set up AI' }))).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Write it down here' })).toBeVisible()
+    await expect(page.getByRole('button', { name: /Summarize my recent logging pattern|protein-rich meal ideas|balanced next meal/ })).toHaveCount(0)
+    // Local safety support answers without AI, so the composer stays.
+    await expect(page.getByRole('textbox', { name: 'Message Coach' })).toHaveAttribute('placeholder', 'Ask for support…')
+  })
 })

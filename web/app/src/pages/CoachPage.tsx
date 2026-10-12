@@ -211,6 +211,8 @@ export function CoachPage() {
   const byok = usesByok(state.aiSettings)
   const provider = byok ? providerLabel(state.aiSettings.provider) : 'Poiem AI'
   const canChat = ai.kind === 'ready'
+  // While availability is still being checked the page looks as it will when ready, so it does not flip.
+  const aiBlocked = !canChat && ai.kind !== 'checking'
 
   function prepareDraft(text: string) {
     setInput(text)
@@ -409,21 +411,32 @@ export function CoachPage() {
 
         {state.chatMessages.length === 0 && (
           <section className="k-card k-coach-empty" aria-labelledby="coach-empty-title">
-            <h2 id="coach-empty-title">Ask me anything</h2>
-            <p>Reflect on recent logging patterns or ask for general meal ideas.</p>
-            <div className="k-coach-starters">
-              {STARTERS.map(starter => (
-                <button
-                  key={starter.text}
-                  type="button"
-                  className={`k-coach-starter is-tone-${starter.tone}`}
-                  onClick={() => prepareDraft(starter.text)}
-                  disabled={loading}
-                >
-                  <Sparkles size={16} aria-hidden="true" /> {starter.text}
-                </button>
-              ))}
-            </div>
+            {aiBlocked ? (
+              <>
+                {/* Starters only fill a draft that cannot be answered, so they stay out of the way. The
+                    composer stays: local safety support answers without an AI connection. */}
+                <h2 id="coach-empty-title">Write it down here</h2>
+                <p>Replies from Coach need AI set up. You can still write here, and support options appear if you mention something that needs care.</p>
+              </>
+            ) : (
+              <>
+                <h2 id="coach-empty-title">Ask me anything</h2>
+                <p>Reflect on recent logging patterns or ask for general meal ideas.</p>
+                <div className="k-coach-starters">
+                  {STARTERS.map(starter => (
+                    <button
+                      key={starter.text}
+                      type="button"
+                      className={`k-coach-starter is-tone-${starter.tone}`}
+                      onClick={() => prepareDraft(starter.text)}
+                      disabled={loading}
+                    >
+                      <Sparkles size={16} aria-hidden="true" /> {starter.text}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
             {compose}
           </section>
         )}
