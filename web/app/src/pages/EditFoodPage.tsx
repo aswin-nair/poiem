@@ -9,6 +9,7 @@ import { PressableButton } from '../components/PressableButton'
 import { FlowFeedback, LogFlowHeader } from '../components/LogFlowUI'
 import { MealNameField, MealTotals, MealTypePicker, NutritionFields } from '../components/MealEntryFields'
 import { validateManualFood } from '../lib/foodEntryValidation'
+import { feel } from '../lib/feel'
 
 export function EditFoodPage() {
   const { id } = useParams<{ id: string }>()
@@ -67,7 +68,7 @@ export function EditFoodPage() {
       <main className="app-main">
         <div className="flow-edit-topbar">
           <BackLink onClick={leave} label="Today" />
-          <button type="button" className="flow-favourite" onClick={() => toggleFavorite(entry)}
+          <button type="button" className="flow-favourite" onClick={() => { feel('select'); toggleFavorite(entry) }}
             aria-pressed={fav} aria-label={fav ? `Remove ${entry.name} from Saved` : `Save ${entry.name}`}>
             <IconStar active={fav} size={20} /> {fav ? 'Saved' : 'Save'}
           </button>
