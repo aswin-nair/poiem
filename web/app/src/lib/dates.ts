@@ -32,6 +32,14 @@ export function startOfDay(date = new Date()): Date {
   return d
 }
 
+/**
+ * Milliseconds until the next local midnight. The calendar answers it, not a
+ * fixed 24 hours: a daylight-saving day is 23 or 25 hours long.
+ */
+export function msUntilNextLocalDay(now: Date): number {
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime() - now.getTime()
+}
+
 /** Read a journal date as a local calendar day, rejecting rollovers and future days. */
 export function journalDayFromNavState(state: unknown): Date | undefined {
   if (!state || typeof state !== 'object' || !('journalDay' in state)) return undefined

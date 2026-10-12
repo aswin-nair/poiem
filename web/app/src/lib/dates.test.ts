@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { journalDayFromNavState, localDayKey } from './dates'
+import { journalDayFromNavState, localDayKey, msUntilNextLocalDay } from './dates'
 
 describe('journalDayFromNavState', () => {
   beforeEach(() => {
@@ -31,5 +31,21 @@ describe('journalDayFromNavState', () => {
     { journalDay: '2026-10-07' },
   ])('rejects malformed, rolled-over or future navigation state: %j', state => {
     expect(journalDayFromNavState(state)).toBeUndefined()
+  })
+})
+
+describe('msUntilNextLocalDay', () => {
+  it('counts the milliseconds left in the local day', () => {
+    expect(msUntilNextLocalDay(new Date(2026, 9, 12, 23, 58, 0))).toBe(2 * 60 * 1000)
+    expect(msUntilNextLocalDay(new Date(2026, 9, 12, 0, 0, 0))).toBe(24 * 60 * 60 * 1000)
+  })
+
+  it('is never zero, so a timer set at midnight cannot spin', () => {
+    expect(msUntilNextLocalDay(new Date(2026, 9, 12, 23, 59, 59, 999))).toBe(1)
+  })
+
+  it('rolls over a month and a year end', () => {
+    expect(msUntilNextLocalDay(new Date(2026, 11, 31, 23, 0, 0))).toBe(60 * 60 * 1000)
+    expect(msUntilNextLocalDay(new Date(2026, 1, 28, 12, 0, 0))).toBe(12 * 60 * 60 * 1000)
   })
 })
