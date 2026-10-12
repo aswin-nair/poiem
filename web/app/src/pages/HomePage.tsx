@@ -158,8 +158,8 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
     if (guest || paused) return {} as Partial<Record<MealType, FoodEntry | null>>
     const now = new Date()
     return Object.fromEntries(slots.map(slot => [slot, usualMeal(state.foodEntries, slot, now)])) as Partial<Record<MealType, FoodEntry | null>>
-    // The calendar day is a dependency: yesterday's entries are today's history after midnight.
-  }, [state.foodEntries, currentDayKey, guest, paused])
+    // The calendar day is a dependency on purpose: the 30-day window moves when the date does.
+  }, [state.foodEntries, currentDayKey, guest, paused]) // eslint-disable-line react-hooks/exhaustive-deps
   const water = state.gamification.waterByDate[selectedDayKey] ?? 0
   const notes = state.gamification.notesByDate[selectedDayKey] ?? 0
   const loggedDays = useMemo(() => new Set(state.foodEntries.map(entry => localDayKey(entry.timestamp))), [state.foodEntries])
