@@ -35,6 +35,7 @@ import { clearAnalytics, track } from '../lib/analytics'
 import { clearNotificationHistory, requestNotifyPermission } from '../lib/notifications'
 import { clearRingAck } from '../lib/ringAck'
 import { userInitials } from '../lib/auth'
+import { localDayKey } from '../lib/dates'
 import { IconChevronRight, IconCoach } from '../components/icons'
 import { apiChangePassword, apiDeleteAccount, apiLogoutAll, loadAuthToken, saveVerifiedAuthToken } from '../lib/apiClient'
 import { isCloudBackend } from '../lib/dataBackend'
@@ -352,7 +353,8 @@ export function SettingsPage() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `poiem-export-${new Date().toISOString().slice(0, 10)}.json`
+    // The reader's own calendar day, not the UTC date: before 05:30 in India the UTC date is still yesterday.
+    a.download = `poiem-export-${localDayKey(new Date())}.json`
     a.click()
     URL.revokeObjectURL(url)
     track({ name: 'export_completed' })
