@@ -263,8 +263,10 @@
   .k-insights .badge-card.unlocked { border-color: var(--k-sticker-ink); background: var(--k-sticker-butter); color: var(--k-sticker-ink); box-shadow: none; }
   .k-insights .badge-card.locked { border-style: dashed; background: transparent; color: var(--k-muted); filter: none; opacity: 1; }
   .k-insights .badge-emoji { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid currentColor; background: none; }
-  .k-insights .badge-name { font: 800 var(--k-text-sm)/1.2 var(--k-font-body); }
-  .k-insights .badge-desc { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); }
+  /* The card sets the colour: the legacy name and description tokens turn light in dark mode, which left them unreadable on the butter face. */
+  .k-insights .badge-name { font: 800 var(--k-text-sm)/1.2 var(--k-font-body); color: inherit; }
+  .k-insights .badge-desc { font: 500 var(--k-text-xs)/1.35 var(--k-font-body); color: inherit; }
+  .k-insights .badge-card.locked .badge-name { color: var(--k-ink); }
 
   /* The weight sheet opens over Insights, shaped like the log sheet. */
   .k-insights .modal-backdrop {
