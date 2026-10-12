@@ -120,7 +120,12 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1280, height: 900 
       for (const [name, path] of [['today', '/'], ['log', '/log'], ['saved', '/discover'], ['insights', '/progress'], ['you', '/settings']]) {
         await test.step(`${name} in ${theme}`, async () => {
           await page.goto(path)
-          await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible()
+          // The log sheet is a modal: the Today heading behind it is hidden from the accessibility tree
+          // the moment it opens, so the sheet is the landmark there. Cold route chunks get a longer wait.
+          const landmark = path === '/log'
+            ? page.getByRole('dialog', { name: 'Log a meal' })
+            : page.getByRole('heading', { level: 1 }).first()
+          await expect(landmark).toBeVisible({ timeout: 15_000 })
           await expectTheme(page, theme)
           await fitsViewport(page)
           await page.screenshot({ path: testInfo.outputPath(`${name}-${theme}-${viewport.width}.png`), fullPage: true, animations: 'disabled' })

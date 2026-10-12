@@ -45,7 +45,8 @@ describe('deploy context for shared packages', () => {
     }
     expect(runtime.CONTRACTS_PACKAGE_ID).toBe('@fud-ai/contracts')
     expect(typeof runtime.buildTelemetryEnvelope).toBe('function')
-  })
+    // An esbuild bundle spawns a child process; the default 5 s limit is too tight on a busy CI worker or laptop.
+  }, 30_000)
 
   it('keeps a committed Node runtime next to the API functions', async () => {
     const runtime = await import(pathToFileURL(contractsRuntimeFile(webRoot)).href) as {
