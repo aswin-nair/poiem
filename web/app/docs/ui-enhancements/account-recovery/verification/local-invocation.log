@@ -1,0 +1,4 @@
+Error: Project(s) "auth.spec.ts", "session-continuity.spec.ts", "settings-departure.spec.ts", "route-focus.spec.ts", "production.spec.ts" not found. Available projects: "chromium", "mobile", "mobile-pixel", "production"
+    at Object.filterProjects (C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\node_modules\playwright\lib\runner\index.js:2096:11)
+    at runTests (C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\node_modules\playwright\lib\cli\testActions.js:61:30)
+    at _Command.<anonymous> (C:\Users\aswin\Desktop\Fud AI\.claude\worktrees\poiem-motion-return\web\app\node_modules\playwright\lib\program.js:53:7)

@@ -1,0 +1,13 @@
+
+> test:api
+> vitest run --config test/api/vitest.config.ts test/api/refresh.test.ts test/api/mobile-client.test.ts test/api/session-store.test.ts --maxWorkers=2
+
+
+ RUN  v4.1.10 C:/Users/aswin/Desktop/Fud AI/.claude/worktrees/poiem-motion-return/web
+
+
+ Test Files  3 passed (3)
+      Tests  20 passed (20)
+   Start at  01:30:04
+   Duration  2.67s (transform 864ms, setup 0ms, import 1.71s, tests 73ms, environment 0ms)
+

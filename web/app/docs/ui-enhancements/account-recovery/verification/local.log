@@ -1,0 +1,85 @@
+[WebServer] (node:31496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 37 tests using 1 worker
+
+(node:30196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium] › e2e\auth.spec.ts:17:3 › Authentication › shows login page (1.1m)
+(node:9168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium] › e2e\auth.spec.ts:24:3 › Authentication › sign up with email and password (35.9s)
+  ok  3 [chromium] › e2e\auth.spec.ts:36:3 › Authentication › Momo closes its eyes for passwords and visibility can be toggled (13.6s)
+  ok  4 [chromium] › e2e\auth.spec.ts:47:3 › Authentication › rejects mismatched passwords on sign up (17.1s)
+  ok  5 [chromium] › e2e\auth.spec.ts:59:3 › Authentication › sign in after sign up and sign out (36.5s)
+  ok  6 [chromium] › e2e\route-focus.spec.ts:18:3 › pending route focus preserves a selected Manual field at 390px (11.6s)
+  ok  7 [chromium] › e2e\route-focus.spec.ts:44:3 › pending route focus preserves a selected action at 390px (4.9s)
+  ok  8 [chromium] › e2e\route-focus.spec.ts:18:3 › pending route focus preserves a selected Manual field at 1440px (5.1s)
+  ok  9 [chromium] › e2e\route-focus.spec.ts:44:3 › pending route focus preserves a selected action at 1440px (11.3s)
+  ok 10 [chromium] › e2e\route-focus.spec.ts:57:1 › a direct Manual arrival without interaction focuses its heading (4.9s)
+  x  11 [chromium] › e2e\route-focus.spec.ts:65:1 › keyboard navigation moves focus from the retained tab to each destination heading (9.6s)
+(node:16096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [chromium] › e2e\route-focus.spec.ts:77:1 › leaving a pending screen retires its focus request before its download finishes (6.9s)
+  ok 13 [chromium] › e2e\route-focus.spec.ts:113:5 › iPhone 13 › a selected Manual field retains focus at keyboard height while route focus is pending (16.7s)
+  ok 14 [chromium] › e2e\route-focus.spec.ts:113:5 › Pixel 7 › a selected Manual field retains focus at keyboard height while route focus is pending (6.7s)
+  ok 15 [chromium] › e2e\session-continuity.spec.ts:4:1 › deliberate sign-out clears return navigation while preserving the account journal (45.1s)
+  ok 16 [chromium] › e2e\session-continuity.spec.ts:16:1 › an explicit setup handoff keeps guest choices when creating an unconfigured account (12.9s)
+  ok 17 [chromium] › e2e\session-continuity.spec.ts:34:1 › an existing completed account wins over a guest setup handoff (34.8s)
+[WebServer] 1:38:17 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:38:25 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 18 [chromium] › e2e\settings-departure.spec.ts:36:1 › Stay, Escape and backdrop keep both drafts while panel and search navigation remain free (17.1s)
+[WebServer] 1:38:34 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:38:43 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 19 [chromium] › e2e\settings-departure.spec.ts:58:1 › Discard leaves with the current applied values and keeps immediate preferences (17.8s)
+[WebServer] 1:38:52 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:39:11 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 20 [chromium] › e2e\settings-departure.spec.ts:75:1 › Save applies both drafts and resumes the Log sheet with its original background state (25.1s)
+[WebServer] 1:39:18 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:39:26 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 21 [chromium] › e2e\settings-departure.spec.ts:91:1 › invalid profile from another panel focuses Height and applies neither draft (15.0s)
+[WebServer] 1:39:34 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:39:44 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 22 [chromium] › e2e\settings-departure.spec.ts:106:1 › invalid AI opens the auth disclosure, focuses its field and preserves a valid profile draft (18.3s)
+[WebServer] 1:39:53 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:40:05 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 23 [chromium] › e2e\settings-departure.spec.ts:126:1 › Forward can Stay and resumes the pending in-app history destination (26.9s)
+[WebServer] 1:40:22 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:40:35 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:40:39 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 24 [chromium] › e2e\settings-departure.spec.ts:144:1 › Back keeps drafts through panel history and protects the previous app route (26.5s)
+[WebServer] 1:40:49 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:41:00 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 25 [chromium] › e2e\settings-departure.spec.ts:166:1 › only dirty drafts register browser departure protection; immediate preferences stay freely navigable (20.5s)
+[WebServer] 1:41:09 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:41:18 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 26 [chromium] › e2e\settings-departure.spec.ts:187:1 › intentional sign-out offers Stay or Discard and never promises Save during sign-out (17.2s)
+[WebServer] 1:41:28 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:41:40 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 27 [chromium] › e2e\settings-departure.spec.ts:208:1 › forced account expiry bypasses a pending prompt and removes secret drafts (41.6s)
+[WebServer] 1:42:10 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:42:18 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 28 [chromium] › e2e\settings-departure.spec.ts:224:3 › departure choices fit 320px light at short keyboard height (15.7s)
+[WebServer] 1:42:26 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:42:35 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 29 [chromium] › e2e\settings-departure.spec.ts:224:3 › departure choices fit 320px dark at short keyboard height (16.0s)
+[WebServer] 1:42:44 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:42:53 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 30 [chromium] › e2e\settings-departure.spec.ts:224:3 › departure choices fit 390px light at short keyboard height (17.0s)
+[WebServer] 1:43:02 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:43:14 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 31 [chromium] › e2e\settings-departure.spec.ts:224:3 › departure choices fit 390px dark at short keyboard height (20.3s)
+[WebServer] 1:43:23 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:43:32 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 32 [chromium] › e2e\settings-departure.spec.ts:224:3 › departure choices fit 1440px light at short keyboard height (17.7s)
+[WebServer] 1:43:41 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+[WebServer] 1:43:52 am [vite] (client) [console.warn] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+  ok 33 [chromium] › e2e\settings-departure.spec.ts:224:3 › departure choices fit 1440px dark at short keyboard height (18.7s)
+(node:27264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 34 [production] › e2e\production.spec.ts:8:3 › Production build › public entry routes setup and returning members under the app prefix (10.3s)
+  ok 35 [production] › e2e\production.spec.ts:16:3 › Production build › Poiem metadata, manifest and branding images resolve under /app/ (2.8s)
+  ok 36 [production] › e2e\production.spec.ts:28:3 › Production build › app loads at /app/ and starts first-time guests in onboarding (2.6s)
+  ok 37 [production] › e2e\production.spec.ts:34:3 › Production build › client router works under /app/ (3.4s)
