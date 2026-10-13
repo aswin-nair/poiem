@@ -371,10 +371,15 @@ function InterludeScene({ entry, host, target, position: initial, outfit, static
       if (!next) {
         const compact = !position.compact && scenePosition(target, undefined, true)
         if (compact) { setPosition(compact); return }
-        callbacks.current.onUnavailable()
-        return
+        // A scroll can cover every free gap. Keep a scene that is already on
+        // screen so its dismiss control stays available.
+        if (rect.height <= 0) {
+          callbacks.current.onUnavailable()
+          return
+        }
+      } else {
+        setPosition(previous => previous.left === next.left && previous.top === next.top && previous.width === next.width ? previous : next)
       }
-      setPosition(previous => previous.left === next.left && previous.top === next.top && previous.width === next.width ? previous : next)
       const root = document.documentElement
       const reserved = Number.parseFloat(root.style.getPropertyValue('--k-momo-interlude-clearance')) || 0
       root.dataset.momoInterludeReserved = 'true'
