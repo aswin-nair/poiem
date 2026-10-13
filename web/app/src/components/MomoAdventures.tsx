@@ -10,6 +10,7 @@ import {
 import type { MomoOutfit } from '../types'
 import { Momo } from './Momo'
 import { StickerPairs } from './StickerPairs'
+import { DiscoveryJourney } from './DiscoveryJourney'
 import { IconCarbs, IconChevronDown, IconLunch, IconMeal, IconRest, IconSparkles, IconStar } from './icons'
 
 const STICKER_ICONS = { color: IconLunch, texture: IconCarbs, comfort: IconRest, aroma: IconSparkles, sound: IconMeal, pause: IconStar }
@@ -26,7 +27,7 @@ function Sticker({ id, collected = true }: { id: AdventureId; collected?: boolea
 }
 
 type Props = { still: boolean; showMomo: boolean; outfit?: MomoOutfit }
-type View = { kind: 'pick' | 'album' | 'reset' | 'pairs' } | { kind: 'challenge' | 'keepsake'; adventure: MomoAdventure; fresh?: boolean }
+type View = { kind: 'pick' | 'album' | 'reset' | 'pairs' | 'journey' } | { kind: 'challenge' | 'keepsake'; adventure: MomoAdventure; fresh?: boolean }
 
 /** Keying the inner view keeps both in-memory and persisted collections account-specific. */
 export function MomoAdventures(props: Props) {
@@ -170,6 +171,7 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
   const hasPending = Object.keys(pendingChoices.current).length > 0 || pendingPin.current !== undefined
   const answer = active?.options.find(option => option.id === collection.choices[active.id])
   const title = view.kind === 'pick' ? 'Pick your next discovery'
+    : view.kind === 'journey' ? 'Your discovery journey'
     : view.kind === 'pairs' ? 'A perfect little pair'
     : view.kind === 'album' ? 'Your sticker book'
     : view.kind === 'reset' ? 'Start a fresh sticker book?'
@@ -204,11 +206,14 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
     </summary>
     <div className="k-adventures-body">
       <div className="k-adventures-nav" role="group" aria-label="Little adventures views">
+        <AdventureButton aria-pressed={view.kind === 'journey'} onClick={() => open({ kind: 'journey' })}>Journey</AdventureButton>
         <AdventureButton aria-pressed={view.kind === 'pick' || view.kind === 'challenge'} onClick={() => open({ kind: 'pick' })}>Challenges</AdventureButton>
         <AdventureButton aria-pressed={view.kind === 'album' || view.kind === 'keepsake'} onClick={() => open({ kind: 'album' })}>Sticker book ({count})</AdventureButton>
         <AdventureButton aria-pressed={view.kind === 'pairs'} onClick={() => open({ kind: 'pairs' })}>Sticker pairs</AdventureButton>
       </div>
       <h3 id={`${id}-title`} ref={heading} tabIndex={-1}>{title}</h3>
+      {view.kind === 'journey' && <DiscoveryJourney collection={collection} showMomo={showMomo}
+        onVisit={adventure => open({ kind: collection.choices[adventure.id] ? 'keepsake' : 'challenge', adventure })} />}
       {view.kind === 'pairs' && <StickerPairs showMomo={showMomo} renderSticker={stickerId => <Sticker id={stickerId} />} />}
       {view.kind === 'pick' && <>
         <p>Notice something, choose what fits, and keep a sticker. All six are ready whenever you are.</p>
@@ -231,6 +236,7 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
         <p className="k-adventure-small">Choose the one that fits you. Every answer keeps the same sticker.</p>
         <AdventureButton className="k-text-button" onClick={pickForMe}>Pick another</AdventureButton>
         <AdventureButton className="k-text-button" onClick={() => open({ kind: 'pick' })}>Choose another challenge</AdventureButton>
+        <AdventureButton className="k-text-button" onClick={() => open({ kind: 'journey' })}>Back to my journey</AdventureButton>
       </div>}
       {view.kind === 'keepsake' && <div className="k-adventure-keepsake">
         <div className={`k-adventure-reveal${view.fresh ? ' is-fresh' : ''}`} key={`${view.adventure.id}-${focusStep}`}>
@@ -246,6 +252,7 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
           <AdventureButton onClick={() => pin(collection.pinned === view.adventure.id ? null : view.adventure.id)}>
             {collection.pinned === view.adventure.id ? 'Unpin from Today' : 'Pin on Today'}
           </AdventureButton>
+          <AdventureButton onClick={() => open({ kind: 'journey' })}>{count === MOMO_ADVENTURES.length ? 'See my journey postcard' : 'Continue my journey'}</AdventureButton>
         </div>
       </div>}
       {view.kind === 'album' && <>

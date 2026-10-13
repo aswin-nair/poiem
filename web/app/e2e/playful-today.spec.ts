@@ -8,6 +8,31 @@ const book = (page: Page) => page.locator('.k-adventures')
 const shelf = (page: Page) => page.getByRole('region', { name: 'Sticker shelf', exact: true })
 const key = adventureStorageKey(VISUAL_USER.sub)
 
+test('discovery journey continues saved progress and earns a personal postcard', async ({ page }) => {
+  await applyVisualSeed(page)
+  await seedStickers(page)
+  await page.goto('/')
+  await book(page).locator('summary').click()
+  await book(page).getByRole('button', { name: 'Journey', exact: true }).click()
+  const trail = page.getByRole('region', { name: 'The little joy trail' })
+  await expect(trail.getByRole('progressbar')).toHaveAttribute('value', '2')
+  for (const adventure of MOMO_ADVENTURES.slice(2)) {
+    await trail.getByRole('button', { name: 'Continue the trail' }).click()
+    await expect(book(page).getByRole('heading', { level: 3 })).toHaveText(adventure.title)
+    await book(page).getByRole('button', { name: adventure.options[0].label, exact: true }).click()
+    await book(page).getByRole('button', { name: /Continue my journey|See my journey postcard/ }).click()
+  }
+  await expect(trail.getByRole('progressbar')).toHaveAttribute('value', '6')
+  const postcard = trail.getByRole('article', { name: 'Your journey postcard' })
+  await expect(postcard).toBeVisible()
+  for (const adventure of MOMO_ADVENTURES) await expect(postcard).toContainText(adventure.options[0].label)
+  await page.reload()
+  await book(page).locator('summary').click()
+  await book(page).getByRole('button', { name: 'Journey', exact: true }).click()
+  await expect(postcard).toBeVisible()
+  await controlsFit(trail, page.viewportSize()!.width)
+})
+
 test('sticker pairs can be solved, replayed and leave the collection untouched', async ({ page }) => {
   await applyVisualSeed(page)
   await seedStickers(page)

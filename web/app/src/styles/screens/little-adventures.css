@@ -1,4 +1,19 @@
 @layer screens {
+  .k-discovery-journey, .k-journey-ticket, .k-journey-postcard { display: grid; gap: var(--k-space-md); min-width: 0; }
+  .k-journey-ticket, .k-journey-postcard { padding: var(--k-space-md); border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-mint); color: var(--k-sticker-ink); }
+  .k-journey-postcard { background: var(--k-sticker-pink); }
+  .k-discovery-journey h4 { margin: 0; font: 900 var(--k-type-panel)/1.1 var(--k-font-display); overflow-wrap: anywhere; }
+  .k-journey-ticket progress { width: 100%; accent-color: var(--k-sticker-ink); }
+  .k-journey-route { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--k-space-md); }
+  .k-journey-route li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: var(--k-space-sm); align-items: center; }
+  .k-journey-marker { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid var(--k-line); border-radius: 50%; font-weight: 900; }
+  .k-journey-route .is-explored .k-journey-marker { background: var(--k-sticker-mint); color: var(--k-sticker-ink); }
+  .k-discovery-journey button { padding: var(--k-space-md); border: 2px solid var(--k-line); background: var(--k-card); color: var(--k-ink); text-align: left; font: 700 var(--k-type-label)/1.4 var(--k-font-body); overflow-wrap: anywhere; }
+  .k-journey-route button { display: grid; gap: var(--k-space-xs); }
+  .k-journey-route button span { font-weight: 500; font-size: var(--k-type-meta); }
+  .k-journey-route button[aria-current='step'] { background: var(--k-acid); color: var(--k-on-acid); }
+  .k-journey-postcard ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--k-space-sm); }
+  .k-journey-postcard li { display: grid; gap: var(--k-space-xs); padding-bottom: var(--k-space-sm); border-bottom: 1px dashed currentColor; }
   .k-sticker-pairs { display: grid; gap: var(--k-space-md); min-width: 0; }
   .k-pairs-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--k-space-sm); }
   .k-pairs-card { display: grid; place-items: center; gap: var(--k-space-xs); min-width: 0; min-height: 96px; padding: var(--k-space-sm); border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-pink); color: var(--k-sticker-ink); font: 900 var(--k-type-panel)/1 var(--k-font-display); }
