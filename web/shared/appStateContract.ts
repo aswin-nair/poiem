@@ -1,4 +1,6 @@
-import { authHeaderIssue, endpointIssue } from './aiConnection'
+// The `.js` matters: the Vercel functions run this file as native ESM, which cannot resolve an
+// extensionless specifier. Without it `api/state` fails to load and every sign-in and save returns 500.
+import { authHeaderIssue, endpointIssue } from './aiConnection.js'
 
 export type StateValidationResult =
   | { ok: true }
