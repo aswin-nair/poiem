@@ -286,6 +286,21 @@
     text-align: left;
     cursor: pointer;
   }
+  /* A quiet repeat for an empty slot: what they usually have, one tap to log it again. No calories. */
+  .k-today .k-usual-row {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--k-space-md);
+    min-height: 56px;
+    padding: var(--k-space-xs) var(--k-space-md);
+    border-top: 1px solid var(--k-role-border-subtle);
+  }
+  .k-today .k-meal-group.is-empty .k-usual-row { border-top: 0; }
+  .k-today .k-usual-row .k-food-tile { width: 38px; height: 38px; border: 1.5px dashed var(--k-role-border); color: var(--k-on-tone); }
+  .k-today .k-usual-name { display: grid; gap: 2px; min-width: 0; font: 700 var(--k-type-body)/1.25 var(--k-font-body); overflow-wrap: anywhere; }
+  .k-today .k-usual-name small { font: 500 var(--k-type-meta)/1.3 var(--k-font-body); color: var(--k-role-text-muted); }
+  .k-today .k-usual-log { min-height: 44px; padding-inline: var(--k-space-sm); white-space: nowrap; }
   .k-today .k-add-plus {
     display: grid;
     place-items: center;

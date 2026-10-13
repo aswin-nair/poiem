@@ -37,6 +37,11 @@
   .k-insights .insights-week-fact { display: grid; gap: var(--k-space-xs); margin: 0; font: 600 var(--k-text-sm)/1.4 var(--k-font-body); }
   .k-insights .insights-week-fact strong { font: 900 var(--k-type-figure)/1.1 var(--k-font-display); overflow-wrap: anywhere; }
   .k-insights .insights-week-note { margin: 0; font: 500 var(--k-text-xs)/1.5 var(--k-font-body); }
+  /* Patterns: a few plain lines about how they log, never about the numbers. */
+  .k-insights .insights-patterns { display: grid; gap: var(--k-space-sm); margin: 0; padding: var(--k-space-lg); border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-mint); color: var(--k-sticker-ink); }
+  .k-insights .insights-patterns h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }
+  .k-insights .insights-patterns ul { display: grid; gap: var(--k-space-xs); margin: 0; padding: 0; list-style: none; }
+  .k-insights .insights-patterns li { margin: 0; font: 600 var(--k-type-body)/1.45 var(--k-font-body); }
   .k-insights .insights-section { display: grid; min-width: 0; gap: var(--k-space-lg); }
   .k-insights .insights-section-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--k-space-sm) var(--k-space-lg); padding-bottom: var(--k-space-sm); border-bottom: 2px solid var(--k-role-border); }
   .k-insights .insights-section-heading h2 { margin: 0; font: 900 var(--k-type-panel)/1 var(--k-font-display); text-transform: uppercase; }
@@ -162,6 +167,16 @@
   .k-insights .insights-chart-scroll { max-width: 100%; overflow-x: auto; padding: 4px 0; scrollbar-color: var(--k-hair-strong) var(--k-card); }
   .k-insights .insights-chart-plot { position: relative; }
   .k-insights .insights-chart-controls { position: absolute; display: grid; }
+  /* A mouse or pen can drag across the bars, so the pointer says so. Touch still taps and scrolls. */
+  @media (hover: hover) and (pointer: fine) {
+    .k-insights .insights-chart-controls { cursor: ew-resize; user-select: none; }
+  }
+  /* The bars rise from the baseline once when they arrive, all together; their values fade in with them.
+     Transform and opacity only, and the global reduced-motion rule collapses both. */
+  .k-insights .insights-bar { transform-box: fill-box; transform-origin: 50% 100%; animation: k-insights-bar-rise 240ms var(--k-ease) both; }
+  .k-insights .insights-bar-value { animation: k-insights-value-in 240ms var(--k-ease) both; }
+  @keyframes k-insights-bar-rise { from { transform: scaleY(0); } }
+  @keyframes k-insights-value-in { from { opacity: 0; } }
   .k-insights .insights-chart-day { min-width: 44px; min-height: 44px; margin: 0; padding: 0; border: 2px solid transparent; border-radius: 0; background: transparent; box-shadow: none; cursor: pointer; touch-action: pan-x pan-y; }
   .k-insights .insights-chart-day[aria-pressed="true"] { border-color: var(--k-ink); }
   .k-insights .insights-chart-day:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: -5px; }

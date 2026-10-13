@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poiem — Little adventures</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#fff8eb;color:#20221d;font:16px/1.55 system-ui,sans-serif}main{max-width:1250px;margin:auto;padding:32px 20px 64px}h1{font-size:clamp(32px,5vw,64px);line-height:1;letter-spacing:-.045em;margin:16px 0}h2{margin:0 0 16px}p{max-width:760px}.eyebrow{display:inline-block;background:#ffa9ce;border:2px solid;padding:8px 12px;font-weight:800}header{margin-bottom:40px}.controls{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0}label{display:grid;gap:8px;font-weight:700}select{min-height:44px;padding:8px 12px;background:#fffdf7;color:#20221d;border:2px solid;font:inherit}.pair,.panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}.panels{grid-template-columns:repeat(3,minmax(0,1fr))}figure{margin:0;min-width:0}figcaption{font-weight:750;padding:12px 0}img{display:block;width:100%;height:auto;border:2px solid #20221d;background:#fffdf7}a{color:inherit}a:focus-visible,select:focus-visible{outline:3px solid #20221d;outline-offset:4px}section{margin-top:40px}.note{background:#c4eed8;padding:20px;border:2px solid}.pair.phone{max-width:820px}.meta{font-size:14px;color:#5a564c}@media(max-width:700px){.panels,.pair{grid-template-columns:1fr}.panels{max-width:420px}}
+</style>
+<main>
+  <header><span class="eyebrow">POIEM / PERSONAL CHALLENGES</span><h1>Little adventures.<br>A book of your own.</h1>
+  <p>Choose a tiny discovery about color, texture, comfort, aroma, sound, or a quiet moment. Keep its sticker and get a playful Momo reaction.</p>
+  <p class="meta">In Today, open <strong>Little adventures</strong> beneath Momo and the daily ring. All six challenges are available at your own pace. The sticker book stays in this browser for your account.</p></header>
+  <div class="controls"><label>Theme<select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></label><label>Today layout<select id="width"><option value="390">Phone · 390px</option><option value="1440">Desktop · 1440px</option></select></label></div>
+  <section><h2>Choose → discover → collect</h2><div class="panels">
+    <figure><a data-link="challenges"><img data-panel="challenges" alt="Six optional challenge cards" loading="lazy"></a><figcaption>1. Choose any challenge</figcaption></figure>
+    <figure><a data-link="collected"><img data-panel="collected" alt="A collected sticker and Momo's reaction" loading="lazy"></a><figcaption>2. Keep a little discovery</figcaption></figure>
+    <figure><a data-link="album"><img data-panel="album" alt="The personal sticker collection" loading="lazy"></a><figcaption>3. Revisit your sticker book</figcaption></figure>
+  </div></section>
+  <section><h2>Today, before and after</h2><div class="pair phone" id="comparison">
+    <figure><a id="before-link"><img id="before" alt="Today before Little adventures" loading="lazy"></a><figcaption>Before</figcaption></figure>
+    <figure><a id="after-link"><img id="after" alt="Today with the Little adventures panel" loading="lazy"></a><figcaption>After · opens when you choose</figcaption></figure>
+  </div></section>
+  <section class="note"><h2>Made to feel good</h2><p>Replay a challenge, choose a different answer, or clear the book and start again. Stickers never expire. Momo honors quiet mode, and the stamp and cheer settle after a short animation. Reduced motion keeps everything still.</p><p class="meta">Screenshots use a fictional review account. Touch layouts were checked using iPhone 13 and Pixel 7 emulation in Chromium; physical iOS behavior remains a device check.</p></section>
+</main>
+<script>
+  const theme=document.querySelector('#theme'),width=document.querySelector('#width');
+  function themeName(){return theme.value==='dark'?'dark':'light'}
+  function layoutWidth(){return width.value==='1440'?'1440':'390'}
+  function show(){
+    const mode=themeName(),size=layoutWidth();
+    const challenges='after-desktop-390-'+mode+'-challenges.png';
+    const collected='after-desktop-390-'+mode+'-collected.png';
+    const album='after-desktop-390-'+mode+'-album.png';
+    document.querySelector('[data-panel="challenges"]').src=challenges;document.querySelector('[data-link="challenges"]').href=challenges;
+    document.querySelector('[data-panel="collected"]').src=collected;document.querySelector('[data-link="collected"]').href=collected;
+    document.querySelector('[data-panel="album"]').src=album;document.querySelector('[data-link="album"]').href=album;
+    const before=size==='1440'?'before-1440-'+mode+'.png':'before-390-'+mode+'.png';
+    const after=size==='1440'?'after-desktop-1440-'+mode+'-today.png':'after-desktop-390-'+mode+'-today.png';
+    document.querySelector('#before').src=before;document.querySelector('#before-link').href=before;
+    document.querySelector('#after').src=after;document.querySelector('#after-link').href=after;
+    document.querySelector('#comparison').classList.toggle('phone',size==='390');
+  }
+  theme.addEventListener('change',show);width.addEventListener('change',show);show();
+</script>
+</html>

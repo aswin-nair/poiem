@@ -146,6 +146,7 @@ describe('Today', () => {
     expect(html).toContain('Manage pause')
     expect(html).not.toContain('kcal left')
     expect(html).not.toContain('aria-label="Macros"')
+    expect(html).not.toContain('Little adventures')
   })
 
   it('opens an archived local day with its meals and a way back to today', () => {
@@ -162,6 +163,7 @@ describe('Today', () => {
     expect(html).toContain('Back to today')
     expect(html).not.toContain('Add breakfast')
     expect(html).not.toContain('aria-label="Water and notes"')
+    expect(html).not.toContain('Little adventures')
   })
 
   it('respects mute and hide-Momo preferences', () => {
@@ -177,5 +179,14 @@ describe('Today', () => {
     expect(html).toContain('Save your progress')
     expect(html).not.toContain('Add breakfast')
     expect(html).not.toContain('aria-label="Main"')
+    expect(html).not.toContain('Little adventures')
+  })
+
+  it('keeps optional challenges available when Momo is hidden, after the daily ring', () => {
+    state.gamification.mascotActivity = 'off'
+    const html = render()
+    expect(html).toContain('Little adventures')
+    expect(html.indexOf('class="k-ring"')).toBeLessThan(html.indexOf('Little adventures'))
+    expect(html).toContain('Kept in this browser for your account')
   })
 })
