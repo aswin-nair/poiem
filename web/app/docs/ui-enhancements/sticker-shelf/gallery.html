@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poiem — Sticker shelf</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#fff8eb;color:#20221d;font:16px/1.55 system-ui,sans-serif}main{max-width:1250px;margin:auto;padding:32px 20px 64px}h1{font-size:clamp(32px,5vw,64px);line-height:1;letter-spacing:-.045em;margin:16px 0}h2{margin:0 0 16px}p{max-width:760px}.eyebrow{display:inline-block;background:#8ae7bc;border:2px solid;padding:8px 12px;font-weight:800}header{margin-bottom:32px}.controls{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0}label{display:grid;gap:8px;font-weight:700}select{min-height:44px;padding:8px 12px;background:#fffdf7;color:#20221d;border:2px solid;font:inherit}.pair,.panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}.panels{grid-template-columns:repeat(3,minmax(0,1fr))}figure{margin:0;min-width:0}figcaption{font-weight:750;padding:12px 0}img{display:block;width:100%;height:auto;border:2px solid #20221d;background:#fffdf7}a{color:inherit}a:focus-visible,select:focus-visible{outline:3px solid #20221d;outline-offset:4px}section{margin-top:40px}.note{background:#c4eed8;padding:20px;border:2px solid}.pair.phone{max-width:820px}.meta{font-size:14px;color:#5a564c}@media(max-width:700px){.panels,.pair{grid-template-columns:1fr}.panels{max-width:420px}}
+</style>
+<main>
+  <header><span class="eyebrow">POIEM / STICKER SHELF</span><h1>A favorite discovery.<br>A little Momo commentary.</h1>
+  <p>Pin a collected sticker on Today. Momo celebrates once, then keeps it company with a line inspired by your choice.</p>
+  <p class="meta">Open <strong>Little adventures → Sticker book</strong>, choose a collected sticker, then select <strong>Pin on Today</strong>. The shelf stays visible while the book is closed. Change your favorite or unpin it whenever you like.</p></header>
+  <div class="controls"><label>Theme<select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></label><label>Today layout<select id="width"><option value="390">Phone · 390px</option><option value="1440">Desktop · 1440px</option></select></label></div>
+  <section><h2>Collect it. Pin it. Make it yours.</h2><div class="pair phone">
+    <figure><a data-link="collected"><img data-panel="collected" alt="Collected sticker with the new Pin on Today action" loading="lazy"></a><figcaption>Choose Pin on Today from a collected sticker</figcaption></figure>
+    <figure><a data-link="favorite"><img data-panel="favorite" alt="Favorite sticker displayed beside Momo with change and unpin controls" loading="lazy"></a><figcaption>Your favorite stays visible outside the book</figcaption></figure>
+  </div></section>
+  <section><h2>A shelf that fits</h2><div class="panels">
+    <figure><a data-link="small"><img data-panel="small" alt="Sticker shelf at the narrowest 320px layout" loading="lazy"></a><figcaption>320px · narrow phone</figcaption></figure>
+    <figure><a data-link="iphone"><img data-panel="iphone" alt="Sticker shelf on iPhone 13 Chromium emulation" loading="lazy"></a><figcaption>iPhone 13 · touch emulation</figcaption></figure>
+    <figure><a data-link="pixel"><img data-panel="pixel" alt="Sticker shelf on Pixel 7 Chromium emulation" loading="lazy"></a><figcaption>Pixel 7 · touch emulation</figcaption></figure>
+  </div></section>
+  <section><h2>Today, before and after</h2><div class="pair phone" id="comparison">
+    <figure><a id="before-link"><img id="before" alt="Today with two collected stickers before the shelf feature" loading="lazy"></a><figcaption>Before · discoveries stay inside the book</figcaption></figure>
+    <figure><a id="after-link"><img id="after" alt="Today after choosing Color spotter for the shelf" loading="lazy"></a><figcaption>After · your chosen favorite on display</figcaption></figure>
+  </div></section>
+  <section class="note"><h2>Yours to keep or change</h2><p>The favorite stays in this browser for your account. Unpinning keeps the sticker in your book; clearing the book also clears the shelf. If the browser cannot save a change, a visible notice tells you.</p><p>Momo honors hidden and muted settings. Calm mode and reduced motion keep the artwork still. Reloading Today never repeats the pin celebration.</p><p class="meta">These are real app screenshots with fictional review data. iPhone and Pixel captures use Chromium device emulation. Physical Safari and device haptics still need a real-phone check. <a href="README.md">Implementation and verification notes</a>.</p></section>
+</main>
+<script>
+  const theme=document.querySelector('#theme'),width=document.querySelector('#width');
+  function show(){
+    const mode=theme.value,size=width.value;
+    for(const [name,device] of Object.entries({small:'desktop-320',iphone:'iphone-390',pixel:'pixel-412'})){
+      const path=`after-${device}-${mode}-shelf.png`;
+      document.querySelector(`[data-panel="${name}"]`).src=path;
+      document.querySelector(`[data-link="${name}"]`).href=path;
+    }
+    for(const [name,suffix] of Object.entries({collected:'collected',favorite:'shelf'})){
+      const path=`after-desktop-390-${mode}-${suffix}.png`;
+      document.querySelector(`[data-panel="${name}"]`).src=path;document.querySelector(`[data-link="${name}"]`).href=path;
+    }
+    for(const name of ['before','after']){
+      const path=name==='before'?`before-${size}-${mode}-today.png`:`after-desktop-${size}-${mode}-today.png`;
+      document.querySelector(`#${name}`).src=path;document.querySelector(`#${name}-link`).href=path;
+    }
+    document.querySelector('#comparison').classList.toggle('phone',size==='390');
+  }
+  theme.addEventListener('change',show);width.addEventListener('change',show);show();
+</script>
+</html>

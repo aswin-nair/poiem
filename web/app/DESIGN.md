@@ -12,6 +12,8 @@ This file describes the **Poiem system**: the tokens, components and screen rule
 
 Today’s **Little adventures** panel opens on request. Its six self-reported sensory and comfort challenges collect browser-local stickers independently of nutrition, logging commitments, XP, and wardrobe unlocks. All challenges remain available; there are no deadlines or loss states. A sticker stamp and Momo cheer finish within 600ms and leave controls stationary. Calm mode and either reduced-motion preference keep them still; hiding or muting Momo keeps the collection available with neutral copy. See [feature review](docs/ui-enhancements/little-adventures/README.md).
 
+The **Sticker shelf** appears above that panel after someone pins a collected sticker. One favorite stays on Today while the book is closed, with a matching Momo line and direct change/unpin controls. Pinning gives a single decorative reaction; reopening Today or receiving another tab's update does not replay it. The shelf shares the book's account-scoped browser storage, clear action, and mascot preferences. It never selects or unlocks a sticker automatically. See [shelf review](docs/ui-enhancements/sticker-shelf/README.md).
+
 ## Expo
 
 The Expo `mobile/` app stays a private alpha. It does **not** extract shared tokens from this vocabulary until a later converge-or-retire decision. Web ships the system first; carrying two design systems at once is the expensive option, so Expo waits. Shared *behaviour* (meal slots, streaks, notifications) already lives in `packages/domain` with JSON fixtures that both apps test against.

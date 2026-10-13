@@ -1,4 +1,24 @@
 @layer screens {
+  .k-adventure-space { display: grid; gap: var(--k-space-lg); min-width: 0; }
+  .k-sticker-shelf {
+    display: grid;
+    gap: var(--k-space-md);
+    min-width: 0;
+    padding: var(--k-space-lg);
+    border: 2px solid var(--k-line);
+    background: var(--k-card);
+    color: var(--k-ink);
+  }
+  .k-sticker-shelf-label { display: flex; align-items: center; justify-content: space-between; gap: var(--k-space-sm); font: 700 var(--k-type-meta)/1.4 var(--k-font-mono); text-transform: uppercase; }
+  .k-sticker-shelf-title { display: grid; gap: var(--k-space-xs); }
+  .k-sticker-shelf-title > span { color: var(--k-muted); font: 500 var(--k-type-meta)/1.4 var(--k-font-body); }
+  .k-sticker-shelf h3 { margin: 0; color: inherit; font: 900 var(--k-type-panel)/1.05 var(--k-font-display); overflow-wrap: anywhere; }
+  .k-sticker-shelf p, .k-sticker-shelf-notice { margin: 0; color: var(--k-ink); font: 500 var(--k-type-label)/1.55 var(--k-font-body); }
+  .k-sticker-shelf button { min-width: 44px; min-height: 44px; cursor: pointer; }
+  .k-sticker-shelf :is(button, h3):focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 3px; }
+  .k-sticker-shelf .k-sticker-shelf-art { min-height: 112px; border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-mint); }
+  .k-sticker-shelf-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .k-sticker-shelf-actions button { overflow-wrap: anywhere; }
   .k-adventures {
     min-width: 0;
     border: 2px solid var(--k-line);
@@ -99,7 +119,7 @@
   .k-adventure-notice:empty { display: none; }
   .k-adventure-reveal.is-fresh > .k-adventure-sticker { animation: k-adventure-stamp 500ms var(--k-ease) both; }
   .k-adventure-reveal.is-fresh > .k-adventure-momo { animation: k-adventure-cheer 600ms var(--k-ease) both; }
-  .k-adventures.is-still .k-adventure-reveal > *, :root[data-action-motion='still'] .k-adventure-reveal > * { animation: none; }
+  .k-adventure-space.is-still .k-adventure-reveal > *, :root[data-action-motion='still'] .k-adventure-reveal > * { animation: none; }
   @media (prefers-reduced-motion: reduce) { .k-adventure-reveal > * { animation: none; } }
   @keyframes k-adventure-stamp {
     0% { transform: scale(.65) rotate(-12deg); }
