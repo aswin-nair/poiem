@@ -8,6 +8,10 @@ The October 2026 visual direction explicitly replaces the earlier flat-surface r
 
 This file describes the **Poiem system**: the tokens, components and screen rules the app is being rebuilt on. Screens that have not moved yet still run on the older stylesheets, which are contained in a lower cascade layer (see [Architecture](#architecture)).
 
+## Optional discoveries
+
+Today’s **Little adventures** panel opens on request. Its six self-reported sensory and comfort challenges collect browser-local stickers independently of nutrition, logging commitments, XP, and wardrobe unlocks. All challenges remain available; there are no deadlines or loss states. A sticker stamp and Momo cheer finish within 600ms and leave controls stationary. Calm mode and either reduced-motion preference keep them still; hiding or muting Momo keeps the collection available with neutral copy. See [feature review](docs/ui-enhancements/little-adventures/README.md).
+
 ## Expo
 
 The Expo `mobile/` app stays a private alpha. It does **not** extract shared tokens from this vocabulary until a later converge-or-retire decision. Web ships the system first; carrying two design systems at once is the expensive option, so Expo waits. Shared *behaviour* (meal slots, streaks, notifications) already lives in `packages/domain` with JSON fixtures that both apps test against.

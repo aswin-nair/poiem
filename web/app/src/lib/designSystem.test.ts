@@ -34,6 +34,7 @@ const LAYERED = {
   'styles/screens/entry.css': 'screens',
   'styles/screens/momo-interlude.css': 'screens',
   'styles/screens/today-play.css': 'screens',
+  'styles/screens/little-adventures.css': 'screens',
   'styles/screens/safe-area.css': 'screens',
 } as const
 
@@ -61,6 +62,7 @@ const MIGRATED = [
   'styles/screens/coach-drafting.css',
   'styles/screens/momo-interlude.css',
   'styles/screens/today-play.css',
+  'styles/screens/little-adventures.css',
   'styles/screens/safe-area.css',
 ] as const
 
@@ -78,6 +80,7 @@ const DRAWN = /momo|wardrobe|torn-stub|flow-camera-sticker/
 /* The playful Neo Brutalist direction adds deliberate depth to feature panels
    and primary or selected controls. Reading rows and form fields stay flat. */
 const PLAYFUL = [
+  /\.k-adventure-reveal > \.k-adventure-sticker\b/,
   /\.pressable-primary\b|\.k-button\.is-primary\b|\.k-repeat-actions \.k-repeat-log\b/,
   /\.k-method\b|\.flow-heading\b|\.flow-steps li\[aria-current|\.flow-description-card\b|\.photo-upload-zone\b/,
   /\.k-saved \.page-heading\b|\.k-saved \.k-repeat-meal\b/,

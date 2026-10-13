@@ -8,6 +8,7 @@ import { DatePickerModal } from '../components/DatePickerModal'
 import { BottomNav } from '../components/BottomNav'
 import { AppShell, EmptyState, MealRow, PageHeader, Section, Surface } from '../components/system'
 import { TodayMomo } from '../components/TodayMomo'
+import { MomoAdventures } from '../components/MomoAdventures'
 import { WeekStrip } from '../components/WeekStrip'
 import { Meter } from '../components/Meter'
 import {
@@ -534,6 +535,7 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                   closeMs={ringCheck ?? RING_CHECK_MS}
                   note={<p className="k-ring-note">{progressNote({ loggedDays: loggedDayCount, ownedPieceIds: state.gamification.ownedCosmeticIds }).text}</p>}
                 />
+                {isToday && !guest && <MomoAdventures still={actionMotionStill} showMomo={showMomo} outfit={state.gamification.outfit} />}
               </div>
                 {isToday && !guest && (
                   <Surface variant="outlined" as="section" className="k-extras" aria-label="Water and notes">

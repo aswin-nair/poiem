@@ -31,6 +31,7 @@ import {
   profileInputIssue,
 } from '../lib/profile'
 import { clearUserState, exportData } from '../lib/storage'
+import { clearAdventureCollection } from '../lib/momoAdventures'
 import { clearAnalytics, track } from '../lib/analytics'
 import { clearNotificationHistory, requestNotifyPermission } from '../lib/notifications'
 import { clearRingAck } from '../lib/ringAck'
@@ -442,6 +443,7 @@ export function SettingsPage() {
       try { await clearDurableUser(user.sub) } catch { localCleanupFailed = true }
       for (const cleanup of [
         () => clearUserState(user.sub),
+        () => clearAdventureCollection(user.sub),
         () => clearOnboardingDraft(user.sub),
         clearNotificationHistory,
         clearRingAck,
