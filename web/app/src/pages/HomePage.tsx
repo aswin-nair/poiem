@@ -524,6 +524,8 @@ export function HomePage({ guest = false }: { guest?: boolean }) {
                 {showMomo && (
                   <TodayMomo
                     greeting={greeting}
+                    playful={isToday && !guest}
+                    still={actionMotionStill}
                     outfit={state.gamification.outfit}
                     roasts={Boolean(profile.mascotRoasts)}
                     onRoast={() => mascotEvent('poke')}

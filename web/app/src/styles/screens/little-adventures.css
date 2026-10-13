@@ -19,6 +19,16 @@
   .k-sticker-shelf .k-sticker-shelf-art { min-height: 112px; border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-mint); }
   .k-sticker-shelf-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .k-sticker-shelf-actions button { overflow-wrap: anywhere; }
+  .k-sticker-play { display: grid; place-items: center; flex-shrink: 0; padding: var(--k-space-sm); border: 0; background: transparent; color: var(--k-sticker-ink); border-radius: var(--k-radius-tile); }
+  .k-sticker-play-art { display: block; }
+  .k-sticker-play-art .k-adventure-sticker { width: 72px; height: 72px; box-shadow: var(--k-shadow-sm); }
+  .k-sticker-play-art .k-adventure-sticker svg { width: 40px; height: 40px; }
+  .k-sticker-play-art svg, .k-sticker-play-art svg * { animation: none; }
+  .k-sticker-play-art.is-fresh { animation: k-adventure-stamp 500ms var(--k-ease) both; }
+  .k-sticker-shelf .k-sticker-play-hint { font: 500 var(--k-type-meta)/1.4 var(--k-font-body); color: var(--k-muted); }
+  .k-sticker-play-line { min-height: 4.65em; }
+  .k-adventure-space.is-still .k-sticker-play-art, :root[data-action-motion='still'] .k-sticker-play-art { animation: none; }
+  @media (prefers-reduced-motion: reduce) { .k-sticker-play-art { animation: none; } }
   .k-adventures {
     min-width: 0;
     border: 2px solid var(--k-line);
@@ -100,6 +110,7 @@
   .k-adventure-preview { display: flex; align-items: center; gap: var(--k-space-md); }
   .k-adventure-options { display: grid; gap: var(--k-space-sm); }
   .k-adventure-options button:active { background: var(--k-acid); color: var(--k-on-acid); }
+  .k-adventure-options .k-adventure-suggest { display: flex; align-items: center; gap: var(--k-space-sm); background: var(--k-sticker-butter); color: var(--k-sticker-ink); border-color: var(--k-sticker-ink); }
   .k-adventures .k-adventure-small { font: 500 var(--k-type-meta)/1.5 var(--k-font-body); color: var(--k-muted); }
   .k-adventure-reveal {
     display: flex;

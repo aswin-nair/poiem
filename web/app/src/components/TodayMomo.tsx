@@ -3,17 +3,20 @@ import { useFeel } from '../hooks/useHaptic'
 import { MOMO_POKES, type TodayGreeting } from '../lib/todayGreeting'
 import type { MomoOutfit } from '../types'
 import { Momo } from './Momo'
+import { MomoPlayroom } from './MomoPlayroom'
 import { IconFlame } from './icons'
 
 /**
  * Momo says hello beside the day's chosen steps, dressed in his current outfit. A tap
  * gets a playful line and a little bop; nothing moves or talks on its own.
  */
-export function TodayMomo({ greeting, outfit, roasts, onRoast }: {
+export function TodayMomo({ greeting, outfit, roasts, onRoast, still = false, playful = false }: {
   greeting: TodayGreeting
   outfit?: MomoOutfit
   roasts: boolean
   onRoast: () => void
+  still?: boolean
+  playful?: boolean
 }) {
   const feel = useFeel()
   const [pokes, setPokes] = useState(0)
@@ -40,6 +43,7 @@ export function TodayMomo({ greeting, outfit, roasts, onRoast }: {
           </button>
         )}
       </div>
+      {playful && <MomoPlayroom still={still} outfit={outfit} />}
     </aside>
   )
 }

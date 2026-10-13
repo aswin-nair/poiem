@@ -211,7 +211,7 @@ test('shelf has clear targets without overflow on phone and desktop in both them
       expect(bounds!.x).toBeGreaterThanOrEqual(0)
       expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width)
     }
-    const actions = await shelf(page).getByRole('button').evaluateAll(elements => elements.map(element => {
+    const actions = await shelf(page).locator('.k-sticker-shelf-actions button').evaluateAll(elements => elements.map(element => {
       const bounds = element.getBoundingClientRect()
       return { left: bounds.left, right: bounds.right }
     }))

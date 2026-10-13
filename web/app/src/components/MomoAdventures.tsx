@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type ButtonHTMLAttributes } from 'react'
 import { useAuth } from '../store/AuthContext'
 import { useFeel } from '../hooks/useHaptic'
+import { stickerReaction, suggestAdventure } from '../lib/adventureSuggestions'
 import {
   MOMO_ADVENTURES, adventureStorageKey, clearAdventureCollection, collectAdventure,
   emptyAdventureCollection, pinAdventure, readAdventureCollection, sanitizeAdventureCollection,
@@ -40,6 +41,8 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
   const [notice, setNotice] = useState('')
   const [bookOpen, setBookOpen] = useState(false)
   const [pinBeat, setPinBeat] = useState(0)
+  const [stickerTurn, setStickerTurn] = useState<{ id: AdventureId; turn: number } | null>(null)
+  const suggestions = useRef<AdventureId[]>([])
   const [focusStep, setFocusStep] = useState(0)
   const heading = useRef<HTMLHeadingElement>(null)
   const shelfHeading = useRef<HTMLHeadingElement>(null)
@@ -75,6 +78,7 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
         setFocusStep(step => step + 1)
       }
       setPinBeat(0)
+      setStickerTurn(null)
       setCollection(next)
       setView(previous => previous.kind === 'keepsake' && !choices[previous.adventure.id] ? { kind: 'album' } : previous)
       setNotice(Object.keys(pendingChoices.current).length || pendingPin.current !== undefined
@@ -110,7 +114,21 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
     focus('step')
   }
 
+  function pickForMe() {
+    const current = view.kind === 'challenge' ? view.adventure.id : undefined
+    const next = suggestAdventure(collection.choices, suggestions.current, current)
+    suggestions.current = next.seen
+    open({ kind: 'challenge', adventure: next.adventure })
+  }
+
+  function wiggleSticker(id: AdventureId) {
+    setStickerTurn(previous => ({ id, turn: previous?.id === id ? previous.turn + 1 : 0 }))
+    setPinBeat(still ? 0 : beat => beat + 1)
+    feel('tap')
+  }
+
   function pin(next: AdventureId | null, fromShelf = false) {
+    setStickerTurn(null)
     const result = pinAdventure(accountId, collection, next, pendingChoices.current)
     setCollection(result.collection)
     if (!result.available) {
@@ -138,6 +156,8 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
       pendingChoices.current = {}
       pendingPin.current = undefined
       setPinBeat(0)
+      setStickerTurn(null)
+      suggestions.current = []
       setCollection(emptyAdventureCollection())
       setNotice('Sticker book cleared. You can start again whenever you like.')
       open({ kind: 'pick' })
@@ -156,12 +176,17 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
   return <div className={`k-adventure-space${still ? ' is-still' : ''}`}>
     {pinned && <section ref={shelf} className="k-sticker-shelf" aria-label="Sticker shelf">
       <div className="k-sticker-shelf-label"><span>Sticker shelf</span><IconStar size={18} /></div>
-      <div className={`k-sticker-shelf-art k-adventure-reveal${pinBeat ? ' is-fresh' : ''}`} key={`${pinned.id}-${pinBeat}`}>
-        <Sticker id={pinned.id} />
-        {showMomo && <span className="k-adventure-momo" aria-hidden="true"><Momo expression="proud" pose="still" steam={false} outfit={outfit} /></span>}
+      <div className={`k-sticker-shelf-art k-adventure-reveal${pinBeat ? ' is-fresh' : ''}`}>
+        <AdventureButton className="k-sticker-play" aria-label="Give my sticker a wiggle" onClick={() => wiggleSticker(pinned.id)}>
+          <span key={`${pinned.id}-${pinBeat}`} className={`k-sticker-play-art${pinBeat ? ' is-fresh' : ''}`}><Sticker id={pinned.id} /></span>
+        </AdventureButton>
+        {showMomo && <span key={`${pinned.id}-${pinBeat}`} className="k-adventure-momo" aria-hidden="true"><Momo expression={stickerTurn?.id === pinned.id ? 'wink' : 'proud'} pose="still" steam={false} outfit={outfit} /></span>}
       </div>
+      <p className="k-sticker-play-hint">Tap your sticker for a little surprise.</p>
       <div className="k-sticker-shelf-title"><span>Pinned by you</span><h3 ref={shelfHeading} tabIndex={-1}>{pinned.sticker}</h3></div>
-      <p>{showMomo ? pinned.shelfQuip : 'A favorite little discovery, on display.'}</p>
+      <p className="k-sticker-play-line" aria-live="polite" aria-atomic="true">{stickerTurn?.id === pinned.id
+        ? stickerReaction(pinned.id, stickerTurn.turn, showMomo)
+        : showMomo ? pinned.shelfQuip : 'A favorite little discovery, on display.'}</p>
       <div className="k-sticker-shelf-actions k-adventure-options">
         <AdventureButton onClick={() => open({ kind: 'album' })}>Change sticker</AdventureButton>
         <AdventureButton onClick={() => pin(null, true)}>Unpin sticker</AdventureButton>
@@ -183,6 +208,7 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
       <h3 id={`${id}-title`} ref={heading} tabIndex={-1}>{title}</h3>
       {view.kind === 'pick' && <>
         <p>Notice something, choose what fits, and keep a sticker. All six are ready whenever you are.</p>
+        <div className="k-adventure-options"><AdventureButton className="k-adventure-suggest" onClick={pickForMe}><IconSparkles size={18} /> Pick for me</AdventureButton></div>
         <div className="k-adventure-grid" aria-label="Choose a challenge">
           {MOMO_ADVENTURES.map(adventure => <AdventureButton className="k-adventure-card" key={adventure.id}
             onClick={() => open({ kind: 'challenge', adventure })}>
@@ -199,6 +225,7 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
           {view.adventure.options.map(option => <AdventureButton key={option.id} onClick={() => collect(view.adventure, option.id)}>{option.label}</AdventureButton>)}
         </div>
         <p className="k-adventure-small">Choose the one that fits you. Every answer keeps the same sticker.</p>
+        <AdventureButton className="k-text-button" onClick={pickForMe}>Pick another</AdventureButton>
         <AdventureButton className="k-text-button" onClick={() => open({ kind: 'pick' })}>Choose another challenge</AdventureButton>
       </div>}
       {view.kind === 'keepsake' && <div className="k-adventure-keepsake">

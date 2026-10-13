@@ -10,9 +10,13 @@ This file describes the **Poiem system**: the tokens, components and screen rule
 
 ## Optional discoveries
 
+**Play with Momo** opens a small theatre beneath Today's greeting. High-five, Make a face and Tiny dance each rotate through three authored lines with a performance that finishes within 900ms. The controls stay still, and closing playtime returns focus to its toggle. Calm and reduced-motion modes show static expressions; hidden or muted Momo removes playtime. It is available on the signed-in current day. See [interactive review](docs/ui-enhancements/playful-today/README.md).
+
 Today’s **Little adventures** panel opens on request. Its six self-reported sensory and comfort challenges collect browser-local stickers independently of nutrition, logging commitments, XP, and wardrobe unlocks. All challenges remain available; there are no deadlines or loss states. A sticker stamp and Momo cheer finish within 600ms and leave controls stationary. Calm mode and either reduced-motion preference keep them still; hiding or muting Momo keeps the collection available with neutral copy. See [feature review](docs/ui-enhancements/little-adventures/README.md).
 
 The **Sticker shelf** appears above that panel after someone pins a collected sticker. One favorite stays on Today while the book is closed, with a matching Momo line and direct change/unpin controls. Pinning gives a single decorative reaction; reopening Today or receiving another tab's update does not replay it. The shelf shares the book's account-scoped browser storage, clear action, and mascot preferences. It never selects or unlocks a sticker automatically. See [shelf review](docs/ui-enhancements/sticker-shelf/README.md).
+
+**Pick for me** rotates through uncollected adventures before suggesting repeats. A choice opens a challenge and moves focus to its heading; answering remains the user's decision. Pinned stickers are buttons with their own brief wiggle and rotating comments, with neutral alternatives when Momo is hidden. Only their artwork moves; the button keeps focus and leaves the saved collection untouched.
 
 ## Expo
 

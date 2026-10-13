@@ -1,0 +1,90 @@
+@layer screens {
+  .k-momo-playroom { grid-column: 1 / -1; min-width: 0; color: var(--k-sticker-ink); }
+  .k-momo-playroom button { min-width: 44px; min-height: 44px; cursor: pointer; }
+  .k-momo-playroom button svg, .k-momo-playroom button svg * { animation: none; }
+  .k-momo-playroom button:focus-visible { outline: 3px solid var(--k-role-focus); outline-offset: 3px; }
+  .k-momo-play-toggle {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: var(--k-space-sm);
+    width: 100%;
+    padding: var(--k-space-sm) var(--k-space-md);
+    border: 2px solid var(--k-sticker-ink);
+    border-radius: 0;
+    background: var(--k-sticker-butter);
+    color: inherit;
+    font: 800 var(--k-type-label)/1.4 var(--k-font-body);
+    text-align: left;
+  }
+  .k-momo-play-toggle[aria-expanded='true'] > svg:last-child { transform: rotate(180deg); }
+  .k-momo-play-content {
+    display: grid;
+    gap: var(--k-space-md);
+    padding: var(--k-space-md);
+    border: 2px solid var(--k-sticker-ink);
+    border-top: 0;
+    background: var(--k-sticker-mint);
+    color: var(--k-sticker-ink);
+  }
+  .k-momo-play-content[hidden] { display: none; }
+  .k-momo-play-stage {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    isolation: isolate;
+    min-width: 0;
+    overflow: hidden;
+    padding: var(--k-space-sm) var(--k-space-lg);
+    border: 2px solid var(--k-sticker-ink);
+    background: var(--k-sticker-sky);
+  }
+  .k-momo-play-stage-label {
+    position: relative;
+    font: 700 var(--k-type-meta)/1.4 var(--k-font-mono);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .k-momo-play-actor { display: block; width: 112px; height: 112px; transform-origin: 50% 90%; }
+  .k-momo-play-actor .momo-art, .k-momo-play-actor .momo-art * { animation: none; }
+  .k-momo-play-star { position: absolute; top: 44%; font: 700 var(--k-type-panel)/1 var(--k-font-body); }
+  .k-momo-play-star.is-left { left: var(--k-space-lg); color: var(--k-sticker-ink); }
+  .k-momo-play-star.is-right { right: var(--k-space-lg); color: var(--k-sticker-ink); }
+  .k-momo-playroom .k-momo-play-line { min-height: 4.5em; margin: 0; color: inherit; font: 700 var(--k-type-label)/1.5 var(--k-font-body); }
+  .k-momo-play-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--k-space-sm); }
+  .k-momo-play-actions button {
+    min-width: 0;
+    min-height: 56px;
+    padding: var(--k-space-sm) var(--k-space-xs);
+    border: 2px solid var(--k-sticker-ink);
+    border-radius: 0;
+    background: var(--k-sticker-butter);
+    color: var(--k-sticker-ink);
+    font: 800 var(--k-type-label)/1.35 var(--k-font-body);
+    overflow-wrap: anywhere;
+  }
+  .k-momo-play-actions button:nth-child(2) { background: var(--k-sticker-pink); }
+  .k-momo-play-actions button:nth-child(3) { background: var(--k-sticker-sky); }
+  .k-momo-play-actions button:active { background: var(--k-card); color: var(--k-ink); }
+  .k-momo-play-close { padding: var(--k-space-sm); border: 2px solid var(--k-sticker-ink); border-radius: 0; background: transparent; color: inherit; font: 700 var(--k-type-label)/1.4 var(--k-font-body); }
+  .k-momo-play-actor.is-high-five { animation: k-momo-play-five 700ms var(--k-ease) both; }
+  .k-momo-play-actor.is-face { animation: k-momo-play-face 600ms var(--k-ease) both; }
+  .k-momo-play-actor.is-dance { animation: k-momo-play-dance 850ms var(--k-ease) both; }
+  .k-momo-playroom.is-still .k-momo-play-actor, :root[data-action-motion='still'] .k-momo-play-actor { animation: none; }
+  @media (prefers-reduced-motion: reduce) { .k-momo-play-actor { animation: none; } }
+  @keyframes k-momo-play-five {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    40% { transform: translateY(-8px) rotate(-8deg); }
+    65% { transform: translateY(0) rotate(4deg); }
+  }
+  @keyframes k-momo-play-face {
+    0%, 100% { transform: scale(1); }
+    45% { transform: scale(1.06, .94); }
+    75% { transform: scale(.98, 1.02); }
+  }
+  @keyframes k-momo-play-dance {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    20%, 60% { transform: translateX(-8px) rotate(-8deg); }
+    40%, 80% { transform: translateX(8px) rotate(8deg); }
+  }
+}

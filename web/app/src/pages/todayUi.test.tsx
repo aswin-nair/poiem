@@ -174,6 +174,20 @@ describe('Today', () => {
     expect(render()).not.toContain('A note from Momo')
   })
 
+  it('offers optional playtime only with Momo on the signed-in current day', () => {
+    expect(render()).toContain('Play with Momo')
+    expect(render()).not.toContain('Close playtime')
+    expect(render(true)).not.toContain('Play with Momo')
+    state.profile.mascotMuted = true
+    expect(render()).not.toContain('Play with Momo')
+    state.profile.mascotMuted = false
+    state.gamification.mascotActivity = 'off'
+    expect(render()).not.toContain('Play with Momo')
+    state.gamification.mascotActivity = 'lively'
+    state.profile.trackingPaused = true
+    expect(render()).not.toContain('Play with Momo')
+  })
+
   it('keeps the guest account-claim path without log shortcuts or navigation', () => {
     const html = render(true)
     expect(html).toContain('Save your progress')
