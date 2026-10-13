@@ -28,21 +28,24 @@
 </main>
 <script>
   const theme=document.querySelector('#theme'),width=document.querySelector('#width');
+  function themeName(){return theme.value==='dark'?'dark':'light'}
+  function layoutWidth(){return width.value==='1440'?'1440':'390'}
   function show(){
-    const mode=theme.value,size=width.value;
-    for(const [name,device] of Object.entries({small:'desktop-320',iphone:'iphone-390',pixel:'pixel-412'})){
-      const path=`after-${device}-${mode}-shelf.png`;
-      document.querySelector(`[data-panel="${name}"]`).src=path;
-      document.querySelector(`[data-link="${name}"]`).href=path;
-    }
-    for(const [name,suffix] of Object.entries({collected:'collected',favorite:'shelf'})){
-      const path=`after-desktop-390-${mode}-${suffix}.png`;
-      document.querySelector(`[data-panel="${name}"]`).src=path;document.querySelector(`[data-link="${name}"]`).href=path;
-    }
-    for(const name of ['before','after']){
-      const path=name==='before'?`before-${size}-${mode}-today.png`:`after-desktop-${size}-${mode}-today.png`;
-      document.querySelector(`#${name}`).src=path;document.querySelector(`#${name}-link`).href=path;
-    }
+    const mode=themeName(),size=layoutWidth();
+    const small='after-desktop-320-'+mode+'-shelf.png';
+    const iphone='after-iphone-390-'+mode+'-shelf.png';
+    const pixel='after-pixel-412-'+mode+'-shelf.png';
+    document.querySelector('[data-panel="small"]').src=small;document.querySelector('[data-link="small"]').href=small;
+    document.querySelector('[data-panel="iphone"]').src=iphone;document.querySelector('[data-link="iphone"]').href=iphone;
+    document.querySelector('[data-panel="pixel"]').src=pixel;document.querySelector('[data-link="pixel"]').href=pixel;
+    const collected='after-desktop-390-'+mode+'-collected.png';
+    const favorite='after-desktop-390-'+mode+'-shelf.png';
+    document.querySelector('[data-panel="collected"]').src=collected;document.querySelector('[data-link="collected"]').href=collected;
+    document.querySelector('[data-panel="favorite"]').src=favorite;document.querySelector('[data-link="favorite"]').href=favorite;
+    const before=size==='1440'?'before-1440-'+mode+'-today.png':'before-390-'+mode+'-today.png';
+    const after=size==='1440'?'after-desktop-1440-'+mode+'-today.png':'after-desktop-390-'+mode+'-today.png';
+    document.querySelector('#before').src=before;document.querySelector('#before-link').href=before;
+    document.querySelector('#after').src=after;document.querySelector('#after-link').href=after;
     document.querySelector('#comparison').classList.toggle('phone',size==='390');
   }
   theme.addEventListener('change',show);width.addEventListener('change',show);show();
