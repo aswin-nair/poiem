@@ -8,6 +8,62 @@ const book = (page: Page) => page.locator('.k-adventures')
 const shelf = (page: Page) => page.getByRole('region', { name: 'Sticker shelf', exact: true })
 const key = adventureStorageKey(VISUAL_USER.sub)
 
+test('sticker pairs can be solved, replayed and leave the collection untouched', async ({ page }) => {
+  await applyVisualSeed(page)
+  await seedStickers(page)
+  await page.goto('/')
+  const original = await collection(page)
+  await book(page).locator('summary').click()
+  await book(page).getByRole('button', { name: 'Sticker pairs', exact: true }).click()
+  const game = page.getByRole('region', { name: 'Sticker pairs game' })
+  const cards = game.locator('.k-pairs-card')
+  const known = new Map<string, number[]>()
+  for (let i = 0; i < 12; i += 2) {
+    for (const index of [i, i + 1]) {
+      await cards.nth(index).click()
+      const name = (await cards.nth(index).getAttribute('aria-label'))!.replace(/^Card \d+: /, '').replace(', matched', '')
+      known.set(name, [...(known.get(name) ?? []), index])
+    }
+    const back = game.getByRole('button', { name: 'Turn cards back' })
+    if (await back.getAttribute('aria-disabled') === 'false') await back.click()
+  }
+  expect(known.size).toBe(6)
+  for (const indices of known.values()) {
+    expect(indices).toHaveLength(2)
+    if ((await cards.nth(indices[0]).getAttribute('aria-label'))!.includes(', matched')) continue
+    await cards.nth(indices[0]).click()
+    await cards.nth(indices[1]).click()
+  }
+  await expect(game.locator('.is-matched')).toHaveCount(12)
+  await expect(game.getByRole('status')).toContainText('All pairs reunited')
+  expect(await collection(page)).toBe(original)
+  await game.getByRole('button', { name: 'Play again' }).click()
+  await expect(game.locator('.is-revealed')).toHaveCount(0)
+  await expect(game.locator('.k-pairs-score')).toHaveText('0/6 pairs · 0 turns')
+})
+
+test('sticker pairs fit a narrow phone and keep keyboard focus on the card', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await applyVisualSeed(page)
+  await page.goto('/')
+  await book(page).locator('summary').click()
+  await book(page).getByRole('button', { name: 'Sticker pairs', exact: true }).click()
+  const game = page.getByRole('region', { name: 'Sticker pairs game' })
+  const card = game.locator('.k-pairs-card').first()
+  await card.focus()
+  await page.keyboard.press('Enter')
+  await expect(card).toBeFocused()
+  await expect(card).toHaveClass(/is-revealed/)
+  await page.keyboard.press('Enter')
+  await expect(game.locator('.k-pairs-score')).toHaveText('0/6 pairs · 0 turns')
+  await controlsFit(game, 320)
+  expect(await card.evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(0)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320)
+  await game.screenshot({ path: test.info().outputPath('sticker-pairs-phone.png'), animations: 'disabled',
+    style: '.bottom-nav-wrap { visibility: hidden !important; }' })
+})
+
 async function seedStickers(page: Page, complete = false) {
   const choices = complete
     ? Object.fromEntries(MOMO_ADVENTURES.map(adventure => [adventure.id, adventure.options[0].id]))

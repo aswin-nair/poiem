@@ -9,6 +9,7 @@ import {
 } from '../lib/momoAdventures'
 import type { MomoOutfit } from '../types'
 import { Momo } from './Momo'
+import { StickerPairs } from './StickerPairs'
 import { IconCarbs, IconChevronDown, IconLunch, IconMeal, IconRest, IconSparkles, IconStar } from './icons'
 
 const STICKER_ICONS = { color: IconLunch, texture: IconCarbs, comfort: IconRest, aroma: IconSparkles, sound: IconMeal, pause: IconStar }
@@ -25,7 +26,7 @@ function Sticker({ id, collected = true }: { id: AdventureId; collected?: boolea
 }
 
 type Props = { still: boolean; showMomo: boolean; outfit?: MomoOutfit }
-type View = { kind: 'pick' | 'album' | 'reset' } | { kind: 'challenge' | 'keepsake'; adventure: MomoAdventure; fresh?: boolean }
+type View = { kind: 'pick' | 'album' | 'reset' | 'pairs' } | { kind: 'challenge' | 'keepsake'; adventure: MomoAdventure; fresh?: boolean }
 
 /** Keying the inner view keeps both in-memory and persisted collections account-specific. */
 export function MomoAdventures(props: Props) {
@@ -169,6 +170,7 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
   const hasPending = Object.keys(pendingChoices.current).length > 0 || pendingPin.current !== undefined
   const answer = active?.options.find(option => option.id === collection.choices[active.id])
   const title = view.kind === 'pick' ? 'Pick your next discovery'
+    : view.kind === 'pairs' ? 'A perfect little pair'
     : view.kind === 'album' ? 'Your sticker book'
     : view.kind === 'reset' ? 'Start a fresh sticker book?'
     : view.kind === 'keepsake' ? `${active!.sticker}${view.fresh ? ' collected!' : ''}` : active!.title
@@ -204,8 +206,10 @@ function AdventureBook({ accountId, still, showMomo, outfit }: Props & { account
       <div className="k-adventures-nav" role="group" aria-label="Little adventures views">
         <AdventureButton aria-pressed={view.kind === 'pick' || view.kind === 'challenge'} onClick={() => open({ kind: 'pick' })}>Challenges</AdventureButton>
         <AdventureButton aria-pressed={view.kind === 'album' || view.kind === 'keepsake'} onClick={() => open({ kind: 'album' })}>Sticker book ({count})</AdventureButton>
+        <AdventureButton aria-pressed={view.kind === 'pairs'} onClick={() => open({ kind: 'pairs' })}>Sticker pairs</AdventureButton>
       </div>
       <h3 id={`${id}-title`} ref={heading} tabIndex={-1}>{title}</h3>
+      {view.kind === 'pairs' && <StickerPairs showMomo={showMomo} renderSticker={stickerId => <Sticker id={stickerId} />} />}
       {view.kind === 'pick' && <>
         <p>Notice something, choose what fits, and keep a sticker. All six are ready whenever you are.</p>
         <div className="k-adventure-options"><AdventureButton className="k-adventure-suggest" onClick={pickForMe}><IconSparkles size={18} /> Pick for me</AdventureButton></div>
