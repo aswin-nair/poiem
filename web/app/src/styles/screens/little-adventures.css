@@ -154,7 +154,10 @@
   .k-adventure-reveal > .k-adventure-sticker { width: 72px; height: 72px; box-shadow: var(--k-shadow-sm); }
   .k-adventure-reveal > .k-adventure-sticker svg { width: 40px; height: 40px; }
   .k-adventure-momo { display: block; width: 80px; height: 80px; }
-  .k-adventure-momo .momo-art, .k-adventure-momo .momo-art * { animation: none; }
+  /* Faces update immediately; the outer wrapper owns the optional celebration.
+     Disable the property, not just duration: the global reduced-motion rule
+     retains a 0.01ms transition that can still run after an expression change. */
+  .k-adventure-momo .momo-art, .k-adventure-momo .momo-art * { animation: none; transition-property: none; }
   .k-adventures .k-adventure-quip { font: 700 var(--k-type-lead)/1.45 var(--k-font-body); }
   .k-adventure-notice:empty { display: none; }
   .k-adventure-reveal.is-fresh > .k-adventure-sticker { animation: k-adventure-stamp 500ms var(--k-ease) both; }

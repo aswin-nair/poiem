@@ -222,7 +222,18 @@ for (const setting of ['calm', 'profile', 'system'] as const) {
       expect(await room(page).locator('.k-momo-play-actor').evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(0)
     }
     await shelf(page).getByRole('button', { name: 'Give my sticker a wiggle' }).click()
-    expect(await shelf(page).locator('.k-sticker-play-art, .k-adventure-momo').evaluateAll(elements => elements.flatMap(element => element.getAnimations({ subtree: true })).length)).toBe(0)
+    await expect(shelf(page).locator('.momo-mouth')).toHaveCSS('transition-property', 'none')
+    const remainingMotion = await shelf(page).locator('.k-sticker-play-art, .k-adventure-momo').evaluateAll(elements =>
+      elements.flatMap(element => element.getAnimations({ subtree: true }).map(animation => {
+        const target = (animation.effect as KeyframeEffect | null)?.target
+        return {
+          name: animation instanceof CSSAnimation ? animation.animationName : animation instanceof CSSTransition ? animation.transitionProperty : animation.constructor.name,
+          target: target instanceof Element ? target.outerHTML.slice(0, 240) : null,
+          state: animation.playState,
+          timing: animation.effect?.getTiming(),
+        }
+      })))
+    expect(remainingMotion).toEqual([])
   })
 }
 

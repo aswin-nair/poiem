@@ -27,7 +27,9 @@ npm run build:cloud
 
 ## Release boundary
 
-CI follow-up: the full Linux browser run on 57a298ed passed 497 of 498 tests. The remaining system reduced-motion case exposed media-query selectors with lower specificity than the fresh sticker/Momo animation selectors. The correction matches their specificity, so the later reduced-motion rules win without weakening the test. All 12 focused desktop/iPhone/Pixel Chromium motion scenarios and eight design-system tests passed locally. The local Docker daemon was unavailable; the pushed CI run must confirm the Linux result.
+CI follow-up (15 October): the full Linux browser runs on 57a298ed and 30af15f5 passed 497 of 498 tests. The first correction fixed reduced-motion selector specificity, but the system-preference case still failed. Repeating that case in the pinned CI image (`mcr.microsoft.com/playwright:v1.61.1-noble`) reproduced three failures in 20 runs. Animation diagnostics identified a `stroke-width` transition on Momo's mouth after its expression changed. The global reduced-motion rule leaves a 0.01ms transition duration and delay, so it could still appear as active.
+
+The static adventure artwork now sets `transition-property: none`; the outer wrapper still owns lively celebrations. The existing regression test checks that computed property and retains its strict empty-animation assertion, with target/property/timing diagnostics on failure. All 20 repeated system-preference runs passed in the Linux image after this correction. All 12 focused motion scenarios (lively, calm, profile and system preferences across desktop/iPhone/Pixel Chromium) also passed in that image. Eight design-system tests and the focused test-file lint check passed. The new full GitHub CI run must confirm the complete suite.
 
 Physical iPhone Safari/Android device checks, live-service smoke checks and final CI results remain separate release gates. No production deployment was performed by this review. The previous main squash snapshot was verified byte-for-byte against 84e932a4 before reconciling Git history; the reconciliation changed no application files.
 
