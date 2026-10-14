@@ -3,7 +3,7 @@ import { runInNewContext } from 'node:vm'
 import { describe, expect, it } from 'vitest'
 
 const html = readFileSync(new URL('../../docs/ui-enhancements/playful-today/journey-gallery.html', import.meta.url), 'utf8')
-const script = html.match(/<script>([\s\S]*?)<\/script>/)![1]
+const script = html.match(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/i)![1]
 
 function gallery(width: string, theme: string) {
   const changes: Record<string, () => void> = {}
