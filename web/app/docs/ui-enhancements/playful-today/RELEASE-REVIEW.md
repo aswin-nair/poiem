@@ -27,6 +27,8 @@ npm run build:cloud
 
 ## Release boundary
 
+CI follow-up: the full Linux browser run on 57a298ed passed 497 of 498 tests. The remaining system reduced-motion case exposed media-query selectors with lower specificity than the fresh sticker/Momo animation selectors. The correction matches their specificity, so the later reduced-motion rules win without weakening the test. All 12 focused desktop/iPhone/Pixel Chromium motion scenarios and eight design-system tests passed locally. The local Docker daemon was unavailable; the pushed CI run must confirm the Linux result.
+
 Physical iPhone Safari/Android device checks, live-service smoke checks and final CI results remain separate release gates. No production deployment was performed by this review. The previous main squash snapshot was verified byte-for-byte against 84e932a4 before reconciling Git history; the reconciliation changed no application files.
 
 Rollback: revert the feature changes through a reviewed commit. The game is transient and journey progress uses the existing sticker collection, so no database migration or new persisted format needs reversing.

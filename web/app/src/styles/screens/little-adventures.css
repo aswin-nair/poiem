@@ -57,7 +57,7 @@
   .k-sticker-shelf .k-sticker-play-hint { font: 500 var(--k-type-meta)/1.4 var(--k-font-body); color: var(--k-muted); }
   .k-sticker-play-line { min-height: 4.65em; }
   .k-adventure-space.is-still .k-sticker-play-art, :root[data-action-motion='still'] .k-sticker-play-art { animation: none; }
-  @media (prefers-reduced-motion: reduce) { .k-sticker-play-art { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .k-sticker-play-art.is-fresh { animation: none; } }
   .k-adventures {
     min-width: 0;
     border: 2px solid var(--k-line);
@@ -160,7 +160,10 @@
   .k-adventure-reveal.is-fresh > .k-adventure-sticker { animation: k-adventure-stamp 500ms var(--k-ease) both; }
   .k-adventure-reveal.is-fresh > .k-adventure-momo { animation: k-adventure-cheer 600ms var(--k-ease) both; }
   .k-adventure-space.is-still .k-adventure-reveal > *, :root[data-action-motion='still'] .k-adventure-reveal > * { animation: none; }
-  @media (prefers-reduced-motion: reduce) { .k-adventure-reveal > * { animation: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .k-adventure-reveal.is-fresh > .k-adventure-sticker,
+    .k-adventure-reveal.is-fresh > .k-adventure-momo { animation: none; }
+  }
   @keyframes k-adventure-stamp {
     0% { transform: scale(.65) rotate(-12deg); }
     65% { transform: scale(1.08) rotate(4deg); }
