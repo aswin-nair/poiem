@@ -3,7 +3,12 @@ import { runInNewContext } from 'node:vm'
 import { describe, expect, it } from 'vitest'
 
 const html = readFileSync(new URL('../../docs/ui-enhancements/playful-today/journey-gallery.html', import.meta.url), 'utf8')
-const script = html.match(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/i)![1]
+// This is an exact local fixture contract, not an HTML sanitizer or general parser.
+const sections = html.split('<script>')
+if (sections.length !== 2 || sections[1].split('</script>').length !== 2) {
+  throw new Error('Expected exactly one script in the journey gallery fixture')
+}
+const script = sections[1].split('</script>')[0]
 
 function gallery(width: string, theme: string) {
   const changes: Record<string, () => void> = {}
