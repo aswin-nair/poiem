@@ -1,4 +1,33 @@
 @layer screens {
+  .k-discovery-journey, .k-journey-ticket, .k-journey-postcard { display: grid; gap: var(--k-space-md); min-width: 0; }
+  .k-journey-ticket, .k-journey-postcard { padding: var(--k-space-md); border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-mint); color: var(--k-sticker-ink); }
+  .k-journey-postcard { background: var(--k-sticker-pink); }
+  .k-discovery-journey h4 { margin: 0; font: 900 var(--k-type-panel)/1.1 var(--k-font-display); overflow-wrap: anywhere; }
+  .k-journey-ticket progress { width: 100%; accent-color: var(--k-sticker-ink); }
+  .k-journey-route { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--k-space-md); }
+  .k-journey-route li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: var(--k-space-sm); align-items: center; }
+  .k-journey-marker { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid var(--k-line); border-radius: 50%; font-weight: 900; }
+  .k-journey-route .is-explored .k-journey-marker { background: var(--k-sticker-mint); color: var(--k-sticker-ink); }
+  .k-discovery-journey button { padding: var(--k-space-md); border: 2px solid var(--k-line); background: var(--k-card); color: var(--k-ink); text-align: left; font: 700 var(--k-type-label)/1.4 var(--k-font-body); overflow-wrap: anywhere; }
+  .k-journey-route button { display: grid; gap: var(--k-space-xs); }
+  .k-journey-route button span { font-weight: 500; font-size: var(--k-type-meta); }
+  .k-journey-route button[aria-current='step'] { background: var(--k-acid); color: var(--k-on-acid); }
+  .k-journey-postcard ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--k-space-sm); }
+  .k-journey-postcard li { display: grid; gap: var(--k-space-xs); padding-bottom: var(--k-space-sm); border-bottom: 1px dashed currentColor; }
+  .k-sticker-pairs { display: grid; gap: var(--k-space-md); min-width: 0; }
+  .k-pairs-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--k-space-sm); }
+  .k-pairs-card { display: grid; place-items: center; gap: var(--k-space-xs); min-width: 0; min-height: 96px; padding: var(--k-space-sm); border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-pink); color: var(--k-sticker-ink); font: 900 var(--k-type-panel)/1 var(--k-font-display); }
+  .k-pairs-card.is-revealed { background: var(--k-card); color: var(--k-ink); }
+  .k-pairs-card.is-matched { background: var(--k-sticker-mint); color: var(--k-sticker-ink); }
+  .k-pairs-card small { font: 600 var(--k-type-meta)/1.4 var(--k-font-body); }
+  .k-pairs-card .k-adventure-sticker { width: 40px; height: 40px; box-shadow: none; }
+  .k-pairs-card svg, .k-pairs-card svg * { animation: none; }
+  .k-pairs-card.is-revealed .k-adventure-sticker { animation: k-adventure-stamp 300ms var(--k-ease) both; }
+  .k-pairs-message { min-height: 4.65em; }
+  .k-sticker-pairs button[aria-disabled='true'] { cursor: default; }
+  .k-adventure-space.is-still .k-pairs-card .k-adventure-sticker, :root[data-action-motion='still'] .k-pairs-card .k-adventure-sticker { animation: none; }
+  @media (prefers-reduced-motion: reduce) { .k-pairs-card.is-revealed .k-adventure-sticker { animation: none; } }
+  @media (min-width: 600px) { .k-pairs-board { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .k-adventure-space { display: grid; gap: var(--k-space-lg); min-width: 0; }
   .k-sticker-shelf {
     display: grid;
@@ -19,6 +48,16 @@
   .k-sticker-shelf .k-sticker-shelf-art { min-height: 112px; border: 2px solid var(--k-sticker-ink); background: var(--k-sticker-mint); }
   .k-sticker-shelf-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .k-sticker-shelf-actions button { overflow-wrap: anywhere; }
+  .k-sticker-play { display: grid; place-items: center; flex-shrink: 0; padding: var(--k-space-sm); border: 0; background: transparent; color: var(--k-sticker-ink); border-radius: var(--k-radius-tile); }
+  .k-sticker-play-art { display: block; }
+  .k-sticker-play-art .k-adventure-sticker { width: 72px; height: 72px; box-shadow: var(--k-shadow-sm); }
+  .k-sticker-play-art .k-adventure-sticker svg { width: 40px; height: 40px; }
+  .k-sticker-play-art svg, .k-sticker-play-art svg * { animation: none; }
+  .k-sticker-play-art.is-fresh { animation: k-adventure-stamp 500ms var(--k-ease) both; }
+  .k-sticker-shelf .k-sticker-play-hint { font: 500 var(--k-type-meta)/1.4 var(--k-font-body); color: var(--k-muted); }
+  .k-sticker-play-line { min-height: 4.65em; }
+  .k-adventure-space.is-still .k-sticker-play-art, :root[data-action-motion='still'] .k-sticker-play-art { animation: none; }
+  @media (prefers-reduced-motion: reduce) { .k-sticker-play-art.is-fresh { animation: none; } }
   .k-adventures {
     min-width: 0;
     border: 2px solid var(--k-line);
@@ -100,6 +139,7 @@
   .k-adventure-preview { display: flex; align-items: center; gap: var(--k-space-md); }
   .k-adventure-options { display: grid; gap: var(--k-space-sm); }
   .k-adventure-options button:active { background: var(--k-acid); color: var(--k-on-acid); }
+  .k-adventure-options .k-adventure-suggest { display: flex; align-items: center; gap: var(--k-space-sm); background: var(--k-sticker-butter); color: var(--k-sticker-ink); border-color: var(--k-sticker-ink); }
   .k-adventures .k-adventure-small { font: 500 var(--k-type-meta)/1.5 var(--k-font-body); color: var(--k-muted); }
   .k-adventure-reveal {
     display: flex;
@@ -114,13 +154,19 @@
   .k-adventure-reveal > .k-adventure-sticker { width: 72px; height: 72px; box-shadow: var(--k-shadow-sm); }
   .k-adventure-reveal > .k-adventure-sticker svg { width: 40px; height: 40px; }
   .k-adventure-momo { display: block; width: 80px; height: 80px; }
-  .k-adventure-momo .momo-art, .k-adventure-momo .momo-art * { animation: none; }
+  /* Faces update immediately; the outer wrapper owns the optional celebration.
+     Disable the property, not just duration: the global reduced-motion rule
+     retains a 0.01ms transition that can still run after an expression change. */
+  .k-adventure-momo .momo-art, .k-adventure-momo .momo-art * { animation: none; transition-property: none; }
   .k-adventures .k-adventure-quip { font: 700 var(--k-type-lead)/1.45 var(--k-font-body); }
   .k-adventure-notice:empty { display: none; }
   .k-adventure-reveal.is-fresh > .k-adventure-sticker { animation: k-adventure-stamp 500ms var(--k-ease) both; }
   .k-adventure-reveal.is-fresh > .k-adventure-momo { animation: k-adventure-cheer 600ms var(--k-ease) both; }
   .k-adventure-space.is-still .k-adventure-reveal > *, :root[data-action-motion='still'] .k-adventure-reveal > * { animation: none; }
-  @media (prefers-reduced-motion: reduce) { .k-adventure-reveal > * { animation: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .k-adventure-reveal.is-fresh > .k-adventure-sticker,
+    .k-adventure-reveal.is-fresh > .k-adventure-momo { animation: none; }
+  }
   @keyframes k-adventure-stamp {
     0% { transform: scale(.65) rotate(-12deg); }
     65% { transform: scale(1.08) rotate(4deg); }

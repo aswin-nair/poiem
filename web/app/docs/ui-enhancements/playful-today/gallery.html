@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poiem — More ways to play</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff8eb;color:#20221d;font:16px/1.55 system-ui,sans-serif}main{max-width:1250px;margin:auto;padding:32px 20px 64px}h1{font-size:clamp(32px,5vw,64px);line-height:1;letter-spacing:-.045em;margin:16px 0}h2{margin:0 0 16px}p{max-width:760px}.eyebrow{display:inline-block;background:#ffd45c;border:2px solid;padding:8px 12px;font-weight:800}.controls{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0}label{display:grid;gap:8px;font-weight:700}select{min-height:44px;padding:8px 12px;background:#fffdf7;color:#20221d;border:2px solid;font:inherit}.pair,.panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}.panels{grid-template-columns:repeat(3,minmax(0,1fr))}figure{margin:0;min-width:0}figcaption{font-weight:750;padding:12px 0}img{display:block;width:100%;height:auto;border:2px solid #20221d;background:#fffdf7}a{color:inherit}a:focus-visible,select:focus-visible{outline:3px solid #20221d;outline-offset:4px}section{margin-top:40px}.note{background:#c4eed8;padding:20px;border:2px solid}.pair.phone{max-width:820px}.meta{font-size:14px;color:#5a564c}@media(max-width:700px){.panels,.pair{grid-template-columns:1fr}.panels{max-width:420px}}
+</style>
+<main>
+<header><span class="eyebrow">POIEM / MORE WAYS TO PLAY</span><h1>Tiny theatre.<br>Big dumpling energy.</h1><p>Give Momo a high-five, ask for a funny face, or cue a tiny dance. Let the adventure picker choose a discovery, then give your favorite sticker a wiggle.</p><p class="meta">On Today, select <strong>Play with Momo</strong> beneath the greeting. In Little adventures, try <strong>Pick for me</strong>. Tap a pinned sticker for a fresh comment.</p></header>
+<div class="controls"><label>Theme<select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></label><label>Today layout<select id="width"><option value="390">Phone · 390px</option><option value="1440">Desktop · 1440px</option></select></label></div>
+<section><h2>Three ways to make Today your own</h2><div class="panels">
+<figure><a data-link="playroom"><img data-panel="playroom" alt="Momo's little theatre with high-five, funny face and dance controls"></a><figcaption>Play with Momo · nine funny lines</figcaption></figure>
+<figure><a data-link="picker"><img data-panel="picker" alt="Little adventures with the Pick for me action" loading="lazy"></a><figcaption>A discovery when you need an idea</figcaption></figure>
+<figure><a data-link="sticker"><img data-panel="sticker" alt="A tappable pinned sticker with a playful comment" loading="lazy"></a><figcaption>Your sticker has a playful side</figcaption></figure>
+</div></section>
+<section><h2>Today, before and after</h2><div class="pair phone" id="comparison">
+<figure><a id="before-link"><img id="before" alt="Today before the new playtime invitation" loading="lazy"></a><figcaption>Before</figcaption></figure>
+<figure><a id="after-link"><img id="after" alt="Today with the Play with Momo invitation" loading="lazy"></a><figcaption>After · playtime opens when you choose</figcaption></figure>
+</div></section>
+<section><h2>Made for a thumb, too</h2><div class="panels">
+<figure><a data-link="small"><img data-panel="small" alt="Playroom at 320 pixels wide" loading="lazy"></a><figcaption>320px · narrow phone</figcaption></figure>
+<figure><a data-link="iphone"><img data-panel="iphone" alt="Playroom on iPhone 13 Chromium emulation" loading="lazy"></a><figcaption>iPhone 13 · touch emulation</figcaption></figure>
+<figure><a data-link="pixel"><img data-panel="pixel" alt="Playroom on Pixel 7 Chromium emulation" loading="lazy"></a><figcaption>Pixel 7 · touch emulation</figcaption></figure>
+</div></section>
+<section class="note"><h2>A little break, at your pace</h2><p>The jokes and suggestions are ready immediately. Calm and reduced-motion settings keep the artwork still. Hide or mute Momo to keep the discoveries with neutral sticker comments.</p><p class="meta">Actual app screenshots use fictional review data. Component close-ups omit fixed navigation; navigation clearance is checked separately. Physical Safari and device haptics still need a real phone. <a href="README.md">Verification notes</a>.</p></section>
+</main>
+<script>
+const theme=document.querySelector('#theme'),width=document.querySelector('#width');
+function show(){
+  const mode=theme.value==='dark'?'dark':'light',size=width.value==='1440'?'1440':'390';
+  const paths={playroom:'after-desktop-390-'+mode+'-playroom.png',picker:'after-desktop-390-'+mode+'-picker.png',sticker:'after-desktop-390-'+mode+'-sticker.png',small:'after-desktop-320-'+mode+'-playroom.png',iphone:'after-iphone-390-'+mode+'-playroom.png',pixel:'after-pixel-412-'+mode+'-playroom.png'};
+  for(const [name,path] of Object.entries(paths)){document.querySelector('[data-panel="'+name+'"]').src=path;document.querySelector('[data-link="'+name+'"]').href=path}
+  const before='before-'+size+'-'+mode+'-today.png',after='after-desktop-'+size+'-'+mode+'-today.png';
+  document.querySelector('#before').src=before;document.querySelector('#before-link').href=before;document.querySelector('#after').src=after;document.querySelector('#after-link').href=after;
+  document.querySelector('#comparison').classList.toggle('phone',size==='390');
+}
+theme.addEventListener('change',show);width.addEventListener('change',show);show();
+</script>
+</html>

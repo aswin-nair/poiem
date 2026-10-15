@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Little Joy Trail · release review</title>
+<style>body{margin:0;padding:24px;background:#fffdf5;color:#242720;font:16px/1.5 system-ui}main{max-width:1100px;margin:auto}h1{font-size:40px;line-height:1.1}select{font:inherit;padding:12px;border:2px solid}header{padding:24px;background:#8be3ba;border:2px solid;margin-bottom:24px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}figure{margin:0;padding:16px;border:2px solid;background:white}img{display:block;max-width:100%;height:auto;margin:auto}figcaption{font-weight:700;margin-bottom:16px}@media(max-width:600px){.grid{grid-template-columns:1fr}h1{font-size:28px}}</style>
+<main><header><p>POIEM · RELEASE REVIEW</p><h1>A small journey. A personal keepsake.</h1><p>Six discovery stops, saved progress, detours and a postcard made from your choices.</p><label>Viewport <select id="width"><option>320</option><option selected>390</option><option>1440</option></select></label> <label>Theme <select id="theme"><option>light</option><option>dark</option></select></label></header>
+<div class="grid"><figure><figcaption>Your route</figcaption><img id="route" alt="The Little Joy Trail with six accessible discovery stops"></figure><figure><figcaption>Your completed postcard</figcaption><img id="postcard" alt="Personal postcard showing the choices made at each discovery stop"></figure></div><p>Component captures from the running app. Fixed navigation is hidden only during capture. Phone widths are browser simulations, not physical-device certification.</p></main>
+<script>
+  const width = document.querySelector('#width');
+  const theme = document.querySelector('#theme');
+  function show() {
+    // Only fixed literals enter image paths; never reuse text read from the DOM.
+    const size = width.value === '320' ? '320' : width.value === '1440' ? '1440' : '390';
+    const mode = theme.value === 'dark' ? 'dark' : 'light';
+    for (const kind of ['route', 'postcard']) {
+      document.getElementById(kind).src = `journey-${size}-${mode}-${kind}.png`;
+    }
+  }
+  width.addEventListener('change', show);
+  theme.addEventListener('change', show);
+  show();
+</script></html>
